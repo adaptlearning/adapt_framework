@@ -1,0 +1,21 @@
+{
+  "name": "adapt_framework",
+  "version": "0.0.0",
+  "description": "Adapt Learning output framework",
+  "main": "source/adapt.js",
+  "scripts": {
+    "test": "mocha tests/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adaptlearning/adapt_framework.git"
+  },
+  "author": "AdaptLearning",
+  "license": "GPL v3",
+  "bugs": {
+    "url": "https://github.com/adaptlearning/adapt_framework/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0"
+  }
+}
