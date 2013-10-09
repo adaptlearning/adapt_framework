@@ -14,5 +14,8 @@
   "license": "GPL v3",
   "bugs": {
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0"
   }
 }
