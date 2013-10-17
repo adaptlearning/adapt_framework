@@ -1,0 +1,12 @@
+[{
+    "id":"menuItem-05",
+    "parentId":"course",
+    "title":"First menu item",
+    "body":"Body text for the first menu item."
+},
+{
+    "id":"menuItem-10",
+    "parentId":"menuItem-05",
+    "title":"Second menu item",
+    "body":"Body text for the second menu item."
+}]

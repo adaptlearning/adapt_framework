@@ -1,0 +1,5 @@
+{
+    "title":"Hot Graphic",
+    "description":"A simple Hot Graphic component that displays hotspots over an image. When the hotspots are clicked, display text is shown in a popup. This component swaps to a narrative for smaller devices.",
+    "bidirectional":true
+}

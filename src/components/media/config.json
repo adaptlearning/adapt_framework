@@ -1,0 +1,5 @@
+{
+    "title":"Media",
+    "description":"A simple Media component that displays either a video player or an audio player.",
+    "bidirectional":true
+}

@@ -1,0 +1,12 @@
+{
+    "title":"MCQ",
+    "description":"A simple Multiple Choice Question component that displays a question to the user.",
+    "bidirectional":true,
+    "editor":[{
+        "title":"textInput",
+        "items":[{
+            "title":"textInput",
+            "correct":"truth"
+        }]
+    }]
+}

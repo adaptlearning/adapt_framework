@@ -1,0 +1,8 @@
+{
+    "title":"Tutor",
+    "description":"An overlay feedback box that appears above all content and displays the users feedback after a question is answered.",
+    "editor":[{
+        "title":"textInput",
+        "body":"textArea"
+    }]
+}

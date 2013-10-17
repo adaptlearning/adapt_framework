@@ -1,0 +1,5 @@
+{
+    "title":"MCQ",
+    "description":"A simple Text Input Question component that displays input boxes to the user, where they have free input. Multiple input boxes can be used.",
+    "bidirectional":true
+}

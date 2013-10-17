@@ -1,0 +1,5 @@
+{
+    "title":"Narrative",
+    "description":"A simple accordion component that enables the user to click headings that reveal related content below.",
+    "bidirectional":true
+}

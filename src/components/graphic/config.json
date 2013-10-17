@@ -1,0 +1,5 @@
+{
+    "title":"Graphic",
+    "description":"A simple graphic component that displays an image.",
+    "bidirectional":true
+}

@@ -1,0 +1,24 @@
+{
+    "defaultLanguage":"en",
+    "scores": [-1, 0, 1],
+    "components":[
+        "components/accordion/js/accordion.js",
+        "components/graphic/js/graphic.js",
+        "components/hotGraphic/js/hotGraphic.js",
+        "components/mcq/js/mcq.js",
+        "components/media/js/media.js",
+        "components/narrative/js/narrative.js",
+        "components/text/js/text.js",
+        "components/textInput/js/textInput.js"
+    ],
+    "menu":[
+        "menu/js/basic.js"
+    ],
+    "extensions":[
+        "extensions/tutor/js/tutor.js"
+    ],
+    "theme":[
+        "theme/adapt/css/adapt.css",
+        "theme/adapt/templates/adapt.js"
+    ]
+}
