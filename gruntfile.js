@@ -1,4 +1,6 @@
 module.exports = function(grunt) {
+    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		less: {
@@ -43,13 +45,9 @@ module.exports = function(grunt) {
             tasks: ['less', 'handlebars']
 		}
 	});
-	grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-contrib-handlebars');
-    grunt.loadNpmTasks('grunt-contrib-requirejs');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.registerTask('default',['less', 'handlebars', 'watch']);
+	
+    grunt.registerTask('default',['less', 'handlebars', 'watch']);
 	grunt.registerTask('build',['less', 'handlebars', 'requirejs']);
-}
-
+};
 /*
 "build/templates/partials.js": "src/**//*.handlebars"*/

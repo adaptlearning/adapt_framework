@@ -1,0 +1,22 @@
+{
+  "name": "adapt_framework",
+  "version": "0.0.0",
+  "homepage": "https://github.com/cajones/adapt_framework",
+  "authors": [
+    "Daryl Hedley <daryl.hedley@kineo.com>",
+    "Chris Jones <chris.jones@spongeuk.com>"
+  ],
+  "main": "",
+  "license": "GPLv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "src/plugins",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "adapt-hello-world": "git@github.com:cajones/adapt-hello-world.git#~0.0.2"
+  }
+}

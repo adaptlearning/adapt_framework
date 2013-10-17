@@ -1,5 +1,3 @@
-.hello-world{color:#ff5678}
-
 
 
 
@@ -41,3 +39,5 @@ button{width:auto;overflow:visible}
 .clearfix{zoom:1}
 
 #wrapper{width:960px;margin:0 auto}@media all and (max-width:959px) and (min-width:760px){#wrapper{width:100%}}@media all and (max-width:759px) and (min-width:520px){#wrapper{width:520px}}@media all and (max-width:519px){#wrapper{width:100%}}
+
+.hello-world{color:#ff5678}

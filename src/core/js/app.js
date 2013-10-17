@@ -4,9 +4,8 @@ require([
     "coreJS/adapt", 
     "coreJS/utils", 
     "coreJS/router",
-    "coreViews/nav",
-    "components/helloWorld/js/helloWorld"
-], function(Backbone, Handlebars, Adapt, Utils, Router, Nav, HelloWorld) {
+    "coreViews/nav"
+], function(Backbone, Handlebars, Adapt, Utils, Router, Nav) {
     
     Backbone.history.start();
     

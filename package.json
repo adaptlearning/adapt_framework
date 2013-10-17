@@ -16,13 +16,18 @@
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
   "devDependencies": {
-    "mocha": "~1.13.0"
-  },
-  "dependencies": {
+    "mocha": "~1.13.0",
+    "matchdep": "~0.3.0",
     "grunt": "~0.4.1",
     "grunt-contrib-less": "~0.7.0",
     "grunt-contrib-handlebars": "~0.5.11",
     "grunt-contrib-watch": "~0.5.3",
-    "grunt-contrib-requirejs": "~0.4.1"
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-concurrent": "~0.3.0",
+    "grunt-open": "~0.2.2"
+  },
+  "dependencies": {
   }
 }

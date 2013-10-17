@@ -1,0 +1,14 @@
+{
+  "name": "adapt-hello-world",
+  "homepage": "https://github.com/cajones/adapt-hello-world",
+  "version": "0.0.2",
+  "_release": "0.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.2",
+    "commit": "affb988b7e158809bb3ea7bbf02d3a8fadbee297"
+  },
+  "_source": "git@github.com:cajones/adapt-hello-world.git",
+  "_target": "~0.0.2",
+  "_originalSource": "git@github.com:cajones/adapt-hello-world.git"
+}
