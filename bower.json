@@ -17,6 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "adapt-hello-world": "git@github.com:cajones/adapt-hello-world.git#~0.0.2"
+    "adapt-hello-world": "~0.0.3"
   }
 }
