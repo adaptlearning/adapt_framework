@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 					'build/adapt/css/adapt.css' : 'src/**/*.less'
 				}
 			},
-            options:{ 
+            options:{
                 compress:true
             }
 		},
@@ -30,6 +30,20 @@ module.exports = function(grunt) {
                 }
             }
         },
+        bower: {
+            target: {
+                rjsConfig: './config.js',
+                options: {
+                    baseUrl: 'src'
+                }
+            }
+        },
+        'requirejs-bundle': {
+            plugins: {
+                src: 'src/plugins/',
+                dest: 'src/plugins.js'
+            }
+        },
         requirejs: {
             compile: {
                 options: {
@@ -47,7 +61,7 @@ module.exports = function(grunt) {
 	});
 	
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-	grunt.registerTask('build',['less', 'handlebars', 'requirejs']);
+	grunt.registerTask('build',['less', 'handlebars', 'bower', 'requirejs']);
 };
 /*
 "build/templates/partials.js": "src/**//*.handlebars"*/
