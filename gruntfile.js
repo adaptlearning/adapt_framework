@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 	});
 	
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-	grunt.registerTask('build',['less', 'handlebars', 'bower', 'requirejs']);
+	grunt.registerTask('build',['less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs']);
 };
 /*
 "build/templates/partials.js": "src/**//*.handlebars"*/
