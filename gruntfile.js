@@ -39,9 +39,9 @@ module.exports = function(grunt) {
             }
         },
         'requirejs-bundle': {
-            plugins: {
-                src: 'src/plugins/',
-                dest: 'src/plugins.js'
+            components: {
+                src: 'src/components/',
+                dest: 'src/components.js'
             }
         },
         requirejs: {

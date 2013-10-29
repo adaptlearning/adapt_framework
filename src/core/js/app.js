@@ -1,11 +1,11 @@
 require([
     "backbone",
     "handlebars",
-    "coreJS/adapt", 
-    "coreJS/utils", 
+    "coreJS/adapt",
+    "coreJS/utils",
     "coreJS/router",
     "coreViews/nav",
-    "adapt-hello-world"
+    "components",
 ], function(Backbone, Handlebars, Adapt, Utils, Router, Nav) {
     
     Backbone.history.start();
@@ -15,6 +15,7 @@ require([
     Adapt.create('nav', 'view');
     
     Adapt.create('helloWorld', 'view');
+    Adapt.create('helloWorld2', 'view');
     
     /*Modernizr.load([
         {
