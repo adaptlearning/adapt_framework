@@ -1,5 +1,5 @@
 /*globals define*/
-define(['components', 'extensions', 'menu', 'theme'], function () {
+define(['modernizr', 'components', 'extensions', 'menu', 'theme'], function (Modernizr) {
     
     Modernizr.load([
         {
