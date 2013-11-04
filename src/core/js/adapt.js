@@ -1,8 +1,7 @@
 /*
 * Adapt
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Author - Fabien O'Carroll
-* Maintainers - Fabien O'Carroll
+* Maintainers - Daryl Hedley, Fabien O'Carroll
 */
 
 define(["underscore", "backbone"], function(_, Backbone){

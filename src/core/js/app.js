@@ -1,4 +1,8 @@
-/*globals define*/
+/*
+* Adapt
+* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* Maintainers - Daryl Hedley, Fabien O'Carroll, Chris Jones
+*/
 require([
     'coreJS/adapt',
     'coreViews/navigationView',
@@ -12,8 +16,6 @@ require([
     console.log(Adapt);
     
     // All code that needs to run before adapt starts should go here
-    
-    new NavigationView();
     
     Adapt.initialize();
     

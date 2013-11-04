@@ -6,10 +6,27 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, src: ['src/index.html'], dest: 'build/', filter: 'isFile', flatten: true},
-                    {expand: true, src: ['src/core/js/scriptLoader.js'], dest: 'build/adapt/js/', filter: 'isFile', flatten: true},
-                    {expand: true, src: ['src/core/js/libraries/.js'], dest: 'build/adapt/js/', filter: 'isFile', flatten: true},
-                    {expand: true, src: ['src/core/js/scriptLoader.js'], dest: 'build/adapt/js/', filter: 'isFile', flatten: true}
+                    {
+                        expand: true, 
+                        src: ['src/index.html'], 
+                        dest: 'build/', 
+                        filter: 'isFile', 
+                        flatten: true
+                    },
+                    {
+                        expand: true, 
+                        src: ['src/core/js/scriptLoader.js'], 
+                        dest: 'build/adapt/js/', 
+                        filter: 'isFile', 
+                        flatten: true
+                    },
+                    {
+                        expand: true, 
+                        src: ['src/core/js/libraries/require.js', 'src/core/js/libraries/modernizr.js'], 
+                        dest: 'build/libraries/', 
+                        filter: 'isFile', 
+                        flatten: true
+                    }
                 ]
             }
         },
@@ -67,6 +84,17 @@ module.exports = function(grunt) {
             }
         },
         requirejs: {
+            dev: {
+                options: {
+                    name: "core/js/app",
+                    baseUrl: "src",
+                    mainConfigFile: "./config.js",
+                    out: "./build/adapt/js/adapt.min.js",
+                    generateSourceMaps: true,
+                    preserveLicenseComments:false,
+                    optimize: "none"
+                }
+            },
             compile: {
                 options: {
                     name: "core/js/app",
@@ -83,5 +111,6 @@ module.exports = function(grunt) {
     });
     
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('build',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs']);
+    grunt.registerTask('build',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
+    grunt.registerTask('dev',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
 };
