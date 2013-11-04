@@ -1,25 +1,20 @@
 /*globals define*/
-define(['modernizr', 'components', 'extensions', 'menu', 'theme'], function (Modernizr) {
+require([
+    'coreJS/adapt',
+    'coreViews/navigationView',
+    'templates',
+    'components/components', 
+    'extensions/extensions', 
+    'menus/menu', 
+    'themes/theme'
+], function (Adapt, NavigationView) {
     
-    Modernizr.load([
-        {
-            test: window.JSON,
-            nope: 'core/js/vendor/json2.js'
-        },
-        {
-            test: Modernizr.video || Modernizr.audio,
-            nope: 'core/js/vendor/swfObject.js'
-        },
-        {
-            test: /ie[78]/.test(document.getElementsByTagName("html")[0].className),
-            yep: 'core/css/legacy.css',
-            nope: 'core/css/responsive.css'
-        },
-        {
-            load:[
-                'core/js/adapt.js'
-            ]
-        }
-    ]);
-
+    console.log(Adapt);
+    
+    // All code that needs to run before adapt starts should go here
+    
+    new NavigationView();
+    
+    Adapt.initialize();
+    
 });

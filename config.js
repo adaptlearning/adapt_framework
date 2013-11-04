@@ -1,8 +1,8 @@
 require.config({
     paths: {
-        jquery: 'core/js/libraries/jquery.v2',
-        underscore: 'core/js/libraries/underscore',
-        backbone: 'core/js/libraries/backbone',
+        jquery: 'components/jquery/jquery',
+        underscore: 'components/underscore/underscore',
+        backbone: 'components/backbone/backbone',
         modernizr: 'core/js/libraries/modernizr',
         handlebars: 'core/js/libraries/handlebars',
         imageReady: 'core/js/libraries/imageReady',
@@ -10,7 +10,9 @@ require.config({
         scrollTo: 'core/js/libraries/scrollTo',
         coreJS: 'core/js',
         coreViews: 'core/js/views',
-        templates: '../build/templates/templates'
+        coreModels: 'core/js/models',
+        coreCollections: 'core/js/collections',
+        templates: 'templates/templates'
     },
     shim: {
         jquery: [

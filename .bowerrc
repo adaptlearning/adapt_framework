@@ -1,4 +1,10 @@
 {
     "directory" : "src/components",
-    "registry"  : "http://adapt-bower-repository.herokuapp.com/"
+    "registry"  : {
+        "register": "http://adapt-bower-repository.herokuapp.com/",
+        "search": [
+            "http://adapt-bower-repository.herokuapp.com/",
+            "https://bower.herokuapp.com"
+        ]
+    }
 }

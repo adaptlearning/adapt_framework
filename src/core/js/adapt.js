@@ -5,10 +5,17 @@
 * Maintainers - Fabien O'Carroll
 */
 
-define(function(){
+define(["underscore", "backbone"], function(_, Backbone){
+    
     var Adapt = {};
 
     _.extend(Adapt, Backbone.Events);
+    
+    Adapt.initialize = _.once(function() {
+        console.log('Adapt running');
+        Adapt.trigger('adapt:initialize');
+    });
 
     return Adapt;
+    
 });

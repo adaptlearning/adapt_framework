@@ -6,7 +6,10 @@ module.exports = function(grunt) {
         copy: {
             main: {
                 files: [
-                  {expand: true, src: ['src/index.html'], dest: 'build/', filter: 'isFile', flatten: true}
+                    {expand: true, src: ['src/index.html'], dest: 'build/', filter: 'isFile', flatten: true},
+                    {expand: true, src: ['src/core/js/scriptLoader.js'], dest: 'build/adapt/js/', filter: 'isFile', flatten: true},
+                    {expand: true, src: ['src/core/js/libraries/.js'], dest: 'build/adapt/js/', filter: 'isFile', flatten: true},
+                    {expand: true, src: ['src/core/js/scriptLoader.js'], dest: 'build/adapt/js/', filter: 'isFile', flatten: true}
                 ]
             }
         },
@@ -33,7 +36,7 @@ module.exports = function(grunt) {
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
-                    "build/templates/templates.js": "src/**/*.handlebars"
+                    "src/templates/templates.js": "src/**/*.hbs"
                 }
             }
         },
@@ -48,19 +51,19 @@ module.exports = function(grunt) {
         'requirejs-bundle': {
             components: {
                 src: 'src/components/',
-                dest: 'src/components.js'
+                dest: 'src/components/components.js'
             },
             extensions: {
                 src: 'src/extensions/',
-                dest: 'src/extensions.js'
+                dest: 'src/extensions/extensions.js'
             },
             menu: {
                 src: 'src/menu/',
-                dest: 'src/menu.js'
+                dest: 'src/menus/menu.js'
             },
             theme: {
                 src: 'src/theme/',
-                dest: 'src/theme.js'
+                dest: 'src/themes/theme.js'
             }
         },
         requirejs: {

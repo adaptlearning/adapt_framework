@@ -22,6 +22,7 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
         },
         
         triggerEvent: function(event) {
+            event.preventDefault();
             var currentEvent = $(event.currentTarget).attr('data-event');
             Adapt.trigger('navigation:' + currentEvent);
         }
