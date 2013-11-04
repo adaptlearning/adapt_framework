@@ -1,0 +1,4 @@
+{
+    "directory" : "src/components",
+    "registry"  : "http://adapt-bower-repository.herokuapp.com/"
+}
