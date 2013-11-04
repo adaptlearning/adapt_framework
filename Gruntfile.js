@@ -3,11 +3,18 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        copy: {
+            main: {
+                files: [
+                  {expand: true, src: ['src/index.html'], dest: 'build/', filter: 'isFile', flatten: true}
+                ]
+            }
+        },
         less: {
             dist: {
-                    files: {
-                            'build/adapt/css/adapt.css' : 'src/**/*.less'
-                    }
+                files: {
+                        'build/adapt/css/adapt.css' : 'src/**/*.less'
+                }
             },
             options:{
                 compress:true
@@ -71,7 +78,7 @@ module.exports = function(grunt) {
             tasks: ['less', 'handlebars']
         }
     });
-        
+    
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('build',['less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs']);
+    grunt.registerTask('build',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs']);
 };
