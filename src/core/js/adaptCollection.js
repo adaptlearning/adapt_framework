@@ -1,3 +1,9 @@
+/*
+* Adapt
+* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* Maintainers - Daryl Hedley
+*/
+
 define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
 
     var AdaptCollection = Backbone.Collection.extend({

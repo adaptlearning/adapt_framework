@@ -1,8 +1,8 @@
 require.config({
     paths: {
-        jquery: 'components/jquery/jquery',
-        underscore: 'components/underscore/underscore',
-        backbone: 'components/backbone/backbone',
+        jquery: 'core/js/libraries/jquery',
+        underscore: 'core/js/libraries/underscore',
+        backbone: 'core/js/libraries/backbone',
         modernizr: 'core/js/libraries/modernizr',
         handlebars: 'core/js/libraries/handlebars',
         imageReady: 'core/js/libraries/imageReady',
@@ -20,8 +20,8 @@ require.config({
         ],
         backbone: {
             deps: [
-                'core/js/libraries/underscore',
-                'core/js/libraries/jquery.v2'
+                'underscore',
+                'jquery'
             ],
             exports: 'Backbone'
         },

@@ -3,6 +3,7 @@
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley, Fabien O'Carroll, Chris Jones
 */
+
 require([
     'coreJS/adapt',
     'coreViews/navigationView',

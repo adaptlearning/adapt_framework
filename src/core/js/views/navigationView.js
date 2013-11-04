@@ -3,6 +3,7 @@
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley
 */
+
 define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars, Adapt) {
     
     var NavigationView = Backbone.View.extend({

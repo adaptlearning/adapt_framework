@@ -3,6 +3,7 @@
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley
 */
+
 Modernizr.load([
     {
         test: window.JSON,
