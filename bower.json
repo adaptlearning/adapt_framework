@@ -1,17 +1,24 @@
 {
-  "name": "my-adapt-course",
+  "name": "adapt_framework",
   "version": "0.0.0",
+  "homepage": "https://github.com/adaptlearning/adapt_framework",
+  "main": "app.js",
+  "keywords": [
+    "adapt"
+  ],
   "authors": [
     "AdaptLearning"
   ],
-  "main": "build/index.html",
   "license": "GPLv3",
   "private": true,
+  "dependencies": {
+    "backbone": "~1.1.0",
+    "jquery": "1.8.3",
+    "underscore": "~1.5.2"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
     "test"
-  ],
-  "dependencies": {
-  }
+  ]
 }
