@@ -2,7 +2,7 @@
   "name": "adapt_framework",
   "version": "0.0.0",
   "description": "Adapt Learning output framework",
-  "main": "source/adapt.js",
+  "main": "src/adapt.js",
   "scripts": {
     "test": "mocha tests"
   },
