@@ -14,6 +14,7 @@ define(["handlebars", "coreViews/adaptView", "coreViews/blockView"], function(Ha
         
         init: function() {
             this.template = 'article';
+            console.log('options',this.options);
             this.$parent = this.options.$parent;
         },
         
