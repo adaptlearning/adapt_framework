@@ -10,8 +10,12 @@ define(["coreModels/adaptModel", "coreJS/adapt"], function(AdaptModel, Adapt) {
         
         initialize: function() {
             if (this.get('_type') === 'page') this.constructor.children = 'articles';
-            if (this.constructor.children)
-                Adapt[this.constructor.children].on("change:_ready", this.checkReadyStatus, this);
+            if (this.constructor.children) {
+                Adapt[this.constructor.children].on({
+                    "change:_ready": this.checkReadyStatus,
+                    "change:_complete": this.checkCompletionStatus
+                }, this);
+            }
             this.init();
         }
         

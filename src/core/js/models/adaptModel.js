@@ -9,12 +9,12 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
     var AdaptModel = Backbone.Model.extend({
         
         initialize: function() {
-            if (this.constructor.children)
+            if (this.constructor.children) {
                 Adapt[this.constructor.children].on({
                     "change:_ready": this.checkReadyStatus,
                     "change:_complete": this.checkCompletionStatus
                 }, this);
-                //Adapt[this.constructor.children].on("change:_ready", this.checkReadyStatus, this);
+            }
             this.init();
         },
         
@@ -26,7 +26,7 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
         init: function() {},
         
         checkReadyStatus: function(model) {
-            console.log(model.get('_ready'));
+            console.log(model.get("_id"),model.get('_ready'));
             if (this.getChildren().findWhere({_ready:false})) return;
             this.set({_ready:true});
         },
