@@ -4,7 +4,7 @@
   "description": "Adapt Learning output framework",
   "main": "source/adapt.js",
   "scripts": {
-    "test": "mocha tests/api/specRunner"
+    "test": "mocha tests"
   },
   "repository": {
     "type": "git",
