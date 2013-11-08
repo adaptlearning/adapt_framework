@@ -1,6 +1,6 @@
-var assert = require("assert");
+var expect = require("expect.js");
 describe("Number", function(){
     it("should add", function(){
-        assert.equal(1+1, 2);
+        expect(1+1).to.equal(2);
     });
 });

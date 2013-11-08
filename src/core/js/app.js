@@ -1,11 +1,12 @@
 /*
-* Adapt
+* App
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley, Fabien O'Carroll, Chris Jones
 */
 
 require([
     'coreJS/adapt',
+    'coreJS/router',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/courseModel',
@@ -18,18 +19,32 @@ require([
     'extensions/extensions', 
     'menus/menu', 
     'themes/theme'
-], function (Adapt, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
-    
-    console.log("adapt", Adapt);
+], function (Adapt, NavigationView, Router, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     Adapt.on('adaptCollection:dataLoaded', checkDataIsLoaded);
     
     // All code that needs to run before adapt starts should go here
     Adapt.course = new CourseModel({url:"course/en/course.json"});
-    Adapt.contentObjects = new AdaptCollection(null, {model: ContentObjectModel, url: "course/en/contentObjects.json"});
-    Adapt.articles = new AdaptCollection(null, {model: ArticleModel, url: "course/en/articles.json"});
-    Adapt.blocks = new AdaptCollection(null, {model: BlockModel, url: "course/en/blocks.json"});
-    Adapt.components = new AdaptCollection(null, {model: ComponentModel, url: "course/en/components.json"});
+    
+    Adapt.contentObjects = new AdaptCollection(null, {
+        model: ContentObjectModel, 
+        url: "course/en/contentObjects.json"
+    });
+    
+    Adapt.articles = new AdaptCollection(null, {
+        model: ArticleModel, 
+        url: "course/en/articles.json"
+    });
+    
+    Adapt.blocks = new AdaptCollection(null, {
+        model: BlockModel, 
+        url: "course/en/blocks.json"
+    });
+    
+    Adapt.components = new AdaptCollection(null, {
+        model: ComponentModel, 
+        url: "course/en/components.json"
+    });
     
     function checkDataIsLoaded() {
         if (Adapt.contentObjects.models.length > 0 

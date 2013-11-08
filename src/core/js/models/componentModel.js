@@ -8,8 +8,7 @@ define(["coreModels/adaptModel"], function(AdaptModel) {
 
     var ComponentModel = AdaptModel.extend({
         
-        initialize: function() {
-            console.log('Component Created');
+        init: function() {
         }
         
     }, {

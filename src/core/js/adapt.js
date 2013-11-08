@@ -13,7 +13,11 @@ define(["underscore", "backbone"], function(_, Backbone){
     Adapt.initialize = _.once(function() {
         console.log('Adapt running');
         Adapt.trigger('adapt:initialize');
+        console.log(Adapt);
+        Backbone.history.start();
     });
+    
+    Adapt.componentStore = {};
 
     return Adapt;
     

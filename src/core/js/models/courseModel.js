@@ -10,7 +10,6 @@ define(["coreModels/adaptModel", "coreJS/adapt"], function(AdaptModel, Adapt) {
     
         initialize: function(options) {
             this.url = options.url;
-            console.log('course model loaded');
             this.on('sync', this.loadedData, this);
             this.fetch();
         },

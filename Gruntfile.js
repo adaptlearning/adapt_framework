@@ -15,6 +15,12 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true, 
+                        src: ['**/*'], 
+                        dest: 'build/course/', 
+                        cwd: 'src/course/'
+                    },
+                    {
+                        expand: true, 
                         src: ['src/core/js/scriptLoader.js'], 
                         dest: 'build/adapt/js/', 
                         filter: 'isFile', 

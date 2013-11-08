@@ -1,5 +1,5 @@
 /*
-* Adapt
+* NavigationView
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley
 */
@@ -12,9 +12,9 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
         
         initialize: function() {
             this.template = "navigation";
-            Adapt.trigger('navigation:preRender', this);
+            Adapt.trigger('navigationView:preRender', this);
             this.render();
-            Adapt.trigger('navigation:postRender', this);
+            Adapt.trigger('navigationView:postRender', this);
         },
         
         events: {

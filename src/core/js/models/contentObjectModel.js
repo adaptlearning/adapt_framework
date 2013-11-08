@@ -4,18 +4,21 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["coreModels/adaptModel"], function(AdaptModel) {
+define(["coreModels/adaptModel", "coreJS/adapt"], function(AdaptModel, Adapt) {
 
     var ContentObjectModel = AdaptModel.extend({
         
         initialize: function() {
-            console.log('ContentObjectModel Created');
+            if (this.get('_type') === 'page') this.constructor.children = 'articles';
+            if (this.constructor.children)
+                Adapt[this.constructor.children].on("change:_ready", this.checkReadyStatus, this);
+            this.init();
         }
         
     }, {
         parent:'course',
         siblings:'contentObjects',
-        children:'articles'
+        children:'contentObjects'
     });
     
     return ContentObjectModel;

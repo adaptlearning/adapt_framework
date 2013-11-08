@@ -1,0 +1,12 @@
+{
+    "_type":"component",
+    "_component":"text",
+    "attributes":[
+        {
+            "_id":"string",
+            "_parentId":"string",
+            "title":"textInput",
+            "body":"textarea"
+        }
+    ]
+}
