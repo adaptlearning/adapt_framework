@@ -14,7 +14,6 @@ define(["handlebars", "coreViews/adaptView", "coreViews/blockView"], function(Ha
         
         init: function() {
             this.template = 'article';
-            console.log('options',this.options);
             this.$parent = this.options.$parent;
         },
         
@@ -23,9 +22,9 @@ define(["handlebars", "coreViews/adaptView", "coreViews/blockView"], function(Ha
         },
         
         addChildren: function() {
-            this.model.getChildren().each(_.bind(function(model) {
+            this.model.getChildren().each(function(model) {
                 new BlockView({model:model, $parent:$('.block-container', this.$el)});
-            }, this));
+            }, this);
         }
         
     });

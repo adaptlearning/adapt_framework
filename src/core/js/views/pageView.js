@@ -26,9 +26,9 @@ define(["handlebars", "coreViews/adaptView", "coreViews/articleView"], function(
         },
         
         addChildren: function() {
-            this.model.getChildren().each(_.bind(function(model) {
+            this.model.getChildren().each(function(model) {
                 new ArticleView({model:model, $parent:$('.article-container', this.$el)});
-            }, this));
+            }, this);
         }
         
     });

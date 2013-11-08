@@ -22,12 +22,12 @@ define(["handlebars", "coreJS/adapt", "coreViews/adaptView", "./../components/te
         },
         
         addChildren: function() {
-            this.model.getChildren().each(_.bind(function(model) {
+            this.model.getChildren().each(function(model) {
                 new Adapt.componentStore[model.get("_component")]({
                     model:model, 
                     $parent:$('.component-container', this.$el)
                 });
-            }, this));
+            }, this);
         }
         
     });
