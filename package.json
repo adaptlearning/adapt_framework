@@ -16,9 +16,7 @@
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
   "devDependencies": {
-    "karma-mocha": "~0.0.4",
     "karma": "~0.9",
-    "mocha": "~1.13.0",
     "matchdep": "~0.3.0",
     "grunt": "~0.4.1",
     "grunt-contrib-less": "~0.7.0",
@@ -30,8 +28,6 @@
     "grunt-open": "~0.2.2",
     "grunt-bower-requirejs": "~0.7.1",
     "grunt-requirejs-bundle": "~0.0.4",
-    "grunt-contrib-copy": "~0.4.1",
-    "expect.js": "~0.2.0",
-    "requirejs": "~2.1.9"
+    "grunt-contrib-copy": "~0.4.1"
   }
 }
