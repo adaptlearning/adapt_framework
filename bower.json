@@ -12,6 +12,8 @@
   "license": "GPLv3",
   "private": true,
   "dependencies": {
+    "requirejs": "2.1.8",
+    "mocha": "*"
   },
   "ignore": [
     "**/.*",

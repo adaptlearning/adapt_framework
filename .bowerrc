@@ -1,5 +1,5 @@
 {
-    "directory": "src/core/js/libraries",
+    "directory": "bower_components",
     "registry": {
         "register": "http://adapt-bower-repository.herokuapp.com/",
         "search": [

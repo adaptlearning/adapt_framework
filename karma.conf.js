@@ -10,7 +10,7 @@ module.exports = function(config) {
       'test/test-main.js'
     ],
     // List of frameworks you want to use: jasmine, mocha, qunit
-    frameworks: ['mocha', 'requirejs'],
+    frameworks: ['requirejs'],
     // Enable or disable watching files and executing the tests
     // whenever one of these files changes.
     autoWatch: false,
