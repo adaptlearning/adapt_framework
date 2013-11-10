@@ -13,7 +13,8 @@
   "private": true,
   "dependencies": {
     "requirejs": "2.1.8",
-    "mocha": "*"
+    "mocha": "*",
+    "jasmine": "1.3.1"
   },
   "ignore": [
     "**/.*",

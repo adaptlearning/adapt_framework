@@ -1,5 +1,5 @@
 // load the entire module/library and pass to the test
-define(['/src/core/js/adapt.js'],function(Adapt) {
+define(['coreJS/adapt'],function(Adapt) {
 
   // use jasmine to run tests against the required code
   describe('Adapt', function() {
