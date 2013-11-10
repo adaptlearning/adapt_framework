@@ -7,20 +7,47 @@
   <script src="../bower_components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
    <script>
       var require = {
-        baseUrl: '../src',
-        urlArgs: 'cb=' + Math.random(),
-        paths: {
-          lodash: '../bower_components/lodash/dist/lodash.min',
-          spec: '../test/spec'
-        }
+          baseUrl: '../src',
+          paths: {
+            jquery: 'core/js/libraries/jquery',
+            underscore: 'core/js/libraries/underscore',
+            backbone: 'core/js/libraries/backbone',
+            modernizr: 'core/js/libraries/modernizr',
+            handlebars: 'core/js/libraries/handlebars',
+            imageReady: 'core/js/libraries/imageReady',
+            inview: 'core/js/libraries/inview',
+            scrollTo: 'core/js/libraries/scrollTo',
+            coreJS: 'core/js',
+            coreViews: 'core/js/views',
+            coreModels: 'core/js/models',
+            coreCollections: 'core/js/collections',
+            templates: 'templates/templates',
+            spec: '../test/spec'
+          },
+            shim: {
+                jquery: [
+            
+                ],
+                backbone: {
+                    deps: [
+                        'underscore',
+                        'jquery'
+                    ],
+                    exports: 'Backbone'
+                },
+                underscore: {
+                    exports: '_'
+                },
+                handlebars: {
+                    exports: 'Handlebars'
+                }
+            }
       }
   </script>
-  <script src="../bower_components/requirejs/require.js"></script>
+  <script src="../src/core/js/libraries/require.js"></script>
   <script type="text/javascript">
     require([
-    'spec/mylib',
-    'spec/module1',
-    'spec/module2'
+    'spec/module1'
     ], function() {
       var jasmineEnv = jasmine.getEnv();
       var htmlReporter = new jasmine.HtmlReporter();
