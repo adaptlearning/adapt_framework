@@ -21,7 +21,7 @@ module.exports = function(config) {
     // Opera (requires karma-opera-launcher plugin)
     // Internet Explorer (requires karma-ie-launcher plugin)
     // Safari (requires karma-safari-launcher plugin)
-    browsers: ['Chrome'],
+    browsers: [],
     // If singleRun is set to true, Karma will start and capture all
     // configured browsers, run tests and then exit with an exit code of 0 or 1.
     singleRun: false
