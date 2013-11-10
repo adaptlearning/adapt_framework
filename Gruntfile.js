@@ -106,7 +106,8 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: "./build/adapt/js/adapt.min.js"
+                    out: "./build/adapt/js/adapt.min.js",
+                    optimize:"uglify2"
                 }
             }
         },
