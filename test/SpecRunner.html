@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jasmine Spec Runner</title>
+  <link rel="stylesheet" href="../bower_components/jasmine/lib/jasmine-core/jasmine.css">
+  <script src="../bower_components/jasmine/lib/jasmine-core/jasmine.js"></script>
+  <script src="../bower_components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
+   <script>
+      var require = {
+        baseUrl: '../src',
+        urlArgs: 'cb=' + Math.random(),
+        paths: {
+          lodash: '../bower_components/lodash/dist/lodash.min',
+          spec: '../test/spec'
+        }
+      }
+  </script>
+  <script src="../bower_components/requirejs/require.js"></script>
+  <script type="text/javascript">
+    require([
+    'spec/mylib',
+    'spec/module1',
+    'spec/module2'
+    ], function() {
+      var jasmineEnv = jasmine.getEnv();
+      var htmlReporter = new jasmine.HtmlReporter();
+      jasmineEnv.updateInterval = 1000;
+      jasmineEnv.addReporter(htmlReporter);
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+      jasmineEnv.execute();
+    });
+  </script>
+</head>
+<body>
+</body>
+</html>
