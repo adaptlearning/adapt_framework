@@ -16,8 +16,8 @@
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
   "devDependencies": {
-    "karma-mocha": "~0.0.1",
-    "karma": "~0.10",
+    "karma-mocha": "~0.0.4",
+    "karma": "~0.9",
     "mocha": "~1.13.0",
     "matchdep": "~0.3.0",
     "grunt": "~0.4.1",
