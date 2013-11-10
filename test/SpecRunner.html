@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Jasmine Spec Runner</title>
-  <link rel="stylesheet" href="../bower_components/jasmine/lib/jasmine-core/jasmine.css">
-  <script src="../bower_components/jasmine/lib/jasmine-core/jasmine.js"></script>
-  <script src="../bower_components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
-   <script>
-      var require = {
-          baseUrl: '../src',
-          paths: {
+    <title>Jasmine Spec Runner</title>
+    <link rel="stylesheet" href="../bower_components/jasmine/lib/jasmine-core/jasmine.css">
+    <script src="../bower_components/jasmine/lib/jasmine-core/jasmine.js"></script>
+    <script src="../bower_components/jasmine/lib/jasmine-core/jasmine-html.js"></script>
+    <script>
+    var require = {
+        baseUrl: '../src',
+        paths: {
             jquery: 'core/js/libraries/jquery',
             underscore: 'core/js/libraries/underscore',
             backbone: 'core/js/libraries/backbone',
@@ -23,42 +23,40 @@
             coreCollections: 'core/js/collections',
             templates: 'templates/templates',
             spec: '../test/spec'
-          },
-            shim: {
-                jquery: [
-            
-                ],
-                backbone: {
-                    deps: [
-                        'underscore',
-                        'jquery'
-                    ],
-                    exports: 'Backbone'
-                },
-                underscore: {
-                    exports: '_'
-                },
-                handlebars: {
-                    exports: 'Handlebars'
-                }
+        },
+        shim: {
+            jquery: [],
+            backbone: {
+            deps: [
+                'underscore',
+                'jquery'
+            ],
+                exports: 'Backbone'
+            },
+            underscore: {
+                exports: '_'
+            },
+            handlebars: {
+                exports: 'Handlebars'
             }
-      }
-  </script>
-  <script src="../src/core/js/libraries/require.js"></script>
-  <script type="text/javascript">
+        }
+    }
+    </script>
+    <script src="../src/core/js/libraries/require.js"></script>
+    <script type="text/javascript">
     require([
-    'spec/module1'
+        'spec/module1'
     ], function() {
-      var jasmineEnv = jasmine.getEnv();
-      var htmlReporter = new jasmine.HtmlReporter();
-      jasmineEnv.updateInterval = 1000;
-      jasmineEnv.addReporter(htmlReporter);
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
-      jasmineEnv.execute();
+        var jasmineEnv = jasmine.getEnv();
+        var htmlReporter = new jasmine.HtmlReporter();
+        jasmineEnv.updateInterval = 1000;
+        jasmineEnv.addReporter(htmlReporter);
+        jasmineEnv.specFilter = function(spec) {
+            return htmlReporter.specFilter(spec);
+        };
+        jasmineEnv.execute();
     });
-  </script>
+    </script>
 </head>
 <body>
 </body>
