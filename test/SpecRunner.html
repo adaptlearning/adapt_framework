@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Jasmine Spec Runner</title>
-    <link rel="stylesheet" href="libraries/jasmine.css">
-    <script src="libraries/jasmine.js"></script>
-    <script src="libraries/jasmine-html.js"></script>
+    <title>Adapt Spec Runner</title>
+    <link rel="stylesheet" href="libraries/mocha.css">
+    <script src="libraries/expect.js"></script>
+    <script src="libraries/mocha.js"></script>
     <script>
     var require = {
         baseUrl: '../src',
@@ -22,7 +22,9 @@
             coreModels: 'core/js/models',
             coreCollections: 'core/js/collections',
             templates: 'templates/templates',
-            spec: '../test/spec'
+            spec: '../test/spec',
+            expect: '../test/libraries/expect',
+            mocha: '../test/libraries/mocha',
         },
         shim: {
             jquery: [],
@@ -44,20 +46,22 @@
     </script>
     <script src="../src/core/js/libraries/require.js"></script>
     <script type="text/javascript">
-    require([
-        'spec/adapt'
-    ], function() {
-        var jasmineEnv = jasmine.getEnv();
-        var htmlReporter = new jasmine.HtmlReporter();
-        jasmineEnv.updateInterval = 1000;
-        jasmineEnv.addReporter(htmlReporter);
-        jasmineEnv.specFilter = function(spec) {
-            return htmlReporter.specFilter(spec);
-        };
-        jasmineEnv.execute();
+    require(['require', 'expect', 'mocha'], function(require, expect, chai) {
+        
+        mocha.setup('bdd');
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        // Require test specs here
+        require([
+            'spec/adapt'
+        ], function(capitalize){
+            mocha.run();
+        });
+        
     });
     </script>
 </head>
 <body>
+    <div id="mocha"></div>
 </body>
 </html>

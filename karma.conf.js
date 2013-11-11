@@ -10,7 +10,7 @@ module.exports = function(config) {
         'test/test-main.js'
     ],
     // List of frameworks you want to use: jasmine, mocha, qunit
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['expect', 'mocha', 'requirejs'],
     // Enable or disable watching files and executing the tests
     // whenever one of these files changes.
     autoWatch: false,
@@ -21,7 +21,7 @@ module.exports = function(config) {
     // Opera (requires karma-opera-launcher plugin)
     // Internet Explorer (requires karma-ie-launcher plugin)
     // Safari (requires karma-safari-launcher plugin)
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['Chrome', 'PhantomJS', 'Firefox'],
     // If singleRun is set to true, Karma will start and capture all
     // configured browsers, run tests and then exit with an exit code of 0 or 1.
     singleRun: false
