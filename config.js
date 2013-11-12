@@ -12,7 +12,8 @@ require.config({
         coreViews: 'core/js/views',
         coreModels: 'core/js/models',
         coreCollections: 'core/js/collections',
-        templates: 'templates/templates'
+        templates: 'templates/templates',
+        components: 'components'
     },
     shim: {
         jquery: [

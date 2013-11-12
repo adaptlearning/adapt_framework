@@ -18,6 +18,7 @@ define(["handlebars", "coreViews/adaptView", "coreViews/articleView"], function(
             
             _.delay(_.bind(function() {
                 console.log(this.model.get("_complete","_ready"))
+                console.log(this.model.findDescendant("components"));
             },this),1000);
         },
         

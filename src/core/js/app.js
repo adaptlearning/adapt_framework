@@ -54,6 +54,7 @@ require([
             && Adapt.course.hasChanged()) {
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
+            Adapt.off('adaptCollection:dataLoaded');
         }
     }
     

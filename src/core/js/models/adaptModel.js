@@ -25,16 +25,46 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
         
         init: function() {},
         
-        checkReadyStatus: function(model) {
-            console.log(model.get("_id"),model.get('_ready'));
+        checkReadyStatus: function() {
             if (this.getChildren().findWhere({_ready:false})) return;
             this.set({_ready:true});
         },
         
-        checkCompletionStatus: function(model) {
-            console.log(model.get("_complete"))
+        checkCompletionStatus: function() {
             if (this.getChildren().findWhere({_complete:false})) return;
             this.set({_complete:true});
+        },
+        
+        findDescendant: function(descendant) {
+            console.log(descendant);
+
+            // first check if descendant is child and return child
+            if (this.constructor.children === descendant) {
+                return this.getChildren();
+            }
+            
+            var allDescendants = [];
+            var flattenedDescendants;
+            var children = this.getChildren();
+            var returnedDescedants;
+            function searchChildren(children) {
+                children.each(function(model) {
+                    var childrensModels = model.getChildren().models;
+                    allDescendants.push(childrensModels);
+                    flattenedDescendants = _.flatten(allDescendants);                    
+                });
+                returnedDescedants = new Backbone.Collection(flattenedDescendants);
+                
+                if (children.models[0].constructor.children === descendant) {
+                    return;
+                } else {
+                    allDescendants = [];
+                    searchChildren(returnedDescedants);
+                }
+            }
+            
+            searchChildren(children);
+            return returnedDescedants;
         },
         
         getChildren: function() {

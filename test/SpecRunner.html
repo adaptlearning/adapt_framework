@@ -22,9 +22,10 @@
             coreModels: 'core/js/models',
             coreCollections: 'core/js/collections',
             templates: 'templates/templates',
+            components: 'components',
             spec: '../test/spec',
             expect: '../test/libraries/expect',
-            mocha: '../test/libraries/mocha',
+            mocha: '../test/libraries/mocha'
         },
         shim: {
             jquery: [],
@@ -53,7 +54,9 @@
         mocha.globals(['jQuery']);
         // Require test specs here
         require([
-            'spec/adapt'
+            'spec/adapt',
+            'spec/adaptCollection',
+            'spec/articleAndBlockModel'
         ], function(capitalize){
             mocha.run();
         });

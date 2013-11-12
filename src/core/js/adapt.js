@@ -11,9 +11,7 @@ define(["underscore", "backbone"], function(_, Backbone){
     _.extend(Adapt, Backbone.Events);
     
     Adapt.initialize = _.once(function() {
-        console.log('Adapt running');
         Adapt.trigger('adapt:initialize');
-        console.log(Adapt);
         Backbone.history.start();
     });
     

@@ -4,7 +4,7 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["handlebars", "coreJS/adapt", "coreViews/adaptView", "./../components/text/js/text.js"], function(Handlebars, Adapt, AdaptView, text) {
+define(["handlebars", "coreJS/adapt", "coreViews/adaptView", "components/text/js/text.js"], function(Handlebars, Adapt, AdaptView, text) {
     
     var BlockView = AdaptView.extend({
         

@@ -20,38 +20,30 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
         },
         
         handleCourse: function() {
+            Adapt.trigger('router:handleCourse');
             console.log('load course menu');
             this.removeViews();
         },
         
         handleId: function(id) {
             
+            Adapt.trigger('router:handleId', id);
             this.removeViews();
             this.showLoading();
             Adapt.currentLocation = id;
             
-            var prefix = id.replace(/[0-9]/g, '');
+            //var prefix = id.replace(/[0-9]/g, '');
+                
+            var currentModel = Adapt.contentObjects.findWhere({_id:id});
             
-            if (prefix === 'co-') {
-                
-                var currentModel = Adapt.contentObjects.findWhere({_id:id});
-                
-                if (currentModel.get('_type') == 'page') {
-                    $('#wrapper').removeClass().addClass('location-content');
-                    new PageView({model:currentModel});
-                } else {
-                    $('#wrapper').removeClass().addClass('location-menu');
-                    console.log('new menu view');
-                }
-                
+            if (currentModel.get('_type') == 'page') {
+                Adapt.trigger('router:page', id);
+                $('#wrapper').removeClass().addClass('location-content');
+                new PageView({model:currentModel});
             } else {
-                console.log('still needs a lot of work!!!')
-                /*var currentObject = Adapt.articles.findWhere({id:id});
-                var currentPage = currentObject.searchParent(‘page’);
-                new PageView({model:currentPage});
-                _.defer(function() {
-                    $.scrollTo("#"+id);
-                });*/
+                Adapt.trigger('router:menu', id);
+                $('#wrapper').removeClass().addClass('location-menu');
+                console.log('new menu view');
             }
             
         },
