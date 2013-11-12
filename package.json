@@ -4,7 +4,7 @@
   "description": "Adapt Learning output framework",
   "main": "source/adapt.js",
   "scripts": {
-    "test": "mocha tests"
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,6 @@
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
   "devDependencies": {
-    "mocha": "~1.13.0",
     "matchdep": "~0.3.0",
     "grunt": "~0.4.1",
     "grunt-contrib-less": "~0.7.0",
@@ -29,7 +28,8 @@
     "grunt-bower-requirejs": "~0.7.1",
     "grunt-requirejs-bundle": "~0.0.4",
     "grunt-contrib-copy": "~0.4.1",
-    "expect.js": "~0.2.0",
-    "requirejs": "~2.1.9"
+    "karma": "~0.9",
+    "karma-mocha": "*",
+    "karma-expect": "*"
   }
 }
