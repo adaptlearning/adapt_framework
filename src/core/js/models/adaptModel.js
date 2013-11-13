@@ -35,11 +35,29 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             this.set({_complete:true});
         },
         
-        findDescendant: function(descendant) {
-            console.log(descendant);
+        findAncestor: function(ancestors) {
+            
+            var parent = this.getParent();
+            
+            if (this.constructor.parent === ancestors) {
+                return parent;
+            }
+            
+            var returnedAncestor = parent.getParent();
+ 
+            if (parent.constructor.parent !== ancestors) {
+                returnedAncestor = returnedAncestor.getParent();
+            }
+
+            // Returns a single model
+            return returnedAncestor;
+            
+        },
+        
+        findDescendants: function(descendants) {
 
             // first check if descendant is child and return child
-            if (this.constructor.children === descendant) {
+            if (this.constructor.children === descendants) {
                 return this.getChildren();
             }
             
@@ -47,15 +65,18 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             var flattenedDescendants;
             var children = this.getChildren();
             var returnedDescedants;
+            
             function searchChildren(children) {
+                
                 children.each(function(model) {
                     var childrensModels = model.getChildren().models;
                     allDescendants.push(childrensModels);
                     flattenedDescendants = _.flatten(allDescendants);                    
                 });
+                
                 returnedDescedants = new Backbone.Collection(flattenedDescendants);
                 
-                if (children.models[0].constructor.children === descendant) {
+                if (children.models[0].constructor.children === descendants) {
                     return;
                 } else {
                     allDescendants = [];
@@ -64,6 +85,8 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             }
             
             searchChildren(children);
+            
+            // returns a collection of children
             return returnedDescedants;
         },
         
@@ -93,6 +116,22 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             var siblingsCollection = new Backbone.Collection(siblings);
             this.set("_siblings", siblingsCollection);
             return siblingsCollection;
+        },
+        
+        setOnChildren: function(key, value) {
+            console.log('set on children call');
+            var attributes;
+            if(!_.isObject(key)) (attrs = {})[key] = value;
+            else attributes = key;
+            this.set(attributes);
+            if (this.constructor.children) {
+                this.getChildren().each(function(model) {
+                    model.setOnChildren(attributes);
+                })
+            } else {
+                console.log('no children here please')
+            }
+            //if(this.get('child')) this.attributes[this.get('child')].setOnChildren(attrs);
         }
         
     });

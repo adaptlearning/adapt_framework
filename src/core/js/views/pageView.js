@@ -15,11 +15,6 @@ define(["handlebars", "coreViews/adaptView", "coreViews/articleView"], function(
         init: function() {
             this.template = 'page';
             this.$parent = $('#wrapper');
-            
-            _.delay(_.bind(function() {
-                console.log(this.model.get("_complete","_ready"))
-                console.log(this.model.findDescendant("components"));
-            },this),1000);
         },
         
         postRender: function() {

@@ -30,5 +30,13 @@
         "_component":"text",
         "title":"Title of our very fourth component",
         "body":"Whoo - if we get this rendering we've made the big time"
+    },
+    {
+        "_id":"c-25",
+        "_parentId":"b-15",
+        "_type":"component",
+        "_component":"text",
+        "title":"Title of our very fifth component",
+        "body":"Whoo - if we get this rendering we've made the big time"
     }
 ]
