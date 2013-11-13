@@ -19,8 +19,13 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
         },
         
         defaults: {
-            _ready:false,
             _complete:false,
+            _enabled:true,
+            _enabledOnRevisit:true,
+            _isAvailable:true,
+            _isOptional: false,
+            _isTrackable:true,
+            _ready:false
         },
         
         init: function() {},
