@@ -10,6 +10,6 @@ define(["coreViews/componentView", "coreJS/adapt"], function(ComponentView, Adap
         
     });
     
-    Adapt.componentStore.text = Text;
+    Adapt.register("text", Text);
     
 });

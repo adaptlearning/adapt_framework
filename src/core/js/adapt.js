@@ -16,7 +16,15 @@ define(["underscore", "backbone"], function(_, Backbone){
     });
     
     Adapt.componentStore = {};
-
+    
+    Adapt.register = function(name, object) {
+        
+        if (Adapt.componentStore[name])
+            throw Error('This component already exists in your project');
+        Adapt.componentStore[name] = object;     
+        
+    }
+    
     return Adapt;
     
 });
