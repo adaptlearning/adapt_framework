@@ -1,4 +1,4 @@
-define([
+/*define([
     "coreModels/articleModel",
     "coreModels/blockModel",
     "coreModels/componentModel",
@@ -27,8 +27,8 @@ define([
         Adapt.components = new AdaptCollection(null, {model: ComponentModel, url:"../src/course/en/components.json"});
         //console.log(TestAdaptModel.checkReadyStatus());
     
-       /* var firstModel = Adapt.articles.models[0];
-        console.log(firstModel);*/
+        var firstModel = Adapt.articles.models[0];
+        console.log(firstModel);
         it('should check ready status', function() {
         
             expect(true).to.be(true);
@@ -37,4 +37,4 @@ define([
     
     });
 
-});
+});*/
