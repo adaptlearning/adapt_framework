@@ -1,4 +1,4 @@
-define(['coreJS/adaptCollection'], function(AdaptCollection) {
+/*define(['coreJS/adaptCollection'], function(AdaptCollection) {
 
     describe('Adapt Collection', function() {
     
@@ -8,4 +8,4 @@ define(['coreJS/adaptCollection'], function(AdaptCollection) {
     
     });
 
-});
+});*/
