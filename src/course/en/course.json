@@ -1,6 +1,6 @@
 {
     "_id":"course",
     "_type":"course",
-    "title":"Adapt v0.0.0",
+    "title":"Adapt v0.0.1",
     "body":"This is the first version of the open source re-architecture"
 }
