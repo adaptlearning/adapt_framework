@@ -73,20 +73,36 @@ module.exports = function(grunt) {
         },
         'requirejs-bundle': {
             components: {
-                src: 'src/components/',
-                dest: 'src/components/components.js'
+                src: 'src/components',
+                dest: 'src/components/components.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'components/components'
+                }
             },
             extensions: {
                 src: 'src/extensions/',
-                dest: 'src/extensions/extensions.js'
+                dest: 'src/extensions/extensions.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'extensions/extensions'
+                }
             },
             menu: {
                 src: 'src/menu/',
-                dest: 'src/menus/menu.js'
+                dest: 'src/menus/menu.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'menu/menu'
+                }
             },
             theme: {
-                src: 'src/theme/',
-                dest: 'src/themes/theme.js'
+                src: 'src/themes/',
+                dest: 'src/themes/theme.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'themes/themes'
+                }
             }
         },
         requirejs: {

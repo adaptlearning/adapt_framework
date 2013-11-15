@@ -1,20 +1,22 @@
 {
-    "name": "adapt_framework",
-    "version": "0.0.0",
-    "homepage": "https://github.com/adaptlearning/adapt_framework",
-    "main": "app.js",
-    "keywords": [
-        "adapt"
-    ],
-    "authors": [
-        "AdaptLearning"
-    ],
-    "license": "GPLv3",
-    "private": true,
-    "dependencies": {
-    },
-    "ignore": [
-        "**/.*",
-        "node_modules"
-    ]
+  "name": "adapt_framework",
+  "version": "0.0.0",
+  "homepage": "https://github.com/adaptlearning/adapt_framework",
+  "main": "app.js",
+  "keywords": [
+    "adapt"
+  ],
+  "authors": [
+    "AdaptLearning"
+  ],
+  "license": "GPLv3",
+  "private": true,
+  "dependencies": {
+    "adapt-contrib-text": "*",
+    "adapt-hello-world": "~0.0.4"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules"
+  ]
 }

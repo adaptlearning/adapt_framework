@@ -1,3 +1,7 @@
+src/components
+src/themes
+src/menus
+src/extensions
 build
 bower_components
 node_modules

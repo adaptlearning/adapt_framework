@@ -31,8 +31,6 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
             this.removeViews();
             this.showLoading();
             Adapt.currentLocation = id;
-            
-            //var prefix = id.replace(/[0-9]/g, '');
                 
             var currentModel = Adapt.contentObjects.findWhere({_id:id});
             

@@ -4,7 +4,7 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["handlebars", "coreJS/adapt", "coreViews/adaptView", "components/text/js/text.js"], function(Handlebars, Adapt, AdaptView, text) {
+define(["handlebars", "coreJS/adapt", "coreViews/adaptView"], function(Handlebars, Adapt, AdaptView) {
     
     var BlockView = AdaptView.extend({
         
@@ -24,7 +24,7 @@ define(["handlebars", "coreJS/adapt", "coreViews/adaptView", "components/text/js
         addChildren: function() {
             this.model.getChildren().each(function(model) {
                 new Adapt.componentStore[model.get("_component")]({
-                    model:model, 
+                    model:model,
                     $parent:$('.component-container', this.$el)
                 });
             }, this);
