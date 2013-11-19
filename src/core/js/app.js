@@ -17,8 +17,8 @@ require([
     'templates',
     'components/components', 
     'extensions/extensions', 
-    'menus/menu', 
-    'themes/theme'
+    'menu/menu', 
+    'theme/theme'
 ], function (Adapt, NavigationView, Router, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     Adapt.on('adaptCollection:dataLoaded', checkDataIsLoaded);

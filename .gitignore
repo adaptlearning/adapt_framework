@@ -1,6 +1,6 @@
 src/components
-src/themes
-src/menus
+src/theme
+src/menu
 src/extensions
 templates
 build

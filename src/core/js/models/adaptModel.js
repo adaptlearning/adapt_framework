@@ -123,15 +123,21 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             return siblingsCollection;
         },
         
-        setOnChildren: function(key, value) {
+        setOnChildren: function(key, value, options) {
             console.log('set on children call');
             var attributes;
-            if(!_.isObject(key)) (attrs = {})[key] = value;
-            else attributes = key;
-            this.set(attributes);
+            if (typeof key === 'object') {
+                attributes = key;
+                options = value;
+            } else {
+                (attributes = {})[key] = value;
+            }
+            /*if(!_.isObject(key)) (attrs = {})[key] = value;
+            else attributes = key;*/
+            this.set(attributes, options);
             if (this.constructor.children) {
                 this.getChildren().each(function(model) {
-                    model.setOnChildren(attributes);
+                    model.setOnChildren(attributes, options);
                 })
             } else {
                 console.log('no children here please')

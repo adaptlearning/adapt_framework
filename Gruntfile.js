@@ -90,15 +90,15 @@ module.exports = function(grunt) {
             },
             menu: {
                 src: 'src/menu/',
-                dest: 'src/menus/menu.js',
+                dest: 'src/menu/menu.js',
                 options: {
                     baseUrl: "src",
                     moduleName: 'menu/menu'
                 }
             },
             theme: {
-                src: 'src/themes/',
-                dest: 'src/themes/theme.js',
+                src: 'src/theme/',
+                dest: 'src/theme/theme.js',
                 options: {
                     baseUrl: "src",
                     moduleName: 'themes/themes'
