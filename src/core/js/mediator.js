@@ -1,3 +1,10 @@
+/**
+ * Adapt
+ * License - http://github.com/adaptlearning/adapt_framework/LICENSE
+ * Author - Fabien O'Carroll - github.com/allouis
+ * Maintainers - Fabien O'Carroll
+ */
+
 function Mediator(target){
 
     var channels = {}, 
