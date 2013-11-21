@@ -9,6 +9,7 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
     var Router = Backbone.Router.extend({
     
         initialize: function() {
+            this.showLoading();
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
@@ -23,6 +24,7 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
             Adapt.trigger('router:handleCourse');
             console.log('load course menu');
             this.removeViews();
+            Adapt.currentLocation = "course";
         },
         
         handleId: function(id) {
