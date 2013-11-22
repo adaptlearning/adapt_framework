@@ -38,7 +38,7 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
             
             if (currentModel.get('_type') == 'page') {
                 Adapt.trigger('router:page', id);
-                $('#wrapper').removeClass().addClass('location-content');
+                $('#wrapper').removeClass().addClass('location-page');
                 new PageView({model:currentModel});
             } else {
                 Adapt.trigger('router:menu', id);

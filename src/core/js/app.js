@@ -21,7 +21,7 @@ require([
     'theme/theme'
 ], function (Adapt, NavigationView, Router, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
-    Adapt.on('adaptCollection:dataLoaded', checkDataIsLoaded);
+    Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
     // All code that needs to run before adapt starts should go here
     Adapt.course = new CourseModel({url:"course/en/course.json"});
