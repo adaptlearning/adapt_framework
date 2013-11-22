@@ -18,6 +18,12 @@ define(["coreJS/router", "coreJS/adapt", "backbone", "handlebars", "coreViews/pa
     
     describe('Router', function() {
         
+        Adapt.on('router:menu', function() {
+            routeToMenu = true;
+        })
+        
+        Router.handleId('co-10');
+        
         it('should allow me load a menu based upon an id', function() {
             
             expect(routeToPage).to.be(false);
