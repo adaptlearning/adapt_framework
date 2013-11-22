@@ -1,0 +1,47 @@
+[
+    {
+        "_id":"c-05",
+        "_parentId":"b-05",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "title":"Title of our very first component",
+        "body":"Whoo - if we get this rendering we've made the big time"
+    },
+    {
+        "_id":"c-10",
+        "_parentId":"b-05",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "title":"Title of our very second component",
+        "body":"Whoo - if we get this rendering we've made the big time"
+    },
+    {
+        "_id":"c-15",
+        "_parentId":"b-10",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "title":"Title of our very third component",
+        "body":"Whoo - if we get this rendering we've made the big time"
+    },
+    {
+        "_id":"c-20",
+        "_parentId":"b-10",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "title":"Title of our very fourth component",
+        "body":"Whoo - if we get this rendering we've made the big time"
+    },
+    {
+        "_id":"c-25",
+        "_parentId":"b-15",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "title":"Title of our very fifth component",
+        "body":"Whoo - if we get this rendering we've made the big time"
+    }
+]

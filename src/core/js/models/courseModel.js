@@ -15,7 +15,7 @@ define(["coreModels/adaptModel", "coreJS/adapt"], function(AdaptModel, Adapt) {
         },
         
         loadedData: function() {
-            Adapt.trigger('loaded:data');
+            Adapt.trigger('courseModel:dataLoaded');
         }
     
     }, {

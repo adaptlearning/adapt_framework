@@ -124,7 +124,6 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
         },
         
         setOnChildren: function(key, value, options) {
-            console.log('set on children call');
             var attributes;
             if (typeof key === 'object') {
                 attributes = key;
@@ -132,17 +131,14 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             } else {
                 (attributes = {})[key] = value;
             }
-            /*if(!_.isObject(key)) (attrs = {})[key] = value;
-            else attributes = key;*/
+
             this.set(attributes, options);
             if (this.constructor.children) {
                 this.getChildren().each(function(model) {
                     model.setOnChildren(attributes, options);
                 })
-            } else {
-                console.log('no children here please')
             }
-            //if(this.get('child')) this.attributes[this.get('child')].setOnChildren(attrs);
+            
         }
         
     });
