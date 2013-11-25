@@ -12,8 +12,8 @@ define(["coreModels/adaptModel", "coreJS/adapt"], function(AdaptModel, Adapt) {
             if (this.get('_type') === 'page') this.constructor.children = 'articles';
             if (this.constructor.children) {
                 Adapt[this.constructor.children].on({
-                    "change:_ready": this.checkReadyStatus,
-                    "change:_complete": this.checkCompletionStatus
+                    "change:_isReady": this.checkReadyStatus,
+                    "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
             this.init();

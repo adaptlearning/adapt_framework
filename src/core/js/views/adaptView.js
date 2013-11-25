@@ -27,6 +27,14 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
             var template = Handlebars.templates[this.template];
             this.$el.html(template(data)).appendTo(this.$parent);
             return this;
+        },
+      
+        setReadyStatus: function() {
+            this.model.set('_isReady', true);
+        },
+      
+        setCompletionStatus: function() {
+            this.model.set('_complete', true);
         }
         
     });
