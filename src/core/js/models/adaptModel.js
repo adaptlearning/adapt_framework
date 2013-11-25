@@ -11,33 +11,33 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
         initialize: function() {
             if (this.constructor.children) {
                 Adapt[this.constructor.children].on({
-                    "change:_ready": this.checkReadyStatus,
-                    "change:_complete": this.checkCompletionStatus
+                    "change:_isReady": this.checkReadyStatus,
+                    "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
             this.init();
         },
         
         defaults: {
-            _complete:false,
-            _enabled:true,
-            _enabledOnRevisit:true,
+            _isComplete:false,
+            _isEnabled:true,
+            _isEnabledOnRevisit:true,
             _isAvailable:true,
             _isOptional: false,
             _isTrackable:true,
-            _ready:false
+            _isReady:false
         },
         
         init: function() {},
         
         checkReadyStatus: function() {
-            if (this.getChildren().findWhere({_ready:false})) return;
-            this.set({_ready:true});
+            if (this.getChildren().findWhere({_isReady:false})) return;
+            this.set({_isReady:true});
         },
         
         checkCompletionStatus: function() {
-            if (this.getChildren().findWhere({_complete:false})) return;
-            this.set({_complete:true});
+            if (this.getChildren().findWhere({_isComplete:false})) return;
+            this.set({_isComplete:true});
         },
         
         findAncestor: function(ancestors) {

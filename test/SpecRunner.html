@@ -54,7 +54,8 @@
         mocha.globals(['jQuery']);
         // Require test specs here
         require([
-            'spec/adapt'
+            'spec/adapt',
+            'spec/adaptModels'
         ], function(capitalize){
             mocha.run();
         });
