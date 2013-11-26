@@ -310,6 +310,44 @@ define(function(require) {
       expect(parentId).to.equal('co-05');
       
     });
+      
+    it("should allow me to set my childrens attributes by passing in an object", function() {
+    
+      var firstPage = Adapt.contentObjects.models[0];
+      console.log(firstPage);
+      firstPage.setOnChildren({_isComplete:true});
+      var firstComponent = Adapt.components.models[0];
+      console.log(firstComponent.get('_isComplete'));
+      var completeStatus = firstComponent.get('_isComplete');
+      expect(completeStatus).to.equal(true);
+      
+    });
+
+    it("should allow me to set my childrens attributes by passing in a string", function() {
+    
+      var firstPage = Adapt.contentObjects.models[0];
+      console.log(firstPage);
+      firstPage.setOnChildren("_isAvailable", false);
+      var firstComponent = Adapt.components.models[0];
+      console.log(firstComponent.get('_isAvailable'));
+      var availableStatus = firstComponent.get('_isAvailable');
+      expect(availableStatus).to.equal(false);
+      
+    });
+      
+    it("should allow me to set my childrens attributes by passing in an object with options", function() {
+    
+      var isOptionalTriggered = false;
+      Adapt.components.on('change:_isOptional', function(model) {
+        isOptionalTriggered = true;
+      })
+      var firstPage = Adapt.contentObjects.models[0];
+      firstPage.setOnChildren({_isOptional:true}, {silent:true});
+      var firstComponent = Adapt.components.models[0];
+      var optionalStatus = firstComponent.get('_isOptional');
+      expect(isOptionalTriggered).to.equal(false);
+      
+    });
     
   });
 

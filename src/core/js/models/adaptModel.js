@@ -124,20 +124,16 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
         },
         
         setOnChildren: function(key, value, options) {
-            var attributes;
-            if (typeof key === 'object') {
-                attributes = key;
-                options = value;
-            } else {
-                (attributes = {})[key] = value;
-            }
-
-            this.set(attributes, options);
-            if (this.constructor.children) {
-                this.getChildren().each(function(model) {
-                    model.setOnChildren(attributes, options);
-                })
-            }
+            
+            var args = arguments;
+            
+            this.set.apply(this, args);
+            
+            if(!this.constructor.children) return;
+            
+            this.getChildren().each(function(child){
+                child.setOnChildren.apply(child, args);
+            })
             
         }
         
