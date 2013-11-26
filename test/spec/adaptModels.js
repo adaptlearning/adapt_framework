@@ -314,10 +314,8 @@ define(function(require) {
     it("should allow me to set my childrens attributes by passing in an object", function() {
     
       var firstPage = Adapt.contentObjects.models[0];
-      console.log(firstPage);
       firstPage.setOnChildren({_isComplete:true});
       var firstComponent = Adapt.components.models[0];
-      console.log(firstComponent.get('_isComplete'));
       var completeStatus = firstComponent.get('_isComplete');
       expect(completeStatus).to.equal(true);
       
@@ -326,10 +324,8 @@ define(function(require) {
     it("should allow me to set my childrens attributes by passing in a string", function() {
     
       var firstPage = Adapt.contentObjects.models[0];
-      console.log(firstPage);
       firstPage.setOnChildren("_isAvailable", false);
       var firstComponent = Adapt.components.models[0];
-      console.log(firstComponent.get('_isAvailable'));
       var availableStatus = firstComponent.get('_isAvailable');
       expect(availableStatus).to.equal(false);
       
