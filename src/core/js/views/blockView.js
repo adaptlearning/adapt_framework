@@ -1,5 +1,5 @@
 /*
-* ArticleView
+* BlockView
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley
 */
@@ -10,26 +10,11 @@ define(["handlebars", "coreJS/adapt", "coreViews/adaptView"], function(Handlebar
         
         className: function() {
             return "block " + this.model.get('_id');
-        },
-        
-        init: function() {
-            this.template = 'block';
-            this.$parent = this.options.$parent;
-        },
-        
-        postRender: function() {
-            this.addChildren();
-        },
-        
-        addChildren: function() {
-            this.model.getChildren().each(function(model) {
-                new Adapt.componentStore[model.get("_component")]({
-                    model:model,
-                    $parent:$('.component-container', this.$el)
-                });
-            }, this);
         }
         
+    }, {
+        childContainer: '.component-container',
+        template: 'block'
     });
     
     return BlockView;

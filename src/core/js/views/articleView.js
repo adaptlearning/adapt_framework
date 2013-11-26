@@ -10,23 +10,12 @@ define(["handlebars", "coreViews/adaptView", "coreViews/blockView"], function(Ha
         
         className: function() {
             return "article " + this.model.get('_id');
-        },
-        
-        init: function() {
-            this.template = 'article';
-            this.$parent = this.options.$parent;
-        },
-        
-        postRender: function() {
-            this.addChildren();
-        },
-        
-        addChildren: function() {
-            this.model.getChildren().each(function(model) {
-                new BlockView({model:model, $parent:$('.block-container', this.$el)});
-            }, this);
         }
         
+    }, {
+        childContainer: '.block-container',
+        childView: BlockView,
+        template: 'article'
     });
     
     return ArticleView;

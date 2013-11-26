@@ -13,8 +13,7 @@ define(["handlebars", "coreViews/adaptView"], function(Handlebars, AdaptView) {
         },
         
         init: function() {
-            this.template = this.model.get('_component');
-            this.$parent = this.options.$parent;
+            this.constructor.template = this.model.get('_component');
         }
         
     });
