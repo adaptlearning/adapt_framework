@@ -100,6 +100,8 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             var children = Adapt[this.constructor.children].where({_parentId:this.get("_id")});
             var childrenCollection = new Backbone.Collection(children);
             this.set("_children", childrenCollection);
+            
+            // returns a collection of children
             return childrenCollection;
         },
         
@@ -108,6 +110,8 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             var parent = Adapt[this.constructor.parent].where({_id:this.get("_parentId")});
             var parent = parent[0];
             this.set("_parent", parent);
+            
+            // returns a parent model
             return parent;
         },
         
@@ -120,6 +124,8 @@ define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
             }, this));
             var siblingsCollection = new Backbone.Collection(siblings);
             this.set("_siblings", siblingsCollection);
+            
+            // returns a collection of siblings
             return siblingsCollection;
         },
         
