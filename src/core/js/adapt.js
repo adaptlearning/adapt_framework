@@ -1,14 +1,30 @@
 /*
 * Adapt
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Author - Fabien O'Carroll
-* Maintainers - Fabien O'Carroll
+* Maintainers - Daryl Hedley, Fabien O'Carroll
 */
 
-define(function(){
+define(["underscore", "backbone"], function(_, Backbone){
+    
     var Adapt = {};
 
     _.extend(Adapt, Backbone.Events);
-
+    
+    Adapt.initialize = _.once(function() {
+        Adapt.trigger('adapt:initialize');
+        Backbone.history.start();
+    });
+    
+    Adapt.componentStore = {};
+    
+    Adapt.register = function(name, object) {
+        
+        if (Adapt.componentStore[name])
+            throw Error('This component already exists in your project');
+        Adapt.componentStore[name] = object;     
+        
+    }
+    
     return Adapt;
+    
 });

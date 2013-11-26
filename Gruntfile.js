@@ -3,11 +3,44 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        copy: {
+            main: {
+                files: [
+                    {
+                        expand: true, 
+                        src: ['src/index.html'], 
+                        dest: 'build/', 
+                        filter: 'isFile', 
+                        flatten: true
+                    },
+                    {
+                        expand: true, 
+                        src: ['**/*'], 
+                        dest: 'build/course/', 
+                        cwd: 'src/course/'
+                    },
+                    {
+                        expand: true, 
+                        src: ['src/core/js/scriptLoader.js'], 
+                        dest: 'build/adapt/js/', 
+                        filter: 'isFile', 
+                        flatten: true
+                    },
+                    {
+                        expand: true, 
+                        src: ['src/core/js/libraries/require.js', 'src/core/js/libraries/modernizr.js'], 
+                        dest: 'build/libraries/', 
+                        filter: 'isFile', 
+                        flatten: true
+                    }
+                ]
+            }
+        },
         less: {
             dist: {
-                    files: {
-                            'build/adapt/css/adapt.css' : 'src/**/*.less'
-                    }
+                files: {
+                        'build/adapt/css/adapt.css' : 'src/**/*.less'
+                }
             },
             options:{
                 compress:true
@@ -26,7 +59,7 @@ module.exports = function(grunt) {
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
-                    "build/templates/templates.js": "src/**/*.handlebars"
+                    "src/templates/templates.js": "src/**/*.hbs"
                 }
             }
         },
@@ -40,29 +73,57 @@ module.exports = function(grunt) {
         },
         'requirejs-bundle': {
             components: {
-                src: 'src/components/',
-                dest: 'src/components.js'
+                src: 'src/components',
+                dest: 'src/components/components.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'components/components'
+                }
             },
             extensions: {
                 src: 'src/extensions/',
-                dest: 'src/extensions.js'
+                dest: 'src/extensions/extensions.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'extensions/extensions'
+                }
             },
             menu: {
                 src: 'src/menu/',
-                dest: 'src/menu.js'
+                dest: 'src/menu/menu.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'menu/menu'
+                }
             },
             theme: {
                 src: 'src/theme/',
-                dest: 'src/theme.js'
+                dest: 'src/theme/theme.js',
+                options: {
+                    baseUrl: "src",
+                    moduleName: 'themes/themes'
+                }
             }
         },
         requirejs: {
+            dev: {
+                options: {
+                    name: "core/js/app",
+                    baseUrl: "src",
+                    mainConfigFile: "./config.js",
+                    out: "./build/adapt/js/adapt.min.js",
+                    generateSourceMaps: true,
+                    preserveLicenseComments:false,
+                    optimize: "none"
+                }
+            },
             compile: {
                 options: {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: "./build/adapt/js/adapt.min.js"
+                    out: "./build/adapt/js/adapt.min.js",
+                    optimize:"uglify2"
                 }
             }
         },
@@ -71,7 +132,8 @@ module.exports = function(grunt) {
             tasks: ['less', 'handlebars']
         }
     });
-        
+    
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('build',['less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs']);
+    grunt.registerTask('build',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
+    grunt.registerTask('dev',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
 };

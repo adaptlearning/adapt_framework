@@ -1,4 +1,12 @@
-require.config({
+var tests = [];
+for (var file in window.__karma__.files) {
+    if (/spec\//.test(file)) {
+        tests.push(file);
+    }
+}
+
+requirejs.config({
+    baseUrl: '/base/src',
     paths: {
         jquery: 'core/js/libraries/jquery',
         underscore: 'core/js/libraries/underscore',
@@ -12,12 +20,11 @@ require.config({
         coreViews: 'core/js/views',
         coreModels: 'core/js/models',
         coreCollections: 'core/js/collections',
-        templates: 'templates/templates'
+        templates: 'templates/templates',
+        spec: '../test/spec'
     },
     shim: {
-        jquery: [
-
-        ],
+        jquery: [],
         backbone: {
             deps: [
                 'underscore',
@@ -31,5 +38,7 @@ require.config({
         handlebars: {
             exports: 'Handlebars'
         }
-    }
+    },
+    deps: tests,
+    callback: window.__karma__.start
 });
