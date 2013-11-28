@@ -39,7 +39,13 @@ module.exports = function(grunt) {
         less: {
             dist: {
                 files: {
-                        'build/adapt/css/adapt.css' : 'src/**/*.less'
+                        'build/adapt/css/adapt.css' : [
+                            'src/core/less/*.less', 
+                            'src/theme/**/*.less', 
+                            'src/menu/**/*.less', 
+                            'src/components/**/*.less',
+                            'src/extensions/**/*.less'
+                        ]
                 }
             },
             options:{
