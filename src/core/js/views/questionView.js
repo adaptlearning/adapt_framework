@@ -86,162 +86,162 @@ define(["handlebars", "coreViews/componentView"], function(Handlebars, Component
         },
         
         setupFeedbackArrays: function() {
-        if(_.isString(this.model.get('feedback').partly)) {
-            this.model.get('feedback').partly = [this.model.get('feedback').partly, this.model.get('feedback').partly] 
-        }
-        if(_.isString(this.model.get('feedback').incorrect)) {
-            this.model.get('feedback').incorrect = [this.model.get('feedback').incorrect, this.model.get('feedback').incorrect]
-        }
-    },
-
-    showFeedback: function() {
-        
-        if(this.model.get("_isAssessment")) {
-            this.showAssessmentFeedback();
-            return;
-        }
-        
-        this.model.set('tutorAudio', this.model.get("feedback").audio)
-        
-        if(this.model.get('_selectable') === 1) {
-            if(this.getOptionSpecificFeedback()) {
-                this.model.set('tutorMessage', this.getOptionSpecificFeedback());
+            if(_.isString(this.model.get('feedback').partly)) {
+                this.model.get('feedback').partly = [this.model.get('feedback').partly, this.model.get('feedback').partly] 
             }
-            if(this.getOptionSpecificAudio()) {
-                this.model.set('tutorAudio', this.getOptionSpecificAudio());
+            if(_.isString(this.model.get('feedback').incorrect)) {
+                this.model.get('feedback').incorrect = [this.model.get('feedback').incorrect, this.model.get('feedback').incorrect]
             }
-        }
+        },
+    
+        showFeedback: function() {
+            
+            if(this.model.get("_isAssessment")) {
+                this.showAssessmentFeedback();
+                return;
+            }
+            
+            this.model.set('tutorAudio', this.model.get("feedback").audio)
+            
+            if(this.model.get('_selectable') === 1) {
+                if(this.getOptionSpecificFeedback()) {
+                    this.model.set('tutorMessage', this.getOptionSpecificFeedback());
+                }
+                if(this.getOptionSpecificAudio()) {
+                    this.model.set('tutorAudio', this.getOptionSpecificAudio());
+                }
+            }
+            
+            new TutorModel({
+                title: this.model.get('title'), 
+                message: this.model.get('tutorMessage'),
+                audio: this.model.get('tutorAudio')
+            });
+        },
         
-        new TutorModel({
-            title: this.model.get('title'), 
-            message: this.model.get('tutorMessage'),
-            audio: this.model.get('tutorAudio')
-        });
-    },
-    
-    showAssessmentFeedback: function() {
-        alert("Assessment feedback");
-    },
-    
-    showMarking: function() {
-        _.each(this.model.get('items'), function(item, i) {
-            var $item = this.$('.item').eq(i);
-            $item.addClass(item.correct ? 'correct' : 'incorrect');
-        }, this);
-    },
-    
-    showModelAnswer: function () {
-        this.$(".widget").removeClass("user").addClass("model");
-        this.onModelAnswerShown();
-    },
-    
-    showUserAnswer: function() {
-        this.$(".widget").removeClass("model").addClass("user");
-        this.onUserAnswerShown();
-    },
-    
-    onComplete: function(parameters) {
-        this.model.set({
-            _isComplete: true,
-            _isEnabled: false,
-            _isCorrect: !!parameters.correct
-        });
-        this.$(".widget").addClass("disabled");
-        if(parameters.correct) this.$(".widget").addClass("correct");
-        this.showMarking();
-        this.showUserAnswer();
-        /*if(Adapt.Spoor) {
-            this.model.set('sessionID', Adapt.Spoor.get('sessionID'));
-        }*/
-    },
-
-    onModelAnswerClicked: function(event) {
-        if(event) event.preventDefault();
-        this.showModelAnswer();
-    },
-    
-    onQuestionCorrect: function() {
-        this.onComplete({correct: true});
-        this.model.getParent("article").attributes.score ++;
-        this.model.set("tutorMessage", this.model.get("feedback").correct);
-    },
-    
-    onQuestionIncorrect: function() {
-        var feedbackIndex = Math.ceil(this.model.get("_attemptsLeft")/this.model.get("_attempts"));
-        if(this.isPartlyCorrect()) { 
-            this.model.set("tutorMessage", this.model.get("feedback").partly[feedbackIndex]);
-        } else {
-            this.model.set("tutorMessage", this.model.get("feedback").incorrect[feedbackIndex]);
-        }
-        if(feedbackIndex === 0) {
-            this.onComplete({correct: false});
-        }
-    },
-    
-    onResetClicked: function(event) {
-        if(event) event.preventDefault(); 
-        this.resetQuestion({resetAttempts:false, resetCorrect:true});
-        this.$(".widget").removeClass("submitted");
-        this.resetItems();
-    },
-
-    onSubmitClicked: function(event) {
+        showAssessmentFeedback: function() {
+            alert("Assessment feedback");
+        },
         
-        event.preventDefault();
+        showMarking: function() {
+            _.each(this.model.get('items'), function(item, i) {
+                var $item = this.$('.item').eq(i);
+                $item.addClass(item.correct ? 'correct' : 'incorrect');
+            }, this);
+        },
         
-        if(!this.canSubmit()) return;
+        showModelAnswer: function () {
+            this.$(".widget").removeClass("user").addClass("model");
+            this.onModelAnswerShown();
+        },
         
-        Adapt.tabHistory = $(event.currentTarget).parent('.inner');
+        showUserAnswer: function() {
+            this.$(".widget").removeClass("model").addClass("user");
+            this.onUserAnswerShown();
+        },
         
-        var attemptsLeft = this.model.get("_attemptsLeft") - 1;
-        this.model.set({
-            _isEnabled: false,
-            _isSubmitted: true,
-            _attemptsLeft: attemptsLeft
-        });
-        this.$(".widget").addClass("submitted");
-        
-        this.storeUserAnswer();
-        this.markQuestion();
-        this.showFeedback();
-    },
-
-    onUserAnswerClicked: function(event) {
-        if(event) event.preventDefault();
-        this.showUserAnswer();
-    },
-    
-    postRender: function() {
-        ComponentView.prototype.postRender.apply(this);
-        if(this.model.get('_isEnabled') == false) {
+        onComplete: function(parameters) {
+            this.model.set({
+                _isComplete: true,
+                _isEnabled: false,
+                _isCorrect: !!parameters.correct
+            });
+            this.$(".widget").addClass("disabled");
+            if(parameters.correct) this.$(".widget").addClass("correct");
+            this.showMarking();
             this.showUserAnswer();
+            /*if(Adapt.Spoor) {
+                this.model.set('sessionID', Adapt.Spoor.get('sessionID'));
+            }*/
+        },
+    
+        onModelAnswerClicked: function(event) {
+            if(event) event.preventDefault();
+            this.showModelAnswer();
+        },
+        
+        onQuestionCorrect: function() {
+            this.onComplete({correct: true});
+            this.model.getParent("article").attributes.score ++;
+            this.model.set("tutorMessage", this.model.get("feedback").correct);
+        },
+        
+        onQuestionIncorrect: function() {
+            var feedbackIndex = Math.ceil(this.model.get("_attemptsLeft")/this.model.get("_attempts"));
+            if(this.isPartlyCorrect()) { 
+                this.model.set("tutorMessage", this.model.get("feedback").partly[feedbackIndex]);
+            } else {
+                this.model.set("tutorMessage", this.model.get("feedback").incorrect[feedbackIndex]);
+            }
+            if(feedbackIndex === 0) {
+                this.onComplete({correct: false});
+            }
+        },
+        
+        onResetClicked: function(event) {
+            if(event) event.preventDefault(); 
+            this.resetQuestion({resetAttempts:false, resetCorrect:true});
+            this.$(".widget").removeClass("submitted");
+            this.resetItems();
+        },
+    
+        onSubmitClicked: function(event) {
+            
+            event.preventDefault();
+            
+            if(!this.canSubmit()) return;
+            
+            Adapt.tabHistory = $(event.currentTarget).parent('.inner');
+            
+            var attemptsLeft = this.model.get("_attemptsLeft") - 1;
+            this.model.set({
+                _isEnabled: false,
+                _isSubmitted: true,
+                _attemptsLeft: attemptsLeft
+            });
+            this.$(".widget").addClass("submitted");
+            
+            this.storeUserAnswer();
+            this.markQuestion();
+            this.showFeedback();
+        },
+    
+        onUserAnswerClicked: function(event) {
+            if(event) event.preventDefault();
+            this.showUserAnswer();
+        },
+        
+        postRender: function() {
+            ComponentView.prototype.postRender.apply(this);
+            if(this.model.get('_isEnabled') == false) {
+                this.showUserAnswer();
+            }
+        },
+        
+        /**
+        * to be implemented by subclass
+        */
+        // compulsory methods
+        canSubmit: function() { 
+            //throw new AbstractMethodError({invoker: this.constructor, methodName:"canSubmit"}) 
+        },
+        forEachAnswer: function() { 
+            //throw new AbstractMethodError({invoker: this.constructor, methodName:"forEachAnswer"})
+        },
+        
+        // optional methods
+        resetItems: function(){ 
+            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"resetItems"}) 
+        },
+        onModelAnswerShown: function() { 
+            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onModelAnswerShown"}) 
+        },
+        onUserAnswerShown: function() { 
+            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onUserAnswerShown"}) 
+        },
+        storeUserAnswer: function() { 
+            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"storeUserAnswer"}) 
         }
-    },
-    
-    /**
-    * to be implemented by subclass
-    */
-    // compulsory methods
-    canSubmit: function() { 
-        //throw new AbstractMethodError({invoker: this.constructor, methodName:"canSubmit"}) 
-    },
-    forEachAnswer: function() { 
-        //throw new AbstractMethodError({invoker: this.constructor, methodName:"forEachAnswer"})
-    },
-    
-    // optional methods
-    resetItems: function(){ 
-        //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"resetItems"}) 
-    },
-    onModelAnswerShown: function() { 
-        //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onModelAnswerShown"}) 
-    },
-    onUserAnswerShown: function() { 
-        //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onUserAnswerShown"}) 
-    },
-    storeUserAnswer: function() { 
-        //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"storeUserAnswer"}) 
-    }
         
     });
     
