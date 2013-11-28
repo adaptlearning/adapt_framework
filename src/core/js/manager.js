@@ -1,3 +1,9 @@
+/*
+* Adapt
+* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* Maintainers - Daryl Hedley, Fabien O'Carroll
+*/
+
 define(function(require) {
     var Adapt = require('coreJS/adapt');
     
@@ -42,7 +48,8 @@ define(function(require) {
                     subString: "Chrome",
                     identity: "Chrome"
                 },
-                { 	string: navigator.userAgent,
+                { 	
+                    string: navigator.userAgent,
                     subString: "OmniWeb",
                     versionSearch: "OmniWeb/",
                     identity: "OmniWeb"
@@ -128,8 +135,9 @@ define(function(require) {
         };
         
         BrowserDetect.init(); 
-    
-        $("html").addClass(BrowserDetect.browser);
+        
+        var browserString = BrowserDetect.browser + " version-" + BrowserDetect.version + " OS-" + BrowserDetect.OS;
+        $("html").addClass(browserString);
         
     }
     
