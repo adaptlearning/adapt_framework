@@ -5,6 +5,7 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
+        "_layout":"left",
         "title":"Title of our very first component",
         "body":"Whoo - if we get this rendering we've made the big time"
     },
@@ -14,6 +15,7 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
+        "_layout":"right",
         "title":"Title of our very second component",
         "body":"Whoo - if we get this rendering we've made the big time"
     },
@@ -23,6 +25,7 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
+        "_layout":"left",
         "title":"Title of our very third component",
         "body":"Whoo - if we get this rendering we've made the big time"
     },
@@ -32,6 +35,7 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
+        "_layout":"right",
         "title":"Title of our very fourth component",
         "body":"Whoo - if we get this rendering we've made the big time"
     },
@@ -41,6 +45,7 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
+        "_layout":"left",
         "title":"Title of our very fifth component",
         "body":"Whoo - if we get this rendering we've made the big time"
     }
