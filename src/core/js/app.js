@@ -7,7 +7,7 @@
 require([
     'coreJS/adapt',
     'coreJS/router',
-    'coreJS/manager',
+    'coreJS/device',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/courseModel',
@@ -20,7 +20,7 @@ require([
     'extensions/extensions', 
     'menu/menu', 
     'theme/theme'
-], function (Adapt, Router, Manager, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Router, Device, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
@@ -47,7 +47,7 @@ require([
         url: "course/en/components.json"
     });
     
-    new Manager();
+    new Device();
     
     function checkDataIsLoaded() {
         if (Adapt.contentObjects.models.length > 0 

@@ -11,7 +11,7 @@ define(function(require) {
         var $window = $(window);
         
         $window.on('resize', function() {
-            Adapt.trigger('manager:resize', $window.width());
+            Adapt.trigger('device:resize', $window.width());
         });
         
         // http://www.quirksmode.org/js/detect.html
