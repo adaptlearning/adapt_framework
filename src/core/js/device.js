@@ -11,7 +11,8 @@ define(function(require) {
         var $window = $(window);
         
         $window.on('resize', function() {
-            Adapt.trigger('device:resize', $window.width());
+            Adapt.screenWidth = $window.width();
+            Adapt.trigger('device:resize', Adapt.screenWidth);
         });
         
         // http://www.quirksmode.org/js/detect.html
