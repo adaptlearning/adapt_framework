@@ -10,9 +10,33 @@ define(function(require) {
     var Manager = function() {
         var $window = $(window);
         
+        // To be taken from theme when setup
+        var mediumScreenSize = 759;
+        var smallScreenSize = 519;
+        Adapt.screenWidth = $window.width();
+        
+        function checkScreenSize() {
+            var screenSize;
+            if (Adapt.screenWidth > mediumScreenSize) {
+                screenSize = 'large';
+            } else if (Adapt.screenWidth > smallScreenSize) {
+                screenSize = 'medium';
+            } else {
+                screenSize = 'small';
+            }
+            return screenSize;
+        }
+        
+        Adapt.screenSize = checkScreenSize();
+        
         $window.on('resize', function() {
             Adapt.screenWidth = $window.width();
             Adapt.trigger('device:resize', Adapt.screenWidth);
+            var newScreenSize = checkScreenSize();
+            if (newScreenSize !== Adapt.screenSize) {
+                Adapt.screenSize = newScreenSize;
+                Adapt.trigger('device:changed', Adapt.screenSize);
+            }
         });
         
         // http://www.quirksmode.org/js/detect.html
