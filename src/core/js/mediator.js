@@ -59,7 +59,7 @@ function Mediator(target){
  * Export for AMD and CJS 
  */
 if(typeof define === "function"){
-    define([], function(){ return Mediator; });
+    define(function(define){ return Mediator; });
 } else if (typeof exports !== "undefined"){
     module.exports = Mediator;
 }
