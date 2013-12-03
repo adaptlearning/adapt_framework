@@ -15,7 +15,9 @@ require.config({
         templates: 'templates/templates'
     },
     shim: {
-        jquery: [],
+        jquery: [
+
+        ],
         backbone: {
             deps: [
                 'underscore',
