@@ -15,9 +15,7 @@ require.config({
         templates: 'templates/templates'
     },
     shim: {
-        jquery: [
-
-        ],
+        jquery: [],
         backbone: {
             deps: [
                 'underscore',
@@ -30,6 +28,10 @@ require.config({
         },
         handlebars: {
             exports: 'Handlebars'
+        },
+        imageReady: {
+            deps: 'jquery',
+            exports: 'imageready'
         }
     }
 });

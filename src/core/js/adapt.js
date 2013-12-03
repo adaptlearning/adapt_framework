@@ -21,6 +21,7 @@ define(["underscore", "backbone"], function(_, Backbone){
         
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
+        object.prototype.constructor.template = name;
         Adapt.componentStore[name] = object;     
         
     }
