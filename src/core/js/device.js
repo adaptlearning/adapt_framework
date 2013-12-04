@@ -172,8 +172,6 @@ define(function(require) {
         
         $("html").addClass(browserString);
         
-        console.log(Adapt);
-        
     }
     
     return new Device;
