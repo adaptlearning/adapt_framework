@@ -1,25 +1,29 @@
 /*
-* Adapt
+* Device
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Daryl Hedley, Fabien O'Carroll
 */
 
 define(function(require) {
     var Adapt = require('coreJS/adapt');
+    Adapt.device = {};
     
-    var Manager = function() {
+    var Device = function() {
         var $window = $(window);
+        
+        // Check whether device is touch enabled
+        Adapt.device.touch = Modernizr.touch;
         
         // To be taken from theme when setup
         var mediumScreenSize = 759;
         var smallScreenSize = 519;
-        Adapt.screenWidth = $window.width();
+        Adapt.device.screenWidth = $window.width();
         
         function checkScreenSize() {
             var screenSize;
-            if (Adapt.screenWidth > mediumScreenSize) {
+            if (Adapt.device.screenWidth > mediumScreenSize) {
                 screenSize = 'large';
-            } else if (Adapt.screenWidth > smallScreenSize) {
+            } else if (Adapt.device.screenWidth > smallScreenSize) {
                 screenSize = 'medium';
             } else {
                 screenSize = 'small';
@@ -27,15 +31,15 @@ define(function(require) {
             return screenSize;
         }
         
-        Adapt.screenSize = checkScreenSize();
+        Adapt.device.screenSize = checkScreenSize();
         
         $window.on('resize', function() {
-            Adapt.screenWidth = $window.width();
-            Adapt.trigger('device:resize', Adapt.screenWidth);
+            Adapt.device.screenWidth = $window.width();
+            Adapt.trigger('device:resize', Adapt.device.screenWidth);
             var newScreenSize = checkScreenSize();
-            if (newScreenSize !== Adapt.screenSize) {
-                Adapt.screenSize = newScreenSize;
-                Adapt.trigger('device:changed', Adapt.screenSize);
+            if (newScreenSize !== Adapt.device.screenSize) {
+                Adapt.device.screenSize = newScreenSize;
+                Adapt.trigger('device:changed', Adapt.device.screenSize);
             }
         });
         
@@ -162,10 +166,14 @@ define(function(require) {
         BrowserDetect.init(); 
         
         var browserString = BrowserDetect.browser + " version-" + BrowserDetect.version + " OS-" + BrowserDetect.OS;
+        Adapt.device.browser = BrowserDetect.browser;
+        Adapt.device.version = BrowserDetect.version;
+        Adapt.device.OS = BrowserDetect.OS;
+        
         $("html").addClass(browserString);
         
     }
     
-    return Manager;
+    return new Device;
     
 });

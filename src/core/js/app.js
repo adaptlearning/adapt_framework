@@ -47,8 +47,6 @@ require([
         url: "course/en/components.json"
     });
     
-    new Device();
-    
     function checkDataIsLoaded() {
         if (Adapt.contentObjects.models.length > 0 
             && Adapt.articles.models.length > 0 
