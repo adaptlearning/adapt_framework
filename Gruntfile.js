@@ -49,7 +49,8 @@ module.exports = function(grunt) {
                 }
             },
             options:{
-                compress:true
+                compress:true,
+                syncImport:true
             }
         },
         handlebars: {

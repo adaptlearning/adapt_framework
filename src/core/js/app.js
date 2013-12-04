@@ -16,6 +16,9 @@ require([
     'coreModels/blockModel',
     'coreModels/componentModel',
     'templates',
+    'imageReady',
+    'inview',
+    'scrollTo',
     'components/components', 
     'extensions/extensions', 
     'menu/menu', 
@@ -46,8 +49,6 @@ require([
         model: ComponentModel, 
         url: "course/en/components.json"
     });
-    
-    new Device();
     
     function checkDataIsLoaded() {
         if (Adapt.contentObjects.models.length > 0 
