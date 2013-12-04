@@ -32,15 +32,21 @@ require.config({
             exports: 'Handlebars'
         },
         imageReady: {
-            deps: 'jquery',
+            deps: [
+                'jquery'
+            ],
             exports: 'imageready'
         },
         inview: {
-            deps: 'jquery',
+            deps: [
+                'jquery'
+            ],
             exports: 'inview'
         },
         scrollTo: {
-            deps: 'jquery',
+            deps: [
+                'jquery'
+            ],
             exports: 'scrollTo'
         }
     }
