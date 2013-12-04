@@ -9,7 +9,7 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
     var AdaptView = Backbone.View.extend({
         
         initialize: function() {
-            this.model.set('_ready', false);
+            this.model.set('_isReady', false);
             this.listenTo(Adapt, 'remove', this.remove);
             this.init();
         },
@@ -47,7 +47,7 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
         },
       
         setCompletionStatus: function() {
-            this.model.set('_complete', true);
+            this.model.set('_isComplete', true);
         }
         
     });

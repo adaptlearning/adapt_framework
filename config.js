@@ -30,6 +30,10 @@ require.config({
         },
         handlebars: {
             exports: 'Handlebars'
+        },
+        imageReady: {
+            deps: 'jquery',
+            exports: 'imageready'
         }
     }
 });

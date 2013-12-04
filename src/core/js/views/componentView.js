@@ -15,9 +15,7 @@ define(["handlebars", "coreViews/adaptView"], function(Handlebars, AdaptView) {
             + " component-" + this.model.get('_layout');
         },
         
-        init: function() {
-            this.constructor.template = this.model.get('_component');
-        }
+        postRender: function() {}
         
     });
     
