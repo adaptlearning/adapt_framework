@@ -34,6 +34,14 @@ require.config({
         imageReady: {
             deps: 'jquery',
             exports: 'imageready'
+        },
+        inview: {
+            deps: 'jquery',
+            exports: 'inview'
+        },
+        scrollTo: {
+            deps: 'jquery',
+            exports: 'scrollTo'
         }
     }
 });
