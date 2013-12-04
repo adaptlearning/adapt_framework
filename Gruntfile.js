@@ -36,21 +36,26 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        concat: {
+            less: {
+                src: [
+                    'src/core/less/*.less', 
+                    'src/theme/**/*.less', 
+                    'src/menu/**/*.less', 
+                    'src/components/**/*.less', 
+                    'src/extensions/**/*.less'
+                ],
+                dest: 'src/less/adapt.less'
+            }
+        },
         less: {
+            options:{
+                compress:true
+            },
             dist: {
                 files: {
-                        'build/adapt/css/adapt.css' : [
-                            'src/core/less/*.less', 
-                            'src/theme/**/*.less', 
-                            'src/menu/**/*.less', 
-                            'src/components/**/*.less',
-                            'src/extensions/**/*.less'
-                        ]
+                    'build/adapt/css/adapt.css' : 'src/less/adapt.less'
                 }
-            },
-            options:{
-                compress:true,
-                syncImport:true
             }
         },
         handlebars: {
@@ -136,11 +141,12 @@ module.exports = function(grunt) {
         },
         watch: {
             files: ['src/**/*.less', 'src/**/*.handlebars'],
-            tasks: ['less', 'handlebars']
+            tasks: ['concat', 'less', 'handlebars']
         }
     });
     
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('build',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
-    grunt.registerTask('dev',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
+    grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
+    grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
 };
