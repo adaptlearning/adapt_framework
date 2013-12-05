@@ -7,11 +7,15 @@
 Modernizr.load([
     {
         test: window.JSON,
-        nope: 'core/js/vendor/json2.js'
+        nope: 'core/js/libraries/json2.js'
+    },
+    {
+        test: window.console,
+        nope: 'core/js/libraries/consoles.js'
     },
     {
         test: Modernizr.video || Modernizr.audio,
-        nope: 'core/js/vendor/swfObject.js',
+        nope: 'core/js/libraries/swfObject.js',
         complete: function() {
             yepnope.injectJs("libraries/require.js", function () {   
             }, {
