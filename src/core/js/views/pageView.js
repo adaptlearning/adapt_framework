@@ -18,7 +18,6 @@ define(["handlebars", "coreViews/adaptView", "coreViews/articleView", "coreJS/ad
         
         isReady: function() {
             Adapt.trigger('pageView:ready');
-            // comment to be removed
         }
         
     }, {
