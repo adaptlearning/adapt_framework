@@ -32,6 +32,20 @@ module.exports = function(grunt) {
                         dest: 'build/libraries/', 
                         filter: 'isFile', 
                         flatten: true
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/theme/**/fonts/**'],
+                        dest: 'build/adapt/css/fonts/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/theme/**/assets/**'],
+                        dest: 'build/adapt/css/assets/',
+                        filter: 'isFile'
                     }
                 ]
             }
