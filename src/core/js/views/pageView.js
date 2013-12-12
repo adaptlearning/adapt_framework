@@ -17,7 +17,9 @@ define(["handlebars", "coreViews/adaptView", "coreViews/articleView", "coreJS/ad
         },
         
         isReady: function() {
-            Adapt.trigger('pageView:ready');
+            _.defer(function() {
+                Adapt.trigger('pageView:ready');
+            });
         }
         
     }, {
