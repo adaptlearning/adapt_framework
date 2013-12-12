@@ -46,6 +46,13 @@ module.exports = function(grunt) {
                         src: ['src/theme/**/assets/**'],
                         dest: 'build/adapt/css/assets/',
                         filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/components/**/assets/**'],
+                        dest: 'build/assets/',
+                        filter: 'isFile'
                     }
                 ]
             }
@@ -156,6 +163,15 @@ module.exports = function(grunt) {
         watch: {
             files: ['src/**/*.less', 'src/**/*.handlebars'],
             tasks: ['concat', 'less', 'handlebars']
+        },
+        connect: {
+            server: {
+              options: {
+                port: 9001,
+                base: 'build',
+                keepalive:true
+              }
+            }
         }
     });
     
