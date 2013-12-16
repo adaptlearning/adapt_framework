@@ -9,7 +9,7 @@
             "alt": "alt text",
             "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
         },
-        "linkText":"View page"
+        "linkText":"View"
     },
     {
         "_id":"co-10",
@@ -21,7 +21,7 @@
             "alt": "alt text",
             "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
         },
-        "linkText":"View page"
+        "linkText":"View"
     },
     {
         "_id":"co-15",
@@ -33,7 +33,7 @@
             "alt": "alt text",
             "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
         },
-        "linkText":"View page"
+        "linkText":"View"
     },
     {
         "_id":"co-20",
@@ -45,6 +45,6 @@
             "alt": "alt text",
             "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
         },
-        "linkText":"View page"
+        "linkText":"View"
     }
 ]
