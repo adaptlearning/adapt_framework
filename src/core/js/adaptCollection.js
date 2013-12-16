@@ -4,7 +4,10 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
+define(function(require) {
+
+    var Backbone = require('backbone');
+    var Adapt = require('coreJS/adapt');
 
     var AdaptCollection = Backbone.Collection.extend({
         initialize : function(models, options){

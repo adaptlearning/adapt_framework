@@ -4,7 +4,10 @@
 * Maintainers - Daryl Hedley, Fabien O'Carroll
 */
 
-define(["underscore", "backbone"], function(_, Backbone){
+define(function(require){
+
+    var _ = require('underscore');
+    var Backbone = require('backbone');
     
     var Adapt = {};
 
