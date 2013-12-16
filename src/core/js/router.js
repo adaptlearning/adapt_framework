@@ -21,7 +21,7 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
         },
         
         handleCourse: function() {
-            Adapt.trigger('router:handleCourse');
+            Adapt.trigger('router:handleCourse', Adapt.course);
             console.log('load course menu');
             this.removeViews();
             Adapt.currentLocation = "course";
@@ -44,7 +44,6 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
                     .append(new PageView({model:currentModel}).$el);
             } else {
                 Adapt.trigger('router:menu', id);
-                $('#wrapper').removeClass().addClass('location-menu');
                 console.log('new menu view');
             }
             

@@ -12,7 +12,7 @@ define(["handlebars", "coreViews/adaptView", "coreViews/articleView", "coreJS/ad
             return "page " + this.model.get('_id');                  
         },
         
-        init: function() {
+        preRender: function() {
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
         

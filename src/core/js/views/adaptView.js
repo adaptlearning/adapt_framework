@@ -11,11 +11,11 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
         initialize: function() {
             this.model.set('_isReady', false);
             this.listenTo(Adapt, 'remove', this.remove);
-            this.init();
+            this.preRender();
             this.render();
         },
         
-        init: function() {},
+        preRender: function() {},
         
         postRender: function() {
             this.addChildren();
