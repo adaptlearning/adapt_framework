@@ -25,9 +25,10 @@ define(function(require) {
         },
         
         handleCourse: function() {
+            this.removeViews();
             Adapt.trigger('router:handleCourse', Adapt.course);
             console.log('load course menu');
-            this.removeViews();
+            
             Adapt.currentLocation = "course";
         },
         

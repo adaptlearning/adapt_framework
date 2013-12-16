@@ -12,6 +12,7 @@ define(function(require) {
     var AdaptModel = Backbone.Model.extend({
         
         initialize: function() {
+            if (this.get('_type') === 'page') this.constructor.children = 'articles';
             if (this.constructor.children) {
                 Adapt[this.constructor.children].on({
                     "change:_isReady": this.checkReadyStatus,
