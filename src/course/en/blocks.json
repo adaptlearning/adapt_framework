@@ -3,30 +3,35 @@
         "_id":"b-05",
         "_parentId":"a-05",
         "_type":"block",
-        "title":"Title of first block"
+        "title":"Title of first block",
+        "body":"Body text for block"
     },
     {
         "_id":"b-10",
         "_parentId":"a-05",
         "_type":"block",
-        "title":"Title of second block"
+        "title":"Title of second block",
+        "body":"Body text for block"
     },
     {
         "_id":"b-15",
         "_parentId":"a-10",
         "_type":"block",
-        "title":"Title of third block"
+        "title":"Title of third block",
+        "body":"Body text for block"
     },
     {
         "_id":"b-20",
         "_parentId":"a-15",
         "_type":"block",
-        "title":"Title of fourth block"
+        "title":"Title of fourth block",
+        "body":"Body text for block"
     },
     {
         "_id":"b-25",
         "_parentId":"a-20",
         "_type":"block",
-        "title":"Title of fifth block"
+        "title":"Title of fifth block",
+        "body":"Body text for block"
     }
 ]

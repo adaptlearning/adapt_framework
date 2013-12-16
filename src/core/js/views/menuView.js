@@ -14,14 +14,6 @@ define(function(require) {
     	className: function() {
     		return 'menu ' + 'menu-' + this.model.get('_id');
     	},
-
-    	initialize: function() {
-    		$('#wrapper').removeClass().addClass('location-menu');
-    		this.model.set('_isReady', false);
-            this.listenTo(Adapt, 'remove', this.remove);
-            this.preRender();
-            this.render();
-    	},
         
         postRender: function() { 
         }
