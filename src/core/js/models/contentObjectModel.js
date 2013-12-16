@@ -4,7 +4,10 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["coreModels/adaptModel", "coreJS/adapt"], function(AdaptModel, Adapt) {
+define(function(require) {
+
+    var AdaptModel = require('coreModels/adaptModel');
+    var Adapt = require('coreJS/adapt');
 
     var ContentObjectModel = AdaptModel.extend({
         

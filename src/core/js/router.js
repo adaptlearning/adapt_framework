@@ -4,7 +4,11 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Adapt, PageView) {
+define(function(require) {
+
+    var Backbone = require('backbone');
+    var Adapt = require('coreJS/adapt');
+    var PageView = require('coreViews/pageView');
 
     var Router = Backbone.Router.extend({
     

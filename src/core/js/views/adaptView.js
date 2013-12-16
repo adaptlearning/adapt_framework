@@ -4,8 +4,12 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars, Adapt) {
+define(function(require) {
     
+    var Backbone = require('backbone');
+    var Handlebars = require('handlebars');
+    var Adapt = require('coreJS/adapt');
+
     var AdaptView = Backbone.View.extend({
         
         initialize: function() {

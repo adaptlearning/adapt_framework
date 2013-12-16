@@ -4,8 +4,12 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["handlebars", "coreViews/adaptView", "coreViews/articleView", "coreJS/adapt"], function(Handlebars, AdaptView, ArticleView, Adapt) {
+define(function(require) {
     
+    var AdaptView = require('coreViews/adaptView');
+    var ArticleView = require('coreViews/articleView');
+    var Adapt = require('coreJS/adapt');
+
     var PageView = AdaptView.extend({
         
         className: function() {

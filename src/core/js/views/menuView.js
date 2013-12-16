@@ -7,7 +7,6 @@
 define(function(require) {
 
     var AdaptView = require('coreViews/adaptView');
-    var Handlebars = require('handlebars');
     var Adapt = require('coreJS/adapt');
     
     var MenuView = AdaptView.extend({

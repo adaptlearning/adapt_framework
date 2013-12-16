@@ -4,7 +4,9 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["coreModels/adaptModel"], function(AdaptModel) {
+define(function(require) {
+
+	var AdaptModel = require('coreModels/adaptModel');
 
     var BlockModel = AdaptModel.extend({
         
