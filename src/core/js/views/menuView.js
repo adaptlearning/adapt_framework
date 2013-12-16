@@ -12,7 +12,9 @@ define(function(require) {
     var MenuView = AdaptView.extend({
 
     	className: function() {
-    		return 'menu ' + 'menu-' + this.model.get('_id');
+    		return 'menu ' 
+            + 'menu-' 
+            + this.model.get('_id');
     	},
         
         postRender: function() { 

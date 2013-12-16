@@ -7,7 +7,7 @@
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
-            "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
+            "src": "course/en/images/backgroundA.jpg"
         },
         "linkText":"View"
     },
@@ -19,7 +19,7 @@
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
-            "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
+            "src": "course/en/images/backgroundA.jpg"
         },
         "linkText":"View"
     },
@@ -43,7 +43,7 @@
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
-            "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
+            "src": "course/en/images/backgroundA.jpg"
         },
         "linkText":"View"
     }
