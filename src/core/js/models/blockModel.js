@@ -10,9 +10,6 @@ define(function(require) {
 
     var BlockModel = AdaptModel.extend({
         
-        init: function() {
-        }
-        
     }, {
         parent:'articles',
         siblings:'blocks',
