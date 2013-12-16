@@ -33,7 +33,10 @@ define(function(require) {
             this.$el.html(template(data));
             
             Adapt.trigger(this.model.get('_type') + 'View:postRender', this);
-            this.postRender();
+            
+            _.defer(_.bind(function() {
+               this.postRender(); 
+            }, this));
 
             return this;
         },
