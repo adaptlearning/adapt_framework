@@ -4,7 +4,7 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["handlebars", "coreViews/componentView"], function(Handlebars, ComponentView) {
+define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handlebars, ComponentView, Adapt) {
 
     var QuestionView = ComponentView.extend({
     
@@ -49,7 +49,20 @@ define(["handlebars", "coreViews/componentView"], function(Handlebars, Component
         },
         
         markQuestion: function() {
-            this.model.set("_numberOfCorrectAnswers", this.getNumberOfCorrectAnswers());
+			var correctCount = this.getNumberOfCorrectAnswers();
+			var score = 0;
+			
+			if (this.model.has("_questionWeight"))
+			{
+				score = this.model.get("_questionWeight") * correctCount / this.model.get('items').length;
+			}
+			else
+			{
+				score = Adapt.course.get("_questionWeight") * correctCount / this.model.get('items').length;
+			}
+			
+            this.model.set("_numberOfCorrectAnswers", correctCount);
+			this.model.set("_score", score);
             this.isCorrect() ? this.onQuestionCorrect() : this.onQuestionIncorrect();
         },
         
