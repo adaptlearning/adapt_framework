@@ -32,18 +32,51 @@ module.exports = function(grunt) {
                         dest: 'build/libraries/', 
                         filter: 'isFile', 
                         flatten: true
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/theme/**/fonts/**'],
+                        dest: 'build/adapt/css/fonts/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/theme/**/assets/**'],
+                        dest: 'build/adapt/css/assets/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/components/**/assets/**'],
+                        dest: 'build/assets/',
+                        filter: 'isFile'
                     }
                 ]
             }
         },
+        concat: {
+            less: {
+                src: [
+                    'src/core/less/*.less', 
+                    'src/theme/**/*.less', 
+                    'src/menu/**/*.less', 
+                    'src/components/**/*.less', 
+                    'src/extensions/**/*.less'
+                ],
+                dest: 'src/less/adapt.less'
+            }
+        },
         less: {
-            dist: {
-                files: {
-                        'build/adapt/css/adapt.css' : 'src/**/*.less'
-                }
-            },
             options:{
                 compress:true
+            },
+            dist: {
+                files: {
+                    'build/adapt/css/adapt.css' : 'src/less/adapt.less'
+                }
             }
         },
         handlebars: {
@@ -129,11 +162,21 @@ module.exports = function(grunt) {
         },
         watch: {
             files: ['src/**/*.less', 'src/**/*.handlebars'],
-            tasks: ['less', 'handlebars']
+            tasks: ['concat', 'less', 'handlebars']
+        },
+        connect: {
+            server: {
+              options: {
+                port: 9001,
+                base: 'build',
+                keepalive:true
+              }
+            }
         }
     });
     
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('build',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
-    grunt.registerTask('dev',['copy', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
+    grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
+    grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
 };

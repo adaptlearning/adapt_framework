@@ -41,7 +41,7 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
                 $('#wrapper')
                     .removeClass()
                     .addClass('location-page')
-                    .append(new PageView({model:currentModel}).render().$el);
+                    .append(new PageView({model:currentModel}).$el);
             } else {
                 Adapt.trigger('router:menu', id);
                 $('#wrapper').removeClass().addClass('location-menu');

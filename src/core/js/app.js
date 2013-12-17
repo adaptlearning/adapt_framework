@@ -7,6 +7,7 @@
 require([
     'coreJS/adapt',
     'coreJS/router',
+    'coreJS/device',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/courseModel',
@@ -15,11 +16,14 @@ require([
     'coreModels/blockModel',
     'coreModels/componentModel',
     'templates',
+    'imageReady',
+    'inview',
+    'scrollTo',
     'components/components', 
     'extensions/extensions', 
     'menu/menu', 
     'theme/theme'
-], function (Adapt, NavigationView, Router, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Router, Device, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
