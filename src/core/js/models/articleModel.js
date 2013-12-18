@@ -11,9 +11,6 @@ define(function(require) {
 
     var ArticleModel = AdaptModel.extend({
         
-        init: function() {
-        }
-        
     }, {
         parent:'contentObjects',
         siblings:'articles',

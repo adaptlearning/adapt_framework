@@ -42,11 +42,13 @@ define(function(require) {
         },
       
         addChildren: function() {
+            var nthChild = 0;
             this.model.getChildren().each(function(model) {
                 if (model.get('_isAvailable')) {
+                    nthChild ++;
                     var ChildView = this.constructor.childView || Adapt.componentStore[model.get("_component")];
-                    var $ParentContainer = this.$(this.constructor.childContainer);
-                    $ParentContainer.append(new ChildView({model:model, $parent:$ParentContainer}).$el);
+                    var $parentContainer = this.$(this.constructor.childContainer);
+                    $parentContainer.append(new ChildView({model:model, $parent:$parentContainer, nthChild:nthChild}).$el);
                 }
             }, this);
         },

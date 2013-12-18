@@ -22,6 +22,8 @@ define(function(require) {
         
         isReady: function() {
             _.defer(function() {
+                $('.loading').hide();
+                $(window).scroll();
                 Adapt.trigger('pageView:ready');
             });
         }

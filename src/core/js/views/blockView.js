@@ -11,7 +11,10 @@ define(function(require) {
     var BlockView = AdaptView.extend({
         
         className: function() {
-            return "block " + this.model.get('_id');
+            return "block " 
+            + this.model.get('_id') 
+            + " nth-child-" 
+            + this.options.nthChild;;
         }
         
     }, {
