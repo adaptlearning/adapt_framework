@@ -1,0 +1,11 @@
+{
+    "dependencies": {
+    	"adapt-contrib-vanilla": "0.0.0",
+    	"adapt-contrib-text": "0.0.0",
+    	"adapt-contrib-narrative": "0.0.0",
+    	"adapt-contrib-media": "0.0.0",
+    	"adapt-contrib-hotgraphic": "0.0.0",
+    	"adapt-contrib-blank": "0.0.0",
+    	"adapt-contrib-accordion": "0.0.0"
+    }
+}
