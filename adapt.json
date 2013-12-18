@@ -1,6 +1,5 @@
 {
     "dependencies": {
-    	"adapt-hello-world": "0.0.0",
     	"adapt-contrib-vanilla": "0.0.0",
     	"adapt-contrib-text": "0.0.0",
     	"adapt-contrib-narrative": "0.0.0",
