@@ -4,7 +4,11 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Adapt, PageView) {
+define(function(require) {
+
+    var Backbone = require('backbone');
+    var Adapt = require('coreJS/adapt');
+    var PageView = require('coreViews/pageView');
 
     var Router = Backbone.Router.extend({
     
@@ -21,9 +25,8 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
         },
         
         handleCourse: function() {
-            Adapt.trigger('router:handleCourse');
-            console.log('load course menu');
             this.removeViews();
+            Adapt.trigger('router:handleCourse', Adapt.course);            
             Adapt.currentLocation = "course";
         },
         
@@ -44,7 +47,6 @@ define(["backbone", "coreJS/adapt", "coreViews/pageView"], function(Backbone, Ad
                     .append(new PageView({model:currentModel}).$el);
             } else {
                 Adapt.trigger('router:menu', id);
-                $('#wrapper').removeClass().addClass('location-menu');
                 console.log('new menu view');
             }
             

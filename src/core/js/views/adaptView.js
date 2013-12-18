@@ -4,18 +4,22 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars, Adapt) {
+define(function(require) {
     
+    var Backbone = require('backbone');
+    var Handlebars = require('handlebars');
+    var Adapt = require('coreJS/adapt');
+
     var AdaptView = Backbone.View.extend({
         
         initialize: function() {
             this.model.set('_isReady', false);
             this.listenTo(Adapt, 'remove', this.remove);
-            this.init();
+            this.preRender();
             this.render();
         },
         
-        init: function() {},
+        preRender: function() {},
         
         postRender: function() {
             this.addChildren();
@@ -29,7 +33,10 @@ define(["backbone", "handlebars", "coreJS/adapt"], function(Backbone, Handlebars
             this.$el.html(template(data));
             
             Adapt.trigger(this.model.get('_type') + 'View:postRender', this);
-            this.postRender();
+            
+            _.defer(_.bind(function() {
+               this.postRender(); 
+            }, this));
 
             return this;
         },

@@ -4,11 +4,15 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["backbone", "coreJS/adapt"], function(Backbone, Adapt) {
+define(function(require) {
+
+    var Backbone = require('backbone');
+    var Adapt = require('coreJS/adapt');
 
     var AdaptModel = Backbone.Model.extend({
         
         initialize: function() {
+            if (this.get('_type') === 'page') this.constructor.children = 'articles';
             if (this.constructor.children) {
                 Adapt[this.constructor.children].on({
                     "change:_isReady": this.checkReadyStatus,
