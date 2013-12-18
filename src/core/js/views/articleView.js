@@ -12,7 +12,10 @@ define(function(require) {
     var ArticleView = AdaptView.extend({
         
         className: function() {
-            return "article " + this.model.get('_id');
+            return "article " 
+            + this.model.get('_id') 
+            + " nth-child-" 
+            + this.options.nthChild;
         }
         
     }, {
