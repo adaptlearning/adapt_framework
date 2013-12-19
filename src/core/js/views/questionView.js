@@ -9,8 +9,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
     var QuestionView = ComponentView.extend({
     
         className: function() {
-            return "component question-component " + this.model.get('_component')+"-component " + this.model.get('_id');
-        },
+            return "component question-component " + this.model.get('_component')+"-component " + this.model.get('_id'); },
         
         init: function() {
             this.constructor.template = this.model.get('_component');
@@ -23,7 +22,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
         },
         
         isPartlyCorrect: function() {
-            return !this.isCorrect() && this.model.get('_atLeastOneCorrectSelection');
+            return !this.isCorrect() && this.model.get('_isAtLeastOneCorrectSelection');
         },
         
         getNumberOfCorrectAnswers: function() {
@@ -69,17 +68,17 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
         resetQuestion: function(properties) {
             var shouldEnable = true;
             if(!!properties.initialisingScreen && this.model.get("_isEnabledOnRevisit") !== undefined && !!this.model.get('_isComplete')) {
-                if(Adapt.Spoor) {
+                /*if(Adapt.Spoor) {
                     var sameSession = this.model.get('_sessionID') === Adapt.Spoor.get('_sessionID');
                     if(sameSession) {
                         shouldEnable = this.model.get("_isEnabledOnRevisit");
                     }
-                } else {
+                } else {*/
                     shouldEnable = this.model.get("_isEnabledOnRevisit");
-                }
+                //}
             }
             
-            this.model.set({enabled: shouldEnable});
+            this.model.set({"_isEnabled": shouldEnable});
             
             if(shouldEnable) {
                 _.each(this.model.get('_selectedItems'), function(item) {item.selected = false}, this);
@@ -92,7 +91,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
                 if(properties.resetCorrect === true) {
                     this.model.set({
                         _isCorrect: false,
-                        _atLeastOneCorrectSelection: false
+                        _isAtLeastOneCorrectSelection: false
                     });
                 }
             }
@@ -116,7 +115,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
             
             this.model.set('tutorAudio', this.model.get("feedback").audio)
             
-            if(this.model.get('_selectable') === 1) {
+            if(this.model.get('_isSelectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
                     this.model.set('tutorMessage', this.getOptionSpecificFeedback());
                 }
@@ -124,12 +123,15 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
                     this.model.set('tutorAudio', this.getOptionSpecificAudio());
                 }
             }
+
+            Adapt.trigger('QuestionView:feedback', {feedback:this.model.get('tutorMessage')});
+            alert("Feedback: " + this.model.get('tutorMessage'));
             
-            new TutorModel({
+            /*new TutorModel({
                 title: this.model.get('title'), 
                 message: this.model.get('tutorMessage'),
                 audio: this.model.get('tutorAudio')
-            });
+            });*/
         },
         
         showAssessmentFeedback: function() {
