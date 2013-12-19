@@ -3,6 +3,7 @@
         "_id":"co-05",
         "_parentId":"course",
         "_type":"page",
+        "_classes":"",
         "title":"Title of first page model",
         "body":"Body text to go here.",
         "graphic": {
