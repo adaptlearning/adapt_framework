@@ -146,12 +146,12 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
         },
         
         showModelAnswer: function () {
-            this.$(".widget").removeClass("user").addClass("model");
+            this.$(".component-widget").removeClass("user").addClass("model");
             this.onModelAnswerShown();
         },
         
         showUserAnswer: function() {
-            this.$(".widget").removeClass("model").addClass("user");
+            this.$(".component-widget").removeClass("model").addClass("user");
             this.onUserAnswerShown();
         },
         
@@ -161,8 +161,8 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
                 _isEnabled: false,
                 _isCorrect: !!parameters.correct
             });
-            this.$(".widget").addClass("disabled");
-            if(parameters.correct) this.$(".widget").addClass("correct");
+            this.$(".component-widget").addClass("disabled");
+            if(parameters.correct) this.$(".component-widget").addClass("correct");
             this.showMarking();
             this.showUserAnswer();
             /*if(Adapt.Spoor) {
