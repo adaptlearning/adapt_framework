@@ -3,6 +3,7 @@
         "_id":"b-05",
         "_parentId":"a-05",
         "_type":"block",
+        "_classes":"",
         "title":"Title of first block",
         "body":"Body text for block"
     },
