@@ -78,7 +78,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
                 //}
             }
             
-            this.model.set({enabled: shouldEnable});
+            this.model.set({"_isEnabled": shouldEnable});
             
             if(shouldEnable) {
                 _.each(this.model.get('_selectedItems'), function(item) {item.selected = false}, this);
