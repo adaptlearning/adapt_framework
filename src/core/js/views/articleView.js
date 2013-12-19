@@ -13,7 +13,8 @@ define(function(require) {
         
         className: function() {
             return "article " 
-            + this.model.get('_id') 
+            + this.model.get('_id')
+            + " " + this.model.get('_classes') 
             + " nth-child-" 
             + this.options.nthChild;
         }

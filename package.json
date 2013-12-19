@@ -30,7 +30,8 @@
     "grunt-contrib-copy": "~0.4.1",
     "karma": "~0.9",
     "karma-mocha": "*",
-    "karma-expect": "*"
+    "karma-expect": "*",
+    "bower":"*"
   },
   "dependencies": {
     "assemble-less": "~0.5.3",

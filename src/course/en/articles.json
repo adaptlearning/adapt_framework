@@ -3,6 +3,7 @@
         "_id":"a-05",
         "_parentId":"co-05",
         "_type":"article",
+        "_classes":"",
         "title":"Article first title",
         "body":"Body text for article"
     },
