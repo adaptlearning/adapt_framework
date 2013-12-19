@@ -196,7 +196,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
         onResetClicked: function(event) {
             if(event) event.preventDefault(); 
             this.resetQuestion({resetAttempts:false, resetCorrect:true});
-            this.$(".widget").removeClass("submitted");
+            this.$(".component-widget").removeClass("submitted");
             this.resetItems();
         },
     
@@ -206,7 +206,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
             
             if(!this.canSubmit()) return;
             
-            Adapt.tabHistory = $(event.currentTarget).parent('.inner');
+            Adapt.tabHistory = $(event.currentTarget).parent('.component-inner');
             
             var attemptsLeft = this.model.get("_attemptsLeft") - 1;
             this.model.set({
@@ -214,7 +214,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
                 _isSubmitted: true,
                 _attemptsLeft: attemptsLeft
             });
-            this.$(".widget").addClass("submitted");
+            this.$(".component-widget").addClass("submitted");
             
             this.storeUserAnswer();
             this.markQuestion();
