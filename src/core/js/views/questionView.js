@@ -15,6 +15,7 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
             this.constructor.template = this.model.get('_component');
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
             this.setupFeedbackArrays();
+			this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
         },
         
         isCorrect: function() {
@@ -224,6 +225,9 @@ define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handl
         onUserAnswerClicked: function(event) {
             if(event) event.preventDefault();
             this.showUserAnswer();
+        },
+		
+		onEnabledChanged: function () {
         },
         
         postRender: function() {
