@@ -4,7 +4,11 @@
 * Maintainers - Daryl Hedley
 */
 
-define(["handlebars", "coreViews/componentView", "coreJS/adapt"], function(Handlebars, ComponentView, Adapt) {
+define(function(require) {
+
+    var Handlebars = require('handelbars');
+    var ComponentView = require('coreViews/componentView');
+    var Adapt = require('coreJS/adapt');
 
     var QuestionView = ComponentView.extend({
     
