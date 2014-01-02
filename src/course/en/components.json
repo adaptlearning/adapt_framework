@@ -133,71 +133,162 @@
         "_id":"c-70",
         "_parentId":"b-35",
         "_type":"component",
-        "_component":"text",
+        "_component":"graphic",
         "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very fourth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_layout":"left",
+        "title":"Here is a graphic object",
+        "body":"Hi everybody!",
+        "graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+            "medium": "http://www.cartoonbrew.com/wp-content/uploads/2013/09/minions-delay.jpg",
+            "small": "http://minionslovebananas.com/images/check-in-minion.jpg"
+        }
     },
     {
         "_id":"c-75",
         "_parentId":"b-40",
         "_type":"component",
-        "_component":"text",
+        "_component":"accordion",
         "_classes":"",
         "_layout":"left",
-        "title":"Title of our very fifth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "title": "Accordion",
+        "body": "This is optional body text. Select the headings below to reveal the text.",
+        "items": [
+            {
+                "alt": "Heading 1",
+                "title": "Heading 1",
+                "body": "This is display text 1."
+            },
+            {
+                "alt": "Heading 2",
+                "title": "Heading 2",
+                "body": "This is display text 2."
+            },
+            {
+                "alt": "Heading 3",
+                "title": "Heading 3",
+                "body": "This is display text 3."
+            }
+        ]
     },
     {
         "_id":"c-80",
         "_parentId":"b-40",
         "_type":"component",
-        "_component":"text",
+        "_component":"blank",
         "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very first component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_layout":"right"
     },
     {
         "_id":"c-85",
         "_parentId":"b-45",
+        "_classes": "",
         "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"left",
-        "title":"Title of our very second component",
-        "body":"Whoo - if we get this rendering we've made the big time"
-    },
-    {
-        "_id":"c-90",
-        "_parentId":"b-45",
-        "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very third component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_layout": "full",
+        "_component": "narrative",
+        "title": "Narrative",
+        "body": "This is optional body text. Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
+        "items": [
+            {
+                "title": "Narrative stage 1 title",
+                "body": "This is display text 1. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
+                "graphic": {
+                    "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+                    "alt": "First graphic",
+                    "title": "Second graphic"
+                },
+                "strapline": "Here is the first..."
+            },
+            {
+                "title": "Narrative stage 2 title",
+                "body": "This is display text 2.",
+                "graphic": {
+                    "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+                    "alt": "Second graphic",
+                    "title": "Second graphic"
+                },
+                "strapline": "Now comes the second..."
+            },
+            {
+                "title": "Narrative stage 3 title",
+                "body": "This is display text 3.",
+                "graphic": {
+                    "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+                    "alt": "Third graphic",
+                    "title": "Third graphic"
+                },
+                "strapline": "Third here!"
+            }
+        ]
     },
     {
         "_id":"c-95",
         "_parentId":"b-50",
+        "_classes": "",
         "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"left",
-        "title":"Title of our very fourth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_component": "hotgraphic",
+        "_layout": "full",    
+        "title": "Hot graphic",
+        "body": "This is optional body text. Select the hotspots on the image to reveal the text. This component will scale down to a narrative when viewed on mobile.",
+        "graphic": {
+            "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+            "alt": "alt text",
+            "title": "title"
+        },
+        "items": [
+            {
+                "title": "Hotspot 1 title",
+                "body": "This is display text 1.",
+                "graphic": {
+                    "src": "http://minionslovebananas.com/images/check-in-minion.jpg",
+                    "alt": "alt text",
+                    "title": "title text"
+                },
+                "strapline": "strapline...",
+                "top": 5,
+                "left": 20
+            },
+            {
+                "title": "Hotspot 2 title",
+                "body": "This is display text 2.",
+                "graphic": {
+                    "src": "http://minionslovebananas.com/images/check-in-minion.jpg",
+                    "alt": "alt text",
+                    "title": "title text"
+                },
+                "strapline": "strapline...",
+                "top": 25,
+                "left": 60
+            },
+            {
+                "title": "Hotspot 3 title",
+                "body": "This is display text 3.",
+                "graphic": {
+                    "src": "http://minionslovebananas.com/images/check-in-minion.jpg",
+                    "alt": "alt text",
+                    "title": "title text"
+                },
+                "strapline": "strapline...",
+                "top": 85,
+                "left": 40
+            }
+        ]
     },
     {
-        "_id":"c-100",
-        "_parentId":"b-50",
+        "_id":"c-102",
+        "_parentId":"b-52",
         "_type":"component",
-        "_component":"text",
+        "_component":"media",
         "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very fifth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_layout":"left",
+        "title":"Title of the media component",
+        "media": {
+            "mp4": "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v",
+            "ogv": "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_stereo.ogg"
+        },
+        "body": "This is optional body text. Select the play button to start the video."
     },
     {
         "_id":"c-105",
