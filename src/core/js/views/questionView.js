@@ -19,6 +19,7 @@ define(function(require) {
             this.constructor.template = this.model.get('_component');
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
             this.setupFeedbackArrays();
+            this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
         },
         
         isCorrect: function() {
@@ -229,7 +230,9 @@ define(function(require) {
             if(event) event.preventDefault();
             this.showUserAnswer();
         },
-        
+
+        onEnabledChanged: function () {},
+
         postRender: function() {
             ComponentView.prototype.postRender.apply(this);
             if(this.model.get('_isEnabled') == false) {
