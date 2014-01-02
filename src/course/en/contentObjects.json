@@ -4,8 +4,8 @@
         "_parentId":"course",
         "_type":"page",
         "_classes":"",
-        "title":"Title of first page model",
-        "body":"Body text to go here.",
+        "title":"Demo page",
+        "body":"This page should contain a working Adapt page will all core bundled components and plugins working.",
         "graphic": {
             "alt": "alt text",
             "src": "course/en/images/backgroundA.jpg"
@@ -16,8 +16,8 @@
         "_id":"co-10",
         "_parentId":"course",
         "_type":"menu",
-        "title":"Title of second page model",
-        "body":"Body text to go here.",
+        "title":"What to know more about our components",
+        "body":"We've split the presentation and question components to give you a better overview of Adapt",
         "graphic": {
             "alt": "alt text",
             "src": "course/en/images/backgroundA.jpg"
@@ -27,8 +27,8 @@
     {
         "_id":"co-15",
         "_parentId":"co-10",
-        "_type":"page",
-        "title":"Title of third page model",
+        "_type":"menu",
+        "title":"Presentation components",
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
@@ -38,9 +38,9 @@
     },
     {
         "_id":"co-20",
-        "_parentId":"course",
+        "_parentId":"co-10",
         "_type":"page",
-        "title":"Title of fourth page model",
+        "title":"Question components",
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
