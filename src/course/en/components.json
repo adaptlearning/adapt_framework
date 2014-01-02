@@ -135,7 +135,7 @@
         "_type":"component",
         "_component":"graphic",
         "_classes":"",
-        "_layout":"left",
+        "_layout":"right",
         "title":"Here is a graphic object",
         "body":"Hi everybody!",
         "graphic": {
