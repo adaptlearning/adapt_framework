@@ -2,7 +2,7 @@ src/components
 src/theme
 src/menu
 src/extensions
-src/less/adapt.less
+src/less
 templates
 build
 bower_components
