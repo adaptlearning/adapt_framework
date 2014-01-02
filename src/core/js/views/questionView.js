@@ -6,7 +6,7 @@
 
 define(function(require) {
 
-    var Handlebars = require('handelbars');
+    var Handlebars = require('handlebars');
     var ComponentView = require('coreViews/componentView');
     var Adapt = require('coreJS/adapt');
 
