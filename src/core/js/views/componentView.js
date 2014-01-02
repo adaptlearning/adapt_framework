@@ -14,7 +14,9 @@ define(function(require) {
             return "component " 
             + this.model.get('_component')
             + "-component " + this.model.get('_id') 
-            + " component-" + this.model.get('_layout');
+            + " " + this.model.get('_classes')
+            + " component-" + this.model.get('_layout')
+            + " nth-child-" + this.options.nthChild;
         },
         
         postRender: function() {}

@@ -13,7 +13,7 @@ define(function(require) {
     var PageView = AdaptView.extend({
         
         className: function() {
-            return "page " + this.model.get('_id');                  
+            return "page " + this.model.get('_id') + " " + this.model.get('_classes');                  
         },
         
         preRender: function() {
@@ -22,6 +22,8 @@ define(function(require) {
         
         isReady: function() {
             _.defer(function() {
+                $('.loading').hide();
+                $(window).scroll();
                 Adapt.trigger('pageView:ready');
             });
         }

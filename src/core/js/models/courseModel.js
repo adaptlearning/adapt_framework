@@ -19,6 +19,14 @@ define(function(require) {
         
         loadedData: function() {
             Adapt.trigger('courseModel:dataLoaded');
+            this.setupListeners();
+        },
+
+        setupListeners: function() {
+            Adapt[this.constructor.children].on({
+                "change:_isReady": this.checkReadyStatus,
+                "change:_isComplete": this.checkCompletionStatus
+            }, this);
         }
     
     }, {

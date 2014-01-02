@@ -26,10 +26,9 @@ define(function(require) {
         
         handleCourse: function() {
             this.removeViews();
-            Adapt.trigger('router:handleCourse', Adapt.course);
-            console.log('load course menu');
-            
+            Adapt.trigger('router:menu', Adapt.course);         
             Adapt.currentLocation = "course";
+            $('#wrapper').addClass('location-menu');
         },
         
         handleId: function(id) {
@@ -42,14 +41,14 @@ define(function(require) {
             var currentModel = Adapt.contentObjects.findWhere({_id:id});
             
             if (currentModel.get('_type') == 'page') {
-                Adapt.trigger('router:page', id);
+                Adapt.trigger('router:page', currentModel);
                 $('#wrapper')
                     .removeClass()
                     .addClass('location-page')
                     .append(new PageView({model:currentModel}).$el);
             } else {
-                Adapt.trigger('router:menu', id);
-                console.log('new menu view');
+                Adapt.trigger('router:menu', currentModel);
+                $('#wrapper').addClass('location-menu');
             }
             
         },

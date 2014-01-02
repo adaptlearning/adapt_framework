@@ -3,24 +3,49 @@
         "_id":"co-05",
         "_parentId":"course",
         "_type":"page",
-        "title":"Title of first page model"
+        "_classes":"",
+        "title":"Title of first page model",
+        "body":"Body text to go here.",
+        "graphic": {
+            "alt": "alt text",
+            "src": "course/en/images/backgroundA.jpg"
+        },
+        "linkText":"View"
     },
     {
         "_id":"co-10",
         "_parentId":"course",
         "_type":"menu",
-        "title":"Title of second page model"
+        "title":"Title of second page model",
+        "body":"Body text to go here.",
+        "graphic": {
+            "alt": "alt text",
+            "src": "course/en/images/backgroundA.jpg"
+        },
+        "linkText":"View"
     },
     {
         "_id":"co-15",
         "_parentId":"co-10",
         "_type":"page",
-        "title":"Title of third page model"
+        "title":"Title of third page model",
+        "body":"Body text to go here.",
+        "graphic": {
+            "alt": "alt text",
+            "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg"
+        },
+        "linkText":"View"
     },
     {
         "_id":"co-20",
         "_parentId":"course",
         "_type":"page",
-        "title":"Title of fourth page model"
+        "title":"Title of fourth page model",
+        "body":"Body text to go here.",
+        "graphic": {
+            "alt": "alt text",
+            "src": "course/en/images/backgroundA.jpg"
+        },
+        "linkText":"View"
     }
 ]
