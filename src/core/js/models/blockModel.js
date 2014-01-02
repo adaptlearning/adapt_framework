@@ -9,11 +9,9 @@ define(function(require) {
 	var AdaptModel = require('coreModels/adaptModel');
 
     var BlockModel = AdaptModel.extend({
-        
-    }, {
-        parent:'articles',
-        siblings:'blocks',
-        children:'components'
+        _parent:'articles',
+    	_siblings:'blocks',
+        _children: 'components'
     });
     
     return BlockModel;
