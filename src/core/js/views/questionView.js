@@ -248,26 +248,13 @@ define(function(require) {
         * to be implemented by subclass
         */
         // compulsory methods
-        canSubmit: function() { 
-            //throw new AbstractMethodError({invoker: this.constructor, methodName:"canSubmit"}) 
-        },
-        forEachAnswer: function() { 
-            //throw new AbstractMethodError({invoker: this.constructor, methodName:"forEachAnswer"})
-        },
-        
+        canSubmit: function() {},
+        forEachAnswer: function() {},
         // optional methods
-        resetItems: function(){ 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"resetItems"}) 
-        },
-        onModelAnswerShown: function() { 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onModelAnswerShown"}) 
-        },
-        onUserAnswerShown: function() { 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onUserAnswerShown"}) 
-        },
-        storeUserAnswer: function() { 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"storeUserAnswer"}) 
-        }
+        resetItems: function(){},
+        onModelAnswerShown: function() {},
+        onUserAnswerShown: function() {},
+        storeUserAnswer: function() {}
         
     });
     
