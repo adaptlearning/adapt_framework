@@ -8,8 +8,40 @@ define(function(require) {
 	var Backbone = require('backbone');
 	var Adapt = require('coreJS/adapt');
 
-	Adapt.mediator = _.extend({}, Backbone.Events);
+	Adapt.mediator = {};
+	Adapt.mediator.channels = {};
 
-	console.log(Adapt.mediator);
+	Adapt.mediator.default = function(event, callback) {
+
+		Adapt.on(event, function(attributes) {
+
+			var allowDefaultCallback = true;
+			var eventObject = {
+				preventDefault: function() {
+					allowDefaultCallback = false;
+				}
+			};
+			
+			_.each(Adapt.mediator.channels[event], function(channelCallback) {
+				channelCallback.apply(null, [eventObject]);
+			});
+
+			console.log('should I allow callback', allowDefaultCallback);
+
+			if (allowDefaultCallback !== false) {
+				callback(attributes);
+			}
+		});
+
+	}
+
+	Adapt.mediator.on = function(event, callback) {
+		if (_.isArray(Adapt.mediator.channels[event])) {
+			Adapt.mediator.channels[event].push(callback);
+		} else {
+			Adapt.mediator.channels[event] = [];
+			Adapt.mediator.channels[event].push(callback);
+		}
+	}
 
 });
