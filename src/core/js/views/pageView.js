@@ -17,15 +17,17 @@ define(function(require) {
         },
         
         preRender: function() {
+            this.$el.hide();
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
         
         isReady: function() {
-            _.defer(function() {
+            _.defer(_.bind(function() {
                 $('.loading').hide();
                 $(window).scroll();
                 Adapt.trigger('pageView:ready');
-            });
+                this.$el.fadeIn('fast');
+            }, this));
         }
         
     }, {
