@@ -28,7 +28,7 @@ define(function(require) {
             this.removeViews();
             Adapt.trigger('router:menu', Adapt.course);         
             Adapt.currentLocation = "course";
-            $('#wrapper').addClass('location-menu');
+            $('#wrapper').removeClass().addClass('location-menu');
         },
         
         handleId: function(id) {
@@ -48,7 +48,7 @@ define(function(require) {
                     .append(new PageView({model:currentModel}).$el);
             } else {
                 Adapt.trigger('router:menu', currentModel);
-                $('#wrapper').addClass('location-menu');
+                $('#wrapper').removeClass().addClass('location-menu');
             }
             
         },

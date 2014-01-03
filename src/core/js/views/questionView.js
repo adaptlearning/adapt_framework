@@ -6,19 +6,27 @@
 
 define(function(require) {
 
-    var Handlebars = require('handelbars');
+    var Handlebars = require('handlebars');
     var ComponentView = require('coreViews/componentView');
     var Adapt = require('coreJS/adapt');
 
     var QuestionView = ComponentView.extend({
     
         className: function() {
-            return "component question-component " + this.model.get('_component')+"-component " + this.model.get('_id'); },
+            return "component "
+            + "question-component " 
+            + this.model.get('_component')
+            + "-component " + this.model.get('_id') 
+            + " " + this.model.get('_classes')
+            + " component-" + this.model.get('_layout')
+            + " nth-child-" + this.options.nthChild;
+        },
         
-        init: function() {
+        preRender: function() {
             this.constructor.template = this.model.get('_component');
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
             this.setupFeedbackArrays();
+            this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
         },
         
         isCorrect: function() {
@@ -229,7 +237,9 @@ define(function(require) {
             if(event) event.preventDefault();
             this.showUserAnswer();
         },
-        
+
+        onEnabledChanged: function () {},
+
         postRender: function() {
             ComponentView.prototype.postRender.apply(this);
             if(this.model.get('_isEnabled') == false) {
@@ -241,26 +251,13 @@ define(function(require) {
         * to be implemented by subclass
         */
         // compulsory methods
-        canSubmit: function() { 
-            //throw new AbstractMethodError({invoker: this.constructor, methodName:"canSubmit"}) 
-        },
-        forEachAnswer: function() { 
-            //throw new AbstractMethodError({invoker: this.constructor, methodName:"forEachAnswer"})
-        },
-        
+        canSubmit: function() {},
+        forEachAnswer: function() {},
         // optional methods
-        resetItems: function(){ 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"resetItems"}) 
-        },
-        onModelAnswerShown: function() { 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onModelAnswerShown"}) 
-        },
-        onUserAnswerShown: function() { 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"onUserAnswerShown"}) 
-        },
-        storeUserAnswer: function() { 
-            //if(this.constructor.abstract) throw new AbstractMethodError({invoker: this.constructor, methodName:"storeUserAnswer"}) 
-        }
+        resetItems: function(){},
+        onModelAnswerShown: function() {},
+        onUserAnswerShown: function() {},
+        storeUserAnswer: function() {}
         
     });
     
