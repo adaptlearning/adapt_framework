@@ -8,7 +8,7 @@
         "body":"This page should contain a working Adapt page will all core bundled components and plugins working.",
         "graphic": {
             "alt": "alt text",
-            "src": ""
+            "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText":"View"
     },
@@ -21,7 +21,7 @@
         "body":"We've split the presentation and question components to give you a better overview of Adapt",
         "graphic": {
             "alt": "alt text",
-            "src": ""
+            "src": "course/en/images/origami-menu-two.jpg"
         },
         "linkText":"View"
     },
@@ -34,7 +34,7 @@
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
-            "src": ""
+            "src": "course/en/images/origami-menu-three.jpg"
         },
         "linkText":"View"
     },
@@ -47,7 +47,7 @@
         "body":"Body text to go here.",
         "graphic": {
             "alt": "alt text",
-            "src": ""
+            "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText":"View"
     }

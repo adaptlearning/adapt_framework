@@ -13,7 +13,6 @@ define(function(require) {
     var AdaptView = Backbone.View.extend({
         
         initialize: function() {
-            this.model.set('_isReady', false);
             this.listenTo(Adapt, 'remove', this.remove);
             this.preRender();
             this.render();
@@ -59,7 +58,15 @@ define(function(require) {
       
         setCompletionStatus: function() {
             this.model.set('_isComplete', true);
-        }
+        },
+
+        remove: function() {
+            this.model.setOnChildren('_isReady', false);
+            this.model.set('_isReady', false);
+            this.$el.remove();
+            this.stopListening();
+            return this;
+        },
         
     });
     
