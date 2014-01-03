@@ -10,11 +10,9 @@ define(function(require) {
 	var Adapt = require('coreJS/adapt');
 
     var ArticleModel = AdaptModel.extend({
-        
-    }, {
-        parent:'contentObjects',
-        siblings:'articles',
-        children:'blocks'
+        _parent:'contentObjects',
+    	_siblings:'articles',
+        _children: 'blocks'
     });
     
     return ArticleModel;

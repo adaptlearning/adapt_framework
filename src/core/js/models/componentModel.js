@@ -9,10 +9,8 @@ define(function(require) {
 	var AdaptModel = require('coreModels/adaptModel');
 
     var ComponentModel = AdaptModel.extend({
-        
-    }, {
-        parent:'blocks',
-        siblings:'components'
+        _parent:'blocks',
+    	_siblings:'components'
     });
     
     return ComponentModel;

@@ -23,14 +23,14 @@ define(function(require) {
         },
 
         setupListeners: function() {
-            Adapt[this.constructor.children].on({
+            Adapt[this._children].on({
                 "change:_isReady": this.checkReadyStatus,
                 "change:_isComplete": this.checkCompletionStatus
             }, this);
-        }
+        },
+
+        _children: "contentObjects"
     
-    }, {
-        children: "contentObjects"
     });
     
     return CourseModel;

@@ -10,11 +10,11 @@ define(function(require) {
     var Adapt = require('coreJS/adapt');
 
     var AdaptModel = Backbone.Model.extend({
-        
+
         initialize: function() {
-            if (this.get('_type') === 'page') this.constructor.children = 'articles';
-            if (this.constructor.children) {
-                Adapt[this.constructor.children].on({
+            if (this.get('_type') === 'page') this._children = 'articles';
+            if (this._children) {
+                Adapt[this._children].on({
                     "change:_isReady": this.checkReadyStatus,
                     "change:_isComplete": this.checkCompletionStatus
                 }, this);
@@ -48,13 +48,13 @@ define(function(require) {
             
             var parent = this.getParent();
             
-            if (this.constructor.parent === ancestors) {
+            if (this._parent === ancestors) {
                 return parent;
             }
             
             var returnedAncestor = parent.getParent();
  
-            if (parent.constructor.parent !== ancestors) {
+            if (parent._parent !== ancestors) {
                 returnedAncestor = returnedAncestor.getParent();
             }
 
@@ -66,7 +66,7 @@ define(function(require) {
         findDescendants: function(descendants) {
 
             // first check if descendant is child and return child
-            if (this.constructor.children === descendants) {
+            if (this._children === descendants) {
                 return this.getChildren();
             }
             
@@ -85,7 +85,7 @@ define(function(require) {
                 
                 returnedDescedants = new Backbone.Collection(flattenedDescendants);
                 
-                if (children.models[0].constructor.children === descendants) {
+                if (children.models[0]._children === descendants) {
                     return;
                 } else {
                     allDescendants = [];
@@ -101,7 +101,7 @@ define(function(require) {
         
         getChildren: function() {
             if (this.get("_children")) return this.get("_children");
-            var children = Adapt[this.constructor.children].where({_parentId:this.get("_id")});
+            var children = Adapt[this._children].where({_parentId:this.get("_id")});
             var childrenCollection = new Backbone.Collection(children);
             this.set("_children", childrenCollection);
             
@@ -111,7 +111,7 @@ define(function(require) {
         
         getParent: function() {
             if (this.get("_parent")) return this.get("_parent");
-            var parent = Adapt[this.constructor.parent].where({_id:this.get("_parentId")});
+            var parent = Adapt[this._parent].where({_id:this.get("_parentId")});
             var parent = parent[0];
             this.set("_parent", parent);
             
@@ -121,7 +121,7 @@ define(function(require) {
         
         getSiblings: function() {
             if (this.get("_siblings")) return this.get("_siblings");
-            var siblings = _.reject(Adapt[this.constructor.siblings].where({
+            var siblings = _.reject(Adapt[this._siblings].where({
                 _parentId:this.get("_parentId")
             }), _.bind(function(model){ 
                 return model.get('_id') == this.get('_id'); 
@@ -139,7 +139,7 @@ define(function(require) {
             
             this.set.apply(this, args);
             
-            if(!this.constructor.children) return;
+            if(!this._children) return;
             
             this.getChildren().each(function(child){
                 child.setOnChildren.apply(child, args);
