@@ -13,7 +13,14 @@ define(function(require) {
     var QuestionView = ComponentView.extend({
     
         className: function() {
-            return "component question-component " + this.model.get('_component')+"-component " + this.model.get('_id'); },
+            return "component "
+            + "question-component " 
+            + this.model.get('_component')
+            + "-component " + this.model.get('_id') 
+            + " " + this.model.get('_classes')
+            + " component-" + this.model.get('_layout')
+            + " nth-child-" + this.options.nthChild;
+        },
         
         init: function() {
             this.constructor.template = this.model.get('_component');

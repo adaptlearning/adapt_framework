@@ -46,13 +46,5 @@
         "_classes":"",
         "title":"Article sixth title",
         "body":"Body text for article"
-    },
-    {
-        "_id":"a-35",
-        "_parentId":"co-20",
-        "_type":"article",
-        "_classes":"",
-        "title":"Article seventh title",
-        "body":"Body text for article"
     }
 ]

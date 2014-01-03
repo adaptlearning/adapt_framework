@@ -102,21 +102,5 @@
         "_classes":"",
         "title":"Title of second block",
         "body":"Body text for block"
-    },
-    {
-        "_id":"b-65",
-        "_parentId":"a-35",
-        "_type":"block",
-        "_classes":"",
-        "title":"Title of third block",
-        "body":"Body text for block"
-    },
-    {
-        "_id":"b-70",
-        "_parentId":"a-35",
-        "_type":"block",
-        "_classes":"",
-        "title":"Title of fourth block",
-        "body":"Body text for block"
     }
 ]
