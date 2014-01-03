@@ -22,7 +22,7 @@ define(function(require) {
             + " nth-child-" + this.options.nthChild;
         },
         
-        init: function() {
+        preRender: function() {
             this.constructor.template = this.model.get('_component');
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
             this.setupFeedbackArrays();
