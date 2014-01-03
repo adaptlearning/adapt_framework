@@ -17,7 +17,7 @@ define(function(require) {
         },
         
         preRender: function() {
-            this.$el.hide();
+            this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
         
@@ -26,7 +26,7 @@ define(function(require) {
                 $('.loading').hide();
                 $(window).scroll();
                 Adapt.trigger('pageView:ready');
-                this.$el.fadeIn('fast');
+                this.$el.animate({'opacity': 1}, 'fast');
             }, this));
         }
         
