@@ -9,9 +9,16 @@ define(function(require) {
 	var Adapt = require('coreJS/adapt');
 
 	Adapt.mediator = {};
-	Adapt.mediator.channels = {};
+	var channels = {};
+	var events = {};
 
 	Adapt.mediator.default = function(event, callback) {
+
+		if (events[event]) {
+			throw new Error('This default event already exists');
+		}
+
+		events[event] = event;
 
 		Adapt.on(event, function(attributes) {
 
@@ -22,7 +29,7 @@ define(function(require) {
 				}
 			};
 			
-			_.each(Adapt.mediator.channels[event], function(channelCallback) {
+			_.each(channels[event], function(channelCallback) {
 				channelCallback.apply(null, [eventObject, attributes]);
 			});
 
@@ -34,11 +41,11 @@ define(function(require) {
 	};
 
 	Adapt.mediator.on = function(event, callback) {
-		if (_.isArray(Adapt.mediator.channels[event])) {
-			Adapt.mediator.channels[event].push(callback);
+		if (_.isArray(channels[event])) {
+			channels[event].push(callback);
 		} else {
-			Adapt.mediator.channels[event] = [];
-			Adapt.mediator.channels[event].push(callback);
+			channels[event] = [];
+			channels[event].push(callback);
 		}
 	};
 

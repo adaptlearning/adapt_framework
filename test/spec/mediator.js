@@ -9,11 +9,11 @@ define(function(require) {
             
             var mediatorEventSent = false;
         
-            Adapt.mediator.default('testing:mediator', function() {
+            Adapt.mediator.default('testing:mediatorOne', function() {
                 mediatorEventSent = true;
             });
             
-            Adapt.trigger('testing:mediator');
+            Adapt.trigger('testing:mediatorOne');
             
             expect(mediatorEventSent).to.be(true);
             
@@ -26,11 +26,11 @@ define(function(require) {
                 body: "Body text for feedback"
             }
 
-            Adapt.mediator.default('testing:mediator', function(attributes) {
+            Adapt.mediator.default('testing:mediatorTwo', function(attributes) {
                 expect(attributes.title).to.equal("A title for feedback");
             });
 
-            Adapt.trigger('testing:mediator', feedback);
+            Adapt.trigger('testing:mediatorTwo', feedback);
 
         });
 
@@ -38,17 +38,17 @@ define(function(require) {
 
             var mediatorPreventDefault = true;
 
-            Adapt.mediator.default('testing:mediator', function() {
+            Adapt.mediator.default('testing:mediatorThree', function() {
                 mediatorPreventDefault = false;
             });
 
-            Adapt.mediator.on('testing:mediator', function(event) {
+            Adapt.mediator.on('testing:mediatorThree', function(event) {
                 event.preventDefault();
                 expect(mediatorPreventDefault).to.be(true);
                 
             })
 
-            Adapt.trigger('testing:mediator');
+            Adapt.trigger('testing:mediatorThree');
 
         });
 
@@ -56,15 +56,15 @@ define(function(require) {
 
             var mediatorPreventDefault = true;
 
-            Adapt.mediator.default('testing:mediator', function() {
+            Adapt.mediator.default('testing:mediatorFour', function() {
                 mediatorPreventDefault = false;
                 expect(mediatorPreventDefault).to.be(false);
             });
 
-            Adapt.mediator.on('testing:mediator', function(event) {
+            Adapt.mediator.on('testing:mediatorFour', function(event) {
             })
 
-            Adapt.trigger('testing:mediator');
+            Adapt.trigger('testing:mediatorFour');
 
         });
 
@@ -75,14 +75,14 @@ define(function(require) {
                 body: "Body text for feedback"
             }
 
-            Adapt.mediator.default('testing:mediator', function(attributes) {
+            Adapt.mediator.default('testing:mediatorFive', function(attributes) {
             });
 
-            Adapt.mediator.on('testing:mediator', function(event, attributes) {
+            Adapt.mediator.on('testing:mediatorFive', function(event, attributes) {
                 expect(attributes.body).to.equal("Body text for feedback");
             })
 
-            Adapt.trigger('testing:mediator', feedback);
+            Adapt.trigger('testing:mediatorFive', feedback);
 
         });
 
@@ -95,16 +95,30 @@ define(function(require) {
                 body: "Body text for feedback"
             }
 
-            Adapt.mediator.default('testing:mediator', function(attributes) {
+            Adapt.mediator.default('testing:mediatorSix', function(attributes) {
                 mediatorPreventDefault = false;
             });
 
-            Adapt.mediator.on('testing:mediator', function(event, attributes) {
+            Adapt.mediator.on('testing:mediatorSix', function(event, attributes) {
                 event.preventDefault();
                 expect(attributes.body + " " + mediatorPreventDefault).to.equal("Body text for feedback true");
             })
 
-            Adapt.trigger('testing:mediator', feedback);
+            Adapt.trigger('testing:mediatorSix', feedback);
+
+        });
+
+        it('should not allow me to overwrite a predefined default callback', function() {
+
+            Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
+                mediatorPreventDefault = false;
+            });
+
+            expect(function() {
+                Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
+                    mediatorPreventDefault = true;
+                });
+            }).to.throwError();
 
         });
 
