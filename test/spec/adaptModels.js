@@ -314,9 +314,9 @@ define(function(require) {
     it("should allow me to set my childrens attributes by passing in an object", function() {
     
       var firstPage = Adapt.contentObjects.models[0];
-      firstPage.setOnChildren({_isComplete:true});
+      firstPage.setOnChildren({_isReady:true});
       var firstComponent = Adapt.components.models[0];
-      var completeStatus = firstComponent.get('_isComplete');
+      var completeStatus = firstComponent.get('_isReady');
       expect(completeStatus).to.equal(true);
       
     });

@@ -141,9 +141,9 @@
         "graphic": {
             "alt": "alt text",
             "title": "title text",
-            "large": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
-            "medium": "http://www.cartoonbrew.com/wp-content/uploads/2013/09/minions-delay.jpg",
-            "small": "http://minionslovebananas.com/images/check-in-minion.jpg"
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         }
     },
     {
@@ -195,7 +195,7 @@
                 "title": "Narrative stage 1 title",
                 "body": "This is display text 1. If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
                 "graphic": {
-                    "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+                    "src": "course/en/images/origami-menu-one.jpg",
                     "alt": "First graphic",
                     "title": "Second graphic"
                 },
@@ -205,7 +205,7 @@
                 "title": "Narrative stage 2 title",
                 "body": "This is display text 2.",
                 "graphic": {
-                    "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+                    "src": "course/en/images/origami-menu-two.jpg",
                     "alt": "Second graphic",
                     "title": "Second graphic"
                 },
@@ -215,7 +215,7 @@
                 "title": "Narrative stage 3 title",
                 "body": "This is display text 3.",
                 "graphic": {
-                    "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+                    "src": "course/en/images/origami-menu-three.jpg",
                     "alt": "Third graphic",
                     "title": "Third graphic"
                 },
@@ -233,7 +233,7 @@
         "title": "Hot graphic",
         "body": "This is optional body text. Select the hotspots on the image to reveal the text. This component will scale down to a narrative when viewed on mobile.",
         "graphic": {
-            "src": "http://cdn.lipstiq.com/wp-content/uploads/2013/07/minions-film.jpg",
+            "src": "course/en/images/origami-hotgraphic.jpg",
             "alt": "alt text",
             "title": "title"
         },
@@ -242,7 +242,7 @@
                 "title": "Hotspot 1 title",
                 "body": "This is display text 1.",
                 "graphic": {
-                    "src": "http://minionslovebananas.com/images/check-in-minion.jpg",
+                    "src": "course/en/images/origami-menu-two.jpg",
                     "alt": "alt text",
                     "title": "title text"
                 },
@@ -254,7 +254,7 @@
                 "title": "Hotspot 2 title",
                 "body": "This is display text 2.",
                 "graphic": {
-                    "src": "http://minionslovebananas.com/images/check-in-minion.jpg",
+                    "src": "course/en/images/origami-menu-three.jpg",
                     "alt": "alt text",
                     "title": "title text"
                 },
@@ -266,7 +266,7 @@
                 "title": "Hotspot 3 title",
                 "body": "This is display text 3.",
                 "graphic": {
-                    "src": "http://minionslovebananas.com/images/check-in-minion.jpg",
+                    "src": "course/en/images/origami-menu-one.jpg",
                     "alt": "alt text",
                     "title": "title text"
                 },
