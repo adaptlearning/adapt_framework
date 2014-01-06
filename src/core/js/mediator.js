@@ -23,17 +23,15 @@ define(function(require) {
 			};
 			
 			_.each(Adapt.mediator.channels[event], function(channelCallback) {
-				channelCallback.apply(null, [eventObject]);
+				channelCallback.apply(null, [eventObject, attributes]);
 			});
-
-			console.log('should I allow callback', allowDefaultCallback);
 
 			if (allowDefaultCallback !== false) {
 				callback(attributes);
 			}
 		});
 
-	}
+	};
 
 	Adapt.mediator.on = function(event, callback) {
 		if (_.isArray(Adapt.mediator.channels[event])) {
@@ -42,6 +40,6 @@ define(function(require) {
 			Adapt.mediator.channels[event] = [];
 			Adapt.mediator.channels[event].push(callback);
 		}
-	}
+	};
 
 });
