@@ -14,8 +14,8 @@ define(function(require){
     _.extend(Adapt, Backbone.Events);
     
     Adapt.initialize = _.once(function() {
-        Adapt.trigger('adapt:initialize');
         Backbone.history.start();
+        Adapt.trigger('adapt:initialize');
     });
     
     Adapt.componentStore = {};

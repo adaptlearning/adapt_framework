@@ -110,16 +110,12 @@ define(function(require) {
 
         it('should not allow me to overwrite a predefined default callback', function() {
 
-<<<<<<< HEAD
             var mediatorPreventDefault = true;
 
-=======
->>>>>>> b114f5f4aa4cb8c03316e9249a525edc1e5252a1
             Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
                 mediatorPreventDefault = false;
             });
 
-<<<<<<< HEAD
             Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
                 mediatorPreventDefault = true;
             });
@@ -127,13 +123,6 @@ define(function(require) {
             Adapt.trigger('testing:mediatorSeven');
 
             expect(mediatorPreventDefault).to.be(false);
-=======
-            expect(function() {
-                Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
-                    mediatorPreventDefault = true;
-                });
-            }).to.throwError();
->>>>>>> b114f5f4aa4cb8c03316e9249a525edc1e5252a1
 
         });
 
