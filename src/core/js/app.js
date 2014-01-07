@@ -26,6 +26,9 @@ require([
     'theme/theme'
 ], function (Adapt, Mediator, Router, Device, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
+    var template = Handlebars.templates['loading'];
+    $('#wrapper').append(template());
+
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
     // All code that needs to run before adapt starts should go here
