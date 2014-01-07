@@ -92,7 +92,7 @@ module.exports = function(grunt) {
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
-                    "src/templates/templates.js": "src/**/*.hbs"
+                    'src/templates/templates.js': 'src/**/*.hbs'
                 }
             }
         },
@@ -161,8 +161,25 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            files: ['src/**/*.less', 'src/**/*.handlebars'],
-            tasks: ['concat', 'less', 'handlebars']
+            less: {
+                files: ['src/**/*.less'],
+                tasks: ['concat', 'less']
+            },
+            handlebars: {
+                files: ['src/**/*.hbs'],
+                tasks: ['handlebars', 'compile']
+            },
+            js: {
+                files: [
+                    'src/**/*.js', 
+                    '!src/components/components.js',
+                    '!src/extensions/extensions.js',
+                    '!src/menu/menu.js',
+                    '!src/themes/theme.js',
+                    '!src/templates/templates.js',
+                ],
+                tasks: ['compile']
+            }
         },
         connect: {
             server: {
@@ -177,6 +194,7 @@ module.exports = function(grunt) {
     
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
+    grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
 };
