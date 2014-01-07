@@ -20,7 +20,7 @@ define(function(require) {
         preRender: function() {
             this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
-        }
+        },
         
         postRender: function() { 
         },
