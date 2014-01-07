@@ -9,7 +9,6 @@ require([
     'coreJS/mediator',
     'coreJS/router',
     'coreJS/device',
-    'coreJS/mediator',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/courseModel',
