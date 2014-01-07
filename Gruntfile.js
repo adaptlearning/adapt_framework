@@ -4,7 +4,7 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         copy: {
-            main: {
+            index: {
                 files: [
                     {
                         expand: true, 
@@ -13,6 +13,10 @@ module.exports = function(grunt) {
                         filter: 'isFile', 
                         flatten: true
                     },
+                ]
+            },
+            main: {
+                files: [
                     {
                         expand: true, 
                         src: ['**/*'], 
@@ -179,6 +183,18 @@ module.exports = function(grunt) {
                     '!src/templates/templates.js',
                 ],
                 tasks: ['compile']
+            },
+            index: {
+                files: ['src/index.html'],
+                tasks: ['copy:index']
+            },
+            assets: {
+                files: [
+                    'src/theme/**/fonts/**',
+                    'src/theme/**/assets/**',
+                    'src/components/**/assets/**'
+                ],
+                tasks: ['copy:main']
             }
         },
         connect: {
@@ -194,7 +210,7 @@ module.exports = function(grunt) {
     
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:compile']);
+    grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
     grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
 };
