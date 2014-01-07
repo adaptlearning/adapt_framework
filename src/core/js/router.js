@@ -17,6 +17,9 @@ define(function(require) {
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
+            Adapt.mediator.default('navigation:menu', function() {
+                this.navigateUpALevel();
+            }, this);
         },
         
         routes: {
@@ -59,6 +62,18 @@ define(function(require) {
         
         showLoading: function() {
             $('.loading').fadeIn('fast');
+        },
+
+        navigateUpALevel: function() {
+            if (Adapt.currentLocation === 'course') {
+                return;
+            }
+            var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.currentLocation});
+            var parent = currentModel.getParent();
+            if (parent.get('_id') === 'course') {
+                return this.navigate('#', {trigger:true});
+            }
+            this.navigate('#/id/' + parent.get('_id'), {trigger:true});
         }
     
     });
