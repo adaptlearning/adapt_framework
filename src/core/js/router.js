@@ -60,7 +60,7 @@ define(function(require) {
         },
         
         showLoading: function() {
-            $('.loading').fadeIn('fast');
+            $('.loading').show();
         },
 
         navigateToParent: function() {
