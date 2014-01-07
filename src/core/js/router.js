@@ -18,7 +18,7 @@ define(function(require) {
                 document.title = Adapt.course.get('title');
             });
             Adapt.mediator.default('navigation:menu', function() {
-                this.navigateUpALevel();
+                this.navigateToParent();
             }, this);
         },
         
@@ -64,7 +64,7 @@ define(function(require) {
             $('.loading').fadeIn('fast');
         },
 
-        navigateUpALevel: function() {
+        navigateToParent: function() {
             if (Adapt.currentLocation === 'course') {
                 return;
             }
