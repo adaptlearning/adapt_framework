@@ -21,10 +21,19 @@ require([
     'scrollTo',
     'components/components', 
     'extensions/extensions', 
-    'menu/menu', 
+    'menu/menu',
     'theme/theme'
 ], function (Adapt, Router, Device, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
+    // $('#navigation').hide();
+
+    var dataLoaded = false;
+
+    if (!dataLoaded) {
+        var template = Handlebars.templates['loading'];
+        $('#wrapper').append(template());
+    }
+
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
     // All code that needs to run before adapt starts should go here
@@ -49,16 +58,21 @@ require([
         model: ComponentModel, 
         url: "course/en/components.json"
     });
-    
+
     function checkDataIsLoaded() {
         if (Adapt.contentObjects.models.length > 0 
             && Adapt.articles.models.length > 0 
             && Adapt.blocks.models.length > 0 
             && Adapt.components.models.length > 0 
             && Adapt.course.hasChanged()) {
+
+            dataLoaded = true;
+        
+            $('loading').hide();
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
             Adapt.off('adaptCollection:dataLoaded');
+
         }
     }
     
