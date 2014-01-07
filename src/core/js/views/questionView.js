@@ -23,7 +23,6 @@ define(function(require) {
         },
         
         preRender: function() {
-            this.constructor.template = this.model.get('_component');
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
             this.setupFeedbackArrays();
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
@@ -63,17 +62,16 @@ define(function(require) {
             var correctCount = this.getNumberOfCorrectAnswers();
             var score = 0;
             
-            if (this.model.has("_questionWeight"))
-            {
+            if (this.model.has("_questionWeight")) {
                 score = this.model.get("_questionWeight") * correctCount / this.model.get('items').length;
-            }
-            else
-            {
+            } else {
                 score = Adapt.course.get("_questionWeight") * correctCount / this.model.get('items').length;
             }
             
-            this.model.set("_numberOfCorrectAnswers", correctCount);
-            this.model.set("_score", score);
+            this.model.set({
+                "_numberOfCorrectAnswers": correctCount,
+                "_score": score
+            });
             this.isCorrect() ? this.onQuestionCorrect() : this.onQuestionIncorrect();
         },
         
@@ -120,34 +118,27 @@ define(function(require) {
     
         showFeedback: function() {
             
-            if(this.model.get("_isAssessment")) {
-                this.showAssessmentFeedback();
-                return;
-            }
-            
-            this.model.set('tutorAudio', this.model.get("feedback").audio)
+            this.model.set('feedbackAudio', this.model.get("feedback").audio)
             
             if(this.model.get('_isSelectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
-                    this.model.set('tutorMessage', this.getOptionSpecificFeedback());
+                    this.model.set('feedbackMessage', this.getOptionSpecificFeedback());
                 }
                 if(this.getOptionSpecificAudio()) {
-                    this.model.set('tutorAudio', this.getOptionSpecificAudio());
+                    this.model.set('feedbackAudio', this.getOptionSpecificAudio());
                 }
             }
 
-            Adapt.trigger('QuestionView:feedback', {feedback:this.model.get('tutorMessage')});
-            alert("Feedback: " + this.model.get('tutorMessage'));
-            
-            /*new TutorModel({
-                title: this.model.get('title'), 
-                message: this.model.get('tutorMessage'),
-                audio: this.model.get('tutorAudio')
-            });*/
-        },
-        
-        showAssessmentFeedback: function() {
-            alert("Assessment feedback");
+            Adapt.mediator.default('questionView:feedback', function(feedback) {
+                Adapt.trigger('questionView:showFeedback', feedback);
+            });
+
+            Adapt.trigger('questionView:feedback', {
+                title: this.model.get('title'),
+                message:this.model.get('feedbackMessage'),
+                audio:this.model.get('feedbackAudio')
+            });
+
         },
         
         showMarking: function() {
@@ -190,15 +181,15 @@ define(function(require) {
         onQuestionCorrect: function() {
             this.onComplete({correct: true});
             this.model.getParent("article").attributes.score ++;
-            this.model.set("tutorMessage", this.model.get("feedback").correct);
+            this.model.set("feedbackMessage", this.model.get("feedback").correct);
         },
         
         onQuestionIncorrect: function() {
             var feedbackIndex = Math.ceil(this.model.get("_attemptsLeft")/this.model.get("_attempts"));
             if(this.isPartlyCorrect()) { 
-                this.model.set("tutorMessage", this.model.get("feedback").partly[feedbackIndex]);
+                this.model.set("feedbackMessage", this.model.get("feedback").partly[feedbackIndex]);
             } else {
-                this.model.set("tutorMessage", this.model.get("feedback").incorrect[feedbackIndex]);
+                this.model.set("feedbackMessage", this.model.get("feedback").incorrect[feedbackIndex]);
             }
             if(feedbackIndex === 0) {
                 this.onComplete({correct: false});
@@ -208,7 +199,7 @@ define(function(require) {
         onResetClicked: function(event) {
             if(event) event.preventDefault(); 
             this.resetQuestion({resetAttempts:false, resetCorrect:true});
-            this.$(".widget").removeClass("submitted");
+            this.$(".component-widget").removeClass("submitted");
             this.resetItems();
         },
     
@@ -226,7 +217,7 @@ define(function(require) {
                 _isSubmitted: true,
                 _attemptsLeft: attemptsLeft
             });
-            this.$(".widget").addClass("submitted");
+            this.$(".component-widget").addClass("submitted");
             
             this.storeUserAnswer();
             this.markQuestion();

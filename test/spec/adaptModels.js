@@ -182,6 +182,12 @@ define(function(require) {
       expect(firstChildTitle).to.be('Title of our very first component');
       
     });
+
+    it("should allow me to get my parent if I'm a contentObject but my parent is not the course model", function() {
+      var contentObject = Adapt.contentObjects.findWhere({_id:'co-15'});
+      var parent = contentObject.getParent();
+      expect(parent.get('title')).to.be('Title of second page model');
+    });
     
     it("should allow me to get my parent if I'm an article", function() {
     

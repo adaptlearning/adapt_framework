@@ -12,13 +12,13 @@ define(function(require) {
 	var channels = {};
 	var events = {};
 
-	Adapt.mediator.default = function(event, callback) {
+	Adapt.mediator.default = function(event, callback, context) {
 
 		if (events[event]) {
-			throw new Error('This default event already exists');
+			return;
 		}
 
-		events[event] = event;
+		events[event] = callback;
 
 		Adapt.on(event, function(attributes) {
 
@@ -30,11 +30,11 @@ define(function(require) {
 			};
 			
 			_.each(channels[event], function(channelCallback) {
-				channelCallback.apply(null, [eventObject, attributes]);
+				channelCallback.apply(this, [eventObject, attributes]);
 			});
 
 			if (allowDefaultCallback !== false) {
-				callback(attributes);
+				callback.call(context, attributes);
 			}
 		});
 
