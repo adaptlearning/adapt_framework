@@ -33,7 +33,6 @@ define(function(require) {
         
         handleId: function(id) {
             
-            Adapt.trigger('router:handleId', id);
             this.removeViews();
             this.showLoading();
             Adapt.currentLocation = id;
