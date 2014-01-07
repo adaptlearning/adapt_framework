@@ -60,6 +60,9 @@ require([
             && Adapt.blocks.models.length > 0 
             && Adapt.components.models.length > 0 
             && Adapt.course.hasChanged()) {
+
+            $('.loading').hide();
+        
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
             Adapt.off('adaptCollection:dataLoaded');
