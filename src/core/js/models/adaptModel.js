@@ -12,7 +12,12 @@ define(function(require) {
     var AdaptModel = Backbone.Model.extend({
 
         initialize: function() {
-            if (this.get('_type') === 'page') this._children = 'articles';
+            if (this.get('_type') === 'page') {
+                this._children = 'articles';
+            }
+            if (this._siblings === 'contentObjects' && this.get('_parentId') !== 'course') {
+                this._parent = 'contentObjects';
+            }
             if (this._children) {
                 Adapt[this._children].on({
                     "change:_isReady": this.checkReadyStatus,
@@ -111,6 +116,9 @@ define(function(require) {
         
         getParent: function() {
             if (this.get("_parent")) return this.get("_parent");
+            if (this._parent === "course") {
+                return Adapt.course;
+            }
             var parent = Adapt[this._parent].where({_id:this.get("_parentId")});
             var parent = parent[0];
             this.set("_parent", parent);

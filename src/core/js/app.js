@@ -6,9 +6,9 @@
 
 require([
     'coreJS/adapt',
+    'coreJS/mediator',
     'coreJS/router',
     'coreJS/device',
-    'coreJS/mediator',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/courseModel',
@@ -24,7 +24,7 @@ require([
     'extensions/extensions', 
     'menu/menu', 
     'theme/theme'
-], function (Adapt, Router, Device, Mediator, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Mediator, Router, Device, NavigationView, AdaptCollection, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
