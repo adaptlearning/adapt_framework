@@ -23,7 +23,7 @@
     "grunt-contrib-watch": "~0.5.1",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-connect": "~0.3.0",
-    "grunt-concurrent": "~0.3.0",
+    "grunt-concurrent": "~0.4.2",
     "grunt-open": "~0.2.2",
     "grunt-bower-requirejs": "~0.7.1",
     "grunt-requirejs-bundle": "~0.0.7",
@@ -31,7 +31,7 @@
     "karma": "~0.9",
     "karma-mocha": "*",
     "karma-expect": "*",
-    "bower":"*"
+    "bower": "*"
   },
   "dependencies": {
     "assemble-less": "~0.5.3",
