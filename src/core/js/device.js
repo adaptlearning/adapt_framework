@@ -7,33 +7,35 @@
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
-    
+
     Adapt.device = {};
     
     var $window = $(window);
     
     // Check whether device is touch enabled
     Adapt.device.touch = Modernizr.touch;
-    
-    // To be taken from theme when setup
-    var mediumScreenSize = 759;
-    var smallScreenSize = 519;
+      
+    Adapt.once('app:dataReady', function() {
+        // The theme.json will have been loaded at this point
+        Adapt.device.screenSize = checkScreenSize();
+    });
+
     Adapt.device.screenWidth = $window.width();
     
     function checkScreenSize() {
+       
         var screenSize;
-        if (Adapt.device.screenWidth > mediumScreenSize) {
+
+        if (Adapt.device.screenWidth > Adapt.config.get('screenSize').medium) {
             screenSize = 'large';
-        } else if (Adapt.device.screenWidth > smallScreenSize) {
+        } else if (Adapt.device.screenWidth > Adapt.config.get('screenSize').small) {
             screenSize = 'medium';
         } else {
             screenSize = 'small';
         }
         return screenSize;
     }
-    
-    Adapt.device.screenSize = checkScreenSize();
-    
+        
     $window.on('resize', function() {
         Adapt.device.screenWidth = $window.width();
         Adapt.trigger('device:resize', Adapt.device.screenWidth);

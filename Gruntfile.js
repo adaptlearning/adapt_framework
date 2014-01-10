@@ -209,8 +209,37 @@ module.exports = function(grunt) {
     });
     
     grunt.loadNpmTasks('grunt-contrib-concat');
+
+    // This is a simple function to take the course's config.json and append the theme.json
+    grunt.registerTask('create-json-config', 'Creating config.json', function() {
+
+        var themeJsonFile = '';
+
+        // As any theme folder may be used, we need to first find the location of the
+        // theme.json file
+        grunt.file.recurse('src/theme/', function(abspath, rootdir, subdir, filename) {
+            if (filename == 'theme.json') {
+                themeJsonFile = rootdir + subdir + '/' + filename;
+            }
+        });
+
+        if (themeJsonFile == '') {
+            grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
+        }
+
+        var configJson = grunt.file.readJSON('src/course/config.json');
+        var themeJson = grunt.file.readJSON(themeJsonFile);
+
+        // This effectively combines the JSON   
+        for (var prop in themeJson) {           
+            configJson[prop] = themeJson[prop];
+        }
+
+        grunt.file.write('build/course/config.json', JSON.stringify(configJson));
+    });
+
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
     grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
-    grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
-    grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev']);
+    grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
+    grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
 };
