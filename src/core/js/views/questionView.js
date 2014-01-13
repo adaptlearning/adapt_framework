@@ -13,10 +13,6 @@ define(function(require) {
     var QuestionView = ComponentView.extend({
     
         className: function() {
-            var visible = "visibility-hidden";
-            if (this.model.get('_isVisible')) {
-                visible = "";
-            }
             return "component "
             + "question-component " 
             + this.model.get('_component')
