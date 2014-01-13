@@ -23,6 +23,7 @@ define(function(require) {
         },
         
         preRender: function() {
+            this.setupDefaultSettings();
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
             this.setupFeedbackArrays();
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
@@ -60,14 +61,8 @@ define(function(require) {
         
         markQuestion: function() {
             var correctCount = this.getNumberOfCorrectAnswers();
-            var score = 0;
-            
-            if (this.model.has("_questionWeight")) {
-                score = this.model.get("_questionWeight") * correctCount / this.model.get('items').length;
-            } else {
-                score = Adapt.course.get("_questionWeight") * correctCount / this.model.get('items').length;
-            }
-            
+            var score = this.model.get("_questionWeight") * correctCount / this.model.get('items').length;
+
             this.model.set({
                 "_numberOfCorrectAnswers": correctCount,
                 "_score": score
@@ -107,6 +102,15 @@ define(function(require) {
             }
         },
         
+        setupDefaultSettings: function() {
+            if (!this.model.has("_questionWeight")) {
+                this.model.set("_questionWeight", Adapt.course.get("_questionWeight"));
+            }
+            if (!this.model.has("buttons")) {
+                this.model.set("buttons", Adapt.course.get("buttons"));
+            }
+        },
+
         setupFeedbackArrays: function() {
             if(_.isString(this.model.get('feedback').partly)) {
                 this.model.get('feedback').partly = [this.model.get('feedback').partly, this.model.get('feedback').partly] 

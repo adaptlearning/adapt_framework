@@ -197,6 +197,17 @@ module.exports = function(grunt) {
                 tasks: ['copy:main']
             }
         },
+        
+        open: {
+            server: {
+                path: 'http://localhost:<%= connect.server.options.port %>/'
+            }
+        },
+
+        concurrent: {
+            server: ['connect:server', 'open:server', 'watch']
+        },
+
         connect: {
             server: {
               options: {
@@ -240,6 +251,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
     grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
+    grunt.registerTask('server',['concurrent:server']);
     grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
     grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
 };
