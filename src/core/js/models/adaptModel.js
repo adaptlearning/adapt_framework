@@ -34,7 +34,8 @@ define(function(require) {
             _isAvailable:true,
             _isOptional: false,
             _isTrackable:true,
-            _isReady:false
+            _isReady:false,
+            _isVisible:true
         },
         
         init: function() {},

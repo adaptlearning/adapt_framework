@@ -12,9 +12,14 @@ define(function(require) {
     var MenuView = AdaptView.extend({
 
     	className: function() {
+            var visible = "visibility-hidden";
+            if (this.model.get('_isVisible')) {
+                visible = "";
+            }
     		return 'menu ' 
             + 'menu-' 
-            + this.model.get('_id');
+            + this.model.get('_id')
+            + " " + this.setVisibility();
     	},
 
         preRender: function() {

@@ -13,11 +13,16 @@ define(function(require) {
     var QuestionView = ComponentView.extend({
     
         className: function() {
+            var visible = "visibility-hidden";
+            if (this.model.get('_isVisible')) {
+                visible = "";
+            }
             return "component "
             + "question-component " 
             + this.model.get('_component')
             + "-component " + this.model.get('_id') 
             + " " + this.model.get('_classes')
+            + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
             + " nth-child-" + this.options.nthChild;
         },
