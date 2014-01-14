@@ -309,24 +309,22 @@
         "_layout":"left",
         "_attempts":1,
         "_questionWeight":1,
-        "_isEnabledOnRevisit":true,
-        "_isAssessment":false,
-        "_isRandom":false,
-        "_isSelectable":1,
+        "_random":false,
+        "_selectable":1,
         "title": "MCQ",
         "body": "Which of the following options would you consider to be correct?",
         "items": [
             {
                 "text": "This is option 1.",
-                "correct":true
+                "shouldBeSelected":true
             },
             {
                 "text": "This is option 2.",
-                "correct":false
+                "shouldBeSelected":false
             },
             {
                 "text": "This is option 3.",
-                "correct":false
+                "shouldBeSelected":false
             }
         ],
         "feedback":{
