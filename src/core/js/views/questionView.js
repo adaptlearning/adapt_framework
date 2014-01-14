@@ -18,6 +18,7 @@ define(function(require) {
             + this.model.get('_component')
             + "-component " + this.model.get('_id') 
             + " " + this.model.get('_classes')
+            + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
             + " nth-child-" + this.options.nthChild;
         },

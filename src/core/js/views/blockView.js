@@ -14,6 +14,7 @@ define(function(require) {
             return "block " 
             + this.model.get('_id') 
             + " " + this.model.get('_classes')
+            + " " + this.setVisibility() 
             + " nth-child-" 
             + this.options.nthChild;;
         }

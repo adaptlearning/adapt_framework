@@ -14,6 +14,7 @@ define(function(require) {
         
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
+            this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             this.preRender();
             this.render();
         },
@@ -57,7 +58,9 @@ define(function(require) {
         },
       
         setCompletionStatus: function() {
-            this.model.set('_isComplete', true);
+            if (this.model.get('_isVisible')) {
+                this.model.set('_isComplete', true);
+            }
         },
 
         remove: function() {
@@ -67,6 +70,21 @@ define(function(require) {
             this.stopListening();
             return this;
         },
+
+        setVisibility: function() {
+            var visible = "visibility-hidden";
+            if (this.model.get('_isVisible')) {
+                visible = "";
+            }
+            return visible;
+        },
+
+        toggleVisibility: function() {
+            if (this.model.get('_isVisible')) {
+                return this.$el.removeClass('visibility-hidden');
+            }
+            this.$el.addClass('visibility-hidden');
+        }
         
     });
     

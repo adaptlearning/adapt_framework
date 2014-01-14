@@ -14,7 +14,8 @@ define(function(require) {
         className: function() {
             return "article " 
             + this.model.get('_id')
-            + " " + this.model.get('_classes') 
+            + " " + this.model.get('_classes')
+            + " " + this.setVisibility() 
             + " nth-child-" 
             + this.options.nthChild;
         }
