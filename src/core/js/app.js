@@ -37,7 +37,7 @@ require([
 
     var courseFolder = "course/" + Adapt.config.get('_defaultLanguage')+"/";
 
-    Adapt.course = new CourseModel({url:courseFolder + "/course.json"});
+    Adapt.course = new CourseModel({url:courseFolder + "course.json"});
     
     Adapt.contentObjects = new AdaptCollection(null, {
         model: ContentObjectModel,
@@ -64,7 +64,7 @@ require([
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
-            && Adapt.config !== null
+            && Adapt.config.hasChanged()
             && Adapt.course.hasChanged()) {
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
