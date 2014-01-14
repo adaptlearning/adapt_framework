@@ -348,6 +348,7 @@
         "_component": "matching",
         "_attempts": 2,
         "_random": true,
+        "_questionWeight":10,
         "title": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "buttons": {
@@ -433,6 +434,7 @@
         "_allowsAnyOrder": false,
         "_allowsAnyCase": true,
         "_allowsPunctuation": true,
+        "_questionWeight":10,
         "buttons": {
             "submit": "Submit",
             "reset": "Reset",
