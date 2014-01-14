@@ -104,7 +104,7 @@ define(function(require) {
         
         setupDefaultSettings: function() {
             if (!this.model.has("_questionWeight")) {
-                this.model.set("_questionWeight", Adapt.course.get("_questionWeight"));
+                this.model.set("_questionWeight", Adapt.config.get("_questionWeight"));
             }
             if (!this.model.has("buttons")) {
                 this.model.set("buttons", Adapt.course.get("buttons"));
