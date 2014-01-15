@@ -1,5 +1,6 @@
 {
     "_defaultLanguage": "en",
+    "_questionWeight": 1,
     "tracking": {
         "requireAllModulesCompleted": true,
         "requireQuizPassed": false

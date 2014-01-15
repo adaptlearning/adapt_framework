@@ -3,7 +3,6 @@
     "_type":"course",
     "title":"Adapt v0.0.1",
     "body":"This is the first version of the open source re-architecture",
-    "_questionWeight":1,
     "buttons": {
         "submit":"Submit",
         "reset":"Reset",
