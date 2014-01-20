@@ -8,6 +8,7 @@ define(function(require){
 
     var _ = require('underscore');
     var Backbone = require('backbone');
+    var Helpers = require('coreHelpers');
     
     var Adapt = {};
 
