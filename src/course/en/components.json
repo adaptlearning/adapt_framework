@@ -296,7 +296,7 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
-        "_layout":"left",
+        "_layout":"right",
         "title":"Title of our very third component",
         "body":"Whoo - if we get this rendering we've made the big time"
     },
@@ -343,7 +343,7 @@
         "_id":"c-110",
         "_parentId":"b-55",
         "_classes": "",
-        "_layout": "left",
+        "_layout": "right",
         "_type":"component",
         "_component": "matching",
         "_attempts": 2,
