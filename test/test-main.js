@@ -20,6 +20,7 @@ requirejs.config({
         coreViews: 'core/js/views',
         coreModels: 'core/js/models',
         coreCollections: 'core/js/collections',
+        coreHelpers: 'core/js/helpers',
         templates: 'templates/templates',
         spec: '../test/spec'
     },

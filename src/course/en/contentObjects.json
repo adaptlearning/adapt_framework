@@ -5,7 +5,7 @@
         "_type":"page",
         "_classes":"",
         "title":"Demo page",
-        "body":"This page should contain a working Adapt page will all core bundled components and plugins working.",
+        "body":"This page contains a working Adapt page with all core bundled components and plugins working.",
         "graphic": {
             "alt": "alt text",
             "src": "course/en/images/origami-menu-one.jpg"
@@ -18,7 +18,7 @@
         "_type":"menu",
         "_classes":"",
         "title":"Want to know more about our components",
-        "body":"We've split the presentation and question components to give you a better overview of Adapt",
+        "body":"We've split the presentation and question components to give you a better overview of Adapt.",
         "graphic": {
             "alt": "alt text",
             "src": "course/en/images/origami-menu-two.jpg"
