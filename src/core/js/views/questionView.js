@@ -134,7 +134,7 @@ define(function(require) {
                 }
             }
 
-            Adapt.mediator.default('questionView:feedback', function(feedback) {
+            Adapt.mediator.defaultCallback('questionView:feedback', function(feedback) {
                 Adapt.trigger('questionView:showFeedback', feedback);
             });
 

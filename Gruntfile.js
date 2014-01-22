@@ -32,7 +32,13 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true, 
-                        src: ['src/core/js/libraries/require.js', 'src/core/js/libraries/modernizr.js'], 
+                        src: [
+                            'src/core/js/libraries/require.js', 
+                            'src/core/js/libraries/modernizr.js',
+                            'src/core/js/libraries/json2.js',
+                            'src/core/js/libraries/consoles.js',
+                            'src/core/js/libraries/swfObject.js'
+                        ], 
                         dest: 'build/libraries/', 
                         filter: 'isFile', 
                         flatten: true

@@ -1,8 +1,8 @@
 {
     "_id":"course",
     "_type":"course",
-    "title":"Adapt v0.0.1",
-    "body":"This is the first version of the open source re-architecture",
+    "title":"Welcome to Adapt Learning - v1.0.0",
+    "body":"This release is aimed at developers who want to get involved with the Adapt Open Source initiative.",
     "buttons": {
         "submit":"Submit",
         "reset":"Reset",

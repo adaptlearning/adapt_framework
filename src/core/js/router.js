@@ -17,7 +17,7 @@ define(function(require) {
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
-            Adapt.mediator.default('navigation:menu', function() {
+            Adapt.mediator.defaultCallback('navigation:menu', function() {
                 this.navigateToParent();
             }, this);
         },

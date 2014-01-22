@@ -12,7 +12,7 @@ define(function(require) {
 	var channels = {};
 	var events = {};
 
-	Adapt.mediator.default = function(event, callback, context) {
+	Adapt.mediator.defaultCallback = function(event, callback, context) {
 
 		if (events[event]) {
 			return;

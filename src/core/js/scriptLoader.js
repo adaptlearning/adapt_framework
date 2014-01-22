@@ -10,7 +10,7 @@ Modernizr.load([
         nope: 'core/js/libraries/json2.js'
     },
     {
-        test: window.console,
+        test: navigator.userAgent.match(/MSIE\s(?!9.0)/),
         nope: 'core/js/libraries/consoles.js'
     },
     {
