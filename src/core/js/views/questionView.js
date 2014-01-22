@@ -52,7 +52,9 @@ define(function(require) {
             if (selectedItem.hasOwnProperty('feedback')) {
                 return selectedItem.feedback;
             } else {
-                if (this.isPartlyCorrect()) {
+                if (this.isCorrect()) {
+                    return this.model.get('feedback').correct;
+                } else if (this.isPartlyCorrect()) {
                     return this.model.get('feedback').partly;
                 } else {
                     return this.model.get('feedback').incorrect;
@@ -123,11 +125,13 @@ define(function(require) {
         },
 
         setupFeedbackArrays: function() {
-            if(_.isString(this.model.get('feedback').partly)) {
-                this.model.get('feedback').partly = [this.model.get('feedback').partly, this.model.get('feedback').partly] 
-            }
-            if(_.isString(this.model.get('feedback').incorrect)) {
-                this.model.get('feedback').incorrect = [this.model.get('feedback').incorrect, this.model.get('feedback').incorrect]
+            // Randomize the selection of the feedback messages (if using an array)       
+            if(!_.isString(this.model.get('feedback').partly)) {
+                this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
+            } 
+
+            if(!_.isString(this.model.get('feedback').incorrect)) {
+                this.model.get('feedback').incorrect = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
             }
         },
     
