@@ -9,7 +9,7 @@ define(function(require) {
             
             var mediatorEventSent = false;
         
-            Adapt.mediator.default('testing:mediatorOne', function() {
+            Adapt.mediator.defaultCallback('testing:mediatorOne', function() {
                 mediatorEventSent = true;
             });
             
@@ -26,7 +26,7 @@ define(function(require) {
                 body: "Body text for feedback"
             }
 
-            Adapt.mediator.default('testing:mediatorTwo', function(attributes) {
+            Adapt.mediator.defaultCallback('testing:mediatorTwo', function(attributes) {
                 expect(attributes.title).to.equal("A title for feedback");
             });
 
@@ -38,7 +38,7 @@ define(function(require) {
 
             var mediatorPreventDefault = true;
 
-            Adapt.mediator.default('testing:mediatorThree', function() {
+            Adapt.mediator.defaultCallback('testing:mediatorThree', function() {
                 mediatorPreventDefault = false;
             });
 
@@ -56,7 +56,7 @@ define(function(require) {
 
             var mediatorPreventDefault = true;
 
-            Adapt.mediator.default('testing:mediatorFour', function() {
+            Adapt.mediator.defaultCallback('testing:mediatorFour', function() {
                 mediatorPreventDefault = false;
                 expect(mediatorPreventDefault).to.be(false);
             });
@@ -75,7 +75,7 @@ define(function(require) {
                 body: "Body text for feedback"
             }
 
-            Adapt.mediator.default('testing:mediatorFive', function(attributes) {
+            Adapt.mediator.defaultCallback('testing:mediatorFive', function(attributes) {
             });
 
             Adapt.mediator.on('testing:mediatorFive', function(event, attributes) {
@@ -95,7 +95,7 @@ define(function(require) {
                 body: "Body text for feedback"
             }
 
-            Adapt.mediator.default('testing:mediatorSix', function(attributes) {
+            Adapt.mediator.defaultCallback('testing:mediatorSix', function(attributes) {
                 mediatorPreventDefault = false;
             });
 
@@ -112,11 +112,11 @@ define(function(require) {
 
             var mediatorPreventDefault = true;
 
-            Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
+            Adapt.mediator.defaultCallback('testing:mediatorSeven', function(attributes) {
                 mediatorPreventDefault = false;
             });
 
-            Adapt.mediator.default('testing:mediatorSeven', function(attributes) {
+            Adapt.mediator.defaultCallback('testing:mediatorSeven', function(attributes) {
                 mediatorPreventDefault = true;
             });
 
