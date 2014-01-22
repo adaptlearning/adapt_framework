@@ -218,7 +218,7 @@ module.exports = function(grunt) {
             // As the XML file is unlikely to change much at this point, a concatenated string is used
             // We could possibly read this in from a template XML asset in the future
             var manifestXml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-            manifestXml += '<manifest identifier="kineo_manifest" version="1" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">\n';
+            manifestXml += '<manifest identifier="adapt_manifest" version="1" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">\n';
             manifestXml += '    <metadata>\n';
             manifestXml += '        <schema>ADL SCORM</schema>\n';
             manifestXml += '        <schemaversion>1.2</schemaversion>\n';
@@ -233,11 +233,11 @@ module.exports = function(grunt) {
             manifestXml += '            </general>\n';
             manifestXml += '        </lom>\n';
             manifestXml += '    </metadata>\n';
-            manifestXml += '<organizations default="kineo_scorm">\n';
-            manifestXml += '    <organization identifier="kineo_scorm">\n';
-            manifestXml += '        <title>Kineo Adapt SCORM Test</title>\n';
+            manifestXml += '<organizations default="adapt_scorm">\n';
+            manifestXml += '    <organization identifier="adapt_scorm">\n';
+            manifestXml += '        <title>Adapt SCORM Test</title>\n';
             manifestXml += '        <item identifier="item_1" isvisible="true" identifierref="res1">\n';
-            manifestXml += '            <title>Kineo Adapt SCORM Test</title>\n';
+            manifestXml += '            <title>Adapt SCORM Test</title>\n';
             manifestXml += '            <adlcp:masteryscore>70</adlcp:masteryscore>\n';
             manifestXml += '        </item>\n';
             manifestXml += '    </organization>\n';
