@@ -47,7 +47,17 @@ define(function(require) {
         },
         
         getOptionSpecificFeedback: function() {
-            return this.getSelectedItems().feedback;
+            // Check if option specific feedback has been set
+            var selectedItem = this.getSelectedItems();
+            if (selectedItem.hasOwnProperty('feedback')) {
+                return selectedItem.feedback;
+            } else {
+                if (this.isPartlyCorrect()) {
+                    return this.model.get('feedback').partly;
+                } else {
+                    return this.model.get('feedback').incorrect;
+                }
+            }
         },
     
         getOptionSpecificAudio: function() {
@@ -125,7 +135,7 @@ define(function(require) {
             
             this.model.set('feedbackAudio', this.model.get("feedback").audio)
             
-            if(this.model.get('_isSelectable') === 1) {
+            if(this.model.get('_selectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
                     this.model.set('feedbackMessage', this.getOptionSpecificFeedback());
                 }
