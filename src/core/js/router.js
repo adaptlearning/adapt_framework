@@ -29,6 +29,7 @@ define(function(require) {
         
         handleCourse: function() {
             this.removeViews();
+            this.setContentObjectToVisited(Adapt.course);
             Adapt.trigger('router:menu', Adapt.course);         
             Adapt.currentLocation = "course";
             $('#wrapper').removeClass().addClass('location-menu');
@@ -41,7 +42,7 @@ define(function(require) {
             Adapt.currentLocation = id;
                 
             var currentModel = Adapt.contentObjects.findWhere({_id:id});
-            
+            this.setContentObjectToVisited(currentModel);
             if (currentModel.get('_type') == 'page') {
                 Adapt.trigger('router:page', currentModel);
                 $('#wrapper')
@@ -73,7 +74,12 @@ define(function(require) {
                 return this.navigate('#', {trigger:true});
             }
             this.navigate('#/id/' + parent.get('_id'), {trigger:true});
+        },
+
+        setContentObjectToVisited: function(model) {
+            model.set('_isVisited', true);
         }
+
     
     });
     
