@@ -6,18 +6,22 @@
         "_component":"text",
         "_classes":"",
         "_layout":"left",
-        "title":"Title of our very first component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "title":"Our first look at a component",
+        "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component."
     },
     {
         "_id":"c-10",
         "_parentId":"b-05",
         "_type":"component",
-        "_component":"text",
+        "_component":"media",
         "_classes":"",
         "_layout":"right",
-        "title":"Title of our very second component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "title":"<br>",
+        "body": "",
+        "media": {
+            "mp4": "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v",
+            "ogv": "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_stereo.ogg"
+        }
     },
     {
         "_id":"c-15",

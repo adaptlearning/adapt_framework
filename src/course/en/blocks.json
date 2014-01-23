@@ -4,8 +4,8 @@
         "_parentId":"a-05",
         "_type":"block",
         "_classes":"",
-        "title":"Title of first block",
-        "body":"Body text for block"
+        "title":"How is Adapt structured?",
+        "body":"Adapt uses a layout we've labelled ABC. When a user enters a page they are shown the page title. Inside a page we have articles, which are used to separate out relevant learning material. Blocks are placed inside articles and blocks hold the interactive components."
     },
     {
         "_id":"b-10",
