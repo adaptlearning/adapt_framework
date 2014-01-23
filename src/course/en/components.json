@@ -5,9 +5,23 @@
         "_type":"component",
         "_component":"text",
         "_classes":"",
-        "_layout":"full",
-        "title": "Welcome to Adapt Learning",
-        "body": "Welcome to the <b>Adapt Learning</b> demo page.<br><br>This page contains a sample of the functionality that will be available in the upcoming releases of the open source code in January 2014.<br><br>The content  itself will explain some of the thinking that’s gone into the design and development of the framework, as well as highlighting what’s on the roadmap for release later in the year.<span class='scroll'>Scroll</span>"
+        "_layout":"left",
+        "title":"Our first look at a component",
+        "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component."
+    },
+    {
+        "_id":"c-10",
+        "_parentId":"b-05",
+        "_type":"component",
+        "_component":"media",
+        "_classes":"",
+        "_layout":"right",
+        "title":"<br>",
+        "body": "",
+        "media": {
+            "mp4": "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v",
+            "ogv": "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_stereo.ogg"
+        }
     },
     {
         "_id":"c-15",
@@ -51,14 +65,46 @@
         ]
     },
     {
-        "_id":"c-25",
+        "_id":"c-20",
         "_parentId":"b-15",
         "_type":"component",
-        "_component":"text",
+        "_component":"accordion",
         "_classes":"",
         "_layout":"left",
-        "title":"Title of our very fifth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "title": "Scrolling: Some considerations",
+        "body": "Here are some reasons why we think scrolling is perfectly fine – and even desirable: Select the headings below to reveal the text.",
+        "items": [
+            {
+                "alt": "Your learners already do it",
+                "title": "Your learners already do it",
+                "body": "Visit a website today and vertical scrolling will most likely factor into the overall design of the site.  Users understand what’s expected of them and are scrolling down the page to read content.  Feedback from our user trialling of scrolling page designs supports the assertion that users ‘get it’. Actually, they preferred this approach over more traditional template designs.<br><br>Surely we want to present learning that uses conventions our audience is most comfortable with?"
+                },
+                {
+                "alt": "Device proof your learning",
+                "title": "Device proof your learning",
+                "body": "More and more learners are accessing content on a wide range of devices and each of these devices will display pages differently. The only thing you can guarantee is if you’re accessing content on a smartphone vertical scrolling will be required. Why not embrace this and place responsive design and vertical scrolling at the heart of your design?"
+                },
+                {
+                "alt": "Meaningful navigation",
+                "title": "Meaningful navigation",
+                "body": "It's common sense to cluster any related content on a single page that’s either as short or as long as it needs to be.  Not only does this reduce any unnecessary navigation, it also helps the learner make sense of the structure and the relationship between content. Navigation becomes meaningful, rather than a by-product of the template size."
+                },
+                {
+                "alt": "‘Everything above the fold’ might be old hat but...",
+                "title": "‘Everything above the fold’ might be old hat but...",
+                "body": "...The principle remains. Due to the variety of devices used to access web content you’ll only be able to guarantee the first 400 or 500 pixels of a page will be visible, so there’s no harm in putting the important stuff first and hooking your learners early. In fact, we advocate this as good practice, regardless of what page layouts are being used."
+                },
+                {
+                "alt": "More flexibility",
+                "title": "More flexibility",
+                "body": "Scrolling pages still allow you to present content via interactive elements (we call them components instead of templates), but with a scrolling page there is far more flexibility in how these elements are presented. Layouts can now vary in size and the density of content, which in turn creates more space for branding to be incorporated. Or indeed some precious white space to give the content space to breathe.  Overruns are also a thing of the past meaning localisation of content becomes a simpler proposition as well."
+                },
+                {
+                "alt": "Don’t throw the baby out with the bath water",
+                "title": "Don’t throw the baby out with the bath water",
+                "body": "None of the above means we stop following instructional design best practice.  We continue to put the learner at the heart of what we produce, writing well-structured which follows an appropriate learning model. It’s more about looking around at what is going on within the wider web community and taking note of changes in best practice and the nature of how content, is being accessed."
+                }
+        ]
     },
     {
         "_id":"c-30",
@@ -71,15 +117,18 @@
         "body":"Whoo - if we get this rendering we've made the big time"
     },
     {
-        "_id":"c-35",
-        "_parentId":"b-20",
-        "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"left",
-        "title":"Title of our very second component",
-        "body":"Whoo - if we get this rendering we've made the big time"
-    },
+        "id": "c-35",
+        "class": "",
+        "layout": "full",
+        "component": "graphic",
+        "title": "It’s as simple as A, B, C",
+        "body": "The longer, scrolling pages made possible with Adapt require their own hierarchy and nomenclature to ensure content is structured in a coherent manner. Accordingly, we’ve agreed on the following structure for a page:",
+        "graphic": {
+            "src": "course/assets/graphic_large.png",
+            "alt": "alt text",
+            "title": "title text"
+        }
+    },     
     {
         "_id":"c-40",
         "_parentId":"b-20",
