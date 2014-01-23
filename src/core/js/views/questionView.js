@@ -47,7 +47,19 @@ define(function(require) {
         },
         
         getOptionSpecificFeedback: function() {
-            return this.getSelectedItems().feedback;
+            // Check if option specific feedback has been set
+            var selectedItem = this.getSelectedItems();
+            if (selectedItem.hasOwnProperty('feedback')) {
+                return selectedItem.feedback;
+            } else {
+                if (this.isCorrect()) {
+                    return this.model.get('feedback').correct;
+                } else if (this.isPartlyCorrect()) {
+                    return this.model.get('feedback').partly;
+                } else {
+                    return this.model.get('feedback').incorrect;
+                }
+            }
         },
     
         getOptionSpecificAudio: function() {
@@ -113,11 +125,13 @@ define(function(require) {
         },
 
         setupFeedbackArrays: function() {
-            if(_.isString(this.model.get('feedback').partly)) {
-                this.model.get('feedback').partly = [this.model.get('feedback').partly, this.model.get('feedback').partly] 
-            }
-            if(_.isString(this.model.get('feedback').incorrect)) {
-                this.model.get('feedback').incorrect = [this.model.get('feedback').incorrect, this.model.get('feedback').incorrect]
+            // Randomize the selection of the feedback messages (if using an array)       
+            if(!_.isString(this.model.get('feedback').partly)) {
+                this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
+            } 
+
+            if(!_.isString(this.model.get('feedback').incorrect)) {
+                this.model.get('feedback').incorrect = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
             }
         },
     
@@ -125,7 +139,7 @@ define(function(require) {
             
             this.model.set('feedbackAudio', this.model.get("feedback").audio)
             
-            if(this.model.get('_isSelectable') === 1) {
+            if(this.model.get('_selectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
                     this.model.set('feedbackMessage', this.getOptionSpecificFeedback());
                 }
