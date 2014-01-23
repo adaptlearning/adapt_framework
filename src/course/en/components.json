@@ -110,25 +110,107 @@
         "_id":"c-30",
         "_parentId":"b-15",
         "_type":"component",
-        "_component":"text",
+        "_component":"mcq",
         "_classes":"",
         "_layout":"right",
-        "title":"Title of our very first component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_attempts":1,
+        "_questionWeight":1,
+        "_random":true,
+        "_selectable":4,
+        "title": "Multiple choice question example",
+        "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach? Select one or more options from the list below and select <b>Submit.</b>",
+        "items": [
+            {
+                "text": "Vertical scrolling as a means of navigation on the web is common place and therefore familiar to users",
+                "shouldBeSelected":true
+            },
+            {
+                "text": "Placing scrolling at the heart of your approach means designs are more mobile friendly",
+                "shouldBeSelected":true
+            },
+            {
+                "text": "It reduces the need for unnecessary navigation as pages can be as long as they need to be",
+                "shouldBeSelected":true
+            },
+            {
+                "text": "It means that you no longer need to first gain your learners' attention",
+                "shouldBeSelected":false
+            }
+        ],
+        "feedback":{
+            "correct": "That’s correct. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
+            "incorrect": [
+            "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
+            "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+            ],
+            "partly": "That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+        },
+        "buttons":{
+            "submit": "Submit",
+            "reset": "Reset",
+            "model": "Model Answer",
+            "user": "My Answer"
+        }
     },
     {
-        "id": "c-35",
-        "class": "",
-        "layout": "full",
-        "component": "graphic",
+        "_id": "c-35",
+        "_parentId":"b-16",
+        "_type":"component",
+        "_classes": "",
+        "_layout": "full",
+        "_component": "graphic",
         "title": "It’s as simple as A, B, C",
         "body": "The longer, scrolling pages made possible with Adapt require their own hierarchy and nomenclature to ensure content is structured in a coherent manner. Accordingly, we’ve agreed on the following structure for a page:",
         "graphic": {
-            "src": "course/assets/graphic_large.png",
+            "small": "course/en/images/graphic_large.png",
+            "medium": "course/en/images/graphic_large.png",
+            "large": "course/en/images/graphic_large.png",
             "alt": "alt text",
             "title": "title text"
         }
-    },     
+    },
+    {
+        "_id": "c-36",
+        "_parentId":"b-17",
+        "_type":"component",
+        "_classes": "",
+        "_layout": "full",
+        "_component": "narrative",
+        "title": "What’s coming next?",
+        "body": "Find out what’s on the roadmap for 2014 for Adapt Learning.",
+        "items": [
+            {
+            "title": "Improvements",
+            "body": "Over the next few months we’ll be working on a number of developments to improve Adapt Learning to ensure it’s the leading elearning framework for responsive content. At the heart of these developments are two key pieces of work.",
+            "graphic": {
+                "src": "course/en/images/narrative.png",
+                "alt": "alt text",
+                "title": "title text"
+            },
+            "strapline": "Improvements"
+            },
+            {
+            "title": "1: Plug-in Friendly Architecture",
+            "body": "We’re in the process of reworking the codebase to ensure a plugin friendly approach. This will help us to establish an extensive and vibrant open source community to support the framework and adhere to the principles of collaborative development.",
+            "graphic": {
+                "src": "course/en/images/narrative_1.png",
+                "alt": "alt text",
+                "title": "title text"
+            },
+            "strapline": "1: Plug-in Friendly Architecture"
+            },
+            {
+            "title": "2: Authoring Tool",
+            "body": "We’re also creating an authoring tool to allow non-technical users to create fully featured Adapt elearning courses. The authoring tool will be simple enough for novices to use yet powerful enough to meet the needs of the elearning professional.",
+            "graphic": {
+                "src": "course/en/images/narrative_2.png",
+                "alt": "alt text",
+                "title": "title text"
+            },
+            "strapline": "2: Authoring Tool"
+            }
+        ]
+    },
     {
         "_id":"c-40",
         "_parentId":"b-20",
