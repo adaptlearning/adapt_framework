@@ -148,8 +148,8 @@
         "buttons":{
             "submit": "Submit",
             "reset": "Reset",
-            "model": "Model Answer",
-            "user": "My Answer"
+            "showCorrectAnswer": "Model Answer",
+            "hideCorrectAnswer": "My Answer"
         }
     },
     {
