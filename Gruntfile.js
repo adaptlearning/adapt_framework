@@ -15,6 +15,26 @@ module.exports = function(grunt) {
                     },
                 ]
             },
+            courseJson: {
+                files: [
+                    {
+                        expand: true, 
+                        src: ['**/*.json'], 
+                        dest: 'build/course/', 
+                        cwd: 'src/course/'
+                    }
+                ]
+            },
+            courseAssets: {
+                files: [
+                    {
+                        expand: true, 
+                        src: ['**/*','!**/*.json'], 
+                        dest: 'build/course/', 
+                        cwd: 'src/course/'
+                    }
+                ]
+            },
             main: {
                 files: [
                     {
@@ -178,6 +198,18 @@ module.exports = function(grunt) {
             handlebars: {
                 files: ['src/**/*.hbs'],
                 tasks: ['handlebars', 'compile']
+            },
+            courseJson: {
+                files: [
+                    'src/course/**/*.json'
+                ],
+                tasks : [ 'copy:courseJson']
+            },
+            courseAssets: {
+                files: [
+                    'src/course/**/*', '!src/course/**/*.json'
+                ],
+                tasks : [ 'copy:courseAssets']
             },
             js: {
                 files: [
