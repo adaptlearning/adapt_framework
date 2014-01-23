@@ -190,13 +190,21 @@ define(function(require) {
         },
         
         onQuestionIncorrect: function() {
-            var feedbackIndex = Math.ceil(this.model.get("_attemptsLeft")/this.model.get("_attempts"));
-            if(this.isPartlyCorrect()) { 
-                this.model.set("feedbackMessage", this.model.get("feedback").partly[feedbackIndex]);
+            if (this.isPartlyCorrect()) {
+                if (!_.isString(this.model.get('feedback').partly)) {
+                    this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
+                } else {
+                    this.model.set("feedbackMessage", this.model.get('feedback').partly); 
+                }
             } else {
-                this.model.set("feedbackMessage", this.model.get("feedback").incorrect[feedbackIndex]);
+                if (!_.isString(this.model.get('feedback').incorrect)) {
+                    this.model.get('feedback').partly = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
+                } else {
+                    this.model.set("feedbackMessage", this.model.get('feedback').incorrect); 
+                }
             }
-            if(feedbackIndex === 0) {
+
+            if (Math.ceil(this.model.get("_attemptsLeft")/this.model.get("_attempts")) === 0) {
                 this.onComplete({correct: false});
             }
         },
@@ -209,7 +217,7 @@ define(function(require) {
         },
     
         onSubmitClicked: function(event) {
-            
+            console.log('question submitted');
             event.preventDefault();
             
             if(!this.canSubmit()) return;
