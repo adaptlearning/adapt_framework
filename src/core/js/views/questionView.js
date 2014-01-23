@@ -217,7 +217,6 @@ define(function(require) {
         },
     
         onSubmitClicked: function(event) {
-            console.log('question submitted');
             event.preventDefault();
             
             if(!this.canSubmit()) return;
