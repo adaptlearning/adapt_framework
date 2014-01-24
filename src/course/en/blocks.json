@@ -4,8 +4,8 @@
         "_parentId":"a-05",
         "_type":"block",
         "_classes":"",
-        "title":"How is Adapt structured?",
-        "body":"Adapt uses a layout we've labelled ABC. When a user enters a page they are shown the page title. Inside a page we have articles, which are used to separate out relevant learning material. Blocks are placed inside articles and blocks hold the interactive components."
+        "title":"It’s as simple as A, B, C",
+        "body":"Adapt uses a layout we've labelled ABC. When a user enters a page they are shown the page title. Inside a page we have articles, which are used to separate out relevant learning material. Blocks are placed inside articles and blocks hold the interactive components. The longer, scrolling pages made possible with Adapt require their own hierarchy and nomenclature to ensure content is structured in a coherent manner."
     },
     {
         "_id":"b-10",
@@ -24,84 +24,76 @@
         "body":""
     },
     {
-        "_id":"b-16",
-        "_parentId":"a-10",
-        "_type":"block",
-        "_classes":"",
-        "title":"",
-        "body":""
-    },
-    {
-        "_id":"b-17",
-        "_parentId":"a-10",
-        "_type":"block",
-        "_classes":"",
-        "title":"",
-        "body":""
-    },
-    {
         "_id":"b-20",
         "_parentId":"a-10",
         "_type":"block",
         "_classes":"",
-        "title":"Title of fourth block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
+    },
+    {
+        "_id":"b-22",
+        "_parentId":"a-15",
+        "_type":"block",
+        "_classes":"",
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-25",
         "_parentId":"a-15",
         "_type":"block",
         "_classes":"",
-        "title":"Title of fifth block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-30",
         "_parentId":"a-15",
         "_type":"block",
         "_classes":"",
-        "title":"Title of first block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-35",
         "_parentId":"a-20",
         "_type":"block",
         "_classes":"",
-        "title":"Title of second block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-40",
         "_parentId":"a-20",
         "_type":"block",
         "_classes":"",
-        "title":"Title of third block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-45",
         "_parentId":"a-25",
         "_type":"block",
         "_classes":"",
-        "title":"Title of fourth block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-50",
         "_parentId":"a-25",
         "_type":"block",
         "_classes":"",
-        "title":"Title of fifth block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-52",
         "_parentId":"a-25",
         "_type":"block",
         "_classes":"",
-        "title":"Title of sixth block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-55",

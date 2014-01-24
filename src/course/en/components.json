@@ -117,7 +117,7 @@
         "_questionWeight":1,
         "_random":true,
         "_selectable":4,
-        "title": "Multiple choice question example",
+        "title": "Key benefits of a vertical scrolling approach",
         "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach? Select one or more options from the list below and select <b>Submit.</b>",
         "items": [
             {
@@ -154,24 +154,7 @@
     },
     {
         "_id": "c-35",
-        "_parentId":"b-16",
-        "_type":"component",
-        "_classes": "",
-        "_layout": "full",
-        "_component": "graphic",
-        "title": "It’s as simple as A, B, C",
-        "body": "The longer, scrolling pages made possible with Adapt require their own hierarchy and nomenclature to ensure content is structured in a coherent manner. Accordingly, we’ve agreed on the following structure for a page:",
-        "graphic": {
-            "small": "course/en/images/graphic_large.png",
-            "medium": "course/en/images/graphic_large.png",
-            "large": "course/en/images/graphic_large.png",
-            "alt": "alt text",
-            "title": "title text"
-        }
-    },
-    {
-        "_id": "c-36",
-        "_parentId":"b-17",
+        "_parentId":"b-20",
         "_type":"component",
         "_classes": "",
         "_layout": "full",
@@ -212,64 +195,356 @@
         ]
     },
     {
-        "_id":"c-40",
-        "_parentId":"b-20",
+        "_id":"c-200",
+        "_parentId":"b-22",
         "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very third component",
-        "body":"Whoo - if we get this rendering we've made the big time"
-    },
-    {
-        "_id":"c-45",
-        "_parentId":"b-25",
-        "_type":"component",
-        "_component":"text",
+        "_component":"mcq",
         "_classes":"",
         "_layout":"left",
-        "title":"Title of our very fourth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_attempts":1,
+        "_questionWeight":1,
+        "_random":false,
+        "_selectable":1,
+        "title": "MCQ",
+        "body": "Which of the following options would you consider to be correct?",
+        "items": [
+            {
+                "text": "This is option 1.",
+                "shouldBeSelected":true
+            },
+            {
+                "text": "This is option 2.",
+                "shouldBeSelected":false
+            },
+            {
+                "text": "This is option 3.",
+                "shouldBeSelected":false
+            }
+        ],
+        "feedback":{
+            "correct":"Congratulations, this is the correct feedback.",
+            "partly":"This is the partly correct feedback.",
+            "incorrect":"Unfortunately this is the incorrect feedback."
+        },
+        "buttons":{
+            "submit":"SUBMIT",
+            "reset":"RESET",
+            "showCorrectAnswer":"MODEL ANSWER",
+            "hideCorrectAnswer":"YOUR ANSWER"
+        }
     },
     {
-        "_id":"c-50",
+        "_id":"c-205",
+        "_parentId":"b-22",
+        "_classes": "",
+        "_layout": "right",
+        "_type":"component",
+        "_component": "matching",
+        "_attempts": 2,
+        "_random": true,
+        "_questionWeight":10,
+        "title": "Matching",
+        "body": "Basically what you need to do is match the questions below with the drop down box option.",
+        "buttons": {
+            "submit": "Submit",
+            "reset": "Reset",
+            "showCorrectAnswer": "Model Answer",
+            "hideCorrectAnswer": "My Answer"
+        },
+        "feedback": {
+            "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
+            "incorrect": [
+                "FINAL This feedback will appear if you answered the question incorrectly.",
+                "NON-FINAL This feedback will appear if you answered the question incorrectly."
+            ],
+            "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
+        },
+        "placeholder": "select an option",
+        "items": [
+            {
+                "text": "Pick option two",
+                "options": [
+                    {
+                        "text": "Option one",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option two (correct)",
+                        "correct": true
+                    },
+                    {
+                        "text": "Option three",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "text": "Pick option three",
+                "options": [
+                    {
+                        "text": "Option one",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option two",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option three (correct)",
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "text": "Pick option one",
+                "options": [
+                    {
+                        "text": "Option one (correct)",
+                        "correct": true
+                    },
+                    {
+                        "text": "Option two",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option three",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "_id":"c-210",
         "_parentId":"b-25",
         "_type":"component",
-        "_component":"text",
+        "_component":"textinput",
+        "_classes":"",
+        "_layout":"left",
+        "title": "Title of our text input component",
+        "body": "If A is 1% and Z is 26%, what are B, C and D?",
+        "_attempts": 1,
+        "placeholder": "Enter answer here",
+        "_allowsAnyOrder": false,
+        "_allowsAnyCase": true,
+        "_allowsPunctuation": true,
+        "_questionWeight":10,
+        "buttons": {
+            "submit": "Submit",
+            "reset": "Reset",
+            "showCorrectAnswer": "Model answer",
+            "hideCorrectAnswer": "My answer"
+        },
+        "feedback": {
+            "correct": "This feedback will appear if you answered the question correctly.",
+            "incorrect": "This feedback will appear if you answered the question incorrectly.",
+            "partly": "This feedback will appear if you answered part of the question correctly."
+        },
+        "items": [
+            {
+                "prefix": "B:",
+                "suffix": "%",
+                "answers": [
+                    "2",
+                    "two"
+                ]
+            },
+            {
+                "prefix": "C:",
+                "suffix": "%",
+                "answers": [
+                    "3",
+                    "three"
+                ]
+            },
+            {
+                "prefix": "D:",
+                "suffix": "%",
+                "answers": [
+                    "4",
+                    "four"
+                ]
+            }
+        ]
+    },
+    {
+        "_id":"c-215",
+        "_parentId":"b-25",
+        "_type":"component",
+        "_component":"gmcq",
         "_classes":"",
         "_layout":"right",
-        "title":"Title of our very fifth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_attempts":1,
+        "_questionWeight":1,
+        "_random":false,
+        "_selectable":1,
+        "title": "GMCQ",
+        "body": "Which of the following options would you consider to be correct?",
+        "items": [
+            {
+                "text": "This is option 1.",
+                "shouldBeSelected":true,
+                "graphic": {
+                    "alt": "Alt text for option 1",
+                    "title": "title text",
+                    "large": "http://placehold.it/480x300/",
+                    "medium": "http://placehold.it/480x250/",
+                    "small": "http://placehold.it/480x350/"
+                }
+            },
+            {
+                "text": "This is option 2.",
+                "shouldBeSelected":false,
+                "graphic": {
+                    "alt": "Alt text for option 2",
+                    "title": "title text",
+                    "large": "http://placehold.it/480x300/3eb4e4/fff",
+                    "medium": "http://placehold.it/480x250/3eb4e4/fff",
+                    "small": "http://placehold.it/480x350/3eb4e4/fff"
+                }
+            }
+        ],
+        "feedback":{
+            "correct":"Congratulations, this is the correct feedback.",
+            "partly":"This is the partly correct feedback.",
+            "incorrect":"Unfortunately this is the incorrect feedback."
+        },
+        "buttons":{
+            "submit":"SUBMIT",
+            "reset":"RESET",
+            "showCorrectAnswer":"MODEL ANSWER",
+            "hideCorrectAnswer":"YOUR ANSWER"
+        }
+    },
+    {
+        "_id":"c-125",
+        "_parentId":"b-30",
+        "_type":"component",
+        "_component":"mcq",
+        "_classes":"",
+        "_layout":"left",
+        "_attempts":1,
+        "_questionWeight":1,
+        "_random":false,
+        "_selectable":1,
+        "title": "MCQ",
+        "body": "Which of the following options would you consider to be correct?",
+        "items": [
+            {
+                "text": "This is option 1.",
+                "shouldBeSelected":true
+            },
+            {
+                "text": "This is option 2.",
+                "shouldBeSelected":false
+            },
+            {
+                "text": "This is option 3.",
+                "shouldBeSelected":false
+            }
+        ],
+        "feedback":{
+            "correct":"Congratulations, this is the correct feedback.",
+            "partly":"This is the partly correct feedback.",
+            "incorrect":"Unfortunately this is the incorrect feedback."
+        },
+        "buttons":{
+            "submit":"SUBMIT",
+            "reset":"RESET",
+            "showCorrectAnswer":"MODEL ANSWER",
+            "hideCorrectAnswer":"YOUR ANSWER"
+        }
+    },
+    {
+        "_id":"c-125",
+        "_parentId":"b-30",
+        "_classes": "",
+        "_layout": "right",
+        "_type":"component",
+        "_component": "matching",
+        "_attempts": 2,
+        "_random": true,
+        "_questionWeight":10,
+        "title": "Matching",
+        "body": "Basically what you need to do is match the questions below with the drop down box option.",
+        "buttons": {
+            "submit": "Submit",
+            "reset": "Reset",
+            "showCorrectAnswer": "Model Answer",
+            "hideCorrectAnswer": "My Answer"
+        },
+        "feedback": {
+            "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
+            "incorrect": [
+                "FINAL This feedback will appear if you answered the question incorrectly.",
+                "NON-FINAL This feedback will appear if you answered the question incorrectly."
+            ],
+            "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
+        },
+        "placeholder": "select an option",
+        "items": [
+            {
+                "text": "Pick option two",
+                "options": [
+                    {
+                        "text": "Option one",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option two (correct)",
+                        "correct": true
+                    },
+                    {
+                        "text": "Option three",
+                        "correct": false
+                    }
+                ]
+            },
+            {
+                "text": "Pick option three",
+                "options": [
+                    {
+                        "text": "Option one",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option two",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option three (correct)",
+                        "correct": true
+                    }
+                ]
+            },
+            {
+                "text": "Pick option one",
+                "options": [
+                    {
+                        "text": "Option one (correct)",
+                        "correct": true
+                    },
+                    {
+                        "text": "Option two",
+                        "correct": false
+                    },
+                    {
+                        "text": "Option three",
+                        "correct": false
+                    }
+                ]
+            }
+        ]
     },
     {
         "_id":"c-55",
-        "_parentId":"b-30",
-        "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"left",
-        "title":"Title of our very first component",
-        "body":"Whoo - if we get this rendering we've made the big time"
-    },
-    {
-        "_id":"c-60",
-        "_parentId":"b-30",
-        "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very second component",
-        "body":"Whoo - if we get this rendering we've made the big time"
-    },
-    {
-        "_id":"c-65",
         "_parentId":"b-35",
         "_type":"component",
         "_component":"text",
         "_classes":"",
         "_layout":"left",
-        "title":"Title of our very third component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "title":"Content is king",
+        "body":"The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job."
     },
     {
         "_id":"c-70",
@@ -278,8 +553,8 @@
         "_component":"graphic",
         "_classes":"",
         "_layout":"right",
-        "title":"Here is a graphic object",
-        "body":"Hi everybody!",
+        "title":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
         "graphic": {
             "alt": "alt text",
             "title": "title text",
@@ -295,23 +570,23 @@
         "_component":"accordion",
         "_classes":"",
         "_layout":"left",
-        "title": "Accordion",
-        "body": "This is optional body text. Select the headings below to reveal the text.",
+        "title": "Headlines to grab attention",
+        "body": "The accordion component enables a content creator to pick some catchy titles that reveal more information. Select the headings below to reveal the text.",
         "items": [
             {
-                "alt": "Heading 1",
-                "title": "Heading 1",
-                "body": "This is display text 1."
+                "alt": "Missing title and body elements",
+                "title": "Missing title and body elements",
+                "body": "As mentioned before, title and body elements on components are not compulsory. The same is true for articles and blocks."
             },
             {
-                "alt": "Heading 2",
-                "title": "Heading 2",
-                "body": "This is display text 2."
+                "alt": "Use space",
+                "title": "Use space",
+                "body": "One important learning pattern to remember is to not fill every component. This can lead to a poor user experience on smaller screens. We're use to scrolling on smaller devices so use up the vertical space."
             },
             {
-                "alt": "Heading 3",
-                "title": "Heading 3",
-                "body": "This is display text 3."
+                "alt": "Think about background images for decoration",
+                "title": "Think about background images for decoration",
+                "body": "One way of bringing content to life is adding background images to blocks or articles. We suggest doing this after the content is produced so the imagery can aid the learning."
             }
         ]
     },
@@ -424,23 +699,13 @@
         "_type":"component",
         "_component":"media",
         "_classes":"",
-        "_layout":"left",
+        "_layout":"full",
         "title":"Title of the media component",
         "media": {
             "mp4": "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v",
             "ogv": "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_stereo.ogg"
         },
         "body": "This is optional body text. Select the play button to start the video."
-    },
-    {
-        "_id":"c-103",
-        "_parentId":"b-52",
-        "_type":"component",
-        "_component":"text",
-        "_classes":"",
-        "_layout":"right",
-        "title":"Title of our very third component",
-        "body":"Whoo - if we get this rendering we've made the big time"
     },
     {
         "_id":"c-105",
@@ -619,10 +884,49 @@
         "_id":"c-120",
         "_parentId":"b-60",
         "_type":"component",
-        "_component":"text",
+        "_component":"gmcq",
         "_classes":"",
         "_layout":"right",
-        "title":"Title of our very fifth component",
-        "body":"Whoo - if we get this rendering we've made the big time"
+        "_attempts":1,
+        "_questionWeight":1,
+        "_random":false,
+        "_selectable":1,
+        "title": "GMCQ",
+        "body": "Which of the following options would you consider to be correct?",
+        "items": [
+            {
+                "text": "This is option 1.",
+                "shouldBeSelected":true,
+                "graphic": {
+                    "alt": "Alt text for option 1",
+                    "title": "title text",
+                    "large": "http://placehold.it/480x300/",
+                    "medium": "http://placehold.it/480x250/",
+                    "small": "http://placehold.it/480x350/"
+                }
+            },
+            {
+                "text": "This is option 2.",
+                "shouldBeSelected":false,
+                "graphic": {
+                    "alt": "Alt text for option 2",
+                    "title": "title text",
+                    "large": "http://placehold.it/480x300/3eb4e4/fff",
+                    "medium": "http://placehold.it/480x250/3eb4e4/fff",
+                    "small": "http://placehold.it/480x350/3eb4e4/fff"
+                }
+            }
+        ],
+        "feedback":{
+            "correct":"Congratulations, this is the correct feedback.",
+            "partly":"This is the partly correct feedback.",
+            "incorrect":"Unfortunately this is the incorrect feedback."
+        },
+        "buttons":{
+            "submit":"SUBMIT",
+            "reset":"RESET",
+            "showCorrectAnswer":"MODEL ANSWER",
+            "hideCorrectAnswer":"YOUR ANSWER"
+        }
     }
 ]
