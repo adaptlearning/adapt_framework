@@ -121,6 +121,13 @@ define(function(require) {
             }
             if (!this.model.has("buttons")) {
                 this.model.set("buttons", Adapt.course.get("buttons"));
+            } else {
+                for(var key in this.model.get("buttons")) {
+                    var value=this.model.get("buttons")[key];
+                    if (!value) {
+                        this.model.get("buttons")[key] = Adapt.course.get("buttons")[key];
+                    }
+                }
             }
         },
 

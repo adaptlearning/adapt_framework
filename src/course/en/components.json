@@ -146,10 +146,10 @@
             "partly": "That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
         },
         "buttons":{
-            "submit": "Submit",
-            "reset": "Reset",
-            "showCorrectAnswer": "Model Answer",
-            "hideCorrectAnswer": "My Answer"
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         }
     },
     {
@@ -227,10 +227,10 @@
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
         "buttons":{
-            "submit":"SUBMIT",
-            "reset":"RESET",
-            "showCorrectAnswer":"MODEL ANSWER",
-            "hideCorrectAnswer":"YOUR ANSWER"
+            "submit":"",
+            "reset":"",
+            "showCorrectAnswer":"",
+            "hideCorrectAnswer":""
         }
     },
     {
@@ -246,10 +246,10 @@
         "title": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "buttons": {
-            "submit": "Submit",
-            "reset": "Reset",
-            "showCorrectAnswer": "Model Answer",
-            "hideCorrectAnswer": "My Answer"
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         },
         "feedback": {
             "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
@@ -330,10 +330,10 @@
         "_allowsPunctuation": true,
         "_questionWeight":10,
         "buttons": {
-            "submit": "Submit",
-            "reset": "Reset",
-            "showCorrectAnswer": "Model answer",
-            "hideCorrectAnswer": "My answer"
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         },
         "feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
@@ -409,11 +409,11 @@
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons":{
-            "submit":"SUBMIT",
-            "reset":"RESET",
-            "showCorrectAnswer":"MODEL ANSWER",
-            "hideCorrectAnswer":"YOUR ANSWER"
+        "buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         }
     },
     {
@@ -448,11 +448,11 @@
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons":{
-            "submit":"SUBMIT",
-            "reset":"RESET",
-            "showCorrectAnswer":"MODEL ANSWER",
-            "hideCorrectAnswer":"YOUR ANSWER"
+        "buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         }
     },
     {
@@ -468,10 +468,10 @@
         "title": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "buttons": {
-            "submit": "Submit",
-            "reset": "Reset",
-            "showCorrectAnswer": "Model Answer",
-            "hideCorrectAnswer": "My Answer"
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         },
         "feedback": {
             "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
@@ -739,11 +739,11 @@
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons":{
-            "submit":"SUBMIT",
-            "reset":"RESET",
-            "showCorrectAnswer":"MODEL ANSWER",
-            "hideCorrectAnswer":"YOUR ANSWER"
+        "buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         }
     },
     {
@@ -759,10 +759,10 @@
         "title": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "buttons": {
-            "submit": "Submit",
-            "reset": "Reset",
-            "showCorrectAnswer": "Model Answer",
-            "hideCorrectAnswer": "My Answer"
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         },
         "feedback": {
             "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
@@ -843,10 +843,10 @@
         "_allowsPunctuation": true,
         "_questionWeight":10,
         "buttons": {
-            "submit": "Submit",
-            "reset": "Reset",
-            "showCorrectAnswer": "Model answer",
-            "hideCorrectAnswer": "My answer"
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         },
         "feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
@@ -922,11 +922,11 @@
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons":{
-            "submit":"SUBMIT",
-            "reset":"RESET",
-            "showCorrectAnswer":"MODEL ANSWER",
-            "hideCorrectAnswer":"YOUR ANSWER"
+        "buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
         }
     }
 ]
