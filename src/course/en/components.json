@@ -19,8 +19,8 @@
         "title":"<br>",
         "body": "",
         "media": {
-            "mp4": "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v",
-            "ogv": "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_stereo.ogg"
+            "mp4": "course/en/video/big_buck_bunny.mp4",
+            "ogv": "course/en/video/big_buck_bunny.ogv"
         }
     },
     {
@@ -702,8 +702,8 @@
         "_layout":"full",
         "title":"Title of the media component",
         "media": {
-            "mp4": "http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_640x360.m4v",
-            "ogv": "http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_stereo.ogg"
+            "mp4": "course/en/video/big_buck_bunny.mp4",
+            "ogv": "course/en/video/big_buck_bunny.ogv"
         },
         "body": "This is optional body text. Select the play button to start the video."
     },

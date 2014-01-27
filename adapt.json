@@ -4,14 +4,13 @@
         "adapt-contrib-text": "0.0.0",
         "adapt-contrib-narrative": "0.0.0",
         "adapt-contrib-media": "0.0.0",
-        "adapt-contrib-hotGraphic": "0.0.0",
+        "adapt-contrib-hotgraphic": "0.0.0",
         "adapt-contrib-blank": "0.0.0",
         "adapt-contrib-accordion": "0.0.0",
         "adapt-contrib-graphic": "0.0.0",
         "adapt-contrib-matching": "0.0.0",
         "adapt-contrib-textInput": "0.0.0",
         "adapt-contrib-mcq": "0.0.0",
-        "adapt-contrib-gmcq": "0.0.0",
         "adapt-contrib-tutor": "0.0.0",
         "adapt-contrib-boxMenu": "0.0.0"
     }
