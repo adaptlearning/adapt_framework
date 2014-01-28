@@ -4,7 +4,7 @@ The Adapt Learning project is an open-source effort to create a Framework and Au
 
 This repository holds the Adapt Framework codebase.
 
-This code is currently being refactored and will be released in January 2014.
+This code is currently a developers release.
 
 ## Learn more about the Open Source Project
 
@@ -16,4 +16,4 @@ If you would like to see what the Adapt Framework is capable of you can [view so
 
 We are publishing some developer specific information on the [wiki of this repository](https://github.com/adaptlearning/adapt_framework/wiki).
 
-
+To get started with this release please see [Setting up your development environment](https://github.com/adaptlearning/adapt_framework/wiki/Setting-up-your-development-environment).
