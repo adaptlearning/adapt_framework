@@ -84,13 +84,12 @@ define(function(require) {
         },
         
         resetQuestion: function(properties) {
-            this.model.set({"_isEnabled": this.model.get("_isEnabledOnRevisit")});
-
             if(!!properties.initialisingScreen && this.model.get('_isComplete')) {
                 Adapt.trigger('questionView:reset', this);
             }
+            this.model.set({"_isEnabled": this.model.get('_isComplete') ? this.model.get("_isEnabledOnRevisit") : true});
             
-            if(shouldEnable) {
+            if(this.model.get('_isEnabled')) {
                 _.each(this.model.get('_selectedItems'), function(item) {item.selected = false}, this);
                 this.model.set({
                     _isSubmitted: false,
