@@ -10,8 +10,8 @@ Modernizr.load([
         nope: 'libraries/json2.js'
     },
     {
-        test: document.querySelector,
-        nope: 'libraries/consoles.js'
+        test: window.console == undefined,
+        yep: 'libraries/consoles.js'
     },
     {
         test: Modernizr.video || Modernizr.audio,

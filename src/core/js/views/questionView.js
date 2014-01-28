@@ -84,21 +84,12 @@ define(function(require) {
         },
         
         resetQuestion: function(properties) {
-            var shouldEnable = true;
-            if(!!properties.initialisingScreen && this.model.get("_isEnabledOnRevisit") !== undefined && !!this.model.get('_isComplete')) {
-                /*if(Adapt.Spoor) {
-                    var sameSession = this.model.get('_sessionID') === Adapt.Spoor.get('_sessionID');
-                    if(sameSession) {
-                        shouldEnable = this.model.get("_isEnabledOnRevisit");
-                    }
-                } else {*/
-                    shouldEnable = this.model.get("_isEnabledOnRevisit");
-                //}
+            if(!!properties.initialisingScreen && this.model.get('_isComplete')) {
+                Adapt.trigger('questionView:reset', this);
             }
+            this.model.set({"_isEnabled": this.model.get('_isComplete') ? this.model.get("_isEnabledOnRevisit") : true});
             
-            this.model.set({"_isEnabled": shouldEnable});
-            
-            if(shouldEnable) {
+            if(this.model.get('_isEnabled')) {
                 _.each(this.model.get('_selectedItems'), function(item) {item.selected = false}, this);
                 this.model.set({
                     _isSubmitted: false,
@@ -121,6 +112,13 @@ define(function(require) {
             }
             if (!this.model.has("buttons")) {
                 this.model.set("buttons", Adapt.course.get("buttons"));
+            } else {
+                for(var key in this.model.get("buttons")) {
+                    var value=this.model.get("buttons")[key];
+                    if (!value) {
+                        this.model.get("buttons")[key] = Adapt.course.get("buttons")[key];
+                    }
+                }
             }
         },
 
@@ -187,9 +185,7 @@ define(function(require) {
             if(parameters.correct) this.$(".component-widget").addClass("correct");
             this.showMarking();
             this.showUserAnswer();
-            /*if(Adapt.Spoor) {
-                this.model.set('sessionID', Adapt.Spoor.get('sessionID'));
-            }*/
+            Adapt.trigger('questionView:complete', this);
         },
     
         onModelAnswerClicked: function(event) {
