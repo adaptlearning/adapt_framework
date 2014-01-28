@@ -1,0 +1,54 @@
+.responsive-layout {
+    width:100%;
+    margin: 0 auto;
+    @media all and (min-width:520px) {
+        width:520px;
+    }
+    @media all and (min-width:760px) {
+        width:100%;
+    }
+    @media all and (min-width:960px) {
+        width:960px;
+    }
+}
+
+#wrapper {
+    .responsive-layout;
+    padding-top:40px;
+}
+
+.navigation {
+    .responsive-layout;
+    position:fixed;
+    top:0;
+    height:40px;
+    z-index:500;
+}
+
+.component-container:before, .component-container:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
+.component-container:after { clear: both; }  
+.component-container { zoom: 1; }
+
+.component-left {
+    width:100%;
+    float:auto;
+    @media all and (min-width:760px) {
+        width:50%;
+        float:left;
+        .component-inner {
+            margin-right:5%;
+        }
+    }
+}
+
+.component-right {
+    width:100%;
+    float:auto;
+    @media all and (min-width:760px) {
+        width:50%;
+        float:right;
+        .component-inner {
+            margin-left:5%;
+        }
+    }
+}

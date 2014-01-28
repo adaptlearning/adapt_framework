@@ -1,0 +1,13 @@
+{
+    "_id": "course",
+    "_type": "course",
+    "title": "Welcome to Adapt Learning - v1.0.0",
+    "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
+    "buttons": {
+        "submit": "Submit",
+        "reset": "Reset",
+        "showCorrectAnswer": "Model Answer",
+        "hideCorrectAnswer": "My Answer"
+    },
+    "_latestTrackingId": 13
+}
