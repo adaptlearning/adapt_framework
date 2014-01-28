@@ -108,21 +108,21 @@
         "_trackingId": 11
     },
     {
-        "_id": "b-55",
-        "_parentId": "a-30",
-        "_type": "block",
-        "_classes": "",
-        "title": "Title of first block",
-        "body": "Body text for block",
+        "_id":"b-55",
+        "_parentId":"a-30",
+        "_type":"block",
+        "_classes":"",
+        "title":"",
+        "body":"",
         "_trackingId": 12
     },
     {
-        "_id": "b-60",
-        "_parentId": "a-30",
-        "_type": "block",
-        "_classes": "",
-        "title": "Title of second block",
-        "body": "Body text for block",
+        "_id":"b-60",
+        "_parentId":"a-30",
+        "_type":"block",
+        "_classes":"",
+        "title":"",
+        "body":"",
         "_trackingId": 13
     }
 ]
