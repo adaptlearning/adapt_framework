@@ -1,0 +1,16 @@
+{
+    "_defaultLanguage": "en",
+    "_questionWeight": 1,
+    "_spoor": {
+        "_tracking": {
+            "_requireCourseCompleted": true,
+            "_requireAssessmentPassed": true,
+            "_shouldSubmitScore": false
+        },
+        "_reporting": {
+            "_comment": "Your options here are 'completed', 'passed', 'failed', and 'incomplete'",
+            "_onTrackingCriteriaMet": "completed",
+            "_onQuizFailure": "incomplete"
+        }
+    }
+}

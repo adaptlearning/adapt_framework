@@ -1,3 +1,11 @@
+src/components
+src/theme
+src/menu
+src/extensions
+src/less
+templates
+build
+bower_components
 node_modules
 .DS_Store
 
