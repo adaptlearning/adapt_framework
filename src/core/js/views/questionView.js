@@ -84,19 +84,11 @@ define(function(require) {
         },
         
         resetQuestion: function(properties) {
-            var shouldEnable = true;
-            if(!!properties.initialisingScreen && this.model.get("_isEnabledOnRevisit") !== undefined && !!this.model.get('_isComplete')) {
-                /*if(Adapt.Spoor) {
-                    var sameSession = this.model.get('_sessionID') === Adapt.Spoor.get('_sessionID');
-                    if(sameSession) {
-                        shouldEnable = this.model.get("_isEnabledOnRevisit");
-                    }
-                } else {*/
-                    shouldEnable = this.model.get("_isEnabledOnRevisit");
-                //}
+            this.model.set({"_isEnabled": this.model.get("_isEnabledOnRevisit")});
+
+            if(!!properties.initialisingScreen && this.model.get('_isComplete')) {
+                Adapt.trigger('questionView:reset', this);
             }
-            
-            this.model.set({"_isEnabled": shouldEnable});
             
             if(shouldEnable) {
                 _.each(this.model.get('_selectedItems'), function(item) {item.selected = false}, this);
@@ -194,9 +186,7 @@ define(function(require) {
             if(parameters.correct) this.$(".component-widget").addClass("correct");
             this.showMarking();
             this.showUserAnswer();
-            /*if(Adapt.Spoor) {
-                this.model.set('sessionID', Adapt.Spoor.get('sessionID'));
-            }*/
+            Adapt.trigger('questionView:complete', this);
         },
     
         onModelAnswerClicked: function(event) {
