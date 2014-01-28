@@ -100,15 +100,15 @@
         "_parentId":"a-30",
         "_type":"block",
         "_classes":"",
-        "title":"Title of first block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     },
     {
         "_id":"b-60",
         "_parentId":"a-30",
         "_type":"block",
         "_classes":"",
-        "title":"Title of second block",
-        "body":"Body text for block"
+        "title":"",
+        "body":""
     }
 ]
