@@ -1,13 +1,16 @@
 {
     "_defaultLanguage": "en",
     "_questionWeight": 1,
-    "tracking": {
-        "requireAllModulesCompleted": true,
-        "requireQuizPassed": false
-    },
-    "reporting": {
-        "comment": "Your options here are 'completed', 'passed', 'failed', and 'incomplete'",
-        "onTrackingCriteriaMet": "completed",
-        "onQuizFailure": "incomplete"
+    "_spoor": {
+        "_tracking": {
+            "_requireCourseCompleted": true,
+            "_requireQuizPassed": false,
+            "_shouldSubmitScore": false
+        },
+        "_reporting": {
+            "_comment": "Your options here are 'completed', 'passed', 'failed', and 'incomplete'",
+            "_onTrackingCriteriaMet": "completed",
+            "_onQuizFailure": "incomplete"
+        }
     }
 }
