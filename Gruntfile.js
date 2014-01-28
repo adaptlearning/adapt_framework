@@ -83,6 +83,13 @@ module.exports = function(grunt) {
                         src: ['src/components/**/assets/**'],
                         dest: 'build/assets/',
                         filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/extensions/adapt-contrib-spoor/required/*'],
+                        dest: 'build/',
+                        filter: 'isFile'
                     }
                 ]
             }
