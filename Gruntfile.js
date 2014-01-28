@@ -239,11 +239,15 @@ module.exports = function(grunt) {
         open: {
             server: {
                 path: 'http://localhost:<%= connect.server.options.port %>/'
+            },
+            spoor: {
+                path: 'http://localhost:<%= connect.server.options.port %>/main.html'
             }
         },
 
         concurrent: {
-            server: ['connect:server', 'open:server', 'watch']
+            server: ['connect:server', 'open:server', 'watch'],
+            spoor: ['connect:spoorOffline', 'open:spoor', 'watch']
         },
 
         connect: {
@@ -253,7 +257,21 @@ module.exports = function(grunt) {
                 base: 'build',
                 keepalive:true
               }
+            },
+            spoorOffline: {
+                options: {
+                    port: 9001,
+                    base: 'build',
+                    keepalive:true
+                }
             }
+        },
+        
+        adapt_insert_tracking_ids: {
+          options: {
+              courseFile: "src/course/en/course.json",
+              blocksFile: "src/course/en/blocks.json"
+          }
         }
     });
     
@@ -290,6 +308,10 @@ module.exports = function(grunt) {
     grunt.registerTask('default',['less', 'handlebars', 'watch']);
     grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
     grunt.registerTask('server',['concurrent:server']);
+    grunt.registerTask('server-scorm',['concurrent:spoor']);
     grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
     grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
+    
+    grunt.loadNpmTasks('adapt-grunt-tracking-ids');
+    grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
 };
