@@ -202,29 +202,29 @@
         "_classes":"",
         "_layout":"left",
         "_attempts":1,
-        "_questionWeight":1,
-        "_isRandom":false,
-        "_selectable":1,
-        "title": "MCQ",
-        "body": "Which of the following options would you consider to be correct?",
+        "_questionWeight":10,
+        "_isRandom":true,
+        "_selectable":3,
+        "title": "Getting involved",
+        "body": "How can anyone get involved with Adapt? Select the correct answers below.",
         "items": [
             {
-                "text": "This is option 1.",
+                "text": "Sign up to the community site",
                 "shouldBeSelected":true
             },
             {
-                "text": "This is option 2.",
-                "shouldBeSelected":false
+                "text": "Contrib to code on Github",
+                "shouldBeSelected":true
             },
             {
-                "text": "This is option 3.",
-                "shouldBeSelected":false
+                "text": "Suggest extra features for plugins",
+                "shouldBeSelected":true
             }
         ],
         "feedback":{
-            "correct":"Congratulations, this is the correct feedback.",
-            "partly":"This is the partly correct feedback.",
-            "incorrect":"Unfortunately this is the incorrect feedback."
+            "correct":"That's correct. There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+            "partly":"Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+            "incorrect":"That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
         },
         "buttons":{
             "submit":"",
@@ -240,11 +240,11 @@
         "_layout": "right",
         "_type":"component",
         "_component": "matching",
-        "_attempts": 2,
+        "_attempts": 1,
         "_random": true,
         "_questionWeight":10,
-        "title": "Matching",
-        "body": "Basically what you need to do is match the questions below with the drop down box option.",
+        "title": "Order of a page",
+        "body": "Put in order, the elements as they are viewed in a standard Adapt page",
         "buttons": {
             "submit": "",
             "reset": "",
@@ -252,62 +252,59 @@
             "hideCorrectAnswer": ""
         },
         "feedback": {
-            "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
-            "incorrect": [
-                "FINAL This feedback will appear if you answered the question incorrectly.",
-                "NON-FINAL This feedback will appear if you answered the question incorrectly."
-            ],
+            "correct": "That's correct. Think A, B, C when creating Adapt courses.",
+            "incorrect": "FINAL This feedback will appear if you answered the question incorrectly.",
             "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
         },
         "placeholder": "select an option",
         "items": [
             {
-                "text": "Pick option two",
+                "text": "First element",
                 "options": [
                     {
-                        "text": "Option one",
+                        "text": "Component",
                         "correct": false
                     },
                     {
-                        "text": "Option two (correct)",
+                        "text": "Article",
                         "correct": true
                     },
                     {
-                        "text": "Option three",
+                        "text": "Block",
                         "correct": false
                     }
                 ]
             },
             {
-                "text": "Pick option three",
+                "text": "Second element",
                 "options": [
                     {
-                        "text": "Option one",
+                        "text": "Component",
                         "correct": false
                     },
                     {
-                        "text": "Option two",
+                        "text": "Article",
                         "correct": false
                     },
                     {
-                        "text": "Option three (correct)",
+                        "text": "Block",
                         "correct": true
                     }
                 ]
             },
             {
-                "text": "Pick option one",
+                "text": "Third element",
                 "options": [
                     {
-                        "text": "Option one (correct)",
+                        "text": "Component",
                         "correct": true
                     },
                     {
-                        "text": "Option two",
+                        "text": "Article",
                         "correct": false
                     },
                     {
-                        "text": "Option three",
+                        "text": "Block",
                         "correct": false
                     }
                 ]
@@ -321,8 +318,8 @@
         "_component":"textinput",
         "_classes":"",
         "_layout":"left",
-        "title": "Title of our text input component",
-        "body": "If A is 1% and Z is 26%, what are B, C and D?",
+        "title": "Extensions",
+        "body": "Name the two extensions being used on this page?",
         "_attempts": 1,
         "placeholder": "Enter answer here",
         "_allowsAnyOrder": false,
@@ -342,27 +339,19 @@
         },
         "items": [
             {
-                "prefix": "B:",
-                "suffix": "%",
+                "prefix": "",
+                "suffix": "",
                 "answers": [
-                    "2",
-                    "two"
+                    "article assessment",
+                    "trickle"
                 ]
             },
             {
-                "prefix": "C:",
-                "suffix": "%",
+                "prefix": "",
+                "suffix": "",
                 "answers": [
-                    "3",
-                    "three"
-                ]
-            },
-            {
-                "prefix": "D:",
-                "suffix": "%",
-                "answers": [
-                    "4",
-                    "four"
+                    "article assessment",
+                    "trickle"
                 ]
             }
         ]
@@ -375,7 +364,7 @@
         "_classes":"",
         "_layout":"right",
         "_attempts":1,
-        "_questionWeight":1,
+        "_questionWeight":10,
         "_isRandom":false,
         "_selectable":1,
         "title": "GMCQ",
@@ -663,7 +652,7 @@
                     "alt": "alt text",
                     "title": "title text"
                 },
-                "strapline": "strapline...",
+                "strapline": "Single components",
                 "top": 5,
                 "left": 20
             },
@@ -675,7 +664,7 @@
                     "alt": "alt text",
                     "title": "title text"
                 },
-                "strapline": "strapline...",
+                "strapline": "Spanned components",
                 "top": 25,
                 "left": 60
             },
@@ -687,7 +676,7 @@
                     "alt": "alt text",
                     "title": "title text"
                 },
-                "strapline": "strapline...",
+                "strapline": "Single and Spanned components",
                 "top": 85,
                 "left": 40
             }
