@@ -7,13 +7,7 @@
         "_classes":"",
         "_layout":"left",
         "title":"Our first look at a component",
-        "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component.",
-        "triggered": {
-            "top": 30,
-            "left": 30,
-            "showButtonText": "Click me to show",
-            "hideButtonText": "Click me to hide"
-        }
+        "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component."
     },
     {
         "_id":"c-10",
@@ -27,12 +21,6 @@
         "media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv"
-        },
-        "triggered": {
-            "top": 80,
-            "left": 80,
-            "showButtonText": "",
-            "hideButtonText": ""
         }
     },
     {
