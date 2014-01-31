@@ -35,8 +35,8 @@ define(function(require) {
         }
         return screenSize;
     }
-        
-    $window.on('resize', function() {
+
+    var onWindowResize = _.debounce(function onScreenSizeChanged() {
         Adapt.device.screenWidth = $window.width();
         Adapt.trigger('device:resize', Adapt.device.screenWidth);
         var newScreenSize = checkScreenSize();
@@ -44,7 +44,9 @@ define(function(require) {
             Adapt.device.screenSize = newScreenSize;
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
-    });
+    }, 100);
+        
+    $window.on('resize', onWindowResize);
     
     // http://www.quirksmode.org/js/detect.html
     
