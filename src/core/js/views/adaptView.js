@@ -32,10 +32,9 @@ define(function(require) {
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
             
-            Adapt.trigger(this.model.get('_type') + 'View:postRender', this);
-            
             _.defer(_.bind(function() {
-               this.postRender(); 
+                this.postRender();
+                Adapt.trigger(this.model.get('_type') + 'View:postRender', this);
             }, this));
 
             return this;
