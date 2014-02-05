@@ -94,7 +94,7 @@ define(function(require) {
                 this.model.set({
                     _isSubmitted: false,
                     _selectedItems: [],
-                    _userAnswer: [],
+                    _userAnswer: []
                 });
                 if(properties.resetAttempts === true) this.model.set("_attemptsLeft", this.model.get('_attempts'));
                 if(properties.resetCorrect === true) {
