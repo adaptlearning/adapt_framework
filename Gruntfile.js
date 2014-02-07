@@ -224,7 +224,7 @@ module.exports = function(grunt) {
                     '!src/components/components.js',
                     '!src/extensions/extensions.js',
                     '!src/menu/menu.js',
-                    '!src/themes/theme.js',
+                    '!src/theme/theme.js',
                     '!src/templates/templates.js',
                 ],
                 tasks: ['compile']
