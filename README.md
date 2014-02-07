@@ -6,6 +6,8 @@ This repository holds the Adapt Framework codebase.
 
 This code is currently a developers release.
 
+ [![Build Status](https://secure.travis-ci.org/adaptlearning/adapt_framework.png)](http://travis-ci.org/adaptlearning/adapt_framework)
+
 ## Learn more about the Open Source Project
 
 If you would like to learn more or get involved with this project please visit [community.adaptlearning.org](http://community.adaptlearning.org/).
