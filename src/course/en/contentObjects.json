@@ -63,5 +63,18 @@
             "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText":"View"
+    },
+    {
+        "_id":"co-25",
+        "_parentId":"course",
+        "_type":"page",
+        "_classes":"",
+        "title":"Custom Demo Page",
+        "body":"This is a page added as part of working through the customization process.",
+        "graphic": {
+            "alt": "alt text",
+            "src": "course/en/images/origami-menu-one.jpg"
+        },
+        "linkText":"View"
     }
 ]

@@ -77,5 +77,13 @@
         "_classes":"",
         "title":"An introduction to our Question Components",
         "body":"Below you'll see a summary of our Question Components that come bundled with Adapt's core. Each question has a question weight/score that can be used for assessment plugins. If this is not set it takes the global question weight. All questions can also have multiple attempts by setting these on the individual question."
+    },
+    {
+        "_id":"a-50",
+        "_parentId":"co-25",
+        "_type":"article",
+        "_classes":"",
+        "title":"Custom Demo Article",
+        "body":"This is the body text for the Custom Demo Article."
     }
 ]

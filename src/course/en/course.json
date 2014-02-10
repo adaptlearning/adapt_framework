@@ -1,13 +1,13 @@
 {
     "_id": "course",
     "_type": "course",
-    "title": "Welcome to Adapt Learning - v1.0.0",
-    "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
+    "title": "TiER1 Sample Adapt Course",
+    "body": "This is an example of an Adapt Framework course modified by Tom Streeter.",
     "buttons": {
         "submit": "Submit",
         "reset": "Reset",
-        "showCorrectAnswer": "Model Answer",
+        "showCorrectAnswer": "Show Correct Answer",
         "hideCorrectAnswer": "My Answer"
     },
-    "_latestTrackingId": 13
+    "_latestTrackingId": 14
 }

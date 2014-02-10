@@ -29,7 +29,7 @@
         "_classes": "",
         "_type":"component",
         "_component": "hotgraphic",
-        "_layout": "full",    
+        "_layout": "full",
         "title": "Key Facts",
         "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution. <span class='show-for-mobile'>Click the <b>+ icons</b> below for more.</span>",
         "graphic": {
@@ -635,7 +635,7 @@
         "_classes": "",
         "_type":"component",
         "_component": "hotgraphic",
-        "_layout": "full",    
+        "_layout": "full",
         "title": "Hot graphic",
         "body": "The hot graphic component enables the learner to interact with an image by clicking on the hot spots to reveal more. This component will scale down to a narrative when viewed on mobile. Select the hotspots on the image to reveal the text.",
         "graphic": {
@@ -879,5 +879,25 @@
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
         }
+    },
+    {
+        "_id":"c-200",
+        "_parentId":"b-150",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "_layout":"left",
+        "title":"This is a custom component inserted into the custom block with _trackingId 14",
+        "body":"Since this is a text component all you're going to see is text.  Go figure."
+    },
+    {
+        "_id":"c-201",
+        "_parentId":"b-150",
+        "_type":"component",
+        "_component":"text",
+        "_classes":"",
+        "_layout":"right",
+        "title":"This is a second custom component inserted into the right side of custom block with _trackingId 14",
+        "body":"Since this is a text component all you're going to see is even more text.  Go figure."
     }
 ]
