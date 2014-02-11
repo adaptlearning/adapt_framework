@@ -9,6 +9,7 @@ require([
     'coreJS/mediator',
     'coreJS/router',
     'coreJS/device',
+    'coreJS/popupManager',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/configModel',
@@ -25,7 +26,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (Adapt, Mediator, Router, Device, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Mediator, Router, Device, PopupManager, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
