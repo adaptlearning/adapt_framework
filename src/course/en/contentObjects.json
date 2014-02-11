@@ -10,7 +10,8 @@
             "alt": "alt text",
             "src": "course/en/images/origami-menu-one.jpg"
         },
-        "linkText":"View"
+        "linkText":"View",
+        "duration":"2 mins"
     },
     {
         "_id":"co-10",
@@ -23,7 +24,8 @@
             "alt": "alt text",
             "src": "course/en/images/origami-menu-two.jpg"
         },
-        "linkText":"View"
+        "linkText":"View",
+        "duration":"2 mins"
     },
     {
         "_id":"co-12",
@@ -36,7 +38,8 @@
             "alt": "alt text",
             "src": "course/en/images/origami-menu-three.jpg"
         },
-        "linkText":"View"
+        "linkText":"View",
+        "duration":"2 mins"
     },
     {
         "_id":"co-15",
@@ -49,7 +52,8 @@
             "alt": "alt text",
             "src": "course/en/images/origami-menu-three.jpg"
         },
-        "linkText":"View"
+        "linkText":"View",
+        "duration":"2 mins"
     },
     {
         "_id":"co-20",
@@ -62,6 +66,7 @@
             "alt": "alt text",
             "src": "course/en/images/origami-menu-one.jpg"
         },
-        "linkText":"View"
+        "linkText":"View",
+        "duration":"2 mins"
     }
 ]

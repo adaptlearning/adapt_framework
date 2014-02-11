@@ -15,6 +15,7 @@ define(function(require) {
         className: "navigation",
         
         initialize: function() {
+            this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
             Adapt.trigger('navigationView:preRender', this);
             this.render();
@@ -35,6 +36,18 @@ define(function(require) {
             event.preventDefault();
             var currentEvent = $(event.currentTarget).attr('data-event');
             Adapt.trigger('navigation:' + currentEvent);
+        },
+
+        hideNavigationButton: function(model) {
+            if (model.get('_type') === "course") {
+                $('.navigation-back-button').addClass('display-none');
+            } else {
+                this.showNavigationButton();
+            }
+        },
+
+        showNavigationButton: function() {
+            $('.navigation-back-button').removeClass('display-none');
         }
         
     });

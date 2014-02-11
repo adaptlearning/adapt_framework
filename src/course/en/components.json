@@ -7,7 +7,10 @@
         "_classes":"",
         "_layout":"left",
         "title":"Our first look at a component",
-        "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component."
+        "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component.",
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-10",
@@ -20,7 +23,11 @@
         "body": "",
         "media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
-            "ogv": "course/en/video/big_buck_bunny.ogv"
+            "ogv": "course/en/video/big_buck_bunny.ogv",
+            "_allowCompletionOnInview":true
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": false
         }
     },
     {
@@ -62,7 +69,10 @@
                 "top": 60,
                 "left": 80
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-20",
@@ -104,7 +114,10 @@
                 "title": "Don’t throw the baby out with the bath water",
                 "body": "None of the above means we stop following instructional design best practice.  We continue to put the learner at the heart of what we produce, writing well-structured which follows an appropriate learning model. It’s more about looking around at what is going on within the wider web community and taking note of changes in best practice and the nature of how content, is being accessed."
                 }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-30",
@@ -150,6 +163,9 @@
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     },
     {
@@ -192,7 +208,10 @@
             },
             "strapline": "2: Authoring Tool"
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-200",
@@ -231,6 +250,9 @@
             "reset":"",
             "showCorrectAnswer":"",
             "hideCorrectAnswer":""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     },
     {
@@ -309,7 +331,10 @@
                     }
                 ]
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-210",
@@ -354,7 +379,10 @@
                     "trickle"
                 ]
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-215",
@@ -403,6 +431,9 @@
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     },
     {
@@ -442,6 +473,9 @@
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     },
     {
@@ -523,7 +557,10 @@
                     }
                 ]
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-55",
@@ -533,7 +570,10 @@
         "_classes":"",
         "_layout":"left",
         "title":"Content is king",
-        "body":"The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job."
+        "body":"The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job.",
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-70",
@@ -550,6 +590,9 @@
             "large": "course/en/images/origami-menu-two.jpg",
             "medium": "course/en/images/origami-menu-two.jpg",
             "small": "course/en/images/origami-menu-two.jpg"
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     },
     {
@@ -577,7 +620,10 @@
                 "title": "Think about background images for decoration",
                 "body": "One way of bringing content to life is adding background images to blocks or articles. We suggest doing this after the content is produced so the imagery can aid the learning."
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-80",
@@ -585,7 +631,10 @@
         "_type":"component",
         "_component":"blank",
         "_classes":"",
-        "_layout":"right"
+        "_layout":"right",
+        "_pageLevelProgress": {
+            "_isEnabled": false
+        }
     },
     {
         "_id":"c-85",
@@ -627,7 +676,10 @@
                 },
                 "strapline": "How a narrative looks on mobile"
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-95",
@@ -680,7 +732,10 @@
                 "top": 85,
                 "left": 40
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-102",
@@ -692,9 +747,13 @@
         "title":"Media component",
         "media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
-            "ogv": "course/en/video/big_buck_bunny.ogv"
+            "ogv": "course/en/video/big_buck_bunny.ogv",
+            "_allowCompletionOnInview":false
         },
-        "body": "As mentioned above in the hot graphic - a media component is both a single and spanned component. Below is a media component spanned."
+        "body": "As mentioned above in the hot graphic - a media component is both a single and spanned component. Below is a media component spanned.",
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-105",
@@ -733,6 +792,9 @@
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     },
     {
@@ -790,7 +852,10 @@
                     }
                 ]
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-115",
@@ -829,7 +894,10 @@
                     "component"
                 ]
             }
-        ]
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
     },
     {
         "_id":"c-120",
@@ -878,6 +946,9 @@
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
         }
     }
 ]
