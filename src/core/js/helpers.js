@@ -20,7 +20,6 @@ define(function(require){
                 return (index +1) % 2 === 0  ? 'even' : 'odd';
             },
             if_value_equals: function(value, text, block) {
-                console.log(block);
                 if (value === text) {
                     return block.fn(this);
                 } else {
