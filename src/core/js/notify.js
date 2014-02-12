@@ -40,14 +40,16 @@ define(function(require) {
 	var prompt = {
 		title: "PROMPT",
 		body: "Would you really like to commit all your spare time to an awesome open source project?",
-		_promptOne: {
-			buttonText: "Yes",
-			_callbackEvent: "prompt:yes"
-		},
-		_promptTwo: {
-			buttonText: "No",
-			_callbackEvent: "prompt:no"
-		},
+		_prompts:[
+			{
+				promptText: "Yes",
+				_callbackEvent: "prompt:yes"
+			},
+			{
+				promptText: "No",
+				_callbackEvent: "prompt:no"
+			}
+		],
 		_showIcon: true
 	};
 
@@ -58,8 +60,21 @@ define(function(require) {
 
 	_.delay(function() {
 		Adapt.trigger('notify:alert', alert);
-		Adapt.trigger('notify:prompt', prompt);
-		Adapt.trigger('notify:popup', popup);
-	}, 1000)
+		//Adapt.trigger('notify:prompt', prompt);
+		//Adapt.trigger('notify:popup', popup);
+	}, 1000);
+
+	Adapt.on('alert:closed', function() {
+		console.log('alert is closed');
+	});
+	Adapt.on('prompt:yes', function() {
+		console.log('prompt yes');
+	});
+	Adapt.on('prompt:no', function() {
+		console.log('prompt no');
+	});
+	Adapt.on('notify:closed', function() {
+		console.log('notify has closed from a popup');
+	});
 
 });
