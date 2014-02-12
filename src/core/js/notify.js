@@ -6,8 +6,60 @@
 
 define(function(require) {
 
-	var Notify = (){};
+	var Adapt = require('coreJS/adapt');
+	var NotifyView = require('coreViews/notifyView');
+	var Notify = {};
 
-	console.log(Notify);
+	Adapt.on('notify:alert', function(notifyObject) {
+		addNotifyView('alert', notifyObject);
+	});
+
+	Adapt.on('notify:prompt', function(notifyObject) {
+		addNotifyView('prompt', notifyObject);
+	});
+
+	Adapt.on('notify:popup', function(notifyObject) {
+		addNotifyView('popup', notifyObject);
+	});
+
+	function addNotifyView(type, notifyObject) {
+		notifyObject._type = type;
+		new NotifyView({
+			model: new Backbone.Model(notifyObject)
+		});
+	}
+
+	var alert = {
+		title:"ALERT",
+		body: "Ooops looks like you've done something wrong!",
+		confirmText: "Ok",
+		_callbackEvent: 'alert:closed',
+		_showIcon: true
+	};
+
+	var prompt = {
+		title: "PROMPT",
+		body: "Would you really like to commit all your spare time to an awesome open source project?",
+		_promptOne: {
+			buttonText: "Yes",
+			_callbackEvent: "prompt:yes"
+		},
+		_promptTwo: {
+			buttonText: "No",
+			_callbackEvent: "prompt:no"
+		},
+		_showIcon: true
+	};
+
+	var popup = {
+		title: "POPUP",
+		body: "Oh - you fancied popping a popup eh?"
+	};
+
+	_.delay(function() {
+		Adapt.trigger('notify:alert', alert);
+		Adapt.trigger('notify:prompt', prompt);
+		Adapt.trigger('notify:popup', popup);
+	}, 1000)
 
 });
