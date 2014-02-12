@@ -26,7 +26,7 @@ define(function(require){
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
         object.template = name;
-        Adapt.componentStore[name] = object;     
+        Adapt.componentStore[name] = object;
         
     }
     

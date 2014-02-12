@@ -25,12 +25,14 @@ define(function(require) {
         },
         
         isReady: function() {
-            _.defer(_.bind(function() {
-                $('.loading').hide();
-                Adapt.trigger('pageView:ready', this);
-                this.$el.animate({'opacity': 1}, 'fast');
-                $(window).scroll();
-            }, this));
+            if (this.model.get('_isReady')) {
+                _.defer(_.bind(function() {
+                    $('.loading').hide();
+                    Adapt.trigger('pageView:ready', this);
+                    this.$el.animate({'opacity': 1}, 'fast');
+                    $(window).scroll();
+                }, this));
+            }
         }
         
     }, {
