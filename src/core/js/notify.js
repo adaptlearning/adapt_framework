@@ -39,7 +39,7 @@ define(function(require) {
 
 	var prompt = {
 		title: "PROMPT",
-		body: "Would you really like to commit all your spare time to an awesome open source project?",
+		body: "Would you really like to commit all your spare time to an awesome open source project? Would you really like to commit all your spare time to an awesome open source project?",
 		_prompts:[
 			{
 				promptText: "Yes",
@@ -58,11 +58,17 @@ define(function(require) {
 		body: "Oh - you fancied popping a popup eh?"
 	};
 
-	_.delay(function() {
-		Adapt.trigger('notify:alert', alert);
-		//Adapt.trigger('notify:prompt', prompt);
-		//Adapt.trigger('notify:popup', popup);
-	}, 1000);
+	Adapt.on('pageView:ready', function(pageView) {
+		if (pageView.model.get('_id') === 'co-05') {
+			Adapt.trigger('notify:alert', alert);
+		}
+		if (pageView.model.get('_id') === 'co-12') {
+			Adapt.trigger('notify:prompt', prompt);
+		}
+		if (pageView.model.get('_id') === 'co-15') {
+			Adapt.trigger('notify:popup', popup);
+		}
+	});
 
 	Adapt.on('alert:closed', function() {
 		console.log('alert is closed');
