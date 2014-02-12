@@ -28,7 +28,7 @@ define(function(require) {
         
         render: function() {
             var template = Handlebars.templates[this.template]
-            $(this.el).html(template).appendTo('#wrapper');
+            this.$el.html(template).appendTo('#wrapper');
             return this;
         },
         
