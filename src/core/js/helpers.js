@@ -1,7 +1,7 @@
 /*
 * Adapt
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Alan Bourne, Chris Jones
+* Maintainers - Alan Bourne, Chris Jones, Daryl Hedley
 */
 define(function(require){
 
