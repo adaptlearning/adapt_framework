@@ -13,7 +13,7 @@ define(function(require) {
         defaults: {
             "_defaultLanguage": "en",
             "screenSize" : 
-                {"small":519,"medium":759,"large":1024}
+                {"small":520,"medium":760,"large":1024}
         },
 
         initialize: function(options) {
