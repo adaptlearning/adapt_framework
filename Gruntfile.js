@@ -125,7 +125,7 @@ module.exports = function(grunt) {
                         newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, "");
                         return  newFilePath;
                     },
-                    partialRegex: /^part_/,
+                    partialRegex: /.*/,
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
