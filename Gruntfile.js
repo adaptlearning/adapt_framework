@@ -3,6 +3,9 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        jsonlint: {
+            src: [ 'src/course/**/*.json' ]
+        },
         copy: {
             index: {
                 files: [
@@ -125,7 +128,7 @@ module.exports = function(grunt) {
                         newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, "");
                         return  newFilePath;
                     },
-                    partialRegex: /^part_/,
+                    partialRegex: /.*/,
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
@@ -210,13 +213,13 @@ module.exports = function(grunt) {
                 files: [
                     'src/course/**/*.json'
                 ],
-                tasks : [ 'copy:courseJson']
+                tasks : ['jsonlint', 'copy:courseJson']
             },
             courseAssets: {
                 files: [
                     'src/course/**/*', '!src/course/**/*.json'
                 ],
-                tasks : [ 'copy:courseAssets']
+                tasks : ['copy:courseAssets']
             },
             js: {
                 files: [
@@ -224,7 +227,7 @@ module.exports = function(grunt) {
                     '!src/components/components.js',
                     '!src/extensions/extensions.js',
                     '!src/menu/menu.js',
-                    '!src/themes/theme.js',
+                    '!src/theme/theme.js',
                     '!src/templates/templates.js',
                 ],
                 tasks: ['compile']
@@ -316,9 +319,10 @@ module.exports = function(grunt) {
     grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
     grunt.registerTask('server',['concurrent:server']);
     grunt.registerTask('server-scorm',['concurrent:spoor']);
-    grunt.registerTask('build',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
-    grunt.registerTask('dev',['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
+    grunt.registerTask('build',['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
+    grunt.registerTask('dev',['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
     
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
+    grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
 };
