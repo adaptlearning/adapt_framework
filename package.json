@@ -32,7 +32,8 @@
     "karma-mocha": "*",
     "karma-expect": "*",
     "bower": "*",
-    "adapt-grunt-tracking-ids":"*"
+    "adapt-grunt-tracking-ids": "*",
+    "grunt-jsonlint": "~1.0.4"
   },
   "dependencies": {
     "assemble-less": "~0.5.3",
