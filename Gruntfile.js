@@ -279,6 +279,13 @@ module.exports = function(grunt) {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
+        },
+
+        nightwatch: {
+            options: {
+                standalone: true,
+                jar_url: 'http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar'
+            }
         }
     });
     
