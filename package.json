@@ -33,7 +33,9 @@
     "karma-expect": "*",
     "bower": "*",
     "adapt-grunt-tracking-ids": "*",
-    "grunt-nightwatch": "^0.1.4"
+    "grunt-nightwatch": "^0.1.6",
+    "underscore": "^1.6.0",
+    "lodash": "^2.4.1"
   },
   "dependencies": {
     "assemble-less": "~0.5.3",
