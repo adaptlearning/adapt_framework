@@ -34,7 +34,7 @@ define(function(require) {
 		},
 
 		openCustomView: function(view) {
-			this.$('.drawer-inner').html(view);
+			this.$('.drawer-holder').html(view);
 			this.showDrawer();
 		},
 
@@ -63,6 +63,7 @@ define(function(require) {
 		},
 
 		showDrawer: function(emptyDrawer) {
+			Adapt.trigger('popup:opened');
 			$('html').css('overflow-y', 'visible');
 			$('body').css({'position':'relative', 'overflow': 'hidden'}).animate({"left":-320});
 			if (!$('html').hasClass('ie8')) {
@@ -76,7 +77,7 @@ define(function(require) {
 		},
 
 		emptyDrawer: function() {
-			this.$('.drawer-inner').empty();
+			this.$('.drawer-holder').empty();
 		},
 
 		renderItems: function() {
@@ -86,6 +87,7 @@ define(function(require) {
 		},
 
 		hideDrawer: function() {
+			Adapt.trigger('popup:closed');
 			$('html').css('overflow-y', 'scroll');
 			
 			if ($('html').hasClass('ie8')) {
