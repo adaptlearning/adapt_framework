@@ -8,6 +8,7 @@
         "_layout":"left",
         "title":"Our first look at a component",
         "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component.",
+        "instruction":"",
         "_pageLevelProgress": {
             "_isEnabled": true
         }
@@ -21,6 +22,7 @@
         "_layout":"right",
         "title":"<br>",
         "body": "",
+        "instruction":"",
         "media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
@@ -38,7 +40,8 @@
         "_component": "hotgraphic",
         "_layout": "full",    
         "title": "Key Facts",
-        "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution. <span class='show-for-mobile'>Click the <b>+ icons</b> below for more.</span>",
+        "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution.",
+        "instruction":"Click the + icons below for more.",
         "graphic": {
             "src": "course/en/images/hotgraphic.png",
             "alt": "alt text",
@@ -82,7 +85,8 @@
         "_classes":"",
         "_layout":"left",
         "title": "Scrolling: Some considerations",
-        "body": "Here are some reasons why we think scrolling is perfectly fine – and even desirable: Select the headings below to reveal the text.",
+        "body": "Here are some reasons why we think scrolling is perfectly fine – and even desirable:",
+        "instruction":"Select the headings below to reveal the text.",
         "items": [
             {
                 "alt": "Your learners already do it",
@@ -131,7 +135,8 @@
         "_isRandom":true,
         "_selectable":4,
         "title": "Key benefits of a vertical scrolling approach",
-        "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach? Select one or more options from the list below and select <b>Submit.</b>",
+        "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
+        "instruction":"Select one or more options from the list below and select Submit.",
         "items": [
             {
                 "text": "Vertical scrolling as a means of navigation on the web is common place and therefore familiar to users",
@@ -177,6 +182,7 @@
         "_component": "narrative",
         "title": "What’s coming next?",
         "body": "Find out what’s on the roadmap for 2014 for Adapt Learning.",
+        "instruction":"",
         "items": [
             {
             "title": "Improvements",
@@ -225,7 +231,8 @@
         "_isRandom":true,
         "_selectable":3,
         "title": "Getting involved",
-        "body": "How can anyone get involved with Adapt? Select the correct answers below.",
+        "body": "How can anyone get involved with Adapt?",
+        "instruction":"Select the correct answers below.",
         "items": [
             {
                 "text": "Sign up to the community site",
@@ -267,6 +274,7 @@
         "_questionWeight":10,
         "title": "Order of a page",
         "body": "Put in order, the elements as they are viewed in a standard Adapt page",
+        "instruction":"Select an options from the drop down list",
         "buttons": {
             "submit": "",
             "reset": "",
@@ -345,6 +353,7 @@
         "_layout":"left",
         "title": "Extensions",
         "body": "Name the two extensions being used on this page?",
+        "instruction":"Fill in your answers below.",
         "_attempts": 1,
         "placeholder": "Enter answer here",
         "_allowsAnyOrder": false,
@@ -397,6 +406,7 @@
         "_selectable":1,
         "title": "GMCQ",
         "body": "Which of the following options would you consider to be correct?",
+        "instruction":"Maybe pick option one.",
         "items": [
             {
                 "text": "This is option 1.",
@@ -449,6 +459,7 @@
         "_selectable":1,
         "title": "MCQ",
         "body": "Which of the following options would you consider to be correct?",
+        "instruction":"Option one again?",
         "items": [
             {
                 "text": "This is option 1.",
@@ -490,6 +501,7 @@
         "_questionWeight":10,
         "title": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
+        "instruction":"Answers should in the question.",
         "buttons": {
             "submit": "",
             "reset": "",
@@ -571,6 +583,7 @@
         "_layout":"left",
         "title":"Content is king",
         "body":"The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job.",
+        "instruction":"",
         "_pageLevelProgress": {
             "_isEnabled": true
         }
@@ -584,6 +597,7 @@
         "_layout":"right",
         "title":"Imagery helps to tell a story",
         "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
         "graphic": {
             "alt": "alt text",
             "title": "title text",
@@ -603,7 +617,8 @@
         "_classes":"",
         "_layout":"left",
         "title": "Headlines to grab attention",
-        "body": "The accordion component enables a content creator to pick some catchy titles that reveal more information. Select the headings below to reveal the text.",
+        "body": "The accordion component enables a content creator to pick some catchy titles that reveal more information.",
+        "instruction":" Select the headings below to reveal the text.",
         "items": [
             {
                 "alt": "Missing title and body elements",
@@ -644,7 +659,8 @@
         "_layout": "full",
         "_component": "narrative",
         "title": "Narrative",
-        "body": "This is optional body text. Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
+        "body": "This is optional body text.",
+        "instruction":"Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
         "items": [
             {
                 "title": "Tell a story",
@@ -689,7 +705,8 @@
         "_component": "hotgraphic",
         "_layout": "full",    
         "title": "Hot graphic",
-        "body": "The hot graphic component enables the learner to interact with an image by clicking on the hot spots to reveal more. This component will scale down to a narrative when viewed on mobile. Select the hotspots on the image to reveal the text.",
+        "body": "The hot graphic component enables the learner to interact with an image by clicking on the hot spots to reveal more. This component will scale down to a narrative when viewed on mobile.",
+        "instruction":"Select the hotspots on the image to reveal the text.",
         "graphic": {
             "src": "course/en/images/origami-hotgraphic.jpg",
             "alt": "alt text",
@@ -751,6 +768,7 @@
             "_allowCompletionOnInview":false
         },
         "body": "As mentioned above in the hot graphic - a media component is both a single and spanned component. Below is a media component spanned.",
+        "instruction":"",
         "_pageLevelProgress": {
             "_isEnabled": true
         }
@@ -767,7 +785,8 @@
         "_isRandom":true,
         "_selectable":1,
         "title": "MCQ",
-        "body": "A multiple choice question items each have a text attribute and whether the item is correct. An MCQ can also set the items to display in a random order and allow multiple items to be selected. <b>What does MCQ standard for?</b> Select an item below and click submit.",
+        "body": "A multiple choice question items each have a text attribute and whether the item is correct. An MCQ can also set the items to display in a random order and allow multiple items to be selected.",
+        "instruction":"What does MCQ standard for? Select an item below and click submit.",
         "items": [
             {
                 "text": "Magical choosing question",
@@ -808,7 +827,8 @@
         "_random": true,
         "_questionWeight":10,
         "title": "Matching",
-        "body": "A matching component allows multiple question stems that each have their own individual drop down. All feedback for questions are passed out through an event system so extensions can display feedback how they want. Core comes bundled with a plugin called Tutor. Match the questions below with the drop down box option.",
+        "body": "A matching component allows multiple question stems that each have their own individual drop down. All feedback for questions are passed out through an event system so extensions can display feedback how they want. Core comes bundled with a plugin called Tutor.",
+        "instruction":"Match the questions below with the drop down box option.",
         "buttons": {
             "submit": "",
             "reset": "",
@@ -865,7 +885,8 @@
         "_classes":"",
         "_layout":"left",
         "title": "Text input",
-        "body": "Text input allows the learner to input a text field into one of the items. This component can check whether you need items to be case sensitive, allow punctuation and allow items to be inserted in any order. <b>Name one type of plugin Adapt supports?</b>",
+        "body": "Text input allows the learner to input a text field into one of the items. This component can check whether you need items to be case sensitive, allow punctuation and allow items to be inserted in any order.",
+        "instruction":"Name one type of plugin Adapt supports?",
         "_attempts": 1,
         "placeholder": "Enter answer here",
         "_allowsAnyOrder": false,
@@ -912,6 +933,7 @@
         "_selectable":1,
         "title": "GMCQ",
         "body": "Similar to the MCQ, but displays graphical assets instead of text items.",
+        "instruction":"",
         "items": [
             {
                 "text": "This is option 1.",
@@ -946,6 +968,82 @@
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+    {
+        "id": "c-125",
+        "_parentId":"b-65",
+        "_type":"component",
+        "_component": "slider",
+        "_classes":"",
+        "_layout": "left",
+        "title": "Slider type component",
+        "body": "Question text here",
+        "instruction": "",
+        "_attempts": 2,
+        "_questionWeight":1,
+        "_showNumber": true,
+        "_showScaleIndicator": true,
+        "labelStart": "incomplete",
+        "labelEnd": "complete",
+        "_scaleStart": 1,
+        "_scaleEnd": 10,
+        "_correctAnswer": "",
+        "_correctRange": {
+            "bottom": 4,
+            "top": 9
+        },
+        "button": {
+            "submit": "Submit",
+            "model": "Model Answer",
+            "reset": "Reset",
+            "user": "My Answer"
+        },
+        "feedback": {
+            "correct": "This feedback will appear if you answered the question correctly.",
+            "incorrect": "This feedback will appear if you answered the question incorrectly.",
+            "partly": "This feedback will appear if you answered part of the question correctly."
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+    {
+        "id": "c-130",
+        "_parentId":"b-65",
+        "_type":"component",
+        "_component": "slider",
+        "_classes":"",
+        "_layout": "right",
+        "title": "Slider type component",
+        "body": "Question text here",
+        "instruction": "What do you think of Adapt?",
+        "_attempts": 1,
+        "_questionWeight":10,
+        "_showNumber": false,
+        "_showScaleIndicator": false,
+        "labelStart": "Not amazing",
+        "labelEnd": "Amazing",
+        "_scaleStart": 1,
+        "_scaleEnd": 10,
+        "_correctAnswer": "",
+        "_correctRange": {
+            "bottom": 4,
+            "top": 9
+        },
+        "button": {
+            "submit": "Submit",
+            "model": "Model Answer",
+            "reset": "Reset",
+            "user": "My Answer"
+        },
+        "feedback": {
+            "correct": "This feedback will appear if you answered the question correctly.",
+            "incorrect": "This feedback will appear if you answered the question incorrectly.",
+            "partly": "This feedback will appear if you answered part of the question correctly."
         },
         "_pageLevelProgress": {
             "_isEnabled": true
