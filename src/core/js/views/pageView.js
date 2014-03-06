@@ -28,6 +28,7 @@ define(function(require) {
             if (this.model.get('_isReady')) {
                 _.defer(_.bind(function() {
                     $('.loading').hide();
+                    $(window).scrollTop(0);
                     Adapt.trigger('pageView:ready', this);
                     this.$el.animate({'opacity': 1}, 'fast');
                     $(window).scroll();
