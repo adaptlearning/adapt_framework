@@ -315,12 +315,12 @@ module.exports = function(grunt) {
         grunt.file.write('build/course/config.json', JSON.stringify(configJson));
     });
 
-    grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
-    grunt.registerTask('server',['concurrent:server']);
-    grunt.registerTask('server-scorm',['concurrent:spoor']);
-    grunt.registerTask('build',['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
-    grunt.registerTask('dev',['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
+    grunt.registerTask('default', ['less', 'handlebars', 'watch']);
+    grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
+    grunt.registerTask('server', ['concurrent:server']);
+    grunt.registerTask('server-scorm', ['concurrent:spoor']);
+    grunt.registerTask('build', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
+    grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
     
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
