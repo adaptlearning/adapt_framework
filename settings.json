@@ -1,0 +1,35 @@
+{
+  "src_folders" : ["./test/acceptance/tests"],
+  "output_folder" : "./test/acceptance/reports",
+  "custom_commands_path" : "./test/acceptance/custom_commands",
+
+  "selenium" : {
+    "start_process" : true,
+    "server_path" : "./test/acceptance/lib/selenium-server-standalone-2.40.0.jar",
+    "log_path" : false,
+    "host" : "127.0.0.1",
+    "port" : 4444
+  },
+
+  "test_settings" : {
+    "default" : {
+      "custom_commands_path" : "./test/acceptance/custom_commands",
+      "launch_url" : "http://localhost:9001/main.html",
+      "selenium_port"  : 4444,
+      "selenium_host"  : "localhost",
+      "silent": false,
+      "firefox_profile": false,
+      "chrome_driver": "",
+      "ie_driver": "",
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    }
+  }
+}
