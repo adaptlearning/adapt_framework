@@ -414,9 +414,9 @@
                 "graphic": {
                     "alt": "Alt text for option 1",
                     "title": "title text",
-                    "large": "http://placehold.it/480x300/",
-                    "medium": "http://placehold.it/480x250/",
-                    "small": "http://placehold.it/480x350/"
+                    "large": "course/en/images/gqcq-1-large.gif",
+                    "medium": "course/en/images/gqcq-1-medium.gif",
+                    "small": "course/en/images/gqcq-1-small.gif"
                 }
             },
             {
@@ -425,9 +425,9 @@
                 "graphic": {
                     "alt": "Alt text for option 2",
                     "title": "title text",
-                    "large": "http://placehold.it/480x300/3eb4e4/fff",
-                    "medium": "http://placehold.it/480x250/3eb4e4/fff",
-                    "small": "http://placehold.it/480x350/3eb4e4/fff"
+                    "large": "course/en/images/gqcq-2-large.gif",
+                    "medium": "course/en/images/gqcq-2-medium.gif",
+                    "small": "course/en/images/gqcq-2-small.gif"
                 }
             }
         ],
@@ -941,9 +941,9 @@
                 "graphic": {
                     "alt": "Alt text for option 1",
                     "title": "title text",
-                    "large": "http://placehold.it/480x300/",
-                    "medium": "http://placehold.it/480x250/",
-                    "small": "http://placehold.it/480x350/"
+                    "large": "course/en/images/gqcq-1-large.gif",
+                    "medium": "course/en/images/gqcq-1-medium.gif",
+                    "small": "course/en/images/gqcq-1-small.gif"
                 }
             },
             {
@@ -952,9 +952,9 @@
                 "graphic": {
                     "alt": "Alt text for option 2",
                     "title": "title text",
-                    "large": "http://placehold.it/480x300/3eb4e4/fff",
-                    "medium": "http://placehold.it/480x250/3eb4e4/fff",
-                    "small": "http://placehold.it/480x350/3eb4e4/fff"
+                    "large": "course/en/images/gqcq-2-large.gif",
+                    "medium": "course/en/images/gqcq-2-medium.gif",
+                    "small": "course/en/images/gqcq-2-small.gif"
                 }
             }
         ],
