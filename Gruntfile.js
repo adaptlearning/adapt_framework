@@ -410,21 +410,17 @@ module.exports = function(grunt) {
         function checkEachElementHasParentId() {
             
             _.each(storedFileParentIds, function(value, key) {
-                if (key === "contentObjects") {
-                    checkIfOrphanedElementsExist(value, "contentObjects");
+                switch(key){
+                    case "contentObjects":
+                        return checkIfOrphanedElementsExist(value, "contentObjects");
+                    case "articles":
+                        return checkIfOrphanedElementsExist(value, "contentObjects");
+                    case "blocks":
+                        return checkIfOrphanedElementsExist(value, "articles");
+                    case "components":
+                        return checkIfOrphanedElementsExist(value, "blocks");
                 }
 
-                if (key === "articles") {
-                    checkIfOrphanedElementsExist(value, "contentObjects");
-                }
-
-                if (key === "blocks") {
-                    checkIfOrphanedElementsExist(value, "articles");
-                }
-
-                if (key === "components") {
-                    checkIfOrphanedElementsExist(value, "blocks");
-                }
             });
 
             if (hasOrphanedParentIds) {
