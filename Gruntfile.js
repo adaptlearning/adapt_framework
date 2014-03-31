@@ -337,6 +337,10 @@ module.exports = function(grunt) {
 
         var storedFileIds = {};
 
+        var hasOrphanedParentIds = false;
+        
+        var orphanedParentIds = [];
+
         // method to check json ids
         function checkJsonIds() {
             var currentCourseFolder;
@@ -390,48 +394,36 @@ module.exports = function(grunt) {
             }
         }
 
+        function checkIfOrphanedElementsExist(value, parentFileToCheck) {
+            _.each(value, function(parentId) {
+                if (parentId === "course") {
+                    return;
+                }
+                if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
+                    hasOrphanedParentIds = true;
+                    orphanedParentIds.push(parentId);
+                };
+                
+            });
+        }
+
         function checkEachElementHasParentId() {
-            var hasOrphanedParentIds = false;
-            var orphanedParentIds = [];
             
             _.each(storedFileParentIds, function(value, key) {
                 if (key === "contentObjects") {
-                    _.each(value, function(parentId) {
-                        if (parentId === "course") {
-                            return;
-                        }
-                        if (_.indexOf(storedFileIds["contentObjects"], parentId) === -1) {
-                            hasOrphanedParentIds = true;
-                            orphanedParentIds.push(parentId);
-                        };
-                    });
+                    checkIfOrphanedElementsExist(value, "contentObjects");
                 }
 
                 if (key === "articles") {
-                    _.each(value, function(parentId) {
-                        if (_.indexOf(storedFileIds["contentObjects"], parentId) === -1) {
-                            hasOrphanedParentIds = true;
-                            orphanedParentIds.push(parentId);
-                        };
-                    });
+                    checkIfOrphanedElementsExist(value, "contentObjects");
                 }
 
                 if (key === "blocks") {
-                    _.each(value, function(parentId) {
-                        if (_.indexOf(storedFileIds["articles"], parentId) === -1) {
-                            hasOrphanedParentIds = true;
-                            orphanedParentIds.push(parentId);
-                        };
-                    });
+                    checkIfOrphanedElementsExist(value, "articles");
                 }
 
                 if (key === "components") {
-                    _.each(value, function(parentId) {
-                        if (_.indexOf(storedFileIds["blocks"], parentId) === -1) {
-                            hasOrphanedParentIds = true;
-                            orphanedParentIds.push(parentId);
-                        };
-                    });
+                    checkIfOrphanedElementsExist(value, "blocks");
                 }
             });
 
