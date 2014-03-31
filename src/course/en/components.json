@@ -447,7 +447,7 @@
         }
     },
     {
-        "_id":"c-125",
+        "_id":"c-124",
         "_parentId":"b-30",
         "_type":"component",
         "_component":"mcq",
@@ -974,7 +974,7 @@
         }
     },
     {
-        "id": "c-125",
+        "_id": "c-126",
         "_parentId":"b-65",
         "_type":"component",
         "_component": "slider",
@@ -1012,7 +1012,7 @@
         }
     },
     {
-        "id": "c-130",
+        "_id": "c-130",
         "_parentId":"b-65",
         "_type":"component",
         "_component": "slider",
