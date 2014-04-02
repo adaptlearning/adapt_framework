@@ -75,6 +75,9 @@ define(function(require) {
 				this.emptyDrawer();
 				this.renderItems();
 			}
+			_.defer(_.bind(function() {
+				this.addBodyEvent();
+			}, this))
 		},
 
 		emptyDrawer: function() {
@@ -104,6 +107,17 @@ define(function(require) {
 				$('.navigation').animate({"left": 0});
 				this.$el.animate({'right': -320});
 			}
+			this.removeBodyEvent();
+		},
+
+		addBodyEvent: function() {
+			$('.page, .menu').one('click', _.bind(function() {
+				this.hideDrawer();
+			}, this));
+		},
+
+		removeBodyEvent: function() {
+			$('.page, .menu').off('click');
 		}
 
 	});
