@@ -34,6 +34,7 @@ define(function(require) {
 		},
 
 		openCustomView: function(view) {
+			this._isCustomViewVisible = true;
 			Adapt.trigger('drawer:empty');
 			this.showDrawer();
 			this.$('.drawer-holder').html(view);
@@ -55,7 +56,7 @@ define(function(require) {
 		},
 
 		toggleDrawer: function() {
-			if (this._isVisible) {
+			if (this._isVisible && this._isCustomViewVisible === false) {
 				this._isVisible = false;
 				this.hideDrawer();
 			} else {
@@ -73,6 +74,7 @@ define(function(require) {
 			}
 			this.$el.animate({'right': 0});
 			if (emptyDrawer) {
+				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
 			}
@@ -108,6 +110,7 @@ define(function(require) {
 				$('.navigation').animate({"left": 0});
 				this.$el.animate({'right': -320});
 			}
+			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
 		},
 
