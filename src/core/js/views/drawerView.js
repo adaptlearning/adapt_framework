@@ -34,6 +34,7 @@ define(function(require) {
 		},
 
 		openCustomView: function(view) {
+			Adapt.trigger('drawer:empty');
 			this.showDrawer();
 			this.$('.drawer-holder').html(view);
 			
@@ -77,7 +78,7 @@ define(function(require) {
 			}
 			_.defer(_.bind(function() {
 				this.addBodyEvent();
-			}, this))
+			}, this));
 		},
 
 		emptyDrawer: function() {
@@ -112,7 +113,7 @@ define(function(require) {
 
 		addBodyEvent: function() {
 			$('.page, .menu').one('click', _.bind(function() {
-				this.hideDrawer();
+				this.onCloseDrawer();
 			}, this));
 		},
 
