@@ -36,7 +36,7 @@
     "adapt-grunt-tracking-ids": "*",
     "grunt-nightwatch": "^0.1.6",
     "underscore": "^1.6.0",
-    "lodash": "^2.4.1"
+    "lodash": "^2.4.1",
     "grunt-jsonlint": "~1.0.4"
   },
   "dependencies": {
