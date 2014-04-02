@@ -3,6 +3,7 @@ define(function(require) {
   var Backbone = require('backbone');
   var Adapt = {};
   var Adapt = require('coreJS/adapt');
+  Adapt.course = new Backbone.Model();
   Adapt.contentObjects = new Backbone.Collection();
   Adapt.articles = new Backbone.Collection();
   Adapt.blocks = new Backbone.Collection();
@@ -13,6 +14,19 @@ define(function(require) {
   var BlockModel = require('coreModels/blockModel');
   var ComponentModel = require('coreModels/componentModel');
   
+  Adapt.course = new Backbone.Model({
+    "_id": "course",
+    "_type": "course",
+    "title": "Welcome to Adapt Learning - v1.0.0",
+    "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
+    "buttons": {
+        "submit": "Submit",
+        "reset": "Reset",
+        "showCorrectAnswer": "Model Answer",
+        "hideCorrectAnswer": "My Answer"
+    },
+    "_latestTrackingId": 13
+  });
   Adapt.contentObjects = new Backbone.Collection([
     {
         "_id":"co-05",
