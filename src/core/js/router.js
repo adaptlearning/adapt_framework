@@ -70,7 +70,7 @@ define(function(require) {
             }
             var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.currentLocation});
             var parent = currentModel.getParent();
-            if (parent.get('_id') === 'course') {
+            if (parent.get('_id') === Adapt.course.get('_id')) {
                 return this.navigate('#', {trigger:true});
             }
             this.navigate('#/id/' + parent.get('_id'), {trigger:true});
