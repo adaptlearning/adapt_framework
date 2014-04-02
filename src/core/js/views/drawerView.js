@@ -34,8 +34,9 @@ define(function(require) {
 		},
 
 		openCustomView: function(view) {
-			this.$('.drawer-holder').html(view);
 			this.showDrawer();
+			this.$('.drawer-holder').html(view);
+			
 		},
 
 		checkIfDrawerIsAvailable: function() {
@@ -81,6 +82,8 @@ define(function(require) {
 		},
 
 		renderItems: function() {
+			Adapt.trigger('drawer:empty');
+			this.emptyDrawer();
 			this.collection.each(function(item) {
 				new DrawerItemView({model: item});
 			});
@@ -110,6 +113,7 @@ define(function(require) {
 		className: 'drawer-item',
 
 		initialize: function() {
+			this.listenTo(Adapt, 'drawer:empty', this.remove);
 			this.render();
 		},
 
@@ -126,7 +130,6 @@ define(function(require) {
 
 		onDrawerItemClicked: function(event) {
 			event.preventDefault();
-			console.log(this.model.get('eventCallback'));
 			var eventCallback = this.model.get('eventCallback');
 			Adapt.trigger(eventCallback);
 		}
