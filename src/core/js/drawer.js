@@ -20,12 +20,12 @@ define(function(require) {
 		Adapt.trigger('drawer:triggerCustomView', view);
 	}
 
-	Drawer.init = function() {
+	var init = function() {
 		new DrawerView({collection: DrawerCollection});
 	}
 
 	Adapt.once('app:dataReady', function() {
-		Drawer.init();
+		init();
 	})
 
 	Adapt.drawer = Drawer;
