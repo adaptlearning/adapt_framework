@@ -73,6 +73,7 @@ define(function(require) {
 				$('.navigation').animate({"left": -320});
 			}
 			this.$el.animate({'right': 0});
+			$('#wrapper').animate({opacity:0.5});
 			if (emptyDrawer) {
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
@@ -110,6 +111,7 @@ define(function(require) {
 				$('.navigation').animate({"left": 0});
 				this.$el.animate({'right': -320});
 			}
+			$('#wrapper').animate({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
 		},
