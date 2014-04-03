@@ -34,8 +34,11 @@ define(function(require) {
 		},
 
 		openCustomView: function(view) {
-			this.$('.drawer-holder').html(view);
+			this._isCustomViewVisible = true;
+			Adapt.trigger('drawer:empty');
 			this.showDrawer();
+			this.$('.drawer-holder').html(view);
+			
 		},
 
 		checkIfDrawerIsAvailable: function() {
@@ -53,7 +56,7 @@ define(function(require) {
 		},
 
 		toggleDrawer: function() {
-			if (this._isVisible) {
+			if (this._isVisible && this._isCustomViewVisible === false) {
 				this._isVisible = false;
 				this.hideDrawer();
 			} else {
@@ -65,15 +68,20 @@ define(function(require) {
 		showDrawer: function(emptyDrawer) {
 			Adapt.trigger('popup:opened');
 			$('html').css('overflow-y', 'visible');
-			$('body').css({'position':'relative', 'overflow': 'hidden'}).animate({"left":-320});
+			$('body').css({'position':'relative', 'overflow': 'hidden'}).animate({"left":-this.$el.width()});
 			if (!$('html').hasClass('ie8')) {
-				$('.navigation').animate({"left": -320});
+				$('.navigation').animate({"left": -this.$el.width()});
 			}
 			this.$el.animate({'right': 0});
+			$('#wrapper').animate({opacity:0.5});
 			if (emptyDrawer) {
+				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
 			}
+			_.defer(_.bind(function() {
+				this.addBodyEvent();
+			}, this));
 		},
 
 		emptyDrawer: function() {
@@ -81,6 +89,8 @@ define(function(require) {
 		},
 
 		renderItems: function() {
+			Adapt.trigger('drawer:empty');
+			this.emptyDrawer();
 			this.collection.each(function(item) {
 				new DrawerItemView({model: item});
 			});
@@ -93,14 +103,27 @@ define(function(require) {
 			if ($('html').hasClass('ie8')) {
 				$('body').css({"left":0});
 				$(this).css({'position':'static', 'overflow': 'visible'});
-				this.$el.css({'right': -320});
+				this.$el.css({'right': -this.$el.width()});
 			} else {
 				$('body').animate({"left":0}, function() {
 					$(this).css({'position':'static', 'overflow': 'visible'});
 				});
 				$('.navigation').animate({"left": 0});
-				this.$el.animate({'right': -320});
+				this.$el.animate({'right': -this.$el.width()});
 			}
+			$('#wrapper').animate({opacity:1});
+			this._isCustomViewVisible = false;
+			this.removeBodyEvent();
+		},
+
+		addBodyEvent: function() {
+			$('.page, .menu').one('click', _.bind(function() {
+				this.onCloseDrawer();
+			}, this));
+		},
+
+		removeBodyEvent: function() {
+			$('.page, .menu').off('click');
 		}
 
 	});
@@ -110,6 +133,7 @@ define(function(require) {
 		className: 'drawer-item',
 
 		initialize: function() {
+			this.listenTo(Adapt, 'drawer:empty', this.remove);
 			this.render();
 		},
 
@@ -126,7 +150,6 @@ define(function(require) {
 
 		onDrawerItemClicked: function(event) {
 			event.preventDefault();
-			console.log(this.model.get('eventCallback'));
 			var eventCallback = this.model.get('eventCallback');
 			Adapt.trigger(eventCallback);
 		}
