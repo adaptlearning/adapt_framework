@@ -68,9 +68,9 @@ define(function(require) {
 		showDrawer: function(emptyDrawer) {
 			Adapt.trigger('popup:opened');
 			$('html').css('overflow-y', 'visible');
-			$('body').css({'position':'relative', 'overflow': 'hidden'}).animate({"left":-320});
+			$('body').css({'position':'relative', 'overflow': 'hidden'}).animate({"left":-this.$el.width()});
 			if (!$('html').hasClass('ie8')) {
-				$('.navigation').animate({"left": -320});
+				$('.navigation').animate({"left": -this.$el.width()});
 			}
 			this.$el.animate({'right': 0});
 			$('#wrapper').animate({opacity:0.5});
@@ -103,13 +103,13 @@ define(function(require) {
 			if ($('html').hasClass('ie8')) {
 				$('body').css({"left":0});
 				$(this).css({'position':'static', 'overflow': 'visible'});
-				this.$el.css({'right': -320});
+				this.$el.css({'right': -this.$el.width()});
 			} else {
 				$('body').animate({"left":0}, function() {
 					$(this).css({'position':'static', 'overflow': 'visible'});
 				});
 				$('.navigation').animate({"left": 0});
-				this.$el.animate({'right': -320});
+				this.$el.animate({'right': -this.$el.width()});
 			}
 			$('#wrapper').animate({opacity:1});
 			this._isCustomViewVisible = false;
