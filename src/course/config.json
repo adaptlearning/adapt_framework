@@ -12,9 +12,5 @@
             "_onTrackingCriteriaMet": "completed",
             "_onQuizFailure": "incomplete"
         }
-    },
-    "_pageLevelProgress": {
-        "title": "Page Level Progress",
-        "description": "Click here to view page progress"
     }
 }

@@ -110,13 +110,13 @@ define(function(require) {
             if (!this.model.has("_questionWeight")) {
                 this.model.set("_questionWeight", Adapt.config.get("_questionWeight"));
             }
-            if (!this.model.has("buttons")) {
-                this.model.set("buttons", Adapt.course.get("buttons"));
+            if (!this.model.has("_buttons")) {
+                this.model.set("_buttons", Adapt.course.get("_buttons"));
             } else {
-                for(var key in this.model.get("buttons")) {
-                    var value=this.model.get("buttons")[key];
+                for(var key in this.model.get("_buttons")) {
+                    var value=this.model.get("_buttons")[key];
                     if (!value) {
-                        this.model.get("buttons")[key] = Adapt.course.get("buttons")[key];
+                        this.model.get("_buttons")[key] = Adapt.course.get("_buttons")[key];
                     }
                 }
             }
