@@ -256,8 +256,8 @@ module.exports = function(grunt) {
         },
 
         concurrent: {
-            server: ['connect:server', 'open:server', 'watch'],
-            spoor: ['connect:spoorOffline', 'open:spoor', 'watch'],
+            server: ['connect:server', 'open:server'],
+            spoor: ['connect:spoorOffline', 'open:spoor'],
             selenium: ['connect:spoorOffline', 'nightwatch']
         },
 
