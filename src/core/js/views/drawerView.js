@@ -144,7 +144,7 @@ define(function(require) {
 		render: function() {
 			var data = this.model.toJSON();
 			var template = Handlebars.templates['drawerItem']
-            $(this.el).html(template(data)).appendTo('.drawer-inner');
+            $(this.el).html(template(data)).appendTo('.drawer-holder');
             return this;
 		},
 
