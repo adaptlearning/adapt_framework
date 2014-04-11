@@ -42,6 +42,8 @@ define(function(require) {
             }
         }
         
+    }, {
+        type:'menu'
     });
     
     return MenuView;

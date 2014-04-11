@@ -26,7 +26,7 @@ define(function(require) {
         },
         
         render: function() {
-            Adapt.trigger(this.model.get('_type') + 'View:preRender', this);
+            Adapt.trigger(this.constructor.type + 'View:preRender', this);
           
             var data = this.model.toJSON();
             var template = Handlebars.templates[this.constructor.template];
@@ -34,7 +34,7 @@ define(function(require) {
             
             _.defer(_.bind(function() {
                 this.postRender();
-                Adapt.trigger(this.model.get('_type') + 'View:postRender', this);
+                Adapt.trigger(this.constructor.type + 'View:postRender', this);
             }, this));
 
             return this;

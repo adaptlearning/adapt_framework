@@ -59,7 +59,12 @@ define(function(require) {
 			var notifyHeight = this.$('.notify-popup').height();
 			var animationSpeed = 400;
 			if (notifyHeight > windowHeight) {
-				this.$('.notify-popup').css({'height':'100%', 'top':0, 'overflow-y': 'scroll'})
+				this.$('.notify-popup').css({
+					'height':'100%', 
+					'top':0, 
+					'overflow-y': 'scroll', 
+					'-webkit-overflow-scrolling': 'touch'
+				});
 			} else {
 				if (noAnimation) {
 					var animationSpeed = 0;

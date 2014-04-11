@@ -31,7 +31,7 @@ define(function(require) {
         },
         
         isCorrect: function() {
-            return !!Math.floor(this.model.get('_numberOfCorrectAnswers') / this.model.get('items').length);
+            return !!Math.floor(this.model.get('_numberOfCorrectAnswers') / this.model.get('_items').length);
         },
         
         isPartlyCorrect: function() {
@@ -49,15 +49,15 @@ define(function(require) {
         getOptionSpecificFeedback: function() {
             // Check if option specific feedback has been set
             var selectedItem = this.getSelectedItems();
-            if (selectedItem.hasOwnProperty('feedback')) {
-                return selectedItem.feedback;
+            if (selectedItem.hasOwnProperty('_feedback')) {
+                return selectedItem._feedback;
             } else {
                 if (this.isCorrect()) {
-                    return this.model.get('feedback').correct;
+                    return this.model.get('_feedback').correct;
                 } else if (this.isPartlyCorrect()) {
-                    return this.model.get('feedback').partly;
+                    return this.model.get('_feedback').partly;
                 } else {
-                    return this.model.get('feedback').incorrect;
+                    return this.model.get('_feedback').incorrect;
                 }
             }
         },
@@ -74,7 +74,7 @@ define(function(require) {
         
         markQuestion: function() {
             var correctCount = this.getNumberOfCorrectAnswers();
-            var score = this.model.get("_questionWeight") * correctCount / this.model.get('items').length;
+            var score = this.model.get("_questionWeight") * correctCount / this.model.get('_items').length;
 
             this.model.set({
                 "_numberOfCorrectAnswers": correctCount,
@@ -124,18 +124,18 @@ define(function(require) {
 
         setupFeedbackArrays: function() {
             // Randomize the selection of the feedback messages (if using an array)       
-            if(!_.isString(this.model.get('feedback').partly)) {
-                this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
+            if(!_.isString(this.model.get('_feedback').partly)) {
+                this.model.get('_feedback').partly = this.model.get('_feedback').partly[_.random(this.model.get('_feedback').partly.length - 1)];
             } 
 
-            if(!_.isString(this.model.get('feedback').incorrect)) {
-                this.model.get('feedback').incorrect = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
+            if(!_.isString(this.model.get('_feedback').incorrect)) {
+                this.model.get('_feedback').incorrect = this.model.get('_feedback').incorrect[_.random(this.model.get('_feedback').incorrect.length - 1)];
             }
         },
     
         showFeedback: function() {
             
-            this.model.set('feedbackAudio', this.model.get("feedback").audio)
+            this.model.set('feedbackAudio', this.model.get("_feedback").audio)
             
             if(this.model.get('_selectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
@@ -159,7 +159,7 @@ define(function(require) {
         },
         
         showMarking: function() {
-            _.each(this.model.get('items'), function(item, i) {
+            _.each(this.model.get('_items'), function(item, i) {
                 var $item = this.$('.item').eq(i);
                 $item.addClass(item.correct ? 'correct' : 'incorrect');
             }, this);
@@ -196,21 +196,21 @@ define(function(require) {
         onQuestionCorrect: function() {
             this.onComplete({correct: true});
             this.model.getParent("article").attributes.score ++;
-            this.model.set("feedbackMessage", this.model.get("feedback").correct);
+            this.model.set("feedbackMessage", this.model.get("_feedback").correct);
         },
         
         onQuestionIncorrect: function() {
             if (this.isPartlyCorrect()) {
-                if (!_.isString(this.model.get('feedback').partly)) {
-                    this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
+                if (!_.isString(this.model.get('_feedback').partly)) {
+                    this.model.get('_feedback').partly = this.model.get('_feedback').partly[_.random(this.model.get('_feedback').partly.length - 1)];
                 } else {
-                    this.model.set("feedbackMessage", this.model.get('feedback').partly); 
+                    this.model.set("feedbackMessage", this.model.get('_feedback').partly); 
                 }
             } else {
-                if (!_.isString(this.model.get('feedback').incorrect)) {
-                    this.model.get('feedback').partly = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
+                if (!_.isString(this.model.get('_feedback').incorrect)) {
+                    this.model.get('_feedback').partly = this.model.get('_feedback').incorrect[_.random(this.model.get('_feedback').incorrect.length - 1)];
                 } else {
-                    this.model.set("feedbackMessage", this.model.get('feedback').incorrect); 
+                    this.model.set("feedbackMessage", this.model.get('_feedback').incorrect); 
                 }
             }
 

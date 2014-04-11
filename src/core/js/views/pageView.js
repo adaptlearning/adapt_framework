@@ -39,6 +39,7 @@ define(function(require) {
     }, {
         childContainer: '.article-container',
         childView: ArticleView,
+        type: 'page',
         template: 'page'
     });
     

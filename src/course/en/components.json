@@ -23,7 +23,7 @@
         "title":"<br>",
         "body": "",
         "instruction":"",
-        "media": {
+        "_media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
             "_allowCompletionOnInview":true
@@ -42,35 +42,35 @@
         "title": "Key Facts",
         "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution.",
         "instruction":"Click the + icons below for more.",
-        "graphic": {
+        "_graphic": {
             "src": "course/en/images/hotgraphic.png",
             "alt": "alt text",
             "title": "title"
         },
-        "items": [
+        "_items": [
             {
                 "title": "Introduction",
                 "body": "With the advent of modern browsers, frameworks, developments in HTML 5 and responsive design approaches we're now able to create engaging learning that will work, regardless of the device being used.<br><br>In addition, Libraries such as Backbone, Underscore and Handlebars have rapidly sped up development and enabled the production of fast single page applications (SPAs) that improve the user experience.",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/html5.png",
                     "alt": "alt text",
                     "title": "title text"
                 },
                 "strapline": "Introduction",
-                "top": 58,
-                "left": 23
+                "_top": 58,
+                "_left": 23
             },
             {
                 "title": "What is responsive elearning?",
                 "body": "Responsive elearning Design takes its inspiration from Responsive Web Design; an approach to design that ensures a single version of a website (or an elearning course created as a web app) can provide a viewing experience optimised to complement a variety of different devices, from desktop monitor to smartphone.This tailored viewing experience is achieved by:<ul><li>providing dynamic layouts which allow for the resizing of onscreen elements to make the most of the space available (fluid grid concept)</li><li>automatically detecting the characteristics of the device being used and applying an appropriate style to all onscreen elements (Media queries and CSS)</li><li>ensuring all images can be scaled to complement the device being used at the time</li></ul>",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/devices.png",
                     "alt": "alt text",
                     "title": "title text"
                 },
                 "strapline": "What is responsive elearning?",
-                "top": 60,
-                "left": 80
+                "_top": 60,
+                "_left": 80
             }
         ],
         "_pageLevelProgress": {
@@ -87,37 +87,37 @@
         "title": "Scrolling: Some considerations",
         "body": "Here are some reasons why we think scrolling is perfectly fine – and even desirable:",
         "instruction":"Select the headings below to reveal the text.",
-        "items": [
+        "_items": [
             {
                 "alt": "Your learners already do it",
                 "title": "Your learners already do it",
                 "body": "Visit a website today and vertical scrolling will most likely factor into the overall design of the site.  Users understand what’s expected of them and are scrolling down the page to read content.  Feedback from our user trialling of scrolling page designs supports the assertion that users ‘get it’. Actually, they preferred this approach over more traditional template designs.<br><br>Surely we want to present learning that uses conventions our audience is most comfortable with?"
-                },
-                {
+            },
+            {
                 "alt": "Device proof your learning",
                 "title": "Device proof your learning",
                 "body": "More and more learners are accessing content on a wide range of devices and each of these devices will display pages differently. The only thing you can guarantee is if you’re accessing content on a smartphone vertical scrolling will be required. Why not embrace this and place responsive design and vertical scrolling at the heart of your design?"
-                },
-                {
+            },
+            {
                 "alt": "Meaningful navigation",
                 "title": "Meaningful navigation",
                 "body": "It's common sense to cluster any related content on a single page that’s either as short or as long as it needs to be.  Not only does this reduce any unnecessary navigation, it also helps the learner make sense of the structure and the relationship between content. Navigation becomes meaningful, rather than a by-product of the template size."
-                },
-                {
+            },
+            {
                 "alt": "‘Everything above the fold’ might be old hat but...",
                 "title": "‘Everything above the fold’ might be old hat but...",
                 "body": "...The principle remains. Due to the variety of devices used to access web content you’ll only be able to guarantee the first 400 or 500 pixels of a page will be visible, so there’s no harm in putting the important stuff first and hooking your learners early. In fact, we advocate this as good practice, regardless of what page layouts are being used."
-                },
-                {
+            },
+            {
                 "alt": "More flexibility",
                 "title": "More flexibility",
                 "body": "Scrolling pages still allow you to present content via interactive elements (we call them components instead of templates), but with a scrolling page there is far more flexibility in how these elements are presented. Layouts can now vary in size and the density of content, which in turn creates more space for branding to be incorporated. Or indeed some precious white space to give the content space to breathe.  Overruns are also a thing of the past meaning localisation of content becomes a simpler proposition as well."
-                },
-                {
+            },
+            {
                 "alt": "Don’t throw the baby out with the bath water",
                 "title": "Don’t throw the baby out with the bath water",
                 "body": "None of the above means we stop following instructional design best practice.  We continue to put the learner at the heart of what we produce, writing well-structured which follows an appropriate learning model. It’s more about looking around at what is going on within the wider web community and taking note of changes in best practice and the nature of how content, is being accessed."
-                }
+            }
         ],
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -137,33 +137,33 @@
         "title": "Key benefits of a vertical scrolling approach",
         "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
         "instruction":"Select one or more options from the list below and select Submit.",
-        "items": [
+        "_items": [
             {
                 "text": "Vertical scrolling as a means of navigation on the web is common place and therefore familiar to users",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "Placing scrolling at the heart of your approach means designs are more mobile friendly",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "It reduces the need for unnecessary navigation as pages can be as long as they need to be",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "It means that you no longer need to first gain your learners' attention",
-                "shouldBeSelected":false
+                "_shouldBeSelected":false
             }
         ],
-        "feedback":{
+        "_feedback":{
             "correct": "That’s correct. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
             "incorrect": [
-            "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
-            "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+                "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
+                "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
             ],
             "partly": "That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
         },
-        "buttons":{
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
@@ -183,36 +183,36 @@
         "title": "What’s coming next?",
         "body": "Find out what’s on the roadmap for 2014 for Adapt Learning.",
         "instruction":"",
-        "items": [
+        "_items": [
             {
-            "title": "Improvements",
-            "body": "Over the next few months we’ll be working on a number of developments to improve Adapt Learning to ensure it’s the leading elearning framework for responsive content. At the heart of these developments are two key pieces of work.",
-            "graphic": {
-                "src": "course/en/images/narrative.png",
-                "alt": "alt text",
-                "title": "title text"
-            },
-            "strapline": "Improvements"
-            },
-            {
-            "title": "1: Plug-in Friendly Architecture",
-            "body": "We’re in the process of reworking the codebase to ensure a plugin friendly approach. This will help us to establish an extensive and vibrant open source community to support the framework and adhere to the principles of collaborative development.",
-            "graphic": {
-                "src": "course/en/images/narrative_1.png",
-                "alt": "alt text",
-                "title": "title text"
-            },
-            "strapline": "1: Plug-in Friendly Architecture"
+                "title": "Improvements",
+                "body": "Over the next few months we’ll be working on a number of developments to improve Adapt Learning to ensure it’s the leading elearning framework for responsive content. At the heart of these developments are two key pieces of work.",
+                "_graphic": {
+                    "src": "course/en/images/narrative.png",
+                    "alt": "alt text",
+                    "title": "title text"
+                },
+                "strapline": "Improvements"
             },
             {
-            "title": "2: Authoring Tool",
-            "body": "We’re also creating an authoring tool to allow non-technical users to create fully featured Adapt elearning courses. The authoring tool will be simple enough for novices to use yet powerful enough to meet the needs of the elearning professional.",
-            "graphic": {
-                "src": "course/en/images/narrative_2.png",
-                "alt": "alt text",
-                "title": "title text"
+                "title": "1: Plug-in Friendly Architecture",
+                "body": "We’re in the process of reworking the codebase to ensure a plugin friendly approach. This will help us to establish an extensive and vibrant open source community to support the framework and adhere to the principles of collaborative development.",
+                "_graphic": {
+                    "src": "course/en/images/narrative_1.png",
+                    "alt": "alt text",
+                    "title": "title text"
+                },
+                "strapline": "1: Plug-in Friendly Architecture"
             },
-            "strapline": "2: Authoring Tool"
+            {
+                "title": "2: Authoring Tool",
+                "body": "We’re also creating an authoring tool to allow non-technical users to create fully featured Adapt elearning courses. The authoring tool will be simple enough for novices to use yet powerful enough to meet the needs of the elearning professional.",
+                "_graphic": {
+                    "src": "course/en/images/narrative_2.png",
+                    "alt": "alt text",
+                    "title": "title text"
+                },
+                "strapline": "2: Authoring Tool"
             }
         ],
         "_pageLevelProgress": {
@@ -233,26 +233,26 @@
         "title": "Getting involved",
         "body": "How can anyone get involved with Adapt?",
         "instruction":"Select the correct answers below.",
-        "items": [
+        "_items": [
             {
                 "text": "Sign up to the community site",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "Contrib to code on Github",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "Suggest extra features for plugins",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             }
         ],
-        "feedback":{
+        "_feedback":{
             "correct":"That's correct. There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
             "partly":"Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
             "incorrect":"That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
         },
-        "buttons":{
+        "_buttons":{
             "submit":"",
             "reset":"",
             "showCorrectAnswer":"",
@@ -275,67 +275,67 @@
         "title": "Order of a page",
         "body": "Put in order, the elements as they are viewed in a standard Adapt page",
         "instruction":"Select an options from the drop down list",
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "That's correct. Think A, B, C when creating Adapt courses.",
             "incorrect": "FINAL This feedback will appear if you answered the question incorrectly.",
             "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
         },
         "placeholder": "select an option",
-        "items": [
+        "_items": [
             {
                 "text": "First element",
-                "options": [
+                "_options": [
                     {
                         "text": "Component",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Article",
-                        "correct": true
+                        "_isCorrect": true
                     },
                     {
                         "text": "Block",
-                        "correct": false
+                        "_isCorrect": false
                     }
                 ]
             },
             {
                 "text": "Second element",
-                "options": [
+                "_options": [
                     {
                         "text": "Component",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Article",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Block",
-                        "correct": true
+                        "_isCorrect": true
                     }
                 ]
             },
             {
                 "text": "Third element",
-                "options": [
+                "_options": [
                     {
                         "text": "Component",
-                        "correct": true
+                        "_isCorrect": true
                     },
                     {
                         "text": "Article",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Block",
-                        "correct": false
+                        "_isCorrect": false
                     }
                 ]
             }
@@ -360,22 +360,22 @@
         "_allowsAnyCase": true,
         "_allowsPunctuation": true,
         "_questionWeight":10,
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
             "incorrect": "This feedback will appear if you answered the question incorrectly.",
             "partly": "This feedback will appear if you answered part of the question correctly."
         },
-        "items": [
+        "_items": [
             {
                 "prefix": "",
                 "suffix": "",
-                "answers": [
+                "_answers": [
                     "article assessment",
                     "trickle"
                 ]
@@ -383,9 +383,9 @@
             {
                 "prefix": "",
                 "suffix": "",
-                "answers": [
-                    "article assessment",
-                    "trickle"
+                "_answers": [
+                    "trickle",
+                    "article assessment"
                 ]
             }
         ],
@@ -407,11 +407,11 @@
         "title": "GMCQ",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Maybe pick option one.",
-        "items": [
+        "_items": [
             {
                 "text": "This is option 1.",
-                "shouldBeSelected":true,
-                "graphic": {
+                "_shouldBeSelected":true,
+                "_graphic": {
                     "alt": "Alt text for option 1",
                     "title": "title text",
                     "large": "course/en/images/gqcq-1-large.gif",
@@ -421,8 +421,8 @@
             },
             {
                 "text": "This is option 2.",
-                "shouldBeSelected":false,
-                "graphic": {
+                "_shouldBeSelected":false,
+                "_graphic": {
                     "alt": "Alt text for option 2",
                     "title": "title text",
                     "large": "course/en/images/gqcq-2-large.gif",
@@ -431,12 +431,12 @@
                 }
             }
         ],
-        "feedback":{
+        "_feedback":{
             "correct":"Congratulations, this is the correct feedback.",
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
@@ -460,26 +460,26 @@
         "title": "MCQ",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Option one again?",
-        "items": [
+        "_items": [
             {
                 "text": "This is option 1.",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "This is option 2.",
-                "shouldBeSelected":false
+                "_shouldBeSelected":false
             },
             {
                 "text": "This is option 3.",
-                "shouldBeSelected":false
+                "_shouldBeSelected":false
             }
         ],
-        "feedback":{
+        "_feedback":{
             "correct":"Congratulations, this is the correct feedback.",
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
@@ -502,13 +502,13 @@
         "title": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "instruction":"Answers should in the question.",
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
             "incorrect": [
                 "FINAL This feedback will appear if you answered the question incorrectly.",
@@ -517,55 +517,55 @@
             "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
         },
         "placeholder": "select an option",
-        "items": [
+        "_items": [
             {
                 "text": "Pick option two",
-                "options": [
+                "_options": [
                     {
                         "text": "Option one",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Option two (correct)",
-                        "correct": true
+                        "_isCorrect": true
                     },
                     {
                         "text": "Option three",
-                        "correct": false
+                        "_isCorrect": false
                     }
                 ]
             },
             {
                 "text": "Pick option three",
-                "options": [
+                "_options": [
                     {
                         "text": "Option one",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Option two",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Option three (correct)",
-                        "correct": true
+                        "_isCorrect": true
                     }
                 ]
             },
             {
                 "text": "Pick option one",
-                "options": [
+                "_options": [
                     {
                         "text": "Option one (correct)",
-                        "correct": true
+                        "_isCorrect": true
                     },
                     {
                         "text": "Option two",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Option three",
-                        "correct": false
+                        "_isCorrect": false
                     }
                 ]
             }
@@ -598,7 +598,7 @@
         "title":"Imagery helps to tell a story",
         "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
         "instruction":"",
-        "graphic": {
+        "_graphic": {
             "alt": "alt text",
             "title": "title text",
             "large": "course/en/images/origami-menu-two.jpg",
@@ -619,7 +619,7 @@
         "title": "Headlines to grab attention",
         "body": "The accordion component enables a content creator to pick some catchy titles that reveal more information.",
         "instruction":" Select the headings below to reveal the text.",
-        "items": [
+        "_items": [
             {
                 "alt": "Missing title and body elements",
                 "title": "Missing title and body elements",
@@ -661,11 +661,11 @@
         "title": "Narrative",
         "body": "This is optional body text.",
         "instruction":"Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
-        "items": [
+        "_items": [
             {
                 "title": "Tell a story",
                 "body": "Narratives should be used to tell a story or to help learners with a process that needs to be in order.",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/origami-menu-one.jpg",
                     "alt": "Origami birds",
                     "title": ""
@@ -675,7 +675,7 @@
             {
                 "title": "Optimised for touch events",
                 "body": "The narrative was built with touch devices in mind - so you can swipe through the images if you device is touch enabled.",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/origami-menu-two.jpg",
                     "alt": "Origami birds",
                     "title": ""
@@ -685,7 +685,7 @@
             {
                 "title": "How a narrative looks on mobile",
                 "body": "If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/origami-menu-three.jpg",
                     "alt": "Origami birds",
                     "title": ""
@@ -707,47 +707,47 @@
         "title": "Hot graphic",
         "body": "The hot graphic component enables the learner to interact with an image by clicking on the hot spots to reveal more. This component will scale down to a narrative when viewed on mobile.",
         "instruction":"Select the hotspots on the image to reveal the text.",
-        "graphic": {
+        "_graphic": {
             "src": "course/en/images/origami-hotgraphic.jpg",
             "alt": "alt text",
             "title": "title"
         },
-        "items": [
+        "_items": [
             {
                 "title": "Single components",
                 "body": "Single components are interactions that enable two components in a block. These take up half of a blocks width.",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/origami-menu-two.jpg",
                     "alt": "alt text",
                     "title": "title text"
                 },
                 "strapline": "Single components",
-                "top": 5,
-                "left": 20
+                "_top": 5,
+                "_left": 20
             },
             {
                 "title": "Spanned components",
                 "body": "Spanned components are interactions that take up a full block and do not allow another component to sit next to it.",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/origami-menu-three.jpg",
                     "alt": "alt text",
                     "title": "title text"
                 },
                 "strapline": "Spanned components",
-                "top": 25,
-                "left": 60
+                "_top": 25,
+                "_left": 60
             },
             {
                 "title": "Single and Spanned components",
                 "body": "Some components are both single and spanned. This means they can sit with another component or fill a whole block. Some exmaples are: Graphic, Text and Media",
-                "graphic": {
+                "_graphic": {
                     "src": "course/en/images/origami-menu-one.jpg",
                     "alt": "alt text",
                     "title": "title text"
                 },
                 "strapline": "Single and Spanned components",
-                "top": 85,
-                "left": 40
+                "_top": 85,
+                "_left": 40
             }
         ],
         "_pageLevelProgress": {
@@ -762,7 +762,7 @@
         "_classes":"",
         "_layout":"full",
         "title":"Media component",
-        "media": {
+        "_media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
             "_allowCompletionOnInview":false
@@ -787,26 +787,26 @@
         "title": "MCQ",
         "body": "A multiple choice question items each have a text attribute and whether the item is correct. An MCQ can also set the items to display in a random order and allow multiple items to be selected.",
         "instruction":"What does MCQ standard for? Select an item below and click submit.",
-        "items": [
+        "_items": [
             {
                 "text": "Magical choosing question",
-                "shouldBeSelected":false
+                "_shouldBeSelected":false
             },
             {
                 "text": "Multiple choice question",
-                "shouldBeSelected":true
+                "_shouldBeSelected":true
             },
             {
                 "text": "Machine coded quote",
-                "shouldBeSelected":false
+                "_shouldBeSelected":false
             }
         ],
-        "feedback":{
+        "_feedback":{
             "correct":"Congratulations, this is the correct answer.",
             "partly":"Not quite right, this is partly correct.",
             "incorrect":"Unfortunately this is the incorrect answer."
         },
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
@@ -829,46 +829,46 @@
         "title": "Matching",
         "body": "A matching component allows multiple question stems that each have their own individual drop down. All feedback for questions are passed out through an event system so extensions can display feedback how they want. Core comes bundled with a plugin called Tutor.",
         "instruction":"Match the questions below with the drop down box option.",
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
             "incorrect": "This feedback will appear if you answered the question incorrectly.",
             "partly": "This feedback will appear if you answered part of the question correctly."
         },
         "placeholder": "Select an option",
-        "items": [
+        "_items": [
             {
                 "text": "What is the core bundled feedback extension called?",
-                "options": [
+                "_options": [
                     {
                         "text": "Feedback plugin",
-                        "correct": false
+                        "_isCorrect": false
                     },
                     {
                         "text": "Tutor",
-                        "correct": true
+                        "_isCorrect": true
                     },
                     {
                         "text": "Question Feedback",
-                        "correct": false
+                        "_isCorrect": false
                     }
                 ]
             },
             {
                 "text": "Can I build another extension to show feedback?",
-                "options": [
+                "_options": [
                     {
                         "text": "Yes",
-                        "correct": true
+                        "_isCorrect": true
                     },
                     {
                         "text": "No",
-                        "correct": false
+                        "_isCorrect": false
                     }
                 ]
             }
@@ -893,22 +893,22 @@
         "_allowsAnyCase": true,
         "_allowsPunctuation": false,
         "_questionWeight":10,
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
             "hideCorrectAnswer": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "That's correct. Adapt allows the following plugins: A theme, components, extensions and a menu",
             "incorrect": "That's not correct. Adapt allows the following plugins: A theme, components, extensions and a menu",
             "partly": "Not quite correct. Adapt allows the following plugins: A theme, components, extensions and a menu"
         },
-        "items": [
+        "_items": [
             {
                 "prefix": "Plugin:",
                 "suffix": "",
-                "answers": [
+                "_answers": [
                     "theme",
                     "menu",
                     "extension",
@@ -934,11 +934,11 @@
         "title": "GMCQ",
         "body": "Similar to the MCQ, but displays graphical assets instead of text items.",
         "instruction":"",
-        "items": [
+        "_items": [
             {
                 "text": "This is option 1.",
-                "shouldBeSelected":true,
-                "graphic": {
+                "_shouldBeSelected":true,
+                "_graphic": {
                     "alt": "Alt text for option 1",
                     "title": "title text",
                     "large": "course/en/images/gqcq-1-large.gif",
@@ -948,8 +948,8 @@
             },
             {
                 "text": "This is option 2.",
-                "shouldBeSelected":false,
-                "graphic": {
+                "_shouldBeSelected":false,
+                "_graphic": {
                     "alt": "Alt text for option 2",
                     "title": "title text",
                     "large": "course/en/images/gqcq-2-large.gif",
@@ -958,12 +958,12 @@
                 }
             }
         ],
-        "feedback":{
+        "_feedback":{
             "correct":"Congratulations, this is the correct feedback.",
             "partly":"This is the partly correct feedback.",
             "incorrect":"Unfortunately this is the incorrect feedback."
         },
-        "buttons": {
+        "_buttons": {
             "submit": "",
             "reset": "",
             "showCorrectAnswer": "",
@@ -993,16 +993,16 @@
         "_scaleEnd": 10,
         "_correctAnswer": "",
         "_correctRange": {
-            "bottom": 4,
-            "top": 9
+            "_bottom": 4,
+            "_top": 9
         },
-        "button": {
-            "submit": "Submit",
-            "model": "Model Answer",
-            "reset": "Reset",
-            "user": "My Answer"
+        "_button": {
+            "submit": "",
+            "model": "",
+            "reset": "",
+            "user": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
             "incorrect": "This feedback will appear if you answered the question incorrectly.",
             "partly": "This feedback will appear if you answered part of the question correctly."
@@ -1031,16 +1031,16 @@
         "_scaleEnd": 10,
         "_correctAnswer": "",
         "_correctRange": {
-            "bottom": 4,
-            "top": 9
+            "_bottom": 4,
+            "_top": 9
         },
-        "button": {
-            "submit": "Submit",
-            "model": "Model Answer",
-            "reset": "Reset",
-            "user": "My Answer"
+        "_button": {
+            "submit": "",
+            "model": "",
+            "reset": "",
+            "user": ""
         },
-        "feedback": {
+        "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
             "incorrect": "This feedback will appear if you answered the question incorrectly.",
             "partly": "This feedback will appear if you answered part of the question correctly."

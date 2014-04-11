@@ -23,6 +23,7 @@ define(function(require) {
     }, {
         childContainer: '.block-container',
         childView: BlockView,
+        type: 'article',
         template: 'article'
     });
     
