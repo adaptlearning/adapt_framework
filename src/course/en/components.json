@@ -130,7 +130,7 @@
         "_component":"mcq",
         "_classes":"",
         "_layout":"right",
-        "_attempts":1,
+        "_attempts":2,
         "_questionWeight":1,
         "_isRandom":true,
         "_selectable":4,
@@ -157,11 +157,14 @@
         ],
         "_feedback":{
             "correct": "That’s correct. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
-            "incorrect": [
-                "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
-                "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
-            ],
-            "partly": "That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+            "_incorrect": {
+                "notFinal": "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
+                "final": "Final feedback! Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+            },
+            "_partlyCorrect": {
+                "notFinal": "That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
+                "final": "Final feedback! That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+            }
         },
         "_buttons": {
             "submit": "",
@@ -249,8 +252,14 @@
         ],
         "_feedback":{
             "correct":"That's correct. There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
-            "partly":"Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
-            "incorrect":"That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            "_incorrect": {
+                "notFinal": "That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+                "final": "Final feedback! That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            },
+            "_partlyCorrect": {
+                "notFinal": "Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+                "final": "Final feedback! Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            }
         },
         "_buttons":{
             "submit":"",
@@ -283,8 +292,14 @@
         },
         "_feedback": {
             "correct": "That's correct. Think A, B, C when creating Adapt courses.",
-            "incorrect": "FINAL This feedback will appear if you answered the question incorrectly.",
-            "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
+            "_incorrect": {
+                "notFinal": "NOT FINAL This feedback will appear if you answered the question incorrectly.",
+                "final": "FINAL This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "NON-FINAL! This feedback will appear if you answered part of the question correctly.",
+                "final": "FINAL! This feedback will appear if you answered part of the question correctly."
+            }
         },
         "placeholder": "select an option",
         "_items": [
@@ -368,8 +383,14 @@
         },
         "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
-            "incorrect": "This feedback will appear if you answered the question incorrectly.",
-            "partly": "This feedback will appear if you answered part of the question correctly."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_items": [
             {
@@ -433,8 +454,14 @@
         ],
         "_feedback":{
             "correct":"Congratulations, this is the correct feedback.",
-            "partly":"This is the partly correct feedback.",
-            "incorrect":"Unfortunately this is the incorrect feedback."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_buttons": {
             "submit": "",
@@ -476,8 +503,14 @@
         ],
         "_feedback":{
             "correct":"Congratulations, this is the correct feedback.",
-            "partly":"This is the partly correct feedback.",
-            "incorrect":"Unfortunately this is the incorrect feedback."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_buttons": {
             "submit": "",
@@ -510,11 +543,14 @@
         },
         "_feedback": {
             "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
-            "incorrect": [
-                "FINAL This feedback will appear if you answered the question incorrectly.",
-                "NON-FINAL This feedback will appear if you answered the question incorrectly."
-            ],
-            "partly": "FINAL and NON-FINAL This feedback will appear if you answered part of the question correctly."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "placeholder": "select an option",
         "_items": [
@@ -803,8 +839,14 @@
         ],
         "_feedback":{
             "correct":"Congratulations, this is the correct answer.",
-            "partly":"Not quite right, this is partly correct.",
-            "incorrect":"Unfortunately this is the incorrect answer."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_buttons": {
             "submit": "",
@@ -837,8 +879,14 @@
         },
         "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
-            "incorrect": "This feedback will appear if you answered the question incorrectly.",
-            "partly": "This feedback will appear if you answered part of the question correctly."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "placeholder": "Select an option",
         "_items": [
@@ -901,8 +949,14 @@
         },
         "_feedback": {
             "correct": "That's correct. Adapt allows the following plugins: A theme, components, extensions and a menu",
-            "incorrect": "That's not correct. Adapt allows the following plugins: A theme, components, extensions and a menu",
-            "partly": "Not quite correct. Adapt allows the following plugins: A theme, components, extensions and a menu"
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_items": [
             {
@@ -960,8 +1014,14 @@
         ],
         "_feedback":{
             "correct":"Congratulations, this is the correct feedback.",
-            "partly":"This is the partly correct feedback.",
-            "incorrect":"Unfortunately this is the incorrect feedback."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_buttons": {
             "submit": "",
@@ -1004,8 +1064,14 @@
         },
         "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
-            "incorrect": "This feedback will appear if you answered the question incorrectly.",
-            "partly": "This feedback will appear if you answered part of the question correctly."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -1042,8 +1108,14 @@
         },
         "_feedback": {
             "correct": "This feedback will appear if you answered the question correctly.",
-            "incorrect": "This feedback will appear if you answered the question incorrectly.",
-            "partly": "This feedback will appear if you answered part of the question correctly."
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
         },
         "_pageLevelProgress": {
             "_isEnabled": true
