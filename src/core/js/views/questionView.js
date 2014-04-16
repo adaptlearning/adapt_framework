@@ -25,7 +25,7 @@ define(function(require) {
         
         preRender: function() {
             this.setupDefaultSettings();
-            this.resetQuestion({resetAttempts:true, initialisingScreen:true});
+            this.resetQuestion({resetAttempts:true, initialisingScreen:true, resetCorrect:true});
             this.setupFeedbackArrays();
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
         },
