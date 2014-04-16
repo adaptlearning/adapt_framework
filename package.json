@@ -28,6 +28,7 @@
     "grunt-bower-requirejs": "~0.7.1",
     "grunt-requirejs-bundle": "~0.0.7",
     "grunt-contrib-copy": "~0.4.1",
+    "grunt-jsonlint": "*",
     "karma": "~0.9",
     "karma-mocha": "*",
     "karma-expect": "*",
