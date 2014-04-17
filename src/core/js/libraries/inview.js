@@ -1,6 +1,8 @@
 /**
  * author Remy Sharp
- * url http://remysharp.com/2009/01/26/element-in-view-event-plugin/
+ * url http://remysharp.com/2009/01/26/element-in-view-event-plugin/, http://remysharp.com/downloads/jquery.inview.js
+ * Extended for Kineo to trigger inviewTop and inview events, to enable capture when all of an element has been in view on-screen.
+ * Extended for Kineo by Gavin McMaster <gavin.mcmaster@kineo.com>
  */
 (function ($) {
     var d = document, w = window, documentElement = d.documentElement;   
@@ -25,7 +27,7 @@
     
         return size;
       }
-
+ 
     $(window).scroll(function () {
         var vpH = getViewportSize().height,
             vpW = getViewportSize().width,
@@ -65,7 +67,6 @@
                 
                 if(top > scrolltop && top < (scrolltop + vpH)) {
                     if(!inviewTop){
-                        console.log("trigger inviewTop true");
                         $el.data('inviewTop', true);
                         $el.trigger('inviewTop', [ true ]);
                     }                    
@@ -74,7 +75,6 @@
                 // we want to know when all of the component is in view and we only need to trigger this event once
                 if (((scrolltop + vpH) > (top + height)) && (offsetLeft >= 0 && offsetLeft < (wrapperOffsetLeft + wrapperWidth) && (posLeft + width) <= wrapperWidth) ) {
                     if(!inview){
-                        console.log("trigger inview true");
                         $el.data('inview', true);
                         $el.trigger('inview', [ true ]);
                     }
