@@ -201,7 +201,6 @@ define(function(require) {
         
         onQuestionIncorrect: function() {
             if (this.isPartlyCorrect()) {
-                console.log(this.model.get('_attemptsLeft'));
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
                     this.model.set("feedbackMessage", this.model.get('_feedback')._partlyCorrect.final);
                 } else {
