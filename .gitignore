@@ -12,3 +12,4 @@ node_modules
 test/acceptance/tests
 test/acceptance/reports
 test/acceptance/tests_output
+*.sublime-*
