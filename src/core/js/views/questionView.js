@@ -26,7 +26,6 @@ define(function(require) {
         preRender: function() {
             this.setupDefaultSettings();
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
-            //this.setupFeedbackArrays();
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
         },
         
@@ -55,9 +54,9 @@ define(function(require) {
                 if (this.isCorrect()) {
                     return this.model.get('_feedback').correct;
                 } else if (this.isPartlyCorrect()) {
-                    return this.model.get('_feedback').partly;
+                    return this.model.get('_feedback')._partlyCorrect;
                 } else {
-                    return this.model.get('_feedback').incorrect;
+                    return this.model.get('_feedback')._incorrect;
                 }
             }
         },
@@ -120,17 +119,6 @@ define(function(require) {
                     }
                 }
             }
-        },
-
-        setupFeedbackArrays: function() {
-            // Randomize the selection of the feedback messages (if using an array)       
-            /*if(!_.isString(this.model.get('_feedback').partly)) {
-                this.model.get('_feedback').partly = this.model.get('_feedback').partly[_.random(this.model.get('_feedback').partly.length - 1)];
-            } 
-
-            if(!_.isString(this.model.get('_feedback').incorrect)) {
-                this.model.get('_feedback').incorrect = this.model.get('_feedback').incorrect[_.random(this.model.get('_feedback').incorrect.length - 1)];
-            }*/
         },
     
         showFeedback: function() {
