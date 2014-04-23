@@ -228,11 +228,13 @@ define(function(require) {
     
         onSubmitClicked: function(event) {
             event.preventDefault();
-            
-            if(!this.canSubmit()) return;
-            
+            if(!this.canSubmit()) {
+                this.cannotSubmit();
+                return;
+            } 
+
             Adapt.tabHistory = $(event.currentTarget).parent('.inner');
-            
+        
             var attemptsLeft = this.model.get("_attemptsLeft") - 1;
             this.model.set({
                 _isEnabled: false,
@@ -243,7 +245,7 @@ define(function(require) {
             
             this.storeUserAnswer();
             this.markQuestion();
-            this.showFeedback();
+            this.showFeedback(); 
         },
     
         onUserAnswerClicked: function(event) {
@@ -270,8 +272,8 @@ define(function(require) {
         resetItems: function(){},
         onModelAnswerShown: function() {},
         onUserAnswerShown: function() {},
-        storeUserAnswer: function() {}
-        
+        storeUserAnswer: function() {},
+        cannotSubmit: function() {}
     });
     
     return QuestionView;
