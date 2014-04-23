@@ -229,7 +229,7 @@ define(function(require) {
         onSubmitClicked: function(event) {
             event.preventDefault();
             if(!this.canSubmit()) {
-                this.cannotSubmit();
+                this.showValidationError();
                 return;
             } 
 
@@ -273,7 +273,7 @@ define(function(require) {
         onModelAnswerShown: function() {},
         onUserAnswerShown: function() {},
         storeUserAnswer: function() {},
-        cannotSubmit: function() {}
+        showValidationError: function() {}
     });
     
     return QuestionView;
