@@ -22,6 +22,8 @@ define(function(require) {
         
         postRender: function() {}
         
+    }, {
+        type:'component'
     });
     
     return ComponentView;

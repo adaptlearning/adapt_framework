@@ -256,8 +256,8 @@ module.exports = function(grunt) {
         },
 
         concurrent: {
-            server: ['connect:server', 'open:server', 'watch'],
-            spoor: ['connect:spoorOffline', 'open:spoor', 'watch'],
+            server: ['connect:server', 'open:server'],
+            spoor: ['connect:spoorOffline', 'open:spoor'],
             selenium: ['connect:spoorOffline', 'nightwatch']
         },
 
@@ -437,8 +437,8 @@ module.exports = function(grunt) {
     grunt.registerTask('server', ['concurrent:server']);
     grunt.registerTask('server-scorm', ['concurrent:spoor']);
     grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
-    grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
-
+    grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
+    
     grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');

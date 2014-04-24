@@ -21,6 +21,7 @@ define(function(require) {
         
     }, {
         childContainer: '.component-container',
+        type: 'block',
         template: 'block'
     });
     
