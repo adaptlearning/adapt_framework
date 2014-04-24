@@ -29,6 +29,7 @@ define(function(require) {
         
         handleCourse: function() {
             this.removeViews();
+            Adapt.course.set('_isReady', false);
             this.setContentObjectToVisited(Adapt.course);
             Adapt.trigger('router:menu', Adapt.course);         
             Adapt.currentLocation = "course";
