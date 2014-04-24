@@ -49,15 +49,7 @@ define(function(require) {
             _isVisible: {}
         },
         
-        init: function() {
-            this.listenTo(this, 'change', function(model) {
-                //console.log('something changed', this.attributes, model.get('_id'));
-            });
-
-            this.listenTo(this, 'invalid', function() {
-                console.log('trying to change a model attribute are we?', arguments);
-            });
-        },
+        init: function() {},
         
         checkReadyStatus: function() {
             if (this.getChildren().findWhere({_isReady:false})) return;
@@ -229,7 +221,6 @@ define(function(require) {
                 var returnAttributes = _.extend(attrs, lockedAttributes);
                 this.validatedAttributes = returnAttributes;
                 return;
-                //console.log(this.lockedAttributes);
             } else {
                 returnObject.attributes = attrs;
                 this.validatedAttributes = attrs;
@@ -253,7 +244,6 @@ define(function(require) {
             // Check if there's a validateError
             var error = this.validationError = this.validate(attrs, options) || null;
             if (!error) return true;
-            console.log('invalid');
             this.trigger('invalid', this, error, _.extend(options, {validationError: error}));
             return false;
         },
