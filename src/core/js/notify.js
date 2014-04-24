@@ -23,6 +23,7 @@ define(function(require) {
 
 	function addNotifyView(type, notifyObject) {
 		notifyObject._type = type;
+		Adapt.trigger('popup:open');
 		new NotifyView({
 			model: new Backbone.Model(notifyObject)
 		});
