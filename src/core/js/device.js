@@ -55,7 +55,7 @@ define(function(require) {
     var version = Bowser.version;
     var OS = Bowser.osversion;
 
-    // Boswer only checks against navigator.userAgent so if the OS is undefined, do a check on the navigator.platform
+    // Bowser only checks against navigator.userAgent so if the OS is undefined, do a check on the navigator.platform
     if (OS == undefined) OS = getPlatform();
 
     function getPlatform() {
