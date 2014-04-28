@@ -1,6 +1,6 @@
 /*
 * Drawer
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley <darylhedley@hotmail.com>
 */
 
@@ -78,9 +78,13 @@ define(function(require) {
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
+				Adapt.trigger('drawer:openedItemView');
+			} else {
+				Adapt.trigger('drawer:openedCustomView');
 			}
 			_.defer(_.bind(function() {
 				this.addBodyEvent();
+				Adapt.trigger('drawer:opened');
 			}, this));
 		},
 
@@ -101,8 +105,11 @@ define(function(require) {
 			$('html').css('overflow-y', 'scroll');
 			
 			if ($('html').hasClass('ie8')) {
-				$('body').css({"left":0});
-				$(this).css({'position':'static', 'overflow': 'visible'});
+				$('body').css({
+					"left":0, 
+					"position":"static", 
+					"overflow": "visible"
+				});
 				this.$el.css({'right': -this.$el.width()});
 			} else {
 				$('body').animate({"left":0}, function() {
@@ -114,6 +121,7 @@ define(function(require) {
 			$('#wrapper').animate({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
+			Adapt.trigger('drawer:closed');
 		},
 
 		addBodyEvent: function() {
