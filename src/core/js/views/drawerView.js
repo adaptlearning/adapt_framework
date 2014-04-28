@@ -78,9 +78,13 @@ define(function(require) {
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
+				Adapt.trigger('drawer:openedItemView');
+			} else {
+				Adapt.trigger('drawer:openedCustomView');
 			}
 			_.defer(_.bind(function() {
 				this.addBodyEvent();
+				Adapt.trigger('drawer:opened');
 			}, this));
 		},
 
@@ -117,6 +121,7 @@ define(function(require) {
 			$('#wrapper').animate({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
+			Adapt.trigger('drawer:closed');
 		},
 
 		addBodyEvent: function() {
