@@ -84,7 +84,6 @@ define(function(require) {
 		},
 
 		closeNotify: function (event) {
-			console.log('closing notify');
 			this.$el.fadeOut('fast', _.bind(function() {
 				this.remove();
 			}, this));
