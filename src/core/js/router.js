@@ -14,6 +14,9 @@ define(function(require) {
     
         initialize: function() {
             this.showLoading();
+            // Store #wrapper element to cache for later
+            this.$wrapper = $('#wrapper');
+            Adapt.on('router:updateLocation', this.updateLocation, this);
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
@@ -29,30 +32,28 @@ define(function(require) {
         
         handleCourse: function() {
             this.removeViews();
+            this.showLoading();
             Adapt.course.set('_isReady', false);
             this.setContentObjectToVisited(Adapt.course);
-            Adapt.trigger('router:menu', Adapt.course);         
-            Adapt.currentLocation = "course";
-            $('#wrapper').removeClass().addClass('location-menu');
+            this.updateLocation({location:'course'});
+            Adapt.trigger('router:menu', Adapt.course);
         },
         
         handleId: function(id) {
             
             this.removeViews();
             this.showLoading();
-            Adapt.currentLocation = id;
                 
             var currentModel = Adapt.contentObjects.findWhere({_id:id});
             this.setContentObjectToVisited(currentModel);
+
             if (currentModel.get('_type') == 'page') {
+                this.updateLocation({location:'page', id:id});
                 Adapt.trigger('router:page', currentModel);
-                $('#wrapper')
-                    .removeClass()
-                    .addClass('location-page')
-                    .append(new PageView({model:currentModel}).$el);
+                this.$wrapper.append(new PageView({model:currentModel}).$el);
             } else {
+                this.updateLocation({location:'menu', id:id});
                 Adapt.trigger('router:menu', currentModel);
-                $('#wrapper').removeClass().addClass('location-menu');
             }
             
         },
@@ -79,6 +80,16 @@ define(function(require) {
 
         setContentObjectToVisited: function(model) {
             model.set('_isVisited', true);
+        },
+
+        updateLocation: function(locationObject) {
+            // Handles updating the location
+            // Plugins can call this by triggering Adapt.trigger('router:updateLocation', location, id);
+            Adapt.currentLocation = (locationObject.id) ? locationObject.id : locationObject.location;
+            this.$wrapper
+                .removeClass()
+                .addClass('location-' + locationObject.location)
+                .attr('data-location', locationObject.location);
         }
 
     
