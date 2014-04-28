@@ -101,8 +101,11 @@ define(function(require) {
 			$('html').css('overflow-y', 'scroll');
 			
 			if ($('html').hasClass('ie8')) {
-				$('body').css({"left":0});
-				$(this).css({'position':'static', 'overflow': 'visible'});
+				$('body').css({
+					"left":0, 
+					"position":"static", 
+					"overflow": "visible"
+				});
 				this.$el.css({'right': -this.$el.width()});
 			} else {
 				$('body').animate({"left":0}, function() {
