@@ -1,7 +1,7 @@
 /*
 * Adapt
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Daryl Hedley
+* Maintainers - Daryl Hedley <darylhedley@hotmail.com>
 */
 
 define(function(require) {
