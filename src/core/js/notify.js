@@ -84,6 +84,8 @@ define(function(require) {
 
 		}
 
+		Adapt.trigger('popup:opened');
+
 		new NotifyView({
 			model: new NotifyModel(notifyObject)
 		});

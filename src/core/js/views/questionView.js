@@ -217,6 +217,7 @@ define(function(require) {
         onSubmitClicked: function(event) {
             event.preventDefault();
             if(!this.canSubmit()) {
+                this.showInstructionError();
                 this.onCannotSubmit();
                 return;
             } 
@@ -230,10 +231,15 @@ define(function(require) {
                 _attemptsLeft: attemptsLeft
             });
             this.$(".component-widget").addClass("submitted");
+            this.$(".component-instruction-inner").removeClass("validation-error");
             
             this.storeUserAnswer();
             this.markQuestion();
             this.showFeedback(); 
+        },
+
+        showInstructionError: function() {
+            this.$(".component-instruction-inner").addClass("validation-error");
         },
     
         onUserAnswerClicked: function(event) {
