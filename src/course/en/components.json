@@ -7,6 +7,7 @@
         "_classes":"",
         "_layout":"left",
         "title":"Our first look at a component",
+        "displayTitle":"Our first look at a component",
         "body":"This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component.",
         "instruction":"",
         "_pageLevelProgress": {
@@ -21,6 +22,7 @@
         "_classes":"",
         "_layout":"right",
         "title":"<br>",
+        "displayTitle":"<br>",
         "body": "",
         "instruction":"",
         "_media": {
@@ -40,6 +42,7 @@
         "_component": "hotgraphic",
         "_layout": "full",    
         "title": "Key Facts",
+        "displayTitle": "Key Facts",
         "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution.",
         "instruction":"Click the + icons below for more.",
         "_graphic": {
@@ -85,6 +88,7 @@
         "_classes":"",
         "_layout":"left",
         "title": "Scrolling: Some considerations",
+        "displayTitle": "Scrolling: Some considerations",
         "body": "Here are some reasons why we think scrolling is perfectly fine – and even desirable:",
         "instruction":"Select the headings below to reveal the text.",
         "_items": [
@@ -135,6 +139,7 @@
         "_isRandom":true,
         "_selectable":4,
         "title": "Key benefits of a vertical scrolling approach",
+        "displayTitle": "Key benefits of a vertical scrolling approach",
         "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
         "instruction":"Select one or more options from the list below and select Submit.",
         "_items": [
@@ -184,6 +189,7 @@
         "_layout": "full",
         "_component": "narrative",
         "title": "What’s coming next?",
+        "displayTitle": "What’s coming next?",
         "body": "Find out what’s on the roadmap for 2014 for Adapt Learning.",
         "instruction":"",
         "_items": [
@@ -234,6 +240,7 @@
         "_isRandom":true,
         "_selectable":3,
         "title": "Getting involved",
+        "displayTitle": "Getting involved",
         "body": "How can anyone get involved with Adapt?",
         "instruction":"Select the correct answers below.",
         "_items": [
@@ -282,6 +289,7 @@
         "_random": true,
         "_questionWeight":10,
         "title": "Order of a page",
+        "displayTitle": "Order of a page",
         "body": "Put in order, the elements as they are viewed in a standard Adapt page",
         "instruction":"Select an options from the drop down list",
         "_buttons": {
@@ -367,6 +375,7 @@
         "_classes":"",
         "_layout":"left",
         "title": "Extensions",
+        "displayTitle": "Extensions",
         "body": "Name the two extensions being used on this page?",
         "instruction":"Fill in your answers below.",
         "_attempts": 1,
@@ -426,6 +435,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "GMCQ",
+        "displayTitle": "GMCQ",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Maybe pick option one.",
         "_items": [
@@ -485,6 +495,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "MCQ",
+        "displayTitle": "MCQ",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Option one again?",
         "_items": [
@@ -533,6 +544,7 @@
         "_random": true,
         "_questionWeight":10,
         "title": "Matching",
+        "displayTitle": "Matching",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "instruction":"Answers should in the question.",
         "_buttons": {
@@ -618,6 +630,7 @@
         "_classes":"",
         "_layout":"left",
         "title":"Content is king",
+        "displayTitle":"Content is king",
         "body":"The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job.",
         "instruction":"",
         "_pageLevelProgress": {
@@ -632,6 +645,7 @@
         "_classes":"",
         "_layout":"right",
         "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
         "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
         "instruction":"",
         "_graphic": {
@@ -653,6 +667,7 @@
         "_classes":"",
         "_layout":"left",
         "title": "Headlines to grab attention",
+        "displayTitle": "Headlines to grab attention",
         "body": "The accordion component enables a content creator to pick some catchy titles that reveal more information.",
         "instruction":" Select the headings below to reveal the text.",
         "_items": [
@@ -695,6 +710,7 @@
         "_layout": "full",
         "_component": "narrative",
         "title": "Narrative",
+        "displayTitle": "Narrative",
         "body": "This is optional body text.",
         "instruction":"Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
         "_items": [
@@ -741,6 +757,7 @@
         "_component": "hotgraphic",
         "_layout": "full",    
         "title": "Hot graphic",
+        "displayTitle": "Hot graphic",
         "body": "The hot graphic component enables the learner to interact with an image by clicking on the hot spots to reveal more. This component will scale down to a narrative when viewed on mobile.",
         "instruction":"Select the hotspots on the image to reveal the text.",
         "_graphic": {
@@ -798,6 +815,7 @@
         "_classes":"",
         "_layout":"full",
         "title":"Media component",
+        "displayTitle":"Media component",
         "_media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
@@ -821,6 +839,7 @@
         "_isRandom":true,
         "_selectable":1,
         "title": "MCQ",
+        "displayTitle": "MCQ",
         "body": "A multiple choice question items each have a text attribute and whether the item is correct. An MCQ can also set the items to display in a random order and allow multiple items to be selected.",
         "instruction":"What does MCQ standard for? Select an item below and click submit.",
         "_items": [
@@ -869,6 +888,7 @@
         "_random": true,
         "_questionWeight":10,
         "title": "Matching",
+        "displayTitle": "Matching",
         "body": "A matching component allows multiple question stems that each have their own individual drop down. All feedback for questions are passed out through an event system so extensions can display feedback how they want. Core comes bundled with a plugin called Tutor.",
         "instruction":"Match the questions below with the drop down box option.",
         "_buttons": {
@@ -933,6 +953,7 @@
         "_classes":"",
         "_layout":"left",
         "title": "Text input",
+        "displayTitle": "Text input",
         "body": "Text input allows the learner to input a text field into one of the items. This component can check whether you need items to be case sensitive, allow punctuation and allow items to be inserted in any order.",
         "instruction":"Name one type of plugin Adapt supports?",
         "_attempts": 1,
@@ -986,6 +1007,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "GMCQ",
+        "displayTitle": "GMCQ",
         "body": "Similar to the MCQ, but displays graphical assets instead of text items.",
         "instruction":"",
         "_items": [
@@ -1041,6 +1063,7 @@
         "_classes":"",
         "_layout": "left",
         "title": "Slider type component",
+        "displayTitle": "Slider type component",
         "body": "Question text here",
         "instruction": "",
         "_attempts": 2,
@@ -1085,6 +1108,7 @@
         "_classes":"",
         "_layout": "right",
         "title": "Slider type component",
+        "displayTitle": "Slider type component",
         "body": "Question text here",
         "instruction": "What do you think of Adapt?",
         "_attempts": 1,
