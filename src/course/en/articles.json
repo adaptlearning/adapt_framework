@@ -5,6 +5,7 @@
         "_type":"article",
         "_classes":"image-3",
         "title":"What is Adapt?",
+        "displayTitle":"What is Adapt?",
         "body":"Welcome to the <b>Adapt Learning</b> demo page. This page contains a sample of the functionality that will be available in the upcoming releases of the open source code in January 2014. The content  itself will explain some of the thinking that’s gone into the design and development of the framework, as well as highlighting what’s on the roadmap for release later in the year."
     },
     {
@@ -13,6 +14,7 @@
         "_type":"article",
         "_classes":"",
         "title":"Being below the fold and ahead of the curve",
+        "displayTitle":"Being below the fold and ahead of the curve",
         "body":"For years, web design and the learning design world chanted this mantra: 'no scrolling, no scrolling'. We were told to avoid the scroll bar at all costs. But things have changed. The scroll bar is back and proving to be an effective means of accessing and exploring the rich world of the web. And yet learning designers have continued to resist. We’re ready to change all that."
     },
     {
@@ -21,6 +23,7 @@
         "_type":"article",
         "_classes":"image-1",
         "title":"A quick assessment with step locking",
+        "displayTitle":"A quick assessment with step locking", 
         "body":"Three plugins come bundled with Adapt's core. Tutor - the feedback popup, Article Assessment - an assessment based upon one article and Trickle - vertical step locking. Have a go at the questions below to see these plugins in action.",
         "_trickle": {
             "_button": "Continue to next question?"
@@ -58,6 +61,7 @@
         "_type":"article",
         "_classes":"image-1",
         "title":"An introduction to our Presentation Components",
+        "displayTitle":"An introduction to our Presentation Components",
         "body":"Below you'll see a summary of our Presentation Components that come bundled with Adapt's core."
     },
     {
@@ -66,6 +70,7 @@
         "_type":"article",
         "_classes":"image-1",
         "title":"More advanced presentation components",
+        "displayTitle":"More advanced presentation components",
         "body":"Some components have more advanced features. Take for instance the narrative below - this can change into a different format when viewed on mobile devices. Even more interesting is how the hotgraphic component completely switches out to a narrative on mobile devices without losing any valuable learning material."
     },
     {
@@ -74,6 +79,7 @@
         "_type":"article",
         "_classes":"image-3",
         "title":"An introduction to our Question Components",
+        "displayTitle":"An introduction to our Question Components",
         "body":"Below you'll see a summary of our Question Components that come bundled with Adapt's core. Each question has a question weight/score that can be used for assessment plugins. If this is not set it takes the global question weight. All questions can also have multiple attempts by setting these on the individual question."
     }
 ]
