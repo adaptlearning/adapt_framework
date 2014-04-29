@@ -1,6 +1,6 @@
 /*
 * MenuView
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley
 */
 
