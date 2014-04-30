@@ -2,12 +2,43 @@
     "_id": "course",
     "_type": "course",
     "title": "Welcome to Adapt Learning - v1.0.0",
+    "displayTitle": "Welcome to Adapt Learning - v1.0.0",
     "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
-    "buttons": {
+    "_buttons": {
         "submit": "Submit",
         "reset": "Reset",
         "showCorrectAnswer": "Model Answer",
         "hideCorrectAnswer": "My Answer"
     },
-    "_latestTrackingId": 13
+    "_latestTrackingId": 13,
+    "_resources": { 
+        "title": "Resources",
+        "description": "Click here to view resources for this course",
+        "_filterButtons": {
+            "all": "All",
+            "document": "PDF",
+            "media": "Media",
+            "link": "Link"
+        },
+        "_resourcesItems": [
+            {
+                "_type":"document",
+                "title":"Button idea",
+                "description":"Click here to see a proposed button idea",
+                "_link":"course/en/pdf/adapt-framework-prototypes-buttons.pdf"
+            },
+            {
+                "_type":"media",
+                "title":"Adapt Learning YouTube Channel",
+                "description":"Fancy catching up on some Adapt material",
+                "_link":"https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
+            },
+            {
+                "_type":"link",
+                "title":"Community Site",
+                "description":"Click here to view our community site",
+                "_link":"https://community.adaptlearning.org"
+            }
+        ]
+    }
 }

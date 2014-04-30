@@ -1,6 +1,6 @@
 /*
 * Adapt
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Brian Quinn
 */
 
@@ -13,7 +13,7 @@ define(function(require) {
         defaults: {
             "_defaultLanguage": "en",
             "screenSize" : 
-                {"small":519,"medium":759,"large":1024}
+                {"small":520,"medium":760,"large":1024}
         },
 
         initialize: function(options) {

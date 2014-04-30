@@ -3,9 +3,12 @@ src/theme
 src/menu
 src/extensions
 src/less
+src/less/adapt.less
 templates
 build
 bower_components
 node_modules
 .DS_Store
-
+test/acceptance/tests
+test/acceptance/reports
+test/acceptance/tests_output

@@ -1,6 +1,6 @@
 /*
 * App
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley, Fabien O'Carroll, Chris Jones
 */
 
@@ -9,6 +9,8 @@ require([
     'coreJS/mediator',
     'coreJS/router',
     'coreJS/device',
+    'coreJS/popupManager',
+    'coreJS/notify',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/configModel',
@@ -25,7 +27,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (Adapt, Mediator, Router, Device, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Mediator, Router, Device, PopupManager, Notify, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());

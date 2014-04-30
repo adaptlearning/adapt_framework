@@ -1,6 +1,6 @@
 /*
 * PageView
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley
 */
 
@@ -25,17 +25,21 @@ define(function(require) {
         },
         
         isReady: function() {
-            _.defer(_.bind(function() {
-                $('.loading').hide();
-                Adapt.trigger('pageView:ready', this);
-                this.$el.animate({'opacity': 1}, 'fast');
-                $(window).scroll();
-            }, this));
+            if (this.model.get('_isReady')) {
+                _.defer(_.bind(function() {
+                    $('.loading').hide();
+                    $(window).scrollTop(0);
+                    Adapt.trigger('pageView:ready', this);
+                    this.$el.animate({'opacity': 1}, 'fast');
+                    $(window).scroll();
+                }, this));
+            }
         }
         
     }, {
         childContainer: '.article-container',
         childView: ArticleView,
+        type: 'page',
         template: 'page'
     });
     
