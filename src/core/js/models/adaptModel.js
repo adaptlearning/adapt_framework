@@ -12,6 +12,13 @@ define(function(require) {
     var AdaptModel = Backbone.Model.extend({
 
         initialize: function() {
+            // Reset this.lockedAttributes on every model initialize
+            this.lockedAttributes = {
+                _isAvailable: {}, 
+                _isOptional: {}, 
+                _isTrackable: {}, 
+                _isVisible: {}
+            };
             this._canValidateLockedAttributes = false;
             this.listenTo(Adapt, 'app:dataReady', function() {
                 this._canValidateLockedAttributes = true;
@@ -177,7 +184,7 @@ define(function(require) {
             // Go through each attribute being set and check if it's in the list of lockedAttributes
             // Add it to the lockedAttributes object
             _.each(attrs, function(value, key) {
-                hasLockedAttribute = _.has(this.lockedAttributes, key);
+                var hasLockedAttribute = _.has(this.lockedAttributes, key);
 
                 if (hasLockedAttribute) {
                     lockedAttributes[key] = value
@@ -220,11 +227,10 @@ define(function(require) {
                 //return
                 var returnAttributes = _.extend(attrs, lockedAttributes);
                 this.validatedAttributes = returnAttributes;
-                return;
+                //return;
             } else {
-                returnObject.attributes = attrs;
                 this.validatedAttributes = attrs;
-                return;
+                //return;
             }
             
         },
@@ -266,9 +272,10 @@ define(function(require) {
             this._validate(attrs, options);
 
             // If validatedAttributes exist use these instead of the attributes passed in
-            if (this.validatedAttributes) {
+            if (this.validatedAttributes != null) {
                 attrs = this.validatedAttributes;
             }
+
             // Extract attributes and options.
             unset           = options.unset;
             silent          = options.silent;
@@ -304,7 +311,8 @@ define(function(require) {
                     this.trigger('change:' + changes[i], this, current[changes[i]], options);
                 }
             }
-
+            // Clear validatedAttributes cache
+            this.validatedAttributes = null;
             // You might be wondering why there's a `while` loop here. Changes can
             // be recursively nested within `"change"` events.
             if (changing) return this;
@@ -316,7 +324,7 @@ define(function(require) {
             }
             this._pending = false;
             this._changing = false;
-            this.validatedAttributes = null;
+            
             return this;
         }
         
