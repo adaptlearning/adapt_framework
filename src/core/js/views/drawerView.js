@@ -21,6 +21,9 @@ define(function(require) {
 			this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
 			this.listenTo(Adapt, 'remove', this.onCloseDrawer);
 			this.render();
+			// Setup cached selectors
+			this.$wrapper = $('#wrapper');
+
 		},
 
 		events: {
@@ -67,13 +70,7 @@ define(function(require) {
 
 		showDrawer: function(emptyDrawer) {
 			Adapt.trigger('popup:opened');
-			$('html').css('overflow-y', 'visible');
-			$('body').css({'position':'relative', 'overflow': 'hidden'}).animate({"left":-this.$el.width()});
-			if (!$('html').hasClass('ie8')) {
-				$('.navigation').animate({"left": -this.$el.width()});
-			}
-			this.$el.animate({'right': 0});
-			$('#wrapper').animate({opacity:0.5});
+			var drawerWidth = this.$el.width();
 			if (emptyDrawer) {
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
@@ -83,8 +80,15 @@ define(function(require) {
 				Adapt.trigger('drawer:openedCustomView');
 			}
 			_.defer(_.bind(function() {
+
+				this.$el.velocity({'right': 0});
+				// Dim down the page or menu containers
+				// CSS is used here as on mobile/tablet devices it makes the animation jerky
+				$('.page, .menu').css({opacity:0.5});
+			
 				this.addBodyEvent();
 				Adapt.trigger('drawer:opened');
+
 			}, this));
 		},
 
@@ -102,23 +106,8 @@ define(function(require) {
 
 		hideDrawer: function() {
 			Adapt.trigger('popup:closed');
-			$('html').css('overflow-y', 'scroll');
-			
-			if ($('html').hasClass('ie8')) {
-				$('body').css({
-					"left":0, 
-					"position":"static", 
-					"overflow": "visible"
-				});
-				this.$el.css({'right': -this.$el.width()});
-			} else {
-				$('body').animate({"left":0}, function() {
-					$(this).css({'position':'static', 'overflow': 'visible'});
-				});
-				$('.navigation').animate({"left": 0});
-				this.$el.animate({'right': -this.$el.width()});
-			}
-			$('#wrapper').animate({opacity:1});
+			this.$el.velocity({'right': -this.$el.width()});
+			$('.page, .menu').css({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
 			Adapt.trigger('drawer:closed');
