@@ -71,7 +71,7 @@ define(function(require) {
 				}
 				this.$('.notify-popup').css({
 					'margin-top': -(notifyHeight/2)-50, 'opacity': 0
-				}).animate({
+				}).velocity({
 					'margin-top': -(notifyHeight/2), 'opacity':1
 				}, animationSpeed);
 			}

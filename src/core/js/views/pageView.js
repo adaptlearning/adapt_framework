@@ -30,7 +30,7 @@ define(function(require) {
                     $('.loading').hide();
                     $(window).scrollTop(0);
                     Adapt.trigger('pageView:ready', this);
-                    this.$el.animate({'opacity': 1}, 'fast');
+                    this.$el.velocity({'opacity': 1}, 'fast');
                     $(window).scroll();
                 }, this));
             }
