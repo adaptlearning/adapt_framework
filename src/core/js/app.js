@@ -20,6 +20,7 @@ require([
     'coreModels/blockModel',
     'coreModels/componentModel',
     'templates',
+    'velocity',
     'imageReady',
     'inview',
     'scrollTo',
