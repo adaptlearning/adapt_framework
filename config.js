@@ -5,6 +5,7 @@ require.config({
         backbone: 'core/js/libraries/backbone',
         modernizr: 'core/js/libraries/modernizr',
         handlebars: 'core/js/libraries/handlebars',
+        velocity: 'core/js/libraries/velocity',
         imageReady: 'core/js/libraries/imageReady',
         inview: 'core/js/libraries/inview',
         scrollTo: 'core/js/libraries/scrollTo',
@@ -31,6 +32,12 @@ require.config({
         },
         handlebars: {
             exports: 'Handlebars'
+        },
+        velocity: {
+            deps: [
+                'jquery'
+            ],
+            exports: 'velocity'
         },
         imageReady: {
             deps: [

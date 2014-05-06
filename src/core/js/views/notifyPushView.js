@@ -23,7 +23,7 @@ define(function(require) {
 
 		events: {
 			'click .notify-push-close': 'closePush',
-			'click .notify-push-inner':'triggerEvent'
+			'click .notify-push-inner': 'triggerEvent'
 		},
 
 		preRender: function() {
