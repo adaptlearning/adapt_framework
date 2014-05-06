@@ -16,8 +16,11 @@ define(function(require) {
 		DrawerCollection.add(drawerObject);
 	}
 
-	Drawer.triggerCustomView = function(view) {
-		Adapt.trigger('drawer:triggerCustomView', view);
+	Drawer.triggerCustomView = function(view, hasBackButton) {
+		if (hasBackButton !== false) {
+			hasBackButton = true;
+		}
+		Adapt.trigger('drawer:triggerCustomView', view, hasBackButton);
 	}
 
 	var init = function() {
