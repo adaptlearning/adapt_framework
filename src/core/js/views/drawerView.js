@@ -23,10 +23,10 @@ define(function(require) {
 			this.render();
 			// Setup cached selectors
 			this.$wrapper = $('#wrapper');
-
 		},
 
 		events: {
+			'click .drawer-back': 'onBackButtonClicked',
 			'click .drawer-close':'onCloseDrawer'
 		},
 
@@ -36,7 +36,9 @@ define(function(require) {
             return this;
 		},
 
-		openCustomView: function(view) {
+		openCustomView: function(view, hasBackButton) {
+			// Set whether back button should display
+			this._hasBackButton = hasBackButton;
 			this._isCustomViewVisible = true;
 			Adapt.trigger('drawer:empty');
 			this.showDrawer();
@@ -48,6 +50,11 @@ define(function(require) {
 			if(this.collection.length == 0) {
 				$('.navigation-drawer-toggle-button').addClass('display-none');
 			}
+		},
+
+		onBackButtonClicked: function(event) {
+			event.preventDefault();
+			this.showDrawer(true);
 		},
 
 		onCloseDrawer: function(event) {
@@ -71,12 +78,16 @@ define(function(require) {
 		showDrawer: function(emptyDrawer) {
 			Adapt.trigger('popup:opened');
 			var drawerWidth = this.$el.width();
+			this.$('.drawer-back').removeClass('show');
 			if (emptyDrawer) {
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
 				Adapt.trigger('drawer:openedItemView');
 			} else {
+				if (this._hasBackButton) {
+					this.$('.drawer-back').addClass('show');
+				}
 				Adapt.trigger('drawer:openedCustomView');
 			}
 			_.defer(_.bind(function() {
