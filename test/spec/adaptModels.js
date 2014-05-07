@@ -8,6 +8,7 @@ define(function (require) {
     Adapt.articles = new Backbone.Collection();
     Adapt.blocks = new Backbone.Collection();
     Adapt.components = new Backbone.Collection();
+    var BackboneModel = require('coreModels/backboneModel');
     var AdaptModel = require('coreModels/adaptModel');
     var ContentObjectModel = require('coreModels/contentObjectModel');
     var ArticleModel = require('coreModels/articleModel');
@@ -26,7 +27,7 @@ define(function (require) {
             "hideCorrectAnswer": "My Answer"
         },
         "_latestTrackingId": 13
-    });
+    }, {reset:true});
     Adapt.contentObjects = new Backbone.Collection([
         {
             "_id": "co-05",
@@ -78,7 +79,7 @@ define(function (require) {
             "_type": "article",
             "title": "Article fourth title"
         }
-    ], {model: ArticleModel});
+    ], {model: ArticleModel, reset:true});
     Adapt.blocks = new Backbone.Collection([
         {
             "_id": "b-05",
@@ -110,7 +111,7 @@ define(function (require) {
             "_type": "block",
             "title": "Title of fifth block"
         }
-    ], {model: BlockModel});
+    ], {model: BlockModel, reset:true});
     Adapt.components = new Backbone.Collection([
         {
             "_id": "c-05",
@@ -157,7 +158,7 @@ define(function (require) {
             "title": "Title of our very fifth component",
             "body": "Whoo - if we get this rendering we've made the big time"
         }
-    ], {model: ComponentModel});
+    ], {model: ComponentModel, reset:true});
 
     describe('AdaptModel', function () {
 
@@ -344,7 +345,7 @@ define(function (require) {
         it("should allow me to set my childrens attributes by passing in a string", function () {
 
             var firstPage = Adapt.contentObjects.models[0];
-            firstPage.setOnChildren("_isAvailable", false);
+            firstPage.setOnChildren("_isAvailable", false, {pluginName: "pluginOne"});
             var firstComponent = Adapt.components.models[0];
             var availableStatus = firstComponent.get('_isAvailable');
             expect(availableStatus).to.equal(false);
