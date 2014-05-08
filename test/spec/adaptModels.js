@@ -53,7 +53,7 @@ define(function (require) {
             "_type": "page",
             "title": "Title of fourth page model"
         }
-    ], {model: ContentObjectModel});
+    ], {model: ContentObjectModel, reset:true});
     Adapt.articles = new Backbone.Collection([
         {
             "_id": "a-05",
@@ -359,7 +359,7 @@ define(function (require) {
                 isOptionalTriggered = true;
             })
             var firstPage = Adapt.contentObjects.models[0];
-            firstPage.setOnChildren({_isOptional: true}, {silent: true});
+            firstPage.setOnChildren({_isOptional: true}, {pluginName: "pluginOne", silent: true});
             var firstComponent = Adapt.components.models[0];
             var optionalStatus = firstComponent.get('_isOptional');
             expect(isOptionalTriggered).to.equal(false);
