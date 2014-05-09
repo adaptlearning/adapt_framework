@@ -1,7 +1,7 @@
 /*
 * Adapt
 * License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Brian Quinn
+* Maintainers - Brian Quinn, Daryl Hedley <darylhedley@gmail.com>
 */
 
 define(function(require) {
@@ -10,24 +10,43 @@ define(function(require) {
     var Adapt = require('coreJS/adapt');
 
     var ConfigModel = Backbone.Model.extend({
+
         defaults: {
-            "_defaultLanguage": "en",
-            "screenSize" : 
-                {"small":520,"medium":760,"large":1024}
+            screenSize : {
+                small:520,
+                medium:760,
+                large:1024
+            },
+            _canLoadData:true
         },
 
-        initialize: function(options) {
-            this.url = options.url;
+        lockedAttributes: {
+            _canLoadData: {}
+        },
+
+        initialize: function(attrs, options) {
+            // Fetch data & if successful trigger event to enable plugins to stop course files loading
+            // Then check if course files can load
+            // 'configModel:loadCourseData' event starts the core content collections and models being fetched
             this.fetch({
-                success: function() {
+                success: _.bind(function() {
                     Adapt.trigger('configModel:dataLoaded');
-                },
+                    if (this.get('_canLoadData')) {
+                        Adapt.trigger('configModel:loadCourseData');
+                    }
+                }, this),
                 error: function() {
                     console.log('Unable to load course/config.json');
                 }
             });
+        },
+
+        loadData: function() {
+            
         }
+
     });
    
-   return ConfigModel; 
+   return ConfigModel;
+
 });
