@@ -11,25 +11,7 @@ define(function (require) {
 
     Backbone.Model = Backbone.Model.extend({
 
-        initialize: function() {
-            // Reset this.lockedAttributes on every model initialize
-            this.lockedAttributes = {
-                _isAvailable: {}, 
-                _isOptional: {}, 
-                _isTrackable: {}, 
-                _isVisible: {}
-            };
-            this.init();
-        },
-
         lockedAttributes: {
-            _isAvailable: {}, 
-            _isOptional: {}, 
-            _isTrackable: {}, 
-            _isVisible: {}
-        },
-
-        init: function() {
 
         },
 

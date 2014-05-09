@@ -13,7 +13,9 @@ define(function(require) {
     
         initialize: function(attrs, options) {
             this.on('sync', this.loadedData, this);
-            this.fetch();
+            if (this.url) {
+                this.fetch();
+            }
         },
         
         loadedData: function() {
