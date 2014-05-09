@@ -22,7 +22,21 @@ define(function (require) {
             _isVisible: true
         },
 
-        init: function () {
+        lockedAttributes: {
+            _isAvailable: {}, 
+            _isOptional: {}, 
+            _isTrackable: {}, 
+            _isVisible: {}
+        },
+
+        initialize: function () {
+            // Reset this.lockedAttributes on every model initialize
+            this.lockedAttributes = {
+                _isAvailable: {}, 
+                _isOptional: {}, 
+                _isTrackable: {}, 
+                _isVisible: {}
+            };
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
             }
@@ -35,6 +49,11 @@ define(function (require) {
                     "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
+            this.init();
+        },
+
+        init: function() {
+
         },
 
         checkReadyStatus: function () {
