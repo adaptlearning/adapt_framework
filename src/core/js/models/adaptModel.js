@@ -12,6 +12,7 @@ define(function (require) {
     var AdaptModel = Backbone.Model.extend({
 
         defaults: {
+            _canShowFeedback: true,
             _isComplete: false,
             _isEnabled: true,
             _isEnabledOnRevisit: true,
@@ -23,6 +24,7 @@ define(function (require) {
         },
 
         lockedAttributes: {
+            _canShowFeedback: {},
             _isAvailable: {}, 
             _isOptional: {}, 
             _isTrackable: {}, 

@@ -123,26 +123,17 @@ define(function(require) {
     
         showFeedback: function() {
             
-            this.model.set('feedbackAudio', this.model.get("_feedback").audio)
-            
             if(this.model.get('_selectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
                     this.model.set('feedbackMessage', this.getOptionSpecificFeedback());
                 }
-                if(this.getOptionSpecificAudio()) {
-                    this.model.set('feedbackAudio', this.getOptionSpecificAudio());
-                }
             }
 
-            Adapt.mediator.defaultCallback('questionView:feedback', function(feedback) {
-                Adapt.trigger('questionView:showFeedback', feedback);
-            });
-
-            Adapt.trigger('questionView:feedback', {
-                title: this.model.get('title'),
-                message:this.model.get('feedbackMessage'),
-                audio:this.model.get('feedbackAudio')
-            });
+            if (this.model.get('_canShowFeedback')) {
+                Adapt.trigger('questionView:showFeedback', this);
+            } else {
+                Adapt.trigger('questionView:disabledFeedback', this);
+            }
 
         },
         
@@ -184,7 +175,7 @@ define(function(require) {
         onQuestionCorrect: function() {
             this.onComplete({correct: true});
             this.model.getParent("article").attributes.score ++;
-            this.model.set("feedbackMessage", this.model.get("_feedback").correct);
+            this.model.set({"feedbackTitle": this.model.get('title'), "feedbackMessage": this.model.get("_feedback").correct});
         },
         
         onQuestionIncorrect: function() {
