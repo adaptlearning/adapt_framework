@@ -1,140 +1,91 @@
 /**
- * author Christopher Blum
- *    - based on the idea of Remy Sharp, http://remysharp.com/2009/01/26/element-in-view-event-plugin/
- *    - forked from http://github.com/zuk/jquery.inview/
+ * author Remy Sharp
+ * url http://remysharp.com/2009/01/26/element-in-view-event-plugin/, http://remysharp.com/downloads/jquery.inview.js
+ * Extended for Kineo to trigger inviewTop and inview events, to enable capture when all of an element has been in view on-screen.
+ * Extended for Kineo by Gavin McMaster <gavin.mcmaster@kineo.com>
  */
 (function ($) {
-  var inviewObjects = {}, viewportSize, viewportOffset,
-      d = document, w = window, documentElement = d.documentElement, expando = $.expando, timer;
-
-  $.event.special.inview = {
-    add: function(data) {
-      inviewObjects[data.guid + "-" + this[expando]] = { data: data, $element: $(this) };
-
-      // Use setInterval in order to also make sure this captures elements within
-      // "overflow:scroll" elements or elements that appeared in the dom tree due to
-      // dom manipulation and reflow
-      // old: $(window).scroll(checkInView);
-      //
-      // By the way, iOS (iPad, iPhone, ...) seems to not execute, or at least delays
-      // intervals while the user scrolls. Therefore the inview event might fire a bit late there
-      // 
-      // Don't waste cycles with an interval until we get at least one element that
-      // has bound to the inview event.  
-      if (!timer && !$.isEmptyObject(inviewObjects)) {
-         timer = setInterval(checkInView, 250);
-      }
-    },
-
-    remove: function(data) {
-      try { delete inviewObjects[data.guid + "-" + this[expando]]; } catch(e) {}
-
-      // Clear interval when we no longer have any elements listening
-      if ($.isEmptyObject(inviewObjects)) {
-         clearInterval(timer);
-         timer = null;
-      }
-    }
-  };
-
-  function getViewportSize() {
-    var mode, domObject, size = { height: w.innerHeight, width: w.innerWidth };
-
-    // if this is correct then return it. iPad has compat Mode, so will
-    // go into check clientHeight/clientWidth (which has the wrong value).
-    if (!size.height) {
-      mode = d.compatMode;
-      if (mode || !$.support.boxModel) { // IE, Gecko
-        domObject = mode === 'CSS1Compat' ?
-          documentElement : // Standards
-          d.body; // Quirks
-        size = {
-          height: domObject.clientHeight,
-          width:  domObject.clientWidth
-        };
-      }
-    }
-
-    return size;
-  }
-
-  function getViewportOffset() {
-    return {
-      top:  w.pageYOffset || documentElement.scrollTop   || d.body.scrollTop,
-      left: w.pageXOffset || documentElement.scrollLeft  || d.body.scrollLeft
-    };
-  }
-
-  function checkInView() {
-  	var navigationOffset = $('.navigation').height();
-    var $elements = $(), elementsLength, i = 0;
-
-    $.each(inviewObjects, function(i, inviewObject) {
-      var selector  = inviewObject.data.selector,
-          $element  = inviewObject.$element,
-          inviewElement = selector ? $element.find(selector) : $element
-          inviewElement.inviewOffset = inviewObject.data.data ? inviewObject.data.data.offset : 0;
-      $elements = $elements.add(inviewElement);
-    });
-
-    elementsLength = $elements.length;
-    if (elementsLength) {
-      viewportSize   = viewportSize   || getViewportSize();
-      viewportOffset = viewportOffset || getViewportOffset();
-
-      for (; i<elementsLength; i++) {
-        // Ignore elements that are not in the DOM tree
-        if (!$.contains(documentElement, $elements[i])) {
-          continue;
-        }
-
-        var $element      = $($elements[i]),
-            elementSize   = { height: $element.height(), width: $element.width() },
-            elementOffset = $element.offset(),
-            inView        = $element.data('inview'),
-            visiblePartX,
-            visiblePartY,
-            visiblePartsMerged;
-        
-        // Don't ask me why because I haven't figured out yet:
-        // viewportOffset and viewportSize are sometimes suddenly null in Firefox 5.
-        // Even though it sounds weird:
-        // It seems that the execution of this function is interferred by the onresize/onscroll event
-        // where viewportOffset and viewportSize are unset
-        if (!viewportOffset || !viewportSize) {
-          return;
-        }
-        
-        elementOffset.top = elementOffset.top - navigationOffset;
-        if (elementOffset.top + elementSize.height > viewportOffset.top &&
-            elementOffset.top < viewportOffset.top + viewportSize.height &&
-            elementOffset.left + elementSize.width > viewportOffset.left &&
-            elementOffset.left < viewportOffset.left + viewportSize.width) {
-          visiblePartX = (viewportOffset.left > elementOffset.left ?
-            'right' : (viewportOffset.left + viewportSize.width) < (elementOffset.left + elementSize.width) ?
-            'left' : 'both');
-          visiblePartY = (viewportOffset.top > elementOffset.top ?
-            'bottom' : (viewportOffset.top + viewportSize.height) < (elementOffset.top + elementSize.height) ?
-            'top' : 'both');
-          visiblePartsMerged = visiblePartX + "-" + visiblePartY;
-          if (!inView || inView !== visiblePartsMerged) {
-            $element.data('inview', visiblePartsMerged).trigger('inview', [true, visiblePartX, visiblePartY]);
-          }
-        } else if (inView) {
-          $element.data('inview', false).trigger('inview', [false]);
-        }
-      }
-    }
-  }
-
-  $(w).bind("scroll resize", function() {
-    viewportSize = viewportOffset = null;
-  });
+    var d = document, w = window, documentElement = d.documentElement;   
   
-  // IE < 9 scrolls to focused elements without firing the "scroll" event
-  if (!documentElement.addEventListener && documentElement.attachEvent) {
-    documentElement.attachEvent("onfocusin", function() {
-      viewportOffset = null;
+    function getViewportSize() {
+        var mode, domObject, size = { height: w.innerHeight, width: w.innerWidth };
+    
+        // if this is correct then return it. iPad has compat Mode, so will
+        // go into check clientHeight/clientWidth (which has the wrong value).
+        if (!size.height) {
+          mode = d.compatMode;
+          if (mode || !$.support.boxModel) { // IE, Gecko
+            domObject = mode === 'CSS1Compat' ?
+              documentElement : // Standards
+              d.body; // Quirks
+            size = {
+              height: domObject.clientHeight,
+              width:  domObject.clientWidth
+            };
+          }
+        }
+    
+        return size;
+      }
+ 
+    $(window).scroll(function () {
+        var vpH = getViewportSize().height,
+            vpW = getViewportSize().width,
+            scrolltop = (document.documentElement.scrollTop ?
+                document.documentElement.scrollTop :
+                document.body.scrollTop),
+            wrapperWidth = $("#wrapper").width(),
+            wrapperOffsetLeft = $("#wrapper").offset().left,
+            navbarHeight,
+            elems = [];
+        
+        // allow for elemnents being out of view behind top nav bar
+        navbarHeight = ($('#navigation').height() === null) ? 0 : $('#navigation').height();
+            
+        // naughty, but this is how it knows which elements to check for
+        $.each($.cache, function () {
+            if (this.events && this.events.inview) {
+                elems.push(this.handle.elem);
+            }
+        });
+        
+        //console.log("wrapper width: "+ wrapperWidth + ", offset left: "+ wrapperOffsetLeft);
+        
+        if (elems.length) {
+            $(elems).each(function () {
+                var $el = $(this),
+                    top = $el.offset().top - navbarHeight,
+                    offsetLeft = $el.offset().left,
+                    posLeft = $el.position().left,
+                    height = $el.height(),
+                    width = $el.width(),
+                    inview = $el.data('inview') || false,
+                    inviewTop =  $el.data('inviewTop') || false
+                  
+                //console.log("scrolltop: " + scrolltop + ", top: " + top + ", height: " + height + ", vpH: " + vpH);
+                //console.log("inview: " + inview + ", inviewTop: " + inviewTop);
+                
+                if(top > scrolltop && top < (scrolltop + vpH)) {
+                    if(!inviewTop){
+                        $el.data('inviewTop', true);
+                        $el.trigger('inviewTop', [ true ]);
+                    }                    
+                }                
+                          
+                // we want to know when all of the component is in view and we only need to trigger this event once
+                if (((scrolltop + vpH) > (top + height)) && (offsetLeft >= 0 && offsetLeft < (wrapperOffsetLeft + wrapperWidth) && (posLeft + width) <= wrapperWidth) ) {
+                    if(!inview){
+                        $el.data('inview', true);
+                        $el.trigger('inview', [ true ]);
+                    }
+                } 
+            });
+        }
     });
-  }
+    
+    // kick the event to pick up any elements already in view.
+    // note however, this only works if the plugin is included after the elements are bound to 'inview'
+    $(function () {
+        $(window).scroll();
+    });
 })(jQuery);
