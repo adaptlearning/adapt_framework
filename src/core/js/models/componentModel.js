@@ -6,6 +6,7 @@
 
 define(function(require) {
 
+    var Adapt = require('coreJS/adapt');
 	var AdaptModel = require('coreModels/adaptModel');
 
     var ComponentModel = AdaptModel.extend({
