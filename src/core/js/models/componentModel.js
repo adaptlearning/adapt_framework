@@ -13,9 +13,11 @@ define(function(require) {
     	init: function() {
     		// Setup _isQuestionType on question components
     		var componentType = this.get('_component');
-    		if (Adapt.componentStore[componentType]._isQuestionType) {
-    			this.set('_isQuestionType', true);
-    		}
+            if (Adapt.componentStore[componentType]) {
+        		if (Adapt.componentStore[componentType]._isQuestionType) {
+        			this.set('_isQuestionType', true);
+        		}
+            }
     	},
         _parent:'blocks',
     	_siblings:'components'
