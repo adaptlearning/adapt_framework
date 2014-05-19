@@ -8,7 +8,10 @@ define(function(require) {
 
     var Backbone = require('backbone');
     var Adapt = require('coreJS/adapt');
+    var RouterModel = require('coreModels/routerModel');
     var PageView = require('coreViews/pageView');
+
+    Adapt.router = new RouterModel(null, {reset: true});
 
     var Router = Backbone.Router.extend({
     
@@ -16,18 +19,28 @@ define(function(require) {
             this.showLoading();
             // Store #wrapper element to cache for later
             this.$wrapper = $('#wrapper');
-            Adapt.on('router:updateLocation', this.updateLocation, this);
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
-            Adapt.mediator.defaultCallback('navigation:menu', function() {
-                this.navigateToParent();
-            }, this);
+            this.listenTo(Adapt, 'navigation:menu', this.navigateToParent);
         },
         
         routes: {
             "":"handleCourse",
-            "id/:id":"handleId"
+            "id/:id":"handleId",
+            ":pluginName(/*location)(/*action)": "handlePluginRouter"
+        },
+
+        handlePluginRouter: function(pluginName, location, action) {
+            var pluginLocation = pluginName;
+            if (location) {
+                pluginLocation = pluginLocation + '-' +location;
+                if (action) {
+                    pluginLocation = pluginLocation + '-' + action;
+                }
+            }
+            this.updateLocation(pluginLocation);
+            Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
         },
         
         handleCourse: function() {
@@ -35,7 +48,7 @@ define(function(require) {
             this.showLoading();
             Adapt.course.set('_isReady', false);
             this.setContentObjectToVisited(Adapt.course);
-            this.updateLocation({location:'course'});
+            this.updateLocation('course');
             Adapt.trigger('router:menu', Adapt.course);
         },
         
@@ -48,11 +61,13 @@ define(function(require) {
             this.setContentObjectToVisited(currentModel);
 
             if (currentModel.get('_type') == 'page') {
-                this.updateLocation({location:'page', id:id});
+                var location = 'page-' + id; 
+                this.updateLocation(location, 'page', id);
                 Adapt.trigger('router:page', currentModel);
                 this.$wrapper.append(new PageView({model:currentModel}).$el);
             } else {
-                this.updateLocation({location:'menu', id:id});
+                var location = 'menu-' + id; 
+                this.updateLocation(location, 'menu', id);
                 Adapt.trigger('router:menu', currentModel);
             }
             
@@ -67,34 +82,70 @@ define(function(require) {
         },
 
         navigateToParent: function() {
-            if (Adapt.currentLocation === 'course') {
-                return;
+            // Sometimes a plugin might want to stop the default navigation
+            // Check whether default navigation has changed
+            if (Adapt.router.get('_canNavigate')) {
+                if (!Adapt.location._currentId) {
+                    return Backbone.history.history.back();
+                }
+                if (Adapt.location._previousContentType === "page") {
+                    return Backbone.history.history.back();
+                }
+                if (Adapt.location._currentLocation === 'course') {
+                    return;
+                }
+                var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId});
+                var parent = currentModel.getParent();
+                if (parent.get('_id') === Adapt.course.get('_id')) {
+                    return this.navigate('#', {trigger:true});
+                }
+                this.navigate('#/id/' + parent.get('_id'), {trigger:true});
             }
-            var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.currentLocation});
-            var parent = currentModel.getParent();
-            if (parent.get('_id') === Adapt.course.get('_id')) {
-                return this.navigate('#', {trigger:true});
-            }
-            this.navigate('#/id/' + parent.get('_id'), {trigger:true});
         },
 
         setContentObjectToVisited: function(model) {
             model.set('_isVisited', true);
         },
 
-        updateLocation: function(locationObject) {
+        updateLocation: function(currentLocation, type, id) {
             // Handles updating the location
-            // Plugins can call this by triggering Adapt.trigger('router:updateLocation', location, id);
-            Adapt.currentLocation = (locationObject.id) ? locationObject.id : locationObject.location;
+            Adapt.location._previousLocation = Adapt.location._currentId;
+            Adapt.location._previousContentType = Adapt.location._contentType;
+
+            if (currentLocation === 'course') {
+                Adapt.location._currentId = 'course';
+                Adapt.location._contentType = 'menu';
+                Adapt.location._lastVisitedMenu = currentLocation;
+            } else if (!type) {
+                Adapt.location._currentId = null;
+                Adapt.location._contentType = null;
+
+            } else if (arguments.length === 3) {
+                Adapt.location._currentId = id;
+                Adapt.location._contentType = type;
+                if (type === 'menu') {
+                    Adapt.location._lastVisitedType = 'menu';
+                    Adapt.location._lastVisitedMenu = id;
+                } else if (type === 'page') {
+                    Adapt.location._lastVisitedType = 'page';
+                    Adapt.location._lastVisitedPage = id;
+                }
+            }
+
+            Adapt.location._currentLocation = currentLocation;
+
             this.$wrapper
                 .removeClass()
-                .addClass('location-' + locationObject.location)
-                .attr('data-location', locationObject.location);
+                .addClass('location-' + Adapt.location._currentLocation)
+                .attr('data-location', Adapt.location._currentLocation);
+
+            // Trigger event when location changes
+            Adapt.trigger('router:location', Adapt.location);
         }
 
     
     });
     
-    return new Router;
+    return new Router({model: new Backbone.Model()});
 
 });
