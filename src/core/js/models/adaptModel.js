@@ -25,6 +25,7 @@ define(function (require) {
 
         lockedAttributes: {
             _canShowFeedback: {},
+            _isEnabledOnRevisit: {},
             _isAvailable: {}, 
             _isOptional: {}, 
             _isTrackable: {}, 
