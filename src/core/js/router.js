@@ -88,19 +88,26 @@ define(function(require) {
                 if (!Adapt.location._currentId) {
                     return Backbone.history.history.back();
                 }
+                if (Adapt.location._previousContentType === "page" && Adapt.location._contentType === "menu") {
+                    return this.navigateToParent();
+                }
                 if (Adapt.location._previousContentType === "page") {
                     return Backbone.history.history.back();
                 }
                 if (Adapt.location._currentLocation === 'course') {
                     return;
                 }
-                var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId});
-                var parent = currentModel.getParent();
-                if (parent.get('_id') === Adapt.course.get('_id')) {
-                    return this.navigate('#', {trigger:true});
-                }
-                this.navigate('#/id/' + parent.get('_id'), {trigger:true});
+                this.navigateToParent();
             }
+        },
+
+        navigateToParent: function() {
+            var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId});
+            var parent = currentModel.getParent();
+            if (parent.get('_id') === Adapt.course.get('_id')) {
+                return this.navigate('#', {trigger:true});
+            }
+            this.navigate('#/id/' + parent.get('_id'), {trigger:true});
         },
 
         setContentObjectToVisited: function(model) {
