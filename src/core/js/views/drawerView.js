@@ -92,7 +92,7 @@ define(function(require) {
 			}
 			_.defer(_.bind(function() {
 
-				this.$el.velocity({'right': 0});
+				this.$el.velocity({'right': 0}, 'easeOutQuart');
 				// Dim down the page or menu containers
 				// CSS is used here as on mobile/tablet devices it makes the animation jerky
 				$('.page, .menu').css({opacity:0.5});
@@ -117,7 +117,7 @@ define(function(require) {
 
 		hideDrawer: function() {
 			Adapt.trigger('popup:closed');
-			this.$el.velocity({'right': -this.$el.width()});
+			this.$el.velocity({'right': -this.$el.width()}, 'easeInQuart');
 			$('.page, .menu').css({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
