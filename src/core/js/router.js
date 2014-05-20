@@ -22,7 +22,7 @@ define(function(require) {
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
-            this.listenTo(Adapt, 'navigation:menu', this.navigateToPreviousRoute);
+            this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
         },
         
         routes: {
