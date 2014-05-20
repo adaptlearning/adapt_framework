@@ -22,7 +22,7 @@ define(function(require) {
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
-            this.listenTo(Adapt, 'navigation:menu', this.navigateToParent);
+            this.listenTo(Adapt, 'navigation:menu', this.navigateToPreviousRoute);
         },
         
         routes: {
@@ -81,7 +81,7 @@ define(function(require) {
             $('.loading').show();
         },
 
-        navigateToParent: function() {
+        navigateToPreviousRoute: function() {
             // Sometimes a plugin might want to stop the default navigation
             // Check whether default navigation has changed
             if (Adapt.router.get('_canNavigate')) {
