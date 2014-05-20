@@ -141,7 +141,6 @@ define(function(require) {
 
             // Trigger event when location changes
             Adapt.trigger('router:location', Adapt.location);
-            console.log(Adapt.location);
         }
 
     
