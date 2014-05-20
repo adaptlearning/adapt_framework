@@ -109,7 +109,7 @@ define(function(require) {
 
         updateLocation: function(currentLocation, type, id) {
             // Handles updating the location
-            Adapt.location._previousLocation = Adapt.location._currentId;
+            Adapt.location._previousId = Adapt.location._currentId;
             Adapt.location._previousContentType = Adapt.location._contentType;
 
             if (currentLocation === 'course') {
@@ -141,6 +141,7 @@ define(function(require) {
 
             // Trigger event when location changes
             Adapt.trigger('router:location', Adapt.location);
+            console.log(Adapt.location);
         }
 
     
