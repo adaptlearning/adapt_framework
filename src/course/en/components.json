@@ -21,7 +21,7 @@
         "_component":"media",
         "_classes":"",
         "_layout":"right",
-        "title":"<br>",
+        "title":"Media component",
         "displayTitle":"<br>",
         "body": "",
         "instruction":"",
@@ -32,7 +32,7 @@
             "poster": "course/en/video/big_buck_bunny-small.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
