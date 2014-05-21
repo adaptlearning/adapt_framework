@@ -40,5 +40,10 @@
                 "_link":"https://community.adaptlearning.org"
             }
         ]
+    },
+    "_search": {
+        "title": "",
+        "description": "Type in search words and enter",
+        "noResultsMessage": "Sorry, no results were found"
     }
 }

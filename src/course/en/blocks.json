@@ -4,9 +4,16 @@
         "_parentId": "a-05",
         "_type": "block",
         "_classes": "",
-        "title": "It’s as simple as A, B, C",
-        "displayTitle": "It’s as simple as A, B, C",
+        "title": "It’s as simple as A, B, C title",
+        "displayTitle": "It’s as simple as A, B, C displayTitle",
         "body": "Adapt uses a layout we've labelled ABC. When a user enters a page they are shown the page title. Inside a page we have articles, which are used to separate out relevant learning material. Blocks are placed inside articles and blocks hold the interactive components. The longer, scrolling pages made possible with Adapt require their own hierarchy and nomenclature to ensure content is structured in a coherent manner.",
+        "_search": {
+            "keywords": [
+                "world",
+                "cup",
+                "brazil"
+            ]
+        },
         "_trackingId": 0
     },
     {
@@ -14,9 +21,16 @@
         "_parentId": "a-05",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as D, E, F",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "brazil",
+                "croatia",
+                "spain"
+            ]
+        },
         "_trackingId": 1
     },
     {
@@ -24,9 +38,16 @@
         "_parentId": "a-10",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as G, H, I",
         "displayTitle": "",
         "body": "",
+         "_search": {
+            "keywords": [
+                "brazil",
+                "spain",
+                "argentina"
+            ]
+        },
         "_trackingId": 2
     },
     {
@@ -34,9 +55,16 @@
         "_parentId": "a-10",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as J, K, M",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "brazil",
+                "rio",
+                "salvador"
+            ]
+        },
         "_trackingId": 3
     },
     {
@@ -44,9 +72,16 @@
         "_parentId": "a-15",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as N, O, P",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "germany",
+                "italy",
+                "england"
+            ]
+        },
         "_trackingId": 4
     },
     {
@@ -54,9 +89,16 @@
         "_parentId": "a-15",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as Q, R, S",
         "displayTitle": "",
         "body": "",
+         "_search": {
+            "keywords": [
+                "manaus",
+                "italy",
+                "england"
+            ]
+        },
         "_trackingId": 5
     },
     {
@@ -64,9 +106,16 @@
         "_parentId": "a-15",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as T, U, V",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "brazil",
+                "croatia",
+                "mexico"
+            ]
+        },
         "_trackingId": 6
     },
     {
@@ -74,9 +123,16 @@
         "_parentId": "a-20",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as W, X, Y",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "colombia",
+                "argentina",
+                "uruguay"
+            ]
+        },
         "_trackingId": 7
     },
     {
@@ -84,9 +140,16 @@
         "_parentId": "a-20",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s as simple as Z",
         "displayTitle": "",
         "body": "",
+         "_search": {
+            "keywords": [
+                "belgium",
+                "portugal",
+                "england"
+            ]
+        },
         "_trackingId": 8
     },
     {
@@ -94,9 +157,18 @@
         "_parentId": "a-25",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "It’s not that simple",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "brazil",
+                "england",
+                "france",
+                "spain",
+                "argentina"
+            ]
+        },
         "_trackingId": 9
     },
     {
@@ -104,9 +176,17 @@
         "_parentId": "a-25",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "Who said it was simple",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "world",
+                "cup",
+                "spain",
+                "brazil"
+            ]
+        },
         "_trackingId": 10
     },
     {
@@ -114,9 +194,17 @@
         "_parentId": "a-25",
         "_type": "block",
         "_classes": "",
-        "title": "",
+        "title": "Dummy title 1",
         "displayTitle": "",
         "body": "",
+        "_search": {
+            "keywords": [
+                "world",
+                "cup",
+                "spain",
+                "brazil"
+            ]
+        },
         "_trackingId": 11
     },
     {
@@ -124,9 +212,17 @@
         "_parentId":"a-30",
         "_type":"block",
         "_classes":"",
-        "title":"",
+        "title": "Dummy title 2",
         "displayTitle":"",
         "body":"",
+        "_search": {
+            "keywords": [
+                "world",
+                "cup",
+                "spain",
+                "holland"
+            ]
+        },
         "_trackingId": 12
     },
     {
@@ -134,9 +230,17 @@
         "_parentId":"a-30",
         "_type":"block",
         "_classes":"",
-        "title":"",
+        "title": "Dummy title 3",
         "displayTitle":"",
         "body":"",
+        "_search": {
+            "keywords": [
+                "brazil",
+                "world",
+                "cup",
+                "rio"
+            ]
+        },
         "_trackingId": 13
     },
     {
@@ -144,9 +248,16 @@
         "_parentId":"a-30",
         "_type":"block",
         "_classes":"",
-        "title":"",
+        "title": "Dummy title 4",
         "displayTitle":"",
         "body":"",
+        "_search": {
+            "keywords": [
+                "brazil",
+                "spain",
+                "final"
+            ]
+        },
         "_trackingId": 14
     }
 ]
