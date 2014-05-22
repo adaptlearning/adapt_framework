@@ -54,9 +54,9 @@ define(function(require) {
                 if (this.isCorrect()) {
                     return this.model.get('_feedback').correct;
                 } else if (this.isPartlyCorrect()) {
-                    return this.model.get('_feedback')._partlyCorrect;
+                    return this.model.get('_feedback')._partlyCorrect.final;
                 } else {
-                    return this.model.get('_feedback')._incorrect;
+                    return this.model.get('_feedback')._incorrect.final;
                 }
             }
         },
