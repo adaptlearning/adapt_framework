@@ -54,9 +54,9 @@ define(function(require) {
                 if (this.isCorrect()) {
                     return this.model.get('_feedback').correct;
                 } else if (this.isPartlyCorrect()) {
-                    return this.model.get('_feedback')._partlyCorrect;
+                    return this.model.get('_feedback')._partlyCorrect.final;
                 } else {
-                    return this.model.get('_feedback')._incorrect;
+                    return this.model.get('_feedback')._incorrect.final;
                 }
             }
         },
@@ -130,6 +130,7 @@ define(function(require) {
             }
 
             if (this.model.get('_canShowFeedback')) {
+                console.log(this);
                 Adapt.trigger('questionView:showFeedback', this);
             } else {
                 Adapt.trigger('questionView:disabledFeedback', this);
@@ -187,6 +188,7 @@ define(function(require) {
                 }
             } else {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._incorrect.notFinal) {
+                    console.log(this.model.get('_feedback')._incorrect.final);
                     this.model.set("feedbackMessage", this.model.get('_feedback')._incorrect.final);
                 } else {
                     this.model.set("feedbackMessage", this.model.get('_feedback')._incorrect.notFinal); 
