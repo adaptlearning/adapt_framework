@@ -1,8 +1,8 @@
 {
     "_id": "course",
     "_type": "course",
-    "title": "Welcome to Adapt Learning - v1.0.0",
-    "displayTitle": "Welcome to Adapt Learning - v1.0.0",
+    "title": "Welcome to Adapt Learning - v1.1.0",
+    "displayTitle": "Welcome to Adapt Learning - v1.1.0",
     "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
     "_buttons": {
         "submit": "Submit",
@@ -40,5 +40,10 @@
                 "_link":"https://community.adaptlearning.org"
             }
         ]
+    },
+    "_search": {
+        "title": "",
+        "description": "Type in search words and enter",
+        "noResultsMessage": "Sorry, no results were found"
     }
 }

@@ -21,14 +21,15 @@
         "_component":"media",
         "_classes":"",
         "_layout":"right",
-        "title":"<br>",
+        "title":"Media component",
         "displayTitle":"<br>",
         "body": "",
         "instruction":"",
+        "_setCompletionOn":"play",
         "_media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
-            "_allowCompletionOnInview":true
+            "poster": "course/en/video/big_buck_bunny-small.jpg"
         },
         "_pageLevelProgress": {
             "_isEnabled": false
@@ -816,13 +817,14 @@
         "_layout":"full",
         "title":"Media component",
         "displayTitle":"Media component",
+        "body": "As mentioned above in the hot graphic - a media component is both a single and spanned component. Below is a media component spanned.",
+        "instruction":"",
+        "_setCompletionOn":"play",
         "_media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
-            "_allowCompletionOnInview":false
+            "poster": "course/en/video/big_buck_bunny-large.jpg"
         },
-        "body": "As mentioned above in the hot graphic - a media component is both a single and spanned component. Below is a media component spanned.",
-        "instruction":"",
         "_pageLevelProgress": {
             "_isEnabled": true
         }
@@ -1113,8 +1115,8 @@
         "instruction": "What do you think of Adapt?",
         "_attempts": 1,
         "_questionWeight":10,
-        "_showNumber": false,
-        "_showScaleIndicator": false,
+        "_showNumber": true,
+        "_showScaleIndicator": true,
         "labelStart": "Not amazing",
         "labelEnd": "Amazing",
         "_scaleStart": 1,

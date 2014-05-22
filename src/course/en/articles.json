@@ -25,10 +25,17 @@
         "title":"A quick assessment with step locking",
         "displayTitle":"A quick assessment with step locking", 
         "body":"Three plugins come bundled with Adapt's core. Tutor - the feedback popup, Article Assessment - an assessment based upon one article and Trickle - vertical step locking. Have a go at the questions below to see these plugins in action.",
-        "_trickle": {
+        "_trickle": { 
+            "_isEnabled":true,
             "_button": "Continue to next question?"
         },
         "_assessment": {
+            "_randomisation": {
+                "_isActive": true,
+                "_startBlockCount": 0,
+                "_endBlockCount": 0,
+                "_randomCount": "all"
+            },
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
             "_completionMessage" : {
