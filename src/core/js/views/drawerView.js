@@ -21,6 +21,8 @@ define(function(require) {
 			this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
 			this.listenTo(Adapt, 'remove', this.onCloseDrawer);
 			this.render();
+			this.drawerDuration = Adapt.config.get('_drawer')._duration;
+			this.drawerDuration = (this.drawerDuration) ? this.drawerDuration : 400;
 			// Setup cached selectors
 			this.$wrapper = $('#wrapper');
 		},
@@ -92,8 +94,9 @@ define(function(require) {
 				Adapt.trigger('drawer:openedCustomView');
 			}
 			_.defer(_.bind(function() {
-
-				this.$el.velocity({'right': 0});
+				var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
+				var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+				this.$el.velocity({'right': 0}, this.drawerDuration, easing);
 				// Dim down the page or menu containers
 				// CSS is used here as on mobile/tablet devices it makes the animation jerky
 				$('.page, .menu').css({opacity:0.5});
@@ -118,7 +121,14 @@ define(function(require) {
 
 		hideDrawer: function() {
 			Adapt.trigger('popup:closed');
-			this.$el.velocity({'right': -this.$el.width()});
+
+			var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
+			var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+
+			var duration = Adapt.config.get('_drawer')._duration;
+			duration = (duration) ? duration : 400;
+
+			this.$el.velocity({'right': -this.$el.width()}, this.drawerDuration, easing);
 			$('.page, .menu').css({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();

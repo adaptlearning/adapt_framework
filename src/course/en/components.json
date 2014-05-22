@@ -21,7 +21,7 @@
         "_component":"media",
         "_classes":"",
         "_layout":"right",
-        "title":"<br>",
+        "title":"Media component",
         "displayTitle":"<br>",
         "body": "",
         "instruction":"",
@@ -32,7 +32,7 @@
             "poster": "course/en/video/big_buck_bunny-small.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -1115,8 +1115,8 @@
         "instruction": "What do you think of Adapt?",
         "_attempts": 1,
         "_questionWeight":10,
-        "_showNumber": false,
-        "_showScaleIndicator": false,
+        "_showNumber": true,
+        "_showScaleIndicator": true,
         "labelStart": "Not amazing",
         "labelEnd": "Amazing",
         "_scaleStart": 1,

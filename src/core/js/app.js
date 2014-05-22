@@ -7,7 +7,6 @@
 require([
     'coreModels/backboneModel',
     'coreJS/adapt',
-    'coreJS/mediator',
     'coreJS/router',
     'coreJS/drawer',
     'coreJS/device',
@@ -30,7 +29,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (BackboneModel, Adapt, Mediator, Drawer, Router, Device, PopupManager, Notify, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     // Append loading template and show
     var template = Handlebars.templates['loading'];

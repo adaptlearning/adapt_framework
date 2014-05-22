@@ -259,6 +259,8 @@ define(function(require) {
         onUserAnswerShown: function() {},
         storeUserAnswer: function() {},
         onCannotSubmit: function() {}
+    }, {
+        _isQuestionType: true
     });
     
     return QuestionView;
