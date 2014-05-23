@@ -34,7 +34,7 @@
                 "_isActive": true,
                 "_startBlockCount": 0,
                 "_endBlockCount": 0,
-                "_randomCount": "all"
+                "_randomCount": 6
             },
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
