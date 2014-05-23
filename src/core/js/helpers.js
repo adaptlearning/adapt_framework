@@ -14,7 +14,7 @@ define(function(require){
                 return index +1;
             },
             capitalise:  function(text) {
-                return text.charAt(0).toUpperCase() + str.slice(1);
+                return text.charAt(0).toUpperCase() + text.slice(1);
             },
             odd: function (index) {
                 return (index +1) % 2 === 0  ? 'even' : 'odd';
