@@ -135,13 +135,13 @@ define(function(require) {
 		},
 
 		addBodyEvent: function() {
-			$('.page, .menu').one('click', _.bind(function() {
+			$('.page, .menu').one('click touchstart', _.bind(function() {
 				this.onCloseDrawer();
 			}, this));
 		},
 
 		removeBodyEvent: function() {
-			$('.page, .menu').off('click');
+			$('.page, .menu').off('click touchstart');
 		}
 
 	});
