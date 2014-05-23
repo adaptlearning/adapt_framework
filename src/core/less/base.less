@@ -12,9 +12,65 @@
     }
 }
 
+.visibility-hidden {
+    visibility:hidden!important;
+}
+
+.display-none {
+    display:none!important;
+}
+
 #wrapper {
     .responsive-layout;
     padding-top:40px;
+}
+
+.drawer {
+    position:fixed;
+    width:320px;
+    height: 100%;
+    top:0px;
+    right:-320px;
+    overflow-y: auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling: touch;
+    z-index:501;
+    .drawer-back {
+        float: left;
+        display:none;
+        &.show {
+            display:inline-block;
+        }
+    }
+    .drawer-close {
+        float: right;
+    }
+    .drawer-inner {
+        height:100%;
+    }
+    .drawer-item {
+        display: block;
+        width: 100%;
+    }
+    .drawer-item-open {
+        display:block;
+    }
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    .loading-image {
+        width: 100%;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+    }
 }
 
 .navigation {
@@ -23,6 +79,72 @@
     top:0;
     height:40px;
     z-index:500;
+    width:100%;
+    .ie8 & {
+        max-width:@ie8-max-width;
+    }
+    .navigation-back-button {
+        float:left;
+    }
+    .navigation-drawer-toggle-button {
+        float:right;
+    }
+}
+
+// Notify styling
+// ==============
+
+.notify {
+
+    .notify-popup {
+        position: fixed;
+        top: 50%;
+        width:100%;
+        z-index: 550;
+    }
+
+    .notify-popup-icon {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        .icon {
+            @media all and (max-width:(@device-width-medium - 1px)) {
+                float:none;
+                margin: 0 auto;
+            }
+        }
+        @media all and (max-width:(@device-width-medium - 1px)) {
+            float:none;
+            margin: 0px auto;
+            position:static;
+        }
+    }
+
+    .notify-popup-content {
+        .responsive-layout
+        .ie8 & {
+            max-width: @ie8-max-width;
+            margin:0 auto;
+        }
+    }
+
+    .notify-popup-content-inner {
+        position:relative;
+    }
+
+    .notify-popup-done {
+        display:inline-block;
+    }
+
+    .notify-shadow {
+        display: none;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 549;
+    }
 }
 
 .component-container:before, .component-container:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
@@ -32,7 +154,7 @@
 .component-left {
     width:100%;
     float:auto;
-    @media all and (min-width:760px) {
+    @media all and (min-width:(@device-width-medium + 1px)) {
         width:50%;
         float:left;
         .component-inner {
@@ -44,7 +166,7 @@
 .component-right {
     width:100%;
     float:auto;
-    @media all and (min-width:760px) {
+    @media all and (min-width:(@device-width-medium + 1px)) {
         width:50%;
         float:right;
         .component-inner {

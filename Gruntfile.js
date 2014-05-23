@@ -256,8 +256,9 @@ module.exports = function(grunt) {
         },
 
         concurrent: {
-            server: ['connect:server', 'open:server', 'watch'],
-            spoor: ['connect:spoorOffline', 'open:spoor', 'watch']
+            server: ['connect:server', 'open:server'],
+            spoor: ['connect:spoorOffline', 'open:spoor'],
+            selenium: ['connect:spoorOffline', 'nightwatch']
         },
 
         connect: {
@@ -282,6 +283,13 @@ module.exports = function(grunt) {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
+        },
+
+        nightwatch: {
+            options: {
+                standalone: true,
+                jar_url: 'http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar'
+            }
         }
     });
     
@@ -315,13 +323,124 @@ module.exports = function(grunt) {
         grunt.file.write('build/course/config.json', JSON.stringify(configJson));
     });
 
-    grunt.registerTask('default',['less', 'handlebars', 'watch']);
-    grunt.registerTask('compile',['bower', 'requirejs-bundle', 'requirejs:dev']);
-    grunt.registerTask('server',['concurrent:server']);
-    grunt.registerTask('server-scorm',['concurrent:spoor']);
-    grunt.registerTask('build',['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
-    grunt.registerTask('dev',['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config']);
+    grunt.registerTask('check-json', 'Checking course.json', function() {
+
+        var _ = require('underscore');
+
+        var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
+
+        var currentJsonFile;
+
+        var storedIds = [];
+
+        var storedFileParentIds = {};
+
+        var storedFileIds = {};
+
+        var hasOrphanedParentIds = false;
+        
+        var orphanedParentIds = [];
+
+        // method to check json ids
+        function checkJsonIds() {
+            var currentCourseFolder;
+            // Go through each course folder inside the src/course directory
+            grunt.file.expand({filter: "isDirectory"}, "src/course/*").forEach(function(path) {
+                // Stored current path of folder - used later to read .json files
+                currentCourseFolder = path;
+                
+                // Go through each list of declared course files
+                listOfCourseFiles.forEach(function(jsonFileName) {
+                    // Make sure course.json file is not searched
+                    if (jsonFileName !== "course") {
+                        storedFileParentIds[jsonFileName] = [];
+                        storedFileIds[jsonFileName] = [];
+                        // Read each .json file
+                        var currentJsonFile = grunt.file.readJSON(currentCourseFolder + "/" + jsonFileName + ".json");
+                        currentJsonFile.forEach(function(item) {
+                            // Store _parentIds and _ids to be used by methods below
+                            storedFileParentIds[jsonFileName].push(item._parentId);
+                            storedFileIds[jsonFileName].push(item._id);
+                            storedIds.push(item._id);
+                        });
+
+                    }
+                    
+                });
+                
+                checkDuplicateIds();
+
+                checkEachElementHasParentId();
+
+            });
+        }
+
+        function checkDuplicateIds() {
+            // Change _ids into an object of key value pairs that contains _ids as keys and a number count of same _ids
+            var countIdsObject = _.countBy(storedIds);
+            var hasDuplicateIds = false;
+            var duplicateIds = [];
+            _.each(countIdsObject, function(value, key) {
+                // Check value of each _ids is not more than 1
+                if (value > 1) {
+                    hasDuplicateIds = true;
+                    duplicateIds.push(key);
+                }
+            });
+
+            // Check if any duplicate _ids exist and return error
+            if (hasDuplicateIds) {
+                grunt.fail.fatal("Oops, looks like you have some duplicate _ids: " + duplicateIds);
+            }
+        }
+
+        function checkIfOrphanedElementsExist(value, parentFileToCheck) {
+            _.each(value, function(parentId) {
+                if (parentId === "course") {
+                    return;
+                }
+                if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
+                    hasOrphanedParentIds = true;
+                    orphanedParentIds.push(parentId);
+                };
+                
+            });
+        }
+
+        function checkEachElementHasParentId() {
+            
+            _.each(storedFileParentIds, function(value, key) {
+                switch(key){
+                    case "contentObjects":
+                        return checkIfOrphanedElementsExist(value, "contentObjects");
+                    case "articles":
+                        return checkIfOrphanedElementsExist(value, "contentObjects");
+                    case "blocks":
+                        return checkIfOrphanedElementsExist(value, "articles");
+                    case "components":
+                        return checkIfOrphanedElementsExist(value, "blocks");
+                }
+
+            });
+
+            if (hasOrphanedParentIds) {
+                grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
+            }
+        }
+
+        checkJsonIds();
+
+    });
+
+    grunt.registerTask('default', ['less', 'handlebars', 'watch']);
+    grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
+    grunt.registerTask('server', ['concurrent:server']);
+    grunt.registerTask('server-scorm', ['concurrent:spoor']);
+    grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
+    grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
     
+    grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
+
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');

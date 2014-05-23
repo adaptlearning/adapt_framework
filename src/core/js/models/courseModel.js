@@ -1,7 +1,7 @@
 /*
 * Adapt
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Daryl Hedley
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
+* Maintainers - Daryl Hedley <darylhedley@gmail.com>
 */
 
 define(function(require) {
@@ -11,10 +11,11 @@ define(function(require) {
 
     var CourseModel = AdaptModel.extend({
     
-        initialize: function(options) {
-            this.url = options.url;
+        initialize: function(attrs, options) {
             this.on('sync', this.loadedData, this);
-            this.fetch();
+            if (this.url) {
+                this.fetch();
+            }
         },
         
         loadedData: function() {

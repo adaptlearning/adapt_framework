@@ -1,6 +1,6 @@
 /*
 * AdaptView
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley
 */
 
@@ -26,16 +26,15 @@ define(function(require) {
         },
         
         render: function() {
-            Adapt.trigger(this.model.get('_type') + 'View:preRender', this);
+            Adapt.trigger(this.constructor.type + 'View:preRender', this);
           
             var data = this.model.toJSON();
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
             
-            Adapt.trigger(this.model.get('_type') + 'View:postRender', this);
-            
             _.defer(_.bind(function() {
-               this.postRender(); 
+                this.postRender();
+                Adapt.trigger(this.constructor.type + 'View:postRender', this);
             }, this));
 
             return this;

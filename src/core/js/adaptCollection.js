@@ -1,6 +1,6 @@
 /*
 * AdaptCollection
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley
 */
 
@@ -11,9 +11,10 @@ define(function(require) {
 
     var AdaptCollection = Backbone.Collection.extend({
         initialize : function(models, options){
-            this.url = options.url;
             this.once('reset', this.loadedData, this);
-            this.fetch({reset:true});
+            if (this.url) {
+                this.fetch({reset:true});
+            }
         },
         
         loadedData: function() {

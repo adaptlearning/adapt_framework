@@ -1,6 +1,6 @@
 /*
 * QuestionView
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
+* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley
 */
 
@@ -26,12 +26,11 @@ define(function(require) {
         preRender: function() {
             this.setupDefaultSettings();
             this.resetQuestion({resetAttempts:true, initialisingScreen:true});
-            this.setupFeedbackArrays();
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
         },
         
         isCorrect: function() {
-            return !!Math.floor(this.model.get('_numberOfCorrectAnswers') / this.model.get('items').length);
+            return !!Math.floor(this.model.get('_numberOfCorrectAnswers') / this.model.get('_items').length);
         },
         
         isPartlyCorrect: function() {
@@ -49,15 +48,15 @@ define(function(require) {
         getOptionSpecificFeedback: function() {
             // Check if option specific feedback has been set
             var selectedItem = this.getSelectedItems();
-            if (selectedItem.hasOwnProperty('feedback')) {
-                return selectedItem.feedback;
+            if (selectedItem.hasOwnProperty('_feedback')) {
+                return selectedItem._feedback;
             } else {
                 if (this.isCorrect()) {
-                    return this.model.get('feedback').correct;
+                    return this.model.get('_feedback').correct;
                 } else if (this.isPartlyCorrect()) {
-                    return this.model.get('feedback').partly;
+                    return this.model.get('_feedback')._partlyCorrect.final;
                 } else {
-                    return this.model.get('feedback').incorrect;
+                    return this.model.get('_feedback')._incorrect.final;
                 }
             }
         },
@@ -74,7 +73,7 @@ define(function(require) {
         
         markQuestion: function() {
             var correctCount = this.getNumberOfCorrectAnswers();
-            var score = this.model.get("_questionWeight") * correctCount / this.model.get('items').length;
+            var score = this.model.get("_questionWeight") * correctCount / this.model.get('_items').length;
 
             this.model.set({
                 "_numberOfCorrectAnswers": correctCount,
@@ -94,7 +93,7 @@ define(function(require) {
                 this.model.set({
                     _isSubmitted: false,
                     _selectedItems: [],
-                    _userAnswer: [],
+                    _userAnswer: []
                 });
                 if(properties.resetAttempts === true) this.model.set("_attemptsLeft", this.model.get('_attempts'));
                 if(properties.resetCorrect === true) {
@@ -110,56 +109,36 @@ define(function(require) {
             if (!this.model.has("_questionWeight")) {
                 this.model.set("_questionWeight", Adapt.config.get("_questionWeight"));
             }
-            if (!this.model.has("buttons")) {
-                this.model.set("buttons", Adapt.course.get("buttons"));
+            if (!this.model.has("_buttons")) {
+                this.model.set("_buttons", Adapt.course.get("_buttons"));
             } else {
-                for(var key in this.model.get("buttons")) {
-                    var value=this.model.get("buttons")[key];
+                for(var key in this.model.get("_buttons")) {
+                    var value=this.model.get("_buttons")[key];
                     if (!value) {
-                        this.model.get("buttons")[key] = Adapt.course.get("buttons")[key];
+                        this.model.get("_buttons")[key] = Adapt.course.get("_buttons")[key];
                     }
                 }
-            }
-        },
-
-        setupFeedbackArrays: function() {
-            // Randomize the selection of the feedback messages (if using an array)       
-            if(!_.isString(this.model.get('feedback').partly)) {
-                this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
-            } 
-
-            if(!_.isString(this.model.get('feedback').incorrect)) {
-                this.model.get('feedback').incorrect = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
             }
         },
     
         showFeedback: function() {
             
-            this.model.set('feedbackAudio', this.model.get("feedback").audio)
-            
             if(this.model.get('_selectable') === 1) {
                 if(this.getOptionSpecificFeedback()) {
                     this.model.set('feedbackMessage', this.getOptionSpecificFeedback());
                 }
-                if(this.getOptionSpecificAudio()) {
-                    this.model.set('feedbackAudio', this.getOptionSpecificAudio());
-                }
             }
 
-            Adapt.mediator.defaultCallback('questionView:feedback', function(feedback) {
-                Adapt.trigger('questionView:showFeedback', feedback);
-            });
-
-            Adapt.trigger('questionView:feedback', {
-                title: this.model.get('title'),
-                message:this.model.get('feedbackMessage'),
-                audio:this.model.get('feedbackAudio')
-            });
+            if (this.model.get('_canShowFeedback')) {
+                Adapt.trigger('questionView:showFeedback', this);
+            } else {
+                Adapt.trigger('questionView:disabledFeedback', this);
+            }
 
         },
         
         showMarking: function() {
-            _.each(this.model.get('items'), function(item, i) {
+            _.each(this.model.get('_items'), function(item, i) {
                 var $item = this.$('.item').eq(i);
                 $item.addClass(item.correct ? 'correct' : 'incorrect');
             }, this);
@@ -196,21 +175,21 @@ define(function(require) {
         onQuestionCorrect: function() {
             this.onComplete({correct: true});
             this.model.getParent("article").attributes.score ++;
-            this.model.set("feedbackMessage", this.model.get("feedback").correct);
+            this.model.set({"feedbackTitle": this.model.get('title'), "feedbackMessage": this.model.get("_feedback").correct});
         },
         
         onQuestionIncorrect: function() {
             if (this.isPartlyCorrect()) {
-                if (!_.isString(this.model.get('feedback').partly)) {
-                    this.model.get('feedback').partly = this.model.get('feedback').partly[_.random(this.model.get('feedback').partly.length - 1)];
+                if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
+                    this.model.set("feedbackMessage", this.model.get('_feedback')._partlyCorrect.final);
                 } else {
-                    this.model.set("feedbackMessage", this.model.get('feedback').partly); 
+                    this.model.set("feedbackMessage", this.model.get('_feedback')._partlyCorrect.notFinal); 
                 }
             } else {
-                if (!_.isString(this.model.get('feedback').incorrect)) {
-                    this.model.get('feedback').partly = this.model.get('feedback').incorrect[_.random(this.model.get('feedback').incorrect.length - 1)];
+                if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._incorrect.notFinal) {
+                    this.model.set("feedbackMessage", this.model.get('_feedback')._incorrect.final);
                 } else {
-                    this.model.set("feedbackMessage", this.model.get('feedback').incorrect); 
+                    this.model.set("feedbackMessage", this.model.get('_feedback')._incorrect.notFinal); 
                 }
             }
 
@@ -228,11 +207,14 @@ define(function(require) {
     
         onSubmitClicked: function(event) {
             event.preventDefault();
-            
-            if(!this.canSubmit()) return;
-            
+            if(!this.canSubmit()) {
+                this.showInstructionError();
+                this.onCannotSubmit();
+                return;
+            } 
+
             Adapt.tabHistory = $(event.currentTarget).parent('.inner');
-            
+        
             var attemptsLeft = this.model.get("_attemptsLeft") - 1;
             this.model.set({
                 _isEnabled: false,
@@ -240,10 +222,15 @@ define(function(require) {
                 _attemptsLeft: attemptsLeft
             });
             this.$(".component-widget").addClass("submitted");
+            this.$(".component-instruction-inner").removeClass("validation-error");
             
             this.storeUserAnswer();
             this.markQuestion();
-            this.showFeedback();
+            this.showFeedback(); 
+        },
+
+        showInstructionError: function() {
+            this.$(".component-instruction-inner").addClass("validation-error");
         },
     
         onUserAnswerClicked: function(event) {
@@ -270,8 +257,10 @@ define(function(require) {
         resetItems: function(){},
         onModelAnswerShown: function() {},
         onUserAnswerShown: function() {},
-        storeUserAnswer: function() {}
-        
+        storeUserAnswer: function() {},
+        onCannotSubmit: function() {}
+    }, {
+        _isQuestionType: true
     });
     
     return QuestionView;
