@@ -30,6 +30,7 @@
             "_button": "Continue to next question?"
         },
         "_assessment": {
+            "_isEnabled": true,
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
             "_completionMessage" : {
