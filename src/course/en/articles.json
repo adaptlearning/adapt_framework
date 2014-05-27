@@ -30,10 +30,14 @@
             "_button": "Continue to next question?"
         },
         "_assessment": {
+            "_startBlockCount": 0,
+            "_endBlockCount": 0,
+            "_banks":{
+                "_isActive": true,
+                "_split": "1,1,1"
+            },
             "_randomisation": {
                 "_isActive": true,
-                "_startBlockCount": 0,
-                "_endBlockCount": 0,
                 "_randomCount": 6
             },
             "_isPercentageBased" : true,

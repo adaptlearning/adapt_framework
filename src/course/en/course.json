@@ -10,8 +10,8 @@
         "showCorrectAnswer": "Model Answer",
         "hideCorrectAnswer": "My Answer"
     },
-    "_latestTrackingId": 13,
-    "_resources": { 
+    "_latestTrackingId": 14,
+    "_resources": {
         "title": "Resources",
         "description": "Click here to view resources for this course",
         "_filterButtons": {
@@ -22,22 +22,22 @@
         },
         "_resourcesItems": [
             {
-                "_type":"document",
-                "title":"Button idea",
-                "description":"Click here to see a proposed button idea",
-                "_link":"course/en/pdf/adapt-framework-prototypes-buttons.pdf"
+                "_type": "document",
+                "title": "Button idea",
+                "description": "Click here to see a proposed button idea",
+                "_link": "course/en/pdf/adapt-framework-prototypes-buttons.pdf"
             },
             {
-                "_type":"media",
-                "title":"Adapt Learning YouTube Channel",
-                "description":"Fancy catching up on some Adapt material",
-                "_link":"https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
+                "_type": "media",
+                "title": "Adapt Learning YouTube Channel",
+                "description": "Fancy catching up on some Adapt material",
+                "_link": "https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
             },
             {
-                "_type":"link",
-                "title":"Community Site",
-                "description":"Click here to view our community site",
-                "_link":"https://community.adaptlearning.org"
+                "_type": "link",
+                "title": "Community Site",
+                "description": "Click here to view our community site",
+                "_link": "https://community.adaptlearning.org"
             }
         ]
     },

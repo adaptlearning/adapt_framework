@@ -241,7 +241,7 @@
         "_isRandom":true,
         "_selectable":3,
         "title": "Getting involved",
-        "displayTitle": "Getting involved",
+        "displayTitle": "Getting involved - bank 1",
         "body": "How can anyone get involved with Adapt?",
         "instruction":"Select the correct answers below.",
         "_items": [
@@ -290,7 +290,7 @@
         "_random": true,
         "_questionWeight":10,
         "title": "Order of a page",
-        "displayTitle": "Order of a page",
+        "displayTitle": "Order of a page - bank 1",
         "body": "Put in order, the elements as they are viewed in a standard Adapt page",
         "instruction":"Select an options from the drop down list",
         "_buttons": {
@@ -376,7 +376,7 @@
         "_classes":"",
         "_layout":"left",
         "title": "Extensions",
-        "displayTitle": "Extensions",
+        "displayTitle": "Extensions - bank 2",
         "body": "Name the two extensions being used on this page?",
         "instruction":"Fill in your answers below.",
         "_attempts": 1,
@@ -436,7 +436,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "GMCQ",
-        "displayTitle": "GMCQ",
+        "displayTitle": "GMCQ - bank 2",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Maybe pick option one.",
         "_items": [
@@ -484,6 +484,112 @@
             "_isEnabled": true
         }
     },
+   {
+        "_id":"c-220",
+        "_parentId":"b-23",
+        "_type":"component",
+        "_component":"mcq",
+        "_classes":"",
+        "_layout":"left",
+        "_attempts":1,
+        "_questionWeight":10,
+        "_isRandom":true,
+        "_selectable":3,
+        "title": "Randomisation banks test - bank 3",
+        "displayTitle": "Randomisation banks test - bank 3",
+        "body": "How can anyone get involved with Adapt?",
+        "instruction":"Select the correct answers below.",
+        "_items": [
+            {
+                "text": "Sign up to the community site",
+                "_shouldBeSelected":true
+            },
+            {
+                "text": "Contrib to code on Github",
+                "_shouldBeSelected":true
+            },
+            {
+                "text": "Suggest extra features for plugins",
+                "_shouldBeSelected":true
+            }
+        ],
+        "_feedback":{
+            "correct":"That's correct. There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+            "_incorrect": {
+                "notFinal": "That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+                "final": "Final feedback! That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            },
+            "_partlyCorrect": {
+                "notFinal": "Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+                "final": "Final feedback! Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            }
+        },
+        "_buttons":{
+            "submit":"",
+            "reset":"",
+            "showCorrectAnswer":"",
+            "hideCorrectAnswer":""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+    {
+        "_id":"c-225",
+        "_parentId":"b-23",
+        "_type":"component",
+        "_component":"textinput",
+        "_classes":"",
+        "_layout":"left",
+        "title": "Randomisation banks test - bank 3",
+        "displayTitle": "Randomisation banks test - bank 3",
+        "body": "Name the two extensions being used on this page?",
+        "instruction":"Fill in your answers below.",
+        "_attempts": 1,
+        "placeholder": "Enter answer here",
+        "_allowsAnyOrder": false,
+        "_allowsAnyCase": true,
+        "_allowsPunctuation": true,
+        "_questionWeight":10,
+        "_buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
+        },
+        "_feedback": {
+            "correct": "This feedback will appear if you answered the question correctly.",
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
+        },
+        "_items": [
+            {
+                "prefix": "",
+                "suffix": "",
+                "_answers": [
+                    "article assessment",
+                    "trickle"
+                ]
+            },
+            {
+                "prefix": "",
+                "suffix": "",
+                "_answers": [
+                    "trickle",
+                    "article assessment"
+                ]
+            }
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },    
     {
         "_id":"c-124",
         "_parentId":"b-30",
@@ -496,7 +602,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "MCQ",
-        "displayTitle": "MCQ",
+        "displayTitle": "MCQ - bank 3",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Option one again?",
         "_items": [
@@ -545,7 +651,7 @@
         "_random": true,
         "_questionWeight":10,
         "title": "Matching",
-        "displayTitle": "Matching",
+        "displayTitle": "Matching - bank 3",
         "body": "Basically what you need to do is match the questions below with the drop down box option.",
         "instruction":"Answers should in the question.",
         "_buttons": {
