@@ -964,8 +964,8 @@
                 "_shouldBeSelected":false
             }
         ],
-        "_feedback":{
-            "correct":"Congratulations, this is the correct answer.",
+        "_feedback": {
+            "correct": "This feedback will appear if you answered the question correctly.",
             "_incorrect": {
                 "notFinal": "",
                 "final": "This feedback will appear if you answered the question incorrectly."
