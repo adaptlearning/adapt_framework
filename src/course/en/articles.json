@@ -6,7 +6,7 @@
         "_classes":"image-3",
         "title":"What is Adapt?",
         "displayTitle":"What is Adapt?",
-        "body":"Welcome to the <b>Adapt Learning</b> demo page. This page contains a sample of the functionality that will be available in the upcoming releases of the open source code in January 2014. The content  itself will explain some of the thinking that’s gone into the design and development of the framework, as well as highlighting what’s on the roadmap for release later in the year."
+        "body":"Welcome to the <b>Adapt Learning</b> demo page. This page contains a sample of the functionality that will be available in the upcoming releases of the open source code in January 2014. The content itself will explain some of the thinking that’s gone into the design and development of the framework, as well as highlighting what’s on the roadmap for release later in the year."
     },
     {
         "_id":"a-10",
@@ -30,6 +30,7 @@
             "_button": "Continue to next question?"
         },
         "_assessment": {
+            "_isEnabled": true,
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
             "_completionMessage" : {

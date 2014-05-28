@@ -80,15 +80,17 @@ define(function(require) {
 		showDrawer: function(emptyDrawer) {
 			Adapt.trigger('popup:opened');
 			var drawerWidth = this.$el.width();
-			this.$('.drawer-back').removeClass('show');
 			if (emptyDrawer) {
+				this.$('.drawer-back').addClass('display-none');
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
 				Adapt.trigger('drawer:openedItemView');
 			} else {
 				if (this._hasBackButton) {
-					this.$('.drawer-back').addClass('show');
+					this.$('.drawer-back').removeClass('display-none');
+				} else {
+					this.$('.drawer-back').addClass('display-none');
 				}
 				Adapt.trigger('drawer:openedCustomView');
 			}
@@ -135,13 +137,13 @@ define(function(require) {
 		},
 
 		addBodyEvent: function() {
-			$('.page, .menu').one('click', _.bind(function() {
+			$('.page, .menu').one('click touchstart', _.bind(function() {
 				this.onCloseDrawer();
 			}, this));
 		},
 
 		removeBodyEvent: function() {
-			$('.page, .menu').off('click');
+			$('.page, .menu').off('click touchstart');
 		}
 
 	});

@@ -21,7 +21,7 @@ define(function(require) {
 		events: {
 			'click .notify-popup-alert-button':'onAlertButtonClicked',
 			'click .notify-popup-prompt-button': 'onPromptButtonClicked',
-			'click .notify-popup-icon-close': 'onCloseButtonClicked'
+			'click .notify-popup-done': 'onCloseButtonClicked'
 		},
 
 		render: function() {
@@ -49,6 +49,7 @@ define(function(require) {
 			Adapt.trigger('notify:closed');
 			this.closeNotify();
 		},
+
 		resetNotifySize: function() {
 			$('.notify-popup').removeAttr('style');
 			this.resizeNotify(true);
@@ -63,7 +64,8 @@ define(function(require) {
 					'height':'100%', 
 					'top':0, 
 					'overflow-y': 'scroll', 
-					'-webkit-overflow-scrolling': 'touch'
+					'-webkit-overflow-scrolling': 'touch',
+					'opacity': 1
 				});
 			} else {
 				if (noAnimation) {
