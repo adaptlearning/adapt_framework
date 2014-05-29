@@ -20,7 +20,21 @@ define(function(require) {
             + " nth-child-" + this.options.nthChild;
         },
         
-        postRender: function() {}
+        postRender: function() {},
+
+        setCompletionStatus: function() {
+            if (this.model.get('_isVisible')) {
+                this.model.set('_isInteractionsComplete', true);
+            }
+
+            AdaptView.prototype.setCompletionStatus.apply(this, arguments);
+        },
+
+        remove: function() {
+            this.model.set('_isInteractionsComplete', false);
+
+            return AdaptView.prototype.remove.apply(this, arguments);
+        }
         
     }, {
         type:'component'
