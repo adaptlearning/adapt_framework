@@ -47,16 +47,21 @@ define(function (require) {
                 this._parent = 'contentObjects';
             }
             if (this._children) {
-                Adapt[this._children].on({
-                    "change:_isReady": this.checkReadyStatus,
-                    "change:_isComplete": this.checkCompletionStatus
-                }, this);
+                this.listenToOnce(Adapt, 'app:dataReady', this.setupChildListeners);
             }
+
             this.init();
         },
 
         init: function() {
 
+        },
+
+        setupChildListeners: function () {
+            this.getChildren().each(function(child) {
+                this.listenTo(child, 'change:_isReady', this.checkReadyStatus);
+                this.listenTo(child, 'change:_isComplete', this.checkCompletionStatus);
+            }, this);
         },
 
         checkReadyStatus: function () {

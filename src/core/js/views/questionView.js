@@ -156,7 +156,6 @@ define(function(require) {
         
         onComplete: function(parameters) {
             this.model.set({
-                _isComplete: true,
                 _isEnabled: false,
                 _isCorrect: !!parameters.correct
             });
@@ -164,6 +163,7 @@ define(function(require) {
             if(parameters.correct) this.$(".component-widget").addClass("correct");
             this.showMarking();
             this.showUserAnswer();
+            this.setCompletionStatus();
             Adapt.trigger('questionView:complete', this);
         },
     
