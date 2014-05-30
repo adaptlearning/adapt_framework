@@ -52,7 +52,7 @@ define(function(require){
         var currentModelId = selector.replace(/\./g, '');
         var currentModel = Adapt[type].findWhere({_id: currentModelId});
         // Get current page to check whether this is the current page
-        var currentPage = currentModel.findAncestor('contentObjects');
+        var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
 
         // If current page - scrollTo element
         if (currentPage.get('_id') === Adapt.location._currentId) {
