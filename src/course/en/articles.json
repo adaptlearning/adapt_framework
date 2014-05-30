@@ -30,17 +30,17 @@
             "_button": "Continue to next question?"
         },
         "_canShowFeedback": false,
-        "_isEnabledOnRevisit": true,
+        "_isEnabledOnRevisit": false,
         "_assessment": {
             "_startBlockCount": 0,
             "_endBlockCount": 1,
             "_banks":{
-                "_isActive": false,
+                "_isEnabled": false,
                 "_split": "1,1,1"
             },
             "_randomisation": {
-                "_isActive": true,
-                "_randomCount": 6
+                "_isEnabled": true,
+                "_blockCount": 2
             },
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
