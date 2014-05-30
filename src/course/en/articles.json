@@ -25,12 +25,13 @@
         "title":"A quick assessment with step locking",
         "displayTitle":"A quick assessment with randomised question banks", 
         "body":"Article Assessment plugin - an assessment based upon one article. Have a go at the questions below. Once complete, your results will appear at the end.",
-        "_trickle": { 
-            "_isEnabled":true,
-            "_button": "Continue to next question?"
-        },
         "_canShowFeedback": false,
         "_isEnabledOnRevisit": true,
+        "_trickle": { 
+            "_isEnabled": true,
+            "_isEnabledOnRevisit": true,
+            "button": "Continue to next question?"
+        },
         "_assessment": {
             "_startBlockCount": 0,
             "_endBlockCount": 1,
