@@ -589,7 +589,23 @@
         "_pageLevelProgress": {
             "_isEnabled": true
         }
-    },    
+    },
+    {
+        "_id":"c-227",
+        "_parentId":"b-31",
+        "_type":"component",
+        "_component":"results",
+        "_classes":"",
+        "_layout":"full",
+        "title":"Results",
+        "displayTitle":"Results",
+        "body":"This component you're reading is a results component. The feedback itself comes from the _assessment object in articles.json.",
+        "instruction":"",
+        "_linkToAssociatedLearning": false,
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
     {
         "_id":"c-124",
         "_parentId":"b-30",
@@ -647,7 +663,7 @@
         "_layout": "right",
         "_type":"component",
         "_component": "matching",
-        "_attempts": 2,
+        "_attempts": 1,
         "_random": true,
         "_questionWeight":10,
         "title": "Matching",
