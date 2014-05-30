@@ -10,7 +10,13 @@ define(function(require) {
 	var AdaptModel = require('coreModels/adaptModel');
 
     var ComponentModel = AdaptModel.extend({
-    	init: function() {
+    	
+        defaults: _.extend({}, AdaptModel.prototype.defaults, {
+                _isInteractionsComplete: false
+            }
+        ),
+
+        init: function() {
     		// Setup _isQuestionType on question components
     		var componentType = this.get('_component');
             if (Adapt.componentStore[componentType]) {
@@ -19,6 +25,7 @@ define(function(require) {
         		}
             }
     	},
+
         _parent:'blocks',
     	_siblings:'components'
     });
