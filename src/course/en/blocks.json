@@ -68,6 +68,24 @@
         "_trackingId": 3
     },
     {
+        "_id": "b-21",
+        "_parentId": "a-15",
+        "_quizBankID": 1,
+        "_type": "block",
+        "_classes": "",
+        "title": "Quiz bank 1",
+        "displayTitle": "",
+        "body": "",
+        "_search": {
+            "keywords": [
+                "germany",
+                "france",
+                "spain"
+            ]
+        },
+        "_trackingId": 4
+    },
+    {
         "_id": "b-22",
         "_parentId": "a-15",
         "_quizBankID": 1,
@@ -86,9 +104,9 @@
         "_trackingId": 4
     },
     {
-        "_id": "b-23",
+        "_id": "b-24",
         "_parentId": "a-15",
-        "_quizBankID": 3,
+        "_quizBankID": 2,
         "_type": "block",
         "_classes": "",
         "title": "Test block for quiz banks/randomisation",
@@ -120,6 +138,24 @@
             ]
         },
         "_trackingId": 5
+    },
+    {
+        "_id": "b-27",
+        "_parentId": "a-15",
+        "_quizBankID": 3,
+        "_type": "block",
+        "_classes": "",
+        "title": "Test block for quiz banks/randomisation",
+        "displayTitle": "",
+        "body": "",
+        "_search": {
+            "keywords": [
+                "mexico",
+                "italy",
+                "england"
+            ]
+        },
+        "_trackingId": 14
     },
     {
         "_id": "b-30",

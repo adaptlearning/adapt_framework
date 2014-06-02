@@ -230,6 +230,126 @@
         }
     },
     {
+        "_id":"c-195",
+        "_parentId":"b-21",
+        "_type":"component",
+        "_component":"gmcq",
+        "_classes":"",
+        "_layout":"right",
+        "_attempts":1,
+        "_questionWeight":10,
+        "_isRandom":false,
+        "_selectable":1,
+        "title": "GMCQ",
+        "displayTitle": "GMCQ - bank 1",
+        "body": "Which of the following options would you consider to be correct?",
+        "instruction":"Maybe pick option two.",
+        "_items": [
+            {
+                "text": "This is option 1.",
+                "_shouldBeSelected":false,
+                "_graphic": {
+                    "alt": "Alt text for option 1",
+                    "title": "title text",
+                    "large": "course/en/images/gqcq-1-large.gif",
+                    "medium": "course/en/images/gqcq-1-medium.gif",
+                    "small": "course/en/images/gqcq-1-small.gif"
+                }
+            },
+            {
+                "text": "This is option 2.",
+                "_shouldBeSelected":true,
+                "_graphic": {
+                    "alt": "Alt text for option 2",
+                    "title": "title text",
+                    "large": "course/en/images/gqcq-2-large.gif",
+                    "medium": "course/en/images/gqcq-2-medium.gif",
+                    "small": "course/en/images/gqcq-2-small.gif"
+                }
+            }
+        ],
+        "_feedback":{
+            "correct":"Congratulations, this is the correct feedback.",
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
+        },
+        "_buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+    {
+        "_id":"c-196",
+        "_parentId":"b-21",
+        "_type":"component",
+        "_component":"gmcq",
+        "_classes":"",
+        "_layout":"right",
+        "_attempts":1,
+        "_questionWeight":10,
+        "_isRandom":false,
+        "_selectable":1,
+        "title": "GMCQ",
+        "displayTitle": "GMCQ - bank 1",
+        "body": "Which of the following options would you consider to be correct?",
+        "instruction":"Maybe pick option two.",
+        "_items": [
+            {
+                "text": "This is option 1.",
+                "_shouldBeSelected":false,
+                "_graphic": {
+                    "alt": "Alt text for option 1",
+                    "title": "title text",
+                    "large": "course/en/images/gqcq-1-large.gif",
+                    "medium": "course/en/images/gqcq-1-medium.gif",
+                    "small": "course/en/images/gqcq-1-small.gif"
+                }
+            },
+            {
+                "text": "This is option 2.",
+                "_shouldBeSelected":true,
+                "_graphic": {
+                    "alt": "Alt text for option 2",
+                    "title": "title text",
+                    "large": "course/en/images/gqcq-2-large.gif",
+                    "medium": "course/en/images/gqcq-2-medium.gif",
+                    "small": "course/en/images/gqcq-2-small.gif"
+                }
+            }
+        ],
+        "_feedback":{
+            "correct":"Congratulations, this is the correct feedback.",
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered part of the question correctly."
+            }
+        },
+        "_buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+    {
         "_id":"c-200",
         "_parentId":"b-22",
         "_type":"component",
@@ -484,9 +604,148 @@
             "_isEnabled": true
         }
     },
+    {
+        "_id":"c-216",
+        "_parentId":"b-24",
+        "_type":"component",
+        "_component":"mcq",
+        "_classes":"",
+        "_layout":"left",
+        "_attempts":1,
+        "_questionWeight":10,
+        "_isRandom":true,
+        "_selectable":3,
+        "title": "Getting involved",
+        "displayTitle": "Getting involved - bank 2",
+        "body": "How can anyone get involved with Adapt?",
+        "instruction":"Select the correct answers below.",
+        "_items": [
+            {
+                "text": "Sign up to the community site",
+                "_shouldBeSelected":true
+            },
+            {
+                "text": "Contrib to code on Github",
+                "_shouldBeSelected":true
+            },
+            {
+                "text": "Suggest extra features for plugins",
+                "_shouldBeSelected":true
+            }
+        ],
+        "_feedback":{
+            "correct":"That's correct. There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+            "_incorrect": {
+                "notFinal": "That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+                "final": "Final feedback! That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            },
+            "_partlyCorrect": {
+                "notFinal": "Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+                "final": "Final feedback! Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+            }
+        },
+        "_buttons":{
+            "submit":"",
+            "reset":"",
+            "showCorrectAnswer":"",
+            "hideCorrectAnswer":""
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
+    {
+        "_id":"c-217",
+        "_parentId":"b-24",
+        "_classes": "",
+        "_layout": "right",
+        "_type":"component",
+        "_component": "matching",
+        "_attempts": 1,
+        "_random": true,
+        "_questionWeight":10,
+        "title": "Order of a page",
+        "displayTitle": "Order of a page - bank 2",
+        "body": "Put in order, the elements as they are viewed in a standard Adapt page",
+        "instruction":"Select an options from the drop down list",
+        "_buttons": {
+            "submit": "",
+            "reset": "",
+            "showCorrectAnswer": "",
+            "hideCorrectAnswer": ""
+        },
+        "_feedback": {
+            "correct": "That's correct. Think A, B, C when creating Adapt courses.",
+            "_incorrect": {
+                "notFinal": "NOT FINAL This feedback will appear if you answered the question incorrectly.",
+                "final": "FINAL This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "NON-FINAL! This feedback will appear if you answered part of the question correctly.",
+                "final": "FINAL! This feedback will appear if you answered part of the question correctly."
+            }
+        },
+        "placeholder": "select an option",
+        "_items": [
+            {
+                "text": "First element",
+                "_options": [
+                    {
+                        "text": "Component",
+                        "_isCorrect": false
+                    },
+                    {
+                        "text": "Article",
+                        "_isCorrect": true
+                    },
+                    {
+                        "text": "Block",
+                        "_isCorrect": false
+                    }
+                ]
+            },
+            {
+                "text": "Second element",
+                "_options": [
+                    {
+                        "text": "Component",
+                        "_isCorrect": false
+                    },
+                    {
+                        "text": "Article",
+                        "_isCorrect": false
+                    },
+                    {
+                        "text": "Block",
+                        "_isCorrect": true
+                    }
+                ]
+            },
+            {
+                "text": "Third element",
+                "_options": [
+                    {
+                        "text": "Component",
+                        "_isCorrect": true
+                    },
+                    {
+                        "text": "Article",
+                        "_isCorrect": false
+                    },
+                    {
+                        "text": "Block",
+                        "_isCorrect": false
+                    }
+                ]
+            }
+        ],
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
    {
         "_id":"c-220",
-        "_parentId":"b-23",
+        "_parentId":"b-27",
         "_type":"component",
         "_component":"mcq",
         "_classes":"",
@@ -536,7 +795,7 @@
     },
     {
         "_id":"c-225",
-        "_parentId":"b-23",
+        "_parentId":"b-27",
         "_type":"component",
         "_component":"textinput",
         "_classes":"",

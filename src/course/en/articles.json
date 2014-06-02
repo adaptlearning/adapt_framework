@@ -28,9 +28,9 @@
         "_canShowFeedback": false,
         "_isEnabledOnRevisit": true,
         "_trickle": { 
-            "_isEnabled": true,
+            "_isEnabled": false,
             "_isEnabledOnRevisit": true,
-            "button": "Continue to next question?"
+            "button": "Continue"
         },
         "_assessment": {
             "_startBlockCount": 0,
@@ -40,8 +40,8 @@
                 "_split": "1,1,1"
             },
             "_randomisation": {
-                "_isEnabled": true,
-                "_blockCount": 2
+                "_isEnabled": false,
+                "_blockCount": 6
             },
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
