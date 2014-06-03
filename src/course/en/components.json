@@ -195,6 +195,10 @@
         "displayTitle": "What’s coming next?",
         "body": "Find out what’s on the roadmap for 2014 for Adapt Learning.",
         "instruction":"",
+        "_buttons": {
+            "next": "Next",
+            "previous": "Back"
+        },
         "_items": [
             {
                 "title": "Improvements",
@@ -716,6 +720,10 @@
         "displayTitle": "Narrative",
         "body": "This is optional body text.",
         "instruction":"Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
+         "_buttons": {
+            "next": "Next",
+            "previous": "Back"
+        },
         "_items": [
             {
                 "title": "Tell a story",
