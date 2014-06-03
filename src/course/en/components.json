@@ -29,7 +29,9 @@
         "_media": {
             "mp4": "course/en/video/big_buck_bunny.mp4",
             "ogv": "course/en/video/big_buck_bunny.ogv",
-            "poster": "course/en/video/big_buck_bunny-small.jpg"
+            "poster": "course/en/video/big_buck_bunny-small.jpg",
+            "transcriptLink": "assets/transcript.pdf",
+            "transcriptText": "Transcript"
         },
         "_pageLevelProgress": {
             "_isEnabled": false
