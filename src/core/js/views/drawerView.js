@@ -34,7 +34,7 @@ define(function(require) {
 
 		render: function() {
 			var template = Handlebars.templates['drawer']
-            $(this.el).html(template).appendTo('body');
+            $(this.el).html(template(Adapt.config.get('_altText'))).appendTo('body');
             return this;
 		},
 
