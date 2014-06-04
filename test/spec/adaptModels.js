@@ -160,6 +160,8 @@ define(function (require) {
         }
     ], {model: ComponentModel, reset:true});
 
+    Adapt.trigger('app:dataReady');
+
     describe('AdaptModel', function () {
 
         it("should allow me to get my children if I'm a contentObject", function () {
