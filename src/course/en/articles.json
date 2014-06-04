@@ -26,7 +26,7 @@
         "displayTitle":"A quick assessment with randomised question banks", 
         "body":"Article Assessment plugin - an assessment based upon one article. Have a go at the questions below. Once complete, your results will appear at the end.",
         "_canShowFeedback": false,
-        "_isEnabledOnRevisit": true,
+        "_isEnabledOnRevisit": false,
         "_trickle": { 
             "_isEnabled": false,
             "_isEnabledOnRevisit": true,
@@ -36,12 +36,12 @@
             "_startBlockCount": 0,
             "_endBlockCount": 1,
             "_banks":{
-                "_isEnabled": false,
-                "_split": "1,1,1"
+                "_isEnabled": true,
+                "_split": "1,2,1"
             },
             "_randomisation": {
-                "_isEnabled": false,
-                "_blockCount": 6
+                "_isEnabled": true,
+                "_blockCount": 4
             },
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
@@ -52,19 +52,23 @@
             "_bands": [
                 {
                     "_score": 0,
-                    "feedback": "You're score was below 25%. Why not have another try?"
+                    "feedback": "Your score was below 25%. Why not have another try? Below is a list of areas you might want to study first.",
+                    "_showAssociatedLearning": true
                 },
                 {
                     "_score": 25,
-                    "feedback": "You're score was below 50%. Why not have another try?"
+                    "feedback": "Your score was below 50%. Why not have another try? Below is a list of areas you might want to study first.",
+                    "_showAssociatedLearning": true
                 },
                 {
                     "_score": 50,
-                    "feedback": "Good effort, but you're score was under 75%. Let's try again?"
+                    "feedback": "Good effort, but you're score was under 75%. Let's try again? Below is a list of areas you might want to study first.",
+                    "_showAssociatedLearning": true
                 },
                 {
                     "_score": 75,
-                    "feedback": "Great work. You passed the assessment article quiz."
+                    "feedback": "Great work. You passed the assessment article quiz.",
+                    "_showAssociatedLearning": false
                 }
             ]
         }

@@ -235,7 +235,7 @@
         "_type":"component",
         "_component":"gmcq",
         "_classes":"",
-        "_layout":"right",
+        "_layout":"left",
         "_attempts":1,
         "_questionWeight":10,
         "_isRandom":false,
@@ -287,7 +287,8 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["a-05"]
     },
     {
         "_id":"c-196",
@@ -347,7 +348,8 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["b-15"]
     },
     {
         "_id":"c-200",
@@ -397,7 +399,8 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["b-20"]
     },
     {
         "_id":"c-205",
@@ -486,7 +489,8 @@
         ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["a-20"]
     },
     {
         "_id":"c-210",
@@ -542,7 +546,8 @@
         ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["a-25"]
     },
     {
         "_id":"c-215",
@@ -602,7 +607,8 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["a-30"]
     },
     {
         "_id":"c-216",
@@ -652,7 +658,8 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["co-12"]
     },
     {
         "_id":"c-217",
@@ -741,7 +748,8 @@
         ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["co-12"]
     },
    {
         "_id":"c-220",
@@ -791,7 +799,8 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["co-12"]
     },
     {
         "_id":"c-225",
@@ -847,7 +856,8 @@
         ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        }
+        },
+        "_associatedLearning": ["co-15"]
     },
     {
         "_id":"c-227",

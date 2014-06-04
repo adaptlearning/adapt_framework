@@ -139,7 +139,7 @@ define(function(require) {
         
         showMarking: function() {
             _.each(this.model.get('_items'), function(item, i) {
-                var $item = this.$('.item').eq(i);
+                var $item = this.$('.' + this.model.get('_component') + '-item').eq(i);
                 $item.addClass(item.correct ? 'correct' : 'incorrect');
             }, this);
         },
