@@ -49,7 +49,7 @@ require([
             && Adapt.course.get('_id')) {
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
-            Adapt.off('adaptCollection:dataLoaded configModel:dataLoaded');
+            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
         }
     }
 
