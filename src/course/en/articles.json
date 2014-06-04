@@ -15,7 +15,12 @@
         "_classes":"",
         "title":"Being below the fold and ahead of the curve",
         "displayTitle":"Being below the fold and ahead of the curve",
-        "body":"For years, web design and the learning design world chanted this mantra: 'no scrolling, no scrolling'. We were told to avoid the scroll bar at all costs. But things have changed. The scroll bar is back and proving to be an effective means of accessing and exploring the rich world of the web. And yet learning designers have continued to resist. We’re ready to change all that."
+        "body":"For years, web design and the learning design world chanted this mantra: 'no scrolling, no scrolling'. We were told to avoid the scroll bar at all costs. But things have changed. The scroll bar is back and proving to be an effective means of accessing and exploring the rich world of the web. And yet learning designers have continued to resist. We’re ready to change all that.",
+        "_trickle": { 
+            "_isEnabled": true,
+            "_isEnabledOnRevisit": false,
+            "button": "Continue"
+        }
     },
     {
         "_id":"a-15",
@@ -26,9 +31,9 @@
         "displayTitle":"A quick assessment with randomised question banks", 
         "body":"Article Assessment plugin - an assessment based upon one article. Have a go at the questions below. Once complete, your results will appear at the end.",
         "_canShowFeedback": false,
-        "_isEnabledOnRevisit": false,
+        "_isEnabledOnRevisit": true,
         "_trickle": { 
-            "_isEnabled": false,
+            "_isEnabled": true,
             "_isEnabledOnRevisit": true,
             "button": "Continue"
         },
@@ -36,11 +41,11 @@
             "_startBlockCount": 0,
             "_endBlockCount": 1,
             "_banks":{
-                "_isEnabled": true,
-                "_split": "1,2,1"
+                "_isEnabled": false,
+                "_split": "2,1,1"
             },
             "_randomisation": {
-                "_isEnabled": true,
+                "_isEnabled": false,
                 "_blockCount": 4
             },
             "_isPercentageBased" : true,
@@ -98,6 +103,11 @@
         "_classes":"image-3",
         "title":"An introduction to our Question Components",
         "displayTitle":"An introduction to our Question Components",
-        "body":"Below you'll see a summary of our Question Components that come bundled with Adapt's core. Each question has a question weight/score that can be used for assessment plugins. If this is not set it takes the global question weight. All questions can also have multiple attempts by setting these on the individual question."
+        "body":"Below you'll see a summary of our Question Components that come bundled with Adapt's core. Each question has a question weight/score that can be used for assessment plugins. If this is not set it takes the global question weight. All questions can also have multiple attempts by setting these on the individual question.",
+         "_trickle": { 
+            "_isEnabled": true,
+            "_isEnabledOnRevisit": false,
+            "button": "Continue"
+        }
     }
 ]

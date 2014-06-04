@@ -40,14 +40,20 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
+
+            this.listenToOnce(Adapt, 'app:dataReady', this.onCourseDataReady);            
+        },
+
+        onCourseDataReady: function() {
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
+                console.log(this.get('_id') + " siblings: " + this._siblings  + ", _parentId " + this.get('_parentId') + ", courseid " + Adapt.course.get('_id'));
             }
             if (this._siblings === 'contentObjects' && this.get('_parentId') !== Adapt.course.get('_id')) {
                 this._parent = 'contentObjects';
             }
             if (this._children) {
-                this.listenToOnce(Adapt, 'app:dataReady', this.setupChildListeners);
+                this.setupChildListeners();
             }
 
             this.init();

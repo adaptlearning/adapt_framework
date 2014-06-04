@@ -46,7 +46,7 @@ require([
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
-            && Adapt.course.hasChanged()) {
+            && Adapt.course.has('_id')) {
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded configModel:dataLoaded');
@@ -61,6 +61,8 @@ require([
         var courseFolder = "course/" + Adapt.config.get('_defaultLanguage')+"/";
 
         Adapt.course = new CourseModel(null, {url:courseFolder + "course.json", reset:true});
+
+        console.log("Adapt.course.hasChanged(): " + Adapt.course.hasChanged());
         
         Adapt.contentObjects = new AdaptCollection(null, {
             model: ContentObjectModel,
@@ -86,10 +88,7 @@ require([
     // Events that are triggered by the main Adapt content collections and models
     Adapt.on('configModel:loadCourseData', loadCourseData);
 
-    Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
-    
-    
-    
+    Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);  
     
     
 });
