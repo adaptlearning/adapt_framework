@@ -60,12 +60,20 @@ define(function (require) {
         },
 
         checkReadyStatus: function () {
-            if (this.getChildren().findWhere({_isReady: false})) return;
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isReady:false
+            // If not - set this model to _isReady: true
+            if (availableChildren.findWhere({_isReady: false})) return;
             this.set({_isReady: true});
         },
 
         checkCompletionStatus: function () {
-            if (this.getChildren().findWhere({_isComplete: false})) return;
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isComplete:false
+            // If not - set this model to _isComplete: true
+            if (availableChildren.findWhere({_isComplete: false})) return;
             this.set({_isComplete: true});
         },
 

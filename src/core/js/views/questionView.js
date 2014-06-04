@@ -139,7 +139,7 @@ define(function(require) {
         
         showMarking: function() {
             _.each(this.model.get('_items'), function(item, i) {
-                var $item = this.$('.item').eq(i);
+                var $item = this.$('.component-item').eq(i);
                 $item.addClass(item.correct ? 'correct' : 'incorrect');
             }, this);
         },
@@ -181,15 +181,27 @@ define(function(require) {
         onQuestionIncorrect: function() {
             if (this.isPartlyCorrect()) {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
-                    this.model.set("feedbackMessage", this.model.get('_feedback')._partlyCorrect.final);
+                    this.model.set({
+                        "feedbackTitle": this.model.get('title'),
+                        "feedbackMessage": this.model.get('_feedback')._partlyCorrect.final
+                    });
                 } else {
-                    this.model.set("feedbackMessage", this.model.get('_feedback')._partlyCorrect.notFinal); 
+                    this.model.set({
+                        "feedbackTitle": this.model.get('title'),
+                        "feedbackMessage": this.model.get('_feedback')._partlyCorrect.notFinal
+                    });
                 }
             } else {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._incorrect.notFinal) {
-                    this.model.set("feedbackMessage", this.model.get('_feedback')._incorrect.final);
+                    this.model.set({
+                        "feedbackTitle": this.model.get('title'),
+                        "feedbackMessage": this.model.get('_feedback')._incorrect.final
+                    });
                 } else {
-                    this.model.set("feedbackMessage", this.model.get('_feedback')._incorrect.notFinal); 
+                    this.model.set({
+                        "feedbackTitle": this.model.get('title'),
+                        "feedbackMessage": this.model.get('_feedback')._incorrect.notFinal
+                    });
                 }
             }
 
