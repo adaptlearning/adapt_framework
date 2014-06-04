@@ -40,6 +40,12 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
+            // Wait until data is ready before setting up model
+            Adapt.once('app:dataReady', this.setupModel, this);
+
+        },
+
+        setupModel: function() {
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
             }
@@ -52,11 +58,6 @@ define(function (require) {
                     "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
-            this.init();
-        },
-
-        init: function() {
-
         },
 
         checkReadyStatus: function () {

@@ -46,10 +46,10 @@ require([
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
-            && Adapt.course.hasChanged()) {
+            && Adapt.course.get('_id')) {
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
-            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded configModel:dataLoaded');
+            Adapt.off('adaptCollection:dataLoaded configModel:dataLoaded');
         }
     }
 
@@ -84,12 +84,8 @@ require([
     }
 
     // Events that are triggered by the main Adapt content collections and models
-    Adapt.on('configModel:loadCourseData', loadCourseData);
+    Adapt.once('configModel:loadCourseData', loadCourseData);
 
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
-    
-    
-    
-    
     
 });
