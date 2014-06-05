@@ -74,8 +74,6 @@ define(function(require) {
         },
         
         removeViews: function() {
-            console.log('focus');
-            $('.navigation-back-button').focus();
             Adapt.trigger('remove');
         },
         

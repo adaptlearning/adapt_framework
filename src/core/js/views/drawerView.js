@@ -35,7 +35,14 @@ define(function(require) {
 		render: function() {
 			var template = Handlebars.templates['drawer']
             $(this.el).html(template(Adapt.config.get('_altText'))).appendTo('body');
+            _.defer(_.bind(function() {
+				this.postRender();
+			}, this));
             return this;
+		},
+
+		postRender: function() {
+			this.$('a, button, input, select, textarea').attr('tabindex', -1);
 		},
 
 		openCustomView: function(view, hasBackButton) {
@@ -142,8 +149,8 @@ define(function(require) {
 			$('.page, .menu').css({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
+			this.$('a, button, input, select, textarea').attr('tabindex', -1);
 			Adapt.trigger('drawer:closed');
-			$('.navigation-drawer-toggle-button').focus()
 		},
 
 		addBodyEvent: function() {
