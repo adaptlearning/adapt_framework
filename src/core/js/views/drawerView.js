@@ -80,17 +80,26 @@ define(function(require) {
 		showDrawer: function(emptyDrawer) {
 			Adapt.trigger('popup:opened');
 			var drawerWidth = this.$el.width();
+			// Sets tab index to 0 for all tabbable elements in Drawer
+			this.$('a, button, input, select, textarea').attr('tabindex', 0);
+
 			if (emptyDrawer) {
 				this.$('.drawer-back').addClass('display-none');
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
 				Adapt.trigger('drawer:openedItemView');
+				// If list items change focus to close button
+				this.$('.drawer-close').focus();
 			} else {
 				if (this._hasBackButton) {
 					this.$('.drawer-back').removeClass('display-none');
+					// Change focus to back button
+					$('.drawer-back').focus();
 				} else {
 					this.$('.drawer-back').addClass('display-none');
+					// Change focus to close button
+					this.$('.drawer-close').focus();
 				}
 				Adapt.trigger('drawer:openedCustomView');
 			}
@@ -134,6 +143,7 @@ define(function(require) {
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();
 			Adapt.trigger('drawer:closed');
+			$('.navigation-drawer-toggle-button').focus()
 		},
 
 		addBodyEvent: function() {
