@@ -40,6 +40,12 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
+            // Wait until data is ready before setting up model
+            Adapt.once('app:dataReady', this.setupModel, this);
+
+        },
+
+        setupModel: function() {
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
             }
@@ -52,20 +58,23 @@ define(function (require) {
                     "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
-            this.init();
-        },
-
-        init: function() {
-
         },
 
         checkReadyStatus: function () {
-            if (this.getChildren().findWhere({_isReady: false})) return;
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isReady:false
+            // If not - set this model to _isReady: true
+            if (availableChildren.findWhere({_isReady: false})) return;
             this.set({_isReady: true});
         },
 
         checkCompletionStatus: function () {
-            if (this.getChildren().findWhere({_isComplete: false})) return;
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isComplete:false
+            // If not - set this model to _isComplete: true
+            if (availableChildren.findWhere({_isComplete: false})) return;
             this.set({_isComplete: true});
         },
 
