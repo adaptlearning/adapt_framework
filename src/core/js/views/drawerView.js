@@ -105,7 +105,7 @@ define(function(require) {
 				if (this._hasBackButton) {
 					this.$('.drawer-back').removeClass('display-none');
 					// Change focus to back button
-					$('.drawer-back').focus();
+					this.$('.drawer-back').focus();
 				} else {
 					this.$('.drawer-back').addClass('display-none');
 					// Change focus to close button

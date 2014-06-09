@@ -1,5 +1,5 @@
 /*
-* Device
+* popupManager
 * License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Kirsty Hames, Daryl Hedley
 */
