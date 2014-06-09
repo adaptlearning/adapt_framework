@@ -21,7 +21,12 @@ define(function(require) {
         $(window).scrollTop(scrollTop);
         $(tabIndexElements).attr('tabindex', 0);
         if ($activeElement) {
-        	$activeElement.focus();
+            if($activeElement.is(':visible')) {
+                $activeElement.focus();
+            } else {
+                $activeElement.next().focus();
+            }
+        	
     	}
     });
 
