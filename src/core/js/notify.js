@@ -55,7 +55,7 @@ define(function(require) {
 
 	});
 
-	NotifyPushes = new NotifyPushCollection();
+	var NotifyPushes = new NotifyPushCollection();
 
 	Adapt.on('notify:alert', function(notifyObject) {
 		addNotifyView('alert', notifyObject);
