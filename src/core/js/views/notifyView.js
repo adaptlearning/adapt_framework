@@ -83,6 +83,14 @@ define(function(require) {
 			this.resizeNotify();
 			this.$('.notify-popup').show();
 			this.$('.notify-shadow').fadeIn('fast');
+			if(this.model.get('_type') === "popup") {
+				$('.notify-popup-done').focus();
+				
+			} else {
+				$('.notify-popup-buttons a').first().focus();
+			}
+			
+			
 		},
 
 		closeNotify: function (event) {
