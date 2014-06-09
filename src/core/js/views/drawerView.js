@@ -11,7 +11,7 @@ define(function(require) {
 
 	var DrawerView = Backbone.View.extend({
 
-		className: 'drawer',
+		className: 'drawer display-none',
 
 		initialize: function() {
 			this._isVisible = false;
@@ -35,7 +35,16 @@ define(function(require) {
 		render: function() {
 			var template = Handlebars.templates['drawer']
             $(this.el).html(template(Adapt.config.get('_altText'))).appendTo('body');
+            // Set defer on post render
+            _.defer(_.bind(function() {
+				this.postRender();
+			}, this));
             return this;
+		},
+
+		// Set tabindex for select elements
+		postRender: function() {
+			this.$('a, button, input, select, textarea').attr('tabindex', -1);
 		},
 
 		openCustomView: function(view, hasBackButton) {
@@ -78,19 +87,29 @@ define(function(require) {
 		},
 
 		showDrawer: function(emptyDrawer) {
+			this.$el.removeClass('display-none');
 			Adapt.trigger('popup:opened');
 			var drawerWidth = this.$el.width();
+			// Sets tab index to 0 for all tabbable elements in Drawer
+			this.$('a, button, input, select, textarea').attr('tabindex', 0);
+
 			if (emptyDrawer) {
 				this.$('.drawer-back').addClass('display-none');
 				this._isCustomViewVisible = false;
 				this.emptyDrawer();
 				this.renderItems();
 				Adapt.trigger('drawer:openedItemView');
+				// If list items change focus to close button
+				this.$('.drawer-close').focus();
 			} else {
 				if (this._hasBackButton) {
 					this.$('.drawer-back').removeClass('display-none');
+					// Change focus to back button
+					this.$('.drawer-back').focus();
 				} else {
 					this.$('.drawer-back').addClass('display-none');
+					// Change focus to close button
+					this.$('.drawer-close').focus();
 				}
 				Adapt.trigger('drawer:openedCustomView');
 			}
@@ -129,7 +148,9 @@ define(function(require) {
 			var duration = Adapt.config.get('_drawer')._duration;
 			duration = (duration) ? duration : 400;
 
-			this.$el.velocity({'right': -this.$el.width()}, this.drawerDuration, easing);
+			this.$el.velocity({'right': -this.$el.width()}, this.drawerDuration, easing, _.bind(function() {
+				this.$el.addClass('display-none');
+			}, this));
 			$('.page, .menu').css({opacity:1});
 			this._isCustomViewVisible = false;
 			this.removeBodyEvent();

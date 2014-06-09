@@ -20,6 +20,17 @@
     display:none!important;
 }
 
+.accessibility {
+    & .no-touch {
+        .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
+            outline: 1px dotted #454545;
+            & when (@focus-outline) {
+                outline: @focus-outline;
+            }
+        }
+    }
+}
+
 #wrapper {
     .responsive-layout;
     padding-top:40px;

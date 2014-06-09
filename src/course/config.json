@@ -1,6 +1,10 @@
 {
     "_defaultLanguage": "en",
     "_questionWeight": 1,
+    "_accessibility": {
+        "_isEnabled": true,
+        "_shouldSupportLegacyBrowsers": true
+    },
     "_drawer": {
         "_showEasing": "easeOutQuart",
         "_hideEasing": "easeInQuart",
