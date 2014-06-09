@@ -35,7 +35,7 @@ define(function(require) {
             // If legacy enabled run setupListeners()
             if($('html').addClass('accessibility').hasClass('ie8') && Adapt.config.get('accessibility')._shouldSupportLegacyBrowsers) {
                 setupListeners();
-                console.log('accessibility');
+                
             }
         }
 
