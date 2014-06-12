@@ -160,6 +160,7 @@ define(function (require) {
         }
     ], {model: ComponentModel, reset:true});
 
+    Adapt.trigger('app:dataLoaded');
     Adapt.trigger('app:dataReady');
 
     describe('AdaptModel', function () {
