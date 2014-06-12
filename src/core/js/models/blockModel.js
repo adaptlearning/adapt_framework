@@ -13,7 +13,7 @@ define(function(require) {
         
         setupChildListeners: function () {
             AdaptModel.prototype.setupChildListeners.apply(this, arguments);
-
+            
             this.getChildren().each(function(child) {
             	this.listenTo(child, 'change:_isInteractionsComplete', this.checkInteractionStatus);
             }, this);

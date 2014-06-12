@@ -62,8 +62,6 @@ require([
 
         Adapt.course = new CourseModel(null, {url:courseFolder + "course.json", reset:true});
 
-        console.log("Adapt.course.hasChanged(): " + Adapt.course.hasChanged());
-        
         Adapt.contentObjects = new AdaptCollection(null, {
             model: ContentObjectModel,
             url: courseFolder +"contentObjects.json"

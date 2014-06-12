@@ -40,14 +40,14 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
+            // Wait until data is ready before setting up model
+            Adapt.once('app:dataReady', this.setupModel, this);
 
-            this.listenToOnce(Adapt, 'app:dataReady', this.onCourseDataReady);            
         },
 
-        onCourseDataReady: function() {
+        setupModel: function() {
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
-                console.log(this.get('_id') + " siblings: " + this._siblings  + ", _parentId " + this.get('_parentId') + ", courseid " + Adapt.course.get('_id'));
             }
             if (this._siblings === 'contentObjects' && this.get('_parentId') !== Adapt.course.get('_id')) {
                 this._parent = 'contentObjects';
@@ -55,15 +55,9 @@ define(function (require) {
             if (this._children) {
                 this.setupChildListeners();
             }
-
-            this.init();
         },
 
-        init: function() {
-
-        },
-
-        setupChildListeners: function () {
+        setupChildListeners: function() {
             this.getChildren().each(function(child) {
                 this.listenTo(child, 'change:_isReady', this.checkReadyStatus);
                 this.listenTo(child, 'change:_isComplete', this.checkCompletionStatus);
@@ -71,12 +65,20 @@ define(function (require) {
         },
 
         checkReadyStatus: function () {
-            if (this.getChildren().findWhere({_isReady: false})) return;
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isReady:false
+            // If not - set this model to _isReady: true
+            if (availableChildren.findWhere({_isReady: false})) return;
             this.set({_isReady: true});
         },
 
         checkCompletionStatus: function () {
-            if (this.getChildren().findWhere({_isComplete: false})) return;
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isComplete:false
+            // If not - set this model to _isComplete: true
+            if (availableChildren.findWhere({_isComplete: false})) return;
             this.set({_isComplete: true});
         },
 
