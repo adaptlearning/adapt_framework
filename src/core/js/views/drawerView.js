@@ -34,7 +34,7 @@ define(function(require) {
 
 		render: function() {
 			var template = Handlebars.templates['drawer']
-            $(this.el).html(template(Adapt.config.get('_altText'))).appendTo('body');
+            $(this.el).html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('body');
             // Set defer on post render
             _.defer(_.bind(function() {
 				this.postRender();

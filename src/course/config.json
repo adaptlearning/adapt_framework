@@ -10,10 +10,6 @@
         "_hideEasing": "easeInQuart",
         "_duration": 400
     },
-    "_altText": {
-        "back": "Back",
-        "close": "Close"
-    },
     "_spoor": {
         "_tracking": {
             "_requireCourseCompleted": true,

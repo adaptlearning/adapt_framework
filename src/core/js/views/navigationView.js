@@ -17,18 +17,22 @@ define(function(require) {
         initialize: function() {
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
-            Adapt.trigger('navigationView:preRender', this);
-            this.render();
-            Adapt.trigger('navigationView:postRender', this);
+            this.listenTo(Adapt, 'app:dataReady', this.setup);
         },
         
         events: {
             'click a':'triggerEvent'
         },
+
+        setup: function() {
+            Adapt.trigger('navigationView:preRender', this);
+            this.render();
+            Adapt.trigger('navigationView:postRender', this);
+        },
         
         render: function() {
             var template = Handlebars.templates[this.template]
-            this.$el.html(template).appendTo('#wrapper');
+            this.$el.html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('#wrapper');
             return this;
         },
         
