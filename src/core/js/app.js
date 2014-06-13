@@ -48,6 +48,7 @@ require([
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
+            Adapt.trigger('app:dataLoaded');
             Adapt.trigger('app:dataReady');
             Adapt.initialize();
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');

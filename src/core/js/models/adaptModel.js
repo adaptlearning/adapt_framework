@@ -40,8 +40,8 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
-            // Wait until data is ready before setting up model
-            Adapt.once('app:dataReady', this.setupModel, this);
+            // Wait until data is loaded before setting up model
+            Adapt.once('app:dataLoaded', this.setupModel, this);
 
         },
 
