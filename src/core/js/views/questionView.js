@@ -170,6 +170,7 @@ define(function(require) {
         onModelAnswerClicked: function(event) {
             if(event) event.preventDefault();
             this.showModelAnswer();
+            $('.button.user').focus();
         },
         
         onQuestionCorrect: function() {
@@ -215,6 +216,7 @@ define(function(require) {
             this.resetQuestion({resetAttempts:false, resetCorrect:true});
             this.$(".component-widget").removeClass("submitted");
             this.resetItems();
+            $('.button.submit').focus();
         },
     
         onSubmitClicked: function(event) {
@@ -248,6 +250,7 @@ define(function(require) {
         onUserAnswerClicked: function(event) {
             if(event) event.preventDefault();
             this.showUserAnswer();
+            $('.button.model').focus();
         },
 
         onEnabledChanged: function () {},

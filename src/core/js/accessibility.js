@@ -30,10 +30,10 @@ define(function(require) {
     Adapt.on('configModel:dataLoaded', function() {
 
         // Check if accessibility is enabled
-        if (Adapt.config.get('accessibility') && Adapt.config.get('accessibility')._isEnabled) {
+        if (Adapt.config.get('_accessibility') && Adapt.config.get('_accessibility')._isEnabled) {
             // If enabled add accessibility class
             // If legacy enabled run setupListeners()
-            if($('html').addClass('accessibility').hasClass('ie8') && Adapt.config.get('accessibility')._shouldSupportLegacyBrowsers) {
+            if($('html').addClass('accessibility').hasClass('ie8') && Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) {
                 setupListeners();
                 
             }
