@@ -11,7 +11,9 @@
         "hideCorrectAnswer": "My Answer"
     },
     "_accessibility": {
-        "_ariaLabels": {
+        "_accessibilityToggleTextOn": "Turn accessibility on?",
+        "_accessibilityToggleTextOff": "Turn accessibility off?",
+        "_ariaLabels": {        
             "previous": "Back",
             "navigationBack": "Navigate back",
             "close": "Close",
@@ -19,7 +21,8 @@
             "next": "Next",
             "done": "Done",
             "menu": "Here is a menu with menu items to choose from. Each item will give you a brief description and the option to view.",
-            "page": ""
+            "page": "",
+            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off"
         },
         "_ariaRegions": {
             "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels.",

@@ -7,39 +7,64 @@
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
+    var AccessibilityView = require('coreViews/accessibilityView');
 
-    function setupLegacyFocus() {
-        var tabIndexElements = 'a, button, input, select, textarea';
-        $(tabIndexElements).attr('tabindex', 0);
-        $('button, select, textarea, a, input, label').on('focus', function() {
-            $(this).addClass('focused');
-        });
+    var Accessibility = _.extend({
 
-        $('button, select, textarea, a, input, label').on('blur', function() {
-            $(this).removeClass('focused');
-        });
-        $('object').attr('tabindex', -1);
-    };
+        setupLegacyFocus: function() {
+            var tabIndexElements = 'a, button, input, select, textarea, label';
+            // Set tabindex of 0 on tabIndexElements, on focus add class of focused, on blur remove class 
+            $(tabIndexElements)
+                .attr('tabindex', 0)
+                .on('focus', function() {
+                    $(this).addClass('focused');
+                })
+                .on('blur', function() {
+                    $(this).removeClass('focused');
+                });
+            // Set object tab index to -1
+            $('object').attr('tabindex', -1);
+        },
 
-    function setupListeners() {
-        Adapt.on('pageView:ready menuView:ready', function() {
-            setupLegacyFocus();
-        });
-    }
+        removeLegacyFocus: function() {
 
-    Adapt.on('configModel:dataLoaded', function() {
+            var tabIndexElements = 'a, button, input, select, textarea, label';
+            $(tabIndexElements).off('focus').off('blur');
 
-        // Check if accessibility is enabled
-        if (Adapt.config.get('_accessibility') && Adapt.config.get('_accessibility')._isEnabled) {
-            // If enabled add accessibility class
-            // If legacy enabled run setupListeners()
-            if($('html').addClass('accessibility').hasClass('ie8') && Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) {
-                setupListeners();
-                
+        },
+
+        setupListeners: function() {
+            // Listen for pageView / menuView ready, set legacyFocus
+            this.listenTo(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocus);
+
+        },
+
+        setupAccessibility: function() {
+            // Check if accessibility is enabled
+            if (Adapt.config.get('_accessibility') && Adapt.config.get('_accessibility')._isEnabled) {
+                // If enabled add accessibility class
+                // If legacy enabled run setupListeners()
+                if($('html').addClass('accessibility').hasClass('ie8') && Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) {
+                    this.setupLegacyFocus();
+                    this.setupListeners();
+                }
+            } else {
+                $('html').removeClass('accessibility');
+                this.removeLegacyFocus();
+                // Stop listeningTo
+                this.stopListening(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocus);
             }
         }
 
+    }, Backbone.Events);
 
-    });  
+
+    Adapt.on('accessibility:toggle', Accessibility.setupAccessibility, Accessibility);
+
+    Adapt.once('configModel:dataLoaded', Accessibility.setupAccessibility, Accessibility);
+
+    Adapt.once('app:dataReady', function() {
+         new AccessibilityView();
+    });
 
 });
