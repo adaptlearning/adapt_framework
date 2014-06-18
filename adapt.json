@@ -14,6 +14,7 @@
         "adapt-contrib-gmcq": "*",
         "adapt-contrib-boxMenu": "*",
         "adapt-contrib-spoor": "*",
-        "adapt-contrib-slider": "*"
+        "adapt-contrib-slider": "*",
+        "adapt-contrib-background-switcher": "*"
     }
 }

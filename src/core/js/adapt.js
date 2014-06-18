@@ -68,7 +68,23 @@ define(function(require){
         });
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true});
+    }
 
+    Adapt.findByID = function (id) {
+        var collections = id.split('_');
+        var collectionID = collections[collections.length - 1];
+        var collectionType = collectionID.replace(/[0-9]+$/, '');
+
+        switch(collectionType) {
+            case "co-":
+                return Adapt.contentObjects.findWhere({_id: collectionID});
+            case "a-":
+                return Adapt.articles.findWhere({_id: collectionID});
+            case "b-":
+                return Adapt.blocks.findWhere({_id: collectionID});
+            case "c-":
+                return Adapt.components.findWhere({_id: collectionID});
+        }
     }
     
     Adapt.register = function(name, object) {
