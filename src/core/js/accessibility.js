@@ -12,7 +12,7 @@ define(function(require) {
     var Accessibility = _.extend({
 
         setupLegacyFocus: function() {
-            var tabIndexElements = 'a, button, input, select, textarea, label';
+            var tabIndexElements = 'a, button, input, select, textarea';
             // Set tabindex of 0 on tabIndexElements, on focus add class of focused, on blur remove class 
             $(tabIndexElements)
                 .attr('tabindex', 0)
@@ -28,7 +28,7 @@ define(function(require) {
 
         removeLegacyFocus: function() {
 
-            var tabIndexElements = 'a, button, input, select, textarea, label';
+            var tabIndexElements = 'a, button, input, select, textarea';
             $(tabIndexElements).off('focus').off('blur');
 
         },
