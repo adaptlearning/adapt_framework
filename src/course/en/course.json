@@ -17,12 +17,14 @@
             "previous": "Back",
             "navigationBack": "Navigate back",
             "close": "Close",
+            "closeDrawer": "Close Drawer",
             "naivgationDrawer": "Open Drawer",
             "next": "Next",
             "done": "Done",
-            "menu": "Here is a menu with menu items to choose from. Each item will give you a brief description and the option to view.",
+            "menu": "Here is a menu with items to choose from. Each item will give you a brief description and the option to view.",
             "page": "",
-            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off"
+            "drawer": "Here is drawer, a slide out panel which holds additional course resources.",
+            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off."
         },
         "_ariaRegions": {
             "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels.",
