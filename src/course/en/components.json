@@ -58,7 +58,7 @@
                 "body": "With the advent of modern browsers, frameworks, developments in HTML 5 and responsive design approaches we're now able to create engaging learning that will work, regardless of the device being used.<br><br>In addition, Libraries such as Backbone, Underscore and Handlebars have rapidly sped up development and enabled the production of fast single page applications (SPAs) that improve the user experience.",
                 "_graphic": {
                     "src": "course/en/images/html5.png",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Introduction",
                 "_top": 58,
@@ -69,7 +69,7 @@
                 "body": "Responsive elearning Design takes its inspiration from Responsive Web Design; an approach to design that ensures a single version of a website (or an elearning course created as a web app) can provide a viewing experience optimised to complement a variety of different devices, from desktop monitor to smartphone.This tailored viewing experience is achieved by:<ul><li>providing dynamic layouts which allow for the resizing of onscreen elements to make the most of the space available (fluid grid concept)</li><li>automatically detecting the characteristics of the device being used and applying an appropriate style to all onscreen elements (Media queries and CSS)</li><li>ensuring all images can be scaled to complement the device being used at the time</li></ul>",
                 "_graphic": {
                     "src": "course/en/images/devices.png",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "What is responsive elearning?",
                 "_top": 60,
@@ -761,7 +761,7 @@
                 "body": "Single components are interactions that enable two components in a block. These take up half of a blocks width.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-two.jpg",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Single components",
                 "_top": 5,
@@ -772,7 +772,7 @@
                 "body": "Spanned components are interactions that take up a full block and do not allow another component to sit next to it.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-three.jpg",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Spanned components",
                 "_top": 25,
@@ -783,7 +783,7 @@
                 "body": "Some components are both single and spanned. This means they can sit with another component or fill a whole block. Some exmaples are: Graphic, Text and Media",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-one.jpg",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Single and Spanned components",
                 "_top": 85,
