@@ -58,7 +58,7 @@
                 "body": "With the advent of modern browsers, frameworks, developments in HTML 5 and responsive design approaches we're now able to create engaging learning that will work, regardless of the device being used.<br><br>In addition, Libraries such as Backbone, Underscore and Handlebars have rapidly sped up development and enabled the production of fast single page applications (SPAs) that improve the user experience.",
                 "_graphic": {
                     "src": "course/en/images/html5.png",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Introduction",
                 "_top": 58,
@@ -69,7 +69,7 @@
                 "body": "Responsive elearning Design takes its inspiration from Responsive Web Design; an approach to design that ensures a single version of a website (or an elearning course created as a web app) can provide a viewing experience optimised to complement a variety of different devices, from desktop monitor to smartphone.This tailored viewing experience is achieved by:<ul><li>providing dynamic layouts which allow for the resizing of onscreen elements to make the most of the space available (fluid grid concept)</li><li>automatically detecting the characteristics of the device being used and applying an appropriate style to all onscreen elements (Media queries and CSS)</li><li>ensuring all images can be scaled to complement the device being used at the time</li></ul>",
                 "_graphic": {
                     "src": "course/en/images/devices.png",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "What is responsive elearning?",
                 "_top": 60,
@@ -161,14 +161,14 @@
             }
         ],
         "_feedback":{
-            "correct": "That’s correct. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
+            "correct": "That’s correct. To continue close this tutor pop-up.",
             "_incorrect": {
-                "notFinal": "Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
-                "final": "Final feedback! Sorry, that’s not right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+                "notFinal": "Sorry, that’s not right. To continue close this tutor pop-up.",
+                "final": "Final feedback! Sorry, that’s not right. To continue close this tutor pop-up."
             },
             "_partlyCorrect": {
-                "notFinal": "That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up.",
-                "final": "Final feedback! That’s not quite right. Your users are almost certainly using vertical scrolling whenever they interact with the web so why reinvent the wheel? Scrolling is also a given when viewing content on a smartphone so any page which is structured with this in mind will help make the design and its navigation feel well thought through for mobile. Clustering related content within a single page should definitely reduce the need to navigate to a different page, as well as that repetitive ‘Click next to continue’ instruction as well.<br><br>Of course, we should always try to gain the learners attention early on the page, it’s just that now, when we have it, we aren’t asking them to go somewhere else. The design challenge is now to give them a reason to scroll and venture down ‘below the fold’.  To continue close this tutor pop-up."
+                "notFinal": "That’s not quite right. To continue close this tutor pop-up.",
+                "final": "Final feedback! That’s not quite right. To continue close this tutor pop-up."
             }
         },
         "_buttons": {
@@ -198,7 +198,7 @@
                 "body": "Over the next few months we’ll be working on a number of developments to improve Adapt Learning to ensure it’s the leading elearning framework for responsive content. At the heart of these developments are two key pieces of work.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": "alt text"
+                    "alt": "narrative alt text"
                 },
                 "strapline": "Improvements"
             },
@@ -207,7 +207,7 @@
                 "body": "We’re in the process of reworking the codebase to ensure a plugin friendly approach. This will help us to establish an extensive and vibrant open source community to support the framework and adhere to the principles of collaborative development.",
                 "_graphic": {
                     "src": "course/en/images/narrative_1.png",
-                    "alt": "alt text"
+                    "alt": "narrative 1 alt text"
                 },
                 "strapline": "1: Plug-in Friendly Architecture"
             },
@@ -216,7 +216,7 @@
                 "body": "We’re also creating an authoring tool to allow non-technical users to create fully featured Adapt elearning courses. The authoring tool will be simple enough for novices to use yet powerful enough to meet the needs of the elearning professional.",
                 "_graphic": {
                     "src": "course/en/images/narrative_2.png",
-                    "alt": "alt text"
+                    "alt": "narrative 2 alt text"
                 },
                 "strapline": "2: Authoring Tool"
             }
@@ -255,14 +255,14 @@
             }
         ],
         "_feedback":{
-            "correct":"That's correct. There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
+            "correct": "That’s correct. To continue close this tutor pop-up.",
             "_incorrect": {
-                "notFinal": "That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
-                "final": "Final feedback! That's not correct. All three answers are correct - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+                "notFinal": "Sorry, that’s not right. To continue close this tutor pop-up.",
+                "final": "Final feedback! Sorry, that’s not right. To continue close this tutor pop-up."
             },
             "_partlyCorrect": {
-                "notFinal": "Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests.",
-                "final": "Final feedback! Not quite correct. Actually it's all three answers - There are multiple ways of getting involved with Adapt. However signing up to the community site is the best way to see discussions, news and feature requests."
+                "notFinal": "That’s not quite right. To continue close this tutor pop-up.",
+                "final": "Final feedback! That’s not quite right. To continue close this tutor pop-up."
             }
         },
         "_buttons":{
@@ -713,7 +713,7 @@
                 "body": "Narratives should be used to tell a story or to help learners with a process that needs to be in order.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-one.jpg",
-                    "alt": "Origami birds"
+                    "alt": "Origami birds 1"
                 },
                 "strapline": "Tell a story"
             },
@@ -722,7 +722,7 @@
                 "body": "The narrative was built with touch devices in mind - so you can swipe through the images if you device is touch enabled.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-two.jpg",
-                    "alt": "Origami birds"
+                    "alt": "Origami birds 2"
                 },
                 "strapline": "Optimised for touch events"
             },
@@ -731,7 +731,7 @@
                 "body": "If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-three.jpg",
-                    "alt": "Origami birds"
+                    "alt": "Origami birds 3"
                 },
                 "strapline": "How a narrative looks on mobile"
             }
@@ -761,7 +761,7 @@
                 "body": "Single components are interactions that enable two components in a block. These take up half of a blocks width.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-two.jpg",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Single components",
                 "_top": 5,
@@ -772,7 +772,7 @@
                 "body": "Spanned components are interactions that take up a full block and do not allow another component to sit next to it.",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-three.jpg",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Spanned components",
                 "_top": 25,
@@ -783,7 +783,7 @@
                 "body": "Some components are both single and spanned. This means they can sit with another component or fill a whole block. Some exmaples are: Graphic, Text and Media",
                 "_graphic": {
                     "src": "course/en/images/origami-menu-one.jpg",
-                    "alt": "alt text"
+                    "alt": "Hot graphic pop-up pin. Select here to open."
                 },
                 "strapline": "Single and Spanned components",
                 "_top": 85,

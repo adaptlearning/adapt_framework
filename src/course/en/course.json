@@ -16,15 +16,14 @@
         "_ariaLabels": {        
             "previous": "Back",
             "navigationBack": "Navigate back",
+            "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
             "close": "Close",
-            "closeDrawer": "Close Drawer",
-            "naivgationDrawer": "Open Drawer",
+            "drawer": "Close Drawer",
+            "closePopup": "Close pop-up",
             "next": "Next",
             "done": "Done",
-            "menu": "Here is a menu with items to choose from. Each item will give you a brief description and the option to view.",
-            "page": "",
-            "drawer": "Here is drawer, a slide out panel which holds additional course resources.",
-            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off."
+            "menuItem": "Menu item. Select to view.",
+            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off"
         },
         "_ariaRegions": {
             "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels.",
@@ -36,7 +35,7 @@
             "mcq": "This component is a multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
             "media": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
             "narrative": "This component displays an image gallery with accompanying text. Select the 'next' and 'previous' navigation controls to work through the narrative.",
-            "slider": "This component requires you to answer the question by positioning a slider on a scale. When you have positioned your answer select the submit button below.",
+            "slider": "This component requires you to answer the question by positioning a slider on a scale. Use the left and right keyboard arrows to position the slider then select the submit button below.",
             "text": "",
             "textInput": "This question component requires you to type your answer in the textbox provided. When you have answered the question select the submit button below."
         }

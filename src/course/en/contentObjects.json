@@ -8,7 +8,7 @@
         "displayTitle":"Welcome to Adapt Learning",
         "body":"This page contains a working Adapt page with all core bundled components and plugins working.",
         "_graphic": {
-            "alt": "Welcome to Adapt Learning",
+            "alt": "This is a picture of Adapt's origami birds.",
             "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText":"View",
@@ -23,7 +23,7 @@
         "displayTitle":"Want to know more about our components",
         "body":"Adapt's power comes from being able to switch out and mix 'n' match components. Some span the whole page, whilst others are single width. We've split the presentation and question components to give you a better overview of Adapt. Select an option below to read more.",
         "_graphic": {
-            "alt": "Want to know more about our components",
+            "alt": "This is a picture of Adapt's origami birds.",
             "src": "course/en/images/origami-menu-two.jpg"
         },
         "linkText":"View",
@@ -38,7 +38,7 @@
         "displayTitle":"Adapt comes with some plugins too",
         "body":"Built with a plugin architecture - Adapt enables developers to create engaging plugins that enhance Adapt's core. View this page to see an assessment mixed with vertical step locking.",
         "_graphic": {
-            "alt": "Adapt comes with some plugins too",
+            "alt": "This is a picture of Adapt's origami birds.",
             "src": "course/en/images/origami-menu-three.jpg"
         },
         "linkText":"View",
@@ -53,7 +53,7 @@
         "displayTitle":"Presentation components",
         "body":"These components are used to display content in a meaning and compelling way across multiple devices.",
         "_graphic": {
-            "alt": "Presentation components",
+            "alt": "This is a picture of Adapt's origami birds.",
             "src": "course/en/images/origami-menu-three.jpg"
         },
         "linkText":"View",
@@ -68,7 +68,7 @@
         "displayTitle":"Question components",
         "body":"These components are used to test the learners ability and understanding of a course/piece of learning.",
         "_graphic": {
-            "alt": "Question components",
+            "alt": "This is a picture of Adapt's origami birds.",
             "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText":"View",
