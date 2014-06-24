@@ -16,7 +16,7 @@
         "_ariaLabels": {        
             "previous": "Back",
             "navigationBack": "Navigate back",
-            "naivgationDrawer": "This is draw which contains additional course resources. Select here to open.",
+            "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
             "close": "Close",
             "drawer": "Close Drawer",
             "next": "Next",
