@@ -19,6 +19,7 @@
             "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
             "close": "Close",
             "drawer": "Close Drawer",
+            "closePopup": "Close pop-up",
             "next": "Next",
             "done": "Done",
             "menuItem": "Menu item. Select to view.",
