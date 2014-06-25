@@ -1,7 +1,7 @@
 /*
 * Drawer
 * License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@hotmail.com>
+* Maintainers - Daryl Hedley <darylhedley@hotmail.com>, Himanshu Rajotia <himanshu.rajotia@credipoint.com>
 */
 
 define(function(require) {
@@ -35,6 +35,8 @@ define(function(require) {
 		render: function() {
 			var template = Handlebars.templates['drawer']
             $(this.el).html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('body');
+            var shadowTemplate = Handlebars.templates['shadow'];
+            $(shadowTemplate()).appendTo('body');
             // Set defer on post render
             _.defer(_.bind(function() {
 				this.postRender();
@@ -117,11 +119,8 @@ define(function(require) {
 				var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
 				var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
 				this.$el.velocity({'right': 0}, this.drawerDuration, easing);
-				// Dim down the page or menu containers
-				// CSS is used here as on mobile/tablet devices it makes the animation jerky
-				$('.page, .menu').css({opacity:0.5});
-			
-				this.addBodyEvent();
+                $('#shadow').removeClass('display-none');
+				this.addShadowEvent();
 				Adapt.trigger('drawer:opened');
 
 			}, this));
@@ -151,20 +150,20 @@ define(function(require) {
 			this.$el.velocity({'right': -this.$el.width()}, this.drawerDuration, easing, _.bind(function() {
 				this.$el.addClass('display-none');
 			}, this));
-			$('.page, .menu').css({opacity:1});
+            $('#shadow').addClass('display-none');
 			this._isCustomViewVisible = false;
-			this.removeBodyEvent();
+			this.removeShadowEvent();
 			Adapt.trigger('drawer:closed');
 		},
 
-		addBodyEvent: function() {
-			$('.page, .menu').one('click touchstart', _.bind(function() {
+        addShadowEvent: function() {
+			$('#shadow').one('click touchstart', _.bind(function() {
 				this.onCloseDrawer();
 			}, this));
 		},
 
-		removeBodyEvent: function() {
-			$('.page, .menu').off('click touchstart');
+        removeShadowEvent: function() {
+			$('#shadow').off('click touchstart');
 		}
 
 	});
