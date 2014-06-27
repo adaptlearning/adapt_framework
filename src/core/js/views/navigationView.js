@@ -58,6 +58,6 @@ define(function(require) {
         
     });
     
-    return new NavigationView;
+    return NavigationView;
     
 });

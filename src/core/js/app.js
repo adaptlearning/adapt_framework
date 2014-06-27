@@ -50,6 +50,7 @@ require([
             && Adapt.course.get('_id')) {
             Adapt.trigger('app:dataLoaded');
             Adapt.trigger('app:dataReady');
+            new NavigationView();
             Adapt.initialize();
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
         }
