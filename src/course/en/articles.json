@@ -31,18 +31,22 @@
         "displayTitle":"A quick assessment with randomised question banks", 
         "body":"Article Assessment plugin - an assessment based upon one article. Have a go at the questions below. Once complete, your results will appear at the end.",
         "_canShowFeedback": false,
-        "_isEnabledOnRevisit": false,
         "_trickle": { 
             "_isEnabled": false,
             "_isEnabledOnRevisit": false,
             "button": "Continue"
         },
         "_assessment": {
+            "_isResetOnRevisit": true,
             "_startBlockCount": 0,
             "_endBlockCount": 1,
-            "_banks":{
-                "_isEnabled": true,
+            "_banks": {
+                "_isEnabled": false,
                 "_split": "1,2,1"
+            },
+            "_randomisation": {
+                "_isEnabled": false,
+                "_blockCount": 3
             },
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,

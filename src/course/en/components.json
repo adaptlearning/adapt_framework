@@ -294,62 +294,23 @@
         "_id":"c-196",
         "_parentId":"b-21",
         "_type":"component",
-        "_component":"gmcq",
+        "_component":"graphic",
         "_classes":"",
         "_layout":"right",
-        "_attempts":1,
-        "_questionWeight":10,
-        "_isRandom":false,
-        "_selectable":1,
-        "title": "GMCQ",
-        "displayTitle": "GMCQ - bank 1",
-        "body": "Which of the following options would you consider to be correct?",
-        "instruction":"Maybe pick option two.",
-        "_items": [
-            {
-                "text": "This is option 1.",
-                "_shouldBeSelected":false,
-                "_graphic": {
-                    "alt": "Alt text for option 1",
-                    "title": "title text",
-                    "large": "course/en/images/gqcq-1-large.gif",
-                    "medium": "course/en/images/gqcq-1-medium.gif",
-                    "small": "course/en/images/gqcq-1-small.gif"
-                }
-            },
-            {
-                "text": "This is option 2.",
-                "_shouldBeSelected":true,
-                "_graphic": {
-                    "alt": "Alt text for option 2",
-                    "title": "title text",
-                    "large": "course/en/images/gqcq-2-large.gif",
-                    "medium": "course/en/images/gqcq-2-medium.gif",
-                    "small": "course/en/images/gqcq-2-small.gif"
-                }
-            }
-        ],
-        "_feedback":{
-            "correct":"Congratulations, this is the correct feedback.",
-            "_incorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered the question incorrectly."
-            },
-            "_partlyCorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered part of the question correctly."
-            }
-        },
-        "_buttons": {
-            "submit": "",
-            "reset": "",
-            "showCorrectAnswer": "",
-            "hideCorrectAnswer": ""
+        "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
+        "_graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        },
-        "_associatedLearning": ["b-15"]
+        }
     },
     {
         "_id":"c-200",
@@ -403,94 +364,26 @@
         "_associatedLearning": ["b-20"]
     },
     {
-        "_id":"c-205",
+        "_id":"c-196",
         "_parentId":"b-22",
-        "_classes": "",
-        "_layout": "right",
         "_type":"component",
-        "_component": "matching",
-        "_attempts": 1,
-        "_random": true,
-        "_questionWeight":10,
-        "title": "Order of a page",
-        "displayTitle": "Order of a page - bank 1",
-        "body": "Put in order, the elements as they are viewed in a standard Adapt page",
-        "instruction":"Select an options from the drop down list",
-        "_buttons": {
-            "submit": "",
-            "reset": "",
-            "showCorrectAnswer": "",
-            "hideCorrectAnswer": ""
+        "_component":"graphic",
+        "_classes":"",
+        "_layout":"right",
+        "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
+        "_graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         },
-        "_feedback": {
-            "correct": "That's correct. Think A, B, C when creating Adapt courses.",
-            "_incorrect": {
-                "notFinal": "NOT FINAL This feedback will appear if you answered the question incorrectly.",
-                "final": "FINAL This feedback will appear if you answered the question incorrectly."
-            },
-            "_partlyCorrect": {
-                "notFinal": "NON-FINAL! This feedback will appear if you answered part of the question correctly.",
-                "final": "FINAL! This feedback will appear if you answered part of the question correctly."
-            }
-        },
-        "placeholder": "select an option",
-        "_items": [
-            {
-                "text": "First element",
-                "_options": [
-                    {
-                        "text": "Component",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Article",
-                        "_isCorrect": true
-                    },
-                    {
-                        "text": "Block",
-                        "_isCorrect": false
-                    }
-                ]
-            },
-            {
-                "text": "Second element",
-                "_options": [
-                    {
-                        "text": "Component",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Article",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Block",
-                        "_isCorrect": true
-                    }
-                ]
-            },
-            {
-                "text": "Third element",
-                "_options": [
-                    {
-                        "text": "Component",
-                        "_isCorrect": true
-                    },
-                    {
-                        "text": "Article",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Block",
-                        "_isCorrect": false
-                    }
-                ]
-            }
-        ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        },
-        "_associatedLearning": ["a-20"]
+        }
     },
     {
         "_id":"c-210",
@@ -550,65 +443,26 @@
         "_associatedLearning": ["a-25"]
     },
     {
-        "_id":"c-215",
+        "_id":"c-197",
         "_parentId":"b-25",
         "_type":"component",
-        "_component":"gmcq",
+        "_component":"graphic",
         "_classes":"",
         "_layout":"right",
-        "_attempts":1,
-        "_questionWeight":10,
-        "_isRandom":false,
-        "_selectable":1,
-        "title": "GMCQ",
-        "displayTitle": "GMCQ - bank 2",
-        "body": "Which of the following options would you consider to be correct?",
-        "instruction":"Maybe pick option one.",
-        "_items": [
-            {
-                "text": "This is option 1.",
-                "_shouldBeSelected":true,
-                "_graphic": {
-                    "alt": "Alt text for option 1",
-                    "title": "title text",
-                    "large": "course/en/images/gqcq-1-large.gif",
-                    "medium": "course/en/images/gqcq-1-medium.gif",
-                    "small": "course/en/images/gqcq-1-small.gif"
-                }
-            },
-            {
-                "text": "This is option 2.",
-                "_shouldBeSelected":false,
-                "_graphic": {
-                    "alt": "Alt text for option 2",
-                    "title": "title text",
-                    "large": "course/en/images/gqcq-2-large.gif",
-                    "medium": "course/en/images/gqcq-2-medium.gif",
-                    "small": "course/en/images/gqcq-2-small.gif"
-                }
-            }
-        ],
-        "_feedback":{
-            "correct":"Congratulations, this is the correct feedback.",
-            "_incorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered the question incorrectly."
-            },
-            "_partlyCorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered part of the question correctly."
-            }
-        },
-        "_buttons": {
-            "submit": "",
-            "reset": "",
-            "showCorrectAnswer": "",
-            "hideCorrectAnswer": ""
+        "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
+        "_graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
             "_isEnabled": true
-        },
-        "_associatedLearning": ["a-30"]
+        }
     },
     {
         "_id":"c-216",
@@ -664,92 +518,24 @@
     {
         "_id":"c-217",
         "_parentId":"b-24",
-        "_classes": "",
-        "_layout": "right",
         "_type":"component",
-        "_component": "matching",
-        "_attempts": 1,
-        "_random": true,
-        "_questionWeight":10,
-        "title": "Order of a page",
-        "displayTitle": "Order of a page - bank 2",
-        "body": "Put in order, the elements as they are viewed in a standard Adapt page",
-        "instruction":"Select an options from the drop down list",
-        "_buttons": {
-            "submit": "",
-            "reset": "",
-            "showCorrectAnswer": "",
-            "hideCorrectAnswer": ""
+        "_component":"graphic",
+        "_classes":"",
+        "_layout":"right",
+        "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
+        "_graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         },
-        "_feedback": {
-            "correct": "That's correct. Think A, B, C when creating Adapt courses.",
-            "_incorrect": {
-                "notFinal": "NOT FINAL This feedback will appear if you answered the question incorrectly.",
-                "final": "FINAL This feedback will appear if you answered the question incorrectly."
-            },
-            "_partlyCorrect": {
-                "notFinal": "NON-FINAL! This feedback will appear if you answered part of the question correctly.",
-                "final": "FINAL! This feedback will appear if you answered part of the question correctly."
-            }
-        },
-        "placeholder": "select an option",
-        "_items": [
-            {
-                "text": "First element",
-                "_options": [
-                    {
-                        "text": "Component",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Article",
-                        "_isCorrect": true
-                    },
-                    {
-                        "text": "Block",
-                        "_isCorrect": false
-                    }
-                ]
-            },
-            {
-                "text": "Second element",
-                "_options": [
-                    {
-                        "text": "Component",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Article",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Block",
-                        "_isCorrect": true
-                    }
-                ]
-            },
-            {
-                "text": "Third element",
-                "_options": [
-                    {
-                        "text": "Component",
-                        "_isCorrect": true
-                    },
-                    {
-                        "text": "Article",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Block",
-                        "_isCorrect": false
-                    }
-                ]
-            }
-        ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        },
-        "_associatedLearning": ["co-12"]
+        }
     },
    {
         "_id":"c-220",
@@ -806,58 +592,23 @@
         "_id":"c-225",
         "_parentId":"b-27",
         "_type":"component",
-        "_component":"textinput",
+        "_component":"graphic",
         "_classes":"",
-        "_layout":"left",
-        "title": "Randomisation banks test - bank 3",
-        "displayTitle": "Randomisation banks test - bank 3",
-        "body": "Name the two extensions being used on this page?",
-        "instruction":"Fill in your answers below.",
-        "_attempts": 1,
-        "placeholder": "Enter answer here",
-        "_allowsAnyOrder": false,
-        "_allowsAnyCase": true,
-        "_allowsPunctuation": true,
-        "_questionWeight":10,
-        "_buttons": {
-            "submit": "",
-            "reset": "",
-            "showCorrectAnswer": "",
-            "hideCorrectAnswer": ""
+        "_layout":"right",
+        "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
+        "_graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         },
-        "_feedback": {
-            "correct": "This feedback will appear if you answered the question correctly.",
-            "_incorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered the question incorrectly."
-            },
-            "_partlyCorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered part of the question correctly."
-            }
-        },
-        "_items": [
-            {
-                "prefix": "",
-                "suffix": "",
-                "_answers": [
-                    "article assessment",
-                    "trickle"
-                ]
-            },
-            {
-                "prefix": "",
-                "suffix": "",
-                "_answers": [
-                    "trickle",
-                    "article assessment"
-                ]
-            }
-        ],
         "_pageLevelProgress": {
             "_isEnabled": true
-        },
-        "_associatedLearning": ["co-15"]
+        }
     },
     {
         "_id":"c-227",
@@ -928,88 +679,21 @@
     {
         "_id":"c-125",
         "_parentId":"b-30",
-        "_classes": "",
-        "_layout": "right",
         "_type":"component",
-        "_component": "matching",
-        "_attempts": 1,
-        "_random": true,
-        "_questionWeight":10,
-        "title": "Matching",
-        "displayTitle": "Matching - bank 3",
-        "body": "Basically what you need to do is match the questions below with the drop down box option.",
-        "instruction":"Answers should in the question.",
-        "_buttons": {
-            "submit": "",
-            "reset": "",
-            "showCorrectAnswer": "",
-            "hideCorrectAnswer": ""
+        "_component":"graphic",
+        "_classes":"",
+        "_layout":"right",
+        "title":"Imagery helps to tell a story",
+        "displayTitle":"Imagery helps to tell a story",
+        "body":"For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
+        "instruction":"",
+        "_graphic": {
+            "alt": "alt text",
+            "title": "title text",
+            "large": "course/en/images/origami-menu-two.jpg",
+            "medium": "course/en/images/origami-menu-two.jpg",
+            "small": "course/en/images/origami-menu-two.jpg"
         },
-        "_feedback": {
-            "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
-            "_incorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered the question incorrectly."
-            },
-            "_partlyCorrect": {
-                "notFinal": "",
-                "final": "This feedback will appear if you answered part of the question correctly."
-            }
-        },
-        "placeholder": "select an option",
-        "_items": [
-            {
-                "text": "Pick option two",
-                "_options": [
-                    {
-                        "text": "Option one",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Option two (correct)",
-                        "_isCorrect": true
-                    },
-                    {
-                        "text": "Option three",
-                        "_isCorrect": false
-                    }
-                ]
-            },
-            {
-                "text": "Pick option three",
-                "_options": [
-                    {
-                        "text": "Option one",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Option two",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Option three (correct)",
-                        "_isCorrect": true
-                    }
-                ]
-            },
-            {
-                "text": "Pick option one",
-                "_options": [
-                    {
-                        "text": "Option one (correct)",
-                        "_isCorrect": true
-                    },
-                    {
-                        "text": "Option two",
-                        "_isCorrect": false
-                    },
-                    {
-                        "text": "Option three",
-                        "_isCorrect": false
-                    }
-                ]
-            }
-        ],
         "_pageLevelProgress": {
             "_isEnabled": true
         }
