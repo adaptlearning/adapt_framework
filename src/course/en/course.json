@@ -8,7 +8,10 @@
         "submit": "Submit",
         "reset": "Reset",
         "showCorrectAnswer": "Model Answer",
-        "hideCorrectAnswer": "My Answer"
+        "hideCorrectAnswer": "My Answer",
+        "showFeedback": "Show feedback",
+        "remainingAttempts": "attempts remaining",
+        "remainingAttempt": "final attempt"
     },
     "_accessibility": {
         "_accessibilityToggleTextOn": "Turn accessibility on?",
