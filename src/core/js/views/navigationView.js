@@ -27,12 +27,14 @@ define(function(require) {
         setup: function() {
             Adapt.trigger('navigationView:preRender', this);
             this.render();
-            Adapt.trigger('navigationView:postRender', this);
         },
         
         render: function() {
             var template = Handlebars.templates[this.template]
             this.$el.html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('#wrapper');
+            _.defer(_.bind(function() {
+                Adapt.trigger('navigationView:postRender', this);
+            }, this));
             return this;
         },
         

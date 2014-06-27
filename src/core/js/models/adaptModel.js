@@ -15,7 +15,7 @@ define(function (require) {
             _canShowFeedback: true,
             _isComplete: false,
             _isEnabled: true,
-            _isEnabledOnRevisit: true,
+            _isResetOnRevisit: false,
             _isAvailable: true,
             _isOptional: false,
             _isTrackable: true,
@@ -25,7 +25,7 @@ define(function (require) {
 
         lockedAttributes: {
             _canShowFeedback: {},
-            _isEnabledOnRevisit: {},
+            _isResetOnRevisit: {},
             _isAvailable: {}, 
             _isOptional: {}, 
             _isTrackable: {}, 
@@ -58,7 +58,10 @@ define(function (require) {
                     "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
+            this.init();
         },
+
+        init: function() {},
 
         checkReadyStatus: function () {
             // Filter children based upon whether they are available
