@@ -161,6 +161,7 @@ define(function (require) {
     ], {model: ComponentModel, reset:true});
 
     Adapt.trigger('app:dataLoaded');
+    Adapt.setupMapping();
     Adapt.trigger('app:dataReady');
 
     describe('AdaptModel', function () {
@@ -398,6 +399,26 @@ define(function (require) {
             var firstArticle = Adapt.articles.models[0];
             var siblings = firstArticle.getSiblings(true);
             expect(siblings.models[0].get("title")).to.equal("Article first title");
+
+        });
+
+    });
+
+    describe('Adapt API', function () {
+
+        it("should allow me to find the collection a model _id belongs to", function () {
+
+            var collectionName = Adapt.mapById('a-05');
+
+            expect(collectionName).to.be('articles');
+
+        });
+
+        it("should allow me to return any core model by passing in a _id", function () {
+
+            var currentModel = Adapt.findById('a-05');
+
+            expect(currentModel.get('title')).to.be('Article first title');
 
         });
 

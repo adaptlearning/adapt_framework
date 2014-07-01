@@ -17,14 +17,14 @@ define(function(require) {
         initialize: function() {
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
-            this.listenTo(Adapt, 'app:dataReady', this.setup);
+            this.preRender();
         },
         
         events: {
             'click a':'triggerEvent'
         },
 
-        setup: function() {
+        preRender: function() {
             Adapt.trigger('navigationView:preRender', this);
             this.render();
         },

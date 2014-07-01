@@ -13,6 +13,7 @@ define(function(require){
     var Adapt = {};
     Adapt.location = {};
     Adapt.componentStore = {};
+    var mappedIds = {};
 
     _.extend(Adapt, Backbone.Events);
     
@@ -42,7 +43,7 @@ define(function(require){
         
     }
 
-    Adapt.navigateToElement = function(selector, type, settings) {
+    Adapt.navigateToElement = function(selector, settings) {
         // Allows a selector to be passed in and Adapt will navigate to this element
 
         // Setup settings object
@@ -50,7 +51,7 @@ define(function(require){
 
         // Removes . symbol from the selector to find the model
         var currentModelId = selector.replace(/\./g, '');
-        var currentModel = Adapt[type].findWhere({_id: currentModelId});
+        var currentModel = Adapt[Adapt.mapById(currentModelId)].findWhere({_id: currentModelId});
         // Get current page to check whether this is the current page
         var currentPage = currentModel.findAncestor('contentObjects');
 
@@ -72,12 +73,53 @@ define(function(require){
     }
     
     Adapt.register = function(name, object) {
-        
+        // Used to register components
+        // Store the component view
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
         object.template = name;
         Adapt.componentStore[name] = object;
         
+    }
+
+    // Used to map ids to collections
+    Adapt.setupMapping = function() {
+        
+        // Setup course Id
+        mappedIds[Adapt.course.get('_id')] = "course";
+
+        // Setup each collection
+        var collections = ["contentObjects", "articles", "blocks", "components"];
+
+        _.each(collections, function(collection) {
+
+            // Go through each collection and store id
+            Adapt[collection].each(function(model) {
+
+                mappedIds[model.get('_id')] = collection;
+
+            });
+
+        });
+
+    }
+
+    Adapt.mapById = function(id) {
+        // Returns collection name that contains this models Id
+        return mappedIds[id];
+
+    }
+
+    Adapt.findById = function(id) {
+
+        // Return a model
+        // Checks if the Id passed in is the course Id
+        if (id === Adapt.course.get('_id')) {
+            return Adapt.course;
+        }
+
+        return Adapt[Adapt.mapById(id)].findWhere({_id: id});
+
     }
     
     return Adapt;
