@@ -48,11 +48,22 @@ require([
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
+
+            // Triggered to setup model connections in AdaptModel.js
             Adapt.trigger('app:dataLoaded');
+            // Sets up collection mapping
+            Adapt.setupMapping();
+            // Triggers once all the data is ready
             Adapt.trigger('app:dataReady');
+            // Setups a new navigation view
+            // This should be triggered after 'app:dataReady' as plugins might want
+            // to manipulate the navigation
             new NavigationView();
+            // Called once Adapt is ready to begin
             Adapt.initialize();
+            // Remove event listeners
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+
         }
     }
 
