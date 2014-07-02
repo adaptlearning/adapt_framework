@@ -376,7 +376,6 @@
         "body": "Name the two extensions being used on this page?",
         "instruction":"Fill in your answers below.",
         "_attempts": 1,
-        "placeholder": "Enter answer here",
         "_allowsAnyOrder": false,
         "_allowsAnyCase": true,
         "_allowsPunctuation": true,
@@ -405,7 +404,8 @@
                 "_answers": [
                     "article assessment",
                     "trickle"
-                ]
+                ],
+                "placeholder": "Enter answer here"
             },
             {
                 "prefix": "",
@@ -945,7 +945,6 @@
         "body": "Text input allows the learner to input a text field into one of the items. This component can check whether you need items to be case sensitive, allow punctuation and allow items to be inserted in any order.",
         "instruction":"Name one type of plugin Adapt supports?",
         "_attempts": 1,
-        "placeholder": "Enter answer here",
         "_allowsAnyOrder": false,
         "_allowsAnyCase": true,
         "_allowsPunctuation": false,
@@ -976,7 +975,8 @@
                     "menu",
                     "extension",
                     "component"
-                ]
+                ],
+                "placeholder": "Enter answer here"
             }
         ],
         "_pageLevelProgress": {
