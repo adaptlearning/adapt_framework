@@ -241,7 +241,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "GMCQ",
-        "displayTitle": "GMCQ - bank 1",
+        "displayTitle": "Bank 1 - Question 1",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Maybe pick option two.",
         "_items": [
@@ -286,7 +286,7 @@
             "hideCorrectAnswer": ""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         },
         "_associatedLearning": ["a-05"]
     },
@@ -309,7 +309,7 @@
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -324,7 +324,7 @@
         "_isRandom":true,
         "_selectable":3,
         "title": "Getting involved",
-        "displayTitle": "Getting involved - bank 1",
+        "displayTitle": "Bank 1 - Question 2",
         "body": "How can anyone get involved with Adapt?",
         "instruction":"Select the correct answers below.",
         "_items": [
@@ -359,7 +359,7 @@
             "hideCorrectAnswer":""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         },
         "_associatedLearning": ["b-20"]
     },
@@ -382,7 +382,7 @@
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -393,7 +393,7 @@
         "_classes":"",
         "_layout":"left",
         "title": "Extensions",
-        "displayTitle": "Extensions - bank 2",
+        "displayTitle": "Bank 2 - Question 1",
         "body": "Name the two extensions being used on this page?",
         "instruction":"Fill in your answers below.",
         "_attempts": 1,
@@ -438,7 +438,7 @@
             }
         ],
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         },
         "_associatedLearning": ["a-25"]
     },
@@ -461,7 +461,7 @@
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -476,7 +476,7 @@
         "_isRandom":true,
         "_selectable":3,
         "title": "Getting involved",
-        "displayTitle": "Getting involved - bank 2",
+        "displayTitle": "Bank 1 - Question 3",
         "body": "How can anyone get involved with Adapt?",
         "instruction":"Select the correct answers below.",
         "_items": [
@@ -511,9 +511,9 @@
             "hideCorrectAnswer":""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         },
-        "_associatedLearning": ["co-12"]
+        "_associatedLearning": ["a-20"]
     },
     {
         "_id":"c-217",
@@ -534,7 +534,7 @@
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
    {
@@ -549,7 +549,7 @@
         "_isRandom":true,
         "_selectable":3,
         "title": "Randomisation banks test - bank 3",
-        "displayTitle": "Randomisation banks test - bank 3",
+        "displayTitle": "Bank 2 - Question 2",
         "body": "How can anyone get involved with Adapt?",
         "instruction":"Select the correct answers below.",
         "_items": [
@@ -584,9 +584,9 @@
             "hideCorrectAnswer":""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         },
-        "_associatedLearning": ["co-12"]
+        "_associatedLearning": ["co-10"]
     },
     {
         "_id":"c-225",
@@ -607,7 +607,7 @@
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -623,7 +623,7 @@
         "instruction":"",
         "_linkToAssociatedLearning": false,
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -638,7 +638,7 @@
         "_isRandom":false,
         "_selectable":1,
         "title": "MCQ",
-        "displayTitle": "MCQ - bank 3",
+        "displayTitle": "Bank 2 - Question 3",
         "body": "Which of the following options would you consider to be correct?",
         "instruction":"Option one again?",
         "_items": [
@@ -673,7 +673,7 @@
             "hideCorrectAnswer": ""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
@@ -695,7 +695,7 @@
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": false
         }
     },
     {
