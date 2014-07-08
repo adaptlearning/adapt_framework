@@ -104,9 +104,45 @@
         "_trackingId": 15
     },
     {
+        "_id": "b-24",
+        "_parentId": "a-15",
+        "_quizBankID": 1,
+        "_type": "block",
+        "_classes": "",
+        "title": "Test block for quiz banks/randomisation",
+        "displayTitle": "",
+        "body": "",
+        "_search": {
+            "keywords": [
+                "mexico",
+                "italy",
+                "england"
+            ]
+        },
+        "_trackingId": 14
+    },
+    {
+        "_id": "b-25",
+        "_parentId": "a-15",
+        "_quizBankID": 2,
+        "_type": "block",
+        "_classes": "",
+        "title": "It’s as simple as Q, R, S",
+        "displayTitle": "",
+        "body": "",
+        "_search": {
+            "keywords": [
+                "manaus",
+                "italy",
+                "england"
+            ]
+        },
+        "_trackingId": 5
+    },
+    {
         "_id": "b-27",
         "_parentId": "a-15",
-        "_quizBankID": 3,
+        "_quizBankID": 2,
         "_type": "block",
         "_classes": "",
         "title": "Test block for quiz banks/randomisation",
@@ -124,7 +160,7 @@
     {
         "_id": "b-30",
         "_parentId": "a-15",
-        "_quizBankID": 3,
+        "_quizBankID": 2,
         "_type": "block",
         "_classes": "",
         "title": "It’s as simple as T, U, V",
@@ -138,6 +174,19 @@
             ]
         },
         "_trackingId": 6
+    },
+    {
+        "_id": "b-31",
+        "_parentId": "a-15",
+        "_type": "block",
+        "_classes": "",
+        "title": "",
+        "displayTitle": "",
+        "body": "",
+        "_search": {
+            "keywords": []
+        },
+        "_trackingId": 17
     },
     {
         "_id": "b-35",

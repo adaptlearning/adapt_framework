@@ -45,5 +45,44 @@
         "title": "",
         "description": "Type in search words and enter",
         "noResultsMessage": "Sorry, no results were found"
+    },
+    "_courseinfo" : {
+        "_filterButtons":{
+            "all": "All",
+            "articles": "Articles",
+            "blocks": "Blocks"
+        },
+        "_allText": {
+            "title": "Title",
+            "status": "Status",
+            "pages": "Pages",
+            "menus": "Menus",
+            "articles": "Articles",
+            "blocks": "Blocks",
+            "components": "Components",
+            "assessment": "Assessment",
+            "total": "Total",
+            "incomplete": "Incomplete",
+            "completed": "Completed",
+            "hasassessment": "Course has assessment",
+            "hasnoassessment": "Course has no assessment",
+            "assessmentincomplete": "Assessment is incomplete",
+            "score" : "Score"
+        },
+        "_finishedText" : {
+            "passed" : {
+                "title": "Congratulations",
+                "body": "Well done! You have passed the assessment!"
+            },
+            "failed" : {
+                "title": "Oh Well",
+                "body": "Unfortunately you have failed the assessment! Oh Well!"
+            }
+        },
+        "_defaultFilter": "articles"
+    },
+     "_scormDataInfo": {
+        "title": "Scorm Data Info",
+        "description": "Shows LMS Scorm status information"
     }
 }
