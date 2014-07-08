@@ -80,5 +80,9 @@
             }
         },
         "_defaultFilter": "articles"
+    },
+     "_scormDataInfo": {
+        "title": "Scorm Data Info",
+        "description": "Shows LMS Scorm status information"
     }
 }
