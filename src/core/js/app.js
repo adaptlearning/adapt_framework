@@ -12,6 +12,7 @@ require([
     'coreJS/device',
     'coreJS/popupManager',
     'coreJS/notify',
+    'coreJS/accessibility',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/configModel',
@@ -29,7 +30,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     // Append loading template and show
     var template = Handlebars.templates['loading'];
@@ -47,10 +48,22 @@ require([
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
+
+            // Triggered to setup model connections in AdaptModel.js
             Adapt.trigger('app:dataLoaded');
+            // Sets up collection mapping
+            Adapt.setupMapping();
+            // Triggers once all the data is ready
             Adapt.trigger('app:dataReady');
+            // Setups a new navigation view
+            // This should be triggered after 'app:dataReady' as plugins might want
+            // to manipulate the navigation
+            new NavigationView();
+            // Called once Adapt is ready to begin
             Adapt.initialize();
+            // Remove event listeners
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+
         }
     }
 

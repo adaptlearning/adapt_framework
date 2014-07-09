@@ -1,20 +1,18 @@
 {
     "dependencies": {
-        "adapt-contrib-vanilla": "*",
-        "adapt-contrib-text": "*",
-        "adapt-contrib-narrative": "*",
-        "adapt-contrib-media": "*",
-        "adapt-contrib-hotgraphic": "*",
+        "adapt-contrib-vanilla": "develop",
+        "adapt-contrib-text": "develop",
+        "adapt-contrib-narrative": "develop",
+        "adapt-contrib-media": "develop",
+        "adapt-contrib-hotgraphic": "develop",
+        "adapt-contrib-graphic": "develop",
         "adapt-contrib-blank": "*",
-        "adapt-contrib-accordion": "*",
-        "adapt-contrib-graphic": "*",
-        "adapt-contrib-matching": "*",
-        "adapt-contrib-textInput": "*",
-        "adapt-contrib-mcq": "*",
-        "adapt-contrib-gmcq": "*",
-        "adapt-contrib-boxMenu": "*",
-        "adapt-contrib-spoor": "*",
-        "adapt-contrib-slider": "*",
-        "adapt-contrib-background-switcher": "*"
+        "adapt-contrib-accordion": "develop",
+        "adapt-contrib-matching": "develop",
+        "adapt-contrib-textInput": "develop",
+        "adapt-contrib-mcq": "develop",
+        "adapt-contrib-gmcq": "develop",
+        "adapt-contrib-boxMenu": "develop",
+        "adapt-contrib-slider": "develop"
     }
 }

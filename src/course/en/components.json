@@ -286,7 +286,8 @@
             "hideCorrectAnswer": ""
         },
         "_pageLevelProgress": {
-            "_isEnabled": false
+            "_isEnabled": false,
+            "_useAssessment": true
         },
         "_associatedLearning": ["a-05"]
     },
@@ -359,7 +360,8 @@
             "hideCorrectAnswer":""
         },
         "_pageLevelProgress": {
-            "_isEnabled": false
+            "_isEnabled": false,
+            "_useAssessment": true
         },
         "_associatedLearning": ["b-20"]
     },
@@ -438,7 +440,8 @@
             }
         ],
         "_pageLevelProgress": {
-            "_isEnabled": false
+            "_isEnabled": false,
+            "_useAssessment": true
         },
         "_associatedLearning": ["a-25"]
     },
@@ -511,7 +514,8 @@
             "hideCorrectAnswer":""
         },
         "_pageLevelProgress": {
-            "_isEnabled": false
+            "_isEnabled": false,
+            "_useAssessment": true
         },
         "_associatedLearning": ["a-20"]
     },
@@ -584,7 +588,8 @@
             "hideCorrectAnswer":""
         },
         "_pageLevelProgress": {
-            "_isEnabled": false
+            "_isEnabled": false,
+            "_useAssessment": true
         },
         "_associatedLearning": ["co-10"]
     },
@@ -606,22 +611,6 @@
             "medium": "course/en/images/origami-menu-two.jpg",
             "small": "course/en/images/origami-menu-two.jpg"
         },
-        "_pageLevelProgress": {
-            "_isEnabled": false
-        }
-    },
-    {
-        "_id":"c-227",
-        "_parentId":"b-31",
-        "_type":"component",
-        "_component":"results",
-        "_classes":"",
-        "_layout":"full",
-        "title":"Results",
-        "displayTitle":"Results",
-        "body":"This component you're reading is a results component. The feedback itself comes from the _assessment object in articles.json.",
-        "instruction":"",
-        "_linkToAssociatedLearning": false,
         "_pageLevelProgress": {
             "_isEnabled": false
         }
@@ -673,7 +662,8 @@
             "hideCorrectAnswer": ""
         },
         "_pageLevelProgress": {
-            "_isEnabled": false
+            "_isEnabled": false,
+            "_useAssessment": true
         }
     },
     {
@@ -710,7 +700,8 @@
         "body":"The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job.",
         "instruction":"",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_useAssessment": true
         }
     },
     {
@@ -1220,6 +1211,23 @@
         },
         "_pageLevelProgress": {
             "_isEnabled": true
+        }
+    },
+    {
+        "_id":"c-227",
+        "_parentId":"b-31",
+        "_type":"component",
+        "_component":"results",
+        "_classes":"",
+        "_layout":"full",
+        "title":"Results",
+        "displayTitle":"Results",
+        "body":"This component you're reading is a results component. The feedback itself comes from the _assessment object in articles.json.",
+        "instruction":"",
+        "_linkToAssociatedLearning": false,
+        "_pageLevelProgress": {
+            "_isEnabled": false,
+            "_useAssessment": true
         }
     }
 ]
