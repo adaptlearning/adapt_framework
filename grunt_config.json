@@ -1,0 +1,10 @@
+{
+  "modules": [
+  	"m05"
+  ],
+  "themes": {
+  	"default":"adapt-contrib-vanilla",
+  	"custom": {
+  	}
+  }
+}
