@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
         jsonlint: {
             sample: {
-                src: [ 'course/course/**/*.json' ]
+                src: [ 'src/courses/<%= grunt.option("moduleid") %>/**/*.json' ]
             }   
         },
 
@@ -220,7 +220,7 @@ module.exports = function(grunt) {
             }
         },
 
-        _watch: {
+        watch: {
             less: {
                 files: ['src/**/*.less'],
                 tasks: ['concat', 'less'],
@@ -343,13 +343,13 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('watch', 'Task has been depreciated', function() {
+    /*grunt.registerTask('watch', 'Task has been depreciated', function() {
         grunt.log.writeln();
         grunt.log.error("The watch task has been depreciated, please use dev or devmod:[id] instead.");
         grunt.log.writeln();
         grunt.log.writeln("For more details on what commands are available, check:");
         grunt.log.writeln("https://git.kineo.com/adapt/grunt-build-process/blob/master/README.md");
-    });
+    });*/
     
     grunt.loadNpmTasks('grunt-contrib-concat');
 
@@ -535,7 +535,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('devmod', 'Builds the first module in DEV MODE.', function(moduleid) {
-        grunt.task.run(['buildmod:' + moduleid + ":true", "_watch"]);
+        grunt.task.run(['buildmod:' + moduleid + ":true", "watch"]);
     });
 
     grunt.registerTask('devall', 'Creates builds for all modules', function() {
@@ -560,7 +560,7 @@ module.exports = function(grunt) {
                 break;
             }
         }
-        if(!exists) grunt.log.writeln("FATAL ERROR! '" + id + "' not specified in grunt_config.json. Try again...");
+        if(!exists) grunt.log.error("ERROR! '" + id + "' not specified in grunt_config.json. Try again...");
         return exists;
     };
 };
