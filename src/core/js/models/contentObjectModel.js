@@ -11,6 +11,23 @@ define(function(require) {
 
     var ContentObjectModel = AdaptModel.extend({
 
+        setupChildListeners: function () {
+            AdaptModel.prototype.setupChildListeners.apply(this, arguments);
+            this.set({_isInteractionsComplete: false, silent:true});
+            this.getChildren().each(function(child) {
+                this.listenTo(child, 'change:_isInteractionsComplete', this.checkInteractionStatus);
+            }, this);
+        },
+
+        checkInteractionStatus: function () {
+            if (this.getChildren().findWhere({_isInteractionsComplete: false})) {
+                this.set('_isInteractionsComplete', false);
+                return;
+            }
+            this.set('_isInteractionsComplete', true);
+            Adapt.trigger('contentObjectModel:interactionsComplete', this);
+        },
+
     	getCompleteComponentsAsPercentage: function() {
     		var children = this.findDescendants('components');
     		var availableChildren = children.where({_isAvailable:true});
