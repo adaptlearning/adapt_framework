@@ -17,18 +17,24 @@ define(function(require) {
         initialize: function() {
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
-            Adapt.trigger('navigationView:preRender', this);
-            this.render();
-            Adapt.trigger('navigationView:postRender', this);
+            this.preRender();
         },
         
         events: {
             'click a':'triggerEvent'
         },
+
+        preRender: function() {
+            Adapt.trigger('navigationView:preRender', this);
+            this.render();
+        },
         
         render: function() {
             var template = Handlebars.templates[this.template]
-            this.$el.html(template).appendTo('#wrapper');
+            this.$el.html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('#wrapper');
+            _.defer(_.bind(function() {
+                Adapt.trigger('navigationView:postRender', this);
+            }, this));
             return this;
         },
         
@@ -52,6 +58,6 @@ define(function(require) {
         
     });
     
-    return new NavigationView;
+    return NavigationView;
     
 });

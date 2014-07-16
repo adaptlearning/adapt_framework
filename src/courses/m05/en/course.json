@@ -1,0 +1,121 @@
+{
+    "_id": "course",
+    "_type": "course",
+    "title": "Welcome to Adapt Learning - v1.1.0",
+    "displayTitle": "Welcome to Adapt Learning - v1.1.0",
+    "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
+    "_buttons": {
+        "submit": "Submit",
+        "reset": "Reset",
+        "showCorrectAnswer": "Model Answer",
+        "hideCorrectAnswer": "My Answer",
+        "showFeedback": "Show feedback",
+        "remainingAttempts": "attempts remaining",
+        "remainingAttempt": "final attempt"
+    },
+    "_accessibility": {
+        "_accessibilityToggleTextOn": "Turn accessibility on?",
+        "_accessibilityToggleTextOff": "Turn accessibility off?",
+        "_ariaLabels": {        
+            "previous": "Back",
+            "navigationBack": "Navigate back",
+            "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
+            "close": "Close",
+            "drawer": "Close Drawer",
+            "closePopup": "Close pop-up",
+            "next": "Next",
+            "done": "Done",
+            "menuItem": "Menu item. Select to view.",
+            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off"
+        },
+        "_ariaRegions": {
+            "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels.",
+            "blank": "",
+            "gmcq": "This component is a graphical multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
+            "graphic": "This component just displays a graphic",
+            "hotGraphic": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
+            "matching": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
+            "mcq": "This component is a multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
+            "media": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
+            "narrative": "This component displays an image gallery with accompanying text. Select the 'next' and 'previous' navigation controls to work through the narrative.",
+            "slider": "This component requires you to answer the question by positioning a slider on a scale. Use the left and right keyboard arrows to position the slider then select the submit button below.",
+            "text": "",
+            "textInput": "This question component requires you to type your answer in the textbox provided. When you have answered the question select the submit button below."
+        }
+    },
+    "_latestTrackingId": 18,
+    "_resources": {
+        "title": "Resources",
+        "description": "Click here to view resources for this course",
+        "_filterButtons": {
+            "all": "All",
+            "document": "PDF",
+            "media": "Media",
+            "link": "Link"
+        },
+        "_resourcesItems": [
+            {
+                "_type": "document",
+                "title": "Button idea",
+                "description": "Click here to see a proposed button idea",
+                "_link": "course/en/pdf/adapt-framework-prototypes-buttons.pdf"
+            },
+            {
+                "_type": "media",
+                "title": "Adapt Learning YouTube Channel",
+                "description": "Fancy catching up on some Adapt material",
+                "_link": "https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
+            },
+            {
+                "_type": "link",
+                "title": "Community Site",
+                "description": "Click here to view our community site",
+                "_link": "https://community.adaptlearning.org"
+            }
+        ]
+    },
+    "_search": {
+        "title": "",
+        "description": "Type in search words and enter",
+        "noResultsMessage": "Sorry, no results were found"
+    },
+    "_courseinfo" : {
+        "_filterButtons":{
+            "all": "All",
+            "articles": "Articles",
+            "blocks": "Blocks"
+        },
+        "_allText": {
+            "title": "Title",
+            "status": "Status",
+            "pages": "Pages",
+            "menus": "Menus",
+            "articles": "Articles",
+            "blocks": "Blocks",
+            "components": "Components",
+            "assessment": "Assessment",
+            "total": "Total",
+            "incomplete": "Incomplete",
+            "completed": "Completed",
+            "hasassessment": "Course has assessment",
+            "hasnoassessment": "Course has no assessment",
+            "assessmentincomplete": "Assessment is incomplete",
+            "score" : "Score"
+        },
+        "_finishedText" : {
+            "passed" : {
+                "title": "Congratulations",
+                "body": "Well done! You have passed the assessment!"
+            },
+            "failed" : {
+                "title": "Oh Well",
+                "body": "Unfortunately you have failed the assessment! Oh Well!"
+            }
+        },
+        "_defaultFilter": "articles"
+    },
+     "_scormDataInfo": {
+        "title": "Scorm Data Info",
+        "description": "Shows LMS Scorm status information"
+    }
+}

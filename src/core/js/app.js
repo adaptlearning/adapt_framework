@@ -12,6 +12,7 @@ require([
     'coreJS/device',
     'coreJS/popupManager',
     'coreJS/notify',
+    'coreJS/accessibility',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/configModel',
@@ -29,7 +30,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     // Append loading template and show
     var template = Handlebars.templates['loading'];
@@ -46,10 +47,23 @@ require([
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
-            && Adapt.course.has('_id')) {
+            && Adapt.course.get('_id')) {
+
+            // Triggered to setup model connections in AdaptModel.js
+            Adapt.trigger('app:dataLoaded');
+            // Sets up collection mapping
+            Adapt.setupMapping();
+            // Triggers once all the data is ready
             Adapt.trigger('app:dataReady');
+            // Setups a new navigation view
+            // This should be triggered after 'app:dataReady' as plugins might want
+            // to manipulate the navigation
+            new NavigationView();
+            // Called once Adapt is ready to begin
             Adapt.initialize();
-            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded configModel:dataLoaded');
+            // Remove event listeners
+            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+
         }
     }
 
@@ -61,7 +75,7 @@ require([
         var courseFolder = "course/" + Adapt.config.get('_defaultLanguage')+"/";
 
         Adapt.course = new CourseModel(null, {url:courseFolder + "course.json", reset:true});
-
+        
         Adapt.contentObjects = new AdaptCollection(null, {
             model: ContentObjectModel,
             url: courseFolder +"contentObjects.json"
@@ -84,9 +98,8 @@ require([
     }
 
     // Events that are triggered by the main Adapt content collections and models
-    Adapt.on('configModel:loadCourseData', loadCourseData);
+    Adapt.once('configModel:loadCourseData', loadCourseData);
 
-    Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);  
-    
+    Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
     
 });

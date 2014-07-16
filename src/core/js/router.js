@@ -141,9 +141,14 @@ define(function(require) {
 
             Adapt.location._currentLocation = currentLocation;
 
+            var classes = (Adapt.location._currentId) ? 'location-' 
+                    + Adapt.location._contentType 
+                    + ' location-id-' 
+                    + Adapt.location._currentId :
+                    'location-' + Adapt.location._currentLocation;
             this.$wrapper
                 .removeClass()
-                .addClass('location-' + Adapt.location._currentLocation)
+                .addClass(classes)
                 .attr('data-location', Adapt.location._currentLocation);
 
             // Trigger event when location changes

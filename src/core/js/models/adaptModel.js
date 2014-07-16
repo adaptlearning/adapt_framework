@@ -40,8 +40,8 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
-            // Wait until data is ready before setting up model
-            Adapt.once('app:dataReady', this.setupModel, this);
+           // Wait until data is loaded before setting up model
+            Adapt.once('app:dataLoaded', this.setupModel, this);
 
         },
 
@@ -135,23 +135,6 @@ define(function (require) {
 
             // returns a collection of children
             return returnedDescedants;
-        },
-
-        findByID: function (id) {
-            var collections = id.split('_');
-            var collectionID = collections[collections.length - 1];
-            var collectionType = collectionID.replace(/[0-9]+$/, '');
-
-            switch(collectionType) {
-                case "co-":
-                    return Adapt.contentObjects.findWhere({_id: collectionID});
-                case "a-":
-                    return Adapt.articles.findWhere({_id: collectionID});
-                case "b-":
-                    return Adapt.blocks.findWhere({_id: collectionID});
-                case "c-":
-                    return Adapt.components.findWhere({_id: collectionID});
-            }
         },
 
         getChildren: function () {
