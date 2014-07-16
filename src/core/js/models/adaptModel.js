@@ -15,7 +15,8 @@ define(function (require) {
             _canShowFeedback: true,
             _isComplete: false,
             _isEnabled: true,
-            _isEnabledOnRevisit: true,
+            _isEnabledOnRevisit: false,
+            _isResetOnRevisit: false,
             _isAvailable: true,
             _isOptional: false,
             _isTrackable: true,
@@ -26,6 +27,7 @@ define(function (require) {
         lockedAttributes: {
             _canShowFeedback: {},
             _isEnabledOnRevisit: {},
+            _isResetOnRevisit: {},
             _isAvailable: {}, 
             _isOptional: {}, 
             _isTrackable: {}, 
