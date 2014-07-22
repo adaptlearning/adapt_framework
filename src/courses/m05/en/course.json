@@ -117,5 +117,50 @@
      "_scormDataInfo": {
         "title": "Scorm Data Info",
         "description": "Shows LMS Scorm status information"
+    },
+    "_banks" : {
+        "1": {
+            "title": "Bank1 - Learning outcome etc."
+        },
+        "2": {
+            "title": "Bank2 - Learning outcome etc."
+        }
+    },
+    "_learnerassistant": {
+        "_showAllBankQuestions": false,
+        "_showAssociatedLearningBy": "bank"
+    },
+    "_rollay": {
+        "_duration": {
+            "show": 200,
+            "hide": 200
+        }
+    },
+     "_bottomnavigation": {
+        "_duration": {
+            "show": 200,
+            "hide": 200
+        },
+        "_showMenu": false
+    },
+     "_glossary": {
+        "title": "Glossary",
+        "description": "Click here to view glossary for this course",
+        "searchPlaceholder": "Search",
+        "notFoundMessage": "Sorry! No results to display",
+        "_glossaryItems": [
+            {
+                "term":"Button idea",
+                "description":"Click here to see a proposed button idea"
+            },
+            {
+                "term":"Adapt Learning YouTube Channel",
+                "description":"Fancy catching up on some Adapt material"
+            },
+            {
+                "term":"Community Site",
+                "description":"Click here to view our community site"
+            }
+        ]
     }
 }

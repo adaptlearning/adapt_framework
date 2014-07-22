@@ -47,11 +47,11 @@
                 "_showProgress": true
             },
             "_banks": {
-                "_isEnabled": false,
+                "_isEnabled": true,
                 "_split": "2,2"
             },
             "_randomisation": {
-                "_isEnabled": false,
+                "_isEnabled": true,
                 "_blockCount": 2
             },
             "_isPercentageBased" : true,
