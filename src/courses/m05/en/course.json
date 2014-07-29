@@ -162,5 +162,14 @@
                 "description":"Click here to view our community site"
             }
         ]
+    },
+    "_bookmarking": {
+        "_isEnabled": true,
+        "title": "Bookmarking",
+        "message": "Whould you like to continue where you left off?",
+        "_buttons": {
+            "yes": "Yes",
+            "no": "No"
+        }
     }
 }
