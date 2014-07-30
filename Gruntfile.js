@@ -4,10 +4,12 @@ module.exports = function(grunt) {
         theme = grunt.option('theme') || '';
 
     if (outputdir) {
-        grunt.log.writeln('** Building to ' + outputdir); 
-        if (outputdir.substring(0, outputdir.length) !== '/') {
+        if (outputdir.substring(outputdir.length - 1, outputdir.length) !== '/') {
+            // Append a slash if required
             outputdir = outputdir + '/';
-        }   
+        }
+        
+        grunt.log.writeln('** Building to ' + outputdir); 
     }
 
     if (theme) {
