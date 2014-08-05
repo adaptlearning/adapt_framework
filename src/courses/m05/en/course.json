@@ -165,6 +165,7 @@
     },
     "_bookmarking": {
         "_isEnabled": true,
+        "_level": "component",
         "title": "Bookmarking",
         "message": "Whould you like to continue where you left off?",
         "_buttons": {
