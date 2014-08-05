@@ -74,7 +74,6 @@ define(function(require) {
                     _isEnabled: true,
                     _attemptsLeft: attempts,
                     _isCorrect: false,
-                    _isComplete: false,
                     _isSubmitted: false,
                     _buttonState: 'submit'
                 });
