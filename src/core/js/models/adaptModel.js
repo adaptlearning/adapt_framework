@@ -63,10 +63,24 @@ define(function (require) {
         init: function() {},
 
         setupChildListeners: function() {
+            console.log(this.get('_id') + ",setupChildListeners");
+            this.set({_isInteractionsComplete: false, silent:true});
             this.getChildren().each(function(child) {
                 this.listenTo(child, 'change:_isReady', this.checkReadyStatus);
                 this.listenTo(child, 'change:_isComplete', this.checkCompletionStatus);
+                this.listenTo(child, 'change:_isInteractionsComplete', this.checkInteractionStatus);
             }, this);
+        },
+
+        checkInteractionStatus: function () {
+            if (this.getChildren().findWhere({_isInteractionsComplete: false})) {
+                this.set('_isInteractionsComplete', false);
+                return;
+            }
+            this.set('_isInteractionsComplete', true);
+            var type = (this.get('_type')==='page' || this.get('_type')==='menu') ? 'contentObject' : this.get('_type');
+            console.log("checkInteractionStatus: " + type + " - " + this.get('_id'));
+            Adapt.trigger(type + 'Model:interactionsComplete', this);
         },
 
         checkReadyStatus: function () {
