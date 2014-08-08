@@ -57,7 +57,10 @@ define(function (require) {
             if (this._children) {
                 this.setupChildListeners();
             }
+            this.init();
         },
+
+        init: function() {},
 
         setupChildListeners: function() {
             this.getChildren().each(function(child) {
