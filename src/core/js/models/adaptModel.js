@@ -21,7 +21,8 @@ define(function (require) {
             _isOptional: false,
             _isTrackable: true,
             _isReady: false,
-            _isVisible: true
+            _isVisible: true,
+            _isInteractionsComplete: false
         },
 
         lockedAttributes: {
@@ -63,10 +64,24 @@ define(function (require) {
         init: function() {},
 
         setupChildListeners: function() {
+            if(!this.getChildren()) return;
+
             this.getChildren().each(function(child) {
                 this.listenTo(child, 'change:_isReady', this.checkReadyStatus);
                 this.listenTo(child, 'change:_isComplete', this.checkCompletionStatus);
+                this.listenTo(child, 'change:_isInteractionsComplete', this.checkInteractionStatus);
             }, this);
+        },
+
+        checkInteractionStatus: function () {
+            if(!this.getChildren()) return;
+            if (this.getChildren().findWhere({_isInteractionsComplete: false})) {
+                this.set('_isInteractionsComplete', false);
+                return;
+            }
+            this.set('_isInteractionsComplete', true);
+            var type = (this.get('_type')==='page' || this.get('_type')==='menu') ? 'contentObject' : this.get('_type');
+            Adapt.trigger(type + 'Model:interactionsComplete', this);
         },
 
         checkReadyStatus: function () {

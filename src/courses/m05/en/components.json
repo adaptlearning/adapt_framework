@@ -139,6 +139,7 @@
         "_questionWeight":1,
         "_isRandom":true,
         "_selectable":4,
+        "_isResetOnRevisit":true,
         "title": "Key benefits of a vertical scrolling approach",
         "displayTitle": "Key benefits of a vertical scrolling approach",
         "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",

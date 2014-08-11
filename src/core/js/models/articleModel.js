@@ -11,24 +11,7 @@ define(function(require) {
 
     var ArticleModel = AdaptModel.extend({
 
-    	setupChildListeners: function () {
-            AdaptModel.prototype.setupChildListeners.apply(this, arguments);
-            this.set({_isInteractionsComplete: false, silent:true});
-            this.getChildren().each(function(child) {
-            	this.listenTo(child, 'change:_isInteractionsComplete', this.checkInteractionStatus);
-            }, this);
-        },
-
-        checkInteractionStatus: function () {
-            if (this.getChildren().findWhere({_isInteractionsComplete: false})) {
-                this.set('_isInteractionsComplete', false);
-                return;
-            }
-            this.set('_isInteractionsComplete', true);
-            Adapt.trigger('articleModel:interactionsComplete', this);
-        },
-
-        _parent:'contentObjects',
+    	_parent:'contentObjects',
     	_siblings:'articles',
         _children: 'blocks'
     });

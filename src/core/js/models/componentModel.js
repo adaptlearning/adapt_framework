@@ -11,11 +11,6 @@ define(function(require) {
 
     var ComponentModel = AdaptModel.extend({
     	
-        defaults: _.extend({}, AdaptModel.prototype.defaults, {
-                _isInteractionsComplete: false
-            }
-        ),
-
         init: function() {
     		// Setup _isQuestionType on question components
     		var componentType = this.get('_component');

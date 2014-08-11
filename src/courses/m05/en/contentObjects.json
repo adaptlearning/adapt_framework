@@ -42,7 +42,11 @@
             "src": "course/en/images/origami-menu-three.jpg"
         },
         "linkText":"View",
-        "duration":"2 mins"
+        "duration":"2 mins",
+        "_bookmarking": {
+            "_isEnabled": true,
+            "_level": "page"
+        }
     },
     {
         "_id":"co-15",
