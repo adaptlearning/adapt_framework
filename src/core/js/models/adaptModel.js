@@ -32,7 +32,7 @@ define(function (require) {
             _isAvailable: {}, 
             _isOptional: {}, 
             _isTrackable: {}, 
-            _isVisible: {},
+            _isVisible: {}
         },
 
         initialize: function () {
