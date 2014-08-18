@@ -1,4 +1,4 @@
-/*
+ /*
 * ButtonsView
 * License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 * Maintainers - Daryl Hedley
@@ -36,6 +36,7 @@ define(function() {
         postRender: function() {
             this.updateAttemptsCount();
             this.onButtonStateChanged(null, this.model.get('_buttonState'));
+            this.checkResetSubmittedState();
             this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
         },
 
@@ -63,14 +64,24 @@ define(function() {
             this.updateAttemptsCount();
         },
 
+        checkResetSubmittedState: function() {
+            var isSubmitted = this.model.get('_isSubmitted');
+            if(!isSubmitted) {
+                var $icon = this.$('.buttons-marking-icon');
+                $icon.removeClass('icon-cross');  
+                $icon.removeClass('icon-tick');  
+                $icon.addClass('display-none');
+            } 
+        },
+
         updateAttemptsCount: function(model, changedAttribute) {
-            var isComplete = this.model.get('_isComplete');
+            var isSubmitted = this.model.get('_isSubmitted');
             var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')
             var isCorrect = this.model.get('_isCorrect');
             var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
             var attemptsString;
 
-            if (!isComplete && attemptsLeft != 0) {
+            if (!isSubmitted && attemptsLeft != 0) {
                 attemptsString = attemptsLeft + " ";
                 if (attemptsLeft > 1) {
                     attemptsString += this.model.get('_buttons').remainingAttempts;
