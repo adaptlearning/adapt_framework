@@ -15,19 +15,16 @@ define(function (require) {
             _canShowFeedback: true,
             _isComplete: false,
             _isEnabled: true,
-            _isEnabledOnRevisit: true,
-            _isResetOnRevisit: true,
+            _isResetOnRevisit: false,
             _isAvailable: true,
             _isOptional: false,
             _isTrackable: true,
             _isReady: false,
-            _isVisible: true,
-            _isInteractionsComplete: false
+            _isVisible: true
         },
 
         lockedAttributes: {
             _canShowFeedback: {},
-            _isEnabledOnRevisit: {},
             _isResetOnRevisit: {},
             _isAvailable: {}, 
             _isOptional: {}, 
@@ -43,7 +40,7 @@ define(function (require) {
                 _isTrackable: {}, 
                 _isVisible: {}
             };
-           // Wait until data is loaded before setting up model
+            // Wait until data is loaded before setting up model
             Adapt.once('app:dataLoaded', this.setupModel, this);
 
         },
@@ -56,33 +53,15 @@ define(function (require) {
                 this._parent = 'contentObjects';
             }
             if (this._children) {
-                this.setupChildListeners();
+                Adapt[this._children].on({
+                    "change:_isReady": this.checkReadyStatus,
+                    "change:_isComplete": this.checkCompletionStatus
+                }, this);
             }
             this.init();
         },
 
         init: function() {},
-
-        setupChildListeners: function() {
-            if(!this.getChildren()) return;
-
-            this.getChildren().each(function(child) {
-                this.listenTo(child, 'change:_isReady', this.checkReadyStatus);
-                this.listenTo(child, 'change:_isComplete', this.checkCompletionStatus);
-                this.listenTo(child, 'change:_isInteractionsComplete', this.checkInteractionStatus);
-            }, this);
-        },
-
-        checkInteractionStatus: function () {
-            if(!this.getChildren()) return;
-            if (this.getChildren().findWhere({_isInteractionsComplete: false})) {
-                this.set('_isInteractionsComplete', false);
-                return;
-            }
-            this.set('_isInteractionsComplete', true);
-            var type = (this.get('_type')==='page' || this.get('_type')==='menu') ? 'contentObject' : this.get('_type');
-            Adapt.trigger(type + 'Model:interactionsComplete', this);
-        },
 
         checkReadyStatus: function () {
             // Filter children based upon whether they are available

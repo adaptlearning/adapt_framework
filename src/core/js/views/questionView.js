@@ -74,6 +74,7 @@ define(function(require) {
                     _isEnabled: true,
                     _attemptsLeft: attempts,
                     _isCorrect: false,
+                    _isComplete: false,
                     _isSubmitted: false,
                     _buttonState: 'submit'
                 });
@@ -288,13 +289,17 @@ define(function(require) {
 
             var isComplete = false;
             
-            if (this.model.get('_isCorrect') || (this.model.get('_attemptsLeft') === 0) ) isComplete = true;
+            if (this.model.get('_isCorrect')) {
+                isComplete = true;
+            } else {
+                if (this.model.get('_attemptsLeft') === 0) {
+                    isComplete = true;
+                }
+            }
 
             if (isComplete) {
                 this.setCompletionStatus();
                 this.$('.component-widget').addClass('complete show-user-answer');
-                // GM - added this line for Kineo
-                Adapt.trigger('questionView:complete', this);
             }
 
         },

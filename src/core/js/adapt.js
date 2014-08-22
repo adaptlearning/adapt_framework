@@ -22,7 +22,7 @@ define(function(require){
         Adapt.trigger('adapt:initialize');
     });
 
-    Adapt.scrollTo = function(selector, settings, offset) {
+    Adapt.scrollTo = function(selector, settings) {
         // Get the current location - this is set in the router
         var location = (Adapt.location._contentType) ? 
             Adapt.location._contentType : Adapt.location.currentLocation;
@@ -33,9 +33,6 @@ define(function(require){
         if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
-
-        settings.offset = {top:offset, left:0};
-
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
         // Trigger an event after animation
@@ -46,10 +43,8 @@ define(function(require){
         
     }
 
-    Adapt.navigateToElement = function(selector, settings, offset) {
+    Adapt.navigateToElement = function(selector, settings) {
         // Allows a selector to be passed in and Adapt will navigate to this element
-
-        if(offset===undefined) offset = -($('.navigation').height()+10);
 
         // Setup settings object
         var settings = (settings || {});
@@ -58,26 +53,28 @@ define(function(require){
         var currentModelId = selector.replace(/\./g, '');
         var currentModel = Adapt[Adapt.mapById(currentModelId)].findWhere({_id: currentModelId});
         // Get current page to check whether this is the current page
-        var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
+        var currentPage = currentModel.findAncestor('contentObjects');
 
         // If current page - scrollTo element
         if (currentPage.get('_id') === Adapt.location._currentId) {
-           return Adapt.scrollTo(selector, settings, offset);
+           return Adapt.scrollTo(selector, settings);
         }
 
         // If the element is on another page navigate and wait until pageView:ready is fired
         // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
-                Adapt.scrollTo(selector, settings, offset)
+                Adapt.scrollTo(selector, settings)
             })
         });
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true});
+
     }
     
     Adapt.register = function(name, object) {
-        
+        // Used to register components
+        // Store the component view
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
         object.template = name;
@@ -114,7 +111,6 @@ define(function(require){
     }
 
     Adapt.findById = function(id) {
-        console.log("Adapt.findById: " + id);
 
         // Return a model
         // Checks if the Id passed in is the course Id
