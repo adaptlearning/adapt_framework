@@ -107,6 +107,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         flatten: true,
+                        src: ['src/extensions/**/assets/**'],
+                        dest: 'builds/<%= grunt.option("moduleID") %>/assets/',
+                        filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
                         src: ['src/extensions/adapt-contrib-spoor/required/*'],
                         dest: 'builds/<%= grunt.option("moduleID") %>/',
                         filter: 'isFile'
@@ -296,7 +303,8 @@ module.exports = function(grunt) {
                 files: [
                     'src/theme/<%= grunt.option("theme") %>/fonts/**',
                     'src/theme/<%= grunt.option("theme") %>/assets/**',
-                    'src/components/**/assets/**'
+                    'src/components/**/assets/**',
+                    'src/extensions/**/assets/**'
                 ],
                 tasks: ['copy:main'],
                 options: {
@@ -354,38 +362,31 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
 
-    // This is a simple function to take the course's config.json and append the theme.json
+    // concatenates config.json and theme.json
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
-
         var themeJsonFile = '';
 
-        // As any theme folder may be used, we need to first find the location of the
-        // theme.json file
+        // find theme.json path
         grunt.file.recurse('src/theme/' + grunt.option("theme") + '/', function(abspath, rootdir, subdir, filename) {
             if (filename == 'theme.json') {
                 themeJsonFile = rootdir;
-                if(subdir) themeJsonFile += subdir; // account for no sub-directory
+                if(subdir) themeJsonFile += subdir;
                 themeJsonFile += '/' + filename;
             }
         });
 
-        if (themeJsonFile == '') {
-            grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
-        }
+        if (themeJsonFile == '') grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
 
         var configJson = grunt.file.readJSON('src/courses/' + grunt.option("moduleID") + '/config.json');
         var themeJson = grunt.file.readJSON(themeJsonFile);
 
-        // This effectively combines the JSON
-        for (var prop in themeJson) {
-            configJson[prop] = themeJson[prop];
-        }
+        // add theme props to config
+        for (var prop in themeJson) configJson[prop] = themeJson[prop];
 
         grunt.file.write('builds/' + grunt.option("moduleID")  + '/course/config.json', JSON.stringify(configJson));
     });
 
     grunt.registerTask('check-json', 'Checking course.json', function() {
-
         var _ = require('underscore');
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
         var currentJsonFile;
@@ -395,11 +396,10 @@ module.exports = function(grunt) {
         var hasOrphanedParentIds = false;
         var orphanedParentIds = [];
 
-        // method to check json ids
         function checkJsonIds() {
             var currentCourseFolder;
             // Go through each course folder inside the src/course directory
-            grunt.file.expand({filter: "isDirectory"}, "src/course/*").forEach(function(path) {
+            grunt.file.expand({filter: "isDirectory"}, "src/courses" + grunt.option("moduleID") + "/*").forEach(function(path) {
                 // Stored current path of folder - used later to read .json files
                 currentCourseFolder = path;
                 // Go through each list of declared course files
@@ -428,24 +428,20 @@ module.exports = function(grunt) {
             var countIdsObject = _.countBy(storedIds);
             var hasDuplicateIds = false;
             var duplicateIds = [];
+
             _.each(countIdsObject, function(value, key) {
-                // Check value of each _ids is not more than 1
                 if (value > 1) {
                     hasDuplicateIds = true;
                     duplicateIds.push(key);
                 }
             });
-            // Check if any duplicate _ids exist and return error
-            if (hasDuplicateIds) {
-                grunt.fail.fatal("Oops, looks like you have some duplicate _ids: " + duplicateIds);
-            }
+            if (hasDuplicateIds) grunt.fail.fatal("Oops, looks like you have some duplicate _ids: " + duplicateIds);
         }
 
         function checkIfOrphanedElementsExist(value, parentFileToCheck) {
             _.each(value, function(parentId) {
-                if (parentId === "course") {
-                    return;
-                }
+                if (parentId === "course") return;
+
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
                     hasOrphanedParentIds = true;
                     orphanedParentIds.push(parentId);
@@ -466,10 +462,7 @@ module.exports = function(grunt) {
                         return checkIfOrphanedElementsExist(value, "blocks");
                 }
             });
-
-            if (hasOrphanedParentIds) {
-                grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
-            }
+            if (hasOrphanedParentIds) grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
         }
         checkJsonIds();
     });
@@ -478,18 +471,13 @@ module.exports = function(grunt) {
     //grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
-    grunt.loadNpmTasks('grunt-jsonlint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-
-    grunt.registerTask('_tracking-insert', '', function(moduleID) {
+    grunt.registerTask('_tracking-insert', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID) {
         grunt.option("moduleID", moduleID);
         grunt.task.run('adapt_insert_tracking_ids');
     });
 
     grunt.registerTask('tracking-insert', '', function(moduleID) {
-        if(moduleID) {
-            grunt.task.run('_tracking-insert:' + moduleID);
-        }
+        if(moduleID) grunt.task.run('_tracking-insert:' + moduleID);
         else {
             var mods = config.modules;
             for (var i = 0; i < mods.length; i++) grunt.task.run('_tracking-insert:' + mods[i]);
@@ -497,7 +485,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
-        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+		checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
@@ -506,10 +494,9 @@ module.exports = function(grunt) {
         grunt.option("moduleID", moduleID);
         grunt.option("theme", theme);
 
-        // log out some info...
         writeln("");
-        writeln("Building module '" + grunt.option("moduleID") + "' dev: " + devMode);
-        writeln("Using theme '" + grunt.option("theme") + "'");
+        writeln("Building module " + grunt.option("moduleID")['cyan'] + " dev: " + devMode);
+        writeln("Using theme " + grunt.option("theme")['cyan']);
 
         var buildProcessRelease = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
         var buildProcessDev = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
@@ -518,9 +505,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('build', '', function(moduleID, devMode) {
-        if(moduleID) {
-            grunt.task.run('_build:' + moduleID + ':false');
-        }
+        if(moduleID) grunt.task.run('_build:' + moduleID + ':false');
         else {
             var mods = config.modules;
             for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ':false');
@@ -528,9 +513,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('dev', '', function(moduleID) {
-        if(moduleID) {
-            grunt.task.run(['_build:' + moduleID + ":true", "watch"]);
-        }
+        if(moduleID) grunt.task.run(['_build:' + moduleID + ":true", "watch"]);
         else {
             var mods = config.modules;
             for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ":true");
@@ -538,8 +521,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('spy', '', function(moduleID) {
-        if(!moduleID) grunt.fail.fatal("No module specified...");
-        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+        checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
@@ -552,8 +534,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('server', '', function(moduleID, spoor) {
-        if(!moduleID) grunt.fail.fatal("No module specified...");
-        if(!checkValidMod(moduleID)) grunt.fail.fatal("'" + moduleID + "' not specified in grunt_config.json. Try again...");
+        checkValidMod(moduleID);
 
         grunt.option("moduleID", moduleID);
         grunt.task.run('concurrent:' + ((!!spoor === true) ? 'spoor' : 'server'));
@@ -564,6 +545,8 @@ module.exports = function(grunt) {
     });
 
     function checkValidMod(id) {
+		if (!id) grunt.fatal("No module specified...");
+
         var mods = config.modules;
         var exists = false;
         for (var i = 0; i < mods.length; i++) {
@@ -572,16 +555,14 @@ module.exports = function(grunt) {
                 break;
             }
         }
-        return exists;
+
+        if(!exists) grunt.fatal("'" + id + "' not specified in grunt_config.json. Try again...");
     };
 
     // shorthand, wraps text
     function writeln(msg) { grunt.log.writeln(grunt.log.wraptext(80, msg)); }
 
-    var colors = ['white', 'black', 'grey', 'blue', 'cyan', 'green', 'magenta', 'red', 'yellow', 'rainbow'];
-
     grunt.registerTask('default', '', function(moduleID) {
-        var width = 80;
         writeln('');
         grunt.log.ok('No task specified. See below for a list of available tasks.');
         writeln('');
@@ -594,6 +575,8 @@ module.exports = function(grunt) {
         writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
         writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
 
+		// FYI: colors = 'white', 'black', 'grey', 'blue', 'cyan',
+		//				 'green', 'magenta', 'red', 'yellow', 'rainbow'
         function writeTask(name, mandParams, optParams, description) {
             writeln(name['cyan'].bold + mandParams['red'].bold + optParams['magenta']);
             writeln(description);
