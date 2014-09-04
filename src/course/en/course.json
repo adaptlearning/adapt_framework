@@ -38,7 +38,7 @@
             "mcq": "This component is a multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
             "media": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
             "narrative": "This component displays an image gallery with accompanying text. Select the 'next' and 'previous' navigation controls to work through the narrative.",
-            "slider": "This component requires you to answer the question by positioning a slider on a scale. Use the left and right keyboard arrows to position the slider then select the submit button below.",
+            "slider": "This component requires you to answer the question by positioning a slider on a scale. Hold down the CTRL key and use the comma and full stop keys to position the slider then select the submit button below.",
             "text": "",
             "textInput": "This question component requires you to type your answer in the textbox provided. When you have answered the question select the submit button below."
         }
