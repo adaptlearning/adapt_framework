@@ -13,10 +13,10 @@
         "remainingAttempts": "attempts remaining",
         "remainingAttempt": "final attempt"
     },
-    "_accessibility": {
+   "_accessibility": {
         "_accessibilityToggleTextOn": "Turn accessibility on?",
         "_accessibilityToggleTextOff": "Turn accessibility off?",
-        "_ariaLabels": {        
+        "_ariaLabels": {
             "previous": "Back",
             "navigationBack": "Navigate back",
             "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
@@ -26,23 +26,33 @@
             "next": "Next",
             "done": "Done",
             "menuItem": "Menu item. Select to view.",
-            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off"
+            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
+            "menuViewButton": "Select here to view page",
+            "sliderHandle": "Slider handle. Hold down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
+            "sliderScaleMarkerPrefix": "Slider value",
+            "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup.",
+            "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback."
         },
         "_ariaRegions": {
-            "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels.",
+            "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Tab to the item titles using the enter key to open the hidden panels. Hold down ALT with the down arrow key to read the panel. After reading continue to tab to the next item title.",
             "blank": "",
-            "gmcq": "This component is a graphical multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
-            "graphic": "This component just displays a graphic",
+            "gmcq": "This component is a graphical multiple choice question. Tab between the items to hear your options. Use the spacebar key to select and de-select your answer. Once you have selected an option tab to the submit button below.",
+            "graphic": "",
             "hotGraphic": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
             "matching": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
-            "mcq": "This component is a multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
+            "mcq": "This component is a multiple choice question. Use the spacebar key to select and de-select your answer. Once you have selected an option tab to the submit button below",
             "media": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
-            "narrative": "This component displays an image gallery with accompanying text. Select the 'next' and 'previous' navigation controls to work through the narrative.",
-            "slider": "This component requires you to answer the question by positioning a slider on a scale. Use the left and right keyboard arrows to position the slider then select the submit button below.",
+            "narrative": "This component displays an image gallery with accompanying text. Tab between the 'next' and 'previous' navigation controls selecting enter key to work through the narrative.",
+            "slider": "This component requires you to answer the question by positioning a slider handle on a scale. Tab to the slider handle to position the scale. Holding down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
             "text": "",
             "textInput": "This question component requires you to type your answer in the textbox provided. When you have answered the question select the submit button below."
+        },
+        "_buttonAria": {
+            "submitLabel": "Select here to submit your answer.",
+            "disabledLabel": "Unavailable. This button will remain disabled until the question component is completed."
         }
     },
+
     "_latestTrackingId": 13,
     "_pageLevelProgress": {
         "_altText": "of components completed on this page"
