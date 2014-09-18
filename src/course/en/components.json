@@ -413,7 +413,8 @@
                 "_answers": [
                     "trickle",
                     "article assessment"
-                ]
+                ],
+                "placeholder": "Enter answer here"
             }
         ],
         "_pageLevelProgress": {
