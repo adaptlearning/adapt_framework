@@ -121,17 +121,32 @@ define(function(require) {
         setupButtonSettings: function() {
             // Checks if no buttons object is on the model
             // Sets button either from global object or component
-            if (!this.model.has("_buttons")) {
-                this.model.set("_buttons", Adapt.course.get("_buttons"));
-            } else {
-                for(var key in Adapt.course.get("_buttons")) {
-                    var value=this.model.get("_buttons")[key];
-                    if (!value) {
-                        this.model.get("_buttons")[key] = Adapt.course.get("_buttons")[key];
-                    }
-                }
-            }
+            // if (!this.model.has("_buttons")) {
+            //     this.model.set("_buttons", Adapt.course.get("_buttons"));
+            // } else {
+            //     for(var key in Adapt.course.get("_buttons")) {
+            //         var value=this.model.get("_buttons")[key];
+            //         if (!value) {
+            //             this.model.get("_buttons")[key] = Adapt.course.get("_buttons")[key];
+            //         }
+            //     }
+            // }
+            // Checks if no buttons object is on the model
+            // if (!this.model.has("_buttons")) {
+            //     // Always make the global buttons available                
+            //     // Add component specific buttons                
+            //     _.defaults(this.model.get("_buttons"),Adapt.course.get("_buttons"));
+            // }else{
 
+            // }    
+            var compButtons =  this.model.get("_buttons");
+            var globButtons = Adapt.course.get("_buttons");
+                        
+            _.each(compButtons,function (value, key) {  
+                if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
+                if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
+                
+            },this);            
         },
 
         // Used to setup either global or local question weight/score
