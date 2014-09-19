@@ -34,7 +34,7 @@ define(function(require) {
 
 		render: function() {
 			var template = Handlebars.templates['drawer']
-            $(this.el).html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('body');
+            $(this.el).html(template(Adapt.course.get('_globals'))).appendTo('body');
             var shadowTemplate = Handlebars.templates['shadow'];
             $(shadowTemplate()).appendTo('body');
             // Set defer on post render

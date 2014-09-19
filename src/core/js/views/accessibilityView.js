@@ -24,12 +24,12 @@ define(function(require) {
         render: function() {
 
             var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
-            var accessibilityOff = Adapt.course.get('_accessibility')._accessibilityToggleTextOff;
-            var accessibilityOn = Adapt.course.get('_accessibility')._accessibilityToggleTextOn;
+            var accessibilityOff = Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
+            var accessibilityOn = Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
 
             var toggleText = (hasAccessibility) ? accessibilityOff : accessibilityOn;
 
-            this.$el.html(toggleText).attr('aria-label', Adapt.course.get('_accessibility')._ariaLabels.accessibilityToggleButton);
+            this.$el.html(toggleText).attr('aria-label', Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);
 
         },
 
