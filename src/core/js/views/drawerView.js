@@ -15,6 +15,10 @@ define(function(require) {
 
 		initialize: function() {
 			this._isVisible = false;
+			this.drawerDir = 'right';
+            if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
+            	this.drawerDir = 'left';
+            }
 			this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
 			this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
 			this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
@@ -118,7 +122,9 @@ define(function(require) {
 			_.defer(_.bind(function() {
 				var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
 				var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
-				this.$el.velocity({'right': 0}, this.drawerDuration, easing);
+				var direction={};
+				direction[this.drawerDir]=0;
+				this.$el.velocity(direction, this.drawerDuration, easing);
                 $('#shadow').removeClass('display-none');
 				this.addShadowEvent();
 				Adapt.trigger('drawer:opened');
@@ -146,8 +152,10 @@ define(function(require) {
 
 			var duration = Adapt.config.get('_drawer')._duration;
 			duration = (duration) ? duration : 400;
-
-			this.$el.velocity({'right': -this.$el.width()}, this.drawerDuration, easing, _.bind(function() {
+			
+			var direction={};
+			direction[this.drawerDir]=-this.$el.width();
+			this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
 				this.$el.addClass('display-none');
 			}, this));
             $('#shadow').addClass('display-none');
