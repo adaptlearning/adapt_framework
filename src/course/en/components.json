@@ -413,7 +413,8 @@
                 "_answers": [
                     "trickle",
                     "article assessment"
-                ]
+                ],
+                "placeholder": "Enter answer here"
             }
         ],
         "_pageLevelProgress": {
@@ -442,7 +443,6 @@
                 "_graphic": {
                     "alt": "Alt text for option 1",
                     "large": "course/en/images/gqcq-1-large.gif",
-                    "medium": "course/en/images/gqcq-1-medium.gif",
                     "small": "course/en/images/gqcq-1-small.gif"
                 }
             },
@@ -452,7 +452,6 @@
                 "_graphic": {
                     "alt": "Alt text for option 2",
                     "large": "course/en/images/gqcq-2-large.gif",
-                    "medium": "course/en/images/gqcq-2-medium.gif",
                     "small": "course/en/images/gqcq-2-small.gif"
                 }
             }
@@ -646,7 +645,6 @@
         "_graphic": {
             "alt": "alt text",
             "large": "course/en/images/origami-menu-two.jpg",
-            "medium": "course/en/images/origami-menu-two.jpg",
             "small": "course/en/images/origami-menu-two.jpg"
         },
         "_pageLevelProgress": {
@@ -1005,7 +1003,6 @@
                 "_graphic": {
                     "alt": "Alt text for option 1",
                     "large": "course/en/images/gqcq-1-large.gif",
-                    "medium": "course/en/images/gqcq-1-medium.gif",
                     "small": "course/en/images/gqcq-1-small.gif"
                 }
             },
@@ -1015,7 +1012,6 @@
                 "_graphic": {
                     "alt": "Alt text for option 2",
                     "large": "course/en/images/gqcq-2-large.gif",
-                    "medium": "course/en/images/gqcq-2-medium.gif",
                     "small": "course/en/images/gqcq-2-small.gif"
                 }
             }
