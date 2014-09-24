@@ -119,12 +119,27 @@
     .ie8 & {
         max-width:@ie8-max-width;
     }
-    .navigation-back-button {
-        float:left;
+    .icon {
+        &.left {
+            float: left;
+        }
+        &.right {
+            float: right;
+        }
     }
-    .navigation-drawer-toggle-button {
-        float:right;
+    .title {
+        &.left {
+            float: left;
+        }
+        &.right {
+            float: right;
+        }
+        @media all and (max-width:(@device-width-small - 1px)) {
+            display: none;
+        }
     }
+
+    -webkit-transform: translateZ(0); // Force hardware acceleration to avoid nav "jumping" around esp in chrome
 }
 
 // Notify styling
