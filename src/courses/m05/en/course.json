@@ -13,6 +13,51 @@
         "remainingAttempts": "attempts remaining",
         "remainingAttempt": "final attempt"
     },
+    "_navigation": {
+        "_showIconBorders": false,
+        "_showAllTooltipsOnHover": true,
+        "_tooltipsAlwaysVisible": false,
+        "_back": {
+            "_isEnabled": true,
+            "_class":"navigation-back-button",
+            "_iconTypeClass": "icon-controls-small-left",
+            "_tooltip": "Back",
+            "_showTooltip": true,
+            "_layout": "left",
+            "_dataEvent": "backButton"
+        },
+        "_menu": {
+            "_isEnabled": true,
+            "_class":"navigation-menu-button",
+            "_iconTypeClass": "icon-home",
+            "_tooltip": "Menu",
+            "_showTooltip": true,
+            "_layout": "left",
+            "_dataEvent": "menuButton"
+        },
+        "_title": {
+            "_isEnabled": true,
+            "_text": "Adapt Learning",
+            "_class":"navigation-title",
+            "_layout": "left"
+        },
+        "_drawer": {
+            "_isEnabled": true,
+            "_class":"navigation-drawer-toggle-button",
+            "_iconTypeClass": "icon-list",
+            "_tooltip": "Drawer",
+            "_showTooltip": true,
+            "_layout": "right",
+            "_dataEvent": "toggleDrawer"
+        },
+        "_extensions": {
+            "_pageLevelProgress": {
+                "_tooltip": "Progress",
+                "_showTooltip": true,
+                "_layout": "right"
+            }
+        }       
+    },
     "_accessibility": {
         "_accessibilityToggleTextOn": "Turn accessibility on?",
         "_accessibilityToggleTextOff": "Turn accessibility off?",
