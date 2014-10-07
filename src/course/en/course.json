@@ -31,6 +31,7 @@
     },
 
     "_globals": {
+      "menuViewButton": "Select here to view page",
         "_components": {
             "_accordion": {
                 "ariaRegion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Tab to the item titles using the enter key to open the hidden panels. Hold down ALT with the down arrow key to read the panel. After reading continue to tab to the next item title.",
@@ -50,7 +51,8 @@
             },
             "_hotGraphic": {
                "ariaRegion": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
-                "instruction": ""
+                "instruction": "",
+                "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup."
                 },
             "_matching": {
                 "ariaRegion": "his question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
@@ -70,7 +72,9 @@
             },
             "_slider": {
                 "ariaRegion": "his component requires you to answer the question by positioning a slider handle on a scale. Tab to the slider handle to position the scale. Holding down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
-                "instruction": ""
+                "instruction": "",
+                "sliderHandle": "Slider handle. Hold down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
+                "sliderScaleMarkerPrefix": "Slider value"
             },
             "_text": {
                "ariaRegion": "",
@@ -96,10 +100,6 @@
                 "done": "Done",
                 "menuItem": "Menu item. Select to view.",
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
-                "menuViewButton": "Select here to view page",
-                "sliderHandle": "Slider handle. Hold down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
-                "sliderScaleMarkerPrefix": "Slider value",
-                "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup.",
                 "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback."
             } 
         }
