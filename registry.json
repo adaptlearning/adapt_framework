@@ -172,5 +172,8 @@
   },
   { "name": "adapt-assessment-pageLevelProgress",
     "url": "git://github.com/cgkineo/adapt-assessment-pageLevelProgress.git"
+  },
+  { "name": "adapt-framework-kineoFork",
+    "url": "git://github.com/cgkineo/adapt-framework-kineoFork.git"
   }
 ]
