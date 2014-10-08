@@ -13,7 +13,6 @@
         "adapt-contrib-mcq": "develop",
         "adapt-contrib-gmcq": "develop",
         "adapt-contrib-boxMenu": "develop",
-        "adapt-contrib-slider": "develop",
-        "adapt-framework-kineoFork": "master"
+        "adapt-contrib-slider": "develop"
     }
 }
