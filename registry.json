@@ -107,9 +107,6 @@
   { "name": "adapt-stars",
     "url": "git://github.com/cgkineo/adapt-stars.git"
   },
-  { "name": "adapt-kineoFork",
-    "url": "git://github.com/cgkineo/adapt-kineoFork.git"
-  },
   { "name": "adapt-keepScrollPosition",
     "url": "git://github.com/cgkineo/adapt-keepScrollPosition.git"
   },
