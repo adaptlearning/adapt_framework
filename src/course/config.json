@@ -1,5 +1,6 @@
 {
     "_defaultLanguage": "en",
+	"_defaultDirection": "ltr",
     "_questionWeight": 1,
     "_accessibility": {
         "_isEnabled": false,
