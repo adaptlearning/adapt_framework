@@ -68,14 +68,13 @@ define(function() {
             var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')
             var isCorrect = this.model.get('_isCorrect');
             var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
-            var attemptsString;
-
+            var attemptsString;                        
             if (!isComplete && attemptsLeft != 0) {
                 attemptsString = attemptsLeft + " ";
                 if (attemptsLeft > 1) {
-                    attemptsString += this.model.get('_buttons').remainingAttempts;
+                    attemptsString += this.model.get('_buttons').remainingAttemptsText;
                 } else if (attemptsLeft === 1){
-                    attemptsString += this.model.get('_buttons').remainingAttempt;
+                    attemptsString += this.model.get('_buttons').remainingAttemptText;
                 }
 
             } else {

@@ -96,10 +96,6 @@
                 "done": "Done",
                 "menuItem": "Menu item. Select to view.",
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
-                "menuViewButton": "Select here to view page",
-                "sliderHandle": "Slider handle. Hold down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
-                "sliderScaleMarkerPrefix": "Slider value",
-                "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup.",
                 "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback."
             } 
         }
