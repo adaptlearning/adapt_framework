@@ -63,6 +63,10 @@ define(function(require) {
 			if(this.collection.length == 0) {
 				$('.navigation-drawer-toggle-button').addClass('display-none');
 				Adapt.trigger('drawer:noItems');
+			} else if (this.collection.length == 1) {
+				Adapt.drawer._forceNoBackButton = true;
+				var eventCallback = this.collection.models[0].get('eventCallback');
+				$('.navigation-drawer-toggle-button').attr('data-eventCallBack', eventCallback);
 			}
 		},
 
@@ -80,7 +84,11 @@ define(function(require) {
 		},
 
 		toggleDrawer: function() {
-			if (this._isVisible && this._isCustomViewVisible === false) {
+			var eventCallback = $('.navigation-drawer-toggle-button').attr('data-eventCallBack');
+			if (eventCallback) {
+				this.showDrawer(true);
+				Adapt.trigger(eventCallback);
+			} else if (this._isVisible && this._isCustomViewVisible === false) {
 				this._isVisible = false;
 				this.hideDrawer();
 			} else {
