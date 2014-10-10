@@ -9,7 +9,9 @@ define(function(require) {
 	var DrawerCollection = new Backbone.Collection();
 	var Adapt = require('coreJS/adapt');
 
-	var Drawer = {};
+	var Drawer = {
+		_forceNoBackButton: false
+	};
 
 	Drawer.addItem = function(drawerObject, eventCallback) {
 		drawerObject.eventCallback = eventCallback;
@@ -17,7 +19,7 @@ define(function(require) {
 	}
 
 	Drawer.triggerCustomView = function(view, hasBackButton) {
-		if (hasBackButton !== false) {
+		if (hasBackButton !== false && !this._forceNoBackButton) {
 			hasBackButton = true;
 		}
 		Adapt.trigger('drawer:triggerCustomView', view, hasBackButton);
