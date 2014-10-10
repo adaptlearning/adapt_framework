@@ -85,7 +85,6 @@ define(function(require) {
 
 		toggleDrawer: function() {
 			var eventCallback = $('.navigation-drawer-toggle-button').attr('data-eventCallBack');
-			//var _hasBackButton
 			if (eventCallback) {
 				this.showDrawer(true);
 				Adapt.trigger(eventCallback);
