@@ -89,10 +89,9 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        flatten: true,
-                        src: ['src/extensions/adapt-contrib-spoor/required/*'],
+                        src: ['**/*'],
                         dest: 'build/',
-                        filter: 'isFile'
+                        cwd: 'src/extensions/adapt-contrib-spoor/required'
                     }
                 ]
             }
@@ -257,8 +256,7 @@ module.exports = function(grunt) {
 
         concurrent: {
             server: ['connect:server', 'open:server'],
-            spoor: ['connect:spoorOffline', 'open:spoor'],
-            selenium: ['connect:spoorOffline', 'nightwatch']
+            spoor: ['connect:spoorOffline', 'open:spoor']
         },
 
         connect: {
@@ -283,13 +281,6 @@ module.exports = function(grunt) {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
-        },
-
-        nightwatch: {
-            options: {
-                standalone: true,
-                jar_url: 'http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar'
-            }
         }
     });
     
@@ -438,8 +429,6 @@ module.exports = function(grunt) {
     grunt.registerTask('server-scorm', ['concurrent:spoor']);
     grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
     grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
-    
-    grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');

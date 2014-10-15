@@ -9,8 +9,7 @@
   "private": true,
   "ignore": [
     "**/.*",
-    "node_modules",
-    "test"
+    "node_modules"
   ],
   "dependencies": {
   }
