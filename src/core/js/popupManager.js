@@ -29,12 +29,12 @@ define(function(require) {
         //restore tab indexes
         $(tabIndexElements).each(function(index, item) {
             var $item = $(item);
-            var pti = $item.attr('tabindex');
-            if (pti === undefined) {
+           var pti = parseInt($item.attr('ptabindex'));
+            if (pti === undefined || isNaN(pti)) {
                 $item.attr('tabindex', 0);
                 return;
             }
-            $item.attr('ptabindex', "" );
+            $item.attr('ptabindex', "");
             $item.attr('tabindex', pti);
         });
 
