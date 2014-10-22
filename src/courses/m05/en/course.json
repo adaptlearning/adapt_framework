@@ -61,34 +61,47 @@
     "_accessibility": {
         "_accessibilityToggleTextOn": "Turn accessibility on?",
         "_accessibilityToggleTextOff": "Turn accessibility off?",
-        "_ariaLabels": {        
+        "_ariaLabels": { 
+            "page": "",  
+            "menuView": "Select here to enter.",     
             "previous": "Back",
             "navigationBack": "Navigate back",
-            "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
+            "navigationDrawer": "Open course resources and search.",
             "close": "Close",
-            "drawer": "Close Drawer",
-            "closePopup": "Close pop-up",
+            "closeDrawer": "Close Drawer",
+            "drawerBack": "Back to drawer",
+            "closePopup": "Close popup",
             "next": "Next",
             "done": "Done",
-            "menuItem": "Menu item. Select to view.",
-            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off"
+            "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
+            "sliderHandle": "Slider handle. Use the left and right arrow keys to move the slider and give your answer. Then tab to the submit button below and press enter.",
+            "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup.",
+            "feedbackPopUp": "Use the down arrow key to read through your feedback. Tab back to the close button and press enter to close feedback."
         },
         "_ariaRegions": {
-            "accordion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels.",
+            "accordion": "This component is an accordion comprised of collapsible content panels containing display text. Tab to the item titles using the enter key to open the hidden panels. Hold down ALT with the down arrow key to read the panel. After reading continue to tab to the next item title.",
             "blank": "",
-            "gmcq": "This component is a graphical multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
-            "graphic": "This component just displays a graphic",
-            "hotGraphic": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
+            "gmcq": "This component is a graphical multiple choice question. Tab between the items to hear your options. Use the spacebar key to select and de-select your answer. Once you have selected an option tab to the submit button below.",
+            "hotGraphic": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a popup that includes an image with text. You can tab through the pop-up slides or close and select the next hot spot.",
             "matching": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
-            "mcq": "This component is a multiple choice question. You can only select one option. Once you have selected an option select the submit button below",
+            "mcq": "This component is a multiple choice question. Use the spacebar key to select and de-select your answer. Once you have selected an option tab to the submit button below",
             "media": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
             "narrative": "This component displays an image gallery with accompanying text. Select the 'next' and 'previous' navigation controls to work through the narrative.",
             "slider": "This component requires you to answer the question by positioning a slider on a scale. Use the left and right keyboard arrows to position the slider then select the submit button below.",
-            "text": "",
-            "textInput": "This question component requires you to type your answer in the textbox provided. When you have answered the question select the submit button below."
+            "textInput": "This question component requires you to input your answer in the textbox provided. When you have answered the question select the submit button below.",
+            "hotGrid": "This component includes a grid of graphic items. Click the items to view their content."
+        },
+        "_buttonAria": {
+            "submitLabel": "Select here to submit your answer.",
+            "disabledLabel": "Unavailable. This button will remain disabled until the question component is completed.",
+            "modelLabel": "Select here to view model answer.",
+            "feedbackLabel": "Select here to show feedback."
         }
-    },
+    },    
     "_latestTrackingId": 18,
+    "_pageLevelProgress": {
+        "_altText": "of components completed on this page"
+    },
     "_resources": {
         "title": "Resources",
         "description": "Click here to view resources for this course",
@@ -97,6 +110,12 @@
             "document": "PDF",
             "media": "Media",
             "link": "Link"
+        },
+        "_filterAria": {
+            "allAria": "View all resources",
+            "documentAria": "View document resources",
+            "mediaAria": "View media resources",
+            "linkAria": "View resource links"
         },
         "_resourcesItems": [
             {
@@ -122,7 +141,8 @@
     "_search": {
         "title": "",
         "description": "Type in search words and enter",
-        "noResultsMessage": "Sorry, no results were found"
+        "noResultsMessage": "Sorry, no results were found",
+        "buttonAria": "Search"
     },
     "_courseinfo" : {
         "_filterButtons":{
@@ -217,5 +237,14 @@
             "yes": "Yes",
             "no": "No"
         }
+    },
+        "_pageIncompletePrompt" : {
+        "_isEnabled": true,
+        "_buttons": {
+            "yes": "Yes",
+            "no": "No"
+        },
+        "title": "You haven't finished this page yet.",
+        "message": "Are you sure you want to leave?"
     }
 }
