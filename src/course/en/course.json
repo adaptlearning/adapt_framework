@@ -53,7 +53,7 @@
                 "instruction": ""
                 },
             "_matching": {
-                "ariaRegion": "his question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
+                "ariaRegion": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
                 "instruction": ""
             },
             "_mcq": {
