@@ -1,258 +1,263 @@
-[ 
-  {
-	"name": "adapt-contrib-accordion",
-    "url": "https://github.com/cgkineo/adapt-contrib-accordion.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-blank",
-    "url": "https://github.com/adaptlearning/adapt-contrib-blank.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-gmcq",
-    "url": "https://github.com/adaptlearning/adapt-contrib-gmcq.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-graphic",
-    "url": "https://github.com/adaptlearning/adapt-contrib-graphic.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-hotgraphic",
-    "url": "https://github.com/cgkineo/adapt-contrib-hotgraphic.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-matching",
-    "url": "https://github.com/adaptlearning/adapt-contrib-matching.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-mcq",
-    "url": "https://github.com/cgkineo/adapt-contrib-mcq.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-media",
-    "url": "https://github.com/cgkineo/adapt-contrib-media.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-narrative",
-    "url": "https://github.com/adaptlearning/adapt-contrib-narrative.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-slider",
-    "url": "https://github.com/cgkineo/adapt-contrib-slider.git",
-    "branch": "develop"
-  },  
-  {
-	"name": "adapt-contrib-text",
-    "url": "https://github.com/adaptlearning/adapt-contrib-text.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-textInput",
-    "url": "https://github.com/adaptlearning/adapt-contrib-textInput.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-animate",
-    "url": "https://github.com/cgkineo/adapt-animate.git"
-  },
-  {
-	"name": "adapt-contrib-assessment",
-    "url": "https://github.com/cgkineo/adapt-contrib-assessment.git"
-  },
-  {
-	"name": "adapt-assessment-learnerAssistant",
-    "url": "https://github.com/cgkineo/adapt-assessment-learnerAssistant.git"
-  },
-  {
-	"name": "adapt-rollay",
-    "url": "https://github.com/cgkineo/adapt-rollay.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-bottomnavigation",
-    "url": "https://github.com/cgkineo/adapt-bottomnavigation.git"
-  },
-  {
-	"name": "adapt-contrib-trickle",
-    "url": "https://github.com/cgkineo/adapt-contrib-trickle.git"
-  },
-  {
-	"name": "adapt-strickle",
-    "url": "https://github.com/cgkineo/adapt-strickle.git"
-  },
-  {
-	"name": "adapt-contrib-tutor",
-    "url": "https://github.com/adaptlearning/adapt-contrib-tutor.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-search",
-    "url": "https://github.com/cgkineo/adapt-search.git"
-  },
-  {
-	"name": "adapt-assessment-singleSubmit",
-    "url": "https://github.com/cgkineo/adapt-assessment-singleSubmit.git"
-  },
-  {
-	"name": "adapt-contrib-spoor",
-    "url": "https://github.com/cgkineo/adapt-contrib-spoor.git"
-  },
-  {
-	"name": "adapt-bookmarking",
-    "url": "https://github.com/cgkineo/adapt-bookmarking.git"
-  },
-  {
-	"name": "adapt-assessment-results",
-    "url": "https://github.com/cgkineo/adapt-assessment-results.git"
-  },
-  {
-	"name": "adapt-scormDataInfo",
-    "url": "https://github.com/cgkineo/adaptscormDataInfo.git"
-  },
-  {
-	"name": "adapt-courseinfo",
-    "url": "https://github.com/cgkineo/adapt-courseinfo.git"
-  },
-  {
-	"name": "adapt-contrib-resources",
-    "url": "https://github.com/adaptlearning/adapt-contrib-resources.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-pageLevelProgress",
-    "url": "https://github.com/cgkineo/adapt-contrib-pageLevelProgress.git"
-  },
-  {
-	"name": "adapt-contrib-boxMenu",
-    "url": "https://github.com/adaptlearning/adapt-contrib-boxmenu.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-contrib-vanilla",
-    "url": "https://github.com/cgkineo/adapt-contrib-vanilla.git",
-    "branch": "develop"
-  },
-  {
-	"name": "adapt-narrativestrip",
-    "url": "https://github.com/cgkineo/adapt-narrativestrip.git"
-  },
-  {
-	"name": "adapt-timedSequence",
-    "url": "https://github.com/cgkineo/adapt-timedSequence.git"
-  },
-  {
-	"name": "adapt-pageMenuRouter",
-    "url": "https://github.com/cgkineo/adapt-pageMenuRouter.git"
-  },
-  {
-	"name": "adapt-background-switcher",
-    "url": "https://github.com/cgkineo/adapt-background-switcher.git"
-  },
-  {
-	"name": "adapt-stars",
-    "url": "https://github.com/cgkineo/adapt-stars.git"
-  },
-  {
-	"name": "adapt-keepScrollPosition",
-    "url": "https://github.com/cgkineo/adapt-keepScrollPosition.git"
-  },
-  {
-	"name": "adapt-diffuseAssessment",
-    "url": "https://github.com/cgkineo/adapt-diffuseAssessment.git"
-  },
-  {
-	"name": "adapt-userLevelGradingBoundaries",
-    "url": "https://github.com/cgkineo/adapt-userLevelGradingBoundaries.git"
-  },
-  {
-	"name": "adapt-printPreview",
-    "url": "https://github.com/cgkineo/adapt-printPreview.git"
-  },
-  {
-	"name": "adapt-article-reveal",
-    "url": "https://github.com/cgkineo/adapt-article-reveal.git"
-  },
-  {
-	"name": "adapt-pageIncompletePrompt",
-    "url": "https://github.com/cgkineo/adapt-pageIncompletePrompt.git"
-  },
-  {
-	"name": "adapt-cover-menu",
-    "url": "https://github.com/cgkineo/adapt-cover-menu.git"
-  },
-  {
-	"name": "adapt-cheat",
-    "url": "https://github.com/cgkineo/adapt-cheat.git"
-  },
-  {
-	"name": "adapt-ppq",
-    	"url": "https://github.com/cgkineo/adapt-ppq.git",
-    	"branch": "master"
-  },
-  {
-	"name": "adapt-menu-controller",
-    "url": "https://github.com/cgkineo/adapt-menu-controller.git"
-  },
-  {
-	"name": "adapt-quicknav",
-    "url": "https://github.com/cgkineo/adapt-quicknav.git"
-  },
-  {
-	"name": "adapt-shallowBranchingMCQ",
-    "url": "https://github.com/cgkineo/adapt-shallowBranchingMCQ.git"
-  },
-  {
-	"name": "adapt-backgroundImageReady",
-    "url": "https://github.com/cgkineo/adapt-backgroundImageReady.git"
-  },
-  {
-	"name": "adapt-hotspot-menu",
-    "url": "https://github.com/cgkineo/adapt-hotspot-menu.git"
-  },
-  {
-	"name": "adapt-ratioRestrict",
-    "url": "https://github.com/cgkineo/adapt-ratioRestrict.git"
-  },
-  {
-	"name": "adapt-html2img",
-    "url": "https://github.com/cgkineo/adapt-html2img.git"
-  },
-  {
-	"name": "adapt-hotgrid",
-    "url": "https://github.com/cgkineo/adapt-hotgrid.git"
-  },
-  {
-	"name": "adapt-nameInput",
-    "url": "https://github.com/cgkineo/adapt-nameInput.git"
-  },
-  {
-	"name": "adapt-native-media",
-    "url": "https://github.com/cgkineo/adapt-native-media.git"
-  },
-  {
-	"name": "adapt-reveal",
-    "url": "https://github.com/cgkineo/adapt-reveal.git"
-  },
-  {
-	"name": "adapt-assessment-pageLevelProgress",
-    "url": "https://github.com/cgkineo/adapt-assessment-pageLevelProgress.git"
-  },
-  {
-	"name": "adapt-framework-kineoFork",
-    "url": "https://github.com/cgkineo/adapt-framework-kineoFork.git",
-    "branch": "master"
-  },
-  {
-	"name": "adapt-peelBackHotspot",
-	"url": "https://github.com/cgkineo/adapt-peelBackHotspot.git",
-	"branch": "master"
-  }
+[
+	{
+	    "name": "adapt-contrib-accordion",
+	    "url": "https://github.com/cgkineo/adapt-contrib-accordion.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-blank",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-blank.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-gmcq",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-gmcq.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-graphic",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-graphic.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-hotgraphic",
+	    "url": "https://github.com/cgkineo/adapt-contrib-hotgraphic.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-matching",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-matching.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-mcq",
+	    "url": "https://github.com/cgkineo/adapt-contrib-mcq.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-media",
+	    "url": "https://github.com/cgkineo/adapt-contrib-media.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-narrative",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-narrative.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-slider",
+	    "url": "https://github.com/cgkineo/adapt-contrib-slider.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-text",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-text.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-textInput",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-textInput.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-animate",
+	    "url": "https://github.com/cgkineo/adapt-animate.git"
+	},
+	{
+	    "name": "adapt-contrib-assessment",
+	    "url": "https://github.com/cgkineo/adapt-contrib-assessment.git"
+	},
+	{
+	    "name": "adapt-assessment-learnerAssistant",
+	    "url": "https://github.com/cgkineo/adapt-assessment-learnerAssistant.git"
+	},
+	{
+	    "name": "adapt-rollay",
+	    "url": "https://github.com/cgkineo/adapt-rollay.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-bottomnavigation",
+	    "url": "https://github.com/cgkineo/adapt-bottomnavigation.git"
+	},
+	{
+	    "name": "adapt-contrib-trickle",
+	    "url": "https://github.com/cgkineo/adapt-contrib-trickle.git"
+	},
+	{
+	    "name": "adapt-strickle",
+	    "url": "https://github.com/cgkineo/adapt-strickle.git"
+	},
+	{
+	    "name": "adapt-contrib-tutor",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-tutor.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-search",
+	    "url": "https://github.com/cgkineo/adapt-search.git"
+	},
+	{
+	    "name": "adapt-assessment-singleSubmit",
+	    "url": "https://github.com/cgkineo/adapt-assessment-singleSubmit.git"
+	},
+	{
+	    "name": "adapt-contrib-spoor",
+	    "url": "https://github.com/cgkineo/adapt-contrib-spoor.git"
+	},
+	{
+	    "name": "adapt-bookmarking",
+	    "url": "https://github.com/cgkineo/adapt-bookmarking.git"
+	},
+	{
+	    "name": "adapt-assessment-results",
+	    "url": "https://github.com/cgkineo/adapt-assessment-results.git"
+	},
+	{
+	    "name": "adapt-scormDataInfo",
+	    "url": "https://github.com/cgkineo/adaptscormDataInfo.git"
+	},
+	{
+	    "name": "adapt-courseinfo",
+	    "url": "https://github.com/cgkineo/adapt-courseinfo.git"
+	},
+	{
+	    "name": "adapt-contrib-resources",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-resources.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-pageLevelProgress",
+	    "url": "https://github.com/cgkineo/adapt-contrib-pageLevelProgress.git"
+	},
+	{
+	    "name": "adapt-contrib-boxMenu",
+	    "url": "https://github.com/adaptlearning/adapt-contrib-boxmenu.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-contrib-vanilla",
+	    "url": "https://github.com/cgkineo/adapt-contrib-vanilla.git",
+	    "branch": "develop"
+	},
+	{
+	    "name": "adapt-narrativestrip",
+	    "url": "https://github.com/cgkineo/adapt-narrativestrip.git"
+	},
+	{
+	    "name": "adapt-timedSequence",
+	    "url": "https://github.com/cgkineo/adapt-timedSequence.git"
+	},
+	{
+	    "name": "adapt-pageMenuRouter",
+	    "url": "https://github.com/cgkineo/adapt-pageMenuRouter.git"
+	},
+	{
+	    "name": "adapt-background-switcher",
+	    "url": "https://github.com/cgkineo/adapt-background-switcher.git"
+	},
+	{
+	    "name": "adapt-stars",
+	    "url": "https://github.com/cgkineo/adapt-stars.git"
+	},
+	{
+	    "name": "adapt-keepScrollPosition",
+	    "url": "https://github.com/cgkineo/adapt-keepScrollPosition.git"
+	},
+	{
+	    "name": "adapt-diffuseAssessment",
+	    "url": "https://github.com/cgkineo/adapt-diffuseAssessment.git"
+	},
+	{
+	    "name": "adapt-userLevelGradingBoundaries",
+	    "url": "https://github.com/cgkineo/adapt-userLevelGradingBoundaries.git"
+	},
+	{
+	    "name": "adapt-printPreview",
+	    "url": "https://github.com/cgkineo/adapt-printPreview.git"
+	},
+	{
+	    "name": "adapt-article-reveal",
+	    "url": "https://github.com/cgkineo/adapt-article-reveal.git"
+	},
+	{
+	    "name": "adapt-pageIncompletePrompt",
+	    "url": "https://github.com/cgkineo/adapt-pageIncompletePrompt.git"
+	},
+	{
+	    "name": "adapt-cover-menu",
+	    "url": "https://github.com/cgkineo/adapt-cover-menu.git"
+	},
+	{
+	    "name": "adapt-cheat",
+	    "url": "https://github.com/cgkineo/adapt-cheat.git"
+	},
+	{
+	    "name": "adapt-ppq",
+	    "url": "https://github.com/cgkineo/adapt-ppq.git",
+	    "branch": "master"
+	},
+	{
+	    "name": "adapt-menu-controller",
+	    "url": "https://github.com/cgkineo/adapt-menu-controller.git"
+	},
+	{
+	    "name": "adapt-quicknav",
+	    "url": "https://github.com/cgkineo/adapt-quicknav.git"
+	},
+	{
+	    "name": "adapt-shallowBranchingMCQ",
+	    "url": "https://github.com/cgkineo/adapt-shallowBranchingMCQ.git"
+	},
+	{
+	    "name": "adapt-backgroundImageReady",
+	    "url": "https://github.com/cgkineo/adapt-backgroundImageReady.git"
+	},
+	{
+	    "name": "adapt-hotspot-menu",
+	    "url": "https://github.com/cgkineo/adapt-hotspot-menu.git"
+	},
+	{
+	    "name": "adapt-ratioRestrict",
+	    "url": "https://github.com/cgkineo/adapt-ratioRestrict.git"
+	},
+	{
+	    "name": "adapt-html2img",
+	    "url": "https://github.com/cgkineo/adapt-html2img.git"
+	},
+	{
+	    "name": "adapt-hotgrid",
+	    "url": "https://github.com/cgkineo/adapt-hotgrid.git"
+	},
+	{
+	    "name": "adapt-nameInput",
+	    "url": "https://github.com/cgkineo/adapt-nameInput.git"
+	},
+	{
+	    "name": "adapt-native-media",
+	    "url": "https://github.com/cgkineo/adapt-native-media.git"
+	},
+	{
+	    "name": "adapt-reveal",
+	    "url": "https://github.com/cgkineo/adapt-reveal.git"
+	},
+	{
+	    "name": "adapt-assessment-pageLevelProgress",
+	    "url": "https://github.com/cgkineo/adapt-assessment-pageLevelProgress.git"
+	},
+	{
+	    "name": "adapt-framework-kineoFork",
+	    "url": "https://github.com/cgkineo/adapt-framework-kineoFork.git",
+	    "branch": "master"
+	},
+	{
+	    "name": "adapt-peelBackHotspot",
+	    "url": "https://github.com/cgkineo/adapt-peelBackHotspot.git",
+	    "branch": "master"
+	},
+	{
+	    "name": "adapt-youtube",
+	    "url": "https://github.com/cgkineo/adapt-youtube.git",
+	    "branch": "master"
+	}
 ]
