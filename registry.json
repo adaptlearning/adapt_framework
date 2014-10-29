@@ -194,7 +194,8 @@
   },
   {
 	"name": "adapt-ppq",
-    "url": "https://github.com/cgkineo/adapt-ppq.git"
+    	"url": "https://github.com/cgkineo/adapt-ppq.git",
+    	"branch": "master"
   },
   {
 	"name": "adapt-menu-controller",
@@ -248,5 +249,10 @@
 	"name": "adapt-framework-kineoFork",
     "url": "https://github.com/cgkineo/adapt-framework-kineoFork.git",
     "branch": "master"
+  },
+  {
+	"name": "adapt-peelBackHotspot",
+	"url": "https://github.com/cgkineo/adapt-peelBackHotspot.git",
+	"branch": "master"
   }
 ]
