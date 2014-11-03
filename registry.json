@@ -262,7 +262,7 @@
 	},
 	{
 	    "name": "adapt-contrib-confidenceSlider",
-	    "url": "https://github.com/cgkineo/contrib-confidenceSlider.git",
+	    "url": "https://github.com/cgkineo/adapt-contrib-confidenceSlider.git",
 	    "branch": "master"
 	}
 ]
