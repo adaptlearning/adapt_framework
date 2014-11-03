@@ -259,5 +259,10 @@
 	    "name": "adapt-youtube",
 	    "url": "https://github.com/cgkineo/adapt-youtube.git",
 	    "branch": "master"
+	},
+	{
+	    "name": "adapt-contrib-confidenceSlider",
+	    "url": "https://github.com/cgkineo/contrib-confidenceSlider.git",
+	    "branch": "master"
 	}
 ]
