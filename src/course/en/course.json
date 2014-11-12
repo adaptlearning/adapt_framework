@@ -29,7 +29,6 @@
         "remainingAttemptText": "final attempt",
         "disabledAriaLabel": "This button is disabled at the moment"
     },
-
     "_globals": {
         "_components": {
             "_accordion": {
@@ -100,8 +99,6 @@
             } 
         }
     },
-
-
     "_latestTrackingId": 13,
     "_pageLevelProgress": {
         "_altText": "of components completed on this page"

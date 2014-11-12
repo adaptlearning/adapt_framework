@@ -136,8 +136,9 @@
     "_layout": "right",
     "_attempts": 2,
     "_questionWeight": 1,
-    "_isRandom": true,
-    "_selectable": 4,
+    "_isRandom": false,
+    "_selectable": 1,
+    "_shouldUseIndividualItemFeedback": true,
     "title": "Key benefits of a vertical scrolling approach",
     "displayTitle": "Key benefits of a vertical scrolling approach",
     "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
@@ -145,19 +146,23 @@
     "_items": [
       {
         "text": "Vertical scrolling as a means of navigation on the web is common place and therefore familiar to users",
-        "_shouldBeSelected": true
+        "_shouldBeSelected": true,
+        "feedback":"Option one feedback"
       },
       {
         "text": "Placing scrolling at the heart of your approach means designs are more mobile friendly",
-        "_shouldBeSelected": true
+        "_shouldBeSelected": false,
+        "feedback":"Option two feedback"
       },
       {
         "text": "It reduces the need for unnecessary navigation as pages can be as long as they need to be",
-        "_shouldBeSelected": true
+        "_shouldBeSelected": false,
+        "feedback":"Option three feedback"
       },
       {
         "text": "It means that you no longer need to first gain your learners' attention",
-        "_shouldBeSelected": false
+        "_shouldBeSelected": false,
+        "feedback":"Option four feedback"
       }
     ],
     "_feedback": {
