@@ -97,7 +97,7 @@
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
                 "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback. Tab back to the close button and press enter to close feedback.",
                 "sliderHandle": "Slider handle. Use the left and right arrow keys to move the slider and give your answer. Then tab to the submit button below and press enter.",
-                "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup.",
+                "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup."
             } 
         }
     },
