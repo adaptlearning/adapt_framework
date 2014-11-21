@@ -53,7 +53,7 @@
                 "instruction": ""
                 },
             "_matching": {
-                "ariaRegion": "his question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
+                "ariaRegion": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
                 "instruction": ""
             },
             "_mcq": {
@@ -69,7 +69,7 @@
                 "instruction": ""
             },
             "_slider": {
-                "ariaRegion": "his component requires you to answer the question by positioning a slider handle on a scale. Tab to the slider handle to position the scale. Holding down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
+                "ariaRegion": "This component requires you to answer the question by positioning a slider handle on a scale. Tab to the slider handle to position the scale. Holding down the CTRL key and use the comma and period keys to move the slider left and right to give your answer. Then tab to the submit button below and press enter.",
                 "instruction": ""
             },
             "_text": {
@@ -88,15 +88,16 @@
             "_ariaLabels": {
                 "previous": "Back",
                 "navigationBack": "Navigate back",
-                "navigationDrawer": "This is drawer which contains additional course resources. Select here to open.",
                 "close": "Close",
-                "drawer": "Close Drawer",
+                "drawer": "Open course resources and search.",
+                "closeDrawer": "Close Drawer",
                 "closePopup": "Close pop-up",
                 "next": "Next",
                 "done": "Done",
-                "menuItem": "Menu item. Select to view.",
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
-                "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback."
+                "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback. Tab back to the close button and press enter to close feedback.",
+                "sliderHandle": "Slider handle. Use the left and right arrow keys to move the slider and give your answer. Then tab to the submit button below and press enter.",
+                "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup."
             } 
         }
     },
@@ -114,6 +115,12 @@
             "document": "PDF",
             "media": "Media",
             "link": "Link"
+        },
+        "_filterAria": {
+            "allAria": "View all resources",
+            "documentAria": "View document resources",
+            "mediaAria": "View media resources",
+            "linkAria": "View resource links"
         },
         "_resourcesItems": [
             {
