@@ -4,15 +4,15 @@
     "title": "Welcome to Adapt Learning - v1.1.0",
     "displayTitle": "Welcome to Adapt Learning - v1.1.0",
     "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
-    "_buttons": {        
+    "_buttons": {
         "_submit": {
             "buttonText": "Submit",
-            "ariaLabel": "Select here to submit your answer." 
+            "ariaLabel": "Select here to submit your answer."
         },
         "_reset": {
             "buttonText": "Reset",
             "ariaLabel": ""
-         },
+        },
         "_showCorrectAnswer": {
             "buttonText": "Correct Answer",
             "ariaLabel": ""
@@ -29,13 +29,12 @@
         "remainingAttemptText": "final attempt",
         "disabledAriaLabel": "This button is disabled at the moment"
     },
-
     "_globals": {
         "_components": {
             "_accordion": {
                 "ariaRegion": "Accordion component - This component is an accordion comprised of collapsible content panels containing display text. Tab to the item titles using the enter key to open the hidden panels. Hold down ALT with the down arrow key to read the panel. After reading continue to tab to the next item title.",
                 "instruction": ""
-                },
+            },
             "_blank": {
                 "ariaRegion": "",
                 "instruction": ""
@@ -43,15 +42,15 @@
             "_gmcq": {
                 "ariaRegion": "This component is a graphical multiple choice question. Tab between the items to hear your options. Use the spacebar key to select and de-select your answer. Once you have selected an option tab to the submit button below.",
                 "instruction": ""
-                },
+            },
             "_graphic": {
                 "ariaRegion": "",
                 "instruction": ""
             },
             "_hotGraphic": {
-               "ariaRegion": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
+                "ariaRegion": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
                 "instruction": ""
-                },
+            },
             "_matching": {
                 "ariaRegion": "his question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button",
                 "instruction": ""
@@ -61,8 +60,8 @@
                 "instruction": ""
             },
             "_media": {
-               "ariaRegion": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
-               "instruction": ""
+                "ariaRegion": "This is a media component which plays audio and video. To watch or listen click on play. Alternatively you can select the link below for the transcript.",
+                "instruction": ""
             },
             "_narrative": {
                 "ariaRegion": "This component displays an image gallery with accompanying text. Tab between the 'next' and 'previous' navigation controls selecting enter key to work through the narrative.",
@@ -73,15 +72,14 @@
                 "instruction": ""
             },
             "_text": {
-               "ariaRegion": "",
-               "instruction": ""
-             },
+                "ariaRegion": "",
+                "instruction": ""
+            },
             "_textInput": {
                 "ariaRegion": "This question component requires you to type your answer in the textbox provided. When you have answered the question select the submit button below.",
                 "instruction": ""
             }
         },
-
         "_accessibility": {
             "_accessibilityToggleTextOn": "Turn accessibility on?",
             "_accessibilityToggleTextOff": "Turn accessibility off?",
@@ -97,16 +95,15 @@
                 "menuItem": "Menu item. Select to view.",
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
                 "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback."
-            } 
+            }
         }
     },
-
-
-    "_latestTrackingId": 13,
+    "_latestTrackingId": 14,
     "_pageLevelProgress": {
+        "_isEnabled": true,
         "_altText": "of components completed on this page"
     },
-    "_resources": { 
+    "_resources": {
         "title": "Resources",
         "description": "Click here to view resources for this course",
         "_filterButtons": {
@@ -117,22 +114,22 @@
         },
         "_resourcesItems": [
             {
-                "_type":"document",
-                "title":"Button idea",
-                "description":"Click here to see a proposed button idea",
-                "_link":"course/en/pdf/adapt-framework-prototypes-buttons.pdf"
+                "_type": "document",
+                "title": "Button idea",
+                "description": "Click here to see a proposed button idea",
+                "_link": "course/en/pdf/adapt-framework-prototypes-buttons.pdf"
             },
             {
-                "_type":"media",
-                "title":"Adapt Learning YouTube Channel",
-                "description":"Fancy catching up on some Adapt material",
-                "_link":"https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
+                "_type": "media",
+                "title": "Adapt Learning YouTube Channel",
+                "description": "Fancy catching up on some Adapt material",
+                "_link": "https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
             },
             {
-                "_type":"link",
-                "title":"Community Site",
-                "description":"Click here to view our community site",
-                "_link":"https://community.adaptlearning.org"
+                "_type": "link",
+                "title": "Community Site",
+                "description": "Click here to view our community site",
+                "_link": "https://community.adaptlearning.org"
             }
         ]
     }
