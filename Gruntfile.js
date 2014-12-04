@@ -99,11 +99,11 @@ module.exports = function(grunt) {
         concat: {
             less: {
                 src: [
-                    'src/core/less/*.less', 
-                    'src/theme/**/*.less', 
-                    'src/menu/**/*.less', 
-                    'src/components/**/*.less', 
-                    'src/extensions/**/*.less'
+                    'src/core/less/*.less',
+                    'src/menu/**/*.less',
+                    'src/components/**/*.less',
+                    'src/extensions/**/*.less',
+                    'src/theme/**/*.less'
                 ],
                 dest: 'src/less/adapt.less'
             }
