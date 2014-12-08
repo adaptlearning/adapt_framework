@@ -58,7 +58,7 @@ define(function() {
             if (changedAttribute === 'correct') {
                 this.$('.buttons-action').attr('disabled', true);
             } else {
-                this.$('.buttons-action').html(this.model.get('_buttons')[changedAttribute]);
+                this.$('.buttons-action').html(this.model.get('_buttons')["_" + changedAttribute].buttonText);
             }
             this.updateAttemptsCount();
         },
