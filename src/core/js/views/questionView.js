@@ -33,7 +33,7 @@ define(function(require) {
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
             // Checks to see if the question should be reset on revisit
             this.checkIfResetOnRevisit();
-            // This method helps setup defualt settings on the model
+            // This method helps setup default settings on the model
             this.setupDefaultSettings();
             // Blank method for setting up questions before rendering
             this.setupQuestion();
