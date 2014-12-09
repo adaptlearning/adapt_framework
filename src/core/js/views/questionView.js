@@ -113,6 +113,10 @@ define(function(require) {
 
         // Calls default methods to setup on questions
         setupDefaultSettings: function() {
+            if(this.model.get("_canShowModelAnswer") === undefined) {
+                this.model.set("_canShowModelAnswer", true);
+            }
+
             this.setupButtonSettings();
             this.setupWeightSettings();
         },
@@ -311,12 +315,14 @@ define(function(require) {
             var buttonState = this.model.get('_buttonState');
 
             if (isComplete) {
-                if (isCorrect) {
-                    this.model.set('_buttonState', 'correct');
-                } else if (buttonState === 'submit' || buttonState === 'hideCorrectAnswer'){
-                    this.model.set('_buttonState', 'showCorrectAnswer');
+                if (isCorrect || !this.model.get('_canShowModelAnswer')) {
+                    this.model.set('_buttonState', 'complete');
                 } else {
-                    this.model.set('_buttonState', 'hideCorrectAnswer');
+                    if (buttonState === 'submit' || buttonState === 'hideCorrectAnswer'){
+                        this.model.set('_buttonState', 'showCorrectAnswer');
+                    } else {
+                        this.model.set('_buttonState', 'hideCorrectAnswer');
+                    }
                 }
             } else {
                 if (isEnabled) {
