@@ -48,7 +48,7 @@
                 "instruction": ""
             },
             "_hotGraphic": {
-               "ariaRegion": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
+                "ariaRegion": "Below is a component which allows you to click on hot spots over an image. When you click on a hot spot you trigger a pop-up that includes an image with text. You can simply tab through the pop-up slides or close and select the next hot spot.",
                 "instruction": ""
             },
             "_matching": {
