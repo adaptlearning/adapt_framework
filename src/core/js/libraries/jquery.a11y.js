@@ -43,7 +43,7 @@
     var scrollToFocus = function(event) {
         $documentActiveElement = $(event.target);
 
-        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selectted")) $("#a11y-selected").focusNoScroll();
+        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
         //console.log ("Focused on:")
         //console.log($documentActiveElement);
         var readText;
