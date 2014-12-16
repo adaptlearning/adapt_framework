@@ -13,6 +13,15 @@
 
     var $documentActiveElement;
 
+    if (!String.prototype.trim) { //IE8 Fix
+      (function() {
+        // Make sure we trim BOM and NBSP
+        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+        String.prototype.trim = function() {
+          return this.replace(rtrim, '');
+        };
+      })();
+    }
 
     //_.defer(_.bind(func, that)) EQUIVALENT
     var defer = function(func, that) {
@@ -43,7 +52,7 @@
     var scrollToFocus = function(event) {
         $documentActiveElement = $(event.target);
 
-        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
+        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selectted")) $("#a11y-selected").focusNoScroll();
         //console.log ("Focused on:")
         //console.log($documentActiveElement);
         var readText;
@@ -246,7 +255,7 @@
         $element.focusNoScroll();
     };
 
-    $(window)
+    $('body')
     .on("keyup", keyUp)
     .on("keydown", keyDown);
 
@@ -269,8 +278,8 @@
                 .on("focus", tabIndexElements, scrollToFocus)
 
                 if ($("#a11y-focusguard").length === 0) $('body').append($('<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button"></a>').addClass(touchClass))
-                if ($("#a11y-selected").length === 0) $('body').append($('<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">'))
-                if ($("#a11y-focuser").length === 0) $('body').append($('<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1">'))
+                if ($("#a11y-selected").length === 0) $('body').append($('<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>'))
+                if ($("#a11y-focuser").length === 0) $('body').append($('<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>'))
             } else {
                 //REMOVES TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
 
@@ -596,7 +605,7 @@
                 $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
                 continue;
             }
-            var sudoElement = $("<a class='aria-label prevent-default' tabindex='0' role='region'>");
+            var sudoElement = $("<a class='aria-label prevent-default' tabindex='0' role='region'></a>");
             sudoElement.on("click", preventDefault);
             sudoElement.html($item.attr("aria-label"));
             $item.prepend(sudoElement);
