@@ -19,6 +19,25 @@ define(function(require) {
         		}
             }
     	},
+
+        reset: function(type, force) {
+            if (!this.get("_canReset") && !force) return;
+
+            type = type || true;
+
+            this.constructor.__super__.reset.call(this, type, force);
+            
+            if (this.get("_isQuestionType")) {
+                var attempts = this.get('_attempts');
+                this.set({
+                    _attemptsLeft: attempts,
+                    _isCorrect: false,
+                    _isSubmitted: false,
+                    _buttonState: 'submit'
+                });
+            }
+        },
+
         _parent:'blocks',
     	_siblings:'components'
     });
