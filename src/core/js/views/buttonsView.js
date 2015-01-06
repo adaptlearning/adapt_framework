@@ -55,7 +55,7 @@ define(function() {
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-            if (changedAttribute === 'correct') {
+            if (changedAttribute === 'complete') {
                 this.$('.buttons-action').attr('disabled', true);
             } else {
                 this.$('.buttons-action').html(this.model.get('_buttons')[changedAttribute]);
