@@ -25,7 +25,7 @@ define(function(require) {
 
             type = type || true;
 
-            this.constructor.__super__.reset.call(this, type, force);
+            AdaptModel.prototype.reset.call(this, type, force);
             
             if (this.get("_isQuestionType")) {
                 var attempts = this.get('_attempts');
