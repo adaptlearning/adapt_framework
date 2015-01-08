@@ -107,9 +107,15 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/extensions/adapt-contrib-spoor/required/*'],
-                        dest: '<%= outputdir %>build/',
+                        src: ['src/extensions/**/assets/**'],
+                        dest: '<%= outputdir %>build/assets/',
                         filter: 'isFile'
+                    },
+                    {
+                        expand: true,
+                        src: ['**/*'],
+                        dest: '<%= outputdir %>build/',
+                        cwd: 'src/extensions/adapt-contrib-spoor/required/'
                     }
                 ]
             }
@@ -117,11 +123,11 @@ module.exports = function(grunt) {
         concat: {
             less: {
                 src: [
-                    'src/core/less/*.less', 
-                    'src/theme/<%= theme %>/**/*.less', 
-                    'src/menu/**/*.less', 
-                    'src/components/**/*.less', 
-                    'src/extensions/**/*.less'
+                    'src/core/less/*.less',
+                    'src/menu/**/*.less',
+                    'src/components/**/*.less',
+                    'src/extensions/**/*.less',
+                    'src/theme/<%= theme %>/**/*.less'
                 ],
                 dest: 'src/less/adapt.less'
             }
@@ -257,7 +263,8 @@ module.exports = function(grunt) {
                 files: [
                     'src/theme/<%= theme %>/**/fonts/**',
                     'src/theme/<%= theme %>/**/assets/**',
-                    'src/components/**/assets/**'
+                    'src/components/**/assets/**',
+                    'src/extensions/**/assets/**'
                 ],
                 tasks: ['copy:main']
             }
