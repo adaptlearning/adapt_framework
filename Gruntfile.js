@@ -84,14 +84,14 @@ module.exports = function(grunt) {
                         expand: true,
                         flatten: true,
                         src: ["src/extensions/**/assets/**"],
-                        dest: "builds/assets/",
+                        dest: "build/assets/",
                         filter: "isFile"
                     },
                     {
                         expand: true,
                         flatten: true,
                         src: ["src/menu/**/assets/**"],
-                        dest: "builds/assets/",
+                        dest: "build/assets/",
                         filter: "isFile"
                     },
                     {
