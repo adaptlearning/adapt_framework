@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                         dest: 'build/', 
                         filter: 'isFile', 
                         flatten: true
-                    },
+                    }
                 ]
             },
             courseJson: {
@@ -89,9 +89,23 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
+                        flatten: true,
+                        src: ["src/extensions/**/assets/**"],
+                        dest: "builds/assets/",
+                        filter: "isFile"
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ["src/menu/**/assets/**"],
+                        dest: "builds/assets/",
+                        filter: "isFile"
+                    },
+                    {
+                        expand: true,
                         src: ['**/*'],
                         dest: 'build/',
-                        cwd: 'src/extensions/adapt-contrib-spoor/required'
+                        cwd: 'src/extensions/adapt-contrib-spoor/required/'
                     }
                 ]
             }
@@ -227,7 +241,7 @@ module.exports = function(grunt) {
                     '!src/extensions/extensions.js',
                     '!src/menu/menu.js',
                     '!src/theme/theme.js',
-                    '!src/templates/templates.js',
+                    '!src/templates/templates.js'
                 ],
                 tasks: ['compile']
             },
@@ -239,7 +253,9 @@ module.exports = function(grunt) {
                 files: [
                     'src/theme/**/fonts/**',
                     'src/theme/**/assets/**',
-                    'src/components/**/assets/**'
+                    'src/components/**/assets/**',
+                    "src/extensions/**/assets/**",
+                    "src/menu/**/assets/**"
                 ],
                 tasks: ['copy:main']
             }
@@ -393,7 +409,7 @@ module.exports = function(grunt) {
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
                     hasOrphanedParentIds = true;
                     orphanedParentIds.push(parentId);
-                };
+                }
                 
             });
         }
