@@ -76,13 +76,6 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/theme/**/assets/**'],
-                        dest: 'build/adapt/css/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
                         src: ['src/components/**/assets/**'],
                         dest: 'build/assets/',
                         filter: 'isFile'
@@ -100,6 +93,13 @@ module.exports = function(grunt) {
                         src: ["src/menu/**/assets/**"],
                         dest: "builds/assets/",
                         filter: "isFile"
+                    },
+                    {
+                        expand: true,
+                        flatten: true,
+                        src: ['src/theme/**/assets/**'],
+                        dest: 'build/adapt/css/assets/',
+                        filter: 'isFile'
                     },
                     {
                         expand: true,
@@ -252,10 +252,10 @@ module.exports = function(grunt) {
             assets: {
                 files: [
                     'src/theme/**/fonts/**',
-                    'src/theme/**/assets/**',
                     'src/components/**/assets/**',
                     "src/extensions/**/assets/**",
-                    "src/menu/**/assets/**"
+                    "src/menu/**/assets/**",
+                    'src/theme/**/assets/**'
                 ],
                 tasks: ['copy:main']
             }
