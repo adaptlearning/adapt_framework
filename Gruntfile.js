@@ -38,6 +38,61 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            componentsAssets: {
+                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ["**"],
+                        dest: "build/assets/",
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            extensionsAssets: {
+                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ["**"],
+                        dest: "build/assets/",
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            menuAssets: {
+                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ["**"],
+                        dest: "build/assets/",
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            themeAssets: {
+                files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ["**"],
+                        dest: "build/assets/",
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            themeFonts: {
+                files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ["**"],
+                        dest: "build/adapt/css/fonts/",
+                        cwd: cwd + 'fonts/',
+                        filter: "isFile"
+                    };
+                })
+            },
             main: {
                 files: [
                     {
@@ -65,41 +120,6 @@ module.exports = function(grunt) {
                         dest: 'build/libraries/', 
                         filter: 'isFile', 
                         flatten: true
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/theme/**/fonts/**'],
-                        dest: 'build/adapt/css/fonts/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/components/**/assets/**'],
-                        dest: 'build/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ["src/extensions/**/assets/**"],
-                        dest: "build/assets/",
-                        filter: "isFile"
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ["src/menu/**/assets/**"],
-                        dest: "build/assets/",
-                        filter: "isFile"
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/theme/**/assets/**'],
-                        dest: 'build/adapt/css/assets/',
-                        filter: 'isFile'
                     },
                     {
                         expand: true,
@@ -249,15 +269,35 @@ module.exports = function(grunt) {
                 files: ['src/index.html'],
                 tasks: ['copy:index']
             },
-            assets: {
+            componentsAssets: {
                 files: [
-                    'src/theme/**/fonts/**',
-                    'src/components/**/assets/**',
-                    "src/extensions/**/assets/**",
-                    "src/menu/**/assets/**",
+                    'src/components/**/assets/**'
+                ],
+                tasks: ['copy:componentsAssets']
+            },
+            extensionsAssets: {
+                files: [
+                    'src/extensions/**/assets/**'
+                ],
+                tasks: ['copy:extensionsAssets']
+            },
+            menuAssets: {
+                files: [
+                    'src/menu/**/assets/**'
+                ],
+                tasks: ['copy:menuAssets']
+            },
+            themeAssets: {
+                files: [
                     'src/theme/**/assets/**'
                 ],
-                tasks: ['copy:main']
+                tasks: ['copy:themeAssets']
+            },
+            themeFonts: {
+                files: [
+                    'src/theme/**/fonts/**'
+                ],
+                tasks: ['copy:themeFonts']
             }
         },
         
@@ -335,8 +375,6 @@ module.exports = function(grunt) {
         var _ = require('underscore');
 
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
-
-        var currentJsonFile;
 
         var storedIds = [];
 
@@ -449,4 +487,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
+
 };
