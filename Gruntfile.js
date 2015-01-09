@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
     var outputdir = grunt.option('outputdir') || '',
-        theme = grunt.option('theme') || '';
+        theme = grunt.option('theme') || 'adapt-contrib-vanilla';
 
     if (outputdir) {
         if (outputdir.substring(outputdir.length - 1, outputdir.length) !== '/') {
@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             outputdir = outputdir + '/';
         }
         
-        grunt.log.writeln('** Building to ' + outputdir); 
+        grunt.log.writeln('** Building to ' + outputdir);
     }
 
     if (theme) {
@@ -55,6 +55,61 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            componentsAssets: {
+                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            extensionsAssets: {
+                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            menuAssets: {
+                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            themeAssets: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd:'src/theme/<%= theme %>/assets/',
+                        filter: 'isFile'
+                    }
+                ]
+            },
+            themeFonts: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        cwd:'src/theme/<%= theme %>/fonts/',
+                        filter: 'isFile'
+                    }
+                ]
+            },
             main: {
                 files: [
                     {
@@ -82,41 +137,6 @@ module.exports = function(grunt) {
                         dest: '<%= outputdir %>build/libraries/', 
                         filter: 'isFile', 
                         flatten: true
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/theme/<%= theme %>/**/fonts/**'],
-                        dest: '<%= outputdir %>build/adapt/css/fonts/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/components/**/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/extensions/**/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/menu/**/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/theme/<%= theme %>/**/assets/**'],
-                        dest: '<%= outputdir %>build/adapt/css/assets/',
-                        filter: 'isFile'
                     },
                     {
                         expand: true,
@@ -266,15 +286,35 @@ module.exports = function(grunt) {
                 files: ['src/index.html'],
                 tasks: ['copy:index']
             },
-            assets: {
+            componentsAssets: {
                 files: [
-                    'src/theme/<%= theme %>/**/fonts/**',
-                    'src/components/**/assets/**',
-                    'src/extensions/**/assets/**',
-                    'src/menu/**/assets/**',
-                    'src/theme/<%= theme %>/**/assets/**'
+                    'src/components/**/assets/**'
                 ],
-                tasks: ['copy:main']
+                tasks: ['copy:componentsAssets']
+            },
+            extensionsAssets: {
+                files: [
+                    'src/extensions/**/assets/**'
+                ],
+                tasks: ['copy:extensionsAssets']
+            },
+            menuAssets: {
+                files: [
+                    'src/menu/**/assets/**'
+                ],
+                tasks: ['copy:menuAssets']
+            },
+            themeAssets: {
+                files: [
+                    'src/theme/<%= theme %>/assets/**'
+                ],
+                tasks: ['copy:themeAssets']
+            },
+            themeFonts: {
+                files: [
+                    'src/theme/<%= theme %>/fonts/**',
+                ],
+                tasks: ['copy:themeFonts']
             }
         },
         
