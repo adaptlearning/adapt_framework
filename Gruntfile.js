@@ -93,7 +93,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['**'],
-                        dest: '<%= outputdir %>build/assets/',
+                        dest: '<%= outputdir %>build/adapt/css/assets/',
                         cwd:'src/theme/<%= theme %>/assets/',
                         filter: 'isFile'
                     }
@@ -517,4 +517,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
+
 };
