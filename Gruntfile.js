@@ -42,8 +42,8 @@ module.exports = function(grunt) {
                 files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
                     return {
                         expand: true,
-                        src: ["**"],
-                        dest: "build/assets/",
+                        src: ['**'],
+                        dest: 'build/assets/',
                         cwd: cwd + 'assets/',
                         filter: "isFile"
                     };
@@ -53,8 +53,8 @@ module.exports = function(grunt) {
                 files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
                     return {
                         expand: true,
-                        src: ["**"],
-                        dest: "build/assets/",
+                        src: ['**'],
+                        dest: 'build/assets/',
                         cwd: cwd + 'assets/',
                         filter: "isFile"
                     };
@@ -64,8 +64,8 @@ module.exports = function(grunt) {
                 files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
                     return {
                         expand: true,
-                        src: ["**"],
-                        dest: "build/assets/",
+                        src: ['**'],
+                        dest: 'build/assets/',
                         cwd: cwd + 'assets/',
                         filter: "isFile"
                     };
@@ -75,8 +75,8 @@ module.exports = function(grunt) {
                 files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
                     return {
                         expand: true,
-                        src: ["**"],
-                        dest: "build/assets/",
+                        src: ['**'],
+                        dest: 'build/adapt/css/assets/',
                         cwd: cwd + 'assets/',
                         filter: "isFile"
                     };
@@ -86,8 +86,8 @@ module.exports = function(grunt) {
                 files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
                     return {
                         expand: true,
-                        src: ["**"],
-                        dest: "build/adapt/css/fonts/",
+                        src: ['**'],
+                        dest: 'build/adapt/css/fonts/',
                         cwd: cwd + 'fonts/',
                         filter: "isFile"
                     };
