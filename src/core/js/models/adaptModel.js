@@ -58,7 +58,10 @@ define(function (require) {
                     "change:_isComplete": this.checkCompletionStatus
                 }, this);
             }
+            this.init();
         },
+
+        init: function() {},
 
         checkReadyStatus: function () {
             // Filter children based upon whether they are available
