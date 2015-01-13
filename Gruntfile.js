@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
     var outputdir = grunt.option('outputdir') || '',
-        theme = grunt.option('theme') || '';
+        theme = grunt.option('theme') || 'adapt-contrib-vanilla';
 
     if (outputdir) {
         if (outputdir.substring(outputdir.length - 1, outputdir.length) !== '/') {
@@ -9,7 +9,7 @@ module.exports = function(grunt) {
             outputdir = outputdir + '/';
         }
         
-        grunt.log.writeln('** Building to ' + outputdir); 
+        grunt.log.writeln('** Building to ' + outputdir);
     }
 
     if (theme) {
@@ -55,6 +55,61 @@ module.exports = function(grunt) {
                     }
                 ]
             },
+            componentsAssets: {
+                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            extensionsAssets: {
+                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            menuAssets: {
+                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            themeAssets: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/adapt/css/assets/',
+                        cwd:'src/theme/<%= theme %>/assets/',
+                        filter: 'isFile'
+                    }
+                ]
+            },
+            themeFonts: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['**'],
+                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        cwd:'src/theme/<%= theme %>/fonts/',
+                        filter: 'isFile'
+                    }
+                ]
+            },
             main: {
                 files: [
                     {
@@ -85,31 +140,9 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        flatten: true,
-                        src: ['src/theme/<%= theme %>/**/fonts/**'],
-                        dest: '<%= outputdir %>build/adapt/css/fonts/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/theme/<%= theme %>/**/assets/**'],
-                        dest: '<%= outputdir %>build/adapt/css/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/components/**/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/extensions/adapt-contrib-spoor/required/*'],
+                        src: ['**/*'],
                         dest: '<%= outputdir %>build/',
-                        filter: 'isFile'
+                        cwd: 'src/extensions/adapt-contrib-spoor/required/'
                     }
                 ]
             }
@@ -117,11 +150,11 @@ module.exports = function(grunt) {
         concat: {
             less: {
                 src: [
-                    'src/core/less/*.less', 
-                    'src/theme/<%= theme %>/**/*.less', 
-                    'src/menu/**/*.less', 
-                    'src/components/**/*.less', 
-                    'src/extensions/**/*.less'
+                    'src/core/less/*.less',
+                    'src/menu/**/*.less',
+                    'src/components/**/*.less',
+                    'src/extensions/**/*.less',
+                    'src/theme/<%= theme %>/**/*.less'
                 ],
                 dest: 'src/less/adapt.less'
             }
@@ -253,13 +286,35 @@ module.exports = function(grunt) {
                 files: ['src/index.html'],
                 tasks: ['copy:index']
             },
-            assets: {
+            componentsAssets: {
                 files: [
-                    'src/theme/<%= theme %>/**/fonts/**',
-                    'src/theme/<%= theme %>/**/assets/**',
                     'src/components/**/assets/**'
                 ],
-                tasks: ['copy:main']
+                tasks: ['copy:componentsAssets']
+            },
+            extensionsAssets: {
+                files: [
+                    'src/extensions/**/assets/**'
+                ],
+                tasks: ['copy:extensionsAssets']
+            },
+            menuAssets: {
+                files: [
+                    'src/menu/**/assets/**'
+                ],
+                tasks: ['copy:menuAssets']
+            },
+            themeAssets: {
+                files: [
+                    'src/theme/<%= theme %>/assets/**'
+                ],
+                tasks: ['copy:themeAssets']
+            },
+            themeFonts: {
+                files: [
+                    'src/theme/<%= theme %>/fonts/**',
+                ],
+                tasks: ['copy:themeFonts']
             }
         },
         
@@ -462,4 +517,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
+
 };
