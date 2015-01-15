@@ -7,6 +7,7 @@
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
+    var a11y = require('a11y');
     var AccessibilityView = require('coreViews/accessibilityView');
 
     var Accessibility = _.extend({
