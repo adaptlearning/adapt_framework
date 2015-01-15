@@ -8,6 +8,7 @@ require.config({
         velocity: 'core/js/libraries/velocity',
         imageReady: 'core/js/libraries/imageReady',
         inview: 'core/js/libraries/inview',
+        a11y: 'core/js/libraries/jquery.a11y',
         scrollTo: 'core/js/libraries/scrollTo',
         coreJS: 'core/js',
         coreViews: 'core/js/views',
@@ -56,6 +57,12 @@ require.config({
                 'jquery'
             ],
             exports: 'scrollTo'
+        },
+        a11y: {
+            deps: [
+                'jquery'
+            ],
+            exports: 'a11y'
         }
     }
 });
