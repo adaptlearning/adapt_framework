@@ -2,12 +2,13 @@
 
     var nativeSpaceElements = "textarea, input[type='text']";
     var nativeEnterElements = "textarea, a, button, input[type='checkbox']";
-    var ignoreElements = "a,button,input,select,textarea";
-    var styleElements = "b,br,i,abbr,strong";
+    var ignoreElements = "a,button,input,select,textarea,br";
+    var styleElements = "b,i,abbr,strong";
     var tabIndexElements = 'a,button,input,select,textarea,[tabindex]';
     var tabIndexElementFilter = ':not(.a11y-ignore)';
     var focusableElementsFilter = ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)";
     var focusableElements = "a,button,input,select,textarea,[tabindex]";
+    var hideableElements = ".a11y-hideable";
     var ariaLabelElements = "div[aria-label], span[aria-label]";
 
 
@@ -52,7 +53,7 @@
     var scrollToFocus = function(event) {
         $documentActiveElement = $(event.target);
 
-        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selectted")) $("#a11y-selected").focusNoScroll();
+        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
         //console.log ("Focused on:")
         //console.log($documentActiveElement);
         var readText;
@@ -183,6 +184,7 @@
 
         //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
         var newChildren = [];
+        var added = false;
         for (var i = 0; i < $element[0].childNodes.length; i++) {
             var child = $element[0].childNodes[i];
             var cloneChild = $(child.outerHTML)[0];
@@ -190,10 +192,11 @@
             case 3: //TEXT NODE
                 //IF TEXT NODE WRAP IN A TABBABLE SPAn
                 newChildren.push( makeTabbable($("<span>"+child.nodeValue+"</span>")) );
+                added = true;
                 break;
             case 1: //DOM NODE
                 var $child = $(cloneChild);
-                if ($child.is(styleElements) || $child.is(ignoreElements)) {
+                if (($child.is(styleElements) && !added) || $child.is(ignoreElements)) {
                     //IGNORE NATIVELY TABBABLE ELEMENTS AND STYLING ELEMENTS
                     newChildren.push( $child );
                 } else {
@@ -341,6 +344,11 @@
 
     $.fn.a11y_on = function(isOn) {
         isOn = isOn === undefined ? true : isOn;
+        if (isOn) {
+            this.find(hideableElements).filter(tabIndexElementFilter).attr("aria-hidden", "true").attr("tabindex", "-1").addClass("aria-hidden");
+        } else {
+            this.find(hideableElements).filter(tabIndexElementFilter).attr("aria-hidden", "false").removeAttr("tabindex").removeClass("aria-hidden");
+        }
         this.find(tabIndexElements).filter(tabIndexElementFilter).a11y_cntrl(isOn);
         return this;
     };
@@ -469,8 +477,14 @@
             $.a11y.focusStack.push($documentActiveElement);
         }
         var $elements;
-        if (container !== undefined) $elements = $(container).find(tabIndexElements).filter(tabIndexElementFilter);
-        else $elements = $(tabIndexElements).filter(tabIndexElementFilter);
+        var $hideable;
+        if (container !== undefined) {
+            $elements = $(container).find(tabIndexElements).filter(tabIndexElementFilter);
+            $hideable = $(container).find(hideableElements).filter(tabIndexElementFilter);
+        } else {
+            $elements = $(tabIndexElements).filter(tabIndexElementFilter);
+            $hideable = $(hideableElements).filter(tabIndexElementFilter);
+        }
         $elements.each(function(index, item) {
             var $item = $(item);
             if (storeLastTabIndex) {
@@ -482,9 +496,12 @@
                 'aria-hidden': true
             }).addClass("aria-hidden");
         });
+        $hideable.attr("aria-hidden", true).attr("tabindex", "-1").addClass("aria-hidden");
+
         this.find(tabIndexElements).filter(tabIndexElementFilter).attr({
             'tabindex': 0
         }).removeAttr('aria-hidden').removeClass("aria-hidden").parents().removeAttr('aria-hidden').removeClass("aria-hidden");
+        this.find(hideableElements).filter(tabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents().removeAttr('aria-hidden').removeClass("aria-hidden");        
 
         return this;
     };
