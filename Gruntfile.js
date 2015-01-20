@@ -8,14 +8,14 @@ module.exports = function(grunt) {
             // Append a slash if required
             outputdir = outputdir + '/';
         }
-        
+
         grunt.log.writeln('** Building to ' + outputdir);
     }
 
     if (theme) {
         grunt.log.writeln('** Using theme ' + theme);
     }
-    
+
     grunt.initConfig({
         outputdir: outputdir,
         theme: theme,
@@ -27,10 +27,10 @@ module.exports = function(grunt) {
             index: {
                 files: [
                     {
-                        expand: true, 
-                        src: ['src/index.html'], 
-                        dest: '<%= outputdir %>build/', 
-                        filter: 'isFile', 
+                        expand: true,
+                        src: ['src/index.html'],
+                        dest: '<%= outputdir %>build/',
+                        filter: 'isFile',
                         flatten: true
                     },
                 ]
@@ -38,9 +38,9 @@ module.exports = function(grunt) {
             courseJson: {
                 files: [
                     {
-                        expand: true, 
-                        src: ['**/*.json'], 
-                        dest: '<%= outputdir %>build/course/', 
+                        expand: true,
+                        src: ['**/*.json'],
+                        dest: '<%= outputdir %>build/course/',
                         cwd: 'src/course/'
                     }
                 ]
@@ -48,9 +48,9 @@ module.exports = function(grunt) {
             courseAssets: {
                 files: [
                     {
-                        expand: true, 
-                        src: ['**/*','!**/*.json'], 
-                        dest: '<%= outputdir %>build/course/', 
+                        expand: true,
+                        src: ['**/*','!**/*.json'],
+                        dest: '<%= outputdir %>build/course/',
                         cwd: 'src/course/'
                     }
                 ]
@@ -113,29 +113,29 @@ module.exports = function(grunt) {
             main: {
                 files: [
                     {
-                        expand: true, 
-                        src: ['**/*'], 
-                        dest: '<%= outputdir %>build/course/', 
+                        expand: true,
+                        src: ['**/*'],
+                        dest: '<%= outputdir %>build/course/',
                         cwd: 'src/course/'
                     },
                     {
-                        expand: true, 
-                        src: ['src/core/js/scriptLoader.js'], 
-                        dest: '<%= outputdir %>build/adapt/js/', 
-                        filter: 'isFile', 
+                        expand: true,
+                        src: ['src/core/js/scriptLoader.js'],
+                        dest: '<%= outputdir %>build/adapt/js/',
+                        filter: 'isFile',
                         flatten: true
                     },
                     {
-                        expand: true, 
+                        expand: true,
                         src: [
-                            'src/core/js/libraries/require.js', 
+                            'src/core/js/libraries/require.js',
                             'src/core/js/libraries/modernizr.js',
                             'src/core/js/libraries/json2.js',
                             'src/core/js/libraries/consoles.js',
                             'src/core/js/libraries/swfObject.js'
-                        ], 
-                        dest: '<%= outputdir %>build/libraries/', 
-                        filter: 'isFile', 
+                        ],
+                        dest: '<%= outputdir %>build/libraries/',
+                        filter: 'isFile',
                         flatten: true
                     },
                     {
@@ -274,7 +274,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: [
-                    'src/**/*.js', 
+                    'src/**/*.js',
                     '!src/extensions/extensions.js',
                     '!src/menu/menu.js',
                     '!src/theme/theme.js',
@@ -317,7 +317,7 @@ module.exports = function(grunt) {
                 tasks: ['copy:themeFonts']
             }
         },
-        
+
         open: {
             server: {
                 path: 'http://localhost:<%= connect.server.options.port %>/'
@@ -329,8 +329,7 @@ module.exports = function(grunt) {
 
         concurrent: {
             server: ['connect:server', 'open:server'],
-            spoor: ['connect:spoorOffline', 'open:spoor'],
-            selenium: ['connect:spoorOffline', 'nightwatch']
+            spoor: ['connect:spoorOffline', 'open:spoor']
         },
 
         connect: {
@@ -349,22 +348,15 @@ module.exports = function(grunt) {
                 }
             }
         },
-        
+
         adapt_insert_tracking_ids: {
           options: {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
-        },
-
-        nightwatch: {
-            options: {
-                standalone: true,
-                jar_url: 'http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar'
-            }
         }
     });
-    
+
     grunt.loadNpmTasks('grunt-contrib-concat');
 
     // This is a simple function to take the course's config.json and append the theme.json
@@ -387,8 +379,8 @@ module.exports = function(grunt) {
         var configJson = grunt.file.readJSON('src/course/config.json');
         var themeJson = grunt.file.readJSON(themeJsonFile);
 
-        // This effectively combines the JSON   
-        for (var prop in themeJson) {           
+        // This effectively combines the JSON
+        for (var prop in themeJson) {
             configJson[prop] = themeJson[prop];
         }
 
@@ -410,7 +402,7 @@ module.exports = function(grunt) {
         var storedFileIds = {};
 
         var hasOrphanedParentIds = false;
-        
+
         var orphanedParentIds = [];
 
         // method to check json ids
@@ -420,7 +412,7 @@ module.exports = function(grunt) {
             grunt.file.expand({filter: "isDirectory"}, "src/course/*").forEach(function(path) {
                 // Stored current path of folder - used later to read .json files
                 currentCourseFolder = path;
-                
+
                 // Go through each list of declared course files
                 listOfCourseFiles.forEach(function(jsonFileName) {
                     // Make sure course.json file is not searched
@@ -437,9 +429,9 @@ module.exports = function(grunt) {
                         });
 
                     }
-                    
+
                 });
-                
+
                 checkDuplicateIds();
 
                 checkEachElementHasParentId();
@@ -475,12 +467,12 @@ module.exports = function(grunt) {
                     hasOrphanedParentIds = true;
                     orphanedParentIds.push(parentId);
                 };
-                
+
             });
         }
 
         function checkEachElementHasParentId() {
-            
+
             _.each(storedFileParentIds, function(value, key) {
                 switch(key){
                     case "contentObjects":
@@ -512,8 +504,6 @@ module.exports = function(grunt) {
     grunt.registerTask('server-build', ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
     
-    grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
-
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');

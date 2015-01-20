@@ -57,5 +57,8 @@ require.config({
             ],
             exports: 'scrollTo'
         }
-    }
+    },
+    packages: [
+
+    ]
 });
