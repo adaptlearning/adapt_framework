@@ -87,13 +87,15 @@ define(function(require) {
 
 		updateIndexPosition: function() {
 			if (!this.hasBeenRemoved) {
-				this.model.collection.each(function(model, index) {
-					
+				var models = this.model.collection.models;
+				for (var i = 0 , len = models.length; i < len; i++) {
+					var index = i;
+					var model = models[i];
 					if (model.get('_isActive') === true) {
 						model.set('_index', index);
 						this.updatePushPosition();
 					}
-				}, this)
+				}
 			}
 		},
 

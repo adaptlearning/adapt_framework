@@ -128,11 +128,10 @@ define(function(require) {
             var globButtons = Adapt.course.get("_buttons");
             // check all the components buttons
             // if they are empty use the global default
-            _.each(compButtons,function (value, key) {  
+            for (var key in compButtons) {
                 if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
                 if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
-                
-            },this);            
+            }
         },
 
         // Used to setup either global or local question weight/score

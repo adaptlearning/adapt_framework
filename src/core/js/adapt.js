@@ -51,7 +51,7 @@ define(function(require){
 
         // Removes . symbol from the selector to find the model
         var currentModelId = selector.replace(/\./g, '');
-        var currentModel = Adapt[Adapt.mapById(currentModelId)].findWhere({_id: currentModelId});
+        var currentModel = Adapt.findById(currentModelId);
         // Get current page to check whether this is the current page
         var currentPage = currentModel.findAncestor('contentObjects');
 
@@ -91,16 +91,15 @@ define(function(require){
         // Setup each collection
         var collections = ["contentObjects", "articles", "blocks", "components"];
 
-        _.each(collections, function(collection) {
-
-            // Go through each collection and store id
-            Adapt[collection].each(function(model) {
-
+        for (var i = 0, len = collections.length; i < len; i++) {
+            var collection = collections[i];
+            var models = Adapt[collection].models;
+            for (var j = 0, len = models.length; j < len; j++) {
+                var model = models[j];
                 mappedIds[model.get('_id')] = collection;
 
-            });
-
-        });
+            }
+        }
 
     }
 
@@ -118,7 +117,7 @@ define(function(require){
             return Adapt.course;
         }
 
-        return Adapt[Adapt.mapById(id)].findWhere({_id: id});
+        return Adapt[Adapt.mapById(id)]._byAdaptID[id][0];
 
     }
     
