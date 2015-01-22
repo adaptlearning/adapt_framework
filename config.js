@@ -18,9 +18,9 @@ require.config({
         templates: 'templates/templates'
     },
     shim: {
-        jquery: [
-
-        ],
+        jquery: {
+            exports: '$'
+        },
         backbone: {
             deps: [
                 'underscore',
@@ -64,5 +64,8 @@ require.config({
             ],
             exports: 'a11y'
         }
-    }
+    },
+    packages: [
+
+    ]
 });
