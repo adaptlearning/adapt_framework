@@ -61,7 +61,7 @@ define(function(require){
         }
 
         // If the element is on another page navigate and wait until pageView:ready is fired
-        // Then scrollTo element
+        // Then scrollTo elementn
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
                 Adapt.scrollTo(selector, settings)
@@ -94,7 +94,7 @@ define(function(require){
         for (var i = 0, len = collections.length; i < len; i++) {
             var collection = collections[i];
             var models = Adapt[collection].models;
-            for (var j = 0, len = models.length; j < len; j++) {
+            for (var j = 0, lenj = models.length; j < lenj; j++) {
                 var model = models[j];
                 mappedIds[model.get('_id')] = collection;
 
