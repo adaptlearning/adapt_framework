@@ -1,7 +1,8 @@
 module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
     var outputdir = grunt.option('outputdir') || '',
-        theme = grunt.option('theme') || 'adapt-contrib-vanilla';
+        theme = grunt.option('theme') || 'adapt-contrib-vanilla',
+        menu = grunt.option('menu') || 'adapt-contrib-boxMenu';
 
     if (outputdir) {
         if (outputdir.substring(outputdir.length - 1, outputdir.length) !== '/') {
@@ -15,10 +16,15 @@ module.exports = function(grunt) {
     if (theme) {
         grunt.log.writeln('** Using theme ' + theme);
     }
+
+    if (menu) {
+        grunt.log.writeln('** Using menu ' + menu);
+    }
     
     grunt.initConfig({
         outputdir: outputdir,
         theme: theme,
+        menu: menu,
         pkg: grunt.file.readJSON('package.json'),
         jsonlint: {
             src: [ 'src/course/**/*.json' ]
@@ -78,15 +84,15 @@ module.exports = function(grunt) {
                 })
             },
             menuAssets: {
-                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
-                    return {
+                files: [ 
+                    {
                         expand: true,
                         src: ['**'],
                         dest: '<%= outputdir %>build/assets/',
-                        cwd: cwd + 'assets/',
+                        cwd: 'src/menu/<%= menu %>/assets/',
                         filter: "isFile"
-                    };
-                })
+                    }
+                ]
             },
             themeAssets: {
                 files: [
@@ -151,7 +157,7 @@ module.exports = function(grunt) {
             less: {
                 src: [
                     'src/core/less/*.less',
-                    'src/menu/**/*.less',
+                    'src/menu/<%= menu %>/**/*.less',
                     'src/components/**/*.less',
                     'src/extensions/**/*.less',
                     'src/theme/<%= theme %>/**/*.less'
@@ -216,6 +222,7 @@ module.exports = function(grunt) {
                 dest: 'src/menu/menu.js',
                 options: {
                     baseUrl: "src",
+                    include: menu,
                     moduleName: 'menu/menu'
                 }
             },
@@ -300,7 +307,7 @@ module.exports = function(grunt) {
             },
             menuAssets: {
                 files: [
-                    'src/menu/**/assets/**'
+                    'src/menu/<%= menu %>/assets/**'
                 ],
                 tasks: ['copy:menuAssets']
             },
@@ -367,30 +374,32 @@ module.exports = function(grunt) {
     
     grunt.loadNpmTasks('grunt-contrib-concat');
 
-    // This is a simple function to take the course's config.json and append the theme.json
+    // This is a simple function to take the course's config.json and append the theme and menu .json
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
 
-        var themeJsonFile = '';
+        var customItems = ['theme', 'menu'];
+        var configJson = grunt.file.readJSON('src/course/config.json');
+        
+        customItems.forEach(function (customItem) {
+            // As any theme folder may be used, we need to first find the location of the
+            // theme.json file
+            grunt.file.recurse('src/' + customItem + '/', function(abspath, rootdir, subdir, filename) {
+                if (filename == customItem + '.json') {
+                    customItemJsonFile = rootdir + subdir + '/' + filename;
+                }
+            });
 
-        // As any theme folder may be used, we need to first find the location of the
-        // theme.json file
-        grunt.file.recurse('src/theme/', function(abspath, rootdir, subdir, filename) {
-            if (filename == 'theme.json') {
-                themeJsonFile = rootdir + subdir + '/' + filename;
+            if (customItemJsonFile == '') {
+                grunt.fail.fatal("Unable to locate " + customItem + ".json, please ensure a valid " + customItem + " exists");
+            }
+
+            var customItemJson = grunt.file.readJSON(customItemJsonFile);
+
+            // This effectively combines the JSON   
+            for (var prop in customItemJson) {           
+                configJson[prop] = customItemJson[prop];
             }
         });
-
-        if (themeJsonFile == '') {
-            grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
-        }
-
-        var configJson = grunt.file.readJSON('src/course/config.json');
-        var themeJson = grunt.file.readJSON(themeJsonFile);
-
-        // This effectively combines the JSON   
-        for (var prop in themeJson) {           
-            configJson[prop] = themeJson[prop];
-        }
 
         grunt.file.write('build/course/config.json', JSON.stringify(configJson));
     });
