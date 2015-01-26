@@ -14,6 +14,7 @@
         "adapt-contrib-gmcq": "develop",
         "adapt-contrib-boxMenu": "develop",
         "adapt-contrib-slider": "develop",
-        "adapt-framework-kineoFork": "master"
+        "adapt-framework-kineoFork": "master",
+        "test": "master"
     }
 }

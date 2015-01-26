@@ -172,5 +172,8 @@
   },
   { "name": "adapt-framework-kineoFork",
     "url": "git://github.com/cgkineo/adapt-framework-kineoFork.git"
+  },
+  { "name": "test",
+    "url": "git://github.com/cgkineo/test.git"
   }
 ]
