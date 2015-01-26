@@ -21,10 +21,12 @@ require([
     'coreModels/articleModel',
     'coreModels/blockModel',
     'coreModels/componentModel',
-    'templates',
     'velocity',
     'imageReady',
     'inview',
+    'handlebars',
+    'templates',
+    'jquery',
     'scrollTo',
     'components/components',
     'extensions/extensions',
@@ -33,6 +35,8 @@ require([
 ], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
     // Append loading template and show
+    window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
+
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
 
