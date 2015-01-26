@@ -1,26 +1,55 @@
 /**
 * CGKineo Internal Adapt Gruntfile.js
-* Authors: Thomas Taylor <thomas.taylor@kineo.com>, Gavin McMaster <gavin.mcmaster@kineo.com>
+* Authors: Thomas Taylor <thomas.taylor@kineo.com>, Gavin McMaster <gavin.mcmaster@kineo.com>, Tom Greenfield <tom.greenfield@kineo.com>
 * version: 1.0
-*
-* TODO: add support for multiple menus
 */
 module.exports = function(grunt) {
-    require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
-
-    var config = require('./grunt_config.json');
+    require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
+    var chalk = require("chalk");
+    var config = require("./grunt_config.json");
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON("package.json"),
 
         jsonlint: {
-            sample: {
-                src: [ 'src/courses/<%= grunt.option("moduleID") %>/**/*.json' ]
-            }
+            all: ["src/courses/<%= grunt.option('moduleID') %>/**/*.json"]
         },
 
         clean: {
-            build: ['builds/<%= grunt.option("moduleID") %>/**']
+            buildMod: ["builds/<%= grunt.option('moduleID') %>/"],
+            buildAll: ["builds/"]
+        },
+
+        jshint: {
+            options: {
+                maxerr: 100,
+                reporter: require("jshint-stylish"),
+                force: true,
+                freeze: true,
+                undef: true,
+                asi: true,
+                eqnull: true,
+                sub: true,
+                expr: true,
+                boss: true,
+                laxbreak: true,
+                browser: true,
+                jquery: true,
+                globals: {
+                    "define": false,
+                    "require": false,
+                    "console": false,
+                    "_": false,
+                    "Backbone": false,
+                    "Handlebars": false,
+                    "Modernizr": false
+                }
+            },
+            core: ["src/core/**/*.js", "!src/core/js/libraries/*.js"],
+            menu: ["src/menu/**/js/*.js"],
+            theme: ["src/theme/**/js/*.js"],
+            extensions: ["src/extensions/**/js/*.js", "!**/**/*.min.js"],
+            components: ["src/components/**/js/*.js", "!**/**/*.min.js"]
         },
 
         copy: {
@@ -28,9 +57,9 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['src/index.html'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>',
-                        filter: 'isFile',
+                        src: ["src/index.html"],
+                        dest: "builds/<%= grunt.option('moduleID') %>",
+                        filter: "isFile",
                         flatten: true
                     },
                 ]
@@ -39,9 +68,9 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*.json', '!**/config.json'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/course/',
-                        cwd: 'src/courses/<%= grunt.option("moduleID") %>'
+                        src: ["**/*.json", "!**/config.json"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/course/",
+                        cwd: "src/courses/<%= grunt.option('moduleID') %>"
                     }
                 ]
             },
@@ -49,9 +78,9 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*','!**/*.json'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/course/',
-                        cwd: 'src/courses/<%= grunt.option("moduleID") %>'
+                        src: ["**/*","!**/*.json"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/course/",
+                        cwd: "src/courses/<%= grunt.option('moduleID') %>"
                     }
                 ]
             },
@@ -59,64 +88,64 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/course/',
-                        cwd: 'src/courses/<%= grunt.option("moduleID") %>'
+                        src: ["**/*"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/course/",
+                        cwd: "src/courses/<%= grunt.option('moduleID') %>"
                     },
                     {
                         expand: true,
-                        src: ['src/core/js/scriptLoader.js'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/adapt/js/',
-                        filter: 'isFile',
+                        src: ["src/core/js/scriptLoader.js"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/adapt/js/",
+                        filter: "isFile",
                         flatten: true
                     },
                     {
                         expand: true,
                         src: [
-                            'src/core/js/libraries/require.js',
-                            'src/core/js/libraries/modernizr.js',
-                            'src/core/js/libraries/json2.js',
-                            'src/core/js/libraries/consoles.js',
-                            'src/core/js/libraries/swfObject.js'
+                            "src/core/js/libraries/require.js",
+                            "src/core/js/libraries/modernizr.js",
+                            "src/core/js/libraries/json2.js",
+                            "src/core/js/libraries/consoles.js",
+                            "src/core/js/libraries/swfObject.js"
                         ],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/libraries/',
-                        filter: 'isFile',
+                        dest: "builds/<%= grunt.option('moduleID') %>/libraries/",
+                        filter: "isFile",
                         flatten: true
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/theme/<%= grunt.option("theme") %>/fonts/**'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/adapt/css/fonts/',
-                        filter: 'isFile'
+                        src: ["src/theme/<%= grunt.option('theme') %>/fonts/**"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/adapt/css/fonts/",
+                        filter: "isFile"
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/theme/<%= grunt.option("theme") %>/assets/**'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/adapt/css/assets/',
-                        filter: 'isFile'
+                        src: ["src/theme/<%= grunt.option('theme') %>/assets/**"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/adapt/css/assets/",
+                        filter: "isFile"
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/components/**/assets/**'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/assets/',
-                        filter: 'isFile'
+                        src: ["src/components/**/assets/**"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/assets/",
+                        filter: "isFile"
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/extensions/**/assets/**'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/assets/',
-                        filter: 'isFile'
+                        src: ["src/extensions/**/assets/**"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/assets/",
+                        filter: "isFile"
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: ['src/extensions/adapt-contrib-spoor/required/*'],
-                        dest: 'builds/<%= grunt.option("moduleID") %>/',
-                        filter: 'isFile'
+                        src: ["src/extensions/adapt-contrib-spoor/required/*"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/",
+                        filter: "isFile"
                     }
                 ]
             }
@@ -125,13 +154,13 @@ module.exports = function(grunt) {
         concat: {
             less: {
                 src: [
-                    'src/core/less/*.less',
-                    'src/menu/**/*.less',
-                    'src/components/**/*.less',
-                    'src/extensions/**/*.less',
-                    'src/theme/<%= grunt.option("theme") %>/less/*.less'
+                    "src/core/less/*.less",
+                    "src/menu/**/*.less",
+                    "src/components/**/*.less",
+                    "src/extensions/**/*.less",
+                    "src/theme/<%= grunt.option('theme') %>/less/*.less"
                 ],
-                dest: 'src/less/adapt.less'
+                dest: "src/less/adapt.less"
             }
         },
 
@@ -141,7 +170,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'builds/<%= grunt.option("moduleID") %>/adapt/css/adapt.css' : 'src/less/adapt.less'
+                    "builds/<%= grunt.option('moduleID') %>/adapt/css/adapt.css" : "src/less/adapt.less"
                 }
             }
         },
@@ -159,52 +188,52 @@ module.exports = function(grunt) {
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
-                    'src/templates/templates.js': 'src/**/*.hbs'
+                    "src/templates/templates.js": "src/**/*.hbs"
                 }
             }
         },
 
         bower: {
             target: {
-                rjsConfig: './config.js',
+                rjsConfig: "./config.js",
                 options: {
-                    baseUrl: 'src'
+                    baseUrl: "src"
                 }
             }
         },
 
-        'requirejs-bundle': {
+        "requirejs-bundle": {
             components: {
-                src: 'src/components',
-                dest: 'src/components/components.js',
+                src: "src/components",
+                dest: "src/components/components.js",
                 options: {
                     baseUrl: "src",
-                    moduleName: 'components/components'
+                    moduleName: "components/components"
                 }
             },
             extensions: {
-                src: 'src/extensions/',
-                dest: 'src/extensions/extensions.js',
+                src: "src/extensions/",
+                dest: "src/extensions/extensions.js",
                 options: {
                     baseUrl: "src",
-                    moduleName: 'extensions/extensions'
+                    moduleName: "extensions/extensions"
                 }
             },
             menu: {
-                src: 'src/menu/',
-                dest: 'src/menu/menu.js',
+                src: "src/menu/",
+                dest: "src/menu/menu.js",
                 options: {
                     baseUrl: "src",
-                    moduleName: 'menu/menu'
+                    moduleName: "menu/menu"
                 }
             },
             theme: {
-                src: 'src/theme/',
-                dest: 'src/theme/theme.js',
+                src: "src/theme/",
+                dest: "src/theme/theme.js",
                 options: {
                     include: "<%= grunt.option('theme') %>",
                     baseUrl: "src",
-                    moduleName: 'themes/themes'
+                    moduleName: "themes/themes"
                 }
             }
         },
@@ -215,7 +244,7 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: './builds/<%= grunt.option("moduleID") %>/adapt/js/adapt.min.js',
+                    out: "./builds/<%= grunt.option('moduleID') %>/adapt/js/adapt.min.js",
                     generateSourceMaps: true,
                     preserveLicenseComments:false,
                     optimize: "none"
@@ -226,7 +255,7 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: './builds/<%= grunt.option("moduleID") %>/adapt/js/adapt.min.js',
+                    out: "./builds/<%= grunt.option('moduleID') %>/adapt/js/adapt.min.js",
                     optimize:"uglify2"
                 }
             }
@@ -234,79 +263,79 @@ module.exports = function(grunt) {
 
         watch: {
             less: {
-                files: ['src/**/*.less'],
-                tasks: ['concat', 'less'],
+                files: ["src/**/*.less"],
+                tasks: ["concat", "less"],
                 options: {
                     spawn: false,
                 },
             },
             handlebars: {
-                files: ['src/**/*.hbs'],
-                tasks: ['handlebars', 'compile'],
+                files: ["src/**/*.hbs"],
+                tasks: ["handlebars", "compile"],
                 options: {
                     spawn: false,
                 },
             },
             courseJson: {
                 files: [
-                    'src/courses/<%= grunt.option("moduleID") %>/**/*.json',
-                    '!src/courses/<%= grunt.option("moduleID") %>/config.json'
+                    "src/courses/<%= grunt.option('moduleID') %>/**/*.json",
+                    "!src/courses/<%= grunt.option('moduleID') %>/config.json"
                 ],
-                tasks : ['jsonlint', 'copy:courseJson'],
+                tasks : ["jsonlint", "copy:courseJson"],
                 options: {
                     spawn: false,
                 },
             },
             configJson: {
                 files: [
-                    'src/courses/<%= grunt.option("moduleID") %>/config.json',
-                    'src/theme/<%= grunt.option("theme") %>/theme.json'
+                    "src/courses/<%= grunt.option('moduleID') %>/config.json",
+                    "src/theme/<%= grunt.option('theme') %>/theme.json"
                 ],
-                tasks : ['jsonlint', 'create-json-config'],
+                tasks : ["jsonlint", "create-json-config"],
                 options: {
                     spawn: false,
                 },
             },
             courseAssets: {
                 files: [
-                    'src/courses/<%= grunt.option("moduleID") %>/**/*',
-                    '!src/courses/<%= grunt.option("moduleID") %>/**/*.json',
-                    '!src/courses/<%= grunt.option("moduleID") %>/config.json'
+                    "src/courses/<%= grunt.option('moduleID') %>/**/*",
+                    "!src/courses/<%= grunt.option('moduleID') %>/**/*.json",
+                    "!src/courses/<%= grunt.option('moduleID') %>/config.json"
                 ],
-                tasks : ['copy:courseAssets'],
+                tasks : ["copy:courseAssets"],
                 options: {
                     spawn: false,
                 },
             },
             js: {
                 files: [
-                    'src/**/*.js',
-                    '!src/components/components.js',
-                    '!src/extensions/extensions.js',
-                    '!src/menu/menu.js',
-                    '!src/theme/theme.js',
-                    '!src/templates/templates.js',
+                    "src/**/*.js",
+                    "!src/components/components.js",
+                    "!src/extensions/extensions.js",
+                    "!src/menu/menu.js",
+                    "!src/theme/theme.js",
+                    "!src/templates/templates.js",
                 ],
-                tasks: ['compile'],
+                tasks: ["compile"],
                 options: {
                     spawn: false,
                 },
             },
             index: {
-                files: ['src/index.html'],
-                tasks: ['copy:index'],
+                files: ["src/index.html"],
+                tasks: ["copy:index"],
                 options: {
                     spawn: false,
                 },
             },
             assets: {
                 files: [
-                    'src/theme/<%= grunt.option("theme") %>/fonts/**',
-                    'src/theme/<%= grunt.option("theme") %>/assets/**',
-                    'src/components/**/assets/**',
-                    'src/extensions/**/assets/**'
+                    "src/theme/<%= grunt.option('theme') %>/fonts/**",
+                    "src/theme/<%= grunt.option('theme') %>/assets/**",
+                    "src/components/**/assets/**",
+                    "src/extensions/**/assets/**"
                 ],
-                tasks: ['copy:main'],
+                tasks: ["copy:main"],
                 options: {
                     spawn: false,
                 },
@@ -315,37 +344,37 @@ module.exports = function(grunt) {
 
         open: {
             server: {
-                path: 'http://localhost:<%= connect.server.options.port %>/'
+                path: "http://localhost:<%= connect.server.options.port %>/"
             },
             spoor: {
-                path: 'http://localhost:<%= connect.server.options.port %>/main.html'
+                path: "http://localhost:<%= connect.server.options.port %>/main.html"
             }
         },
 
         concurrent: {
-            server: ['connect:server', 'open:server'],
-            spoor: ['connect:spoorOffline', 'open:spoor'],
-            selenium: ['connect:spoorOffline', 'nightwatch']
+            server: ["connect:server", "open:server"],
+            spoor: ["connect:spoorOffline", "open:spoor"],
+            selenium: ["connect:spoorOffline", "nightwatch"]
         },
 
         connect: {
             server: {
                 options: {
                     port: 9001,
-                    base: 'builds/<%= grunt.option("moduleID") %>',
+                    base: "builds/<%= grunt.option('moduleID') %>",
                     keepalive:true
                 }
             },
             spoorOffline: {
                 options: {
                     port: 9001,
-                    base: 'builds/<%= grunt.option("moduleID") %>',
+                    base: "builds/<%= grunt.option('moduleID') %>",
                     keepalive:true
                 }
             }
         },
 
-        adapt_insert_tracking_ids: {
+        adapt_reset_tracking_ids: {
             options: {
                 courseFile: "src/courses/<%= grunt.option('moduleID') %>/en/course.json",
                 blocksFile: "src/courses/<%= grunt.option('moduleID') %>/en/blocks.json"
@@ -355,39 +384,39 @@ module.exports = function(grunt) {
         nightwatch: {
             options: {
                 standalone: true,
-                jar_url: 'http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar'
+                jar_url: "http://selenium-release.storage.googleapis.com/2.40/selenium-server-standalone-2.40.0.jar"
             }
         },
     });
 
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks("grunt-contrib-concat");
 
     // concatenates config.json and theme.json
-    grunt.registerTask('create-json-config', 'Creating config.json', function() {
-        var themeJsonFile = '';
+    grunt.registerTask("create-json-config", "Creating config.json", function() {
+        var themeJsonFile = "";
 
         // find theme.json path
-        grunt.file.recurse('src/theme/' + grunt.option("theme") + '/', function(abspath, rootdir, subdir, filename) {
-            if (filename == 'theme.json') {
+        grunt.file.recurse("src/theme/" + grunt.option("theme") + "/", function(abspath, rootdir, subdir, filename) {
+            if (filename === "theme.json") {
                 themeJsonFile = rootdir;
                 if(subdir) themeJsonFile += subdir;
-                themeJsonFile += '/' + filename;
+                themeJsonFile += "/" + filename;
             }
         });
 
-        if (themeJsonFile == '') grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
+        if (themeJsonFile == "") grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
 
-        var configJson = grunt.file.readJSON('src/courses/' + grunt.option("moduleID") + '/config.json');
+        var configJson = grunt.file.readJSON("src/courses/" + grunt.option("moduleID") + "/config.json");
         var themeJson = grunt.file.readJSON(themeJsonFile);
 
         // add theme props to config
         for (var prop in themeJson) configJson[prop] = themeJson[prop];
 
-        grunt.file.write('builds/' + grunt.option("moduleID")  + '/course/config.json', JSON.stringify(configJson));
+        grunt.file.write("builds/" + grunt.option("moduleID")  + "/course/config.json", JSON.stringify(configJson));
     });
 
-    grunt.registerTask('check-json', 'Checking course.json', function() {
-        var _ = require('underscore');
+    grunt.registerTask("check-json", "Checking course.json", function() {
+        var _ = require("underscore");
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
         var currentJsonFile;
         var storedIds = [];
@@ -399,7 +428,7 @@ module.exports = function(grunt) {
         function checkJsonIds() {
             var currentCourseFolder;
             // Go through each course folder inside the src/course directory
-            grunt.file.expand({filter: "isDirectory"}, "src/courses" + grunt.option("moduleID") + "/*").forEach(function(path) {
+            grunt.file.expand({filter: "isDirectory"}, "src/courses/" + grunt.option("moduleID") + "/*").forEach(function(path) {
                 // Stored current path of folder - used later to read .json files
                 currentCourseFolder = path;
                 // Go through each list of declared course files
@@ -467,25 +496,23 @@ module.exports = function(grunt) {
         checkJsonIds();
     });
 
-    grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
-    //grunt.registerTask('acceptance',['compile', 'concurrent:selenium']);
+    grunt.registerTask("compile", ["bower", "requirejs-bundle", "requirejs:dev"]);
+    //grunt.registerTask("acceptance",["compile", "concurrent:selenium"]);
 
-    grunt.loadNpmTasks('adapt-grunt-tracking-ids');
-    grunt.registerTask('_tracking-insert', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID) {
+    grunt.loadNpmTasks("adapt-grunt-tracking-ids");
+    grunt.registerTask("_tracking-insert", "Used internally. DO NOT CALL DIRECTLY.", function(moduleID) {
+        checkValidMod(moduleID);
         grunt.option("moduleID", moduleID);
-        grunt.task.run('adapt_insert_tracking_ids');
+        grunt.task.run("adapt_reset_tracking_ids");
     });
 
-    grunt.registerTask('tracking-insert', '', function(moduleID) {
-        if(moduleID) grunt.task.run('_tracking-insert:' + moduleID);
-        else {
-            var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_tracking-insert:' + mods[i]);
-        }
+    grunt.registerTask("tracking-insert", "", function(moduleID) {
+        if (moduleID) grunt.task.run("_tracking-insert:" + moduleID);
+        else gruntAllMods("_tracking-insert");
     });
 
-    grunt.registerTask('_build', 'Used internally. DO NOT CALL DIRECTLY.', function(moduleID, devMode) {
-		checkValidMod(moduleID);
+    grunt.registerTask("_build", "Used internally. DO NOT CALL DIRECTLY.", function(moduleID, devMode) {
+        checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
         var customTheme = config.themes.custom[moduleID];
@@ -495,32 +522,37 @@ module.exports = function(grunt) {
         grunt.option("theme", theme);
 
         writeln("");
-        writeln("Building module " + grunt.option("moduleID")['cyan'] + " dev: " + devMode);
-        writeln("Using theme " + grunt.option("theme")['cyan']);
+        writeln("Building module " + chalk.cyan(grunt.option("moduleID")) + (devMode ? " (dev mode)" : ""));
+        writeln("Using theme " + chalk.cyan(grunt.option("theme")));
 
-        var buildProcessRelease = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config'];
-        var buildProcessDev = ['jsonlint', 'check-json', 'clean', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config'];
+        var buildProcessRelease = ["jsonlint", "check-json", "clean:buildMod", "copy", "concat", "less", "handlebars", "bower", "requirejs-bundle", "requirejs:compile", "create-json-config"];
+        var buildProcessDev = ["jsonlint", "check-json", "clean:buildMod", "copy", "concat", "less", "handlebars", "bower", "requirejs-bundle", "requirejs:dev", "create-json-config"];
 
         grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
     });
 
-    grunt.registerTask('build', '', function(moduleID, devMode) {
-        if(moduleID) grunt.task.run('_build:' + moduleID + ':false');
+    grunt.registerTask("build", "", function(moduleID) {
+        if (moduleID) {
+            grunt.task.run("_build:" + moduleID + ":false");
+        }
         else {
-            var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ':false');
+            grunt.task.run(["clean:buildAll"]);
+            gruntAllMods("_build", ":false");
         }
     });
 
-    grunt.registerTask('dev', '', function(moduleID) {
-        if(moduleID) grunt.task.run(['_build:' + moduleID + ":true", "watch"]);
+    grunt.registerTask("dev", "", function(moduleID) {
+        if (moduleID) {
+            grunt.task.run(["_build:" + moduleID + ":true", "watch:" + moduleID]);
+        }
         else {
-            var mods = config.modules;
-            for (var i = 0; i < mods.length; i++) grunt.task.run('_build:' + mods[i] + ":true");
+            grunt.task.run(["clean:buildAll"]);
+            gruntAllMods("_build", ":true");
         }
     });
 
-    grunt.registerTask('spy', '', function(moduleID) {
+    grunt.renameTask("watch", "contrib-watch");
+    grunt.registerTask("watch", "", function(moduleID) {
         checkValidMod(moduleID);
 
         // use custom or default theme depending on grunt_config
@@ -530,57 +562,54 @@ module.exports = function(grunt) {
         grunt.option("moduleID", moduleID);
         grunt.option("theme", theme);
 
-        grunt.task.run('watch');
+        grunt.renameTask("contrib-watch", "watch");
+        grunt.task.run("watch");
     });
 
-    grunt.registerTask('server', '', function(moduleID, spoor) {
+    grunt.registerTask("server", "", function(moduleID, spoor) {
         checkValidMod(moduleID);
 
         grunt.option("moduleID", moduleID);
-        grunt.task.run('concurrent:' + ((!!spoor === true) ? 'spoor' : 'server'));
+        grunt.task.run("concurrent:" + ((!!spoor === true) ? "spoor" : "server"));
     });
 
-    grunt.registerTask('server-scorm', '', function(moduleID) {
-        grunt.task.run('server:' + moduleID + ':true');
+    grunt.registerTask("server-scorm", "", function(moduleID) {
+        grunt.task.run("server:" + moduleID + ":true");
     });
 
     function checkValidMod(id) {
-		if (!id) grunt.fatal("No module specified...");
+        if (!id) grunt.fatal("No module specified...");
+        if (!grunt.file.exists("src/courses", id)) grunt.fatal("'" + id + "' directory not found. Try again...");
+    };
 
-        var mods = config.modules;
-        var exists = false;
-        for (var i = 0; i < mods.length; i++) {
-            if(mods[i] === id) {
-                exists = true;
-                break;
-            }
-        }
-
-        if(!exists) grunt.fatal("'" + id + "' not specified in grunt_config.json. Try again...");
+    function gruntAllMods(task, suffix) {
+        if(typeof suffix === "undefined") suffix = "";
+        grunt.file.expand({ filter: "isDirectory", cwd: "src/courses/" }, "*").forEach(function(moduleID) {
+            grunt.task.run(task + ":" + moduleID + suffix);
+        });
     };
 
     // shorthand, wraps text
     function writeln(msg) { grunt.log.writeln(grunt.log.wraptext(80, msg)); }
 
-    grunt.registerTask('default', '', function(moduleID) {
-        writeln('');
-        grunt.log.ok('No task specified. See below for a list of available tasks.');
-        writeln('');
-        writeln('Note: tasks are listed in blue, mandatory parameters are in red, and optional parameters are in purple.');
-        writeln('');
-        writeTask('build', '', ':mod', 'Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.');
-        writeTask('dev', '', ':mod', 'Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.');
-        writeTask('spy', ':mod', '', 'Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.');
-        writeTask('tracking-insert', '', ':mod', 'Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.');
-        writeTask('server', ':mod', '', 'Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.');
-        writeTask('server-scorm', ':mod', '', 'Same as server, but emulates a SCORM server to test the tracking of learner progress.');
+    grunt.registerTask("default", "", function(moduleID) {
+        writeln("");
+        writeln(chalk.yellow("No task specified. See below for a list of available tasks."));
+        writeln("");
+        writeln("Note: tasks are listed in " + chalk.cyan("blue") + ", mandatory parameters are in " + chalk.red("red") + ", and optional parameters are in " + chalk.magenta("magenta") + ".");
+        writeln("");
+        writeTask("build", "", ":mod", "Builds a production ready/minified version of the specified module. If no module ID is specified, all modules are built.");
+        writeTask("dev", "", ":mod", "Creates a developer-friendly version of the specified module (including source maps). If no module ID is specified, all modules are built.");
+        writeTask("jshint", "", "", "Runs JSHint on the src folder. Options are pretty lax, so don't depend on this too heavily.");
+        writeTask("watch", ":mod", "", "Listens for changes to any files associated with the specified module, then performs the necessary actions to update the build.");
+        writeTask("tracking-insert", "", ":mod", "Inserts tracking identifiers (used in conjunction with SCORM). If no module ID is specified, tracking IDs are added for all modules.");
+        writeTask("server", ":mod", "", "Launches a stand-alone Node.JS web server and opens the specified course in your default web browser.");
+        writeTask("server-scorm", ":mod", "", "Same as server, but emulates a SCORM server to test the tracking of learner progress.");
 
-		// FYI: colors = 'white', 'black', 'grey', 'blue', 'cyan',
-		//				 'green', 'magenta', 'red', 'yellow', 'rainbow'
         function writeTask(name, mandParams, optParams, description) {
-            writeln(name['cyan'].bold + mandParams['red'].bold + optParams['magenta']);
+            writeln(chalk.cyan(name) + chalk.red.bold(mandParams) + chalk.magenta(optParams));
             writeln(description);
-            writeln('');
+            writeln("");
         }
     });
 };
