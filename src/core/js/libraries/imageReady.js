@@ -1,2 +1,4 @@
-(function($){$.fn.imageready=function(callback,userSettings){var options=$.extend({},$.fn.imageready.defaults,userSettings),$images=this.find("img").add(this.filter("img")),unloadedImages=$images.length;function loaded(){unloadedImages--;!unloadedImages&&callback()}function bindLoad(){this.one("load",loaded);if(navigator.userAgent.toLowerCase().match("msie")){var src=this.attr("src"),param=src.match(/\?/)?"&":"?";param+=options.cachePrefix+"="+(new Date).getTime();this.attr("src",src+param)}}return $images.each(function(){var $this=
-$(this);if(!$this.attr("src")){loaded();return}this.complete||this.readyState===4?loaded():bindLoad.call($this)})};$.fn.imageready.defaults={cachePrefix:"random"}})(jQuery);
+// jquery.imageready.js
+// @weblinc, @jsantell, (c) 2012
+
+(function(e){e.fn.imageready=function(t,n){function o(){s--;!s&&t()}function u(){var e,t;this.one("load",o);t=navigator.appName.indexOf("Internet Explorer")!=-1?true:false;if(t){var n=this.attr("src"),i=n.match(/\?/)?"&":"?";i+=r.cachePrefix+"="+(new Date).getTime();this.attr("src",n+i)}}var r=e.extend({},e.fn.imageready.defaults,n),i=this.find("img").add(this.filter("img")),s=i.length;if(t==null){t=function(){}}return i.each(function(){var t=e(this);if(!t.attr("src")){o();return}this.complete||this.readyState===4?o():u.call(t)})};e.fn.imageready.defaults={cachePrefix:"random"}})(jQuery)

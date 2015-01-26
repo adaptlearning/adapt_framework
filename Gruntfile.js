@@ -121,6 +121,7 @@ module.exports = function(grunt) {
         handlebars: {
             compile: {
                 options: {
+                    amd: 'handlebars',
                     namespace:"Handlebars.templates",
                     processName: function(filePath) {
                         var newFilePath = filePath.split("/");
