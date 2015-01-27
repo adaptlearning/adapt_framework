@@ -266,8 +266,13 @@
 	    "branch": "master"
 	},
 	{ 
-		"name": "test",
-    	"url": "git://github.com/cgkineo/test.git",
-    	"branch": "master"
+	    "name": "test",
+    	    "url": "git://github.com/cgkineo/test.git",
+    	    "branch": "master"
+  	},
+	{ 
+	    "name": "adapt-kineo-theme",
+    	    "url": "git://github.com/cgkineo/adapt-kineo-theme.git",
+    	    "branch": "master"
   	}
 ]
