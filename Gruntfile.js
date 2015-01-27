@@ -12,7 +12,7 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON("package.json"),
 
         jsonlint: {
-            all: ["src/courses/<%= grunt.option('moduleID') %>/**/*.json"]
+            all: ["src/courses/<%= grunt.option('courseFolder') %>/**/*.json"]
         },
 
         clean: {
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ["**/*.json", "!**/config.json"],
                         dest: "builds/<%= grunt.option('moduleID') %>/course/",
-                        cwd: "src/courses/<%= grunt.option('moduleID') %>"
+                        cwd: "src/courses/<%= grunt.option('courseFolder') %>"
                     }
                 ]
             },
@@ -78,9 +78,9 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ["**/*","!**/*.json"],
+                        src: ["**/*","!**/*.json","!imsmanifest.xml"],
                         dest: "builds/<%= grunt.option('moduleID') %>/course/",
-                        cwd: "src/courses/<%= grunt.option('moduleID') %>"
+                        cwd: "src/courses/<%= grunt.option('courseFolder') %>"
                     }
                 ]
             },
@@ -88,8 +88,23 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ["**/*"],
+                        flatten: true,
+                        src: ["src/extensions/adapt-contrib-spoor/required/*"],
+                        dest: "builds/<%= grunt.option('moduleID') %>/",
+                        filter: function(filepath) {
+                            return excludedFilter(filepath);
+                        }
+                    },
+                    {
+                        expand: true,
+                        src: ["**/*", '!imsmanifest.xml'],
                         dest: "builds/<%= grunt.option('moduleID') %>/course/",
+                        cwd: "src/courses/<%= grunt.option('courseFolder') %>"
+                    },
+                    {
+                        expand: true,
+                        src: "imsmanifest.xml",
+                        dest: "builds/<%= grunt.option('moduleID') %>/",
                         cwd: "src/courses/<%= grunt.option('moduleID') %>"
                     },
                     {
@@ -131,21 +146,18 @@ module.exports = function(grunt) {
                         flatten: true,
                         src: ["src/components/**/assets/**"],
                         dest: "builds/<%= grunt.option('moduleID') %>/assets/",
-                        filter: "isFile"
+                        filter: function(filepath) {
+                            return excludedFilter(filepath);
+                        }
                     },
                     {
                         expand: true,
                         flatten: true,
                         src: ["src/extensions/**/assets/**"],
                         dest: "builds/<%= grunt.option('moduleID') %>/assets/",
-                        filter: "isFile"
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ["src/extensions/adapt-contrib-spoor/required/*"],
-                        dest: "builds/<%= grunt.option('moduleID') %>/",
-                        filter: "isFile"
+                        filter: function(filepath) {
+                            return excludedFilter(filepath);
+                        }
                     }
                 ]
             }
@@ -161,6 +173,11 @@ module.exports = function(grunt) {
                     "src/theme/<%= grunt.option('theme') %>/less/*.less"
                 ],
                 dest: "src/less/adapt.less"
+            },
+            options: {
+                process: function(content, filepath) {
+                    return excludedProcess(content, filepath);
+                }
             }
         },
 
@@ -179,13 +196,16 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     namespace:"Handlebars.templates",
+                    partialRegex: /.*/,
+                    partialsPathRegex: /\/partials\//,
+                    processContent: function(content, filename) {
+                        return excludedProcess(content, filename);
+                    },
                     processName: function(filePath) {
                         var newFilePath = filePath.split("/");
                         newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, "");
                         return  newFilePath;
-                    },
-                    partialRegex: /.*/,
-                    partialsPathRegex: /\/partials\//
+                    }
                 },
                 files: {
                     "src/templates/templates.js": "src/**/*.hbs"
@@ -247,7 +267,10 @@ module.exports = function(grunt) {
                     out: "./builds/<%= grunt.option('moduleID') %>/adapt/js/adapt.min.js",
                     generateSourceMaps: true,
                     preserveLicenseComments:false,
-                    optimize: "none"
+                    optimize: "none",
+                    onBuildRead: function(moduleName, path, contents) {
+                        return excludedProcess(contents, path);
+                    }
                 }
             },
             compile: {
@@ -264,7 +287,7 @@ module.exports = function(grunt) {
         watch: {
             less: {
                 files: ["src/**/*.less"],
-                tasks: ["concat", "less"],
+                tasks: ["less-sourcemaps"],
                 options: {
                     spawn: false,
                 },
@@ -278,8 +301,8 @@ module.exports = function(grunt) {
             },
             courseJson: {
                 files: [
-                    "src/courses/<%= grunt.option('moduleID') %>/**/*.json",
-                    "!src/courses/<%= grunt.option('moduleID') %>/config.json"
+                    "src/courses/<%= grunt.option('courseFolder') %>/**/*.json",
+                    "!src/courses/<%= grunt.option('courseFolder') %>/config.json"
                 ],
                 tasks : ["jsonlint", "copy:courseJson"],
                 options: {
@@ -288,7 +311,7 @@ module.exports = function(grunt) {
             },
             configJson: {
                 files: [
-                    "src/courses/<%= grunt.option('moduleID') %>/config.json",
+                    "src/courses/<%= grunt.option('courseFolder') %>/config.json",
                     "src/theme/<%= grunt.option('theme') %>/theme.json"
                 ],
                 tasks : ["jsonlint", "create-json-config"],
@@ -298,9 +321,9 @@ module.exports = function(grunt) {
             },
             courseAssets: {
                 files: [
-                    "src/courses/<%= grunt.option('moduleID') %>/**/*",
-                    "!src/courses/<%= grunt.option('moduleID') %>/**/*.json",
-                    "!src/courses/<%= grunt.option('moduleID') %>/config.json"
+                    "src/courses/<%= grunt.option('courseFolder') %>/**/*",
+                    "!src/courses/<%= grunt.option('courseFolder') %>/**/*.json",
+                    "!src/courses/<%= grunt.option('courseFolder') %>/config.json"
                 ],
                 tasks : ["copy:courseAssets"],
                 options: {
@@ -374,10 +397,10 @@ module.exports = function(grunt) {
             }
         },
 
-        adapt_reset_tracking_ids: {
+		adapt_reset_tracking_ids: {
             options: {
-                courseFile: "src/courses/<%= grunt.option('moduleID') %>/en/course.json",
-                blocksFile: "src/courses/<%= grunt.option('moduleID') %>/en/blocks.json"
+                courseFile: "src/courses/<%= grunt.option('courseFolder') %>/en/course.json",
+                blocksFile: "src/courses/<%= grunt.option('courseFolder') %>/en/blocks.json"
             }
         },
 
@@ -388,6 +411,48 @@ module.exports = function(grunt) {
             }
         },
     });
+
+    // exclude components/extensions found in grunt_config->custom->excludes
+    var isPathExcluded = function(path) {
+        var custConfig = config.custom[grunt.option("moduleID")];
+        var excludes = (custConfig) ? custConfig.excludes : [];
+        var pathMod = require("path");
+        var dirs = pathMod.normalize(path).split(pathMod.sep);
+
+        for(var i = 0; i < excludes.length; i++) {
+            var index = require("underscore").indexOf(dirs, excludes[i]);
+            if(index !== -1) {
+                writeln("Excluded " + chalk.cyan(dirs[dirs.length-1]));
+                return true;
+            }
+        }
+        return false;
+    };
+
+    var excludedFilter = function(filepath) {
+        return !isPathExcluded(filepath);
+    };
+    // for where filter isn't supported...
+    var excludedProcess = function(content, filepath) {
+        if(isPathExcluded(filepath)) return "";
+        else return content;
+    };
+
+    var setGlobalVariables = function(moduleID) {
+        var custConfig = config.custom[moduleID];
+
+        // use custom or default theme depending on grunt_config
+        var customTheme = (custConfig) ? custConfig.theme : undefined;
+        var theme = (customTheme) ? customTheme : config.defaults.theme;
+
+        // determine the course folder to use
+        var customCourseFolder = (custConfig) ? custConfig.course : undefined;
+        var courseFolder = (customCourseFolder) ? customCourseFolder : moduleID;
+
+        grunt.option("courseFolder", courseFolder);
+        grunt.option("moduleID", moduleID);
+        grunt.option("theme", theme);
+    };
 
     grunt.loadNpmTasks("grunt-contrib-concat");
 
@@ -406,7 +471,7 @@ module.exports = function(grunt) {
 
         if (themeJsonFile == "") grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
 
-        var configJson = grunt.file.readJSON("src/courses/" + grunt.option("moduleID") + "/config.json");
+        var configJson = grunt.file.readJSON("src/courses/" + grunt.option("courseFolder") + "/config.json");
         var themeJson = grunt.file.readJSON(themeJsonFile);
 
         // add theme props to config
@@ -428,7 +493,7 @@ module.exports = function(grunt) {
         function checkJsonIds() {
             var currentCourseFolder;
             // Go through each course folder inside the src/course directory
-            grunt.file.expand({filter: "isDirectory"}, "src/courses/" + grunt.option("moduleID") + "/*").forEach(function(path) {
+            grunt.file.expand({filter: "isDirectory"}, "src/courses/" + grunt.option("courseFolder") + "/*").forEach(function(path) {
                 // Stored current path of folder - used later to read .json files
                 currentCourseFolder = path;
                 // Go through each list of declared course files
@@ -502,33 +567,32 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("adapt-grunt-tracking-ids");
     grunt.registerTask("_tracking-insert", "Used internally. DO NOT CALL DIRECTLY.", function(moduleID) {
         checkValidMod(moduleID);
-        grunt.option("moduleID", moduleID);
         grunt.task.run("adapt_reset_tracking_ids");
     });
 
     grunt.registerTask("tracking-insert", "", function(moduleID) {
+        setGlobalVariables(moduleID);
         if (moduleID) grunt.task.run("_tracking-insert:" + moduleID);
         else gruntAllMods("_tracking-insert");
     });
 
+    var isDevMode = false;
     grunt.registerTask("_build", "Used internally. DO NOT CALL DIRECTLY.", function(moduleID, devMode) {
         checkValidMod(moduleID);
 
-        // use custom or default theme depending on grunt_config
-        var customTheme = config.themes.custom[moduleID];
-        var theme = (customTheme) ? customTheme : config.themes.default;
+        setGlobalVariables(moduleID);
 
-        grunt.option("moduleID", moduleID);
-        grunt.option("theme", theme);
+		devMode = (devMode === "true");
 
         writeln("");
-        writeln("Building module " + chalk.cyan(grunt.option("moduleID")) + (devMode ? " (dev mode)" : ""));
+        writeln("Building module " + chalk.cyan(grunt.option("moduleID")) + ((grunt.option("courseFolder") !== grunt.option("moduleID")) ? " [" + grunt.option("courseFolder") + "]" : "") + (devMode ? " (dev mode)" : ""));
         writeln("Using theme " + chalk.cyan(grunt.option("theme")));
 
-        var buildProcessRelease = ["jsonlint", "check-json", "clean:buildMod", "copy", "concat", "less", "handlebars", "bower", "requirejs-bundle", "requirejs:compile", "create-json-config"];
-        var buildProcessDev = ["jsonlint", "check-json", "clean:buildMod", "copy", "concat", "less", "handlebars", "bower", "requirejs-bundle", "requirejs:dev", "create-json-config"];
+        var buildProcessRelease = ["jsonlint", "check-json", "clean:buildMod", "copy", "less-sourcemaps", "handlebars", "bower", "requirejs-bundle", "requirejs:compile", "create-json-config"];
+        var buildProcessDev = ["jsonlint", "check-json", "clean:buildMod", "copy", "less-sourcemaps", "handlebars", "bower", "requirejs-bundle", "requirejs:dev", "create-json-config"];
 
-        grunt.task.run((!!devMode === true) ? buildProcessDev : buildProcessRelease);
+        isDevMode = devMode;
+        grunt.task.run(devMode ? buildProcessDev : buildProcessRelease);
     });
 
     grunt.registerTask("build", "", function(moduleID) {
@@ -555,12 +619,7 @@ module.exports = function(grunt) {
     grunt.registerTask("watch", "", function(moduleID) {
         checkValidMod(moduleID);
 
-        // use custom or default theme depending on grunt_config
-        var customTheme = config.themes.custom[moduleID];
-        var theme = (customTheme) ? customTheme : config.themes.default;
-
-        grunt.option("moduleID", moduleID);
-        grunt.option("theme", theme);
+        setGlobalVariables(moduleID);
 
         grunt.renameTask("contrib-watch", "watch");
         grunt.task.run("watch");
@@ -569,8 +628,9 @@ module.exports = function(grunt) {
     grunt.registerTask("server", "", function(moduleID, spoor) {
         checkValidMod(moduleID);
 
-        grunt.option("moduleID", moduleID);
-        grunt.task.run("concurrent:" + ((!!spoor === true) ? "spoor" : "server"));
+        setGlobalVariables(moduleID);
+
+        grunt.task.run("concurrent:" + ((spoor === "true") ? "spoor" : "server"));
     });
 
     grunt.registerTask("server-scorm", "", function(moduleID) {
@@ -579,7 +639,11 @@ module.exports = function(grunt) {
 
     function checkValidMod(id) {
         if (!id) grunt.fatal("No module specified...");
-        if (!grunt.file.exists("src/courses", id)) grunt.fatal("'" + id + "' directory not found. Try again...");
+
+        var dirExists = grunt.file.exists("src/courses", id);
+        var custConfig = config.custom[id];
+
+        if (!dirExists && !custConfig) grunt.fatal("'" + id + "' directory not found, and no custom entry in grunt_config.json. Try again...");
     };
 
     function gruntAllMods(task, suffix) {
@@ -587,10 +651,73 @@ module.exports = function(grunt) {
         grunt.file.expand({ filter: "isDirectory", cwd: "src/courses/" }, "*").forEach(function(moduleID) {
             grunt.task.run(task + ":" + moduleID + suffix);
         });
+
+        // now for custom courses...
+        for(var course in config.custom) {
+            if(!grunt.file.exists("src/courses", course)) {
+                grunt.task.run(task + ":" + course + suffix);
+            }
+        }
     };
 
     // shorthand, wraps text
     function writeln(msg) { grunt.log.writeln(grunt.log.wraptext(80, msg)); }
+
+    grunt.registerTask('less-sourcemaps', 'Aligning sourcemaps', function() {
+
+        var done = this.async();
+
+        var _ = require('underscore');
+
+        var gulp = require("gulp");
+        var gulpif = require('gulp-if');
+        var minifyCSS = require('gulp-minify-css');
+        var concat = require("gulp-concat");
+        var less = require("gulp-less");
+        var sourcemaps = require("gulp-sourcemaps");
+
+        return gulp
+            .src([
+                    'src/core/less/*.less',
+                    'src/menu/**/*.less',
+                    'src/components/**/*.less',
+                    'src/extensions/**/*.less',
+                    'src/theme/**/*.less'
+                ], { base: "." })
+
+                .pipe(gulpif(isDevMode,sourcemaps.init()))
+
+                .pipe(concat( "adapt.css" ))
+
+                .pipe(
+                    less()
+                )
+
+                .on('error', function (error) {
+                    grunt.fail.warn(error.message);
+                    done(false);
+                    this.emit('end');
+                })
+
+                .pipe(gulpif(!isDevMode, minifyCSS()))
+
+                .pipe(gulpif(isDevMode, sourcemaps.write("./") ) )
+
+
+                .pipe(gulp.dest("builds/"+grunt.option("moduleID")+"/adapt/css")).on("end", function () {
+                     //redo source map paths so that they end up in the right place in the browser
+                    if (isDevMode) {
+                        var mapFile = grunt.file.readJSON("builds/"+grunt.option("moduleID")+"/adapt/css/adapt.css.map");
+                        delete mapFile.sourceRoot;
+                        _.each(mapFile.sources, function(item, index) { 
+                            mapFile.sources[index]  = item.replace(/\\/g, "/").replace(/src\//g, "" );
+                        });
+                        grunt.file.write("builds/"+grunt.option("moduleID")+"/adapt/css/adapt.css.map", JSON.stringify(mapFile, null,4));
+                    }
+                    done(true);
+                });
+    });
+
 
     grunt.registerTask("default", "", function(moduleID) {
         writeln("");

@@ -1,7 +1,14 @@
 {
-  "modules": [],
-  "themes": {
-  	"default":"adapt-contrib-vanilla",
-  	"custom": {}
-  }
+    "defaults": {
+      "theme": "adapt-contrib-vanilla"
+    },
+    "custom": {
+      "m05": {
+          "theme": "custom-theme",
+          "course": "m05",
+          "excludes": [
+              "extension-name"
+          ]
+      }
+    }
 }
