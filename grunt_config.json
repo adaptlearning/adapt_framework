@@ -1,9 +1,9 @@
 {
     "defaults": {
-      "theme": "adapt-contrib-vanilla"
+      "theme": "adapt-kineo-theme"
     },
     "custom": {
-      "m05": {
+      "t05": {
           "theme": "custom-theme",
           "course": "m05",
           "excludes": [
