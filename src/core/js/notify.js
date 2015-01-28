@@ -84,11 +84,16 @@ define(function(require) {
 
 		}
 
-		Adapt.trigger('popup:opened');
-
-		new NotifyView({
+		var notify = new NotifyView({
 			model: new NotifyModel(notifyObject)
 		});
+
+		var element = notify.$(".notify-popup");
+
+		/*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
+		Adapt.trigger('popup:opened', element);
+		element.a11y_focus();
+		
 	};
 
 });

@@ -16,6 +16,8 @@ define(function(require) {
 			this.listenTo(Adapt, 'notify:pushShown notify:pushRemoved', this.updateIndexPosition);
 			this.listenTo(this.model.collection, 'remove', this.updateIndexPosition);
 			this.listenTo(this.model.collection, 'change:_index', this.updatePushPosition);
+			//include accessibility globals in notify model
+			this.model.set('_globals', Adapt.course.get('_globals'));
 			this.listenTo(Adapt, 'remove', this.remove);
 			this.preRender();
 			this.render();
