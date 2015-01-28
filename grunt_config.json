@@ -1,14 +1,6 @@
 {
-    "defaults": {
-      "theme": "adapt-kineo-theme"
-    },
-    "custom": {
-      "t05": {
-          "theme": "custom-theme",
-          "course": "m05",
-          "excludes": [
-              "extension-name"
-          ]
-      }
-    }
+	"defaults": {
+		"theme": "adapt-kineo-theme"
+	},
+	"custom": {}
 }
