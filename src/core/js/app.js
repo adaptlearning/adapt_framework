@@ -34,7 +34,6 @@ require([
     'theme/theme'
 ], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
     
-    _.delay(function() {
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
 
@@ -106,7 +105,5 @@ require([
     Adapt.once('configModel:loadCourseData', loadCourseData);
 
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
-    
-    },2000);
     
 });
