@@ -15,6 +15,8 @@ define(function(require) {
 		initialize: function() {
 			this.listenTo(Adapt, 'remove', this.remove);
       		this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
+			//include accessibility globals in notify model
+      		this.model.set('_globals', Adapt.course.get('_globals'));
 			this.render();
 		},
 
@@ -34,20 +36,23 @@ define(function(require) {
 
 		onAlertButtonClicked: function(event) {
 			event.preventDefault();
-			Adapt.trigger(this.model.get('_callbackEvent'), this);
+			//tab index preservation, notify must close before subsequent callback is triggered
 			this.closeNotify();
+			Adapt.trigger(this.model.get('_callbackEvent'), this);
 		},
 
 		onPromptButtonClicked: function(event) {
 			event.preventDefault();
-			Adapt.trigger($(event.currentTarget).attr('data-event'));
+			//tab index preservation, notify must close before subsequent callback is triggered
 			this.closeNotify();
+			Adapt.trigger($(event.currentTarget).attr('data-event'));
 		},
 
 		onCloseButtonClicked: function(event) {
 			event.preventDefault();
-			Adapt.trigger('notify:closed');
+			//tab index preservation, notify must close before subsequent callback is triggered
 			this.closeNotify();
+			Adapt.trigger('notify:closed');
 		},
 
 		resetNotifySize: function() {
@@ -83,14 +88,9 @@ define(function(require) {
 			this.resizeNotify();
 			this.$('.notify-popup').show();
 			this.$('.notify-shadow').fadeIn('fast');
-			if(this.model.get('_type') === "popup") {
-				$('.notify-popup-done').focus();
+			//Set focus to first accessible element
+			this.$('.notify-popup').a11y_focus();
 				
-			} else {
-				$('.notify-popup-buttons a').first().focus();
-			}
-			
-			
 		},
 
 		closeNotify: function (event) {

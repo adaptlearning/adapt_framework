@@ -41,6 +41,7 @@ define(function(require) {
             }
             this.updateLocation(pluginLocation);
             Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
+            Adapt.trigger('router:plugin', pluginName, location, action);
         },
         
         handleCourse: function() {
