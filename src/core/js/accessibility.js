@@ -216,13 +216,13 @@ define(function(require) {
         },
 
         setupLegacyFocusClasser: function() {
-            this.removeFocusClasser();
+            this.removeLegacyFocusClasser();
 
             // On focus add class of focused, on blur remove class 
             this._legacyFocusElements = $(this._tabIndexElements);
             this._legacyFocusElements
-                .on('focus', onElementFocused)
-                .on('blur',onElementBlurred);
+                .on('focus', this.onElementFocused)
+                .on('blur', this.onElementBlurred);
         },
 
         removeLegacyFocusClasser: function() {
@@ -230,8 +230,8 @@ define(function(require) {
 
             //Remove focus and blur events
             this._legacyFocusElements
-                .off('focus', onElementFocused)
-                .off('blur',onElementBlurred);
+                .off('focus', this.onElementFocused)
+                .off('blur', this.onElementBlurred);
             this._legacyFocusElements = undefined;
 
         },
