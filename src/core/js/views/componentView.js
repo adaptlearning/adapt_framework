@@ -42,7 +42,7 @@ define(function(require) {
             var rendered = Handlebars.partials['state']( this.model.toJSON() );
             this.$el.append( $(rendered) );
             
-            this.listenTo(this.model, 'change:_isComplete', this.renderState);
+            this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
 
         postRender: function() {}
