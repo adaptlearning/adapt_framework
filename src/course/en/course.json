@@ -4,10 +4,10 @@
     "title": "Welcome to Adapt Learning - v1.1.0",
     "displayTitle": "Welcome to Adapt Learning - v1.1.0",
     "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
-    "_buttons": {        
+    "_buttons": {
         "_submit": {
             "buttonText": "Submit",
-            "ariaLabel": "Select here to submit your answer." 
+            "ariaLabel": "Select here to submit your answer."
         },
         "_reset": {
             "buttonText": "Reset",
@@ -96,14 +96,15 @@
                 "feedbackPopUp": "Pop up opened. Use the down arrow key to read through your feedback. Tab back to the close button and press enter to close feedback.",
                 "sliderHandle": "Slider handle. Use the left and right arrow keys to move the slider and give your answer. Then tab to the submit button below and press enter.",
                 "hotgraphicPopUp": "Popup. Select the down arrow to read through the popup item. Select enter to close the popup."
-            } 
+            }
         }
     },
-    "_latestTrackingId": 13,
+    "_latestTrackingId": 14,
     "_pageLevelProgress": {
+        "_isEnabled": true,
         "_altText": "of components completed on this page"
     },
-    "_resources": { 
+    "_resources": {
         "title": "Resources",
         "description": "Click here to view resources for this course",
         "_filterButtons": {
