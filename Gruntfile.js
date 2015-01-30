@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                         dest: 'build/', 
                         filter: 'isFile', 
                         flatten: true
-                    },
+                    }
                 ]
             },
             courseJson: {
@@ -37,6 +37,61 @@ module.exports = function(grunt) {
                         cwd: 'src/course/'
                     }
                 ]
+            },
+            componentsAssets: {
+                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            extensionsAssets: {
+                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            menuAssets: {
+                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            themeAssets: {
+                files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/adapt/css/assets/',
+                        cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            themeFonts: {
+                files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/adapt/css/fonts/',
+                        cwd: cwd + 'fonts/',
+                        filter: "isFile"
+                    };
+                })
             },
             main: {
                 files: [
@@ -68,30 +123,9 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        flatten: true,
-                        src: ['src/theme/**/fonts/**'],
-                        dest: 'build/adapt/css/fonts/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/theme/**/assets/**'],
-                        dest: 'build/adapt/css/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
-                        flatten: true,
-                        src: ['src/components/**/assets/**'],
-                        dest: 'build/assets/',
-                        filter: 'isFile'
-                    },
-                    {
-                        expand: true,
                         src: ['**/*'],
                         dest: 'build/',
-                        cwd: 'src/extensions/adapt-contrib-spoor/required'
+                        cwd: 'src/extensions/adapt-contrib-spoor/required/'
                     }
                 ]
             }
@@ -228,7 +262,7 @@ module.exports = function(grunt) {
                     '!src/extensions/extensions.js',
                     '!src/menu/menu.js',
                     '!src/theme/theme.js',
-                    '!src/templates/templates.js',
+                    '!src/templates/templates.js'
                 ],
                 tasks: ['compile']
             },
@@ -236,13 +270,35 @@ module.exports = function(grunt) {
                 files: ['src/index.html'],
                 tasks: ['copy:index']
             },
-            assets: {
+            componentsAssets: {
                 files: [
-                    'src/theme/**/fonts/**',
-                    'src/theme/**/assets/**',
                     'src/components/**/assets/**'
                 ],
-                tasks: ['copy:main']
+                tasks: ['copy:componentsAssets']
+            },
+            extensionsAssets: {
+                files: [
+                    'src/extensions/**/assets/**'
+                ],
+                tasks: ['copy:extensionsAssets']
+            },
+            menuAssets: {
+                files: [
+                    'src/menu/**/assets/**'
+                ],
+                tasks: ['copy:menuAssets']
+            },
+            themeAssets: {
+                files: [
+                    'src/theme/**/assets/**'
+                ],
+                tasks: ['copy:themeAssets']
+            },
+            themeFonts: {
+                files: [
+                    'src/theme/**/fonts/**'
+                ],
+                tasks: ['copy:themeFonts']
             }
         },
         
@@ -321,8 +377,6 @@ module.exports = function(grunt) {
 
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
 
-        var currentJsonFile;
-
         var storedIds = [];
 
         var storedFileParentIds = {};
@@ -394,7 +448,7 @@ module.exports = function(grunt) {
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
                     hasOrphanedParentIds = true;
                     orphanedParentIds.push(parentId);
-                };
+                }
                 
             });
         }
@@ -434,4 +488,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
+
 };
