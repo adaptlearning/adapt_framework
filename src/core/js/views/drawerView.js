@@ -134,9 +134,11 @@ define(function(require) {
 		renderItems: function() {
 			Adapt.trigger('drawer:empty');
 			this.emptyDrawer();
-			this.collection.each(function(item) {
+			var models = this.collection.models;
+			for (var i = 0, len = models.length; i < len; i++) {
+				var item = models[i];
 				new DrawerItemView({model: item});
-			});
+			}
 		},
 
 		hideDrawer: function() {

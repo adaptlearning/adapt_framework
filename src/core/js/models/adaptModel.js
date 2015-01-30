@@ -113,12 +113,13 @@ define(function (require) {
             var returnedDescedants;
 
             function searchChildren(children) {
-
-                children.each(function (model) {
+                var models = children.models;
+                for (var i = 0, len = models.length; i < len; i++) {
+                    var model = models[i];  
                     var childrensModels = model.getChildren().models;
                     allDescendants.push(childrensModels);
                     flattenedDescendants = _.flatten(allDescendants);
-                });
+                } 
 
                 returnedDescedants = new Backbone.Collection(flattenedDescendants);
 
@@ -151,8 +152,7 @@ define(function (require) {
             if (this._parent === "course") {
                 return Adapt.course;
             }
-            var parent = Adapt[this._parent].where({_id: this.get("_parentId")});
-            var parent = parent[0];
+            var parent = Adapt.findById(this.get("_parentId"));
             this.set("_parent", parent);
 
             // returns a parent model
@@ -199,9 +199,12 @@ define(function (require) {
 
             if (!this._children) return;
 
-            this.getChildren().each(function (child) {
+            var children = this.getChildren();
+            var models = children.models;
+            for (var i = 0, len = models.length; i < len; i++) {
+                var child = models[i];
                 child.setOnChildren.apply(child, args);
-            })
+            }
 
         }
 
