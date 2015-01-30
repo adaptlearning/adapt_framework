@@ -10,6 +10,7 @@
     var focusableElements = "a,button,input,select,textarea,[tabindex]";
     var hideableElements = ".a11y-hideable";
     var ariaLabelElements = "div[aria-label], span[aria-label]";
+    var ariaLabelElementsFilter = ":not( .a11y-ignore-aria [aria-label] )";
 
 
     var $documentActiveElement;
@@ -362,7 +363,12 @@
         enabled = enabled === undefined ? true : enabled;
         for (var i = 0; i < this.length; i++) {
             var $item = $(this[i]);
-            if (enabled) {
+            if (enabled && $item.is(hideableElements)) {
+                $item.removeAttr("aria-hidden").removeClass("aria-hidden").parents().removeAttr("aria-hidden").removeClass("aria-hidden");
+                if (withDisabled) {
+                    $item.removeAttr("disabled").removeClass("disabled");
+                }
+            } else if (enabled) {
                 $item.attr({
                     tabindex: "0",
                 }).removeAttr("aria-hidden").removeClass("aria-hidden").parents().removeAttr("aria-hidden").removeClass("aria-hidden");
@@ -469,6 +475,8 @@
     };
 
 
+    var ie8TabIndexes = {};
+    var ie8ElementUID = 0;
 //FOCUS RESTRICTION
 
     //ALLOWS FOCUS ON SELECTED ELEMENTS ONLY
@@ -485,6 +493,25 @@
             $elements = $(tabIndexElements).filter(tabIndexElementFilter);
             $hideable = $(hideableElements).filter(tabIndexElementFilter);
         }
+        if ($.a11y.options.OS == "ie8") {
+            $elements.each(function(index, item) {
+                var $item = $(item);
+                
+                var uid;
+                if ($item.a11y_uid == undefined) $item.a11y_uid = "UID" + ++ie8ElementUID;
+                uid = $item.a11y_uid;
+
+                if (storeLastTabIndex) {
+                    if (ie8TabIndexes[uid] === undefined) ie8TabIndexes[uid] = [];
+                    ie8TabIndexes[uid].push( $item.attr('tabindex') || 0 );
+                }
+
+                $item.attr({
+                    'tabindex': -1,
+                    'aria-hidden': true
+                }).addClass("aria-hidden");
+            });
+        } else {
         $elements.each(function(index, item) {
             var $item = $(item);
             if (storeLastTabIndex) {
@@ -496,6 +523,7 @@
                 'aria-hidden': true
             }).addClass("aria-hidden");
         });
+        }
         $hideable.attr("aria-hidden", true).attr("tabindex", "-1").addClass("aria-hidden");
 
         this.find(tabIndexElements).filter(tabIndexElementFilter).attr({
@@ -522,6 +550,27 @@
 
     //RESTORES FOCUS TO PREVIOUS STATE AFTER a11y_popup
     $.a11y_popdown = function() {
+        if ($.a11y.options.OS == "ie8") {
+            $(tabIndexElements).filter(tabIndexElementFilter).each(function(index, item) {
+                var $item = $(item);
+                var pti = 0;
+
+                var uid;
+                if ($item.a11y_uid == undefined) $item.a11y_uid = "UID" + ++ie8ElementUID;
+                uid = $item.a11y_uid;
+
+
+                if (ie8ElementUID[uid] !== undefined && ie8ElementUID[uid].length !== 0) pti = parseInt(ie8ElementUID[uid].pop());
+                if (ie8ElementUID[uid] !== undefined && ie8ElementUID[uid].length > 0) delete ie8ElementUID[uid];
+                
+                $item.attr({
+                    'tabindex': pti
+                })
+
+                if (pti === -1) $item.attr('aria-hidden', true).addClass("aria-hidden");
+                else $item.removeAttr('aria-hidden').removeClass("aria-hidden");;
+            });
+        } else {
         $(tabIndexElements).filter(tabIndexElementFilter).each(function(index, item) {
             var $item = $(item);
             var pti = 0;
@@ -532,6 +581,7 @@
             if (pti === -1) $item.attr('aria-hidden', true).addClass("aria-hidden");
             else $item.removeAttr('aria-hidden').removeClass("aria-hidden");;
         });
+        }
 
         var $activeElement = $.a11y.focusStack.pop();
 
@@ -596,8 +646,6 @@
 
 
 //CONVERT ARIA LABELS
-
-
     //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
     $.fn.a11y_aria_label = function(deep) {
         if (!$.a11y.isOn) return this;
@@ -605,9 +653,9 @@
 
         for (var i = 0; i < this.length; i++) {
             var $item = $(this[i]);
-            if ($item.is(ariaLabelElements)) ariaLabels.push(this[i]);
+            if ($item.not(ariaLabelElementsFilter).is(ariaLabelElements)) ariaLabels.push(this[i]);
             if (deep === true) {
-                var children = $item.find(ariaLabelElements);
+                var children = $item.find(ariaLabelElements).filter(ariaLabelElementsFilter);
                 ariaLabels = ariaLabels.concat(children.toArray());
             }
         }
