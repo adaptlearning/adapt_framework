@@ -211,13 +211,13 @@ define(function(require) {
             // Triggers setCompletionStatus and adds class to widget
             this.checkQuestionCompletion();
             
-            // Used to update buttonsView based upon question state
-            this.updateButtons();
-
             // Used to setup the feedback by checking against 
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
+			// Used to update buttonsView based upon question state
+			// Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
+            this.updateButtons();
             // Used to trigger an event so plugins can display feedback
             this.showFeedback();
 
@@ -315,13 +315,12 @@ define(function(require) {
 
             if (isComplete) {
                 if (isCorrect || !this.model.get('_canShowModelAnswer')) {
-                    this.model.set('_buttonState', 'complete');
-                } else {
-                    if (buttonState === 'submit' || buttonState === 'hideCorrectAnswer'){
+					//use correct instead of complete to signify button state
+                    this.model.set('_buttonState', 'correct');
+                } else if (buttonState === 'submit' || buttonState === 'hideCorrectAnswer'){
                         this.model.set('_buttonState', 'showCorrectAnswer');
-                    } else {
+                } else {
                         this.model.set('_buttonState', 'hideCorrectAnswer');
-                    }
                 }
             } else {
                 if (isEnabled) {

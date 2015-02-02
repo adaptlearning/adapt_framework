@@ -20,12 +20,12 @@
     display:none!important;
 }
 
-.focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
+.focused, *:focus, input:focus + label {
     outline:none;
 }
 
 .accessibility.no-touch {
-    .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
+    .focused, *:focus, input:focus + label {
         outline: 2px dotted #000;
         & when (@focus-outline) {
             outline: @focus-outline;  
@@ -34,13 +34,12 @@
     }
 }
 
-.accessibility-toggle {
+#accessibility-toggle {
     position: absolute;
     top: -1px;
     left: -25px;
     height: 1px;
     width: 1px;
-    display: none;
     z-index: 0;
     overflow: hidden;
     padding: 0;
@@ -211,6 +210,11 @@
     }
 }
 
+/*TO ALLOW CHILDREN ELEMENTS TO BE POSITIONED ABSOLUTELY*/
+.component { position:relative; }
+.block { position: relative; }
+
+//jquery.a11y start
 /*INVISIBLE ARIA-LABELS*/
 .aria-label {
     position:absolute !important;

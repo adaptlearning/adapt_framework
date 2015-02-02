@@ -50,15 +50,33 @@ define(function() {
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
             if (changedAttribute && this.model.get('_canShowFeedback')) {
-                this.$('.buttons-feedback').attr('disabled', false);
+				//enable feedback button
+                this.$('.buttons-feedback').a11y_cntrl_enabled(true);
+            } else {
+				//disable feedback button
+                this.$('.buttons-feedback').a11y_cntrl_enabled(false)
             }
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-            if (changedAttribute === 'complete') {
-                this.$('.buttons-action').attr('disabled', true);
+			//use correct instead of complete to signify button state
+            if (changedAttribute === 'correct') {
+				//disable submit button on correct (i.e. no model answer)
+                this.$('.buttons-action').a11y_cntrl_enabled(false);
             } else {
-                this.$('.buttons-action').html(this.model.get('_buttons')["_" + changedAttribute].buttonText);
+                switch(changedAttribute) {
+                case "showCorrectAnswer": case "hideCorrectAnswer":
+					//make model answer button inaccessible but enabled for visual users
+					//	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                    this.$('.buttons-action').a11y_cntrl(false).html(this.model.get('_buttons')["_" + changedAttribute].buttonText)
+                    .attr('aria-label', this.model.get('_buttons')["_" + changedAttribute].ariaLabel);
+                    break;
+                default:
+					//enabled button, make accessible and update aria labels and text.
+                    this.$('.buttons-action').a11y_cntrl_enabled(true).html(this.model.get('_buttons')["_" + changedAttribute].buttonText)
+                    .attr('aria-label', this.model.get('_buttons')["_" + changedAttribute].ariaLabel);
+                }
+
             }
             this.updateAttemptsCount();
         },
