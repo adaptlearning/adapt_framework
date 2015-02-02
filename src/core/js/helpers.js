@@ -23,7 +23,7 @@ define(function(require){
                 if (value === text) {
                     return block.fn(this);
                 } else {
-                    return block.inverse();
+                    return block.inverse(this);
                 }
             }
         };
