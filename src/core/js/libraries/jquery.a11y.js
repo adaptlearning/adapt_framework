@@ -11,6 +11,7 @@
     var hideableElements = ".a11y-hideable";
     var ariaLabelElements = "div[aria-label], span[aria-label]";
     var ariaLabelElementsFilter = ":not( .a11y-ignore-aria [aria-label] )";
+    var parentsFilter = ":not(#wrapper):not(body)";
 
 
     var $documentActiveElement;
@@ -332,13 +333,14 @@
 
 //TOGGLE ACCESSIBILITY
     //MAKES CHILDREN ACCESSIBLE OR NOT
-    $.a11y_on = function(isOn) {
+    $.a11y_on = function(isOn, selector) {
+        selector = selector || 'body';
         isOn = isOn === undefined ? true : isOn;
         if (isOn === false) {
-            $('body').attr("aria-hidden", true);
+            $(selector).attr("aria-hidden", true);
             $.a11y.options.isOn = false;
         } else {
-            $('body').removeAttr("aria-hidden");
+            $(selector).removeAttr("aria-hidden");
             $.a11y.options.isOn = true;
         }
     };
@@ -364,14 +366,14 @@
         for (var i = 0; i < this.length; i++) {
             var $item = $(this[i]);
             if (enabled && $item.is(hideableElements)) {
-                $item.removeAttr("aria-hidden").removeClass("aria-hidden").parents().removeAttr("aria-hidden").removeClass("aria-hidden");
+                $item.removeAttr("aria-hidden").removeClass("aria-hidden").parents(parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                 if (withDisabled) {
                     $item.removeAttr("disabled").removeClass("disabled");
                 }
             } else if (enabled) {
                 $item.attr({
                     tabindex: "0",
-                }).removeAttr("aria-hidden").removeClass("aria-hidden").parents().removeAttr("aria-hidden").removeClass("aria-hidden");
+                }).removeAttr("aria-hidden").removeClass("aria-hidden").parents(parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                 if (withDisabled) {
                     $item.removeAttr("disabled").removeClass("disabled");
                 }
@@ -528,8 +530,8 @@
 
         this.find(tabIndexElements).filter(tabIndexElementFilter).attr({
             'tabindex': 0
-        }).removeAttr('aria-hidden').removeClass("aria-hidden").parents().removeAttr('aria-hidden').removeClass("aria-hidden");
-        this.find(hideableElements).filter(tabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents().removeAttr('aria-hidden').removeClass("aria-hidden");        
+        }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
+        this.find(hideableElements).filter(tabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");        
 
         return this;
     };
