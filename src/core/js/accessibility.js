@@ -186,13 +186,13 @@ define(function(require) {
             if (instructionsList[Adapt.device.browser]) {
                 usageInstructions = instructionsList[Adapt.device.browser];
             } else if (Modernizr.touch) {
-                usageInstructions = instructions.touch || "";
+                usageInstructions = instructionsList.touch || "";
             } else {
-                usageInstructions = instructions.notouch || "";
+                usageInstructions = instructionsList.notouch || "";
             }
 
            this.$accessibilityInstructions
-                .once("blur", onFocusInstructions)
+                .one("blur", this.onFocusInstructions)
                 .html( usageInstructions );
         },
 
@@ -200,7 +200,7 @@ define(function(require) {
             if (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions) return;
 
             this.$accessibilityInstructions
-                .off("blur", onFocusInstructions)
+                .off("blur", this.onFocusInstructions)
         },
 
         setupLogging: function() {
