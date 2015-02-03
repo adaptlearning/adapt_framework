@@ -242,8 +242,28 @@ define(function(require) {
             this._hasTabPosition = true;
 
             _.delay(function() {
+                $.a11y_on(true, '#wrapper');
+                if (Adapt.location._currentId) {
+                    //required to stop JAWS from auto reading content in IE
+                    var currentModel = Adapt.findById(Adapt.location._currentId);
+                    var alertText = " ";
+                    switch (currentModel.get("_type")) {
+                    case "page":
+                        if (Adapt.course.get("_accessibility") && Adapt.course.get("_accessibility")._ariaLabels && Adapt.course.get("_accessibility")._ariaLabels.pageLoaded) {
+                            alertText = Adapt.course.get("_accessibility")._ariaLabels.pageLoaded;
+                        }
+                        break;
+                    case "menu":
+                        if (Adapt.course.get("_accessibility") && Adapt.course.get("_accessibility")._ariaLabels && Adapt.course.get("_accessibility")._ariaLabels.menuLoaded) {
+                            alertText = Adapt.course.get("_accessibility")._ariaLabels.menuLoaded;
+                        }
+                        break;
+                    }
+                    $.a11y_alert(alertText);
+                }
                 $.a11y_focus();
-            }, 250);
+            }, 1000);
+            
         },
 
         onElementFocused: function(event) {
@@ -256,8 +276,9 @@ define(function(require) {
 
         onNavigationStart: function() {
             this._isLoaded = false;
-            //STOP DOCUMENT READING
-            $.a11y_on(false);
+            //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
+            $.a11y_on(false, '#wrapper');
+            $("#a11y-focuser").focusNoScroll();
         },
 
         onNavigationEnd: function() {
