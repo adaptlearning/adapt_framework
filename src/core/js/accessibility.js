@@ -242,6 +242,7 @@ define(function(require) {
             this._hasTabPosition = true;
 
             _.delay(function() {
+                //ENABLED DOCUMENT READING
                 $.a11y_on(true, '#wrapper');
                 if (Adapt.location._currentId) {
                     //required to stop JAWS from auto reading content in IE
@@ -295,9 +296,6 @@ define(function(require) {
                 $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
                 $.a11y.options.isTouchDevice = Modernizr.touch;
                 
-                //ENABLED DOCUMENT READING
-                $.a11y_on(true);
-
                 //UPDATE NEW DOCUMENT WITH ARIA_LABEL CONFIGURATIONS ETC
                 $.a11y_update();
             } else {
