@@ -397,7 +397,7 @@ module.exports = function(grunt) {
             }
         },
 
-		adapt_reset_tracking_ids: {
+        adapt_reset_tracking_ids: {
             options: {
                 courseFile: "src/courses/<%= grunt.option('courseFolder') %>/en/course.json",
                 blocksFile: "src/courses/<%= grunt.option('courseFolder') %>/en/blocks.json"
@@ -489,6 +489,7 @@ module.exports = function(grunt) {
         var storedFileIds = {};
         var hasOrphanedParentIds = false;
         var orphanedParentIds = [];
+        var courseId;
 
         function checkJsonIds() {
             var currentCourseFolder;
@@ -498,12 +499,14 @@ module.exports = function(grunt) {
                 currentCourseFolder = path;
                 // Go through each list of declared course files
                 listOfCourseFiles.forEach(function(jsonFileName) {
-                    // Make sure course.json file is not searched
-                    if (jsonFileName !== "course") {
+                    var currentJsonFile = grunt.file.readJSON(currentCourseFolder + "/" + jsonFileName + ".json");
+                    // Set course ID
+                    if (jsonFileName === "course") {
+                        courseId = currentJsonFile._id;
+                    } else {
                         storedFileParentIds[jsonFileName] = [];
                         storedFileIds[jsonFileName] = [];
                         // Read each .json file
-                        var currentJsonFile = grunt.file.readJSON(currentCourseFolder + "/" + jsonFileName + ".json");
                         currentJsonFile.forEach(function(item) {
                             // Store _parentIds and _ids to be used by methods below
                             storedFileParentIds[jsonFileName].push(item._parentId);
@@ -534,7 +537,7 @@ module.exports = function(grunt) {
 
         function checkIfOrphanedElementsExist(value, parentFileToCheck) {
             _.each(value, function(parentId) {
-                if (parentId === "course") return;
+                if (parentId === courseId) return;
 
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
                     hasOrphanedParentIds = true;
@@ -582,7 +585,7 @@ module.exports = function(grunt) {
 
         setGlobalVariables(moduleID);
 
-		devMode = (devMode === "true");
+        devMode = (devMode === "true");
 
         writeln("");
         writeln("Building module " + chalk.cyan(grunt.option("moduleID")) + ((grunt.option("courseFolder") !== grunt.option("moduleID")) ? " [" + grunt.option("courseFolder") + "]" : "") + (devMode ? " (dev mode)" : ""));
