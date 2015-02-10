@@ -11,7 +11,7 @@ define(function(require) {
 
     var AccessibilityView = Backbone.View.extend({
 
-        el: '.accessibility-toggle',
+        el: '#accessibility-toggle',
 
         initialize: function() {
             this.render();

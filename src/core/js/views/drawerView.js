@@ -75,23 +75,24 @@ define(function(require) {
 			if (event) {
 				event.preventDefault();
 			}
-			this._isVisible = false;
 			this.hideDrawer();
 		},
 
 		toggleDrawer: function() {
 			if (this._isVisible && this._isCustomViewVisible === false) {
-				this._isVisible = false;
 				this.hideDrawer();
 			} else {
-				this._isVisible = true;
 				this.showDrawer(true);
 			}
 		},
 
 		showDrawer: function(emptyDrawer) {
 			this.$el.removeClass('display-none');
-			Adapt.trigger('popup:opened');
+			//only trigger popup:opened if drawer is visible, pass popup manager drawer element
+			if (!this._isVisible) {
+				Adapt.trigger('popup:opened', this.$el);
+				this._isVisible = true;
+			}
 			var drawerWidth = this.$el.width();
 			// Sets tab index to 0 for all tabbable elements in Drawer
 			this.$('a, button, input, select, textarea').attr('tabindex', 0);
@@ -142,7 +143,11 @@ define(function(require) {
 		},
 
 		hideDrawer: function() {
+			//only trigger popup:closed if drawer is visible
+			if (this._isVisible) {
 			Adapt.trigger('popup:closed');
+				this._isVisible = false;
+			}
 
 			var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
 			var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';

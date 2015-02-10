@@ -7,27 +7,21 @@
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
-    var scrollTop = 0;
-    var $activeElement;
-    var tabIndexElements = 'a, button, input, select, textarea';
 
-    Adapt.on('popup:opened', function() {
-    	scrollTop = $(window).scrollTop();
-    	$activeElement = $(document.activeElement);
-        $(tabIndexElements).attr('tabindex', -1);
+    Adapt.on('popup:opened', function($element) {
+
+		//capture currently active element or element specified
+        var $activeElement = $element || $(document.activeElement);
+
+        //save tab indexes
+        $activeElement.a11y_popup();
     });
 
     Adapt.on('popup:closed', function() {
-        $(window).scrollTop(scrollTop);
-        $(tabIndexElements).attr('tabindex', 0);
-        if ($activeElement) {
-            if($activeElement.is(':visible')) {
-                $activeElement.focus();
-            } else {
-                $activeElement.next().focus();
-            }
         	
-    	}
+        //restore tab indexes
+        $.a11y_popdown();
+
     });
 
 });
