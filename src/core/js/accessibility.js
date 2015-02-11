@@ -100,6 +100,7 @@ define(function(require) {
 
             if (isEnabled) {
                 
+                this.onNavigationEnd();
                 this.setupDocument();
                 this.setupLegacy();
                 this.setupPopupListeners()
@@ -115,7 +116,7 @@ define(function(require) {
                 this.rollbackUsageInstructions();
                 this.rollbackLogging();
             
-                }
+            }
 
 
 
@@ -186,7 +187,7 @@ define(function(require) {
                 return;
             }
 
-            var instructionsList = Adapt.course.get("_accessibility")._accessibilityInstructions;
+            var instructionsList = Adapt.course.get("_globals")._accessibility._accessibilityInstructions;
 
             var usageInstructions;
             if (instructionsList[Adapt.device.browser]) {
