@@ -45,8 +45,14 @@ define(function(require) {
             if (this._isLoaded) return;
 
             //MAKE $.a11y_text and $.a11y_normalize IN GLOBAL HANDLEBARS HELPERS a11y_text and a11y_normalize
+            var config = Adapt.config.get("_accessibility");
             Handlebars.registerHelper('a11y_text', function(text) {
-                return $.a11y_text(text);
+                //ALLOW ENABLE/DISABLE OF a11y_text HELPER
+                if (config && config._isTextProcessorEnabled === false) {
+                    return text;
+                } else { 
+                    return $.a11y_text(text);
+                }
             });
 
             Handlebars.registerHelper('a11y_normalize', function(text) {
