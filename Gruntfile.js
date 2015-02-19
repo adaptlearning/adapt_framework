@@ -49,6 +49,17 @@ module.exports = function(grunt) {
                     };
                 })
             },
+            componentsFonts: {
+                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/adapt/css/fonts/',
+                        cwd: cwd + 'fonts/',
+                        filter: "isFile"
+                    };
+                })
+            },
             extensionsAssets: {
                 files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
                     return {
@@ -60,6 +71,17 @@ module.exports = function(grunt) {
                     };
                 })
             },
+            extensionsFonts: {
+                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/adapt/css/fonts/',
+                        cwd: cwd + 'fonts/',
+                        filter: "isFile"
+                    };
+                })
+            },
             menuAssets: {
                 files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
                     return {
@@ -67,6 +89,17 @@ module.exports = function(grunt) {
                         src: ['**'],
                         dest: 'build/assets/',
                         cwd: cwd + 'assets/',
+                        filter: "isFile"
+                    };
+                })
+            },
+            menuFonts: {
+                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
+                    return {
+                        expand: true,
+                        src: ['**'],
+                        dest: 'build/adapt/css/fonts/',
+                        cwd: cwd + 'fonts/',
                         filter: "isFile"
                     };
                 })
@@ -276,17 +309,35 @@ module.exports = function(grunt) {
                 ],
                 tasks: ['copy:componentsAssets']
             },
+            componentsFonts: {
+                files: [
+                    'src/components/**/fonts/**'
+                ],
+                tasks: ['copy:componentsFonts']
+            },
             extensionsAssets: {
                 files: [
                     'src/extensions/**/assets/**'
                 ],
                 tasks: ['copy:extensionsAssets']
             },
+            extensionsFonts: {
+                files: [
+                    'src/extensions/**/fonts/**'
+                ],
+                tasks: ['copy:extensionsFonts']
+            },
             menuAssets: {
                 files: [
                     'src/menu/**/assets/**'
                 ],
                 tasks: ['copy:menuAssets']
+            },
+            menuFonts: {
+                files: [
+                    'src/menu/**/fonts/**'
+                ],
+                tasks: ['copy:menuFonts']
             },
             themeAssets: {
                 files: [
