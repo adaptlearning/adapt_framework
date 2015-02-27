@@ -1,5 +1,5 @@
 //GULP+LIBRARY IMPORTS
-    var version = "0.0.5"
+    var version = "0.0.6"
     var gulp = require("gulp"),
         _ = require('underscore'),
         chalk = require("chalk"),
@@ -1421,6 +1421,42 @@
 
     });
 
+//GULP PATCH
+    gulp.task("patch", function() {
+        if (!download) download = require("gulp-download");
+        if (!unzip) unzip = require("gulp-unzip");
+        if (!minimatch) minimatch = require('minimatch');
+        if (!tap) tap = require('gulp-tap');
+        if (!npm) npm = require('npm');
+        if (!Q) Q = require('q');
+        if (!fs) fs = require('fs');
+
+        if (patchName === undefined || patchName.length === 0) {
+            return console.log("No patch specified!");
+        }
+
+        var q = Q.defer();
+
+        var file = "https://github.com/oliverfoster/adapt-framework-patches/raw/master/"+patchName+".zip";
+        download(file)
+            .on("error", function() {
+                console.log(chalk.bgRed("Patch " + patchName + " not found."));
+                q.resolve();
+            })
+            .pipe(unzip())
+            .pipe(tap(function(file) {
+                file.path = file.path.substr(file.path.indexOf("/")+1);
+                console.log("Patching: ", file.path);
+            }))
+            .pipe(gulp.dest("."))
+            .on("end", function() {
+                console.log(chalk.bgGreen("Patch " + patchName + " applied."));
+                q.resolve();
+            });
+
+        return q.promise;
+    });
+
 
 //GULP WATCHES
     var createWatcher = function(type) {
@@ -1503,7 +1539,7 @@
 
 
 //INITIALIZATION
-    var courseOptions, coursesConfig;
+    var courseOptions, coursesConfig, patchName;
     var scriptInitialize = function() {   
 
         var processCommandLineArguments = function(argv) {
@@ -1553,6 +1589,10 @@
                     walkSync("src/courses", function(dirs) {
                         courseOptions.courses = dirs;
                     });
+                }
+
+                if (argv.p) {
+                    patchName = argv.p;
                 }
                 
                 courseOptions.options = [];
