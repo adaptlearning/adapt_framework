@@ -16,9 +16,9 @@ define(function(require) {
 		initialize: function() {
 			this._isVisible = false;
 			this.drawerDir = 'right';
-            if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
-            	this.drawerDir = 'left';
-            }
+			if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
+				this.drawerDir = 'left';
+			}
 			this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
 			this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
 			this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
@@ -38,14 +38,14 @@ define(function(require) {
 
 		render: function() {
 			var template = Handlebars.templates['drawer']
-            $(this.el).html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('body');
-            var shadowTemplate = Handlebars.templates['shadow'];
-            $(shadowTemplate()).appendTo('body');
-            // Set defer on post render
-            _.defer(_.bind(function() {
+			$(this.el).html(template(Adapt.course.get('_accessibility')._ariaLabels)).appendTo('body');
+			var shadowTemplate = Handlebars.templates['shadow'];
+			$(shadowTemplate()).appendTo('body');
+			// Set defer on post render
+			_.defer(_.bind(function() {
 				this.postRender();
 			}, this));
-            return this;
+			return this;
 		},
 
 		// Set tabindex for select elements
@@ -125,7 +125,7 @@ define(function(require) {
 				var direction={};
 				direction[this.drawerDir]=0;
 				this.$el.velocity(direction, this.drawerDuration, easing);
-                $('#shadow').removeClass('display-none');
+				$('#shadow').removeClass('display-none');
 				this.addShadowEvent();
 				Adapt.trigger('drawer:opened');
 
@@ -158,19 +158,19 @@ define(function(require) {
 			this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
 				this.$el.addClass('display-none');
 			}, this));
-            $('#shadow').addClass('display-none');
+			$('#shadow').addClass('display-none');
 			this._isCustomViewVisible = false;
 			this.removeShadowEvent();
 			Adapt.trigger('drawer:closed');
 		},
 
-        addShadowEvent: function() {
+		addShadowEvent: function() {
 			$('#shadow').one('click touchstart', _.bind(function() {
 				this.onCloseDrawer();
 			}, this));
 		},
 
-        removeShadowEvent: function() {
+		removeShadowEvent: function() {
 			$('#shadow').off('click touchstart');
 		}
 
@@ -192,8 +192,8 @@ define(function(require) {
 		render: function() {
 			var data = this.model.toJSON();
 			var template = Handlebars.templates['drawerItem']
-            $(this.el).html(template(data)).appendTo('.drawer-holder');
-            return this;
+			$(this.el).html(template(data)).appendTo('.drawer-holder');
+			return this;
 		},
 
 		onDrawerItemClicked: function(event) {
