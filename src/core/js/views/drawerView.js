@@ -15,6 +15,10 @@ define(function(require) {
 
 		initialize: function() {
 			this._isVisible = false;
+			this.drawerDir = 'right';
+			if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
+				this.drawerDir = 'left';
+			}
 			this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
 			this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
 			this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
@@ -34,14 +38,14 @@ define(function(require) {
 
 		render: function() {
 			var template = Handlebars.templates['drawer']
-            $(this.el).html(template(Adapt.course.get('_globals'))).appendTo('body');
-            var shadowTemplate = Handlebars.templates['shadow'];
-            $(shadowTemplate()).appendTo('body');
-            // Set defer on post render
-            _.defer(_.bind(function() {
+			$(this.el).html(template(Adapt.course.get('_globals'))).appendTo('body');
+			var shadowTemplate = Handlebars.templates['shadow'];
+			$(shadowTemplate()).appendTo('body');
+			// Set defer on post render
+			_.defer(_.bind(function() {
 				this.postRender();
 			}, this));
-            return this;
+			return this;
 		},
 
 		// Set tabindex for select elements
@@ -56,7 +60,6 @@ define(function(require) {
 			Adapt.trigger('drawer:empty');
 			this.showDrawer();
 			this.$('.drawer-holder').html(view);
-			
 		},
 
 		checkIfDrawerIsAvailable: function() {
@@ -120,11 +123,12 @@ define(function(require) {
 			_.defer(_.bind(function() {
 				var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
 				var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
-				this.$el.velocity({'right': 0}, this.drawerDuration, easing);
-                $('#shadow').removeClass('display-none');
+				var direction={};
+				direction[this.drawerDir]=0;
+				this.$el.velocity(direction, this.drawerDuration, easing);
+				$('#shadow').removeClass('display-none');
 				this.addShadowEvent();
 				Adapt.trigger('drawer:opened');
-
 			}, this));
 		},
 
@@ -155,25 +159,26 @@ define(function(require) {
 			var duration = Adapt.config.get('_drawer')._duration;
 			duration = (duration) ? duration : 400;
 
-			this.$el.velocity({'right': -this.$el.width()}, this.drawerDuration, easing, _.bind(function() {
+			var direction={};
+			direction[this.drawerDir]=-this.$el.width();
+			this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
 				this.$el.addClass('display-none');
 			}, this));
-            $('#shadow').addClass('display-none');
+			$('#shadow').addClass('display-none');
 			this._isCustomViewVisible = false;
 			this.removeShadowEvent();
 			Adapt.trigger('drawer:closed');
 		},
 
-        addShadowEvent: function() {
+		addShadowEvent: function() {
 			$('#shadow').one('click touchstart', _.bind(function() {
 				this.onCloseDrawer();
 			}, this));
 		},
 
-        removeShadowEvent: function() {
+		removeShadowEvent: function() {
 			$('#shadow').off('click touchstart');
 		}
-
 	});
 
 	var DrawerItemView = Backbone.View.extend({
@@ -192,8 +197,8 @@ define(function(require) {
 		render: function() {
 			var data = this.model.toJSON();
 			var template = Handlebars.templates['drawerItem']
-            $(this.el).html(template(data)).appendTo('.drawer-holder');
-            return this;
+			$(this.el).html(template(data)).appendTo('.drawer-holder');
+			return this;
 		},
 
 		onDrawerItemClicked: function(event) {
@@ -201,9 +206,7 @@ define(function(require) {
 			var eventCallback = this.model.get('eventCallback');
 			Adapt.trigger(eventCallback);
 		}
-
 	});
 
 	return DrawerView;
-
 });

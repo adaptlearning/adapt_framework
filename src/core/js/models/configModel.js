@@ -34,6 +34,9 @@ define(function(require) {
                     if (this.get('_canLoadData')) {
                         Adapt.trigger('configModel:loadCourseData');
                     }
+                    if(this.get('_defaultDirection')=='rtl'){//We're going to use rtl style
+                    	$('html').addClass('dir-rtl');
+                    }
                 }, this),
                 error: function() {
                     console.log('Unable to load course/config.json');

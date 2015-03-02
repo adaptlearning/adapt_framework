@@ -8,7 +8,12 @@ outline: 0; font-size: 100%; vertical-align: baseline; background: transparent;}
 article, aside, figure, footer, header, hgroup, nav, section {display: block;}
 img, object, embed {max-width: 100%;}
 html {overflow-y: scroll;}
-ul li {margin-left:20px;}
+ul li {margin-left:20px;
+	.dir-rtl & {
+	    margin-left:inherit;
+	    margin-right:20px;
+	}
+}
 blockquote, q {quotes: none;}
 blockquote:before, blockquote:after, q:before, 
 q:after {content: ''; content: none;}
@@ -40,7 +45,10 @@ button {width: auto; overflow: visible;}
 .clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
 .clearfix:after { clear: both; }  
 .clearfix { zoom: 1; }
-body {-webkit-tap-highlight-color: rgba(0,0,0,0);}
+body {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	.dir-rtl & { direction:rtl; }
+}
 a, button {-webkit-tap-highlight-color: rgba(0,0,0,0.2);}
 .icon {
 	// Fix for iOS devices not displaying icons if hidden then shown
