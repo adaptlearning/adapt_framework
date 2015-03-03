@@ -26,11 +26,7 @@
 
 .accessibility.no-touch {
     .focused, *:focus, input:focus + label {
-        outline: 2px dotted #000;
-        & when (@focus-outline) {
-            outline: @focus-outline;  
-        }
-        
+        outline: @focus-outline;
     }
 }
 
