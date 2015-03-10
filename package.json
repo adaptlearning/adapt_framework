@@ -1,6 +1,6 @@
 {
   "name": "adapt_framework",
-  "version": "0.0.6",
+  "version": "0.0.11",
   "description": "Adapt Learning output framework",
   "main": "source/adapt.js",
   "scripts": {},
@@ -42,7 +42,7 @@
     "gulp-watch": "~4.1.0",
     "gulp-wrap": "~0.10.1",
     "handlebars": "^3.0.0",
-    "image-size": "^0.3.5",
+    "image-size-big-max-buffer": "^0.3.5",
     "jshint-stylish": "^1.0.0",
     "minimatch": "^2.0.1",
     "minimist": "^1.1.0",

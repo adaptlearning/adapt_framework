@@ -1,5 +1,5 @@
 //GULP+LIBRARY IMPORTS
-    var version = "0.0.6"
+    var version = "0.0.11"
     var gulp = require("gulp"),
         _ = require('underscore'),
         chalk = require("chalk"),
@@ -8,9 +8,13 @@
 
     var reloadClient, isReloadClient = false;
 
+    var updateCheckURL = config.updater.checkURL;
+    var patchURL = config.updater.patchURL;
+    var updateURL = config.updater.updateURL;
+
     function checkUpdates(version) {
         var request = require("request");
-        var url = "https://raw.githubusercontent.com/oliverfoster/adapt_framework_gulp/master/package.json";
+        var url = updateCheckURL;
         var goUrl = "Please run 'gulp update'";
         request({
             url: url,
@@ -607,7 +611,7 @@
 //ASSET FUNCTIONS
     var fileCheck = function(options, config) {
         if (!Q) Q = require('q');
-        if (!imagesize) imagesize = require('image-size');
+        if (!imagesize) imagesize = require('image-size-big-max-buffer');
         if (!path) path = require('path');
         if (!tap) tap = require('gulp-tap');
 
@@ -630,9 +634,15 @@
                     case "jpeg":
                     case "jpg":
                     case "png":
-                        var data = imagesize(file.path);
-                        file.width = data.width;
-                        file.height = data.height;
+                        try {
+                            var data = imagesize(file.path);
+                            file.width = data.width;
+                            file.height = data.height;
+                        } catch(e) {
+                            file.flaggedProps = [
+                                e
+                            ];
+                        }
                         break;
                     case "mp4":
                     case "ogv":
@@ -1386,7 +1396,7 @@
 
         var q = Q.defer();
 
-        var file = "https://github.com/oliverfoster/adapt_framework_gulp/archive/master.zip";
+        var file = updateURL;
         download(file)
             .pipe(unzip({
               filter : function(entry){
@@ -1437,7 +1447,7 @@
 
         var q = Q.defer();
 
-        var file = "https://github.com/oliverfoster/adapt-framework-patches/raw/master/"+patchName+".zip";
+        var file = patchURL+patchName+".zip";
         download(file)
             .on("error", function() {
                 console.log(chalk.bgRed("Patch " + patchName + " not found."));
@@ -1445,7 +1455,7 @@
             })
             .pipe(unzip())
             .pipe(tap(function(file) {
-                file.path = file.path.substr(file.path.indexOf("/")+1);
+                //file.path = file.path.substr(file.path.indexOf("/")+1);
                 console.log("Patching: ", file.path);
             }))
             .pipe(gulp.dest("."))

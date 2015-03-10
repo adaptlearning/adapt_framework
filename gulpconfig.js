@@ -1,5 +1,10 @@
 //JAVASCRIPT ENVIRONMENT + BUILD VARIABLES
 module.exports = {
+    "updater": {
+        "checkURL": "https://raw.githubusercontent.com/cgkineo/adapt-builder/master/package.json",
+        "patchURL": "https://github.com/cgkineo/adapt-builder-patches/raw/master/",
+        "updateURL": "https://github.com/cgkineo/adapt-builder/archive/master.zip"
+    },
     "tasks": {
         "assetcheck": {
             "assetcheck": true
