@@ -195,6 +195,7 @@ module.exports = function(grunt) {
         handlebars: {
             compile: {
                 options: {
+                    amd: 'handlebars',
                     namespace:"Handlebars.templates",
                     partialRegex: /.*/,
                     partialsPathRegex: /\/partials\//,
