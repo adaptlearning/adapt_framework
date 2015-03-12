@@ -188,7 +188,14 @@ module.exports = function(grunt) {
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
-                    'src/templates/templates.js': 'src/**/*.hbs'
+                    'src/templates/templates.js': 
+                    [
+                        'src/components/**/*.hbs',
+                        'src/core/**/*.hbs',
+                        'src/extensions/**/*.hbs',
+                        'src/menu/<%= menu %>/**/*.hbs',
+                        'src/theme/<%= theme %>/**/*.hbs'
+                    ]
                 }
             }
         },
