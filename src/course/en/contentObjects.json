@@ -12,6 +12,7 @@
             "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText": "View",
+        "durationLabel":"Duration:",
         "duration": "2 mins",
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -30,6 +31,7 @@
             "src": "course/en/images/origami-menu-two.jpg"
         },
         "linkText": "View",
+        "durationLabel":"Duration:",
         "duration": "2 mins",
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -48,6 +50,7 @@
             "src": "course/en/images/origami-menu-three.jpg"
         },
         "linkText": "View",
+        "durationLabel":"Duration:",
         "duration": "2 mins",
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -66,6 +69,7 @@
             "src": "course/en/images/origami-menu-three.jpg"
         },
         "linkText": "View",
+        "durationLabel":"Duration:",
         "duration": "2 mins",
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -84,6 +88,7 @@
             "src": "course/en/images/origami-menu-one.jpg"
         },
         "linkText": "View",
+        "durationLabel":"Duration:",
         "duration": "2 mins",
         "_pageLevelProgress": {
             "_isEnabled": true
