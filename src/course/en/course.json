@@ -115,7 +115,9 @@
                 "hotgraphicPopUp": "Hotgraphic popup.",
                 "feedbackPopUp": "Popup opened.",
                 "menuBack": "Back to menu",
-                "menuIndicatorHeading": "Menu item heading "
+                "menuIndicatorHeading": "Menu item heading ",
+                "pageLevelProgress": "Page sections",
+                "pageLevelProgressIndicatorBar": "You have completed "
             }
         }
     },
