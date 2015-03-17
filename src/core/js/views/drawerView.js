@@ -106,20 +106,16 @@ define(function(require) {
 				this.emptyDrawer();
 				this.renderItems();
 				Adapt.trigger('drawer:openedItemView');
-				// If list items change focus to close button
-				this.$('.drawer-close').focus();
 			} else {
 				if (this._hasBackButton) {
 					this.$('.drawer-back').removeClass('display-none');
-					// Change focus to back button
-					this.$('.drawer-back').focus();
 				} else {
 					this.$('.drawer-back').addClass('display-none');
-					// Change focus to close button
-					this.$('.drawer-close').focus();
 				}
 				Adapt.trigger('drawer:openedCustomView');
 			}
+			//focus on first tabbable element in drawer
+			this.$el.a11y_focus();
 			_.defer(_.bind(function() {
 				var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
 				var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';

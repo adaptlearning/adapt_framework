@@ -23,6 +23,8 @@ define(function(require) {
             //RUN ONCE
             if (this._isLoaded) return;
 
+            this.configureA11y();
+
             //CAPTURE TAB PRESSES TO DIVERT
             $('body').on('keyup', this.onKeyUp);
 
@@ -295,13 +297,8 @@ define(function(require) {
             this._isLoaded = true;
 
             if (isEnabled) {
-                var topOffset = $('.navigation').height()+10;
-                var bottomoffset = 0;
-
-                $.a11y.options.focusOffsetTop = topOffset;
-                $.a11y.options.focusOffsetBottom = bottomoffset;
-                $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
-                $.a11y.options.isTouchDevice = Modernizr.touch;
+                
+                this.configureA11y();
                 
                 //UPDATE NEW DOCUMENT WITH ARIA_LABEL CONFIGURATIONS ETC
                 $.a11y_update();
@@ -345,6 +342,15 @@ define(function(require) {
             if (!Accessibility._hasTabPosition) return;
             if (!Accessibility._isLoaded) return;
             $(event.target).addClass("a11y-ignore-focus");
+        },
+
+        configureA11y: function() {
+            var topOffset = $('.navigation').height()+10;
+            var bottomoffset = 0;
+            $.a11y.options.focusOffsetTop = topOffset;
+            $.a11y.options.focusOffsetBottom = bottomoffset;
+            $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
+            $.a11y.options.isTouchDevice = Modernizr.touch;
         }
 
     }, Backbone.Events);
