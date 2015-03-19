@@ -11,6 +11,8 @@ define(function(require) {
 
     var AdaptCollection = Backbone.Collection.extend({
         initialize : function(models, options){
+            this.url = options.url;
+            
             this.once('reset', this.loadedData, this);
             if (this.url) {
                 this.fetch({reset:true});

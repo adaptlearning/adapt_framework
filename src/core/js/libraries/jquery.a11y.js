@@ -1,3 +1,4 @@
+//https://github.com/cgkineo/jquery.a11y Mar 12, 2015
 (function($, window, undefined) {
 
     var nativeSpaceElements = "textarea, input[type='text']";
@@ -15,6 +16,11 @@
 
 
     var $documentActiveElement;
+
+
+    $('body').on("mousedown", focusableElements, function(event) { //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+        $documentActiveElement = $(event.currentTarget);
+    });
 
     if (!String.prototype.trim) { //IE8 Fix
       (function() {
@@ -56,8 +62,8 @@
         $documentActiveElement = $(event.target);
 
         if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
-        //console.log ("Focused on:")
-        //console.log($documentActiveElement);
+        console.log ("Focused on:")
+        console.log($documentActiveElement);
         var readText;
         if ($(event.target).attr("aria-labelledby")) {
             var label = $("#"+$(event.target).attr("aria-labelledby"));
@@ -83,7 +89,7 @@
 
             defer(function() {
                 $.scrollTo(sto, {duration: 0});
-            });
+            }, event);
         }
     };
 

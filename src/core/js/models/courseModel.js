@@ -12,6 +12,8 @@ define(function(require) {
     var CourseModel = AdaptModel.extend({
     
         initialize: function(attrs, options) {
+            this.url = options.url;
+
             this.on('sync', this.loadedData, this);
             if (this.url) {
                 this.fetch();
