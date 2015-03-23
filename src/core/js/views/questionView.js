@@ -69,27 +69,21 @@ define(function(require) {
             // If reset is enabled set defaults
             // Call blank method for question to handle
             if (isResetOnRevisit) {
-                var attempts = this.model.get('_attempts');
-                this.model.set({
-                    _isEnabled: true,
-                    _attemptsLeft: attempts,
-                    _isCorrect: false,
-                    _isComplete: false,
-                    _isSubmitted: false,
-                    _buttonState: 'submit'
-                });
-                // Defer is added to allow the component to render
+
+                this.model.reset(isResetOnRevisit, true);
+
+                 // Defer is added to allow the component to render
                 _.defer(_.bind(function() {
-                    this.resetQuestionOnRevisit();
+                   this.resetQuestionOnRevisit(isResetOnRevisit);
                 }, this));
 
             } else {
 
                 // If complete - display users answer
                 // or reset the question if not complete
-                var isComplete = this.model.get('_isComplete');
+                var isInteractionComplete = this.model.get('_isInteractionComplete');
 
-                if (isComplete) {
+                if (isInteractionComplete) {
                     this.model.set('_buttonState', 'hideCorrectAnswer');
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
@@ -109,7 +103,7 @@ define(function(require) {
         },
 
         // Used by the question to reset the question when revisiting the component
-        resetQuestionOnRevisit: function() {},
+        resetQuestionOnRevisit: function(type) {},
 
         // Calls default methods to setup on questions
         setupDefaultSettings: function() {
@@ -308,12 +302,12 @@ define(function(require) {
         // _buttonState on the model which buttonsView listens to
         updateButtons: function() {
 
-            var isComplete = this.model.get('_isComplete');
+            var isInteractionComplete = this.model.get('_isInteractionComplete');
             var isCorrect = this.model.get('_isCorrect');
             var isEnabled = this.model.get('_isEnabled');
             var buttonState = this.model.get('_buttonState');
 
-            if (isComplete) {
+            if (isInteractionComplete) {
                 if (isCorrect || !this.model.get('_canShowModelAnswer')) {
 					//use correct instead of complete to signify button state
                     this.model.set('_buttonState', 'correct');
