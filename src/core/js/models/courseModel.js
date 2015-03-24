@@ -19,6 +19,9 @@ define(function(require) {
         },
         
         loadedData: function() {
+            var _globals = { _accessibility:  this.get("_accessibility") };
+            this.set("_globals", _globals);
+
             Adapt.trigger('courseModel:dataLoaded');
             this.setupListeners();
         },
