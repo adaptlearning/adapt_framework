@@ -19,8 +19,13 @@ define(function(require) {
         },
         
         loadedData: function() {
-            var _globals = { _accessibility:  this.get("_accessibility") };
-            this.set("_globals", _globals);
+            if (this.get("_globals") === undefined) {
+                var _globals = { 
+                    _accessibility:  this.get("_accessibility"),
+                    _components:   this.get("_accessibility")._components
+                };
+                this.set("_globals", _globals);
+            }
 
             Adapt.trigger('courseModel:dataLoaded');
             this.setupListeners();
