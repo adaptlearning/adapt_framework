@@ -43,14 +43,17 @@ define(function(require) {
       
         addChildren: function() {
             var nthChild = 0;
-            this.model.getChildren().each(function(model) {
+            var children = this.model.getChildren();
+            var models = children.models;
+            for (var i = 0, len = models.length; i < len; i++) {
+                var model = models[i];
                 if (model.get('_isAvailable')) {
                     nthChild ++;
                     var ChildView = this.constructor.childView || Adapt.componentStore[model.get("_component")];
                     var $parentContainer = this.$(this.constructor.childContainer);
                     $parentContainer.append(new ChildView({model:model, $parent:$parentContainer, nthChild:nthChild}).$el);
                 }
-            }, this);
+            }
         },
       
         setReadyStatus: function() {

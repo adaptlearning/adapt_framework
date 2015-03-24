@@ -62,6 +62,7 @@ define(function(require) {
 		checkIfDrawerIsAvailable: function() {
 			if(this.collection.length == 0) {
 				$('.navigation-drawer-toggle-button').addClass('display-none');
+				Adapt.trigger('drawer:noItems');
 			}
 		},
 
@@ -74,23 +75,24 @@ define(function(require) {
 			if (event) {
 				event.preventDefault();
 			}
-			this._isVisible = false;
 			this.hideDrawer();
 		},
 
 		toggleDrawer: function() {
 			if (this._isVisible && this._isCustomViewVisible === false) {
-				this._isVisible = false;
 				this.hideDrawer();
 			} else {
-				this._isVisible = true;
 				this.showDrawer(true);
 			}
 		},
 
 		showDrawer: function(emptyDrawer) {
 			this.$el.removeClass('display-none');
-			Adapt.trigger('popup:opened');
+			//only trigger popup:opened if drawer is visible, pass popup manager drawer element
+			if (!this._isVisible) {
+				Adapt.trigger('popup:opened', this.$el);
+				this._isVisible = true;
+			}
 			var drawerWidth = this.$el.width();
 			// Sets tab index to 0 for all tabbable elements in Drawer
 			this.$('a, button, input, select, textarea').attr('tabindex', 0);
@@ -101,20 +103,16 @@ define(function(require) {
 				this.emptyDrawer();
 				this.renderItems();
 				Adapt.trigger('drawer:openedItemView');
-				// If list items change focus to close button
-				this.$('.drawer-close').focus();
 			} else {
 				if (this._hasBackButton) {
 					this.$('.drawer-back').removeClass('display-none');
-					// Change focus to back button
-					this.$('.drawer-back').focus();
 				} else {
 					this.$('.drawer-back').addClass('display-none');
-					// Change focus to close button
-					this.$('.drawer-close').focus();
 				}
 				Adapt.trigger('drawer:openedCustomView');
 			}
+			//focus on first tabbable element in drawer
+			this.$el.a11y_focus();
 			_.defer(_.bind(function() {
 				var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
 				var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
@@ -133,13 +131,19 @@ define(function(require) {
 		renderItems: function() {
 			Adapt.trigger('drawer:empty');
 			this.emptyDrawer();
-			this.collection.each(function(item) {
+			var models = this.collection.models;
+			for (var i = 0, len = models.length; i < len; i++) {
+				var item = models[i];
 				new DrawerItemView({model: item});
-			});
+			}
 		},
 
 		hideDrawer: function() {
+			//only trigger popup:closed if drawer is visible
+			if (this._isVisible) {
 			Adapt.trigger('popup:closed');
+				this._isVisible = false;
+			}
 
 			var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
 			var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';

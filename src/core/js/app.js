@@ -54,6 +54,8 @@ require([
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
 
+            mapAdaptIdsToObjects();
+
             // Triggered to setup model connections in AdaptModel.js
             Adapt.trigger('app:dataLoaded');
             // Sets up collection mapping
@@ -70,6 +72,13 @@ require([
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
 
         }
+    }
+
+    function mapAdaptIdsToObjects () {
+        Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy("_id");
+        Adapt.articles._byAdaptID = Adapt.articles.groupBy("_id");
+        Adapt.blocks._byAdaptID = Adapt.blocks.groupBy("_id");
+        Adapt.components._byAdaptID = Adapt.components.groupBy("_id");
     }
 
     // This function is called when the config model triggers 'configModel:loadCourseData'

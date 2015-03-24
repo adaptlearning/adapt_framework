@@ -59,11 +59,9 @@
     var scrollToFocus = function(event) {
         $documentActiveElement = $(event.target);
 
+        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
         //console.log ("Focused on:")
         //console.log($documentActiveElement);
-
-        if ($.a11y.options.isOn === false) return $("#a11y-focuser").focusNoScroll();
-        
         var readText;
         if ($(event.target).attr("aria-labelledby")) {
             var label = $("#"+$(event.target).attr("aria-labelledby"));

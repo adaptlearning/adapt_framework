@@ -50,11 +50,15 @@ define(function() {
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
             if (changedAttribute && this.model.get('_canShowFeedback')) {
-                this.$('.buttons-feedback').attr('disabled', false);
+				//enable feedback button
+                this.$('.buttons-feedback').a11y_cntrl_enabled(true);
+            } else {
+				//disable feedback button
+                this.$('.buttons-feedback').a11y_cntrl_enabled(false)
             }
         },
 
-        onButtonStateChanged: function(model, changedAttribute) {
+         onButtonStateChanged: function(model, changedAttribute) {
             if (changedAttribute === 'correct') {
                 this.$('.buttons-action').attr('disabled', true);
             } else {
@@ -62,7 +66,7 @@ define(function() {
             }
             this.updateAttemptsCount();
         },
-
+        
         updateAttemptsCount: function(model, changedAttribute) {
             var isComplete = this.model.get('_isComplete');
             var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')

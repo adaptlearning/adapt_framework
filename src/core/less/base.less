@@ -20,17 +20,13 @@
     display:none!important;
 }
 
-.focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
+.focused, *:focus, input:focus + label {
     outline:none;
 }
 
 .accessibility.no-touch {
-    .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
-        outline: 2px dotted #000;
-        /*& when (@focus-outline) {
+    .focused, *:focus, input:focus + label {
             outline: @focus-outline;  
-        }*/
-        
     }
 }
 
@@ -98,7 +94,7 @@
 .loading {
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 5000;
