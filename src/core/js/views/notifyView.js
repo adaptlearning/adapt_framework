@@ -16,7 +16,7 @@ define(function(require) {
 			this.listenTo(Adapt, 'remove', this.remove);
       		this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
 			//include accessibility globals in notify model
-      		this.model.set('_globals', Adapt.course.get('_globals'));
+      		this.model.set('_globals', {_globals: Adapt.course.get("_globals")});
 			this.render();
 		},
 
