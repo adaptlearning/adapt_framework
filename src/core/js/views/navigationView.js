@@ -31,7 +31,7 @@ define(function(require) {
         
         render: function() {
             var template = Handlebars.templates[this.template]
-            this.$el.html(template(Adapt.course.get('_globals'))).appendTo('#wrapper');
+            this.$el.html(template({_globals: Adapt.course.get("_globals")})).appendTo('#wrapper');
             _.defer(_.bind(function() {
                 Adapt.trigger('navigationView:postRender', this);
             }, this));
