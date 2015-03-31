@@ -13,6 +13,8 @@
         "adapt-contrib-mcq": "develop",
         "adapt-contrib-gmcq": "develop",
         "adapt-contrib-assessment": "develop",
+        "adapt-contrib-assessmentResults": "develop",
+        "adapt-contrib-assessmentResultsTotal": "develop",
         "adapt-contrib-trickle": "develop",
         "adapt-contrib-tutor": "develop",
         "adapt-contrib-boxMenu": "develop",

@@ -750,6 +750,90 @@
     }
   },
   {
+    "_id":"c-130",
+    "_parentId":"b-31",
+    "_type":"component",
+    "_component":"assessmentResults",
+    "_classes":"",
+    "_layout":"full",
+    "title":"Results",
+    "displayTitle":"Results",
+    "body":"This component you're reading is a results component.",
+    "instruction":"",
+    "_pageLevelProgress": {
+      "_isEnabled": true
+    },
+    "_assessmentId": "Assessment 1",
+    "_retry": {
+      "_isEnabled": true,
+      "button": "Retry Assessment",
+      "feedback": "Why not have another try? You have used {{attemptsSpent}} of {{attempts}} attempt(s), which means you have {{attemptsLeft}} attempt(s) remaining."
+    },
+    "_completionMessage" : {
+      "title" : "You have finished the assessment",
+      "message": "You scored {{{score}}} out of {{{maxScore}}}. {{{feedback}}}"
+    },
+    "_bands": [
+      {
+        "_score": 0,
+        "feedback": "Your score was below 25%.",
+        "_isRetryEnabled": true
+      },
+      {
+        "_score": 25,
+        "feedback": "Your score was below 50%.",
+        "_isRetryEnabled": true
+      },
+      {
+        "_score": 50,
+        "feedback": "Good effort, but your score was under 75%.",
+        "_isRetryEnabled": true
+      },
+      {
+        "_score": 75,
+        "feedback": "Great work. You passed your assessment with {{{scoreAsPercent}}}%.",
+        "_isRetryEnabled": true
+      }
+    ]
+  },
+  {
+    "_id":"c-135",
+    "_parentId":"b-32",
+    "_type":"component",
+    "_component":"assessmentResultsTotal",
+    "_classes":"",
+    "_layout":"full",
+    "title":"Total Results",
+    "displayTitle":"Total Results",
+    "body":"This component you're reading is a total results component.",
+    "instruction":"",
+    "_pageLevelProgress": {
+      "_isEnabled": true
+    },
+    "_completionMessage" : {
+      "title" : "You have finished the assessment",
+      "message": "You scored {{{scoreAsPercent}}}% overall. {{{feedback}}}"
+    },
+    "_bands": [
+      {
+        "_score": 0,
+        "feedback": "As your score was below 25% you did not pass your assessments."
+      },
+      {
+        "_score": 25,
+        "feedback": "As your score was below 50% you did not pass your assessments."
+      },
+      {
+        "_score": 50,
+        "feedback": "Good effort, but your score was under 75% and so you did not pass your assessments."
+      },
+      {
+        "_score": 75,
+        "feedback": "Great work. You passed your assessments."
+      }
+    ]
+  },
+  {
     "_id": "c-55",
     "_parentId": "b-35",
     "_type": "component",
