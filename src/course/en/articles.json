@@ -30,31 +30,29 @@
             "button": "Continue to next question?"
         },
         "_assessment": {
-            "_isEnabled": true,
+            "_isEnabled":true,
+            "_id": "Assessment 1",
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
-            "_completionMessage" : {
-                "title" : "You have finished the assessment",
-                "message": "You scored [SCORE] out of [MAXSCORE].  [FEEDBACK]"
+            "_postScoreToLMS": true,
+            "_assessmentWeight": 1,
+            "_banks": {
+                "_isEnabled": true,
+                "_uniqueQuestions": true,
+                "_split": "2,1",
+                "_randomizeBankQuestionOrder": false
             },
-            "_bands": [
-                {
-                    "_score": 0,
-                    "feedback": "You're score was below 25%. Why not have another try?"
-                },
-                {
-                    "_score": 25,
-                    "feedback": "You're score was below 50%. Why not have another try?"
-                },
-                {
-                    "_score": 50,
-                    "feedback": "Good effort, but you're score was under 75%. Let's try again?"
-                },
-                {
-                    "_score": 75,
-                    "feedback": "Great work. You passed the assessment article quiz."
-                }
-            ]
+            "_randomisation": {
+                "_isEnabled": false,
+                "_blockCount": 1
+            },
+            "_questions": {
+                "_isResetOnRevisit": "hard",
+                "_canShowFeedback": false
+            },
+            "_isResetOnRevisit": false,
+            "_isReloadPageOnReset": true,
+            "_attempts": 2
         }
     },
     {
