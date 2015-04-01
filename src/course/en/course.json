@@ -164,7 +164,7 @@
         ]
     },
     "_assessment": {
-        "_postScoreToLMS": true,
+        "_postTotalScoreToLMS": true,
         "_isPercentageBased": true,
         "_scoreToPass": 75
     }

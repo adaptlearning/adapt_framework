@@ -34,24 +34,22 @@
             "_id": "Assessment 1",
             "_isPercentageBased" : true,
             "_scoreToPass" : 75,
-            "_postScoreToLMS": true,
+            "_postScoreToLms": true,
             "_assessmentWeight": 1,
             "_banks": {
                 "_isEnabled": true,
-                "_uniqueQuestions": true,
                 "_split": "2,1",
-                "_randomizeBankQuestionOrder": false
+                "_randomisation": false
             },
             "_randomisation": {
                 "_isEnabled": false,
                 "_blockCount": 1
             },
             "_questions": {
-                "_isResetOnRevisit": "hard",
+                "_resetType": "hard",
                 "_canShowFeedback": false
             },
             "_isResetOnRevisit": false,
-            "_isReloadPageOnReset": true,
             "_attempts": 2
         }
     },

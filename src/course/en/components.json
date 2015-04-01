@@ -765,14 +765,10 @@
     },
     "_assessmentId": "Assessment 1",
     "_retry": {
-      "_isEnabled": true,
       "button": "Retry Assessment",
       "feedback": "Why not have another try? You have used {{attemptsSpent}} of {{attempts}} attempt(s), which means you have {{attemptsLeft}} attempt(s) remaining."
     },
-    "_completionMessage" : {
-      "title" : "You have finished the assessment",
-      "message": "You scored {{{score}}} out of {{{maxScore}}}. {{{feedback}}}"
-    },
+    "_completionBody": "This component you're reading is a results component.<br>You have finished the assessment.<br>You scored {{{score}}} out of {{{maxScore}}}. {{{feedback}}}",
     "_bands": [
       {
         "_score": 0,
@@ -810,10 +806,7 @@
     "_pageLevelProgress": {
       "_isEnabled": true
     },
-    "_completionMessage" : {
-      "title" : "You have finished the assessment",
-      "message": "You scored {{{scoreAsPercent}}}% overall. {{{feedback}}}"
-    },
+    "_completionBody": "This component you're reading is a total results component.<br>You have finished the assessment.<br>You scored {{{scoreAsPercent}}}% overall. {{{feedback}}}",
     "_bands": [
       {
         "_score": 0,
