@@ -773,22 +773,22 @@
       {
         "_score": 0,
         "feedback": "Your score was below 25%.",
-        "_isRetryEnabled": true
+        "_allowRetry": true
       },
       {
         "_score": 25,
         "feedback": "Your score was below 50%.",
-        "_isRetryEnabled": true
+        "_allowRetry": true
       },
       {
         "_score": 50,
         "feedback": "Good effort, but your score was under 75%.",
-        "_isRetryEnabled": true
+        "_allowRetry": true
       },
       {
         "_score": 75,
         "feedback": "Great work. You passed your assessment with {{{scoreAsPercent}}}%.",
-        "_isRetryEnabled": true
+        "_allowRetry": true
       }
     ]
   },
