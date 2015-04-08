@@ -36,9 +36,9 @@ define([
 
 	*/ 
 
-
-	var View = Backbone.View;
 	var viewOptions = ['model', 'collection', 'el', 'id', 'attributes', 'className', 'tagName', 'events'];
+	var View = Backbone.View;
+	
 
 	//Replacement view instanciator
 	Backbone.View = function(options) {
@@ -52,12 +52,13 @@ define([
 			console.warn("Depreciated - Using backbone options functionality");
 		}
 		this._ensureElement();
+		this.delegateEvents();
 		this.initialize.apply(this, arguments);
 	};
 
 	//Make sure the new view instanciator looks like old view instanciator
 	_.extend(Backbone.View, View);
-	_.extend(Backbone.View.prototype, View.prototype);	
+	_.extend(Backbone.View.prototype, View.prototype);
 
 	return Backbone;
 });
