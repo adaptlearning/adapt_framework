@@ -28,7 +28,8 @@ define(function(require) {
         setupListeners: function() {
             Adapt[this._children].on({
                 "change:_isReady": this.checkReadyStatus,
-                "change:_isComplete": this.checkCompletionStatus
+                "change:_isComplete": this.checkCompletionStatus,
+                "change:_isInteractionComplete": this.checkInteractionCompletionStatus
             }, this);
         },
 
