@@ -23,6 +23,7 @@ define(function(require) {
                 document.title = Adapt.course.get('title');
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
+            this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
         },
         
         routes: {
@@ -99,6 +100,10 @@ define(function(require) {
                 }
                 this.navigateToParent();
             }
+        },
+
+        navigateToHomeRoute: function() {
+            this.navigate('#', {trigger: true});
         },
 
         navigateToParent: function() {
