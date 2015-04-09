@@ -13,12 +13,8 @@
 
  		defaults: {
  			_canNavigate: true
- 		},
-
- 		lockedAttributes: {
- 			_canNavigate: {}
  		}
-
+ 		
  	});
 
  	return RouterModel;
