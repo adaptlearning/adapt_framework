@@ -103,7 +103,9 @@ define(function(require) {
         },
 
         navigateToHomeRoute: function() {
-            this.navigate('#', {trigger: true});
+            if (Adapt.router.get('_canNavigate')) {
+                this.navigate('#', {trigger: true});                
+            }
         },
 
         navigateToParent: function() {
