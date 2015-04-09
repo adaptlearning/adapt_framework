@@ -11,7 +11,11 @@ Modernizr.load([
     },
     {
         test: window.console == undefined,
-        yep: 'libraries/consoles.js',
+        yep: 'libraries/consoles.js'
+    },
+    {
+        test: Modernizr.video || Modernizr.audio,
+        nope: 'libraries/swfObject.js',
         complete: function() {
             yepnope.injectJs("libraries/require.js", function () {   
             }, {
