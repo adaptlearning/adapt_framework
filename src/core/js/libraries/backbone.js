@@ -47,7 +47,7 @@ define([
 		_.extend(this, _.pick(options, viewOptions));
 		//THE LINE BELOW IS THE FUNCTIONALITY WE USE
 		this.options = _.omit(options, viewOptions);
-		if (Object.keys(this.options).length > 0) {
+		if (_.keys(this.options).length > 0) {
 			//WARNING TO SHOW DEVELOPERS WHICH BEHAVIOUR NEEDS CHANGING
 			console.warn("Depreciated - Using backbone options functionality");
 		}
