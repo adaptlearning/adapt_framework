@@ -14,7 +14,6 @@
  		defaults: {
  			_canNavigate: true
  		}
- 		
  	});
 
  	return RouterModel;
