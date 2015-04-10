@@ -20,10 +20,6 @@ define(function(require) {
             _canLoadData:true
         },
 
-        lockedAttributes: {
-            _canLoadData: {}
-        },
-
         initialize: function(attrs, options) {
             // Fetch data & if successful trigger event to enable plugins to stop course files loading
             // Then check if course files can load
