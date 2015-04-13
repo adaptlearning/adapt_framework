@@ -37,35 +37,33 @@ require.config({
         velocity: {
             deps: [
                 'jquery'
-            ],
-            exports: 'velocity'
+            ]
         },
         imageReady: {
             deps: [
                 'jquery'
-            ],
-            exports: 'imageready'
+            ]
         },
         inview: {
             deps: [
                 'jquery'
-            ],
-            exports: 'inview'
+            ]
         },
         scrollTo: {
             deps: [
                 'jquery'
-            ],
-            exports: 'scrollTo'
+            ]
         },
         a11y: {
             deps: [
                 'jquery'
-            ],
-            exports: 'a11y'
+            ]
         }
     },
     packages: [
 
+    ],
+    exclude: [
+        'jquery'
     ]
 });
