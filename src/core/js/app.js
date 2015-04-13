@@ -13,6 +13,7 @@ require([
     'coreJS/popupManager',
     'coreJS/notify',
     'coreJS/accessibility',
+    'coreJS/offlineStorage',
     'coreViews/navigationView',
     'coreJS/adaptCollection',
     'coreModels/configModel',
