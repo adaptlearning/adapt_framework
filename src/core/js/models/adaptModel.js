@@ -13,7 +13,9 @@ define(function (require) {
 
         defaults: {
             _canShowFeedback: true,
+            _canReset: false,
             _isComplete: false,
+            _isInteractionComplete: false,
             _isEnabled: true,
             _isResetOnRevisit: false,
             _isAvailable: true,
@@ -23,23 +25,7 @@ define(function (require) {
             _isVisible: true
         },
 
-        lockedAttributes: {
-            _canShowFeedback: {},
-            _isResetOnRevisit: {},
-            _isAvailable: {}, 
-            _isOptional: {}, 
-            _isTrackable: {}, 
-            _isVisible: {}
-        },
-
         initialize: function () {
-            // Reset this.lockedAttributes on every model initialize
-            this.lockedAttributes = {
-                _isAvailable: {}, 
-                _isOptional: {}, 
-                _isTrackable: {}, 
-                _isVisible: {}
-            };
             // Wait until data is loaded before setting up model
             Adapt.once('app:dataLoaded', this.setupModel, this);
 
@@ -55,13 +41,36 @@ define(function (require) {
             if (this._children) {
                 Adapt[this._children].on({
                     "change:_isReady": this.checkReadyStatus,
-                    "change:_isComplete": this.checkCompletionStatus
+                    "change:_isComplete": this.checkCompletionStatus,
+                    "change:_isInteractionComplete": this.checkInteractionCompletionStatus
                 }, this);
             }
             this.init();
         },
 
         init: function() {},
+
+        reset: function(type, force) {
+            if (!this.get("_canReset") && !force) return;
+
+            type = type || true;
+            
+            switch (type) {
+            case "hard": case true:
+                this.set({
+                    _isEnabled: true,
+                    _isComplete: false,
+                    _isInteractionComplete: false,
+                });
+                break;
+            case "soft": 
+                this.set({
+                    _isEnabled: true,
+                    _isInteractionComplete: false
+                });
+                break;
+            }
+        },
 
         checkReadyStatus: function () {
             // Filter children based upon whether they are available
@@ -77,8 +86,25 @@ define(function (require) {
             var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
             // Check if any return _isComplete:false
             // If not - set this model to _isComplete: true
-            if (availableChildren.findWhere({_isComplete: false})) return;
+            if (availableChildren.findWhere({_isComplete: false})) {
+                //cascade reset to menu
+                this.set({_isComplete:false});
+                return;
+            }
             this.set({_isComplete: true});
+        },
+
+        checkInteractionCompletionStatus: function () {
+            // Filter children based upon whether they are available
+            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+            // Check if any return _isInteractionComplete:false
+            // If not - set this model to _isInteractionComplete: true
+            if (availableChildren.findWhere({_isInteractionComplete: false})) {
+                //cascade reset to menu
+                this.set({_isInteractionComplete:false});
+                return;
+            }
+            this.set({_isInteractionComplete: true});
         },
 
         findAncestor: function (ancestors) {

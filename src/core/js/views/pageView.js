@@ -30,7 +30,12 @@ define(function(require) {
                     $('.loading').hide();
                     $(window).scrollTop(0);
                     Adapt.trigger('pageView:ready', this);
-                    this.$el.velocity({'opacity': 1}, 'fast');
+                    var styleOptions = { opacity: 1 };
+                    if ($('html').is(".ie8")) {
+                        this.$el.css(styleOptions)
+                    } else {
+                        this.$el.velocity(styleOptions, 'fast');
+                    }
                     $(window).scroll();
                 }, this));
             }
