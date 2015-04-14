@@ -358,7 +358,7 @@ module.exports = function(grunt) {
                 path: 'http://localhost:<%= connect.server.options.port %>/'
             },
             spoor: {
-                path: 'http://localhost:<%= connect.server.options.port %>/main.html'
+                path: 'http://localhost:<%= connect.server.options.port %>/scorm_test_harness.html'
             }
         },
 
