@@ -5,7 +5,6 @@
 */
 
 require([
-    'coreModels/backboneModel',
     'coreJS/adapt',
     'coreJS/router',
     'coreJS/drawer',
@@ -32,7 +31,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (BackboneModel, Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
         
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
@@ -41,7 +40,6 @@ require([
     $('#wrapper').append(template());
 
     // Create config model
-    // Passing in reset:true means the lockedAttributes get by-passed on load
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
 
     // This function is called anytime a course object is loaded
