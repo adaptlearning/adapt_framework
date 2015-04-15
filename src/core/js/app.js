@@ -20,6 +20,7 @@ require([
     'coreModels/articleModel',
     'coreModels/blockModel',
     'coreModels/componentModel',
+    'coreJS/offlineStorage',
     'velocity',
     'imageReady',
     'inview',
