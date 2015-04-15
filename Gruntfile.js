@@ -148,7 +148,9 @@ module.exports = function(grunt) {
                             'src/core/js/libraries/modernizr.js',
                             'src/core/js/libraries/json2.js',
                             'src/core/js/libraries/consoles.js',
-                            'src/core/js/libraries/swfObject.js'
+                            'src/core/js/libraries/swfObject.js',
+                            'src/core/js/libraries/jquery.js',
+                            'src/core/js/libraries/jquery.v2.js'
                         ], 
                         dest: 'build/libraries/', 
                         filter: 'isFile', 
