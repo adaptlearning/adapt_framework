@@ -20,6 +20,7 @@ require([
     'coreModels/articleModel',
     'coreModels/blockModel',
     'coreModels/componentModel',
+    'coreJS/offlineStorage',
     'velocity',
     'imageReady',
     'inview',
@@ -40,7 +41,6 @@ require([
     $('#wrapper').append(template());
 
     // Create config model
-    // Passing in reset:true means the lockedAttributes get by-passed on load
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
 
     // This function is called anytime a course object is loaded

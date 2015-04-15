@@ -148,7 +148,9 @@ module.exports = function(grunt) {
                             'src/core/js/libraries/modernizr.js',
                             'src/core/js/libraries/json2.js',
                             'src/core/js/libraries/consoles.js',
-                            'src/core/js/libraries/swfObject.js'
+                            'src/core/js/libraries/swfObject.js',
+                            'src/core/js/libraries/jquery.js',
+                            'src/core/js/libraries/jquery.v2.js'
                         ], 
                         dest: 'build/libraries/', 
                         filter: 'isFile', 
@@ -358,7 +360,7 @@ module.exports = function(grunt) {
                 path: 'http://localhost:<%= connect.server.options.port %>/'
             },
             spoor: {
-                path: 'http://localhost:<%= connect.server.options.port %>/main.html'
+                path: 'http://localhost:<%= connect.server.options.port %>/scorm_test_harness.html'
             }
         },
 
