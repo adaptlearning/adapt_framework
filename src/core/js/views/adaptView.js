@@ -15,7 +15,8 @@ define(function(require) {
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
-             this.model.set('_globals', Adapt.course.get('_globals'));
+            this.model.set('_globals', Adapt.course.get('_globals'));
+            this.model.set('_isReady', false);
             this.preRender();
             this.render();
         },
