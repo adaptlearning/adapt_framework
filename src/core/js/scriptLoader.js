@@ -13,32 +13,21 @@
             nope: 'libraries/json2.js'
         },
         {
-            test: window.console == undefined,
-            yep: 'libraries/consoles.js'
+            test: IE == 8,
+            yep: 'libraries/jquery.js',
+            nope: 'libraries/jquery.v2.js'
         },
         {
-            test: Modernizr.video || Modernizr.audio,
-            nope: 'libraries/swfObject.js',
+            test: window.console == undefined,
+            yep: 'libraries/consoles.js',
             complete: function() {
 
                 //Inject require js for dependency loading
-
                 yepnope.injectJs("libraries/require.js", function () { 
-
-                    //Choose jquery for ie8 or other
-                    Modernizr.load([
-                        {
-                            test: IE == 8,
-                            yep: 'libraries/jquery.js',
-                            nope: 'libraries/jquery.v2.js'
-                        },
-                        //Load adapt once finished
-                        "adapt/js/adapt.min.js"
-                    ]);
-
                 }, {
                     type:"text/javascript",
-                    language:"javascript"
+                    language:"javascript",
+                    "data-main":"adapt/js/adapt.min.js"
                 }, 5000);
             }
         }
