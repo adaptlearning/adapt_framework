@@ -35,7 +35,7 @@ define(function(require){
         }
 
         // Trigger scrollTo plugin
-        $.scrollTo(selector, _.extend(settings, { top: settings.offset, left: 0 }));
+        $.scrollTo(selector, settings);
         // Trigger an event after animation
         // 300 milliseconds added to make sure queue has finished
         _.delay(function() {
@@ -50,7 +50,7 @@ define(function(require){
         // Setup settings object
         var settings = (settings || {});
 
-        if(settings.offset===undefined) settings.offset = -($('.navigation').height()+10);
+        if(settings.top===undefined) settings.top = -($('.navigation').height()+10);
 
         // Removes . symbol from the selector to find the model
         var currentModelId = selector.replace(/\./g, '');
