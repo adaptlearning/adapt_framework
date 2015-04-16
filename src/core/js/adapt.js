@@ -22,7 +22,7 @@ define(function(require){
         Adapt.trigger('adapt:initialize');
     });
 
-    Adapt.scrollTo = function(selector, settings) {
+    Adapt.scrollTo = function(selector, settings, offset) {
         // Get the current location - this is set in the router
         var location = (Adapt.location._contentType) ? 
             Adapt.location._contentType : Adapt.location.currentLocation;
@@ -33,6 +33,9 @@ define(function(require){
         if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
+
+        settings.offset = {top:offset, left:0};
+
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
         // Trigger an event after animation
@@ -43,33 +46,34 @@ define(function(require){
         
     }
 
-    Adapt.navigateToElement = function(selector, settings) {
+    Adapt.navigateToElement = function(selector, settings, offset) {
         // Allows a selector to be passed in and Adapt will navigate to this element
+
+        if(offset===undefined) offset = -($('.navigation').height()+10);
 
         // Setup settings object
         var settings = (settings || {});
 
         // Removes . symbol from the selector to find the model
         var currentModelId = selector.replace(/\./g, '');
-        var currentModel = Adapt.findById(currentModelId);
+        var currentModel = Adapt[Adapt.mapById(currentModelId)].findWhere({_id: currentModelId});
         // Get current page to check whether this is the current page
-        var currentPage = currentModel.findAncestor('contentObjects');
+        var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
 
         // If current page - scrollTo element
         if (currentPage.get('_id') === Adapt.location._currentId) {
-           return Adapt.scrollTo(selector, settings);
+           return Adapt.scrollTo(selector, settings, offset);
         }
 
         // If the element is on another page navigate and wait until pageView:ready is fired
-        // Then scrollTo elementn
+        // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
-                Adapt.scrollTo(selector, settings)
+                Adapt.scrollTo(selector, settings, offset)
             })
         });
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true});
-
     }
     
     Adapt.register = function(name, object) {
