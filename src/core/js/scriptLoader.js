@@ -5,46 +5,6 @@
 */
 (function() {
 
-    var loadRequireJS = function() {
-        //Inject require js for dependency loading
-        yepnope.injectJs("libraries/require.js", function () { 
-
-            loadJQuery();
-
-        }, {
-            type:"text/javascript",
-            language:"javascript"
-        }, 5000);
-    };
-
-    var loadJQuery = function() {
-        //Choose jquery for ie8 or other
-        
-        Modernizr.load([
-            {
-                test: IE == 8,
-                yep: 'libraries/jquery.js',
-                nope: 'libraries/jquery.v2.js'
-            },
-
-            //Load adapt once finished
-            "adapt/js/adapt.min.js"
-        ]);
-    };
-
-    //Load foundation libraries, json2, consoles
-    Modernizr.load([
-        {
-            test: window.JSON,
-            nope: 'libraries/json2.js'
-        },
-        {
-            test: window.console == undefined,
-            yep: 'libraries/consoles.js',
-            complete: loadRequireJS
-        }
-    ]);
-
     //Test for ie8
     var IE = (function() { 
         if (document.documentMode) {
@@ -52,5 +12,32 @@
         }
         return false;
     })();
+
+    //Load foundation libraries, json2, consoles, swfObject
+    Modernizr.load([
+        {
+            test: window.JSON,
+            nope: 'libraries/json2.js'
+        },
+        {
+            test: IE == 8,
+            yep: 'libraries/jquery.js',
+            nope: 'libraries/jquery.v2.js'
+        },
+        {
+            test: window.console == undefined,
+            yep: 'libraries/consoles.js',
+            complete: function() {
+
+                //Inject require js for dependency loading
+                yepnope.injectJs("libraries/require.js", function () { 
+                }, {
+                    type:"text/javascript",
+                    language:"javascript",
+                    "data-main":"adapt/js/adapt.min.js"
+                }, 5000);
+            }
+        }
+    ]);
 
 })();
