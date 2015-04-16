@@ -1,4 +1,3 @@
-//https://github.com/cgkineo/jquery.a11y Mar 12, 2015
 (function($, window, undefined) {
 
     var nativeSpaceElements = "textarea, input[type='text']";
@@ -16,11 +15,6 @@
 
 
     var $documentActiveElement;
-
-
-    $('body').on("mousedown", focusableElements, function(event) { //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-        $documentActiveElement = $(event.currentTarget);
-    });
 
     if (!String.prototype.trim) { //IE8 Fix
       (function() {
@@ -61,9 +55,10 @@
     var scrollToFocus = function(event) {
         $documentActiveElement = $(event.target);
 
-        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-selected")) $("#a11y-selected").focusNoScroll();
+        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-focuser")) $("#a11y-focuser").focusNoScroll();
         //console.log ("Focused on:")
         //console.log($documentActiveElement);
+
         var readText;
         if ($(event.target).attr("aria-labelledby")) {
             var label = $("#"+$(event.target).attr("aria-labelledby"));
@@ -133,6 +128,29 @@
             //TURN SPACE INTO CLICK
             $(event.target).trigger("click");
         }
+    };
+
+    //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+    var captureActiveElementOnClick =  function(event) {
+        $documentActiveElement = $(event.currentTarget);
+        if ($documentActiveElement.is(nativeEnterElements)) {
+            //Capture that the user has interacted with a native form element
+            $.a11y.userInteracted = true;
+        }
+    };
+
+    //INFORM ABOUT USER INTERACTION
+    var captureInitialScroll = function() {
+        setTimeout(function() {
+            $(window).one("scroll", function() {
+                $.a11y.userInteracted = true;
+            });
+        }, 500);
+    };
+
+    var setupInteractionListeners = function() {
+        $('body').on("mousedown", focusableElements, captureActiveElementOnClick);
+        captureInitialScroll();
     };
 
     //MAKES AN ELEMENT TABBABLE
@@ -319,6 +337,7 @@
     };
     $.a11y.focusStack = [];
 
+    $.a11y.ready = setupInteractionListeners;
 
     //REAPPLY ON SIGNIFICANT VIEW CHANGES
     $.a11y_update = function() {
@@ -335,6 +354,7 @@
             //ADDS TAB GUARG EVENT HANDLER
             reattachFocusGuard();
         }
+
     };
 
 //TOGGLE ACCESSIBILITY
