@@ -33,6 +33,11 @@ define(function(require){
         if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
+        
+        var navigationOffset = -($('.navigation').height()+10);
+        if (!settings.offset) settings.offset = { top: navigationOffset, left: 0};
+        if (!settings.offset.top) settings.offset.top = navigationOffset;
+        if (!settings.offset.left) settings.offset.left = 0;
 
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
@@ -49,8 +54,6 @@ define(function(require){
 
         // Setup settings object
         var settings = (settings || {});
-
-        if(settings.top===undefined) settings.top = -($('.navigation').height()+10);
 
         // Removes . symbol from the selector to find the model
         var currentModelId = selector.replace(/\./g, '');
