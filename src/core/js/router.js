@@ -55,29 +55,28 @@ define(function(require) {
         
         handleId: function(id) {
             
-            var currentModel = Adapt[Adapt.mapById(id)].findWhere({_id: id});
+            var currentModel = Adapt.findById(id);
 
-            if (currentModel.get('_type') == 'page' || currentModel.get('_type') == 'menu')
-            {
-                this.removeViews();
-                this.showLoading();
-                
-                this.setContentObjectToVisited(currentModel);
+            switch (currentModel.get('_type')) {
+                case 'page': case 'menu':
+                    this.removeViews();
+                    this.showLoading();
+                    
+                    this.setContentObjectToVisited(currentModel);
 
-                if (currentModel.get('_type') == 'page') {
-                    var location = 'page-' + id; 
-                    this.updateLocation(location, 'page', id);
-                    Adapt.trigger('router:page', currentModel);
-                    this.$wrapper.append(new PageView({model:currentModel}).$el);
-                } else {
-                    var location = 'menu-' + id; 
-                    this.updateLocation(location, 'menu', id);
-                    Adapt.trigger('router:menu', currentModel);
-                }
-            }
-            else
-            {
-                Adapt.navigateToElement('.' + id);
+                    if (currentModel.get('_type') == 'page') {
+                        var location = 'page-' + id; 
+                        this.updateLocation(location, 'page', id);
+                        Adapt.trigger('router:page', currentModel);
+                        this.$wrapper.append(new PageView({model:currentModel}).$el);
+                    } else {
+                        var location = 'menu-' + id; 
+                        this.updateLocation(location, 'menu', id);
+                        Adapt.trigger('router:menu', currentModel);
+                    }
+                break;
+                default:
+                    Adapt.navigateToElement('.' + id);
             }
         },
         
