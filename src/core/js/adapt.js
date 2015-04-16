@@ -35,7 +35,7 @@ define(function(require){
         }
 
         // Trigger scrollTo plugin
-        $.scrollTo(selector, settings, {top:settings.offset, left:0});
+        $.scrollTo(selector, _.extend(settings, { top: settings.offset, left: 0 }));
         // Trigger an event after animation
         // 300 milliseconds added to make sure queue has finished
         _.delay(function() {
