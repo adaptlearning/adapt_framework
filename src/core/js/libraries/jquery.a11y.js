@@ -1,3 +1,4 @@
+//https://github.com/cgkineo/jquery.a11y Mar 12, 2015
 (function($, window, undefined) {
 
     var nativeSpaceElements = "textarea, input[type='text']";
@@ -15,6 +16,11 @@
 
 
     var $documentActiveElement;
+
+
+    $('body').on("mousedown", focusableElements, function(event) { //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+        $documentActiveElement = $(event.currentTarget);
+    });
 
     if (!String.prototype.trim) { //IE8 Fix
       (function() {
