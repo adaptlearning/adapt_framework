@@ -13,17 +13,7 @@
         return false;
     })();
 
-    //2. Load requirejs
-    function loadRequireJS() {
-        Modernizr.load([
-            {
-                load: "libraries/require.js",
-                complete: loadJQuery
-            }
-        ]);
-    }
-
-    //3. Load jquery
+    //2. Load jquery
     function loadJQuery() {
         Modernizr.load([
             {
@@ -35,12 +25,12 @@
         ]);
     }
 
-    //4. Load adapt
+    //3. Load adapt
     function loadAdapt() {
         Modernizr.load("adapt/js/adapt.min.js");
     }
 
-    //1. Load foundation libraries, json2, consoles
+    //1. Load foundation libraries, json2, consoles, requirejs
     Modernizr.load([
         {
             test: window.JSON,
@@ -48,8 +38,11 @@
         },
         {
             test: window.console == undefined,
-            yep: 'libraries/consoles.js',
-            complete: loadRequireJS
+            yep: 'libraries/consoles.js'
+        },
+        {
+            load: "libraries/require.js",
+            complete: loadJQuery
         }
     ]);
 
