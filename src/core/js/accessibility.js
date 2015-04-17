@@ -361,6 +361,8 @@ define(function(require) {
             $.a11y.options.focusOffsetBottom = bottomoffset;
             $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
             $.a11y.options.isTouchDevice = Modernizr.touch;
+
+            $.a11y.ready();
         }
 
     }, Backbone.Events);
