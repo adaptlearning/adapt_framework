@@ -34,10 +34,11 @@ define(function(require){
             settings.duration = $.scrollTo.defaults.duration;
         }
         
-        var navigationOffset = -($('.navigation').height()+10);
-        if (!settings.offset) settings.offset = { top: navigationOffset, left: 0};
-        if (!settings.offset.top) settings.offset.top = navigationOffset;
-        if (!settings.offset.left) settings.offset.left = 0;
+        var navigationHeight = $(".navigation").outerHeight();
+
+        if (!settings.offset) settings.offset = { top: -navigationHeight, left: 0 };
+        if (settings.offset.top === undefined) settings.offset.top = -navigationHeight;
+        if (settings.offset.left === undefined) settings.offset.left = 0;
 
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
