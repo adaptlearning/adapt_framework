@@ -1,3 +1,4 @@
+//jQuery.a11y 16/04/2015 https://github.com/cgkineo/jquery.a11y/
 (function($, window, undefined) {
 
     var nativeSpaceElements = "textarea, input[type='text']";
