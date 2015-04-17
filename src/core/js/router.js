@@ -103,12 +103,9 @@ define(function(require) {
         },
 
         navigateToParent: function() {
-            var currentModel = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId});
-            var parent = currentModel.getParent();
-            if (parent.get('_id') === Adapt.course.get('_id')) {
-                return this.navigate('#', {trigger:true});
-            }
-            this.navigate('#/id/' + parent.get('_id'), {trigger:true});
+            var parentId = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId}).get("_parentId");
+            var route = (parentId === Adapt.course.get("_id")) ? "#/" : "#/id/" + parentId;
+            this.navigate(route, { trigger: true });
         },
 
         setContentObjectToVisited: function(model) {
