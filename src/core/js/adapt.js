@@ -33,6 +33,13 @@ define(function(require){
         if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
+        
+        var navigationHeight = $(".navigation").outerHeight();
+
+        if (!settings.offset) settings.offset = { top: -navigationHeight, left: 0 };
+        if (settings.offset.top === undefined) settings.offset.top = -navigationHeight;
+        if (settings.offset.left === undefined) settings.offset.left = 0;
+
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
         // Trigger an event after animation
@@ -53,7 +60,7 @@ define(function(require){
         var currentModelId = selector.replace(/\./g, '');
         var currentModel = Adapt.findById(currentModelId);
         // Get current page to check whether this is the current page
-        var currentPage = currentModel.findAncestor('contentObjects');
+        var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
 
         // If current page - scrollTo element
         if (currentPage.get('_id') === Adapt.location._currentId) {
@@ -61,7 +68,7 @@ define(function(require){
         }
 
         // If the element is on another page navigate and wait until pageView:ready is fired
-        // Then scrollTo elementn
+        // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
                 Adapt.scrollTo(selector, settings)
@@ -69,7 +76,6 @@ define(function(require){
         });
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true});
-
     }
     
     Adapt.register = function(name, object) {

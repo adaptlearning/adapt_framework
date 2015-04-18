@@ -55,23 +55,29 @@ define(function(require) {
         
         handleId: function(id) {
             
-            this.removeViews();
-            this.showLoading();
-                
-            var currentModel = Adapt.contentObjects.findWhere({_id:id});
-            this.setContentObjectToVisited(currentModel);
+            var currentModel = Adapt.findById(id);
 
-            if (currentModel.get('_type') == 'page') {
-                var location = 'page-' + id; 
-                this.updateLocation(location, 'page', id);
-                Adapt.trigger('router:page', currentModel);
-                this.$wrapper.append(new PageView({model:currentModel}).$el);
-            } else {
-                var location = 'menu-' + id; 
-                this.updateLocation(location, 'menu', id);
-                Adapt.trigger('router:menu', currentModel);
+            switch (currentModel.get('_type')) {
+                case 'page': case 'menu':
+                    this.removeViews();
+                    this.showLoading();
+                    
+                    this.setContentObjectToVisited(currentModel);
+
+                    if (currentModel.get('_type') == 'page') {
+                        var location = 'page-' + id; 
+                        this.updateLocation(location, 'page', id);
+                        Adapt.trigger('router:page', currentModel);
+                        this.$wrapper.append(new PageView({model:currentModel}).$el);
+                    } else {
+                        var location = 'menu-' + id; 
+                        this.updateLocation(location, 'menu', id);
+                        Adapt.trigger('router:menu', currentModel);
+                    }
+                break;
+                default:
+                    Adapt.navigateToElement('.' + id);
             }
-            
         },
         
         removeViews: function() {

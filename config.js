@@ -64,6 +64,6 @@ require.config({
 
     ],
     exclude: [
-        'jquery'    
+        'jquery'
     ]
 });
