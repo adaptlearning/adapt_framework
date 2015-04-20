@@ -25,6 +25,17 @@ define(function(require){
                 } else {
                     return block.inverse();
                 }
+            },
+            math: function(lvalue, operator, rvalue, options) {
+                lvalue = parseFloat(lvalue);
+                rvalue = parseFloat(rvalue);
+                switch (operator) {
+                case "+": return lvalue + rvalue;
+                case "-": return lvalue - rvalue;
+                case "*": return lvalue * rvalue;
+                case "/": return lvalue / rvalue;
+                case "%": return lvalue % rvalue;
+                }
             }
         };
 
