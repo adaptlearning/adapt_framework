@@ -391,6 +391,20 @@ module.exports = function(grunt) {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
+        },
+
+        clean: {
+            dist: {
+                src: [
+                    "src/components/components.js",
+                    "src/extensions/extensions.js",
+                    "src/menu/menu.js",
+                    "src/theme/theme.js",
+                    "src/less",
+                    "src/templates",
+                    "build/adapt/js/adapt.min.js.map"
+                ]
+            }
         }
     });
     
@@ -535,7 +549,7 @@ module.exports = function(grunt) {
     grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
     grunt.registerTask('server', ['concurrent:server']);
     grunt.registerTask('server-scorm', ['concurrent:spoor']);
-    grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config']);
+    grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config', 'clean:dist']);
     grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
