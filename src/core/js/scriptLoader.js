@@ -13,30 +13,36 @@
         return false;
     })();
 
-    //Load foundation libraries, json2, consoles, swfObject
+    //2. Load jquery
+    function loadJQuery() {
+        Modernizr.load([
+            {
+                test: IE == 8,
+                yep: 'libraries/jquery.js',
+                nope: 'libraries/jquery.v2.js',
+                complete: loadAdapt
+            }
+        ]);
+    }
+
+    //3. Load adapt
+    function loadAdapt() {
+        Modernizr.load("adapt/js/adapt.min.js");
+    }
+
+    //1. Load foundation libraries, json2, consoles, requirejs
     Modernizr.load([
         {
             test: window.JSON,
             nope: 'libraries/json2.js'
         },
         {
-            test: IE == 8,
-            yep: 'libraries/jquery.js',
-            nope: 'libraries/jquery.v2.js'
+            test: window.console == undefined,
+            yep: 'libraries/consoles.js'
         },
         {
-            test: window.console == undefined,
-            yep: 'libraries/consoles.js',
-            complete: function() {
-
-                //Inject require js for dependency loading
-                yepnope.injectJs("libraries/require.js", function () { 
-                }, {
-                    type:"text/javascript",
-                    language:"javascript",
-                    "data-main":"adapt/js/adapt.min.js"
-                }, 5000);
-            }
+            load: "libraries/require.js",
+            complete: loadJQuery
         }
     ]);
 
