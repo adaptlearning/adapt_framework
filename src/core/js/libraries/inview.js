@@ -98,6 +98,9 @@
 
 		var uniq = ""+top+left+bottom+right+height+width+wHeight+wWidth;
 
+		var onscreen = true;
+		if (rightP > 100 || leftP > 100 || bottomP > 100 || topP > 100) onscreen = false;
+
 		return { 
 			top: top, 
 			left: left, 
@@ -110,6 +113,7 @@
 			percentInview: inviewP, 
 			percentInviewHorizontal: inviewWidthP,
 			percentInviewVertical: inviewHeightP,
+			onscreen: onscreen,
 			uniqueMeasurementId: uniq 
 		};
 	}
@@ -195,7 +199,7 @@
 		var visiblePartX = (measure.percentFromLeft > 0 && measure.percentFromLeft < 100) && (measure.percentFromRight > 0 && measure.percentFromRight < 100) ? "both" : (measure.percentFromLeft > 0 && measure.percentFromLeft < 100) ? "left" : (measure.percentFromRight > 0 && measure.percentFromRight < 100) ? "right" : "none";
 
 		var inviewState = [
-			measure.percentInview > 0, //inview true/false
+			measure.onscreen, //inview true/false
 			visiblePartX, //left, right, both, none
 			visiblePartY //top, bottom, both, none
 		];
