@@ -253,6 +253,10 @@ define(function(require) {
             _.delay(function() {
                 //ENABLED DOCUMENT READING
                 $.a11y_on(true, '#wrapper');
+
+                //DO NOT FOCUS IF USER HAS ALREADY INTERACTED
+                if ($.a11y.userInteracted) return;
+
                 if (Adapt.location._currentId) {
                     //required to stop JAWS from auto reading content in IE
                     var currentModel = Adapt.findById(Adapt.location._currentId);
@@ -329,6 +333,12 @@ define(function(require) {
             //IF NOT TAB KEY, RETURN
             if (event.which !== 9) return;
 
+            //ENABLE DOCUMENT READING
+            $.a11y_on(true);
+
+            //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
+            if ($.a11y.userInteracted) return;
+
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
             if ( Accessibility.isEnabled() && Accessibility._hasTabPosition ) return;
                    
@@ -351,6 +361,8 @@ define(function(require) {
             $.a11y.options.focusOffsetBottom = bottomoffset;
             $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
             $.a11y.options.isTouchDevice = Modernizr.touch;
+
+            $.a11y.ready();
         }
 
     }, Backbone.Events);
