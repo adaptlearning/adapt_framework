@@ -1,5 +1,5 @@
 /*
-* jquery.onscreen 2014-04-24 https://github.com/cgkineo/jquery.onscreen
+* jquery.onscreen 2014-04-27 https://github.com/cgkineo/jquery.onscreen
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Oliver Foster <oliver.foster@kineo.com>
 */
@@ -47,8 +47,8 @@
 
 
   	function getElementOnScreenMeasurements($element) {
-		var height = $element.height();
-		var width = $element.width();
+		var height = $element.outerHeight();
+		var width = $element.outerWidth();
 		var wHeight = $(window).height();
 		var wWidth = $(window).width();
 		
@@ -119,7 +119,7 @@
 	}
 
 	function checkLoopExpired() {
-		if ((new Date()).getTime() - loopData.lastEvent > 500) {
+		if ((new Date()).getTime() - loopData.lastEvent > 250) {
 			stopLoop()
 			return true;
 		}
@@ -134,12 +134,12 @@
 		if (onScreenHandlers.length === 0 && inViewHandlers.length === 0) {
 			//nothing to onscreen
 			stopLoop();
-			$.fn.onscreen.intervalDuration = 500;
+			$.fn.onscreen.intervalDuration = 250;
 			startLoop();
 		} else {
 			//something to onscreen
 			stopLoop();
-			$.fn.onscreen.intervalDuration = 250;
+			$.fn.onscreen.intervalDuration = 125;
 			startLoop();
 		}
 
@@ -235,7 +235,7 @@
 	};
 
 	//checking loop interval duration
-	$.fn.onscreen.intervalDuration = 250;
+	$.fn.onscreen.intervalDuration = 125;
 
 	var loopData = {
 		lastEvent: 0,
