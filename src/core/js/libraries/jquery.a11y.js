@@ -178,6 +178,7 @@
         var childNodes = $element[0].childNodes.length;
         for (var i = childNodes - 1; i > -1 ; i--) {
             if ($element[0].childNodes[i].remove) $element[0].childNodes[i].remove();
+            else if ($element[0].removeChild) $element[0].removeChild($element[0].childNodes[i]); //safari fix
             else if ($element[0].childNodes[i].removeNode) $element[0].childNodes[i].removeNode(true); //ie 11 fix
         }
         return $element;
