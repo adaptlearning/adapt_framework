@@ -64,13 +64,14 @@ define(function(require) {
 
         if (platform.indexOf("Win") != -1) {
             return "Windows";
-        }
-        else if (platform.indexOf("Mac") != -1) {
+        } else if (platform.indexOf("Mac") != -1) {
             return "Mac";
-        }
-        else if (platform.indexOf("Linux") != -1) {
+        } else if (platform.indexOf("Linux") != -1) {
             return "Linux";
         }
+        
+        return "PlatformUnknown";
+
     }
 
     var browserString = browser + " version-" + version + " OS-" + OS;
