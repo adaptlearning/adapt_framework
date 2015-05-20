@@ -47,7 +47,7 @@
     "title": "Key Facts",
     "displayTitle": "Key Facts",
     "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution.",
-    "instruction": "Click the + icons below for more.",
+    "instruction": "Select the hotspots on the image below for more.",
     "_graphic": {
       "src": "course/en/images/hotgraphic.png",
       "alt": "alt text"
@@ -881,7 +881,7 @@
       {
         "alt": "Use space",
         "title": "Use space",
-        "body": "One important learning pattern to remember is to not fill every component. This can lead to a poor user experience on smaller screens. We're use to scrolling on smaller devices so use up the vertical space."
+        "body": "One important learning pattern to remember is to not fill every component. This can lead to a poor user experience on smaller screens. We're used to scrolling on smaller devices so use up the vertical space."
       },
       {
         "alt": "Think about background images for decoration",
@@ -957,7 +957,7 @@
     "_layout": "full",
     "title": "Hot graphic",
     "displayTitle": "Hot graphic",
-    "body": "The hot graphic component enables the learner to interact with an image by clicking on the hot spots to reveal more. This component will scale down to a narrative when viewed on mobile.",
+    "body": "The hot graphic component enables the learner to interact with an image by selecting the hotspots to reveal more. This component will scale down to a narrative when viewed on mobile.",
     "instruction": "Select the hotspots on the image to reveal the text.",
     "_graphic": {
       "src": "course/en/images/origami-hotgraphic.jpg",
@@ -1037,7 +1037,7 @@
     "title": "MCQ",
     "displayTitle": "MCQ",
     "body": "A multiple choice question items each have a text attribute and whether the item is correct. An MCQ can also set the items to display in a random order and allow multiple items to be selected.",
-    "instruction": "What does MCQ standard for? Select an item below and click submit.",
+    "instruction": "What does MCQ standard for? Select an item below and select Submit.",
     "_items": [
       {
         "text": "Magical choosing question",
@@ -1105,7 +1105,7 @@
     "title": "Matching",
     "displayTitle": "Matching",
     "body": "A matching component allows multiple question stems that each have their own individual drop down. All feedback for questions are passed out through an event system so extensions can display feedback how they want. Core comes bundled with a plugin called Tutor.",
-    "instruction": "Match the questions below with the drop down box option.",
+    "instruction": "Match the questions below with the drop-down box option and select Submit.",
     "_buttons": {
       "_submit": {
         "buttonText": "Submit",
@@ -1221,7 +1221,7 @@
       "disabledAriaLabel": "This button is disabled at the moment"
     },
     "_feedback": {
-      "correct": "That's correct. Adapt allows the following plugins: A theme, components, extensions and a menu",
+      "correct": "That's correct. Adapt allows the following plugins: A theme, components, extensions and a menu.",
       "_incorrect": {
         "notFinal": "",
         "final": "This feedback will appear if you answered the question incorrectly."
