@@ -13,9 +13,9 @@ define(function(require) {
 
     	getCompleteComponentsAsPercentage: function() {
     		var children = this.findDescendants('components');
-    		var availableChildren = children.where({_isAvailable:true});
+    		var availableChildren = children.where({_isAvailable:true, _isOptional: false});
             var childrenLength = children.length;
-            var completedChildrenLength = children.where({_isComplete:true, _isAvailable:true}).length;
+            var completedChildrenLength = children.where({_isComplete:true, _isOptional:false, _isAvailable:true}).length;
             var completedChildrenAsPercentage = (completedChildrenLength/childrenLength)*100;
 
             this.set({'completedChildrenAsPercentage': completedChildrenAsPercentage});
