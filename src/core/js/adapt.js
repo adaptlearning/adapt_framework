@@ -33,6 +33,11 @@ define(function(require){
         if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
+        
+        if(!settings.offset) {
+            var offset = -($('.navigation').height()+10);
+            settings.offset = {top:offset, left:0};
+        }
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
         // Trigger an event after animation
