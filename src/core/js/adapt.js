@@ -40,6 +40,8 @@ define(function(require){
         if (settings.offset.top === undefined) settings.offset.top = -navigationHeight;
         if (settings.offset.left === undefined) settings.offset.left = 0;
 
+        if (settings.offset.left === 0) settings.axis = "y";
+
         // Trigger scrollTo plugin
         $(selector).a11y_focus();
         $.scrollTo(selector, settings);
