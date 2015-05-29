@@ -412,7 +412,6 @@ module.exports = function(grunt) {
 
     // This is a simple function to take the course's config.json and append the theme.json
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
-
         var themeJsonFile = '';
 
         // As any theme folder may be used, we need to first find the location of the
@@ -439,19 +438,15 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('check-json', 'Checking course.json', function() {
-
         var _ = require('underscore');
 
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
 
         var storedIds = [];
-
         var storedFileParentIds = {};
-
         var storedFileIds = {};
 
         var hasOrphanedParentIds = false;
-
         var orphanedParentIds = [];
 
         // method to check json ids
@@ -476,15 +471,11 @@ module.exports = function(grunt) {
                             storedFileIds[jsonFileName].push(item._id);
                             storedIds.push(item._id);
                         });
-
                     }
-
                 });
 
                 checkDuplicateIds();
-
                 checkEachElementHasParentId();
-
             });
         }
 
@@ -516,12 +507,10 @@ module.exports = function(grunt) {
                     hasOrphanedParentIds = true;
                     orphanedParentIds.push(parentId);
                 }
-
             });
         }
 
         function checkEachElementHasParentId() {
-
             _.each(storedFileParentIds, function(value, key) {
                 switch(key){
                     case "contentObjects":
@@ -540,9 +529,7 @@ module.exports = function(grunt) {
                 grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
             }
         }
-
         checkJsonIds();
-
     });
 
     grunt.registerTask('default', ['less', 'handlebars', 'watch']);
