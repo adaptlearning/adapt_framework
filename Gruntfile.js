@@ -531,12 +531,61 @@ module.exports = function(grunt) {
         checkJsonIds();
     });
 
-    grunt.registerTask('server', ['concurrent:server']);
-    grunt.registerTask('server-scorm', ['concurrent:spoor']);
-    grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config', 'clean:dist']);
-    grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
+    grunt.registerTask('_build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs', 'create-json-config', 'adapt_insert_tracking_ids']);
+    grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
+    grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
+
+    grunt.registerTask('server', 'Runs a local server using port 9001', ['concurrent:server']);
+    grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['concurrent:spoor']);
+
+    grunt.registerTask('help', function() {
+        var chalk = require('chalk');
+
+        // the following tasks won't be shown
+        var ignoredTasks = [
+            'bower',
+            'concurrent',
+            'clean',
+            'connect',
+            'copy',
+            'handlebars',
+            'less',
+            'requirejs',
+            'watch',
+            'jsonlint',
+            'open',
+            'requirejs-bundle',
+            'concat',
+            'create-json-config',
+            'check-json',
+            'help',
+            '_build',
+            'adapt_insert_tracking_ids',
+            'adapt_remove_tracking_ids',
+            'adapt_reset_tracking_ids'
+        ];
+
+        grunt.log.writeln('');
+        grunt.log.writeln(chalk.underline('Adapt Learning automated build process'));
+        grunt.log.writeln('');
+        grunt.log.writeln('See below for the list of available tasks:');
+        grunt.log.writeln('');
+
+        for(var key in grunt.task._tasks) {
+            if(ignoredTasks.indexOf(key) === -1) {
+                writeTask(grunt.task._tasks[key]);
+            }
+        }
+
+        grunt.log.writeln('');
+        grunt.log.writeln('Run a task using: grunt [task name]');
+        grunt.log.writeln('');
+        grunt.log.writeln('For more information, see https://github.com/adaptlearning/adapt_framework/wiki');
+
+        function writeTask(task) {
+            grunt.log.writeln(chalk.cyan(task.name) + "   " + task.info);
+        }
+    });
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
-    grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
-
 };
