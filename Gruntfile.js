@@ -532,7 +532,6 @@ module.exports = function(grunt) {
         checkJsonIds();
     });
 
-    grunt.registerTask('default', ['less', 'handlebars', 'watch']);
     grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
     grunt.registerTask('server', ['concurrent:server']);
     grunt.registerTask('server-scorm', ['concurrent:spoor']);
