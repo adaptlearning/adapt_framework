@@ -23,7 +23,7 @@ define(function(require) {
             //RUN ONCE
             if (this._isLoaded) return;
 
-            this.configureA11y();
+            this.listenToOnce(Adapt, "app:dataReady", this.configureA11y)
 
             //CAPTURE TAB PRESSES TO DIVERT
             $('body').on('keyup', this.onKeyUp);
@@ -146,13 +146,14 @@ define(function(require) {
         setupDocument: function() {
             this.$html.addClass('accessibility');
             $.a11y(true)
-            $.a11y_on(true);
+            $.a11y_on(true, "body > *");
         },
 
         rollbackDocument: function() {
             this.$html.removeClass('accessibility');
             $.a11y(false)
-            $.a11y_on(false);
+            $.a11y_on(false, "body > *");
+            $.a11y_on(true, "#accessibility-toggle");
         },
 
         setupLegacy: function() {
@@ -275,7 +276,11 @@ define(function(require) {
                     }
                     $.a11y_alert(alertText);
                 }
-                $.a11y_focus();
+                if (!$.a11y.userInteracted) {
+                    $("#accessibility-instructions").focusNoScroll();
+                } else {
+                    $.a11y_focus();
+                }
             }, 1000);
             
         },
@@ -297,6 +302,11 @@ define(function(require) {
 
         onNavigationEnd: function() {
             var isEnabled = this.isEnabled();
+
+            //always use detached aria labels for divs and spans
+            _.defer(function() {
+                $('body').a11y_aria_label(true);
+            });
 
             this._isLoaded = true;
 
@@ -332,9 +342,6 @@ define(function(require) {
 
             //IF NOT TAB KEY, RETURN
             if (event.which !== 9) return;
-
-            //ENABLE DOCUMENT READING
-            $.a11y_on(true);
 
             //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
             if ($.a11y.userInteracted) return;
