@@ -410,8 +410,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
 
-    // This is a simple function to take the course's config.json and append the theme.json
-    grunt.registerTask('create-json-config', 'Creating config.json', function() {
+    grunt.registerTask('create-json-config', 'Concatenates the config and theme json files', function() {
         var themeJsonFile = '';
 
         // As any theme folder may be used, we need to first find the location of the
@@ -437,7 +436,7 @@ module.exports = function(grunt) {
         grunt.file.write('build/course/config.json', JSON.stringify(configJson));
     });
 
-    grunt.registerTask('check-json', 'Checking course.json', function() {
+    grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
         var _ = require('underscore');
 
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
@@ -532,14 +531,12 @@ module.exports = function(grunt) {
         checkJsonIds();
     });
 
-    grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
     grunt.registerTask('server', ['concurrent:server']);
     grunt.registerTask('server-scorm', ['concurrent:spoor']);
     grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config', 'clean:dist']);
     grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
-    grunt.loadNpmTasks('grunt-jsonlint');
     grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
 
 };
