@@ -223,7 +223,7 @@ define(function(require) {
 
         // Adds a validation error class when the canSubmit returns false
         showInstructionError: function() {
-            this.$(".component-instruction-inner").addClass("validation-error");
+            this.$(".component-instruction-inner").addClass("validation-error").a11y_focus();
         },
 
         // Blank method for question to fill out when the question cannot be submitted
