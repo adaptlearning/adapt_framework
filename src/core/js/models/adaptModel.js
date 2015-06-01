@@ -39,6 +39,9 @@ define(function (require) {
                 this._parent = 'contentObjects';
             }
             if (this._children) {
+                //if parent is optional, apply to children
+                if (this.get('_isOptional')) this.setOptional(true);
+    
                 Adapt[this._children].on({
                     "change:_isReady": this.checkReadyStatus,
                     "change:_isComplete": this.checkCompletionStatus,
@@ -99,7 +102,7 @@ define(function (require) {
             var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
             // Check if any return _isInteractionComplete:false
             // If not - set this model to _isInteractionComplete: true
-            if (availableChildren.findWhere({_isInteractionComplete: false})) {
+            if (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false})) {
                 //cascade reset to menu
                 this.set({_isInteractionComplete:false});
                 return;
@@ -232,7 +235,13 @@ define(function (require) {
                 child.setOnChildren.apply(child, args);
             }
 
+        },
+
+        setOptional: function(value) {
+            this.set({_isOptional: value});
+            if (this._children) this.setOnChildren('_isOptional', value);
         }
+
 
     });
 
