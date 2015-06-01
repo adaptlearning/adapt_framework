@@ -279,15 +279,11 @@ module.exports = function(grunt) {
                 tasks: ['handlebars', 'compile']
             },
             courseJson: {
-                files: [
-                    'src/course/**/*.json'
-                ],
+                files: ['src/course/**/*.json'],
                 tasks : ['jsonlint', 'copy:courseJson']
             },
             courseAssets: {
-                files: [
-                    'src/course/**/*', '!src/course/**/*.json'
-                ],
+                files: ['src/course/**/*', '!src/course/**/*.json'],
                 tasks : ['copy:courseAssets']
             },
             js: {
@@ -306,55 +302,38 @@ module.exports = function(grunt) {
                 tasks: ['copy:index']
             },
             componentsAssets: {
-                files: [
-                    'src/components/**/assets/**'
-                ],
+                files: ['src/components/**/assets/**'],
                 tasks: ['copy:componentsAssets']
             },
             componentsFonts: {
-                files: [
-                    'src/components/**/fonts/**'
-                ],
+                files: ['src/components/**/fonts/**'],
                 tasks: ['copy:componentsFonts']
             },
             extensionsAssets: {
-                files: [
-                    'src/extensions/**/assets/**'
-                ],
+                files: ['src/extensions/**/assets/**'],
                 tasks: ['copy:extensionsAssets']
             },
             extensionsFonts: {
-                files: [
-                    'src/extensions/**/fonts/**'
-                ],
+                files: ['src/extensions/**/fonts/**'],
                 tasks: ['copy:extensionsFonts']
             },
             menuAssets: {
-                files: [
-                    'src/menu/**/assets/**'
-                ],
+                files: ['src/menu/**/assets/**'],
                 tasks: ['copy:menuAssets']
             },
             menuFonts: {
-                files: [
-                    'src/menu/**/fonts/**'
-                ],
+                files: ['src/menu/**/fonts/**'],
                 tasks: ['copy:menuFonts']
             },
             themeAssets: {
-                files: [
-                    'src/theme/**/assets/**'
-                ],
+                files: ['src/theme/**/assets/**'],
                 tasks: ['copy:themeAssets']
             },
             themeFonts: {
-                files: [
-                    'src/theme/**/fonts/**'
-                ],
+                files: ['src/theme/**/fonts/**'],
                 tasks: ['copy:themeFonts']
             }
         },
-
         open: {
             server: {
                 path: 'http://localhost:<%= connect.server.options.port %>/'
@@ -363,12 +342,10 @@ module.exports = function(grunt) {
                 path: 'http://localhost:<%= connect.server.options.port %>/scorm_test_harness.html'
             }
         },
-
         concurrent: {
             server: ['connect:server', 'open:server'],
             spoor: ['connect:spoorOffline', 'open:spoor']
         },
-
         connect: {
             server: {
               options: {
@@ -385,14 +362,12 @@ module.exports = function(grunt) {
                 }
             }
         },
-
         adapt_insert_tracking_ids: {
           options: {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
         },
-
         clean: {
             dist: {
                 src: [
