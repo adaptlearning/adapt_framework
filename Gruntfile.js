@@ -558,7 +558,6 @@ module.exports = function(grunt) {
             'concat',
             'create-json-config',
             'check-json',
-            'help',
             '_build',
             'adapt_insert_tracking_ids',
             'adapt_remove_tracking_ids',
@@ -572,7 +571,7 @@ module.exports = function(grunt) {
         grunt.log.writeln('');
 
         for(var key in grunt.task._tasks) {
-            if(ignoredTasks.indexOf(key) === -1) {
+            if(this.name !== key && -1 === ignoredTasks.indexOf(key)) {
                 writeTask(grunt.task._tasks[key]);
             }
         }
