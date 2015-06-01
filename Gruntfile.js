@@ -538,9 +538,10 @@ module.exports = function(grunt) {
     grunt.registerTask('server', 'Runs a local server using port 9001', ['concurrent:server']);
     grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['concurrent:spoor']);
 
+    // Lists out the available tasks along with their descriptions, ignoring any listed in the array below
     grunt.registerTask('help', function() {
+        // for some nice colouring
         var chalk = require('chalk');
-
         // the following tasks won't be shown
         var ignoredTasks = [
             'bower',
