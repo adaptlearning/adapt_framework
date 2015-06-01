@@ -50,14 +50,6 @@ define(function(require) {
             var selectedItem = this.getSelectedItems();
             if (selectedItem.hasOwnProperty('_feedback')) {
                 return selectedItem._feedback;
-            } else {
-                if (this.isCorrect()) {
-                    return this.model.get('_feedback').correct;
-                } else if (this.isPartlyCorrect()) {
-                    return this.model.get('_feedback')._partlyCorrect.final;
-                } else {
-                    return this.model.get('_feedback')._incorrect.final;
-                }
             }
         },
     
