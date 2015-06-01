@@ -36,11 +36,18 @@ define(function(require) {
             if (this.$el.is(".no-state")) return;
             
 			//remove pre-exisiting states
-            this.$(".accessibility-state").remove();
+            var $previousState = this.$(".accessibility-state").remove();
 			
             //render and append state partial
-            var rendered = Handlebars.partials['state']( this.model.toJSON() );
-            this.$el.append( $(rendered) );
+            var $rendered = $(Handlebars.partials['state']( this.model.toJSON() ));
+
+            //restore previous tab index if not on
+            var previousTabIndex = $previousState.find("aria-label").attr("tabindex");
+            if (previousTabIndex === "-1") {
+                $rendered.find("aria-label").attr("tabindex", previousTabIndex);
+            }
+
+            this.$el.append( $rendered );
             
             this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },

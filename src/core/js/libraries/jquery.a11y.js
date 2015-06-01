@@ -1,8 +1,9 @@
-//jQuery.a11y 16/04/2015 https://github.com/cgkineo/jquery.a11y/
+//jQuery.a11y 29/05/2015 https://github.com/cgkineo/jquery.a11y/
 (function($, window, undefined) {
 
     var nativeSpaceElements = "textarea, input[type='text']";
     var nativeEnterElements = "textarea, a, button, input[type='checkbox']";
+    var nativeTabElements = "textarea, input, select";
     var ignoreElements = "a,button,input,select,textarea,br";
     var styleElements = "b,i,abbr,strong";
     var tabIndexElements = 'a,button,input,select,textarea,[tabindex]';
@@ -134,24 +135,14 @@
     //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
     var captureActiveElementOnClick =  function(event) {
         $documentActiveElement = $(event.currentTarget);
-        if ($documentActiveElement.is(nativeEnterElements)) {
+        if ($documentActiveElement.is(nativeTabElements)) {
             //Capture that the user has interacted with a native form element
             $.a11y.userInteracted = true;
         }
     };
 
-    //INFORM ABOUT USER INTERACTION
-    var captureInitialScroll = function() {
-        setTimeout(function() {
-            $(window).one("scroll", function() {
-                $.a11y.userInteracted = true;
-            });
-        }, 500);
-    };
-
     var setupInteractionListeners = function() {
         $('body').on("mousedown", focusableElements, captureActiveElementOnClick);
-        captureInitialScroll();
     };
 
     //MAKES AN ELEMENT TABBABLE
@@ -218,8 +209,10 @@
             var cloneChild = $(child.outerHTML)[0];
             switch(child.nodeType) {
             case 3: //TEXT NODE
+                // preserve whitespace in ie8 by adding initial zero-width space
+                var childContent = child.textContent || "&#8203;" + child.nodeValue;
                 //IF TEXT NODE WRAP IN A TABBABLE SPAn
-                newChildren.push( makeTabbable($("<span>"+child.nodeValue+"</span>")) );
+                newChildren.push( makeTabbable($("<span>"+childContent+"</span>")) );
                 added = true;
                 break;
             case 1: //DOM NODE
@@ -678,7 +671,6 @@
 //CONVERT ARIA LABELS
     //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
     $.fn.a11y_aria_label = function(deep) {
-        if (!$.a11y.isOn) return this;
         var ariaLabels = [];
 
         for (var i = 0; i < this.length; i++) {
@@ -711,3 +703,4 @@
     };
 
 })(jQuery, window);
+
