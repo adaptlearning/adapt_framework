@@ -117,14 +117,20 @@ define(function(require) {
 
         // Used to setup either global or local button text
         setupButtonSettings: function() {
-               
-            var compButtons =  this.model.get("_buttons");
             var globButtons = Adapt.course.get("_buttons");
-            // check all the components buttons
-            // if they are empty use the global default
-            for (var key in compButtons) {
-                if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
-                if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
+
+            // Checks if local _buttons exists and if not use global
+            if (!this.model.has("_buttons")) {
+                this.model.set("_buttons", globButtons);
+            } else {
+                // check all the components buttons
+                // if they are empty use the global default
+                var compButtons = this.model.get("_buttons");
+
+                for (var key in compButtons) {
+                    if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
+                    if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
+                }
             }
         },
 
