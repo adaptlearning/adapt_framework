@@ -167,5 +167,15 @@
         "_postTotalScoreToLMS": true,
         "_isPercentageBased": true,
         "_scoreToPass": 75
+    },
+    "_bookmarking": {
+        "_isEnabled": true,
+        "_level": "block",
+        "title": "Bookmarking",
+        "body": "Would you like to continue where you left off?",
+        "_buttons": {
+            "yes": "Yes",
+            "no": "No"
+        }
     }
 }
