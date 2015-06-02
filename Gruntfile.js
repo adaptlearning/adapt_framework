@@ -1,7 +1,40 @@
 module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
+    var getOutputDir = function() {
+        var outputdir = grunt.option('outputdir') || '';
+        if (outputdir) {
+            // Append a slash if required
+            if (outputdir.substring(outputdir.length - 1, outputdir.length) !== '/') {
+                outputdir = outputdir + '/';
+            }
+            grunt.log.writeln('** Building to ' + outputdir);
+        }
+        return outputdir;
+    };
+
+    var getTheme = function() {
+        // TODO remove hard-coded default theme
+        var theme = grunt.option('theme') || 'adapt-contrib-vanilla';
+        if (theme) {
+            grunt.log.writeln('** Using theme ' + theme);
+        }
+        return theme;
+    };
+
+    var getMenu = function() {
+        // TODO remove hard-coded default menu
+        var menu = grunt.option('menu') || 'adapt-contrib-boxMenu';
+        if (menu) {
+            grunt.log.writeln('** Using menu ' + menu);
+        }
+        return menu;
+    };
+
     grunt.initConfig({
+        outputdir: getOutputDir(),
+        theme: getTheme(),
+        menu: getMenu(),
         pkg: grunt.file.readJSON('package.json'),
         jsonlint: {
             src: [ 'src/course/**/*.json' ]
@@ -12,132 +45,116 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/index.html'],
-                        dest: 'build/',
+                        dest: '<%= outputdir %>build/',
                         filter: 'isFile',
                         flatten: true
                     }
                 ]
             },
-            courseJson: {
+            course: {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*.json'],
-                        dest: 'build/course/',
-                        cwd: 'src/course/'
+                        src: ['**/*'],
+                        cwd: 'src/course/',
+                        dest: '<%= outputdir %>build/course/'
                     }
                 ]
             },
-            courseAssets: {
+            componentAssets: {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*','!**/*.json'],
-                        dest: 'build/course/',
-                        cwd: 'src/course/'
+                        src: ['src/components/**/assets/**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        filter: "isFile",
+                        flatten: true
                     }
                 ]
             },
-            componentsAssets: {
-                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
-                    return {
+            componentFonts: {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/assets/',
-                        cwd: cwd + 'assets/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/components/**/fonts/**'],
+                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
-            componentsFonts: {
-                files: grunt.file.expand(['src/components/*/']).map(function(cwd) {
-                    return {
+            extensionAssets: {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/adapt/css/fonts/',
-                        cwd: cwd + 'fonts/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/extensions/**/assets/**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
-            extensionsAssets: {
-                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
-                    return {
+            extensionFonts: {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/assets/',
-                        cwd: cwd + 'assets/',
-                        filter: "isFile"
-                    };
-                })
-            },
-            extensionsFonts: {
-                files: grunt.file.expand(['src/extensions/*/']).map(function(cwd) {
-                    return {
-                        expand: true,
-                        src: ['**'],
-                        dest: 'build/adapt/css/fonts/',
-                        cwd: cwd + 'fonts/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/extensions/**/fonts/**'],
+                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
             menuAssets: {
-                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
-                    return {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/assets/',
-                        cwd: cwd + 'assets/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/menu/<%= menu %>/assets/**'],
+                        dest: '<%= outputdir %>build/assets/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
             menuFonts: {
-                files: grunt.file.expand(['src/menu/*/']).map(function(cwd) {
-                    return {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/adapt/css/fonts/',
-                        cwd: cwd + 'fonts/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/menu/<%= menu %>/fonts/**'],
+                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
             themeAssets: {
-                files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
-                    return {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/adapt/css/assets/',
-                        cwd: cwd + 'assets/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/theme/<%= theme %>/assets/**'],
+                        dest: '<%= outputdir %>build/adapt/css/assets/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
             themeFonts: {
-                files: grunt.file.expand(['src/theme/*/']).map(function(cwd) {
-                    return {
+                files: [
+                    {
                         expand: true,
-                        src: ['**'],
-                        dest: 'build/adapt/css/fonts/',
-                        cwd: cwd + 'fonts/',
-                        filter: "isFile"
-                    };
-                })
+                        src: ['src/theme/<%= theme %>/fonts/**'],
+                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        filter: "isFile",
+                        flatten: true
+                    }
+                ]
             },
             main: {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*'],
-                        dest: 'build/course/',
-                        cwd: 'src/course/'
-                    },
-                    {
-                        expand: true,
                         src: ['src/core/js/scriptLoader.js'],
-                        dest: 'build/adapt/js/',
+                        dest: '<%= outputdir %>build/adapt/js/',
                         filter: 'isFile',
                         flatten: true
                     },
@@ -152,15 +169,14 @@ module.exports = function(grunt) {
                             'src/core/js/libraries/jquery.js',
                             'src/core/js/libraries/jquery.v2.js'
                         ],
-                        dest: 'build/libraries/',
+                        dest: '<%= outputdir %>build/libraries/',
                         filter: 'isFile',
                         flatten: true
                     },
                     {
                         expand: true,
-                        src: ['**/*'],
-                        dest: 'build/',
-                        cwd: 'src/extensions/adapt-contrib-spoor/required/'
+                        src: ['src/extensions/adapt-contrib-spoor/required/**/*'],
+                        dest: '<%= outputdir %>build/'
                     }
                 ]
             }
@@ -169,10 +185,10 @@ module.exports = function(grunt) {
             less: {
                 src: [
                     'src/core/less/*.less',
-                    'src/menu/**/*.less',
+                    'src/menu/<%= menu %>/**/*.less',
                     'src/components/**/*.less',
                     'src/extensions/**/*.less',
-                    'src/theme/**/*.less'
+                    'src/theme/<%= theme %>/**/*.less'
                 ],
                 dest: 'src/less/adapt.less'
             }
@@ -183,7 +199,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'build/adapt/css/adapt.css' : 'src/less/adapt.less'
+                    '<%= outputdir %>build/adapt/css/adapt.css' : 'src/less/adapt.less'
                 }
             }
         },
@@ -201,7 +217,13 @@ module.exports = function(grunt) {
                     partialsPathRegex: /\/partials\//
                 },
                 files: {
-                    'src/templates/templates.js': 'src/**/*.hbs'
+                    'src/templates/templates.js': [
+                        'src/components/**/*.hbs',
+                        'src/core/**/*.hbs',
+                        'src/extensions/**/*.hbs',
+                        'src/menu/<%= menu %>/**/*.hbs',
+                        'src/theme/<%= theme %>/**/*.hbs'
+                    ]
                 }
             }
         },
@@ -223,7 +245,7 @@ module.exports = function(grunt) {
                 }
             },
             extensions: {
-                src: 'src/extensions/',
+                src: 'src/extensions',
                 dest: 'src/extensions/extensions.js',
                 options: {
                     baseUrl: "src",
@@ -234,14 +256,16 @@ module.exports = function(grunt) {
                 src: 'src/menu/',
                 dest: 'src/menu/menu.js',
                 options: {
-                    baseUrl: "src",
+                    include: '<%= menu %>',
+                    baseUrl: 'src',
                     moduleName: 'menu/menu'
                 }
             },
             theme: {
-                src: 'src/theme/',
+                src: 'src/theme',
                 dest: 'src/theme/theme.js',
                 options: {
+                    include: '<%= theme %>',
                     baseUrl: "src",
                     moduleName: 'themes/themes'
                 }
@@ -253,7 +277,7 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: "./build/adapt/js/adapt.min.js",
+                    out: "<%= outputdir %>build/adapt/js/adapt.min.js",
                     generateSourceMaps: true,
                     preserveLicenseComments:false,
                     optimize: "none"
@@ -264,7 +288,7 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: "./build/adapt/js/adapt.min.js",
+                    out: "<%= outputdir %>build/adapt/js/adapt.min.js",
                     optimize:"uglify2"
                 }
             }
@@ -303,34 +327,34 @@ module.exports = function(grunt) {
             },
             componentsAssets: {
                 files: ['src/components/**/assets/**'],
-                tasks: ['copy:componentsAssets']
+                tasks: ['copy:componentAssets']
             },
             componentsFonts: {
                 files: ['src/components/**/fonts/**'],
-                tasks: ['copy:componentsFonts']
+                tasks: ['copy:componentFonts']
             },
             extensionsAssets: {
                 files: ['src/extensions/**/assets/**'],
-                tasks: ['copy:extensionsAssets']
+                tasks: ['copy:extensionAssets']
             },
             extensionsFonts: {
                 files: ['src/extensions/**/fonts/**'],
-                tasks: ['copy:extensionsFonts']
+                tasks: ['copy:extensionFonts']
             },
             menuAssets: {
-                files: ['src/menu/**/assets/**'],
+                files: ['src/menu/<%= menu %>/**/assets/**'],
                 tasks: ['copy:menuAssets']
             },
             menuFonts: {
-                files: ['src/menu/**/fonts/**'],
+                files: ['src/menu/<%= menu %>/**/fonts/**'],
                 tasks: ['copy:menuFonts']
             },
             themeAssets: {
-                files: ['src/theme/**/assets/**'],
+                files: ['src/theme/<%= theme %>/**/assets/**'],
                 tasks: ['copy:themeAssets']
             },
             themeFonts: {
-                files: ['src/theme/**/fonts/**'],
+                files: ['src/theme/<%= theme %>/**/fonts/**'],
                 tasks: ['copy:themeFonts']
             }
         },
@@ -350,14 +374,14 @@ module.exports = function(grunt) {
             server: {
               options: {
                 port: 9001,
-                base: 'build',
+                base: '<%= outputdir %>build',
                 keepalive:true
               }
             },
             spoorOffline: {
                 options: {
                     port: 9001,
-                    base: 'build',
+                    base: '<%= outputdir %>build',
                     keepalive:true
                 }
             }
@@ -377,7 +401,7 @@ module.exports = function(grunt) {
                     "src/theme/theme.js",
                     "src/less",
                     "src/templates",
-                    "build/adapt/js/adapt.min.js.map"
+                    "<%= outputdir %>build/adapt/js/adapt.min.js.map"
                 ]
             }
         }
@@ -385,30 +409,33 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
 
-    grunt.registerTask('create-json-config', 'Concatenates the config and theme json files', function() {
-        var themeJsonFile = '';
+    // This is a simple function to take the course's config.json and append the theme and menu .json
+    grunt.registerTask('create-json-config', 'Creating config.json', function() {
+        var customItems = ['theme', 'menu'];
+        var configJson = grunt.file.readJSON('src/course/config.json');
 
-        // As any theme folder may be used, we need to first find the location of the
-        // theme.json file
-        grunt.file.recurse('src/theme/', function(abspath, rootdir, subdir, filename) {
-            if (filename == 'theme.json') {
-                themeJsonFile = rootdir + subdir + '/' + filename;
+        customItems.forEach(function (customItem) {
+            // As any theme folder may be used, we need to first find the location of the
+            // theme.json file
+            grunt.file.recurse('src/' + customItem + '/', function(abspath, rootdir, subdir, filename) {
+                if (filename == customItem + '.json') {
+                    customItemJsonFile = rootdir + subdir + '/' + filename;
+                }
+            });
+
+            if (customItemJsonFile == '') {
+                grunt.fail.fatal("Unable to locate " + customItem + ".json, please ensure a valid " + customItem + " exists");
+            }
+
+            var customItemJson = grunt.file.readJSON(customItemJsonFile);
+
+            // This effectively combines the JSON
+            for (var prop in customItemJson) {
+                configJson[prop] = customItemJson[prop];
             }
         });
 
-        if (themeJsonFile == '') {
-            grunt.fail.fatal("Unable to locate theme.json, please ensure a valid theme exists");
-        }
-
-        var configJson = grunt.file.readJSON('src/course/config.json');
-        var themeJson = grunt.file.readJSON(themeJsonFile);
-
-        // This effectively combines the JSON
-        for (var prop in themeJson) {
-            configJson[prop] = themeJson[prop];
-        }
-
-        grunt.file.write('build/course/config.json', JSON.stringify(configJson));
+        grunt.file.write(grunt.config('outputdir') + 'build/course/config.json', JSON.stringify(configJson));
     });
 
     grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
@@ -506,7 +533,8 @@ module.exports = function(grunt) {
         checkJsonIds();
     });
 
-    grunt.registerTask('_build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs', 'create-json-config', 'adapt_insert_tracking_ids']);
+    grunt.registerTask('server-build', 'Builds the course without JSON [used by the authoring tool]', ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
+    grunt.registerTask('_build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'adapt_insert_tracking_ids']);
     grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
 
@@ -534,6 +562,7 @@ module.exports = function(grunt) {
             'concat',
             'create-json-config',
             'check-json',
+            'server-build',
             '_build',
             'adapt_insert_tracking_ids',
             'adapt_remove_tracking_ids',
