@@ -279,15 +279,11 @@ module.exports = function(grunt) {
                 tasks: ['handlebars', 'compile']
             },
             courseJson: {
-                files: [
-                    'src/course/**/*.json'
-                ],
+                files: ['src/course/**/*.json'],
                 tasks : ['jsonlint', 'copy:courseJson']
             },
             courseAssets: {
-                files: [
-                    'src/course/**/*', '!src/course/**/*.json'
-                ],
+                files: ['src/course/**/*', '!src/course/**/*.json'],
                 tasks : ['copy:courseAssets']
             },
             js: {
@@ -306,55 +302,38 @@ module.exports = function(grunt) {
                 tasks: ['copy:index']
             },
             componentsAssets: {
-                files: [
-                    'src/components/**/assets/**'
-                ],
+                files: ['src/components/**/assets/**'],
                 tasks: ['copy:componentsAssets']
             },
             componentsFonts: {
-                files: [
-                    'src/components/**/fonts/**'
-                ],
+                files: ['src/components/**/fonts/**'],
                 tasks: ['copy:componentsFonts']
             },
             extensionsAssets: {
-                files: [
-                    'src/extensions/**/assets/**'
-                ],
+                files: ['src/extensions/**/assets/**'],
                 tasks: ['copy:extensionsAssets']
             },
             extensionsFonts: {
-                files: [
-                    'src/extensions/**/fonts/**'
-                ],
+                files: ['src/extensions/**/fonts/**'],
                 tasks: ['copy:extensionsFonts']
             },
             menuAssets: {
-                files: [
-                    'src/menu/**/assets/**'
-                ],
+                files: ['src/menu/**/assets/**'],
                 tasks: ['copy:menuAssets']
             },
             menuFonts: {
-                files: [
-                    'src/menu/**/fonts/**'
-                ],
+                files: ['src/menu/**/fonts/**'],
                 tasks: ['copy:menuFonts']
             },
             themeAssets: {
-                files: [
-                    'src/theme/**/assets/**'
-                ],
+                files: ['src/theme/**/assets/**'],
                 tasks: ['copy:themeAssets']
             },
             themeFonts: {
-                files: [
-                    'src/theme/**/fonts/**'
-                ],
+                files: ['src/theme/**/fonts/**'],
                 tasks: ['copy:themeFonts']
             }
         },
-
         open: {
             server: {
                 path: 'http://localhost:<%= connect.server.options.port %>/'
@@ -363,12 +342,10 @@ module.exports = function(grunt) {
                 path: 'http://localhost:<%= connect.server.options.port %>/scorm_test_harness.html'
             }
         },
-
         concurrent: {
             server: ['connect:server', 'open:server'],
             spoor: ['connect:spoorOffline', 'open:spoor']
         },
-
         connect: {
             server: {
               options: {
@@ -385,14 +362,12 @@ module.exports = function(grunt) {
                 }
             }
         },
-
         adapt_insert_tracking_ids: {
           options: {
               courseFile: "src/course/en/course.json",
               blocksFile: "src/course/en/blocks.json"
           }
         },
-
         clean: {
             dist: {
                 src: [
@@ -410,9 +385,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
 
-    // This is a simple function to take the course's config.json and append the theme.json
-    grunt.registerTask('create-json-config', 'Creating config.json', function() {
-
+    grunt.registerTask('create-json-config', 'Concatenates the config and theme json files', function() {
         var themeJsonFile = '';
 
         // As any theme folder may be used, we need to first find the location of the
@@ -438,20 +411,16 @@ module.exports = function(grunt) {
         grunt.file.write('build/course/config.json', JSON.stringify(configJson));
     });
 
-    grunt.registerTask('check-json', 'Checking course.json', function() {
-
+    grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
         var _ = require('underscore');
 
         var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
 
         var storedIds = [];
-
         var storedFileParentIds = {};
-
         var storedFileIds = {};
 
         var hasOrphanedParentIds = false;
-
         var orphanedParentIds = [];
 
         // method to check json ids
@@ -476,15 +445,11 @@ module.exports = function(grunt) {
                             storedFileIds[jsonFileName].push(item._id);
                             storedIds.push(item._id);
                         });
-
                     }
-
                 });
 
                 checkDuplicateIds();
-
                 checkEachElementHasParentId();
-
             });
         }
 
@@ -516,12 +481,10 @@ module.exports = function(grunt) {
                     hasOrphanedParentIds = true;
                     orphanedParentIds.push(parentId);
                 }
-
             });
         }
 
         function checkEachElementHasParentId() {
-
             _.each(storedFileParentIds, function(value, key) {
                 switch(key){
                     case "contentObjects":
@@ -540,20 +503,64 @@ module.exports = function(grunt) {
                 grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
             }
         }
-
         checkJsonIds();
-
     });
 
-    grunt.registerTask('default', ['less', 'handlebars', 'watch']);
-    grunt.registerTask('compile', ['bower', 'requirejs-bundle', 'requirejs:dev']);
-    grunt.registerTask('server', ['concurrent:server']);
-    grunt.registerTask('server-scorm', ['concurrent:spoor']);
-    grunt.registerTask('build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile', 'create-json-config', 'clean:dist']);
-    grunt.registerTask('dev', ['jsonlint', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:dev', 'create-json-config', 'watch']);
+    grunt.registerTask('_build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs', 'create-json-config', 'adapt_insert_tracking_ids']);
+    grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
+    grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
+
+    grunt.registerTask('server', 'Runs a local server using port 9001', ['concurrent:server']);
+    grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['concurrent:spoor']);
+
+    // Lists out the available tasks along with their descriptions, ignoring any listed in the array below
+    grunt.registerTask('help', function() {
+        // for some nice colouring
+        var chalk = require('chalk');
+        // the following tasks won't be shown
+        var ignoredTasks = [
+            'bower',
+            'concurrent',
+            'clean',
+            'connect',
+            'copy',
+            'handlebars',
+            'less',
+            'requirejs',
+            'watch',
+            'jsonlint',
+            'open',
+            'requirejs-bundle',
+            'concat',
+            'create-json-config',
+            'check-json',
+            '_build',
+            'adapt_insert_tracking_ids',
+            'adapt_remove_tracking_ids',
+            'adapt_reset_tracking_ids'
+        ];
+
+        grunt.log.writeln('');
+        grunt.log.writeln(chalk.underline('Adapt Learning automated build process'));
+        grunt.log.writeln('');
+        grunt.log.writeln('See below for the list of available tasks:');
+        grunt.log.writeln('');
+
+        for(var key in grunt.task._tasks) {
+            if(this.name !== key && -1 === ignoredTasks.indexOf(key)) {
+                writeTask(grunt.task._tasks[key]);
+            }
+        }
+
+        grunt.log.writeln('');
+        grunt.log.writeln('Run a task using: grunt [task name]');
+        grunt.log.writeln('');
+        grunt.log.writeln('For more information, see https://github.com/adaptlearning/adapt_framework/wiki');
+
+        function writeTask(task) {
+            grunt.log.writeln(chalk.cyan(task.name) + "   " + task.info);
+        }
+    });
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
-    grunt.loadNpmTasks('grunt-jsonlint');
-    grunt.registerTask('tracking-insert', 'adapt_insert_tracking_ids');
-
 };
