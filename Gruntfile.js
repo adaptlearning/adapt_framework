@@ -539,7 +539,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
-        grunt.log.ok('Starting server at "' + grunt.config.get('outputdir') + '"');
+        grunt.log.ok('Starting server in "' + grunt.config.get('outputdir') + '" using port ' + grunt.config.get('connect.server.options.port'));
     });
 
     grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'adapt_insert_tracking_ids']);
