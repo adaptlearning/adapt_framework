@@ -525,13 +525,23 @@ module.exports = function(grunt) {
         checkJsonIds();
     });
 
+    grunt.registerTask('_log-vars', 'Logs out user-defined build variables', function() {
+        grunt.log.ok('Using source at "' + grunt.config.get('sourcedir') + '"');
+        grunt.log.ok('Building to "' + grunt.config.get('outputdir') + '"');
+        if (grunt.config.get('theme') !== '**') grunt.log.ok('Using theme "' + grunt.config.get('theme') + '"');
+        if (grunt.config.get('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config.get('menu') + '"');
+    });
+
+    grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
+        grunt.log.ok('Starting server at "' + grunt.config.get('outputdir') + '"');
+    });
+
+    grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'adapt_insert_tracking_ids']);
     grunt.registerTask('server-build', 'Builds the course without JSON [used by the authoring tool]', ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
-    grunt.registerTask('_build', ['jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'adapt_insert_tracking_ids']);
     grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
-
-    grunt.registerTask('server', 'Runs a local server using port 9001', ['concurrent:server']);
-    grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['concurrent:spoor']);
+    grunt.registerTask('server', 'Runs a local server using port 9001', ['_log-server', 'concurrent:server']);
+    grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['_log-server', 'concurrent:spoor']);
 
     // Lists out the available tasks along with their descriptions, ignoring any listed in the array below
     grunt.registerTask('help', function() {
@@ -554,8 +564,10 @@ module.exports = function(grunt) {
             'concat',
             'create-json-config',
             'check-json',
-            'server-build',
+            '_log-vars',
+            '_log-server',
             '_build',
+            'server-build',
             'adapt_insert_tracking_ids',
             'adapt_remove_tracking_ids',
             'adapt_reset_tracking_ids'
