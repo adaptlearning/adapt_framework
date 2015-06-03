@@ -2,14 +2,7 @@ module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
     var getOutputDir = function() {
-        var outputdir = grunt.option('outputdir') || '';
-        if (outputdir) {
-            // Append a slash if required
-            if (outputdir.substring(outputdir.length - 1, outputdir.length) !== '/') {
-                outputdir = outputdir + '/';
-            }
-            grunt.log.writeln('** Building to ' + outputdir);
-        }
+        var outputdir = appendSlash(grunt.option('outputdir')) || 'build/';
         return outputdir;
     };
 
@@ -27,8 +20,13 @@ module.exports = function(grunt) {
         var menu = grunt.option('menu') || 'adapt-contrib-boxMenu';
         if (menu) {
             grunt.log.writeln('** Using menu ' + menu);
+    };
+
+    var appendSlash = function(dir) {
+        if (dir) {
+            var lastChar = dir.substring(dir.length - 1, dir.length);
+            if (lastChar !== '/') return dir + '/';
         }
-        return menu;
     };
 
     grunt.initConfig({
@@ -45,7 +43,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/index.html'],
-                        dest: '<%= outputdir %>build/',
+                        dest: '<%= outputdir %>',
                         filter: 'isFile',
                         flatten: true
                     }
@@ -57,7 +55,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['**/*'],
                         cwd: 'src/course/',
-                        dest: '<%= outputdir %>build/course/'
+                        dest: '<%= outputdir %>course/'
                     }
                 ]
             },
@@ -66,7 +64,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/components/**/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
+                        dest: '<%= outputdir %>assets/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -77,7 +75,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/components/**/fonts/**'],
-                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        dest: '<%= outputdir %>adapt/css/fonts/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -88,7 +86,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/extensions/**/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
+                        dest: '<%= outputdir %>assets/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -99,7 +97,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/extensions/**/fonts/**'],
-                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        dest: '<%= outputdir %>adapt/css/fonts/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -110,7 +108,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/menu/<%= menu %>/assets/**'],
-                        dest: '<%= outputdir %>build/assets/',
+                        dest: '<%= outputdir %>assets/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -121,7 +119,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/menu/<%= menu %>/fonts/**'],
-                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        dest: '<%= outputdir %>adapt/css/fonts/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -132,7 +130,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/theme/<%= theme %>/assets/**'],
-                        dest: '<%= outputdir %>build/adapt/css/assets/',
+                        dest: '<%= outputdir %>adapt/css/assets/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -143,7 +141,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/theme/<%= theme %>/fonts/**'],
-                        dest: '<%= outputdir %>build/adapt/css/fonts/',
+                        dest: '<%= outputdir %>adapt/css/fonts/',
                         filter: "isFile",
                         flatten: true
                     }
@@ -154,7 +152,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: ['src/core/js/scriptLoader.js'],
-                        dest: '<%= outputdir %>build/adapt/js/',
+                        dest: '<%= outputdir %>adapt/js/',
                         filter: 'isFile',
                         flatten: true
                     },
@@ -169,14 +167,14 @@ module.exports = function(grunt) {
                             'src/core/js/libraries/jquery.js',
                             'src/core/js/libraries/jquery.v2.js'
                         ],
-                        dest: '<%= outputdir %>build/libraries/',
+                        dest: '<%= outputdir %>libraries/',
                         filter: 'isFile',
                         flatten: true
                     },
                     {
                         expand: true,
                         src: ['src/extensions/adapt-contrib-spoor/required/**/*'],
-                        dest: '<%= outputdir %>build/'
+                        dest: '<%= outputdir %>'
                     }
                 ]
             }
@@ -190,7 +188,7 @@ module.exports = function(grunt) {
                     'src/extensions/**/*.less',
                     'src/theme/<%= theme %>/**/*.less'
                 ],
-                dest: 'src/less/adapt.less'
+                dest: '<%= sourcedir %>less/adapt.less'
             }
         },
         less: {
@@ -199,7 +197,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    '<%= outputdir %>build/adapt/css/adapt.css' : 'src/less/adapt.less'
+                    '<%= outputdir %>adapt/css/adapt.css' : '<%= sourcedir %>less/adapt.less'
                 }
             }
         },
@@ -277,7 +275,7 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: "<%= outputdir %>build/adapt/js/adapt.min.js",
+                    out: "<%= outputdir %>adapt/js/adapt.min.js",
                     generateSourceMaps: true,
                     preserveLicenseComments:false,
                     optimize: "none"
@@ -288,7 +286,7 @@ module.exports = function(grunt) {
                     name: "core/js/app",
                     baseUrl: "src",
                     mainConfigFile: "./config.js",
-                    out: "<%= outputdir %>build/adapt/js/adapt.min.js",
+                    out: "<%= outputdir %>adapt/js/adapt.min.js",
                     optimize:"uglify2"
                 }
             }
@@ -374,14 +372,14 @@ module.exports = function(grunt) {
             server: {
               options: {
                 port: 9001,
-                base: '<%= outputdir %>build',
+                base: '<%= outputdir %>',
                 keepalive:true
               }
             },
             spoorOffline: {
                 options: {
                     port: 9001,
-                    base: '<%= outputdir %>build',
+                    base: '<%= outputdir %>',
                     keepalive:true
                 }
             }
@@ -401,7 +399,7 @@ module.exports = function(grunt) {
                     "src/theme/theme.js",
                     "src/less",
                     "src/templates",
-                    "<%= outputdir %>build/adapt/js/adapt.min.js.map"
+                    "<%= outputdir %>adapt/js/adapt.min.js.map"
                 ]
             }
         }
@@ -435,7 +433,7 @@ module.exports = function(grunt) {
             }
         });
 
-        grunt.file.write(grunt.config('outputdir') + 'build/course/config.json', JSON.stringify(configJson));
+        grunt.file.write(grunt.config.get('outputdir') + 'course/config.json', JSON.stringify(configJson));
     });
 
     grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
