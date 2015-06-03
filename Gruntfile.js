@@ -7,19 +7,13 @@ module.exports = function(grunt) {
     };
 
     var getTheme = function() {
-        // TODO remove hard-coded default theme
-        var theme = grunt.option('theme') || 'adapt-contrib-vanilla';
-        if (theme) {
-            grunt.log.writeln('** Using theme ' + theme);
-        }
-        return theme;
+        var theme = grunt.option('theme');
+        return theme || '**';
     };
 
     var getMenu = function() {
-        // TODO remove hard-coded default menu
-        var menu = grunt.option('menu') || 'adapt-contrib-boxMenu';
-        if (menu) {
-            grunt.log.writeln('** Using menu ' + menu);
+        var menu = grunt.option('menu');
+        return menu || '**';
     };
 
     var appendSlash = function(dir) {
