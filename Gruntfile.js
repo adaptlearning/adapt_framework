@@ -563,6 +563,7 @@ module.exports = function(grunt) {
         var chalk = require('chalk');
         // the following tasks won't be shown
         var ignoredTasks = [
+            'default',
             'bower',
             'concurrent',
             'clean',
@@ -608,6 +609,8 @@ module.exports = function(grunt) {
             grunt.log.writeln(chalk.cyan(task.name) + '   ' + task.info);
         }
     });
+
+    grunt.registerTask('default', ['help']);
 
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
 };
