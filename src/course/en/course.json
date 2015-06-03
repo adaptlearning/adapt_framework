@@ -60,7 +60,8 @@
                 "instruction": ""
             },
             "_media": {
-                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen. Alternatively you can select the link below for the transcript.",
+                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen.",
+                "transcriptButton": "Alternatively you can select the link below for the transcript.",
                 "instruction": ""
             },
             "_narrative": {
@@ -72,8 +73,8 @@
                 "instruction": ""
             },
             "_text": {
-               "ariaRegion": "",
-               "instruction": ""
+                "ariaRegion": "",
+                "instruction": ""
             },
             "_textInput": {
                 "ariaRegion": "This question component requires you to input your answer in the textbox provided. When you have answered the question select the submit button below.",
