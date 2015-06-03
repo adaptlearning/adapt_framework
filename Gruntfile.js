@@ -274,7 +274,7 @@ module.exports = function(grunt) {
                 dest: '<%= sourcedir %>theme/theme.js',
                 options: {
                     include: '<%= theme %>',
-                    baseUrl: "src",
+                    baseUrl: '<%= sourcedir %>',
                     moduleName: 'themes/themes'
                 }
             }
