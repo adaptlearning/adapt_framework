@@ -49,11 +49,21 @@ module.exports = function(grunt) {
                     }
                 ]
             },
-            course: {
+            courseAssets: {
                 files: [
                     {
                         expand: true,
-                        src: ['**/*'],
+                        src: ['**/*.json'],
+                        cwd: '<%= sourcedir %>course/',
+                        dest: '<%= outputdir %>course/'
+                    }
+                ]
+            },
+            courseJson: {
+                files: [
+                    {
+                        expand: true,
+                        src: ['**/*', '!**/*.json'],
                         cwd: '<%= sourcedir %>course/',
                         dest: '<%= outputdir %>course/'
                     }
@@ -298,11 +308,11 @@ module.exports = function(grunt) {
             },
             handlebars: {
                 files: ['<%= sourcedir %>**/*.hbs'],
-                tasks: ['handlebars', 'compile']
+                tasks: ['handlebars', 'requirejs:dev']
             },
             courseJson: {
                 files: ['<%= sourcedir %>course/**/*.json'],
-                tasks : ['jsonlint', 'copy:courseJson']
+                tasks : ['jsonlint', 'check-json', 'copy:courseJson']
             },
             courseAssets: {
                 files: ['<%= sourcedir %>course/**/*', '!<%= sourcedir %>course/**/*.json'],
@@ -317,7 +327,7 @@ module.exports = function(grunt) {
                     '!<%= sourcedir %>theme/theme.js',
                     '!<%= sourcedir %>templates/templates.js'
                 ],
-                tasks: ['compile']
+                tasks: ['bower', 'requirejs-bundle', 'requirejs:dev']
             },
             index: {
                 files: ['<%= sourcedir %>index.html'],
