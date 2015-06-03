@@ -54,7 +54,8 @@ define(function(require) {
         events: {
             'click .notify-popup-alert-button':'onAlertButtonClicked',
             'click .notify-popup-prompt-button': 'onPromptButtonClicked',
-            'click .notify-popup-done': 'onCloseButtonClicked'
+            'click .notify-popup-done': 'onCloseButtonClicked',
+            'click .notify-shadow': 'onCloseButtonClicked'
         },
 
         render: function() {
