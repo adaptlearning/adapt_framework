@@ -75,7 +75,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>components/**/assets/**'],
                         dest: '<%= outputdir %>assets/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -86,7 +86,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>components/**/fonts/**'],
                         dest: '<%= outputdir %>adapt/css/fonts/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -97,7 +97,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>extensions/**/assets/**'],
                         dest: '<%= outputdir %>assets/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -108,7 +108,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>extensions/**/fonts/**'],
                         dest: '<%= outputdir %>adapt/css/fonts/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -119,7 +119,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>menu/<%= menu %>/assets/**'],
                         dest: '<%= outputdir %>assets/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>menu/<%= menu %>/fonts/**'],
                         dest: '<%= outputdir %>adapt/css/fonts/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -141,7 +141,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>theme/<%= theme %>/assets/**'],
                         dest: '<%= outputdir %>adapt/css/assets/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['<%= sourcedir %>theme/<%= theme %>/fonts/**'],
                         dest: '<%= outputdir %>adapt/css/fonts/',
-                        filter: "isFile",
+                        filter: 'isFile',
                         flatten: true
                     }
                 ]
@@ -248,7 +248,7 @@ module.exports = function(grunt) {
                 src: '<%= sourcedir %>components',
                 dest: '<%= sourcedir %>components/components.js',
                 options: {
-                    baseUrl: "<%= sourcedir %>",
+                    baseUrl: '<%= sourcedir %>',
                     moduleName: 'components/components'
                 }
             },
@@ -256,7 +256,7 @@ module.exports = function(grunt) {
                 src: '<%= sourcedir %>extensions',
                 dest: '<%= sourcedir %>extensions/extensions.js',
                 options: {
-                    baseUrl: "<%= sourcedir %>",
+                    baseUrl: '<%= sourcedir %>',
                     moduleName: 'extensions/extensions'
                 }
             },
@@ -605,7 +605,7 @@ module.exports = function(grunt) {
         grunt.log.writeln('For more information, see https://github.com/adaptlearning/adapt_framework/wiki');
 
         function writeTask(task) {
-            grunt.log.writeln(chalk.cyan(task.name) + "   " + task.info);
+            grunt.log.writeln(chalk.cyan(task.name) + '   ' + task.info);
         }
     });
 
