@@ -215,10 +215,10 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     amd: 'handlebars',
-                    namespace:"Handlebars.templates",
+                    namespace:'Handlebars.templates',
                     processName: function(filePath) {
-                        var newFilePath = filePath.split("/");
-                        newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, "");
+                        var newFilePath = filePath.split('/');
+                        newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, '');
                         return  newFilePath;
                     },
                     partialRegex: /.*/,
@@ -282,22 +282,22 @@ module.exports = function(grunt) {
         requirejs: {
             dev: {
                 options: {
-                    name: "core/js/app",
-                    baseUrl: "src",
-                    mainConfigFile: "./config.js",
-                    out: "<%= outputdir %>adapt/js/adapt.min.js",
+                    name: 'core/js/app',
+                    baseUrl: 'src',
+                    mainConfigFile: './config.js',
+                    out: '<%= outputdir %>adapt/js/adapt.min.js',
                     generateSourceMaps: true,
                     preserveLicenseComments:false,
-                    optimize: "none"
+                    optimize: 'none'
                 }
             },
             compile: {
                 options: {
-                    name: "core/js/app",
-                    baseUrl: "src",
-                    mainConfigFile: "./config.js",
-                    out: "<%= outputdir %>adapt/js/adapt.min.js",
-                    optimize:"uglify2"
+                    name: 'core/js/app',
+                    baseUrl: 'src',
+                    mainConfigFile: './config.js',
+                    out: '<%= outputdir %>adapt/js/adapt.min.js',
+                    optimize: 'uglify2'
                 }
             }
         },
@@ -396,20 +396,20 @@ module.exports = function(grunt) {
         },
         adapt_insert_tracking_ids: {
           options: {
-              courseFile: "<%= sourcedir %>course/en/course.json",
-              blocksFile: "<%= sourcedir %>course/en/blocks.json"
+              courseFile: '<%= sourcedir %>course/en/course.json',
+              blocksFile: '<%= sourcedir %>course/en/blocks.json'
           }
         },
         clean: {
             dist: {
                 src: [
-                    "<%= sourcedir %>components/components.js",
-                    "<%= sourcedir %>extensions/extensions.js",
-                    "<%= sourcedir %>menu/menu.js",
-                    "<%= sourcedir %>theme/theme.js",
-                    "<%= sourcedir %>less",
-                    "<%= sourcedir %>templates",
-                    "<%= outputdir %>adapt/js/adapt.min.js.map"
+                    '<%= sourcedir %>components/components.js',
+                    '<%= sourcedir %>extensions/extensions.js',
+                    '<%= sourcedir %>menu/menu.js',
+                    '<%= sourcedir %>theme/theme.js',
+                    '<%= sourcedir %>less',
+                    '<%= sourcedir %>templates',
+                    '<%= outputdir %>adapt/js/adapt.min.js.map'
                 ]
             }
         }
@@ -430,7 +430,7 @@ module.exports = function(grunt) {
             });
 
             if (customItemJsonFile == '') {
-                grunt.fail.fatal("Unable to locate " + customItem + ".json, please ensure a valid " + customItem + " exists");
+                grunt.fail.fatal('Unable to locate ' + customItem + '.json, please ensure a valid ' + customItem + ' exists');
             }
 
             var customItemJson = grunt.file.readJSON(customItemJsonFile);
@@ -447,7 +447,7 @@ module.exports = function(grunt) {
     grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
         var _ = require('underscore');
 
-        var listOfCourseFiles = ["course", "contentObjects", "articles", "blocks", "components"];
+        var listOfCourseFiles = ['course', 'contentObjects', 'articles', 'blocks', 'components'];
 
         var storedIds = [];
         var storedFileParentIds = {};
@@ -460,18 +460,18 @@ module.exports = function(grunt) {
         function checkJsonIds() {
             var currentCourseFolder;
             // Go through each course folder inside the <%= sourcedir %>course directory
-            grunt.file.expand({filter: "isDirectory"}, grunt.config.get('sourcedir') + "course/*").forEach(function(path) {
+            grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + 'course/*').forEach(function(path) {
                 // Stored current path of folder - used later to read .json files
                 currentCourseFolder = path;
 
                 // Go through each list of declared course files
                 listOfCourseFiles.forEach(function(jsonFileName) {
                     // Make sure course.json file is not searched
-                    if (jsonFileName !== "course") {
+                    if (jsonFileName !== 'course') {
                         storedFileParentIds[jsonFileName] = [];
                         storedFileIds[jsonFileName] = [];
                         // Read each .json file
-                        var currentJsonFile = grunt.file.readJSON(currentCourseFolder + "/" + jsonFileName + ".json");
+                        var currentJsonFile = grunt.file.readJSON(currentCourseFolder + '/' + jsonFileName + '.json');
                         currentJsonFile.forEach(function(item) {
                             // Store _parentIds and _ids to be used by methods below
                             storedFileParentIds[jsonFileName].push(item._parentId);
@@ -501,13 +501,13 @@ module.exports = function(grunt) {
 
             // Check if any duplicate _ids exist and return error
             if (hasDuplicateIds) {
-                grunt.fail.fatal("Oops, looks like you have some duplicate _ids: " + duplicateIds);
+                grunt.fail.fatal('Oops, looks like you have some duplicate _ids: ' + duplicateIds);
             }
         }
 
         function checkIfOrphanedElementsExist(value, parentFileToCheck) {
             _.each(value, function(parentId) {
-                if (parentId === "course") {
+                if (parentId === 'course') {
                     return;
                 }
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
@@ -520,20 +520,20 @@ module.exports = function(grunt) {
         function checkEachElementHasParentId() {
             _.each(storedFileParentIds, function(value, key) {
                 switch(key){
-                    case "contentObjects":
-                        return checkIfOrphanedElementsExist(value, "contentObjects");
-                    case "articles":
-                        return checkIfOrphanedElementsExist(value, "contentObjects");
-                    case "blocks":
-                        return checkIfOrphanedElementsExist(value, "articles");
-                    case "components":
-                        return checkIfOrphanedElementsExist(value, "blocks");
+                    case 'contentObjects':
+                        return checkIfOrphanedElementsExist(value, 'contentObjects');
+                    case 'articles':
+                        return checkIfOrphanedElementsExist(value, 'contentObjects');
+                    case 'blocks':
+                        return checkIfOrphanedElementsExist(value, 'articles');
+                    case 'components':
+                        return checkIfOrphanedElementsExist(value, 'blocks');
                 }
 
             });
 
             if (hasOrphanedParentIds) {
-                grunt.fail.fatal("Oops, looks like you have some orphaned objects: " + orphanedParentIds);
+                grunt.fail.fatal('Oops, looks like you have some orphaned objects: ' + orphanedParentIds);
             }
         }
         checkJsonIds();
