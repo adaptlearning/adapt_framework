@@ -11,13 +11,44 @@ define(function(require) {
 	var NotifyView = Backbone.View.extend({
 
 		className: 'notify',
+		escapeKeyAttached: false,
 
 		initialize: function() {
-			this.listenTo(Adapt, 'remove', this.remove);
-      		this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
+			this.setupEventListeners();
 			//include accessibility globals in notify model
       		this.model.set('_globals', Adapt.course.get('_globals'));
 			this.render();
+		},
+
+		setupEventListeners: function() {
+			this.listenTo(Adapt, 'remove', this.remove);
+      		this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
+      		this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
+      		this._onKeyUp = _.bind(this.onKeyUp, this);
+      		this.setupEscapeKey();
+		},
+
+		setupEscapeKey: function() {
+			var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
+            if (!hasAccessibility && ! this.escapeKeyAttached) {
+            	$(window).on("keyup", this._onKeyUp);
+            	this.escapeKeyAttached = true;
+            } else {
+            	$(window).off("keyup", this._onKeyUp);
+            	this.escapeKeyAttached = false;
+            }
+		},
+
+		onAccessibilityToggle: function() {
+			this.setupEscapeKey();
+		},
+
+		onKeyUp: function(event) {
+			if (event.which != 27) return;
+			event.preventDefault();
+
+			this.closeNotify();
+			Adapt.trigger('notify:closed');
 		},
 
 		events: {
@@ -98,6 +129,7 @@ define(function(require) {
 				this.remove();
 			}, this));
 			Adapt.trigger('popup:closed');
+			$(window).off("keyup", this._onKeyUp);
 		}
 
 	});
