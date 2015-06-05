@@ -251,12 +251,9 @@ define(function(require) {
 
             this._hasTabPosition = true;
 
-            _.delay(function() {
+            _.delay(_.bind(function() {
                 //ENABLED DOCUMENT READING
                 $.a11y_on(true, '#wrapper');
-
-                //DO NOT FOCUS IF USER HAS ALREADY INTERACTED
-                if ($.a11y.userInteracted) return;
 
                 if (Adapt.location._currentId) {
                     //required to stop JAWS from auto reading content in IE
@@ -264,24 +261,29 @@ define(function(require) {
                     var alertText = " ";
                     switch (currentModel.get("_type")) {
                     case "page":
-                        if (Adapt.course.get("_accessibility") && Adapt.course.get("_accessibility")._ariaLabels && Adapt.course.get("_accessibility")._ariaLabels.pageLoaded) {
-                            alertText = Adapt.course.get("_accessibility")._ariaLabels.pageLoaded;
+                        if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                            alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
                         }
                         break;
-                    case "menu":
-                        if (Adapt.course.get("_accessibility") && Adapt.course.get("_accessibility")._ariaLabels && Adapt.course.get("_accessibility")._ariaLabels.menuLoaded) {
-                            alertText = Adapt.course.get("_accessibility")._ariaLabels.menuLoaded;
+                    case "menu": default:
+                        if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                            alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
                         }
                         break;
                     }
                     $.a11y_alert(alertText);
                 }
-                if (!$.a11y.userInteracted) {
+
+                if (!$.a11y.userInteracted && !this._hasTabPosition) {
                     $("#accessibility-instructions").focusNoScroll();
                 } else {
-                    $.a11y_focus();
+                     _.delay(function() {
+                        $.a11y_focus();
+                    }, 250);
                 }
-            }, 1000);
+
+                
+            }, this), 1000);
             
         },
 
@@ -296,8 +298,9 @@ define(function(require) {
         onNavigationStart: function() {
             this._isLoaded = false;
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
-            $.a11y_on(false, '#wrapper');
             $("#a11y-focuser").focusNoScroll();
+            $.a11y_on(false, '#wrapper');
+            
         },
 
         onNavigationEnd: function() {
