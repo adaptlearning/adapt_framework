@@ -183,7 +183,8 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        src: ['<%= sourcedir %>extensions/adapt-contrib-spoor/required/**/*'],
+                        src: ['**/*'],
+                        cwd: ['<%= sourcedir %>extensions/adapt-contrib-spoor/required/'],
                         dest: '<%= outputdir %>'
                     }
                 ]
