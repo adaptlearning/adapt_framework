@@ -574,9 +574,14 @@ module.exports = function(grunt) {
     grunt.registerTask('tracking-remove', 'Removes all tracking IDs', ['adapt_remove_tracking_ids']);
     grunt.registerTask('tracking-reset', 'Resets and re-inserts all tracking IDs, starting with 0', ['adapt_reset_tracking_ids']);
 
+    /*
+    * Lists out the available tasks along with their descriptions.
+    * Tasks in the array below will not be listed.
+    */
     grunt.registerTask('help', function() {
-        // for some nice colouring
-        var chalk = require('chalk');
+        var chalk = require('chalk'); // for some nice colouring
+        var columnify = require('columnify'); // deals with formatting
+
         // the following tasks won't be shown
         var ignoredTasks = [
             'default',
@@ -610,20 +615,31 @@ module.exports = function(grunt) {
         grunt.log.writeln('See below for the list of available tasks:');
         grunt.log.writeln('');
 
+        var taskData = {};
+        var maxTaskLength = 0;
+        var maxConsoleWidth = 80;
+
         for(var key in grunt.task._tasks) {
             if(this.name !== key && -1 === ignoredTasks.indexOf(key)) {
-                writeTask(grunt.task._tasks[key]);
+                var task = grunt.task._tasks[key];
+                taskData[chalk.cyan(task.name)] = task.info;
+                if(task.name.length > maxTaskLength) maxTaskLength = task.name.length
             }
         }
+
+        var options = {
+            maxWidth: maxConsoleWidth - (maxTaskLength + 2),
+            showHeaders: false,
+            columnSplitter: '  '
+        };
+
+        // log everything
+        grunt.log.writeln(columnify(taskData, options));
 
         grunt.log.writeln('');
         grunt.log.writeln('Run a task using: grunt [task name]');
         grunt.log.writeln('');
         grunt.log.writeln('For more information, see https://github.com/adaptlearning/adapt_framework/wiki');
-
-        function writeTask(task) {
-            grunt.log.writeln(chalk.cyan(task.name) + '   ' + task.info);
-        }
     });
 
     grunt.registerTask('default', ['help']);
