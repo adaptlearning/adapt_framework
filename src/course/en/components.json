@@ -44,6 +44,7 @@
     "_type": "component",
     "_component": "hotgraphic",
     "_layout": "full",
+    "_isOptional": true,
     "title": "Key Facts",
     "displayTitle": "Key Facts",
     "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution.",
