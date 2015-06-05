@@ -325,8 +325,15 @@ define(function(require) {
                     $('html').css({
                         "height": ""
                     });
+
+                    var height = "";
+
+                    if (this._htmlHeight != this._bodyHeight) {
+                        height = this._bodyHeight;
+                    }
+
                     $('body').css({
-                        "height": "",
+                        "height": height,
                         "overflow-y": ""
                     });
                     $('#wrapper').css({
