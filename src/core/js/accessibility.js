@@ -16,6 +16,7 @@ define(function(require) {
         $accessibilityToggle: $("#accessibility-toggle"),
         _tabIndexElements: 'a, button, input, select, textarea, [tabindex]',
         _hasTabPosition: false,
+        _hasUsageInstructionRead: false,
         _isLoaded: false,
         _legacyFocusElements: undefined,
 
@@ -255,31 +256,38 @@ define(function(require) {
                 //ENABLED DOCUMENT READING
                 $.a11y_on(true, '#wrapper');
 
-                if (Adapt.location._currentId) {
-                    //required to stop JAWS from auto reading content in IE
-                    var currentModel = Adapt.findById(Adapt.location._currentId);
-                    var alertText = " ";
-                    switch (currentModel.get("_type")) {
-                    case "page":
-                        if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
-                            alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
-                        }
-                        break;
-                    case "menu": default:
-                        if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
-                            alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
-                        }
-                        break;
-                    }
-                    $.a11y_alert(alertText);
-                }
+                if (!this._hasUsageInstructionRead) {
 
-                if (!$.a11y.userInteracted && !this._hasTabPosition) {
                     $("#accessibility-instructions").focusNoScroll();
+                    
+                    this._hasUsageInstructionRead = true;
+
                 } else {
+
+
+                    if (Adapt.location._currentId) {
+                        //required to stop JAWS from auto reading content in IE
+                        var currentModel = Adapt.findById(Adapt.location._currentId);
+                        var alertText = " ";
+                        switch (currentModel.get("_type")) {
+                        case "page":
+                            if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                                alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
+                            }
+                            break;
+                        case "menu": default:
+                            if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                                alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
+                            }
+                            break;
+                        }
+                        $.a11y_alert(alertText);
+                    }
+
                      _.delay(function() {
                         $.a11y_focus();
                     }, 250);
+
                 }
 
                 
