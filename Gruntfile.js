@@ -401,6 +401,18 @@ module.exports = function(grunt) {
               blocksFile: '<%= sourcedir %>course/en/blocks.json'
           }
         },
+        adapt_remove_tracking_ids: {
+          options: {
+              courseFile: '<%= sourcedir %>course/en/course.json',
+              blocksFile: '<%= sourcedir %>course/en/blocks.json'
+          }
+        },
+        adapt_reset_tracking_ids: {
+          options: {
+              courseFile: '<%= sourcedir %>course/en/course.json',
+              blocksFile: '<%= sourcedir %>course/en/blocks.json'
+          }
+      },
         clean: {
             dist: {
                 src: [
@@ -558,7 +570,10 @@ module.exports = function(grunt) {
     grunt.registerTask('server', 'Runs a local server using port 9001', ['_log-server', 'concurrent:server']);
     grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['_log-server', 'concurrent:spoor']);
 
-    // Lists out the available tasks along with their descriptions, ignoring any listed in the array below
+    grunt.registerTask('tracking-insert', 'Adds any missing tracking IDs (starting at the highest existing ID)', ['adapt_insert_tracking_ids']);
+    grunt.registerTask('tracking-remove', 'Removes all tracking IDs', ['adapt_remove_tracking_ids']);
+    grunt.registerTask('tracking-reset', 'Resets and re-inserts all tracking IDs, starting with 0', ['adapt_reset_tracking_ids']);
+
     grunt.registerTask('help', function() {
         // for some nice colouring
         var chalk = require('chalk');
