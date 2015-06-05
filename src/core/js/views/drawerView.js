@@ -97,7 +97,6 @@ define(function(require) {
             //only trigger popup:opened if drawer is visible, pass popup manager drawer element
             if (!this._isVisible) {
                 Adapt.trigger('popup:opened', this.$el);
-
                 this._isVisible = true;
             }
 

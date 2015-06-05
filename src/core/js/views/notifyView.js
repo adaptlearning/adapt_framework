@@ -34,16 +34,13 @@ define(function(require) {
             var data = this.model.toJSON();
             var template = Handlebars.templates['notify'];
 
-            //hide notify
+            //hide notify container
             this.$el.css("visibility", "hidden");
-
-            //attach popup
+            //attach popup + shadow
             this.$el.html(template(data)).appendTo('body');
-
             //hide popup
             this.$('.notify-popup').css("visibility", "hidden");
-
-            //show notify
+            //show notify container
             this.$el.css("visibility", "visible");
 
             this.showNotify();
@@ -94,7 +91,6 @@ define(function(require) {
         },
 
         showNotify: function() {
-            //start fading in the shadow
 
             if (this.disableAnimation) {
 
