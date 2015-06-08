@@ -81,6 +81,11 @@
                 "instruction": ""
             }
         },
+        "_extensions": {
+            "_pageLevelProgress": {
+                "optionalContent": "Optional Content"
+            }
+        },
         "_accessibility": {
             "_accessibilityToggleTextOn": "Turn accessibility on?",
             "_accessibilityToggleTextOff": "Turn accessibility off?",
