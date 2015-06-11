@@ -500,18 +500,20 @@ module.exports = function(grunt) {
 
                 // Go through each list of declared course files
                 listOfCourseFiles.forEach(function(jsonFileName) {
+                    var currentJsonFile = grunt.file.readJSON(currentCourseFolder + '/' + jsonFileName + '.json');
                     // Make sure course.json file is not searched
                     if (jsonFileName !== 'course') {
                         storedFileParentIds[jsonFileName] = [];
                         storedFileIds[jsonFileName] = [];
                         // Read each .json file
-                        var currentJsonFile = grunt.file.readJSON(currentCourseFolder + '/' + jsonFileName + '.json');
                         currentJsonFile.forEach(function(item) {
                             // Store _parentIds and _ids to be used by methods below
                             storedFileParentIds[jsonFileName].push(item._parentId);
                             storedFileIds[jsonFileName].push(item._id);
                             storedIds.push(item._id);
                         });
+                    } else {
+                        grunt.option('courseId', currentJsonFile._id);
                     }
                 });
 
@@ -541,7 +543,7 @@ module.exports = function(grunt) {
 
         function checkIfOrphanedElementsExist(value, parentFileToCheck) {
             _.each(value, function(parentId) {
-                if (parentId === 'course') {
+                if (parentId === grunt.option('courseId')) {
                     return;
                 }
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
@@ -663,7 +665,7 @@ module.exports = function(grunt) {
         var options = {
             maxWidth: maxConsoleWidth - maxTaskLength,
             showHeaders: false,
-            columnSplitter: '  ',
+            columnSplitter: '  '
         };
 
         // log everything
