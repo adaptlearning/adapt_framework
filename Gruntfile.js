@@ -617,7 +617,7 @@ module.exports = function(grunt) {
 
         var taskData = {};
         var maxTaskLength = 0;
-        var maxConsoleWidth = 80;
+        var maxConsoleWidth = 75; // standard 80 chars + a buffer
 
         for(var key in grunt.task._tasks) {
             if(this.name !== key && -1 === ignoredTasks.indexOf(key)) {
@@ -628,9 +628,9 @@ module.exports = function(grunt) {
         }
 
         var options = {
-            maxWidth: maxConsoleWidth - (maxTaskLength + 2),
+            maxWidth: maxConsoleWidth - maxTaskLength,
             showHeaders: false,
-            columnSplitter: '  '
+            columnSplitter: '  ',
         };
 
         // log everything
