@@ -60,7 +60,8 @@
                 "instruction": ""
             },
             "_media": {
-                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen. Alternatively you can select the link below for the transcript.",
+                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen.",
+                "transcriptButton": "Alternatively you can select the link below for the transcript.",
                 "instruction": ""
             },
             "_narrative": {
@@ -72,12 +73,17 @@
                 "instruction": ""
             },
             "_text": {
-               "ariaRegion": "",
-               "instruction": ""
+                "ariaRegion": "",
+                "instruction": ""
             },
             "_textInput": {
                 "ariaRegion": "This question component requires you to input your answer in the textbox provided. When you have answered the question select the submit button below.",
                 "instruction": ""
+            }
+        },
+        "_extensions": {
+            "_pageLevelProgress": {
+                "optionalContent": "Optional Content"
             }
         },
         "_accessibility": {
@@ -94,7 +100,7 @@
                 "menu": "Menu",
                 "menuItem": "Menu item. Select to view.",
                 "menuViewButton": "Select here to enter.",
-                "page": "",
+                "page": "Page",
                 "pageLoaded": "Page Loaded.",
                 "previous": "Back",
                 "navigationBack": "Navigate back",
@@ -109,8 +115,9 @@
                 "done": "Done",
                 "complete": "Completed",
                 "incomplete": "Incomplete",
-                "incorrect": "incorrect",
-                "correct": "correct",
+                "incorrect": "Incorrect",
+                "correct": "Correct",
+                "locked": "Locked",
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
                 "sliderHandle": "Slider handle. Use the left and right arrow keys to move the slider and give your answer. Then tab to the submit button below and press enter.",
                 "hotgraphicPopUp": "Hotgraphic popup.",

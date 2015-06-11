@@ -63,6 +63,16 @@ define(function() {
             if (changedAttribute === 'correct') {
 				//disable submit button on correct (i.e. no model answer)
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
+
+                if (!this.model.get("_canShowFeedback")) {
+                    if (!this.$el.is(".no-state")) {
+                        //if no feedback, complete correct and has state, force focus to component state
+                        _.defer(_.bind(function() {
+                            $("." + this.model.get("_id") + " .accessibility-state [tabindex]").focusNoScroll();
+                        }, this));
+                    }
+                }
+
             } else {
                 switch(changedAttribute) {
                 case "showCorrectAnswer": case "hideCorrectAnswer":
