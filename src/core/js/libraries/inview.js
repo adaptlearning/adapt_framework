@@ -47,6 +47,8 @@
 
 
   	function getElementOnScreenMeasurements($element) {
+  		if ($element.length === 0) return;
+  		
 		var height = $element.outerHeight();
 		var width = $element.outerWidth();
 		var wHeight = $(window).height();
