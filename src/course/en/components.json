@@ -29,9 +29,16 @@
     "_media": {
       "mp4": "course/en/video/big_buck_bunny.mp4",
       "ogv": "course/en/video/big_buck_bunny.ogv",
-      "poster": "course/en/video/big_buck_bunny-small.jpg",
-      "transcriptLink": "assets/transcript.pdf",
-      "transcriptText": "Transcript"
+      "poster": "course/en/video/big_buck_bunny-small.jpg"
+    },
+    "_transcript": {
+      "_inlineTranscript": false,
+      "_externalTranscript": true,
+      "inlineTranscriptButton": "Transcript",
+      "inlineTranscriptCloseButton": "Close Transcript",
+      "inlineTranscriptBody": "Transcript body text should go here",
+      "transcriptLinkButton": "Transcript",
+      "transcriptLink": "assets/transcript.pdf"
     },
     "_pageLevelProgress": {
       "_isEnabled": false
