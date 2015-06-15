@@ -8,26 +8,58 @@ define(function(require) {
 
     var Adapt = require('coreJS/adapt');
 
-
     var NotifyView = Backbone.View.extend({
 
         className: 'notify',
         disableAnimation: false,
+        escapeKeyAttached: false,
 
         initialize: function() {
             this.disableAnimation = $("html").is(".ie8");
 
-            this.listenTo(Adapt, 'remove', this.remove);
-            this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
+            this.setupEventListeners();
+
             //include accessibility globals in notify model
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.render();
         },
 
+        setupEventListeners: function() {
+            this.listenTo(Adapt, 'remove', this.remove);
+            this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
+            this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
+            this._onKeyUp = _.bind(this.onKeyUp, this);
+            this.setupEscapeKey();
+        },
+
+        setupEscapeKey: function() {
+            var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
+            if (!hasAccessibility && ! this.escapeKeyAttached) {
+                $(window).on("keyup", this._onKeyUp);
+                this.escapeKeyAttached = true;
+            } else {
+                $(window).off("keyup", this._onKeyUp);
+                this.escapeKeyAttached = false;
+            }
+        },
+
+        onAccessibilityToggle: function() {
+            this.setupEscapeKey();
+        },
+
+        onKeyUp: function(event) {
+            if (event.which != 27) return;
+            event.preventDefault();
+
+            this.closeNotify();
+            Adapt.trigger('notify:closed');
+        },
+
         events: {
             'click .notify-popup-alert-button':'onAlertButtonClicked',
             'click .notify-popup-prompt-button': 'onPromptButtonClicked',
-            'click .notify-popup-done': 'onCloseButtonClicked'
+            'click .notify-popup-done': 'onCloseButtonClicked',
+            'click .notify-shadow': 'onCloseButtonClicked'
         },
 
         render: function() {
@@ -70,12 +102,14 @@ define(function(require) {
 
         resetNotifySize: function() {
             $('.notify-popup').removeAttr('style');
+
             this.resizeNotify();
         },
 
         resizeNotify: function() {
             var windowHeight = $(window).height();
             var notifyHeight = this.$('.notify-popup').height();
+
             if (notifyHeight > windowHeight) {
                 this.$('.notify-popup').css({
                     'height':'100%', 
@@ -288,6 +322,7 @@ define(function(require) {
             }
 
         }
+
     });
 
     return NotifyView;
