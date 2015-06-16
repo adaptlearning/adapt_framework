@@ -102,6 +102,7 @@ define(function(require) {
 
         resetNotifySize: function() {
             $('.notify-popup').removeAttr('style');
+
             this.resizeNotify();
         },
 
@@ -124,6 +125,7 @@ define(function(require) {
         },
 
         showNotify: function() {
+
             if (this.disableAnimation) {
 
                 this.$('.notify-shadow').css("display", "block");
