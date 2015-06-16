@@ -13,6 +13,7 @@ define(function(require) {
 
         className: 'drawer display-none',
         disableAnimation: false,
+        escapeKeyAttached: false,
 
         initialize: function() {
             this.disableAnimation = $("html").is(".ie8");
@@ -21,16 +22,45 @@ define(function(require) {
             if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
                 this.drawerDir = 'left';
             }
-            this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
-            this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
-            this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
-            this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
-            this.listenTo(Adapt, 'remove', this.onCloseDrawer);
+            this.setupEventListeners();
             this.render();
             this.drawerDuration = Adapt.config.get('_drawer')._duration;
             this.drawerDuration = (this.drawerDuration) ? this.drawerDuration : 400;
             // Setup cached selectors
             this.$wrapper = $('#wrapper');
+        },
+
+        setupEventListeners: function() {
+            this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
+            this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
+            this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
+            this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
+            this.listenTo(Adapt, 'remove', this.onCloseDrawer);
+            this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
+            this._onKeyUp = _.bind(this.onKeyUp, this);
+            this.setupEscapeKey();
+        },
+
+        setupEscapeKey: function() {
+            var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
+            if (!hasAccessibility && ! this.escapeKeyAttached) {
+                $(window).on("keyup", this._onKeyUp);
+                this.escapeKeyAttached = true;
+            } else {
+                $(window).off("keyup", this._onKeyUp);
+                this.escapeKeyAttached = false;
+            }
+        },
+
+        onAccessibilityToggle: function() {
+            this.setupEscapeKey();
+        },
+
+        onKeyUp: function(event) {
+            if (event.which != 27) return;
+            event.preventDefault();
+
+            this.onCloseDrawer();
         },
 
         events: {
@@ -92,7 +122,6 @@ define(function(require) {
         },
 
         showDrawer: function(emptyDrawer) {
-
             this.$el.removeClass('display-none');
             //only trigger popup:opened if drawer is visible, pass popup manager drawer element
             if (!this._isVisible) {
@@ -161,6 +190,7 @@ define(function(require) {
                 }, this), 200);
 
             }
+
         },
 
         emptyDrawer: function() {
@@ -199,6 +229,8 @@ define(function(require) {
 
                 $('#shadow').addClass("display-none");
 
+                Adapt.trigger('drawer:closed');
+
             } else {
 
                 var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
@@ -225,11 +257,13 @@ define(function(require) {
                         $('#shadow').addClass("display-none");
                     }});
 
+                    Adapt.trigger('drawer:closed');
+
                 }, this), duration + 50);
 
             }
 
-            Adapt.trigger('drawer:closed');
+            
         },
 
         addShadowEvent: function() {
@@ -340,6 +374,9 @@ define(function(require) {
                         "position": "relative",
                         "top": ""
                     });
+
+                    //fix resize whilst popup open
+                    $(window).resize();
 
                     //wait for renderer to catch-up with jump
                     _.delay(_.bind(function() {

@@ -43,11 +43,11 @@ define(function(require){
         if (settings.offset.left === 0) settings.axis = "y";
 
         // Trigger scrollTo plugin
-        $(selector).a11y_focus();
         $.scrollTo(selector, settings);
         // Trigger an event after animation
         // 300 milliseconds added to make sure queue has finished
         _.delay(function() {
+            $(selector).a11y_focus();
             Adapt.trigger(location+':scrolledTo', selector);
         }, settings.duration+300);
         

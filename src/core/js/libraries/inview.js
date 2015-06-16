@@ -1,5 +1,5 @@
 /*
-* jquery.onscreen 2014-04-27 https://github.com/cgkineo/jquery.onscreen
+* jquery.onscreen 2014-06-15 https://github.com/cgkineo/jquery.onscreen
 * License - http://github.com/adaptlearning/adapt_framework/LICENSE
 * Maintainers - Oliver Foster <oliver.foster@kineo.com>
 */
@@ -47,6 +47,8 @@
 
 
   	function getElementOnScreenMeasurements($element) {
+  		if ($element.length === 0) return;
+  		
 		var height = $element.outerHeight();
 		var width = $element.outerWidth();
 		var wHeight = $(window).height();
@@ -100,7 +102,7 @@
 
 		var onscreen = true;
 		if (rightP > 100 || leftP > 100 || bottomP > 100 || topP > 100) onscreen = false;
-		if (!$element.is(":visible")) onscreen = false;
+		if (!$element.is(":visible") || $element.css("visibility") == "hidden") onscreen = false;
 
 		return { 
 			top: top, 
