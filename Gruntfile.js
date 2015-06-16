@@ -1,6 +1,27 @@
 module.exports = function(grunt) {
     require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
+    /*
+    * Uses the parent folder name (menu, theme, components, extensions).
+    * Also caches a list of the installed plugins
+    * assumption: all folders are plugins
+    */
+    var getInstalledPluginsByType = function(type) {
+        var pluginDir = grunt.config.get('sourcedir') + type + '/';
+        if(!grunt.file.isDir(pluginDir)) return []; // fail silently
+        // return all sub-folders, and save for later
+        return grunt.option(type, grunt.file.expand({ filter:'isDirectory', cwd:pluginDir }, '*'));
+    };
+
+    var isPluginInstalled = function(pluginName) {
+        var types = ['components','extensions','theme','menu'];
+        for(var i = 0, len = types.length; i < len; i++) {
+            var plugins = grunt.option(types[i]) || getInstalledPluginsByType(types[i]);
+            if(plugins.indexOf(pluginName) !== -1) return true;
+        }
+        return false;
+    }
+
     var getSourceDir = function() {
         var sourcedir = appendSlash(grunt.option('sourcedir')) || 'src/';
         return sourcedir;
@@ -173,7 +194,6 @@ module.exports = function(grunt) {
                             '<%= sourcedir %>core/js/libraries/modernizr.js',
                             '<%= sourcedir %>core/js/libraries/json2.js',
                             '<%= sourcedir %>core/js/libraries/consoles.js',
-                            '<%= sourcedir %>core/js/libraries/swfObject.js',
                             '<%= sourcedir %>core/js/libraries/jquery.js',
                             '<%= sourcedir %>core/js/libraries/jquery.v2.js'
                         ],
@@ -479,18 +499,20 @@ module.exports = function(grunt) {
 
                 // Go through each list of declared course files
                 listOfCourseFiles.forEach(function(jsonFileName) {
+                    var currentJsonFile = grunt.file.readJSON(currentCourseFolder + '/' + jsonFileName + '.json');
                     // Make sure course.json file is not searched
                     if (jsonFileName !== 'course') {
                         storedFileParentIds[jsonFileName] = [];
                         storedFileIds[jsonFileName] = [];
                         // Read each .json file
-                        var currentJsonFile = grunt.file.readJSON(currentCourseFolder + '/' + jsonFileName + '.json');
                         currentJsonFile.forEach(function(item) {
                             // Store _parentIds and _ids to be used by methods below
                             storedFileParentIds[jsonFileName].push(item._parentId);
                             storedFileIds[jsonFileName].push(item._id);
                             storedIds.push(item._id);
                         });
+                    } else {
+                        grunt.option('courseId', currentJsonFile._id);
                     }
                 });
 
@@ -520,7 +542,7 @@ module.exports = function(grunt) {
 
         function checkIfOrphanedElementsExist(value, parentFileToCheck) {
             _.each(value, function(parentId) {
-                if (parentId === 'course') {
+                if (parentId === grunt.option('courseId')) {
                     return;
                 }
                 if (_.indexOf(storedFileIds[parentFileToCheck], parentId) === -1) {
@@ -563,16 +585,28 @@ module.exports = function(grunt) {
         grunt.log.ok('Starting server in "' + grunt.config.get('outputdir') + '" using port ' + grunt.config.get('connect.server.options.port'));
     });
 
-    grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'adapt_insert_tracking_ids']);
+    grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'tracking-insert']);
     grunt.registerTask('server-build', 'Builds the course without JSON [used by the authoring tool]', ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
     grunt.registerTask('server', 'Runs a local server using port 9001', ['_log-server', 'concurrent:server']);
     grunt.registerTask('server-scorm', 'Runs a SCORM test server using port 9001', ['_log-server', 'concurrent:spoor']);
 
-    grunt.registerTask('tracking-insert', 'Adds any missing tracking IDs (starting at the highest existing ID)', ['adapt_insert_tracking_ids']);
-    grunt.registerTask('tracking-remove', 'Removes all tracking IDs', ['adapt_remove_tracking_ids']);
-    grunt.registerTask('tracking-reset', 'Resets and re-inserts all tracking IDs, starting with 0', ['adapt_reset_tracking_ids']);
+    grunt.registerTask('tracking-insert', 'Adds any missing tracking IDs (starting at the highest existing ID)', function() {
+        if(isPluginInstalled('adapt-contrib-spoor')) {
+            grunt.task.run(['adapt_insert_tracking_ids']);
+        }
+    });
+    grunt.registerTask('tracking-remove', 'Removes all tracking IDs', function() {
+        if(isPluginInstalled('adapt-contrib-spoor')) {
+            grunt.task.run(['adapt_remove_tracking_ids']);
+        }
+    });
+    grunt.registerTask('tracking-reset', 'Resets and re-inserts all tracking IDs, starting with 0', function() {
+        if(isPluginInstalled('adapt-contrib-spoor')) {
+            grunt.task.run(['adapt_reset_tracking_ids']);
+        }
+    });
 
     /*
     * Lists out the available tasks along with their descriptions.
@@ -617,7 +651,7 @@ module.exports = function(grunt) {
 
         var taskData = {};
         var maxTaskLength = 0;
-        var maxConsoleWidth = 80;
+        var maxConsoleWidth = 75; // standard 80 chars + a buffer
 
         for(var key in grunt.task._tasks) {
             if(this.name !== key && -1 === ignoredTasks.indexOf(key)) {
@@ -628,7 +662,7 @@ module.exports = function(grunt) {
         }
 
         var options = {
-            maxWidth: maxConsoleWidth - (maxTaskLength + 2),
+            maxWidth: maxConsoleWidth - maxTaskLength,
             showHeaders: false,
             columnSplitter: '  '
         };
