@@ -17,6 +17,7 @@ define(function(require) {
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
+            this._isRemoved = false;
             this.preRender();
             this.render();
         },
@@ -35,6 +36,9 @@ define(function(require) {
             this.$el.html(template(data));
             
             _.defer(_.bind(function() {
+                // to disallow postRender if remove have been called already
+                if(this._isRemoved) return;
+
                 this.postRender();
                 Adapt.trigger(this.constructor.type + 'View:postRender', this);
             }, this));
@@ -82,6 +86,7 @@ define(function(require) {
         },
 
         remove: function() {
+            this._isRemoved = true;
             this.model.setOnChildren('_isReady', false);
             this.model.set('_isReady', false);
             this.$el.remove();
