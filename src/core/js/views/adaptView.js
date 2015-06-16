@@ -5,13 +5,13 @@
 */
 
 define(function(require) {
-    
+
     var Backbone = require('backbone');
     var Handlebars = require('handlebars');
     var Adapt = require('coreJS/adapt');
 
     var AdaptView = Backbone.View.extend({
-        
+
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
@@ -21,20 +21,20 @@ define(function(require) {
             this.preRender();
             this.render();
         },
-        
+
         preRender: function() {},
-        
+
         postRender: function() {
             this.addChildren();
         },
-        
+
         render: function() {
             Adapt.trigger(this.constructor.type + 'View:preRender', this);
-          
+
             var data = this.model.toJSON();
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
-            
+
             _.defer(_.bind(function() {
                 // to disallow postRender if remove have been called already
                 if(this._isRemoved) return;
@@ -45,7 +45,7 @@ define(function(require) {
 
             return this;
         },
-      
+
         addChildren: function() {
             var nthChild = 0;
             var children = this.model.getChildren();
@@ -60,11 +60,11 @@ define(function(require) {
                 }
             }
         },
-      
+
         setReadyStatus: function() {
             this.model.set('_isReady', true);
         },
-      
+
         setCompletionStatus: function() {
             if (this.model.get('_isVisible')) {
                 this.model.set('_isComplete', true);
@@ -74,7 +74,7 @@ define(function(require) {
 
         resetCompletionStatus: function(type) {
             if (!this.model.get("_canReset")) return;
-            
+
             var descendantComponents = this.model.findDescendants('components');
             if (descendantComponents.length === 0) {
                 this.model.reset(type);
@@ -108,9 +108,9 @@ define(function(require) {
             }
             this.$el.addClass('visibility-hidden');
         }
-        
+
     });
-    
+
     return AdaptView;
-    
+
 });
