@@ -194,7 +194,6 @@ module.exports = function(grunt) {
                             '<%= sourcedir %>core/js/libraries/modernizr.js',
                             '<%= sourcedir %>core/js/libraries/json2.js',
                             '<%= sourcedir %>core/js/libraries/consoles.js',
-                            '<%= sourcedir %>core/js/libraries/swfObject.js',
                             '<%= sourcedir %>core/js/libraries/jquery.js',
                             '<%= sourcedir %>core/js/libraries/jquery.v2.js'
                         ],
