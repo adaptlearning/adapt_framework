@@ -164,20 +164,17 @@ define(function(require) {
         setDocumentTitle: function() {
             if (!Adapt.location._currentId) return;
 
-
             var currentModel = Adapt.findById(Adapt.location._currentId);
 
             var pageTitle = "";
             if (currentModel && currentModel.get("_type") !== "course") {
-                var displayTitle = currentModel.get("title");
-                if (displayTitle) {
-                    pageTitle = " | " + displayTitle;
-                }
+                var currentTitle = currentModel.get("title");
+                if (currentTitle) pageTitle = " | " + currentTitle;
             }
 
             var courseTitle = Adapt.course.get("title");
             var documentTitle = courseTitle + pageTitle;
-            
+
             Adapt.once("pageView:ready menuView:ready", function() {
                 document.title = documentTitle;
             });
