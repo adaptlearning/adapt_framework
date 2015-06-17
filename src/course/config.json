@@ -6,7 +6,7 @@
         "_isEnabled": false,
         "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true,
-        "_disableTextSelectOnClasses": "size-small size-medium size-large"
+        "_disableTextSelectOnClasses": ".size-small .size-medium .size-large"
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",

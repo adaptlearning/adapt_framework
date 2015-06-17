@@ -394,7 +394,7 @@ define(function(require) {
 
             var isMatch = false;
             for (var i = 0, item; item = classes[i++];) {
-                if ($('html').is("."+item)) {
+                if ($('html').is(item)) {
                     isMatch = true;
                     break;
                 }
