@@ -124,7 +124,7 @@ define(function(require) {
             Adapt.location._previousContentType = Adapt.location._contentType;
 
             if (currentLocation === 'course') {
-                Adapt.location._currentId = 'course';
+                Adapt.location._currentId = Adapt.course.get('_id');
                 Adapt.location._contentType = 'menu';
                 Adapt.location._lastVisitedMenu = currentLocation;
             } else if (!type) {
@@ -155,8 +155,33 @@ define(function(require) {
                 .addClass(classes)
                 .attr('data-location', Adapt.location._currentLocation);
 
+            this.setDocumentTitle();
+
             // Trigger event when location changes
             Adapt.trigger('router:location', Adapt.location);
+        },
+
+        setDocumentTitle: function() {
+            if (!Adapt.location._currentId) return;
+
+
+            var currentModel = Adapt.findById(Adapt.location._currentId);
+
+            var pageTitle = "";
+            if (currentModel && currentModel.get("_type") !== "course") {
+                var displayTitle = currentModel.get("title");
+                if (displayTitle) {
+                    pageTitle = " | " + displayTitle;
+                }
+            }
+
+            var courseTitle = Adapt.course.get("title");
+            var documentTitle = courseTitle + pageTitle;
+            
+            Adapt.once("pageView:ready menuView:ready", function() {
+                document.title = documentTitle;
+            });
+
         }
 
     
