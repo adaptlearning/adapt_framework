@@ -19,6 +19,8 @@ define(function(require) {
     Adapt.once('app:dataReady', function() {
         // The theme.json will have been loaded at this point
         Adapt.device.screenSize = checkScreenSize();
+
+        $('html').addClass("size-"+Adapt.device.screenSize);
     });
 
     Adapt.device.screenWidth = $window.width();
@@ -44,6 +46,9 @@ define(function(require) {
 
         if (newScreenSize !== Adapt.device.screenSize) {
             Adapt.device.screenSize = newScreenSize;
+
+            $('html').removeClass("size-small nsize-medium size-large").addClass("size-"+Adapt.device.screenSize);
+
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
         
