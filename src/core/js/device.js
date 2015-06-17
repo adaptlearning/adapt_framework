@@ -47,7 +47,7 @@ define(function(require) {
         if (newScreenSize !== Adapt.device.screenSize) {
             Adapt.device.screenSize = newScreenSize;
 
-            $('html').removeClass("size-small nsize-medium size-large").addClass("size-"+Adapt.device.screenSize);
+            $('html').removeClass("size-small size-medium size-large").addClass("size-"+Adapt.device.screenSize);
 
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
