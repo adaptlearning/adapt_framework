@@ -41,6 +41,8 @@ define(function(require) {
             Adapt.once('app:dataReady', function() {
                 new AccessibilityView();
                 });
+
+            Adapt.on("device:changed", this.setupNoSelect);
         },
 
         setupHelpers: function() {
@@ -380,7 +382,30 @@ define(function(require) {
             $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
             $.a11y.options.isTouchDevice = Modernizr.touch;
 
+            this.setupNoSelect();
+
             $.a11y.ready();
+        },
+
+        setupNoSelect: function() {
+            if (!Adapt.config.get('_accessibility') || !Adapt.config.get('_accessibility')._disableTextSelectOnClasses) return;
+
+            var classes = Adapt.config.get('_accessibility')._disableTextSelectOnClasses.split(" ");
+
+            var isMatch = false;
+            for (var i = 0, item; item = classes[i++];) {
+                if ($('html').is(item)) {
+                    isMatch = true;
+                    break;
+                }
+            }
+
+            if (isMatch) {
+                $('html').addClass("no-select");
+            } else  {
+                $('html').removeClass("no-select");
+            }
+
         }
 
     }, Backbone.Events);
