@@ -36,7 +36,7 @@ define(function(require) {
             this.$el.html(template(data));
 
             _.defer(_.bind(function() {
-                // to disallow postRender if remove have been called already
+                // don't call postRender after remove
                 if(this._isRemoved) return;
 
                 this.postRender();
