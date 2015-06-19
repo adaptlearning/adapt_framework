@@ -400,8 +400,11 @@ define(function(require) {
                 }
             }
 
-            if (isMatch) $('html').addClass("no-select");
-            else  $('html').removeClass("no-select");
+            if (isMatch) {
+                $('html').addClass("no-select");
+            } else  {
+                $('html').removeClass("no-select");
+            }
 
         }
 
