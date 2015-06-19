@@ -12,9 +12,11 @@ define(function(require) {
     var DrawerView = Backbone.View.extend({
 
         className: 'drawer display-none',
+        disableAnimation: false,
         escapeKeyAttached: false,
 
         initialize: function() {
+            this.disableAnimation = $("html").is(".ie8");
             this._isVisible = false;
             this.drawerDir = 'right';
             if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
@@ -126,6 +128,7 @@ define(function(require) {
                 Adapt.trigger('popup:opened', this.$el);
                 this._isVisible = true;
             }
+
             var drawerWidth = this.$el.width();
             // Sets tab index to 0 for all tabbable elements in Drawer
             this.$('a, button, input, select, textarea').attr('tabindex', 0);
@@ -144,18 +147,50 @@ define(function(require) {
                 }
                 Adapt.trigger('drawer:openedCustomView');
             }
-            //focus on first tabbable element in drawer
-            this.$el.a11y_focus();
-            _.defer(_.bind(function() {
-                var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
-                var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+
+            //delay drawer animation until after background fadeout animation is complete
+            if (this.disableAnimation) {
+
+                $('#shadow').removeClass("display-none");
+
+                this.disableBodyScrollbars();
+
                 var direction={};
                 direction[this.drawerDir]=0;
-                this.$el.velocity(direction, this.drawerDuration, easing);
-                $('#shadow').removeClass('display-none');
+                this.$el.css(direction);
                 this.addShadowEvent();
                 Adapt.trigger('drawer:opened');
-            }, this));
+
+                //focus on first tabbable element in drawer
+                //defer to stop focus jumping content
+                this.$el.a11y_focus();
+
+            } else {
+
+                $('#shadow').velocity({opacity:1},{duration:200, begin: function() {
+                        $("#shadow").removeClass("display-none");
+                    }});
+
+                this.disableBodyScrollbars();
+
+                _.delay(_.bind(function() {
+                    
+                    var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
+                    var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+                    var direction={};
+                    direction[this.drawerDir]=0;
+                    this.$el.velocity(direction, this.drawerDuration, easing);
+                    this.addShadowEvent();
+                    Adapt.trigger('drawer:opened');
+
+                    //focus on first tabbable element in drawer
+                    //defer to stop focus jumping content
+                    this.$el.a11y_focus();
+
+                }, this), 200);
+
+            }
+
         },
 
         emptyDrawer: function() {
@@ -175,25 +210,60 @@ define(function(require) {
         hideDrawer: function() {
             //only trigger popup:closed if drawer is visible
             if (this._isVisible) {
-            Adapt.trigger('popup:closed');
+                Adapt.trigger('popup:closed');
                 this._isVisible = false;
+            } else {
+                return;
             }
 
-            var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
-            var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+            if (this.disableAnimation) {
 
-            var duration = Adapt.config.get('_drawer')._duration;
-            duration = (duration) ? duration : 400;
+                var direction={};
+                direction[this.drawerDir]=-this.$el.width();
+                this.$el.css(direction).addClass('display-none');
+                
+                this._isCustomViewVisible = false;
+                this.removeShadowEvent();
 
-            var direction={};
-            direction[this.drawerDir]=-this.$el.width();
-            this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
-                this.$el.addClass('display-none');
-            }, this));
-            $('#shadow').addClass('display-none');
-            this._isCustomViewVisible = false;
-            this.removeShadowEvent();
-            Adapt.trigger('drawer:closed');
+                this.enableBodyScrollbars();
+
+                $('#shadow').addClass("display-none");
+
+                Adapt.trigger('drawer:closed');
+
+            } else {
+
+                var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
+                var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+
+                var duration = Adapt.config.get('_drawer')._duration;
+                duration = (duration) ? duration : 400;
+
+                var direction={};
+                direction[this.drawerDir]=-this.$el.width();
+                this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
+                    this.$el.addClass('display-none');
+                }, this));
+                
+                this._isCustomViewVisible = false;
+                this.removeShadowEvent();
+
+                this.enableBodyScrollbars();
+
+                //delay background fadeout until after drawer animation is complete
+                _.delay(_.bind(function(){
+                
+                    $('#shadow').velocity({opacity:0}, {duration:200, complete:function() {
+                        $('#shadow').addClass("display-none");
+                    }});
+
+                    Adapt.trigger('drawer:closed');
+
+                }, this), duration + 50);
+
+            }
+
+            
         },
 
         addShadowEvent: function() {
@@ -204,7 +274,127 @@ define(function(require) {
 
         removeShadowEvent: function() {
             $('#shadow').off('click touchstart');
+        },
+
+        disableBodyScrollbars: function(callback) {
+            this._scrollTop = $(window).scrollTop();
+            this._bodyHeight = $("body").css("height");
+            this._htmlHeight = $("html").css("height");
+
+            if (this.disableAnimation) {
+
+                $('html').css({
+                    "height": "100%"
+                });
+                $('body').css({
+                    "height": "100%",
+                    "overflow-y": "hidden"
+                });
+
+                $('#wrapper').css({
+                    "position": "relative",
+                    "top": "-"+ this._scrollTop +"px"
+                });
+
+            } else {
+
+                $('.page, .menu').velocity({opacity:0}, {duration:1, complete:_.bind(function() {
+
+                    $('.page, .menu').css("visibility", "hidden");              
+                    //wait for renderer to catch-up with fade out
+                    _.delay(_.bind(function(){
+
+                        //this causes the content to jump 
+                        $('html').css({
+                            "height": "100%"
+                        });
+                        $('body').css({
+                            "height": "100%",
+                            "overflow-y": "hidden"
+                        });
+
+                        //puts the content back to where it should be
+                        $('#wrapper').css({
+                            "position": "relative",
+                            "top": "-"+ this._scrollTop +"px"
+                        });
+                        
+                        //wait for renderer to catch-up with jump
+                        _.delay(_.bind(function() {
+                            $('.page, .menu').css("visibility", "visible");
+                            $('.page, .menu').velocity({opacity:1}, {duration:600});
+                        }, this), 50);
+
+                    }, this), 50);
+
+                },this)});
+            }
+            
+        },
+
+        enableBodyScrollbars: function() {
+
+            if (this.disableAnimation) {
+
+                $('html').css({
+                    "height": ""
+                });
+                $('body').css({
+                    "height": "",
+                    "overflow-y": ""
+                });
+                $('#wrapper').css({
+                    "position": "relative",
+                    "top": ""
+                });
+                $(window).scrollTo(this._scrollTop); 
+
+            } else {
+
+                $('.page, .menu').velocity({opacity:0}, {duration:1, complete:_.bind(function() {
+
+                    $('.page, .menu').css("visibility", "hidden");
+
+                    //this causes the content to jump
+                    $('html').css({
+                        "height": ""
+                    });
+
+                    var height = "";
+
+                    if (this._htmlHeight != this._bodyHeight) {
+                        height = this._bodyHeight;
+                    }
+
+                    $('body').css({
+                        "height": height,
+                        "overflow-y": ""
+                    });
+                    $('#wrapper').css({
+                        "position": "relative",
+                        "top": ""
+                    });
+
+                    //fix resize whilst popup open
+                    $(window).resize();
+
+                    //wait for renderer to catch-up with jump
+                    _.delay(_.bind(function() {
+
+                        $('.page, .menu').css("visibility", "visible");
+
+                        //puts the content back to where it should be
+                        $(window).scrollTo(this._scrollTop);     
+                        
+                        $('.page, .menu').velocity({opacity:1}, {duration: 300 });
+
+                    }, this), 50);    
+
+                }, this)});
+            }
+
         }
+
     });
 
     var DrawerItemView = Backbone.View.extend({
