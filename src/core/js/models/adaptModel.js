@@ -148,6 +148,21 @@ define(function (require) {
                 childrenCollection = new Backbone.Collection(children);
             }
 
+            if (this.get('_type') == 'block' && childrenCollection.length == 2) {
+                // Components may have a 'left' or 'right' _layout, 
+                // so ensure they appear in the correct order
+                if (childrenCollection.models[0].get('_layout') !== 'left') {
+                    var tempCollection = new Backbone.Collection();
+
+                    // Reverse the order of the component models to correct it
+                    tempCollection.add(childrenCollection.models[1]);
+                    tempCollection.add(childrenCollection.models[0]);
+
+                    // Reset the childrenCollection
+                    childrenCollection = tempCollection;
+                }
+            }
+
             this.set("_children", childrenCollection);
 
             // returns a collection of children
