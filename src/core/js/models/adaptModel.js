@@ -152,7 +152,7 @@ define(function (require) {
 
                 returnedDescedants = new Backbone.Collection(flattenedDescendants);
 
-                if (children.models[0]._children === descendants) {
+                if (children.models.length === 0 || children.models[0]._children === descendants) {
                     return;
                 } else {
                     allDescendants = [];
@@ -168,8 +168,25 @@ define(function (require) {
 
         getChildren: function () {
             if (this.get("_children")) return this.get("_children");
-            var children = Adapt[this._children].where({_parentId: this.get("_id")});
-            var childrenCollection = new Backbone.Collection(children);
+
+            var childrenCollection;
+
+            if (!this._children) {
+                childrenCollection = new Backbone.Collection();
+            } else {
+                var children = Adapt[this._children].where({_parentId: this.get("_id")});
+                childrenCollection = new Backbone.Collection(children);
+            }
+
+            if (this.get('_type') == 'block' && childrenCollection.length == 2
+                && childrenCollection.models[0].get('_layout') !== 'left') {
+                // Components may have a 'left' or 'right' _layout, 
+                // so ensure they appear in the correct order
+                // Re-order component models to correct it
+                childrenCollection.comparator = '_layout';
+                childrenCollection.sort();
+            }
+
             this.set("_children", childrenCollection);
 
             // returns a collection of children
