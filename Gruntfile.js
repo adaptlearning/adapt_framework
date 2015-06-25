@@ -203,9 +203,13 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        src: ['**/*'],
-                        cwd: '<%= sourcedir %>extensions/adapt-contrib-spoor/required/',
-                        dest: '<%= outputdir %>'
+                        src: ['*/required/**/*'],
+                        cwd: '<%= sourcedir %>extensions/',
+                        dest: '<%= outputdir %>',
+                        rename: function(destFolder, srcFileName) {
+                            var endOfRequired = srcFileName.indexOf("required/") + 9;
+                            return destFolder + srcFileName.substr(endOfRequired);
+                        }
                     }
                 ]
             }
