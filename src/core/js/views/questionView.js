@@ -127,10 +127,34 @@ define(function(require) {
                 // if they are empty use the global default
                 var compButtons = this.model.get("_buttons");
 
-                for (var key in compButtons) {
-                    if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
-                    if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
-                }
+                if (Object.prototype.toString.call(compButtons) == '[object Array]') {
+                    for (var key in compButtons) {
+                        if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
+                        if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
+                    }
+                } else {
+                    // Backwards compatibility with v1.x
+                    var buttons = [];
+                    
+                    for (var key in compButtons) {
+                        var text = !compButtons[key]
+                            ? globButtons[key]
+                            : compButtons[key];
+                            
+                        buttons['_' + key] = {
+                            buttonText: text,
+                            ariaLabel: text
+                        };
+                    }
+                    
+                    // Append other missing values
+                    buttons['_showFeedback'] = {
+                        buttonText: 'Show feedback',
+                        ariaLabel: 'Show feedback'
+                    };
+                    
+                    this.model.set('_buttons', buttons);    
+                }              
             }
         },
 

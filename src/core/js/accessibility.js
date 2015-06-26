@@ -48,9 +48,12 @@ define(function(require) {
         setupHelpers: function() {
             //RUN ONCE
             if (this._isLoaded) return;
-
+            
             //MAKE $.a11y_text and $.a11y_normalize IN GLOBAL HANDLEBARS HELPERS a11y_text and a11y_normalize
-            var config = Adapt.config.get("_accessibility");
+            var config = Adapt.config.has('_accessibility')
+                ? Adapt.config.get("_accessibility")
+                : false;
+
             Handlebars.registerHelper('a11y_text', function(text) {
                 //ALLOW ENABLE/DISABLE OF a11y_text HELPER
                 if (config && config._isTextProcessorEnabled === false) {
@@ -210,20 +213,20 @@ define(function(require) {
         },
 
         rollbackUsageInstructions: function() {
-            if (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions) return;
+            if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions)) return;
 
             this.$accessibilityInstructions
                 .off("blur", this.onFocusInstructions)
         },
 
         setupLogging: function() {
-            if (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._logReading) return;
+            if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._logReading)) return;
 
             $($.a11y).on("reading", this.onRead);
         },
 
         rollbackLogging: function() {
-            if (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._logReading) return;
+            if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._logReading)) return;
 
             $($.a11y).off("reading", this.onRead);
         },

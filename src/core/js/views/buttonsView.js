@@ -73,21 +73,23 @@ define(function() {
                     }
                 }
 
-            } else {
-                switch(changedAttribute) {
-                case "showCorrectAnswer": case "hideCorrectAnswer":
-					//make model answer button inaccessible but enabled for visual users
-					//	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                    this.$('.buttons-action').a11y_cntrl(false).html(this.model.get('_buttons')["_" + changedAttribute].buttonText)
-                    .attr('aria-label', this.model.get('_buttons')["_" + changedAttribute].ariaLabel);
-                    break;
-                default:
-					//enabled button, make accessible and update aria labels and text.
-                    this.$('.buttons-action').a11y_cntrl_enabled(true).html(this.model.get('_buttons')["_" + changedAttribute].buttonText)
-                    .attr('aria-label', this.model.get('_buttons')["_" + changedAttribute].ariaLabel);
+            } else {        
+                // Backwords compatibility with v1.x
+                var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
+                var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
+                
+                switch (changedAttribute) {
+                    case "showCorrectAnswer": case "hideCorrectAnswer":
+    				    //make model answer button inaccessible but enabled for visual users
+    				    //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                        this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
+                        break;
+                    default:
+    				    //enabled button, make accessible and update aria labels and text.
+                        this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
                 }
-
             }
+              
             this.updateAttemptsCount();
         },
 

@@ -22,18 +22,19 @@ define(function(require) {
         },
 
         render: function() {
-
-            var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
-            var accessibilityOff = Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
-            var accessibilityOn = Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
-
-            var toggleText = (hasAccessibility) ? accessibilityOff : accessibilityOn;
-
-            this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);
-
+            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isEnabled;
+            
+            if (!hasAccessibility) {
+                return;
+            } else {
+                var accessibilityOff = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
+                var accessibilityOn = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
+    
+                var toggleText = (hasAccessibility) ? accessibilityOff : accessibilityOn;
+    
+                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);                
+            }
         },
-
-
 
         toggleAccessibility: function(event) {
             event.preventDefault();
