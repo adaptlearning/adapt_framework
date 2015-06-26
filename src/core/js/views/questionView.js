@@ -127,7 +127,7 @@ define(function(require) {
                 // if they are empty use the global default
                 var compButtons = this.model.get("_buttons");
 
-                if (Object.prototype.toString.call(compButtons) == '[object Array]') {
+                if (typeof(compButtons._submit) !== 'string') {
                     for (var key in compButtons) {
                         if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
                         if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
@@ -147,7 +147,7 @@ define(function(require) {
                         };
                     }
                     
-                    // Append other missing values
+                    // HACK - Append other missing values
                     buttons['_showFeedback'] = {
                         buttonText: 'Show feedback',
                         ariaLabel: 'Show feedback'
