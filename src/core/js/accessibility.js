@@ -26,8 +26,8 @@ define(function(require) {
 
             this.listenToOnce(Adapt, "app:dataReady", this.configureA11y)
 
-            //CAPTURE TAB PRESSES TO DIVERT
-            $('body').on('keyup', this.onKeyUp);
+            // //CAPTURE TAB PRESSES TO DIVERT
+            // $('body').on('keyup', this.onKeyUp);
 
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
             this.listenTo(Adapt, 'router:location', this.onNavigationStart);
@@ -72,10 +72,7 @@ define(function(require) {
         touchDeviceCheck: function() {
             //SCREEN READER DON@T USE TABBING
             //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
-
-            var isEnabled = this.isEnabled();
-
-            if (!Modernizr.touch || isEnabled) return;
+            if (!Modernizr.touch || this.isActive()) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
@@ -85,28 +82,35 @@ define(function(require) {
             this.$accessibilityToggle.remove();
 
             //Force accessibility on
-            Adapt.config.get('_accessibility')._isEnabled = true;
+            Adapt.config.set('_accessibility')._isActive = true;
+            
             Adapt.trigger('accessibility:toggle', true);
 
         },
 
+        isActive: function() {
+            return Adapt.config.has('_accessibility') 
+                && Adapt.config.get('_accessibility')._isEnabled
+                && Adapt.config.get('_accessibility')._isActive;
+        },
+
         isEnabled: function() {
-            return Adapt.config.get('_accessibility') && Adapt.config.get('_accessibility')._isEnabled;
+            return Adapt.config.has('_accessibility') 
+                && Adapt.config.get('_accessibility')._isEnabled
         },
 
         setupAccessibility: function() {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
-
             this.setupHelpers();
+
+            if (!this.isEnabled()) return;
 
             this.touchDeviceCheck();
 
-            // Check if accessibility is enabled
-            var isEnabled = this.isEnabled();
-
             this.checkTabCapture();
 
-            if (isEnabled) {
+            // Check if accessibility is active
+            if (this.isActive()) {
                 
                 this.onNavigationEnd();
                 this.setupDocument();
@@ -126,18 +130,16 @@ define(function(require) {
             
             }
 
-
-
         },
 
         checkTabCapture: function() {
             if (!this._isLoaded) return;
 
-            var isEnabled = this.isEnabled();
+            var isActive = this.isActive();
             
-            $.a11y( isEnabled );
+            $.a11y(isActive);
 
-            if ( isEnabled ) {
+            if (isActive) {
 
                 //IF ACCESSIBILTY TURNED ON GOTO FIRST FOCUSABLE ITEM
                 this.focusInitial();
@@ -249,11 +251,10 @@ define(function(require) {
                 .off('focus', this.onElementFocused)
                 .off('blur', this.onElementBlurred);
             this._legacyFocusElements = undefined;
-
         },
 
         focusInitial: function() {
-            if (!this.isEnabled()) return;
+            if (!this.isActive()) return;
 
             this._hasTabPosition = true;
 
@@ -269,23 +270,26 @@ define(function(require) {
 
                 } else {
 
-
                     if (Adapt.location._currentId) {
                         //required to stop JAWS from auto reading content in IE
                         var currentModel = Adapt.findById(Adapt.location._currentId);
                         var alertText = " ";
+
                         switch (currentModel.get("_type")) {
-                        case "page":
-                            if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
-                                alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
-                            }
-                            break;
-                        case "menu": default:
-                            if (Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
-                                alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
-                            }
-                            break;
+                            case "page":
+                                if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                                    alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
+                                }
+                                break;
+
+                            case "menu": 
+                            default:
+                                if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                                    alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
+                                }
+                                break;
                         }
+
                         $.a11y_alert(alertText);
                     }
 
@@ -294,7 +298,6 @@ define(function(require) {
                     }, 250);
 
                 }
-
                 
             }, this), 1000);
             
@@ -313,12 +316,9 @@ define(function(require) {
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
             $("#a11y-focuser").focusNoScroll();
             $.a11y_on(false, '#wrapper');
-            
         },
 
         onNavigationEnd: function() {
-            var isEnabled = this.isEnabled();
-
             //always use detached aria labels for divs and spans
             _.defer(function() {
                 $('body').a11y_aria_label(true);
@@ -326,7 +326,7 @@ define(function(require) {
 
             this._isLoaded = true;
 
-            if (isEnabled) {
+            if (this.isActive()) {
                 
                 this.configureA11y();
                 
@@ -348,10 +348,10 @@ define(function(require) {
         },
 
         onPop: function() {
-            var isEnabled = this.isEnabled();
-
             //MAKE SURE POPUP IS CONFIGURED CORRECTLY WITH ARIA LABELS, TABINDEXES ETC
-            if ( isEnabled ) $.a11y_update();
+            if (this.isActive()) {
+                $.a11y_update();  
+            } 
         },
 
         onKeyUp: function(event) {
@@ -363,7 +363,7 @@ define(function(require) {
             if ($.a11y.userInteracted) return;
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
-            if ( Accessibility.isEnabled() && Accessibility._hasTabPosition ) return;
+            if (Accessibility.isActive() && Accessibility._hasTabPosition) return;
                    
             //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
             Accessibility.$accessibilityToggle.focus();
@@ -378,6 +378,11 @@ define(function(require) {
         },
 
         configureA11y: function() {
+            if (!this.isEnabled()) return;
+
+            //CAPTURE TAB PRESSES TO DIVERT
+            $('body').on('keyup', this.onKeyUp);
+
             var topOffset = $('.navigation').height()+10;
             var bottomoffset = 0;
             $.a11y.options.focusOffsetTop = topOffset;
