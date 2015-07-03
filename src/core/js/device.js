@@ -81,9 +81,9 @@ define(function(require) {
 
     var browserString = browser + " version-" + version + " OS-" + OS;
 	/*MAKE DEVICE IDENTIFICATION UNIFORM CASE*/
-    Adapt.device.browser = browser.toLowerCase();
-    Adapt.device.version = version.toLowerCase();
-    Adapt.device.OS = OS.toLowerCase();
+    Adapt.device.browser = browser ? browser.toLowerCase() : "";
+    Adapt.device.version = version ? version.toLowerCase() : "";
+    Adapt.device.OS = OS ? OS.toLowerCase() : "";
     
     $("html").addClass(browserString);
     
