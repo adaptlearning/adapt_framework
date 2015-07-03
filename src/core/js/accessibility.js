@@ -26,9 +26,6 @@ define(function(require) {
 
             this.listenToOnce(Adapt, "app:dataReady", this.configureA11y)
 
-            // //CAPTURE TAB PRESSES TO DIVERT
-            // $('body').on('keyup', this.onKeyUp);
-
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
             this.listenTo(Adapt, 'router:location', this.onNavigationStart);
             this.listenTo(Adapt, 'pageView:ready menuView:ready router:plugin', this.onNavigationEnd);
