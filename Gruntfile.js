@@ -86,7 +86,7 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ['**/*.json'],
                         cwd: '<%= sourcedir %>course/',
-                        dest: '<%= outputdir %>course/',
+                        dest: '<%= outputdir %>course/'
                     }
                 ]
             },
