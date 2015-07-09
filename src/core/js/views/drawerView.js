@@ -160,7 +160,6 @@ define(function(require) {
                 Adapt.trigger('drawer:opened');
 
                 //focus on first tabbable element in drawer
-                //defer to stop focus jumping content
                 this.$el.a11y_focus();
 
             } else {
@@ -179,7 +178,6 @@ define(function(require) {
                 Adapt.trigger('drawer:opened');
 
                 //focus on first tabbable element in drawer
-                //defer to stop focus jumping content
                 this.$el.a11y_focus();
 
             }
