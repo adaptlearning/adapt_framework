@@ -84,7 +84,11 @@ require([
     // This enables plugins to tap in before the course files are loaded & also to change the default language
     function loadCourseData() {
         // All code that needs to run before adapt starts should go here    
-        var courseFolder = "course/" + Adapt.config.get('_defaultLanguage')+"/";
+        var language = Adapt.config.get('_defaultLanguage');
+
+        var courseFolder = "course/" + language +"/";
+
+        $('html').attr("lang", language);
 
         Adapt.course = new CourseModel(null, {url:courseFolder + "course.json", reset:true});
         
