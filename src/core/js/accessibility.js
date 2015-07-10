@@ -209,6 +209,7 @@ define(function(require) {
         touchDeviceCheck: function() {
             //SCREEN READER DON@T USE TABBING
             //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
+            if (!this.isEnabled()) return;
             if (!Modernizr.touch || this.isActive()) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
