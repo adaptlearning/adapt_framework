@@ -31,6 +31,7 @@ define(function(require) {
 
             //SETUP RENDERING HELPERS
             Adapt.once('app:dataLoaded', this.setupHelpers, Accessibility);
+            Adapt.once('app:dataLoaded', this.touchDeviceCheck, Accessibility);
 
             //SETUP NEW VIEW FOR TOGGLE BUTTON
             Adapt.once('app:dataReady', this.setupToggleButton, this);
@@ -48,9 +49,6 @@ define(function(require) {
 
         setupAccessibility: function() {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
-            this.setupHelpers();
-
-            this.touchDeviceCheck();
 
             if (!this.isEnabled()) return;
 
@@ -221,7 +219,8 @@ define(function(require) {
             this.$accessibilityToggle.remove();
 
             //Force accessibility on
-            Adapt.config.set('_accessibility')._isActive = true;
+            Adapt.config.get('_accessibility')._isEnabled = true;
+            Adapt.config.get('_accessibility')._isActive = true;
             
             Adapt.trigger('accessibility:toggle', true);
 
