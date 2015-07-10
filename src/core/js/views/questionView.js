@@ -127,7 +127,7 @@ define(function(require) {
                 // if they are empty use the global default
                 var compButtons = this.model.get("_buttons");
 
-                if (typeof(compButtons._submit) !== 'string') {
+                if (typeof compButtons.submit == 'undefined') {
                     for (var key in compButtons) {
                         if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
                         if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
@@ -137,14 +137,16 @@ define(function(require) {
                     var buttons = [];
                     
                     for (var key in compButtons) {
-                        var text = !compButtons[key]
-                            ? globButtons[key]
-                            : compButtons[key];
-                            
-                        buttons['_' + key] = {
-                            buttonText: text,
-                            ariaLabel: text
-                        };
+                        var index = '_' + key;
+
+                        if (!compButtons[key]) {
+                            buttons[index] = globButtons[index];
+                        } else {
+                            buttons[index] = {
+                                buttonText: compButtons[key],
+                                ariaLabel: compButtons[key]
+                            };
+                        }
                     }
                     
                     // HACK - Append other missing values
