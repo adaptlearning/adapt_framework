@@ -156,31 +156,26 @@ define(function(require) {
                 var direction={};
                 direction[this.drawerDir]=0;
                 this.$el.css(direction);
-                this.addShadowEvent();
-                Adapt.trigger('drawer:opened');
-
-                //focus on first tabbable element in drawer
-                this.$el.a11y_focus();
 
             } else {
 
                 $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: function() {
                     $("#shadow").removeClass("display-none");
                 }});
-
                     
                 var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
                 var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
                 var direction={};
                 direction[this.drawerDir]=0;
                 this.$el.velocity(direction, this.drawerDuration, easing);
-                this.addShadowEvent();
-                Adapt.trigger('drawer:opened');
-
-                //focus on first tabbable element in drawer
-                this.$el.a11y_focus();
 
             }
+
+            this.addShadowEvent();
+            Adapt.trigger('drawer:opened');
+
+            //focus on first tabbable element in drawer
+            this.$el.a11y_focus();
 
         },
 
@@ -213,9 +208,6 @@ define(function(require) {
                 direction[this.drawerDir]=-this.$el.width();
                 this.$el.css(direction).addClass('display-none');
                 
-                this._isCustomViewVisible = false;
-                this.removeShadowEvent();
-
                 $('#shadow').addClass("display-none");
 
                 Adapt.trigger('drawer:closed');
@@ -231,19 +223,16 @@ define(function(require) {
                     this.$el.addClass('display-none');
                 }, this));
                 
-                this._isCustomViewVisible = false;
-                this.removeShadowEvent();
-
-                
                 $('#shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
                     $('#shadow').addClass("display-none");
                 }});
 
-                Adapt.trigger('drawer:closed');
-
             }
-
             
+            this._isCustomViewVisible = false;
+            this.removeShadowEvent();
+
+            Adapt.trigger('drawer:closed');
         },
 
         addShadowEvent: function() {
