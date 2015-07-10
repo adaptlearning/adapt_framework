@@ -1,532 +1,861 @@
-//jQuery.a11y 29/05/2015 https://github.com/cgkineo/jquery.a11y/
-(function($, window, undefined) {
-
-    var nativeSpaceElements = "textarea, input[type='text']";
-    var nativeEnterElements = "textarea, a, button, input[type='checkbox']";
-    var nativeTabElements = "textarea, input, select";
-    var ignoreElements = "a,button,input,select,textarea,br";
-    var styleElements = "b,i,abbr,strong";
-    var tabIndexElements = 'a,button,input,select,textarea,[tabindex]';
-    var tabIndexElementFilter = ':not(.a11y-ignore)';
-    var focusableElementsFilter = ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)";
-    var focusableElements = "a,button,input,select,textarea,[tabindex]";
-    var hideableElements = ".a11y-hideable";
-    var ariaLabelElements = "div[aria-label], span[aria-label]";
-    var ariaLabelElementsFilter = ":not( .a11y-ignore-aria [aria-label] )";
-    var parentsFilter = ":not(#wrapper):not(body)";
-
-
-    var $documentActiveElement;
-
-    if (!String.prototype.trim) { //IE8 Fix
-      (function() {
-        // Make sure we trim BOM and NBSP
-        var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-        String.prototype.trim = function() {
-          return this.replace(rtrim, '');
+(function($, window) {
+    
+    // JQUERY FILTERS FOR ELEMENTS
+        var domFilters = {
+            "globalTabIndexElementFilter": ':not(.a11y-ignore)',
+            "focusableElementsFilter": ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)",
+            "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
+            "ariaHiddenParentsFilter": ":not(#wrapper):not(body)",
         };
-      })();
-    }
 
-    //_.defer(_.bind(func, that)) EQUIVALENT
-    var defer = function(func, that) {
-        var thisHandle = that || this;
-        var args = arguments;
-        setTimeout(function() {
-            func.apply(thisHandle, args);
-        },0);
-    };
+    // JQUERY SELECTORS
+        var domSelectors = {
+            "focuser": "#a11y-focuser",
+            "focusguard": "#a11y-focusguard",
+            "selected": "#a11y-selected",
+            "ignoreFocusElements": ".a11y-ignore-focus",
+            "nativeSpaceElements": "textarea, input[type='text']",
+            "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
+            "nativeTabElements": "textarea, input, select",
+            "wrapIgnoreElements": "a,button,input,select,textarea,br",
+            "wrapStyleElements": "b,i,abbr,strong",
+            "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
+            "focusableElements": "a,button,input,select,textarea,[tabindex]",
+            "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
+            "hideableElements": ".a11y-hideable",
+            "ariaLabelElements": "div[aria-label], span[aria-label]",
+        };
 
-    //PREVENT DEFAULT CLICK ACTION FUNCTION
-    var preventDefault = function(event) {
-        event.preventDefault();
-        event.stopPropagation()
-    };
+    // JQUERY INJECTED ELEMENTS
+        var domInjectElements = {
+            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>',
+            "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button"></a>',
+            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>',
+            "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
+        };
 
-    //CHECK IF ELEMENT HAS FIX POSITION
-    var isFixedPosition = function(element) {
-        if ($(element).css("position") == "fixed") return true;
-        var parents = $(element).parents();
-        for (var i = 0; i < parents.length; i++) {
-            if ($(parents[i]).css("position") == "fixed") return true;
+
+    // UTILITY FUNCTIONS
+        function stringTrim(str) {
+          return str.replace(stringTrim.regex, '');
         }
-        return false;
-    };
+        stringTrim.regex = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
-    //SCROLL TO FOCUSED ELEMENT UNLESS FIXED POSITION
-    var scrollToFocus = function(event) {
-        $documentActiveElement = $(event.target);
-
-        if ($.a11y.options.isOn === false && !$documentActiveElement.is("#a11y-focuser")) $("#a11y-focuser").focusNoScroll();
-        //console.log ("Focused on:")
-        //console.log($documentActiveElement);
-
-        var readText;
-        if ($(event.target).attr("aria-labelledby")) {
-            var label = $("#"+$(event.target).attr("aria-labelledby"));
-            readText = label.attr("aria-label") || label.text();
-        } else readText = $(event.target).attr("aria-label") || $(event.target).text();
-
-        $($.a11y).trigger("reading", readText.trim());
-
-        if ($documentActiveElement.is(".a11y-ignore-focus")) return;
-        if (!$.a11y.isOn) return;
-        if ($(event.target).is("#a11y-focusguard")) return;
-        if (isFixedPosition(event.target)) {
-            return;
+        function defer(func, that) {
+            var thisHandle = that || this;
+            var args = arguments;
+            setTimeout(function() {
+                func.apply(thisHandle, args);
+            },0);
         }
-        var offset = $.a11y.options.focusOffsetTop;
-        var to = $(event.target).offset()["top"]
-        var st = $(window).scrollTop() + offset;
-        var bottomoffset = $.a11y.options.focusOffsetBottom;
-        var stbottom = st + ($(window).height() - bottomoffset - offset);
-        if (to < st || to > stbottom) {
-            var sto = to - offset;
-            if (sto < 0) sto = 0;
+
+        function preventDefault(event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        function preventScroll(e) {
+            var state = $.a11y.state;
+            var options = $.a11y.options;
+
+            if (options.isDebug) console.log("preventScroll1")
+
+            if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
+                var scrollingParent = getScrollingParent(e);
+                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
+            }
+
+            if (options.isDebug) console.log("preventScroll2")
+
+            e = e || window.event;
+            if (e.preventDefault)
+              e.preventDefault();
+            e.returnValue = false;  
+        }
+
+        var scrollKeys = {37: 1, 38: 1, 39: 1, 40: 1};
+        function preventScrollKeys(e) {
+            var state = $.a11y.state;
+            var options = $.a11y.options;
+
+            if (options.isDebug) console.log("preventScroll1")
+
+            if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
+                var scrollingParent = getScrollingParent(e);
+                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
+            }
+
+            if (options.isDebug) console.log("preventScroll2")
+
+            if (scrollKeys[e.keyCode]) {
+                preventScroll(e);
+                return false;
+            }
+        }
+
+        function getScrollingParent(event) {
+            var $element = $(event.target);
+            var directionY = event.wheelDeltaY < 0 ? "down" : "up";
+
+            var itemParents = $element.parents();
+            var lastScrolling = null;
+            for (var i = 0, l = itemParents.length; i < l; i++) {
+                var $parent = $(itemParents[i]);
+                if ($parent.is("body")) return $parent;
+                var scrollType = $parent.css("overflow-y");
+                switch (scrollType){
+                case "auto": case "scroll": 
+                    var parentScrollTop = Math.ceil($parent.scrollTop());
+                    var parentInnerHeight = $parent.outerHeight();
+                    var parentScrollHeight = $parent[0].scrollHeight;
+
+                    switch (directionY) {
+                    case "down":
+                        if (parentScrollTop + parentInnerHeight < parentScrollHeight) return $parent;
+                        break;
+                    case "up":
+                       if (parentScrollTop > 0) return $parent;
+                    }
+
+                    lastScrolling = $parent;
+                    
+                    break;
+                default:
+                }
+            }
+            return $('body');
+        }
+
+        //PERFORMS CALCULATIONS TO TURN HTML/TEXT STRINGS INTO TABBABLE CONTENT
+        function makeHTMLOrTextAccessible(text) {
+
+            return getInnerHTML( makeChildNodesAccessible( wrapInDivAndMakeIntoDOMNode(text) ) );
+
+            function wrapInDivAndMakeIntoDOMNode(text) {
+                var $element;
+                try {
+                    // CONVERT ELEMENT TO DOM NODE
+                    $element = $("<div>"+text+"</div>");
+                } catch (e) {
+                    throw e;
+                }
+                return $element;
+            }
+
+            function getInnerHTML($element) {
+                var rtn = "";
+                for (var i = 0; i < $element[0].children.length; i++) {
+                    rtn += $element[0].children[i].outerHTML;
+                }
+                return rtn;
+            }
+
+            function makeChildNodesAccessible($element) {
+                //CAPTURE DOMNODE CHILDREN
+                var children = $element.children();
+
+                
+                if (children.length === 0) {
+                    //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
+                    var textContent = $element.text();
+                    if (stringTrim(textContent) === "") return $element;
+                    removeChildNodes($element);
+                    $element.append( makeElementTabbable($("<span>"+textContent+"</span>")) );
+                    return $element;
+                }
+
+
+                //IF ONLY STYLE TAGS WRAP IN SPAN
+                var styleChildCount = 0;
+                for (var c = 0; c < children.length; c++) {
+                    if ($(children[c]).is(domSelectors.wrapStyleElements)) styleChildCount++;
+                }
+                if (styleChildCount === children.length) {
+                    return $("<span>").append(makeElementTabbable($element));
+                }
+
+                //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
+                var newChildren = [];
+                var added = false;
+                for (var i = 0; i < $element[0].childNodes.length; i++) {
+                    var child = $element[0].childNodes[i];
+                    var cloneChild = $(child.outerHTML)[0];
+                    switch(child.nodeType) {
+                    case 3: //TEXT NODE
+                        // preserve whitespace in ie8 by adding initial zero-width space
+                        var childContent = child.textContent || "&#8203;" + child.nodeValue;
+                        //IF TEXT NODE WRAP IN A TABBABLE SPAn
+                        newChildren.push( makeElementTabbable($("<span>"+childContent+"</span>")) );
+                        added = true;
+                        break;
+                    case 1: //DOM NODE
+                        var $child = $(cloneChild);
+                        if (($child.is(domSelectors.wrapStyleElements) && !added) || $child.is(domSelectors.wrapIgnoreElements)) {
+                            //IGNORE NATIVELY TABBABLE ELEMENTS AND STYLING ELEMENTS
+                            newChildren.push( $child );
+                        } else {
+                            var childChildren = $child.children();
+                            if (childChildren.length === 0) {
+                                //DO NOT DESCEND INTO TEXT ONLY NODES
+                                var textContent = $child.text();
+                                if (stringTrim(textContent) !== "") makeElementTabbable($child);
+                            } else {
+                                //DESCEND INTO NODES WITH CHILDREN
+                                makeChildNodesAccessible($child);
+                            }
+                            newChildren.push( $child );
+                        }
+                        break;
+                    }
+                }
+
+                removeChildNodes($element);
+                $element.append(newChildren);
+
+                return $element;
+
+                function removeChildNodes($element) {
+                    var childNodes = $element[0].childNodes.length;
+                    for (var i = childNodes - 1; i > -1 ; i--) {
+                        if ($element[0].childNodes[i].remove) $element[0].childNodes[i].remove();
+                        else if ($element[0].removeChild) $element[0].removeChild($element[0].childNodes[i]); //safari fix
+                        else if ($element[0].childNodes[i].removeNode) $element[0].childNodes[i].removeNode(true); //ie 11 fix
+                    }
+                    return $element;
+                }
+
+                //MAKES AN ELEMENT TABBABLE
+                function makeElementTabbable($element) {
+                    $element.attr({
+                        "role": "region",
+                        "tabindex": 0,
+                    }).addClass("prevent-default").addClass("accessible-text-block");
+                    return $element;
+                }
+            }
+        }
+
+
+    // JQUERY UTILITY FUNCTIONS
+        $.fn.scrollDisable = function() {
+            if (this.length === 0) return this;
+
+            var options = $.a11y.options;
+            var state = $.a11y.state;
+
+            if (!options.isScrollDisableEnabled) return this;
+
+            if (!state.scrollDisabledElements) state.scrollDisabledElements = $(this);
+            else state.scrollDisabledElements = state.scrollDisabledElements.add(this);
+
+            if (state.scrollDisabledElements.length > 0) a11y_setupScrollListeners();
+
+            return this;
+        }
+
+        $.fn.scrollEnable = function() {
+            if (this.length === 0) return this;
+
+            var options = $.a11y.options;
+            var state = $.a11y.state;
+
+             if (!options.isScrollDisableEnabled) return this;
+
+            if (!state.scrollDisabledElements) return;            
+
+            state.scrollDisabledElements = state.scrollDisabledElements.not(this);
+
+            if (state.scrollDisabledElements.length === 0) a11y_removeScrollListeners();
+
+        }
+
+        $.fn.isFixedPostion = function() {
+            if (this.length === 0) return false;
+
+            var $element = $(this[0]);
+
+            if (!$element) return false;
+
+            if ($element.css("position") == "fixed") return true;
+            var parents = $element.parents();
+            for (var i = 0, l = parents.length; i < l; i++) {
+                if ($(parents[i]).css("position") == "fixed") return true;
+            }
+            return false;
+        };
+
+        $.fn.limitedScrollTo = function() {
+            var options = $.a11y.options;
+
+            if (!options.isFocusLimited) return this;
+
+            if (this.length === 0) return this;
+
+            var $element = $(this[0]);
+
+            if ($element.isFixedPostion()) return this;
+
+            options = options || {};
+            
+            var topOffset = options.focusOffsetTop || 0;
+            var bottomOffset = options.focusOffsetTop || 0;
+
+            var elementTop = $element.offset()["top"];
+            var scrollTopWithTopOffset = $(window).scrollTop() + topOffset;
+            
+            var windowAvailableHeight = $(window).innerHeight() - bottomOffset - topOffset;
+
+            var scrollBottomWithTopOffset = scrollTopWithTopOffset + windowAvailableHeight
+
+            var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
+            if (!isElementTopOutOfView) return;
+
+            var scrollToPosition = elementTop - topOffset;
+            if (scrollToPosition < 0) scrollToPosition = 0;
 
             defer(function() {
-                $.scrollTo(sto, {duration: 0});
+                $.scrollTo(scrollToPosition, { duration: 0 });
+            });
+
+            return this;
+        };
+
+        //jQuery function to focus with no scroll (accessibility requirement for control focus)
+        $.fn.focusNoScroll = function() {
+            if (this.length === 0) return this;
+
+            defer(function() {
+                var options = $.a11y.options;
+                if (options.isDebug) console.log("focusNoScroll", this);
+
+                var y = $(window).scrollTop();
+                this[0].focus();
+                window.scrollTo(null, y);
+            }, this);
+            return this; //chainability
+        };
+
+        $.fn.focusOrNext = function() {
+            if (this.length === 0) return this;
+
+            var $element = $(this[0]);
+
+            //if the element is not focusable, find the next focusable element in section
+            if (!$element.is(domFilters.focusableElementsFilter)) {
+                var element = $element.nextAll(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter)[0];
+                $element = $(element);
+            }
+
+            var options = $.a11y.options;
+            if (options.isDebug) console.log("focusNoScroll", $element);
+
+            $(domSelectors.focuser).focusNoScroll();
+            $element.focusNoScroll();
+
+            return this;
+
+        };
+
+
+    // PRIVATE EVENT HANDLERS
+        function onKeyUp(event) {
+            var options = $.a11y.options;
+
+            var $element = $(event.target);
+
+            switch (event.which) {
+            case 32: //SPACE
+
+                //IF ELEMENT HANDLES SPACE THEN SKIP
+                if ($element.is(domSelectors.nativeSpaceElements)) return;
+
+                //STOP SPACE FROM SCROLLING / SELECTING
+                preventDefault(event);
+
+                if (options.isDebug) console.log("a11y: space keyup > click");
+
+                //TURN SPACE INTO CLICK
+                $element.trigger("click");
+
+                break;
+            case 27: //ESCAPE
+
+                if (options.isDebug) console.log("a11y: escape keyup > focus on first element");
+                //FOCUS ON FIRST ELEMENT
+                $.a11y_focus();
+                break;
+            }
+        }
+
+        function onKeyDown(event) {
+            var options = $.a11y.options;
+
+            var $element = $(event.target);
+
+            switch (event.which) {
+            case 32: //SPACE
+                //IF ELEMENT HANDLES SPACE SKIP
+                if ($element.is(domSelectors.nativeSpaceElements)) return;
+
+                //STOP SPACE FROM SCROLLING / SELECTING
+                preventDefault(event);
+
+                if (options.isDebug) console.log("a11y: space keydown > blocked default");
+
+                break;
+            case 13: //ENTER
+
+                //IF ELEMENT HANDLES ENTER THEN SKIP
+                if ($element.is(domSelectors.nativeEnterElements)) return;
+
+                //STOP ENTER FROM SCROLLING / SELECTING
+                preventDefault(event);
+
+                if (options.isDebug) console.log("a11y: enter keydown > click");
+
+                //TURN ENTER INTO CLICK
+                $element.trigger("click");
+            }
+        }
+
+        function onFocusCapture(event) {
+            var options = $.a11y.options;
+            var state = $.a11y.state;
+
+            //preventDefault(event);
+            event.stopPropagation();
+            var $element = $(event.target);
+            
+            state.$activeElement = $(event.currentTarget);
+            if (options.isDebug) console.log("focusCapture", $element);
+        }
+
+        function onFocus(event) {
+            var options = $.a11y.options;
+            var state = $.a11y.state;
+
+            var $element = $(event.target);
+
+            if (options.isDebug) console.log("focus", $element);
+            
+            state.$activeElement = $(event.currentTarget);
+
+            if (state.$activeElement.is(domSelectors.nativeTabElements)) {
+                //Capture that the user has interacted with a native form element
+                $.a11y.userInteracted = true;
+            }
+
+            var options = $.a11y.options;
+
+            $element.limitedScrollTo();
+        }
+
+
+    // PRIVATE $.a11y FUNCTIONS
+        function a11y_setupScrollListeners() {
+            var event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+            $(window).on(event, preventScroll);
+            $(document).on(event, preventScroll);
+            $(window).on("touchmove", preventScroll); // mobile
+            $(document).on("keydown", preventScrollKeys);
+        }
+
+        function a11y_removeScrollListeners() {
+            var event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+            $(window).off(event, preventScroll);
+            $(document).off(event, preventScroll);
+            $(window).off("touchmove", preventScroll); // mobile
+            $(document).off("keydown", preventScrollKeys);  
+        }
+
+        function a11y_triggerReadEvent($element) {
+            var readText;
+            if ($element.attr("aria-labelledby")) {
+                var label = $("#"+$element.attr("aria-labelledby"));
+                readText = label.attr("aria-label") || label.text();
+            } else readText = $element.attr("aria-label") || $element.text();
+
+            $($.a11y).trigger("reading", stringTrim(readText));
+        }
+
+        function a11y_reattachFocusGuard() {
+            var options = $.a11y.options;
+            var $focusguard = $(domSelectors.focusguard);
+
+            if ($focusguard.length === 0) {
+                $focusguard = $(domInjectElements.focusguard);
+            }
+
+            $focusguard.remove().appendTo($('body')).attr("tabindex", 0);
+
+            $focusguard.off("click").off("focus");
+
+            $focusguard.on("click", function(event) {
+
+                if (options.isDebug) console.log ("focusguard");
+
+                preventDefault(event)
+                $.a11y_focus(true);
+
+            });
+
+            $focusguard.on("focus", function(event) {
+
+                if (options.isDebug) console.log ("focusguard");
+
+                preventDefault(event);
+                $.a11y_focus(true);
+
+                return false;
+
             });
         }
-    };
 
-    //CAPTURE ESCAPE
-    var keyUp = function(event) {
-        switch (event.which) {
-        case 32:
-            //CAPTURE SPACE
-            if ($(event.target).is(nativeSpaceElements)) return;
-
-            //STOP SPACE FROM SCROLLING / SELECTING
-            event.preventDefault();
-            event.stopPropagation();
-            //TURN SPACE INTO CLICK
-            $(event.target).trigger("click");
-            break;
-        //CAPTURE ENTER
-        case 27: //ESCAPE KEY
-            $.a11y_focus();
-            break;
-        }
-    };
-
-    
-    var keyDown = function(event) {
-        switch (event.which) {
-        //CAPTURE SPACE
-        case 32:
-            if ($(event.target).is(nativeSpaceElements)) return;
-
-            //STOP SPACE FROM SCROLLING / SELECTING
-            event.preventDefault();
-            event.stopPropagation();
-            break;
-        //CAPTURE ENTER
-        case 13:
-            if ($(event.target).is(nativeEnterElements)) return;
-            //STOP SPACE FROM SCROLLING / SELECTING
-            event.preventDefault();
-            event.stopPropagation();
-            //TURN SPACE INTO CLICK
-            $(event.target).trigger("click");
-        }
-    };
-
-    //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-    var captureActiveElementOnClick =  function(event) {
-        $documentActiveElement = $(event.currentTarget);
-        if ($documentActiveElement.is(nativeTabElements)) {
-            //Capture that the user has interacted with a native form element
-            $.a11y.userInteracted = true;
-        }
-    };
-
-    var setupInteractionListeners = function() {
-        $('body').on("mousedown", focusableElements, captureActiveElementOnClick);
-    };
-
-    //MAKES AN ELEMENT TABBABLE
-    var makeTabbable = function($element) {
-        if ($element.is(".sr-only")) return $element;
-        $element.attr({
-            "role": "region",
-            "tabindex": 0,
-        }).addClass("prevent-default").addClass("accessible-text-block");
-        return $element;
-    };
-
-    //TURNS DOM ELEMENT CHILDREN INTO HTML STRING
-    var flatten = function($element) {
-        var rtn = "";
-        for (var i = 0; i < $element[0].children.length; i++) {
-            rtn += $element[0].children[i].outerHTML;
-        }
-        return rtn;
-    };
-
-    //REMOVES CHILD ELEMENTS FROM DOM NODE
-    var removeChildNodes = function($element) {
-        var childNodes = $element[0].childNodes.length;
-        for (var i = childNodes - 1; i > -1 ; i--) {
-            if ($element[0].childNodes[i].remove) $element[0].childNodes[i].remove();
-            else if ($element[0].removeChild) $element[0].removeChild($element[0].childNodes[i]); //safari fix
-            else if ($element[0].childNodes[i].removeNode) $element[0].childNodes[i].removeNode(true); //ie 11 fix
-        }
-        return $element;
-    };
-
-    //PERFORMS CALCULATIONS TO TURN DOM NODES + TEXT NODES INTO TABBABLE CONTENT
-    var makeChildNodesAccessible = function ($element) {
-
-        //CAPTURE DOMNODE CHILDREN
-        var children = $element.children();
-
-        
-        if (children.length === 0) {
-            //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
-            var textContent = $element.text();
-            if (textContent.trim() === "") return $element;
-            removeChildNodes($element);
-            $element.append( makeTabbable($("<span>"+textContent+"</span>")) );
-            return $element;
-        }
-
-
-        //IF ONLY STYLE TAGS WRAP IN SPAN
-        var styleChildCount = 0;
-        for (var c = 0; c < children.length; c++) {
-            if ($(children[c]).is(styleElements)) styleChildCount++;
-        }
-        if (styleChildCount === children.length) {
-            return $("<span>").append(makeTabbable($element));
-        }
-
-        //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
-        var newChildren = [];
-        var added = false;
-        for (var i = 0; i < $element[0].childNodes.length; i++) {
-            var child = $element[0].childNodes[i];
-            var cloneChild = $(child.outerHTML)[0];
-            switch(child.nodeType) {
-            case 3: //TEXT NODE
-                // preserve whitespace in ie8 by adding initial zero-width space
-                var childContent = child.textContent || "&#8203;" + child.nodeValue;
-                //IF TEXT NODE WRAP IN A TABBABLE SPAn
-                newChildren.push( makeTabbable($("<span>"+childContent+"</span>")) );
-                added = true;
-                break;
-            case 1: //DOM NODE
-                var $child = $(cloneChild);
-                if (($child.is(styleElements) && !added) || $child.is(ignoreElements)) {
-                    //IGNORE NATIVELY TABBABLE ELEMENTS AND STYLING ELEMENTS
-                    newChildren.push( $child );
-                } else {
-                    var childChildren = $child.children();
-                    if (childChildren.length === 0) {
-                        //DO NOT DESCEND INTO TEXT ONLY NODES
-                        var textContent = $child.text();
-                        if (textContent.trim() !== "") makeTabbable($child);
-                    } else {
-                        //DESCEND INTO NODES WITH CHILDREN
-                        makeChildNodesAccessible($child);
-                    }
-                    newChildren.push( $child );
-                }
-                break;
-            }
-        }
-
-        removeChildNodes($element);
-        $element.append(newChildren);
-
-        return $element;
-    };
-
-    //PERFORMS ABOVE FUNCTION TO EITHER TEXT STRING OR HTML STRING
-    var makeAccessible = function(element) {
-        var $element;
-        // CONVERT ELEMENT TO DOM NODE
-        try {
-            $element = $("<div>"+element+"</div>");
-        } catch (e) {
-            throw e;
-        }
-        return flatten( makeChildNodesAccessible($element) );
-    };
-
-    var reattachFocusGuard = function() {
-        var focusguard = $('#a11y-focusguard');
-        focusguard.remove().appendTo($('body')).attr("tabindex", 0);
-        focusguard.off("click").off("focus");
-        focusguard
-        .on("click", function(event) {
-            alert("click");
-            event.preventDefault();
-            event.stopPropagation();
-            $.a11y_focus(true);
-        }).attr("tabindex", 0)
-        focusguard.on("focus", function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            $.a11y_focus(true);
-        });
-    };
-
-
-    var focusOrNext = function($element) {
-        if(!$element.is(focusableElementsFilter)) $element = $($element.nextAll(focusableElements).filter(focusableElementsFilter)[0]);
-        $("#a11y-focuser").focusNoScroll();
-        $element.focusNoScroll();
-    };
-
-    $('body')
-    .on("keyup", keyUp)
-    .on("keydown", keyDown);
-
-    //TURN ON ACCESSIBILITY FEATURES
-    $.a11y = function(isOn, options) {
-        if (typeof isOn === "function") return;
-        isOn = isOn === undefined ? true : isOn;
-        if (options !== undefined) {
-            $.extend($.a11y.options, options);
-        }
-
-        if ($.a11y.isOn !== isOn) {
-            $.a11y.isOn = isOn;
-            if (isOn) {
-                //ADDS TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
-                var touchClass = $.a11y.options.isTouchDevice ? "touch" : "notouch";
-
-                $("body")
-                .on("click", ".prevent-default", preventDefault)
-                .on("focus", tabIndexElements, scrollToFocus)
-
-                if ($("#a11y-focusguard").length === 0) $('body').append($('<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button"></a>').addClass(touchClass))
-                if ($("#a11y-selected").length === 0) $('body').append($('<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>'))
-                if ($("#a11y-focuser").length === 0) $('body').append($('<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>'))
-            } else {
-                //REMOVES TAB GUARD, CLICK ON ACCESSIBLE TEXT AND SCROLL TO FOCUS EVENT HANDLERS
-
-                $("body")
+        function a11y_setupUserInputControlListeners() {
+             $('body')
                 .off("click", ".prevent-default", preventDefault)
-                .off("focus", tabIndexElements, scrollToFocus);
+                .off("keyup", onKeyUp)
+                .off("keydown", onKeyDown);
 
-                $('#a11y-focusguard').remove();
-                $('#ally-selected').remove();
-                $('#ally-focuser').remove();
+            $('body')
+                .on("click", ".prevent-default", preventDefault)
+                .on("keyup", onKeyUp)
+                .on("keydown", onKeyDown);
+        }
+
+        function a11y_setupFocusControlListeners() {
+            var options = $.a11y.options;
+            $("body")
+                .off("mousedown", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .off("focus", domSelectors.globalTabIndexElements, onFocus);
+
+            $("body")
+                .on("mousedown", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .on("focus", domSelectors.globalTabIndexElements, onFocus);
+        }
+
+        function a11y_injectControlElements() {
+            if ($(domSelectors.selected).length === 0) $('body').append($(domInjectElements.selected))
+            if ($(domSelectors.focuser).length === 0)$('body').append($(domInjectElements.focuser))
+        }
+
+        function a11y_removeNotAccessibles() {
+            //STOP ELEMENTS WITH .not-accessible CLASS FROM BEING IN TAB INDEX
+            $(".not-accessible[tabindex='0'], .not-accessible [tabindex='0']").attr({
+                "tabindex": "-1",
+                "aria-hidden": true
+            }).addClass("aria-hidden");
+        }
+
+        function a11y_disabledAccessibleTabElements() {
+            var accessibleTabElements = $(domSelectors.focusableElementsAccessible);
+            accessibleTabElements.attr({
+                "aria-hidden": "true",
+                "tabindex": "-1"
+            });
+        }
+
+        //TURN ON ACCESSIBILITY FEATURES
+        $.a11y = function(isOn, options) {
+            if ($.a11y.options.isDebug) console.log("$.a11y called", isOn, options )
+            return this;
+        };
+
+        $.a11y.options = {
+            focusOffsetTop: 0,
+            focusOffsetBottom: 0,
+            animateDuration: 250,
+            OS: "",
+            isTouchDevice: false,
+            isTabbableTextEnabled: false,
+            isUserInputControlEnabled: true,
+            isFocusControlEnabled: true,
+            isFocusLimited: false,
+            isRemoveNotAccessiblesEnabled: true,
+            isAriaLabelFixEnabled: true,
+            isFocusWrapEnabled: true,
+            isScrollDisableEnabled: true,
+            isScrollDisabledOnPopupEnabled: true,
+            isSelectedAlertsEnabled: true,
+            isAlertsEnabled: true,
+            isDebug: true
+        };
+        $.a11y.state = {
+            $activeElement: null,
+            focusStack: [],
+            tabIndexes: {},
+            elementUIDIndex: 0,
+            scrollDisabledElements: null
+        };
+
+        $.a11y.ready = function() {
+            var options = $.a11y.options;
+
+            a11y_injectControlElements();
+
+            if (options.isUserInputControlEnabled) {
+                a11y_setupUserInputControlListeners();
+            }
+
+            if (options.isFocusControlEnabled) {
+                a11y_setupFocusControlListeners();
+            }
+
+            if (options.isFocusWrapEnabled) {
+                a11y_reattachFocusGuard();
+            }
+
+            if (options.isDebug) console.log("a11y_ready");
+
+        };
+
+        //REAPPLY ON SIGNIFICANT VIEW CHANGES
+        $.a11y_update = function() {
+            var options = $.a11y.options;
+
+            if (options.isRemoveNotAccessiblesEnabled) {
+                a11y_removeNotAccessibles();
+            }
+
+            if (options.isAriaLabelFixEnabled) {
+                $('body').a11y_aria_label(true);
+            }
+
+            if (options.isFocusWrapEnabled) {
+                a11y_reattachFocusGuard();
+            }
+
+            if (!options.isTabbableTextEnabled) {
+                a11y_disabledAccessibleTabElements();
+            }
+
+            if (options.isDebug) console.log("a11y_update");
+        };
+
+    //TOGGLE ACCESSIBILITY
+        //MAKES CHILDREN ACCESSIBLE OR NOT
+        $.a11y_on = function(isOn, selector) {
+            var options = $.a11y.options;
+
+            if (options.isDebug) console.log("$.a11y_on called", isOn, selector );
+
+            selector = selector || 'body';
+            isOn = isOn === undefined ? true : isOn;
+            if (isOn === false) {
+                $(selector).attr("aria-hidden", true);
+            } else {
+                $(selector).removeAttr("aria-hidden");
+            }
+            return this;
+        };
+
+        $.fn.a11y_on = function(isOn) {
+            if (this.length === 0) return this;
+
+            var options = $.a11y.options;
+
+            if (options.isDebug) console.log("$.fn.a11y_on called", isOn, this );
+
+            isOn = isOn === undefined ? true : isOn;
+            if (isOn) {
+                this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "true").attr("tabindex", "-1").addClass("aria-hidden");
+            } else {
+                this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "false").removeAttr("tabindex").removeClass("aria-hidden");
+            }
+            this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).a11y_cntrl(isOn);
+            return this;
+        };
+
+
+    //MAKE ACCESSIBLE CONTROLS
+
+        
+        //MAKES NAVIGATION CONTROLS ACCESSIBLE OR NOT WITH OPTIONAL DISABLE CLASS AND ATTRIBUTE
+        $.fn.a11y_cntrl = function(enabled, withDisabled) {
+            if (this.length === 0) return this;
+
+            var options = $.a11y.options;
+
+            enabled = enabled === undefined ? true : enabled;
+
+            for (var i = 0; i < this.length; i++) {
+                var $item = $(this[i]);
+
+                if (enabled && $item.is(domSelectors.hideableElements)) {
+                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
+                        $item.removeAttr("aria-hidden").removeClass("aria-hidden");
+                        $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
+                    }
+                    if (withDisabled) {
+                        $item.removeAttr("disabled").removeClass("disabled");
+                    }
+                } else if (enabled) {
+                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
+                        $item.attr({
+                            tabindex: "0",
+                        }).removeAttr("aria-hidden").removeClass("aria-hidden");
+                        $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
+                    }                    
+                    if (withDisabled) {
+                        $item.removeAttr("disabled").removeClass("disabled");
+                    }
+                } else {
+                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
+                        $item.attr({
+                            tabindex: "-1",
+                            "aria-hidden": "true"
+                        }).addClass("aria-hidden");
+                    }
+                    if (withDisabled) {
+                        $item.attr("disabled","disabled").addClass("disabled");
+                    }
+                }
 
             }
+            return this;
+        };
+
+        //MAKES NAVIGATION CONTROLS ACCESSIBLE OR NOT WITH DISABLE CLASS AND ATTRIBUTE
+        $.fn.a11y_cntrl_enabled = function(enabled) {
+            if (this.length === 0) return this;
+            return this.a11y_cntrl(enabled, true);
+        };
+
+      
+    //MAKE ACCESSIBLE TEXT
+
+        var htmlCharRegex = /&.*;/g
+        $.a11y_normalize = function(text) {
+            var options = $.a11y.options;
+
+            if (!options.isTabbableTextEnabled) return text;
+            //USED SPECIFICALLY FOR CONVERTING TITLE TEXT TO ARIA-LABELS
+            var text = $("<div>" + text + "</div>").text();
+            //REMOVE HTML CHARACTERS SUCH AS &apos;
+            text = text.replace(htmlCharRegex,"");
+            return text;
         }
 
-        $.a11y_update();
+        //CONVERTS HTML OR TEXT STRING TO ACCESSIBLE HTML STRING
+        $.a11y_text = function (text) {
+            var options = $.a11y.options;
 
-    };
-    $.a11y.isOn = false;
-    $.a11y.options = {
-        focusOffsetTop: 0,
-        focusOffsetBottom: 0,
-        animateDuration: 250,
-        OS: "",
-        isTouchDevice: false,
-        isOn: false
-    };
-    $.a11y.focusStack = [];
+            if (!options.isTabbableTextEnabled) return text;
 
-    $.a11y.ready = setupInteractionListeners;
+            return makeHTMLOrTextAccessible(text)
+        };
 
-    //REAPPLY ON SIGNIFICANT VIEW CHANGES
-    $.a11y_update = function() {
-        //STOP ELEMENTS WITH .not-accessible CLASS FROM BEING IN TAB INDEX
-        $(".not-accessible[tabindex='0'], .not-accessible [tabindex='0']").attr({
-            "tabindex": "-1",
-            "aria-hidden": true
-        }).addClass("aria-hidden");
+        //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
+        $.fn.a11y_text = function() {
+            var options = $.a11y.options;
 
-        if ($.a11y.isOn) {
+            if (!options.isTabbableTextEnabled) return text;
 
-            //$("#a11y-selected").focusNoScroll();
-            $("body").a11y_aria_label(true);
-            //ADDS TAB GUARG EVENT HANDLER
-            reattachFocusGuard();
-        }
-
-    };
-
-//TOGGLE ACCESSIBILITY
-    //MAKES CHILDREN ACCESSIBLE OR NOT
-    $.a11y_on = function(isOn, selector) {
-        selector = selector || 'body';
-        isOn = isOn === undefined ? true : isOn;
-        if (isOn === false) {
-            $(selector).attr("aria-hidden", true);
-            $.a11y.options.isOn = false;
-        } else {
-            $(selector).removeAttr("aria-hidden");
-            $.a11y.options.isOn = true;
-        }
-    };
-
-    $.fn.a11y_on = function(isOn) {
-        isOn = isOn === undefined ? true : isOn;
-        if (isOn) {
-            this.find(hideableElements).filter(tabIndexElementFilter).attr("aria-hidden", "true").attr("tabindex", "-1").addClass("aria-hidden");
-        } else {
-            this.find(hideableElements).filter(tabIndexElementFilter).attr("aria-hidden", "false").removeAttr("tabindex").removeClass("aria-hidden");
-        }
-        this.find(tabIndexElements).filter(tabIndexElementFilter).a11y_cntrl(isOn);
-        return this;
-    };
+             for (var i = 0; i < this.length; i++) {
+                this[i].innerHTML = makeHTMLOrTextAccessible(this[i].innerHTML);
+            }
+            return this;
+        };
 
 
-//MAKE ACCESSIBLE CONTROLS
 
-    
-    //MAKES NAVIGATION CONTROLS ACCESSIBLE OR NOT WITH OPTIONAL DISABLE CLASS AND ATTRIBUTE
-    $.fn.a11y_cntrl = function(enabled, withDisabled) {
-        enabled = enabled === undefined ? true : enabled;
-        for (var i = 0; i < this.length; i++) {
-            var $item = $(this[i]);
-            if (enabled && $item.is(hideableElements)) {
-                $item.removeAttr("aria-hidden").removeClass("aria-hidden").parents(parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                if (withDisabled) {
-                    $item.removeAttr("disabled").removeClass("disabled");
-                }
-            } else if (enabled) {
-                $item.attr({
-                    tabindex: "0",
-                }).removeAttr("aria-hidden").removeClass("aria-hidden").parents(parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                if (withDisabled) {
-                    $item.removeAttr("disabled").removeClass("disabled");
+    //MAKE SELECTED
+
+        $.fn.a11y_selected = function(isOn) {
+            if (this.length === 0) return this;
+
+            var options = $.a11y.options;
+            if (!options.isSelectedAlertsEnabled) return this;
+
+            if (isOn === undefined) isOn = true;
+            if (isOn) {
+                var selected = $(this[0]);
+                switch ($.a11y.options.OS) {
+                case "mac":
+                    //ANNOUNCES SELECTION ON A MAC BY ADDING A SPAN AND SHIFTING FOCUS
+                    $("#a11y-selected").focusNoScroll();
+                    _.delay(function() {
+                        selected.prepend($("<span class='a11y-selected aria-label'>selected </span>"))
+                        $(selected).focusNoScroll();
+                    },250);
+                    break;
+                default:
+                    //ANOUNCES THE SELECTION ON TABLETS AND PCS
+                    $.a11y_alert("selected " + selected.text());
+                    selected.attr( "aria-label", "selected " + selected.text()).addClass("a11y-selected");
+                    break;
                 }
             } else {
-                $item.attr({
-                    tabindex: "-1",
-                    "aria-hidden": "true"
-                }).addClass("aria-hidden");
-                if (withDisabled) {
-                    $item.attr("disabled","disabled").addClass("disabled");
+                switch ($.a11y.options.OS) {
+                case "mac":
+                    for (var i = 0; i < this.length; i++) {
+                        $(this[i]).find(".a11y-selected").remove()
+                    }
+                    break;
+                default:
+                    for (var i = 0; i < this.length; i++) {
+                        if ($(this[i]).is(".a11y-selected")) $(this[i]).removeClass("a11y-selected").removeAttr("aria-label");
+                        $(this[i]).find(".a11y-selected").removeClass("a11y-selected").removeAttr("aria-label");
+                    }
                 }
             }
-        }
-        return this;
-    };
+            return this;
+        };
 
-    //MAKES NAVIGATION CONTROLS ACCESSIBLE OR NOT WITH DISABLE CLASS AND ATTRIBUTE
-    $.fn.a11y_cntrl_enabled = function(enabled) {
-        return this.a11y_cntrl(enabled, true);
-    };
+        $.a11y_alert = function(text) {
+            if (this.length === 0) return this;
 
-  
-//MAKE ACCESSIBLE TEXT
+            var options = $.a11y.options;
+            if (!options.isAlertsEnabled) return this;
 
-    var htmlCharRegex = /&.*;/g
-    $.a11y_normalize = function(text) {
-        //USED SPECIFICALLY FOR CONVERTING TITLE TEXT TO ARIA-LABELS
-        var text = $("<div>" + text + "</div>").text();
-        //REMOVE HTML CHARACTERS SUCH AS &apos;
-        text = text.replace(htmlCharRegex,"");
-        return text;
-    }
+            var $alert = $('<div role="alert" aria-label="'+text+'">');
 
-    //CONVERTS HTML OR TEXT STRING TO ACCESSIBLE HTML STRING
-    $.a11y_text = function (text) {
-        return makeAccessible(text);
-    };
+            $($.a11y).trigger("reading", text);
+            $("#a11y-selected").append($alert).attr("role","alert");
+            
+            $alert.css("visibility","hidden");
+            $alert.css("visibility","visible");
+            setTimeout(function() {
+                $alert.remove();
+            }, 20000);
 
-    //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
-    $.fn.a11y_text = function() {
-        for (var i = 0; i < this.length; i++) {
-            this[i].innerHTML = makeAccessible(this[i].innerHTML);
-        }
-        return this;
-    };
+            return this;
+        };
 
 
+    //FOCUS RESTRICTION
 
-//MAKE SELECTED
+        //ALLOWS FOCUS ON SELECTED ELEMENTS ONLY
+        $.fn.a11y_only = function(container, storeLastTabIndex) {
+            if (this.length === 0) return this;
 
-    $.fn.a11y_selected = function(isOn) {
-        if (this.length === 0) return this;
-        if (isOn === undefined) isOn = true;
-        if (isOn) {
-            var selected = $(this[0]);
-            switch ($.a11y.options.OS) {
-            case "mac":
-                //ANNOUNCES SELECTION ON A MAC BY ADDING A SPAN AND SHIFTING FOCUS
-                $("#a11y-selected").focusNoScroll();
-                _.delay(function() {
-                    selected.prepend($("<span class='a11y-selected aria-label'>selected </span>"))
-                    $(selected).focusNoScroll();
-                },250);
-                break;
-            default:
-                //ANOUNCES THE SELECTION ON TABLETS AND PCS
-                $.a11y_alert("selected " + selected.text());
-                selected.attr( "aria-label", "selected " + selected.text()).addClass("a11y-selected");
-                break;
+            var state = $.a11y.state;
+
+            if (storeLastTabIndex) {
+                state.focusStack.push(state.$activeElement);
             }
-        } else {
-            switch ($.a11y.options.OS) {
-            case "mac":
-                for (var i = 0; i < this.length; i++) {
-                    $(this[i]).find(".a11y-selected").remove()
-                }
-                break;
-            default:
-                for (var i = 0; i < this.length; i++) {
-                    if ($(this[i]).is(".a11y-selected")) $(this[i]).removeClass("a11y-selected").removeAttr("aria-label");
-                    $(this[i]).find(".a11y-selected").removeClass("a11y-selected").removeAttr("aria-label");
-                }
+            var $elements;
+            var $hideable;
+            if (container !== undefined) {
+                $elements = $(container).find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter);
+                $hideable = $(container).find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter);
+            } else {
+                $elements = $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter);
+                $hideable = $(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter);
             }
-        }
-    };
 
-    $.a11y_alert = function(text) {
-        if (!$.a11y.isOn) return this;
-        //var textNode = document.createTextNode(text);
-        var $alert = $('<div role="alert" aria-label="'+text+'">');
-
-        $($.a11y).trigger("reading", text);
-        //$alert[0].appendChild(textNode);
-        $("#a11y-selected").append($alert).attr("role","alert");
-        
-        $alert.css("visibility","hidden");
-        $alert.css("visibility","visible");
-        setTimeout(function() {
-            $alert.remove();
-        }, 20000)
-    };
-
-
-    var ie8TabIndexes = {};
-    var ie8ElementUID = 0;
-//FOCUS RESTRICTION
-
-    //ALLOWS FOCUS ON SELECTED ELEMENTS ONLY
-    $.fn.a11y_only = function(container, storeLastTabIndex) {
-        if (storeLastTabIndex) {
-            $.a11y.focusStack.push($documentActiveElement);
-        }
-        var $elements;
-        var $hideable;
-        if (container !== undefined) {
-            $elements = $(container).find(tabIndexElements).filter(tabIndexElementFilter);
-            $hideable = $(container).find(hideableElements).filter(tabIndexElementFilter);
-        } else {
-            $elements = $(tabIndexElements).filter(tabIndexElementFilter);
-            $hideable = $(hideableElements).filter(tabIndexElementFilter);
-        }
-        if ($.a11y.options.OS == "ie8") {
             $elements.each(function(index, item) {
                 var $item = $(item);
                 
-                var uid;
-                if ($item.a11y_uid == undefined) $item.a11y_uid = "UID" + ++ie8ElementUID;
-                uid = $item.a11y_uid;
+                var elementUID;
+                if ($item.a11y_uid == undefined) {
+                    $item.a11y_uid = "UID" + ++state.elementUIDIndex;
+                }
+                elementUID = $item.a11y_uid;
 
                 if (storeLastTabIndex) {
-                    if (ie8TabIndexes[uid] === undefined) ie8TabIndexes[uid] = [];
-                    ie8TabIndexes[uid].push( $item.attr('tabindex') || 0 );
+                    if (state.tabIndexes[elementUID] === undefined) state.tabIndexes[elementUID] = [];
+                    state.tabIndexes[elementUID].push( $item.attr('tabindex') || 0 );
                 }
 
                 $item.attr({
@@ -534,173 +863,213 @@
                     'aria-hidden': true
                 }).addClass("aria-hidden");
             });
-        } else {
-        $elements.each(function(index, item) {
-            var $item = $(item);
-            if (storeLastTabIndex) {
-                if (item._a11y === undefined) item._a11y = [];
-                item._a11y.push( $item.attr('tabindex') || 0 );
+
+            $hideable.attr("aria-hidden", true).attr("tabindex", "-1").addClass("aria-hidden");
+
+            this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).attr({
+                'tabindex': 0
+            }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
+            this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden"); 
+
+            $.a11y_update();
+
+            return this;
+        };
+
+        //ALLOWS RESTORATIVE FOCUS ON SELECTED ELEMENTS ONLY
+        $.fn.a11y_popup = function(container) {
+            if (this.length === 0) return this;
+
+            var options = $.a11y.options;
+
+            this.a11y_only(container, true);
+
+            if (this.length > 0) $(this[0]).limitedScrollTo();
+
+            if (options.isScrollDisabledOnPopupEnabled) {
+                $('body').scrollDisable();
+                $(domSelectors.focusguard).css({
+                    "position":"fixed",
+                    "bottom": "0px"
+                });
             }
-            $item.attr({
-                'tabindex': -1,
-                'aria-hidden': true
-            }).addClass("aria-hidden");
-        });
-        }
-        $hideable.attr("aria-hidden", true).attr("tabindex", "-1").addClass("aria-hidden");
 
-        this.find(tabIndexElements).filter(tabIndexElementFilter).attr({
-            'tabindex': 0
-        }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
-        this.find(hideableElements).filter(tabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");        
+            return this;
 
-        return this;
-    };
+        };
 
-    //ALLOWS RESTORATIVE FOCUS ON SELECTED ELEMENTS ONLY
-    $.fn.a11y_popup = function(container) {
+        //RESTORES FOCUS TO PREVIOUS STATE AFTER a11y_popup
+        $.a11y_popdown = function() {
+            var options = $.a11y.options;
+            var state = $.a11y.state;
 
-        this.a11y_only(container, true);
-
-        this.a11y_aria_label(true);
-
-        if (this.length > 0) scrollToFocus( { target: this[0] });
-
-        reattachFocusGuard();
-        
-        return this;
-    };
-
-    //RESTORES FOCUS TO PREVIOUS STATE AFTER a11y_popup
-    $.a11y_popdown = function() {
-        if ($.a11y.options.OS == "ie8") {
-            $(tabIndexElements).filter(tabIndexElementFilter).each(function(index, item) {
+            $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).each(function(index, item) {
                 var $item = $(item);
-                var pti = 0;
+                var previousTabIndex = 0;
 
-                var uid;
-                if ($item.a11y_uid == undefined) $item.a11y_uid = "UID" + ++ie8ElementUID;
-                uid = $item.a11y_uid;
+                var elementUID;
+                if ($item.a11y_uid == undefined) {
+                    //assign element a unique id
+                    $item.a11y_uid = "UID" + ++state.elementUIDIndex;
+                }
+                elementUID = $item.a11y_uid;
 
 
-                if (ie8ElementUID[uid] !== undefined && ie8ElementUID[uid].length !== 0) pti = parseInt(ie8ElementUID[uid].pop());
-                if (ie8ElementUID[uid] !== undefined && ie8ElementUID[uid].length > 0) delete ie8ElementUID[uid];
+                if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length !== 0) {
+                    //get previous tabindex if saved
+                    previousTabIndex = parseInt(state.tabIndexes[elementUID].pop());
+                }
+                if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length > 0) {
+                    //delete element tabindex store if empty
+                    delete state.tabIndexes[elementUID];
+                }
                 
                 $item.attr({
-                    'tabindex': pti
-                })
+                    'tabindex': previousTabIndex
+                });
 
-                if (pti === -1) $item.attr('aria-hidden', true).addClass("aria-hidden");
-                else $item.removeAttr('aria-hidden').removeClass("aria-hidden");;
+                if (previousTabIndex === -1) {
+                    //hide element from screen reader
+                    $item.attr('aria-hidden', true).addClass("aria-hidden");
+                } else {
+                    //show element to screen reader
+                    $item.removeAttr('aria-hidden').removeClass("aria-hidden");
+                }
             });
-        } else {
-        $(tabIndexElements).filter(tabIndexElementFilter).each(function(index, item) {
-            var $item = $(item);
-            var pti = 0;
-            if (item._a11y !== undefined && item._a11y.length !== 0) pti = parseInt(item._a11y.pop());
-            $item.attr({
-                'tabindex': pti
-            })
-            if (pti === -1) $item.attr('aria-hidden', true).addClass("aria-hidden");
-            else $item.removeAttr('aria-hidden').removeClass("aria-hidden");;
-        });
-        }
 
-        var $activeElement = $.a11y.focusStack.pop();
+            state.$activeElement = state.focusStack.pop();
 
-        if ($activeElement) {
-            focusOrNext($activeElement);
-            scrollToFocus({target: $activeElement[0] });
-        } else {
-            $.a11y_focus();
-        }
+            $.a11y_update();
 
-        reattachFocusGuard();
-    };
-
-
-//SET FOCUS
-
-
-    //FOCUSES ON FIRST TABBABLE ELEMENT
-    $.a11y_focus = function(dontDefer) {
-        //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
-        if (dontDefer) {
-            var tags = $(focusableElements).filter(focusableElementsFilter);
-            if (tags.length > 0) {
-                focusOrNext($(tags[0]));
+            if (options.isScrollDisabledOnPopupEnabled) {
+                $('body').scrollEnable();
+                $(domSelectors.focusguard).css({
+                    "position":"",
+                    "bottom": ""
+                });
             }
-            return true;
-        }
-        defer(function(){
-            var tags = $(focusableElements).filter(focusableElementsFilter);
-            if (tags.length > 0) {
-                focusOrNext($(tags[0]));
-            }
-        });
-        //SCROLL TO TOP IF NOT POPUPS ARE OPEN
-        return true;
-    };
 
-    //FOCUSES ON FIRST TABBABLE ELEMENT IN SELECTION
-    $.fn.a11y_focus = function() {
-        if (this.length === 0) return this;
-        //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
-        defer(function(){
-            var $this = $(this[0]);
-            if ($this.is(focusableElements)) {
-                focusOrNext($this);
+            if (state.$activeElement) {
+                state.$activeElement.focusOrNext();
+                state.$activeElement.limitedScrollTo();
             } else {
-                var tags = $this.find(focusableElements).filter(focusableElementsFilter);
-                focusOrNext($(tags[0]));
+                $.a11y_focus();
             }
-        }, this);
-        return this;
-    };
+
+            return this;
+        };
 
 
-    //jQuery function to focus with no scroll (accessibility requirement for control focus)
-    $.fn.focusNoScroll = function(){
-        var y = $(window).scrollTop();
-        if (this.length > 0) this[0].focus();
-        window.scrollTo(null, y);
-        return this; //chainability
-    };
+    //SET FOCUS
 
 
-//CONVERT ARIA LABELS
-    //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
-    $.fn.a11y_aria_label = function(deep) {
-        var ariaLabels = [];
-
-        for (var i = 0; i < this.length; i++) {
-            var $item = $(this[i]);
-            if ($item.not(ariaLabelElementsFilter).is(ariaLabelElements)) ariaLabels.push(this[i]);
-            if (deep === true) {
-                var children = $item.find(ariaLabelElements).filter(ariaLabelElementsFilter);
-                ariaLabels = ariaLabels.concat(children.toArray());
+        //FOCUSES ON FIRST TABBABLE ELEMENT
+        $.a11y_focus = function(dontDefer) {
+            //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
+            if (dontDefer) {
+                var tags = $(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
+                if (tags.length > 0) {
+                    $(tags[0]).focusOrNext();
+                }
+                return this;
             }
-        }
 
-        if (ariaLabels.length === 0) return true;
-        for (var i = 0; i < ariaLabels.length; i++) {
-            var $item = $(ariaLabels[i]);
-            var children = $item.children();
-            if (children.length === 0) continue;
-            if ($(children[0]).is(".aria-label")) continue;
-            if ($item.attr("aria-label") == "") {
+            defer(function(){
+                var tags = $(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
+                if (tags.length > 0) {
+                    $(tags[0]).focusOrNext();
+                }
+            });
+            //SCROLL TO TOP IF NOT POPUPS ARE OPEN        
+            return this;
+        };
+
+        //FOCUSES ON FIRST TABBABLE ELEMENT IN SELECTION
+        $.fn.a11y_focus = function() {
+            if (this.length === 0) return this;
+            //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
+            defer(function(){
+                var $this = $(this[0]);
+                if ($this.is(domSelectors.focusableElements)) {
+                    $this.focusOrNext();
+                } else {
+                    var tags = $this.find(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
+                    if (tags.length === 0) {
+                        var $parents = $this.parents();
+                        for (var i = 0, l = $parents.length; i < l; i++) {
+                            var $parent = $($parents[i]);
+                            tags = $parent.find(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
+                            if (tags.length > 0) {
+                                return $(tags[0]).focusOrNext();
+                            }
+                        }
+                    } else {
+                        $(tags[0]).focusOrNext();
+                    }
+                    
+                }
+            }, this);
+            return this;
+        };
+
+
+    //CONVERT ARIA LABELS
+        //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
+        $.fn.a11y_aria_label = function(deep) {
+            var options = $.a11y.options;
+
+            if (!options.isAriaLabelFixEnabled) return this;
+
+            var ariaLabels = [];
+
+            for (var i = 0; i < this.length; i++) {
+                var $item = $(this[i]);
+
+                if ($item.not(domSelectors.ariaLabelElementsFilter).is(domSelectors.ariaLabelElements)) {
+                    ariaLabels.push(this[i]);
+                }
+
+                if (deep === true) {
+                    var children = $item.find(domSelectors.ariaLabelElements).filter(domFilters.ariaLabelElementsFilter);
+                    ariaLabels = ariaLabels.concat(children.toArray());
+                }
+
+            }
+
+            if (ariaLabels.length === 0) return this;
+
+            for (var i = 0; i < ariaLabels.length; i++) {
+                var $item = $(ariaLabels[i]);
+
+                var $itemChildren = $item.children();
+                if ($itemChildren.length === 0) continue;
+
+                var firstChild = $itemChildren[0];
+                var $firstChild = $(firstChild)
+
+                if ($firstChild.is(".aria-label")) continue;
+
+                var ariaLabel = $item.attr("aria-label");
+
+                if (ariaLabel) {
+                    var injectElement = $(domInjectElements.arialabel);
+                    if (!options.isTabbableTextEnabled) {
+                        injectElement.attr({
+                            "tabindex": "-1"
+                        }).addClass("a11y-ignore");
+                    }
+                    injectElement.html( ariaLabel );
+                    $item.prepend(injectElement);    
+                }
+
                 $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
-                continue;
             }
-            var sudoElement = $("<a class='aria-label prevent-default' tabindex='0' role='region'></a>");
-            sudoElement.on("click", preventDefault);
-            sudoElement.html($item.attr("aria-label"));
-            $item.prepend(sudoElement);
-            $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
-        }
 
-        return this;
-    };
+            return this;
+        };
+
+
+
 
 })(jQuery, window);
 

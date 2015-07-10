@@ -42,9 +42,9 @@ define(function(require) {
             var $rendered = $(Handlebars.partials['state']( this.model.toJSON() ));
 
             //restore previous tab index if not on
-            var previousTabIndex = $previousState.find("aria-label").attr("tabindex");
-            if (previousTabIndex === "-1") {
-                $rendered.find("aria-label").attr("tabindex", previousTabIndex);
+            var previousTabIndex = $previousState.find(".aria-label").attr("tabindex");
+            if (previousTabIndex == "-1") {
+                $rendered.find(".aria-label").attr("tabindex", previousTabIndex);
             }
 
             this.$el.append( $rendered );
