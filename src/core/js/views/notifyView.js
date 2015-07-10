@@ -126,19 +126,7 @@ define(function(require) {
 
         showNotify: function() {
 
-            if (this.disableAnimation) {
-
-                this.$('.notify-shadow').css("display", "block");
-
-            } else {
-
-                this.$('.notify-shadow').velocity({ opacity: 1 }, {duration:200, begin: _.bind(function() {
-                    this.$('.notify-shadow').css("display", "block");
-                }, this)});
-
-            }
-
-            this.disableBodyScrollbars();
+            
 
             if (this.$("img").length > 0) {
                 this.$el.imageready( _.bind(loaded, this));
@@ -147,6 +135,19 @@ define(function(require) {
             }
 
             function loaded() {
+                if (this.disableAnimation) {
+
+                    this.$('.notify-shadow').css("display", "block");
+
+                } else {
+
+                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
+                        this.$('.notify-shadow').css("display", "block");
+                    }, this)});
+
+                }
+
+
                 this.resizeNotify();
 
                 if (this.disableAnimation) {
@@ -154,21 +155,16 @@ define(function(require) {
                     this.$('.notify-popup').css("visibility", "visible");
 
                 } else {
+                    
+                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
+                        this.$('.notify-popup').css("visibility", "visible");
+                    }, this) });
+                    
+                    /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
+                    Adapt.trigger('popup:opened', this.$el);
 
-                    //delay popup fadein until after background animations
-                    _.delay(_.bind(function() {
-                        
-                        this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:200, begin: _.bind(function() {
-                            this.$('.notify-popup').css("visibility", "visible");
-                        }, this) });
-                        
-                        /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                        Adapt.trigger('popup:opened', this.$el);
-
-                        //set focus to first accessible element
-                        this.$('.notify-popup').a11y_focus();
-
-                    }, this), 200);
+                    //set focus to first accessible element
+                    this.$('.notify-popup').a11y_focus();
                 }
             }
 
@@ -181,149 +177,21 @@ define(function(require) {
                 this.$('.notify-popup').css("visibility", "hidden");
                 this.$el.css("visibility", "hidden");
 
-                this.enableBodyScrollbars();
-
                 this.remove();
 
             } else {
 
-                this.$('.notify-popup').velocity({ opacity: 0 }, {duration:200, complete: _.bind(function() {
+                this.$('.notify-popup').velocity({ opacity: 0 }, {duration:400, complete: _.bind(function() {
                     this.$('.notify-popup').css("visibility", "hidden");
                 }, this)});
 
-                this.enableBodyScrollbars();
-
-                //delay background fadeout animations until after popup has faded out
-                _.delay(_.bind(function() {
-
-                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:300, complete:_.bind(function() {
-                        this.$el.css("visibility", "hidden");
-                        this.remove();
-                    }, this)});
-
-                }, this), 200);
-            }
-
-            Adapt.trigger('popup:closed');
-        },
-
-        disableBodyScrollbars: function(callback) {
-            this._scrollTop = $(window).scrollTop();
-            this._bodyHeight = $("body").css("height");
-            this._htmlHeight = $("html").css("height");
-
-            if (this.disableAnimation) {
-
-                $('html').css({
-                    "height": "100%"
-                });
-                $('body').css({
-                    "height": "100%",
-                    "overflow-y": "hidden"
-                });
-
-                $('#wrapper').css({
-                    "position": "relative",
-                    "top": "-"+ this._scrollTop +"px"
-                });
-
-            } else {
-
-                $('.page, .menu').velocity({opacity:0}, {duration:1, complete:_.bind(function() {
-
-                    $('.page, .menu').css("visibility", "hidden");              
-                    //wait for renderer to catch-up with fade out
-                    _.delay(_.bind(function(){
-
-                        //this causes the content to jump 
-                        $('html').css({
-                            "height": "100%"
-                        });
-                        $('body').css({
-                            "height": "100%",
-                            "overflow-y": "hidden"
-                        });
-
-                        //puts the content back to where it should be
-                        $('#wrapper').css({
-                            "position": "relative",
-                            "top": "-"+ this._scrollTop +"px"
-                        });
-                        
-                        //wait for renderer to catch-up with jump
-                        _.delay(_.bind(function() {
-                            $('.page, .menu').css("visibility", "visible");
-                            $('.page, .menu').velocity({opacity:1}, {duration:600});
-                        }, this), 50);
-
-                    }, this), 50);
-
-                },this)});
-            }
-            
-        },
-
-        enableBodyScrollbars: function() {
-
-            if (this.disableAnimation) {
-
-                $('html').css({
-                    "height": ""
-                });
-                $('body').css({
-                    "height": "",
-                    "overflow-y": ""
-                });
-                $('#wrapper').css({
-                    "position": "relative",
-                    "top": ""
-                });
-                $(window).scrollTo(this._scrollTop); 
-
-            } else {
-
-                $('.page, .menu').velocity({opacity:0}, {duration:1, complete:_.bind(function() {
-
-                    $('.page, .menu').css("visibility", "hidden");
-
-                    //this causes the content to jump
-                    $('html').css({
-                        "height": ""
-                    });
-
-                    var height = "";
-
-                    if (this._htmlHeight != this._bodyHeight) {
-                        height = this._bodyHeight;
-                    }
-
-                    $('body').css({
-                        "height": height,
-                        "overflow-y": ""
-                    });
-                    $('#wrapper').css({
-                        "position": "relative",
-                        "top": ""
-                    });
-
-                    //fix resize whilst popup open
-                    $(window).resize();
-
-                    //wait for renderer to catch-up with jump
-                    _.delay(_.bind(function() {
-
-                        $('.page, .menu').css("visibility", "visible");
-
-                        //puts the content back to where it should be
-                        $(window).scrollTo(this._scrollTop);     
-                        
-                        $('.page, .menu').velocity({opacity:1}, {duration: 300 });
-
-                    }, this), 50);    
-
+                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:400, complete:_.bind(function() {
+                    this.$el.css("visibility", "hidden");
+                    this.remove();
                 }, this)});
             }
 
+            Adapt.trigger('popup:closed');
         }
 
     });
