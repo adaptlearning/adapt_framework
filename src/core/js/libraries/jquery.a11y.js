@@ -576,9 +576,9 @@
             isFocusWrapEnabled: true,
             isScrollDisableEnabled: true,
             isScrollDisabledOnPopupEnabled: true,
-            isSelectedAlertsEnabled: true,
-            isAlertsEnabled: true,
-            isDebug: true
+            isSelectedAlertsEnabled: false,
+            isAlertsEnabled: false,
+            isDebug: false
         };
         $.a11y.state = {
             $activeElement: null,
