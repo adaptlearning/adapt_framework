@@ -56,9 +56,7 @@ define(function(require) {
                     nthChild ++;
                     var ChildView = this.constructor.childView || Adapt.componentStore[model.get("_component")];
                     var $parentContainer = this.$(this.constructor.childContainer);
-                    model.set({
-                        "_nthChild": nthChild
-                    });
+                    model.set("_nthChild", nthChild);
                     $parentContainer.append(new ChildView({model:model}).$el);
                 }
             }
