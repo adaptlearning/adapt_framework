@@ -289,12 +289,8 @@ define(function(require) {
 
             var isComplete = false;
             
-            if (this.model.get('_isCorrect')) {
+            if (this.model.get('_isCorrect') || this.model.get('_attemptsLeft') === 0) {
                 isComplete = true;
-            } else {
-                if (this.model.get('_attemptsLeft') === 0) {
-                    isComplete = true;
-                }
             }
 
             if (isComplete) {
@@ -312,17 +308,28 @@ define(function(require) {
             var isCorrect = this.model.get('_isCorrect');
             var isEnabled = this.model.get('_isEnabled');
             var buttonState = this.model.get('_buttonState');
+            var canShowModuleAnswer = this.model.get('_canShowModelAnswer');
 
             if (isInteractionComplete) {
-                if (isCorrect || !this.model.get('_canShowModelAnswer')) {
+
+                if (isCorrect || !canShowModuleAnswer) {
 					//use correct instead of complete to signify button state
                     this.model.set('_buttonState', 'correct');
-                } else if (buttonState === 'submit' || buttonState === 'hideCorrectAnswer'){
-                        this.model.set('_buttonState', 'showCorrectAnswer');
+                    
                 } else {
+
+                    switch(buttonState) {
+                    case "submit": case "hideCorrectAnswer":
+                        this.model.set('_buttonState', 'showCorrectAnswer');
+                        break;
+                    default:
                         this.model.set('_buttonState', 'hideCorrectAnswer');
+                    }
+
                 }
+
             } else {
+
                 if (isEnabled) {
                     this.model.set('_buttonState', 'submit');
                 } else {

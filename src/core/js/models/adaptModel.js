@@ -42,18 +42,26 @@ define(function (require) {
                 //if parent is optional, apply to children
                 if (this.get('_isOptional')) this.setOptional(true);
     
-                Adapt[this._children].on({
-                    "change:_isReady": this.checkReadyStatus,
-                    "change:_isComplete": this.checkCompletionStatus,
-                    "change:_isInteractionComplete": this.checkInteractionCompletionStatus
-                }, this);
+                this.setupChildListeners();
             }
             this.init();
         },
 
+        setupChildListeners: function() {
+
+            if(!this.getChildren()) return;
+
+            Adapt[this._children].on({
+                "change:_isReady": this.checkReadyStatus,
+                "change:_isComplete": this.checkCompletionStatus,
+                "change:_isInteractionComplete": this.checkInteractionCompletionStatus
+            }, this);
+            
+        },
+
         init: function() {},
 
-        reset: function(type, force) {
+        reset: function(type, force) {if(!this.getChildren()) return;
             if (!this.get("_canReset") && !force) return;
 
             type = type || true;
@@ -89,7 +97,7 @@ define(function (require) {
             var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
             // Check if any return _isComplete:false
             // If not - set this model to _isComplete: true
-            if (availableChildren.findWhere({_isComplete: false})) {
+            if (availableChildren.findWhere({_isComplete: false, _isOptional: false})) {
                 //cascade reset to menu
                 this.set({_isComplete:false});
                 return;
