@@ -21,7 +21,7 @@ define(function(require) {
             + " " + this.model.get('_classes')
             + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
-            + " nth-child-" + this.options.nthChild;
+            + " nth-child-" + this.model.get("_nthChild");
         },
 
         //////
