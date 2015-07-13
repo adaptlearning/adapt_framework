@@ -49,7 +49,7 @@ define(function (require) {
 
         setupChildListeners: function() {
 
-            if(!this.getChildren()) return;
+            if (!this.getChildren()) return;
 
             Adapt[this._children].on({
                 "change:_isReady": this.checkReadyStatus,
