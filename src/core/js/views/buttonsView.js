@@ -43,7 +43,7 @@ define(function() {
         checkResetSubmittedState = function() {
             var isSubmitted = this.model.get('_isSubmitted');
 
-            if(!isSubmitted) {
+            if (!isSubmitted) {
 
                 var $icon = this.$('.buttons-marking-icon');
                 $icon.removeClass('icon-cross');  
