@@ -16,7 +16,7 @@ define(function(require) {
             + " " + this.model.get('_classes')
             + " " + this.setVisibility() 
             + " nth-child-" 
-            + this.options.nthChild;;
+            + this.model.get("_nthChild");
         }
         
     }, {
