@@ -61,7 +61,7 @@ define(function (require) {
 
         init: function() {},
 
-        reset: function(type, force) {if(!this.getChildren()) return;
+        reset: function(type, force) {
             if (!this.get("_canReset") && !force) return;
 
             type = type || true;
