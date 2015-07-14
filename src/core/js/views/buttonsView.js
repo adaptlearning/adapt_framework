@@ -40,7 +40,7 @@ define(function() {
             this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
         },
 
-        checkResetSubmittedState = function() {
+        checkResetSubmittedState: function() {
             var isSubmitted = this.model.get('_isSubmitted');
 
             if (!isSubmitted) {
