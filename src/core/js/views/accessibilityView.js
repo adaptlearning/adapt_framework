@@ -22,32 +22,36 @@ define(function(require) {
         },
 
         render: function() {
-
-            var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
-            var accessibilityOff = Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
-            var accessibilityOn = Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
-
-            var toggleText = (hasAccessibility) ? accessibilityOff : accessibilityOn;
-
-            this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);
-
+            var hasAccessibility = Adapt.config.has('_accessibility') 
+                && Adapt.config.get('_accessibility')._isEnabled;
+            
+            if (!hasAccessibility) {
+                return;
+            } else {
+                var isActive = Adapt.config.get('_accessibility')._isActive;
+                var offLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
+                var onLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
+    
+                var toggleText = isActive ? offLabel : onLabel;
+    
+                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);                
+            }
         },
-
-
 
         toggleAccessibility: function(event) {
             event.preventDefault();
 
-            var hasAccessibility = Adapt.config.get('_accessibility')._isEnabled;
+            var hasAccessibility = Adapt.config.get('_accessibility')._isActive;
 
             var toggleAccessibility = (hasAccessibility) ? false : true;
 
-            Adapt.config.get('_accessibility')._isEnabled = toggleAccessibility;
+            Adapt.config.get('_accessibility')._isActive = toggleAccessibility;
 
             Adapt.trigger('accessibility:toggle');
 
-            this.render();
+            Backbone.history.navigate(window.location.hash, {trigger: true});
 
+            this.render();
         }    
 
     });

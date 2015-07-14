@@ -127,10 +127,36 @@ define(function(require) {
                 // if they are empty use the global default
                 var compButtons = this.model.get("_buttons");
 
-                for (var key in compButtons) {
-                    if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
-                    if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
-                }
+                if (typeof compButtons.submit == 'undefined') {
+                    for (var key in compButtons) {
+                        if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
+                        if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
+                    }
+                } else {
+                    // Backwards compatibility with v1.x
+                    var buttons = [];
+                    
+                    for (var key in compButtons) {
+                        var index = '_' + key;
+
+                        if (!compButtons[key]) {
+                            buttons[index] = globButtons[index];
+                        } else {
+                            buttons[index] = {
+                                buttonText: compButtons[key],
+                                ariaLabel: compButtons[key]
+                            };
+                        }
+                    }
+                    
+                    // HACK - Append other missing values
+                    buttons['_showFeedback'] = {
+                        buttonText: 'Show feedback',
+                        ariaLabel: 'Show feedback'
+                    };
+                    
+                    this.model.set('_buttons', buttons);    
+                }              
             }
         },
 
