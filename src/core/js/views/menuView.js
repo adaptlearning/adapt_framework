@@ -19,6 +19,7 @@ define(function(require) {
     		return 'menu ' 
             + 'menu-' 
             + this.model.get('_id')
+            + " " + this.model.get('_classes')
             + " " + this.setVisibility();
     	},
 

@@ -160,13 +160,14 @@ define(function(require) {
                     this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
                         this.$('.notify-popup').css("visibility", "visible");
                     }, this) });
-                    
-                    /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                    Adapt.trigger('popup:opened', this.$el);
-
-                    //set focus to first accessible element
-                    this.$('.notify-popup').a11y_focus();
+                
                 }
+
+                /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
+                Adapt.trigger('popup:opened', this.$el);
+
+                //set focus to first accessible element
+                this.$('.notify-popup').a11y_focus();
             }
 
         },
