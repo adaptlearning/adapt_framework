@@ -147,7 +147,7 @@ define(function(require) {
                     isAriaLabelFixEnabled: true,
                     isFocusWrapEnabled: true,
                     isScrollDisableEnabled: true,
-                    isScrollDisabledOnPopupEnabled: true,
+                    isScrollDisabledOnPopupEnabled: false,
                     isSelectedAlertsEnabled: true,
                     isAlertsEnabled: true
                 });
@@ -161,7 +161,7 @@ define(function(require) {
                     isAriaLabelFixEnabled: true,
                     isFocusWrapEnabled: true,
                     isScrollDisableEnabled: true,
-                    isScrollDisabledOnPopupEnabled: true,
+                    isScrollDisabledOnPopupEnabled: false,
                     isSelectedAlertsEnabled: false,
                     isAlertsEnabled: false
                 });

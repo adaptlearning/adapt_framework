@@ -127,6 +127,7 @@ define(function(require) {
             //only trigger popup:opened if drawer is visible, pass popup manager drawer element
             if (!this._isVisible) {
                 Adapt.trigger('popup:opened', this.$el);
+                $('body').scrollDisable();
                 this._isVisible = true;
             }
 
@@ -199,6 +200,7 @@ define(function(require) {
             if (this._isVisible) {
                 Adapt.trigger('popup:closed');
                 this._isVisible = false;
+                $('body').scrollEnable();
             } else {
                 return;
             }

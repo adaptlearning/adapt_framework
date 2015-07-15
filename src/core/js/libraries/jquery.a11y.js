@@ -575,7 +575,7 @@
             isAriaLabelFixEnabled: true,
             isFocusWrapEnabled: true,
             isScrollDisableEnabled: true,
-            isScrollDisabledOnPopupEnabled: true,
+            isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
             isAlertsEnabled: false,
             isDebug: false
