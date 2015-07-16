@@ -224,6 +224,7 @@ define(function(require) {
                 direction[this.drawerDir]=-this.$el.width();
                 this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
                     this.$el.addClass('display-none');
+                    Adapt.trigger('drawer:closed');
                 }, this));
                 
                 $('#shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
@@ -235,7 +236,7 @@ define(function(require) {
             this._isCustomViewVisible = false;
             this.removeShadowEvent();
 
-            Adapt.trigger('drawer:closed');
+            
         },
 
         addShadowEvent: function() {
