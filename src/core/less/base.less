@@ -20,16 +20,9 @@
     display:none!important;
 }
 
-.focused, *:focus, input:focus + label {
-    outline:none;
-}
-
 .accessibility.no-touch {
     .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
-        outline: 2px dotted #000;
-        & when (@focus-outline) {
-            outline: @focus-outline;  
-        }        
+        outline: @focus-outline;         
     }
 }
 
