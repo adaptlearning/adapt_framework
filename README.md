@@ -1,5 +1,7 @@
 Adapt Framework
 ===============
+
+[![Join the chat at https://gitter.im/adaptlearning/adapt_framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/adaptlearning/adapt_framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 The Adapt Learning project is an open-source effort to create a Framework and Authoring tool for Responsive E-Learning.
 
 This repository holds the Adapt Framework codebase.
