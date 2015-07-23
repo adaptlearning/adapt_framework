@@ -308,7 +308,7 @@ module.exports = function(grunt) {
             dev: {
                 options: {
                     name: 'core/js/app',
-                    baseUrl: 'src',
+                    baseUrl: '<%= sourcedir %>',
                     mainConfigFile: './config.js',
                     out: '<%= outputdir %>adapt/js/adapt.min.js',
                     generateSourceMaps: true,
@@ -319,7 +319,7 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     name: 'core/js/app',
-                    baseUrl: 'src',
+                    baseUrl: '<%= sourcedir %>',
                     mainConfigFile: './config.js',
                     out: '<%= outputdir %>adapt/js/adapt.min.js',
                     optimize: 'uglify2'
