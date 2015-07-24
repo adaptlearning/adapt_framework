@@ -65,6 +65,8 @@
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
+            if ($(e.target).css('-webkit-overflow-scrolling') == 'touch') return;
+
             if (options.isDebug) console.log("preventScroll2")
 
             e = e || window.event;
