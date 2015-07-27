@@ -163,9 +163,12 @@ define(function(require) {
                 
                 }
 
+                var windowHeight = $(window).height();
+                var notifyHeight = this.$('.notify-popup').height();
+
                 /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
                 Adapt.trigger('popup:opened', this.$el);
-                $('body').scrollDisable();
+                $('body').scrollDisable(notifyHeight > windowHeight ? this.$('.notify-popup') : null);
 
                 //set focus to first accessible element
                 this.$('.notify-popup').a11y_focus();
@@ -194,7 +197,10 @@ define(function(require) {
                 }, this)});
             }
 
-            $('body').scrollEnable();
+            var windowHeight = $(window).height();
+            var notifyHeight = this.$('.notify-popup').height();
+
+            $('body').scrollEnable(notifyHeight > windowHeight ? this.$('.notify-popup') : null);
             Adapt.trigger('popup:closed');
         }
 

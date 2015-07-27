@@ -65,6 +65,17 @@
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
+            if (state.scrollDisabledExceptedElements) {
+                var target = $(e.target);
+                var match = false;
+
+                state.scrollDisabledExceptedElements.each(function(index, element) {
+                    match = match || $(element).is(target) || $(element).has(target).length > 0;
+                });
+
+                if (match) return;
+            }
+
             if (options.isDebug) console.log("preventScroll2")
 
             e = e || window.event;
@@ -83,6 +94,17 @@
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
                 var scrollingParent = getScrollingParent(e);
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
+            }
+
+            if (state.scrollDisabledExceptedElements) {
+                var target = $(e.target);
+                var match = false;
+                
+                state.scrollDisabledExceptedElements.each(function(index, element) {
+                    match = match || $(element).is(target) || $(element).has(target).length > 0;
+                });
+
+                if (match) return;
             }
 
             if (options.isDebug) console.log("preventScroll2")
@@ -237,7 +259,7 @@
 
 
     // JQUERY UTILITY FUNCTIONS
-        $.fn.scrollDisable = function() {
+        $.fn.scrollDisable = function(exceptions) {
             if (this.length === 0) return this;
 
             var options = $.a11y.options;
@@ -250,23 +272,31 @@
 
             if (state.scrollDisabledElements.length > 0) a11y_setupScrollListeners();
 
+            if (exceptions) {
+                if (!state.scrollDisabledExceptedElements) state.scrollDisabledExceptedElements = $(exceptions);
+                else state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.add(exceptions);
+            }
             return this;
         }
 
-        $.fn.scrollEnable = function() {
+        $.fn.scrollEnable = function(exceptions) {
             if (this.length === 0) return this;
 
             var options = $.a11y.options;
             var state = $.a11y.state;
 
-             if (!options.isScrollDisableEnabled) return this;
+            if (!options.isScrollDisableEnabled) return this;
 
-            if (!state.scrollDisabledElements) return;            
+            if (state.scrollDisabledElements) {
 
-            state.scrollDisabledElements = state.scrollDisabledElements.not(this);
+                state.scrollDisabledElements = state.scrollDisabledElements.not(this);
 
-            if (state.scrollDisabledElements.length === 0) a11y_removeScrollListeners();
+                if (state.scrollDisabledElements.length === 0) a11y_removeScrollListeners();
+            }
 
+            if (exceptions && state.scrollDisabledExceptedElements) {
+                state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.not(exceptions);
+            }
         }
 
         $.fn.isFixedPostion = function() {
@@ -585,7 +615,8 @@
             focusStack: [],
             tabIndexes: {},
             elementUIDIndex: 0,
-            scrollDisabledElements: null
+            scrollDisabledElements: null,
+            scrollDisabledExceptedElements: null
         };
 
         $.a11y.ready = function() {
