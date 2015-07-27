@@ -65,7 +65,16 @@
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
-            if (state.scrollDisabledExceptedElements && state.scrollDisabledExceptedElements.index($(e.target)).length != -1) return;
+            if (state.scrollDisabledExceptedElements) {
+                var target = $(e.target);
+                var match = false;
+
+                state.scrollDisabledExceptedElements.each(function(index, element) {
+                    match = match || $(element).is(target) || $(element).has(target).length > 0;
+                });
+
+                if (match) return;
+            }
 
             if (options.isDebug) console.log("preventScroll2")
 
@@ -87,7 +96,16 @@
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
-            if (state.scrollDisabledExceptedElements && state.scrollDisabledExceptedElements.index($(e.target)).length != -1) return;
+            if (state.scrollDisabledExceptedElements) {
+                var target = $(e.target);
+                var match = false;
+                
+                state.scrollDisabledExceptedElements.each(function(index, element) {
+                    match = match || $(element).is(target) || $(element).has(target).length > 0;
+                });
+
+                if (match) return;
+            }
 
             if (options.isDebug) console.log("preventScroll2")
 
@@ -254,9 +272,10 @@
 
             if (state.scrollDisabledElements.length > 0) a11y_setupScrollListeners();
 
-            if (!state.scrollDisabledExceptedElements) state.scrollDisabledExceptedElements = $(exceptions);
-            else state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.add(this);
-
+            if (exceptions) {
+                if (!state.scrollDisabledExceptedElements) state.scrollDisabledExceptedElements = $(exceptions);
+                else state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.add(exceptions);
+            }
             return this;
         }
 
@@ -275,7 +294,7 @@
                 if (state.scrollDisabledElements.length === 0) a11y_removeScrollListeners();
             }
 
-            if (state.scrollDisabledExceptedElements) {
+            if (exceptions && state.scrollDisabledExceptedElements) {
                 state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.not(exceptions);
             }
         }
