@@ -65,7 +65,7 @@
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
-            if ($(e.target).css('-webkit-overflow-scrolling') == 'touch') return;
+            if (state.scrollDisabledExceptedElements && state.scrollDisabledExceptedElements.index($(e.target)).length != -1) return;
 
             if (options.isDebug) console.log("preventScroll2")
 
@@ -86,6 +86,8 @@
                 var scrollingParent = getScrollingParent(e);
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
+
+            if (state.scrollDisabledExceptedElements && state.scrollDisabledExceptedElements.index($(e.target)).length != -1) return;
 
             if (options.isDebug) console.log("preventScroll2")
 
@@ -239,7 +241,7 @@
 
 
     // JQUERY UTILITY FUNCTIONS
-        $.fn.scrollDisable = function() {
+        $.fn.scrollDisable = function(exceptions) {
             if (this.length === 0) return this;
 
             var options = $.a11y.options;
@@ -252,23 +254,30 @@
 
             if (state.scrollDisabledElements.length > 0) a11y_setupScrollListeners();
 
+            if (!state.scrollDisabledExceptedElements) state.scrollDisabledExceptedElements = $(exceptions);
+            else state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.add(this);
+
             return this;
         }
 
-        $.fn.scrollEnable = function() {
+        $.fn.scrollEnable = function(exceptions) {
             if (this.length === 0) return this;
 
             var options = $.a11y.options;
             var state = $.a11y.state;
 
-             if (!options.isScrollDisableEnabled) return this;
+            if (!options.isScrollDisableEnabled) return this;
 
-            if (!state.scrollDisabledElements) return;            
+            if (state.scrollDisabledElements) {
 
-            state.scrollDisabledElements = state.scrollDisabledElements.not(this);
+                state.scrollDisabledElements = state.scrollDisabledElements.not(this);
 
-            if (state.scrollDisabledElements.length === 0) a11y_removeScrollListeners();
+                if (state.scrollDisabledElements.length === 0) a11y_removeScrollListeners();
+            }
 
+            if (state.scrollDisabledExceptedElements) {
+                state.scrollDisabledExceptedElements = state.scrollDisabledExceptedElements.not(exceptions);
+            }
         }
 
         $.fn.isFixedPostion = function() {
@@ -587,7 +596,8 @@
             focusStack: [],
             tabIndexes: {},
             elementUIDIndex: 0,
-            scrollDisabledElements: null
+            scrollDisabledElements: null,
+            scrollDisabledExceptedElements: null
         };
 
         $.a11y.ready = function() {

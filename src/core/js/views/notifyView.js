@@ -165,7 +165,7 @@ define(function(require) {
 
                 /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
                 Adapt.trigger('popup:opened', this.$el);
-                $('body').scrollDisable();
+                $('body').scrollDisable(this.$('.notify-popup'));
 
                 //set focus to first accessible element
                 this.$('.notify-popup').a11y_focus();
@@ -194,7 +194,7 @@ define(function(require) {
                 }, this)});
             }
 
-            $('body').scrollEnable();
+            $('body').scrollEnable(this.$('.notify-popup'));
             Adapt.trigger('popup:closed');
         }
 
