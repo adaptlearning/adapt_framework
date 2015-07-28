@@ -126,7 +126,7 @@
                 //mouse events
 
                 //desktop: chrome & safari delta || firefox & ie delta inverted
-                deltaY = event.originalEvent.wheelDeltaY || event.originalEvent.deltaY ? -event.originalEvent.deltaY : undefined;
+                deltaY = event.originalEvent.wheelDeltaY || event.originalEvent.deltaY ? -event.originalEvent.deltaY : event.originalEvent.wheelDelta || undefined;
                 if (deltaY === 0) return $('body');
                 
                 directionY = deltaY > 0 ? "up" : "down";
@@ -501,7 +501,7 @@
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
-            var scrollEventName = "onwheel wheel onmousewheel DOMMouseScroll";
+            var scrollEventName = "wheel mousewheel DOMMouseScroll";
             $(window).on(scrollEventName, preventScroll);
             $(document).on(scrollEventName, preventScroll);
             $(window).on("touchstart", onScrollStartCapture); // mobile
@@ -511,7 +511,7 @@
         }
 
         function a11y_removeScrollListeners() {
-            var scrollEventName = "onwheel wheel onmousewheel DOMMouseScroll";
+            var scrollEventName = "wheel mousewheel DOMMouseScroll";
             $(window).off(scrollEventName, preventScroll);
             $(document).off(scrollEventName, preventScroll);
             $(window).off("touchstart", onScrollStartCapture); // mobile
