@@ -29,11 +29,11 @@ define(function(require) {
 		},
 
 		render: function() {
-          
+
             var data = this.model.toJSON();
             var template = Handlebars.templates['notifyPush'];
             this.$el.html(template(data)).appendTo('#wrapper');
-            
+
             _.defer(_.bind(function() {
                 this.postRender();
             }, this));

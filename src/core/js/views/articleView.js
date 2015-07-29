@@ -1,27 +1,27 @@
 // License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
-    
+
     var AdaptView = require('coreViews/adaptView');
     var BlockView = require('coreViews/blockView');
 
     var ArticleView = AdaptView.extend({
-        
+
         className: function() {
-            return "article " 
+            return "article "
             + this.model.get('_id')
             + " " + this.model.get('_classes')
-            + " " + this.setVisibility() 
-            + " nth-child-" 
+            + " " + this.setVisibility()
+            + " nth-child-"
             + this.model.get("_nthChild");
         }
-        
+
     }, {
         childContainer: '.block-container',
         childView: BlockView,
         type: 'article',
         template: 'article'
     });
-    
+
     return ArticleView;
-    
+
 });

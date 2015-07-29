@@ -21,7 +21,7 @@ define(function(require) {
             type = type || true;
 
             AdaptModel.prototype.reset.call(this, type, force);
-            
+
             if (this.get("_isQuestionType")) {
                 var attempts = this.get('_attempts');
                 this.set({
@@ -36,7 +36,7 @@ define(function(require) {
         _parent:'blocks',
     	_siblings:'components'
     });
-    
+
     return ComponentModel;
 
 });

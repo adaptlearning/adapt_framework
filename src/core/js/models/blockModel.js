@@ -8,7 +8,7 @@ define(function(require) {
     	_siblings:'blocks',
         _children: 'components'
     });
-    
+
     return BlockModel;
 
 });

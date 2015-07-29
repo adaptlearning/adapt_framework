@@ -1,24 +1,24 @@
 // License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
-    
+
     var AdaptView = require('coreViews/adaptView');
     var ArticleView = require('coreViews/articleView');
     var Adapt = require('coreJS/adapt');
 
     var PageView = AdaptView.extend({
-        
+
         className: function() {
-            return "page " 
-            + this.model.get('_id') 
+            return "page "
+            + this.model.get('_id')
             + " " + this.model.get('_classes')
-            + " " + this.setVisibility();                  
+            + " " + this.setVisibility();
         },
-        
+
         preRender: function() {
             this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
-        
+
         isReady: function() {
             if (this.model.get('_isReady')) {
                 _.defer(_.bind(function() {
@@ -35,14 +35,14 @@ define(function(require) {
                 }, this));
             }
         }
-        
+
     }, {
         childContainer: '.article-container',
         childView: ArticleView,
         type: 'page',
         template: 'page'
     });
-    
+
     return PageView;
-    
+
 });

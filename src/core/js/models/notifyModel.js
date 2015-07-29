@@ -10,7 +10,7 @@ define(function(require) {
         	_timeout:3000
         }
     });
-    
+
     return NotifyModel;
 
 });

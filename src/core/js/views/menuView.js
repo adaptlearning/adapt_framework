@@ -3,7 +3,7 @@ define(function(require) {
 
     var AdaptView = require('coreViews/adaptView');
     var Adapt = require('coreJS/adapt');
-    
+
     var MenuView = AdaptView.extend({
 
     	className: function() {
@@ -11,8 +11,8 @@ define(function(require) {
             if (this.model.get('_isVisible')) {
                 visible = "";
             }
-    		return 'menu ' 
-            + 'menu-' 
+    		return 'menu '
+            + 'menu-'
             + this.model.get('_id')
             + " " + this.model.get('_classes')
             + " " + this.setVisibility();
@@ -22,10 +22,10 @@ define(function(require) {
             this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
-        
-        postRender: function() { 
+
+        postRender: function() {
         },
-        
+
         isReady: function() {
             if (this.model.get('_isReady')) {
                 _.defer(_.bind(function() {
@@ -37,11 +37,11 @@ define(function(require) {
                 }, this));
             }
         }
-        
+
     }, {
         type:'menu'
     });
-    
+
     return MenuView;
-    
+
 });

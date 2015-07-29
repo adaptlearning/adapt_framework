@@ -13,7 +13,7 @@ define(function(require) {
     });
 
     Adapt.on('popup:closed', function() {
-        	
+
         //restore tab indexes
         $.a11y_popdown();
 

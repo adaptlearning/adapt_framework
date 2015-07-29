@@ -159,7 +159,7 @@ define(function(require) {
                 $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: function() {
                     $("#shadow").removeClass("display-none");
                 }});
-                    
+
                 var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
                 var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
                 var direction={};
@@ -205,7 +205,7 @@ define(function(require) {
                 var direction={};
                 direction[this.drawerDir]=-this.$el.width();
                 this.$el.css(direction).addClass('display-none');
-                
+
                 $('#shadow').addClass("display-none");
 
                 Adapt.trigger('drawer:closed');
@@ -220,13 +220,13 @@ define(function(require) {
                 this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
                     this.$el.addClass('display-none');
                 }, this));
-                
+
                 $('#shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
                     $('#shadow').addClass("display-none");
                 }});
 
             }
-            
+
             this._isCustomViewVisible = false;
             this.removeShadowEvent();
 

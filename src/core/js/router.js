@@ -9,7 +9,7 @@ define(function(require) {
     Adapt.router = new RouterModel(null, {reset: true});
 
     var Router = Backbone.Router.extend({
-    
+
         initialize: function() {
             this.showLoading();
             // Store #wrapper element to cache for later
@@ -19,7 +19,7 @@ define(function(require) {
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
         },
-        
+
         routes: {
             "":"handleCourse",
             "id/:id":"handleId",
@@ -38,7 +38,7 @@ define(function(require) {
             Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
             Adapt.trigger('router:plugin', pluginName, location, action);
         },
-        
+
         handleCourse: function() {
             this.removeViews();
             this.showLoading();
@@ -47,25 +47,25 @@ define(function(require) {
             this.updateLocation('course');
             Adapt.trigger('router:menu', Adapt.course);
         },
-        
+
         handleId: function(id) {
-            
+
             var currentModel = Adapt.findById(id);
 
             switch (currentModel.get('_type')) {
                 case 'page': case 'menu':
                     this.removeViews();
                     this.showLoading();
-                    
+
                     this.setContentObjectToVisited(currentModel);
 
                     if (currentModel.get('_type') == 'page') {
-                        var location = 'page-' + id; 
+                        var location = 'page-' + id;
                         this.updateLocation(location, 'page', id);
                         Adapt.trigger('router:page', currentModel);
                         this.$wrapper.append(new PageView({model:currentModel}).$el);
                     } else {
-                        var location = 'menu-' + id; 
+                        var location = 'menu-' + id;
                         this.updateLocation(location, 'menu', id);
                         Adapt.trigger('router:menu', currentModel);
                     }
@@ -74,11 +74,11 @@ define(function(require) {
                     Adapt.navigateToElement('.' + id);
             }
         },
-        
+
         removeViews: function() {
             Adapt.trigger('remove');
         },
-        
+
         showLoading: function() {
             $('.loading').show();
         },
@@ -140,9 +140,9 @@ define(function(require) {
 
             Adapt.location._currentLocation = currentLocation;
 
-            var classes = (Adapt.location._currentId) ? 'location-' 
-                    + Adapt.location._contentType 
-                    + ' location-id-' 
+            var classes = (Adapt.location._currentId) ? 'location-'
+                    + Adapt.location._contentType
+                    + ' location-id-'
                     + Adapt.location._currentId :
                     'location-' + Adapt.location._currentLocation;
             this.$wrapper
@@ -176,9 +176,9 @@ define(function(require) {
 
         }
 
-    
+
     });
-    
+
     return new Router({model: new Backbone.Model()});
 
 });

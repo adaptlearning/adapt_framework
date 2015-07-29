@@ -82,7 +82,7 @@ define(function(require) {
 		var notify = new NotifyView({
 			model: new NotifyModel(notifyObject)
 		});
-		
+
 	};
 
 });

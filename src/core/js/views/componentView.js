@@ -5,17 +5,17 @@ define(function(require) {
     var AdaptView = require('coreViews/adaptView');
 
     var ComponentView = AdaptView.extend({
-    
+
         className: function() {
-            return "component " 
+            return "component "
             + this.model.get('_component')
-            + "-component " + this.model.get('_id') 
+            + "-component " + this.model.get('_id')
             + " " + this.model.get('_classes')
             + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
             + " nth-child-" + this.model.get("_nthChild");
         },
-        
+
         initialize: function(){
 			//standard initialization + renderState function
             AdaptView.prototype.initialize.apply(this, arguments);
@@ -29,10 +29,10 @@ define(function(require) {
             if (this.$el.is(".not-accessible")) return;
 			// do not perform if component has .no-state class
             if (this.$el.is(".no-state")) return;
-            
+
 			//remove pre-exisiting states
             var $previousState = this.$(".accessibility-state").remove();
-			
+
             //render and append state partial
             var $rendered = $(Handlebars.partials['state']( this.model.toJSON() ));
 
@@ -43,16 +43,16 @@ define(function(require) {
             }
 
             this.$el.append( $rendered );
-            
+
             this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
 
         postRender: function() {}
-        
+
     }, {
         type:'component'
     });
-    
+
     return ComponentView;
 
 });

@@ -28,7 +28,7 @@ require([
     'menu/menu',
     'theme/theme'
 ], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
-        
+
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
 
@@ -53,22 +53,22 @@ require([
                 // Backwards compatibility with v1.x
                 var oldButtons = Adapt.course.get('_buttons');
                 var buttons = [];
-                
+
                 for (var key in oldButtons) {
                     buttons['_' + key] = {
                         buttonText: oldButtons[key],
                         ariaLabel: oldButtons[key]
                     };
                 }
-                
+
                 // HACK - Append other missing values
                 buttons['_showFeedback'] = {
                     buttonText: 'Show feedback',
                     ariaLabel: 'Show feedback'
                 };
-                
+
                 // Replace the existing property
-                Adapt.course.set('_buttons', buttons); 
+                Adapt.course.set('_buttons', buttons);
             }
 
             // Triggered to setup model connections in AdaptModel.js
@@ -88,7 +88,7 @@ require([
 
         }
     }
-    
+
     function mapAdaptIdsToObjects () {
         Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy("_id");
         Adapt.articles._byAdaptID = Adapt.articles.groupBy("_id");
@@ -100,7 +100,7 @@ require([
     // Once the config model is loaded get the course files
     // This enables plugins to tap in before the course files are loaded & also to change the default language
     function loadCourseData() {
-        // All code that needs to run before adapt starts should go here    
+        // All code that needs to run before adapt starts should go here
         var language = Adapt.config.get('_defaultLanguage');
 
         var courseFolder = "course/" + language +"/";
@@ -108,22 +108,22 @@ require([
         $('html').attr("lang", language);
 
         Adapt.course = new CourseModel(null, {url:courseFolder + "course.json", reset:true});
-        
+
         Adapt.contentObjects = new AdaptCollection(null, {
             model: ContentObjectModel,
             url: courseFolder +"contentObjects.json"
         });
-        
+
         Adapt.articles = new AdaptCollection(null, {
             model: ArticleModel,
             url: courseFolder + "articles.json"
         });
-        
+
         Adapt.blocks = new AdaptCollection(null, {
             model: BlockModel,
             url: courseFolder + "blocks.json"
         });
-        
+
         Adapt.components = new AdaptCollection(null, {
             model: ComponentModel,
             url: courseFolder + "components.json"
@@ -134,5 +134,5 @@ require([
     Adapt.once('configModel:loadCourseData', loadCourseData);
 
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
-    
+
 });

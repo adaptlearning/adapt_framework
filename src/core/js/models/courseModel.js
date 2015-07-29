@@ -5,7 +5,7 @@ define(function(require) {
     var Adapt = require('coreJS/adapt');
 
     var CourseModel = AdaptModel.extend({
-    
+
         initialize: function(attrs, options) {
             this.url = options.url;
 
@@ -14,7 +14,7 @@ define(function(require) {
                 this.fetch();
             }
         },
-        
+
         loadedData: function() {
             Adapt.trigger('courseModel:dataLoaded');
             this.setupListeners();
@@ -29,9 +29,9 @@ define(function(require) {
         },
 
         _children: "contentObjects"
-    
+
     });
-    
+
     return CourseModel;
 
 });

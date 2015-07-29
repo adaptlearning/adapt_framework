@@ -2,7 +2,7 @@
 (function() {
 
     //Test for ie8
-    var IE = (function() { 
+    var IE = (function() {
         if (document.documentMode) {
             return document.documentMode;
         }

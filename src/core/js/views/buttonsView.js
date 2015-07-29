@@ -4,7 +4,7 @@ define(function() {
     var Adapt = require('coreJS/adapt');
 
     var ButtonsView = Backbone.View.extend({
-        
+
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_buttonState', this.onButtonStateChanged);
@@ -41,8 +41,8 @@ define(function() {
             if (!isSubmitted) {
 
                 var $icon = this.$('.buttons-marking-icon');
-                $icon.removeClass('icon-cross');  
-                $icon.removeClass('icon-tick');  
+                $icon.removeClass('icon-cross');
+                $icon.removeClass('icon-tick');
                 $icon.addClass('display-none');
                 this.$el.removeClass("submitted");
 
@@ -88,11 +88,11 @@ define(function() {
                     }
                 }
 
-            } else {        
+            } else {
                 // Backwords compatibility with v1.x
                 var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
                 var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
-                
+
                 switch (changedAttribute) {
                     case "showCorrectAnswer": case "hideCorrectAnswer":
     				    //make model answer button inaccessible but enabled for visual users
@@ -138,7 +138,7 @@ define(function() {
             if (shouldDisplayAttempts) {
                 this.$('.buttons-display-inner').html(attemptsString);
             }
-            
+
         }
 
     });

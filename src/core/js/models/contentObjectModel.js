@@ -16,12 +16,12 @@ define(function(require) {
             this.set({'completedChildrenAsPercentage': completedChildrenAsPercentage});
             return completedChildrenAsPercentage;
     	},
-    	
+
     	_parent:'course',
     	_siblings:'contentObjects',
         _children: 'contentObjects'
     });
-    
+
     return ContentObjectModel;
 
 });

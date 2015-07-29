@@ -9,7 +9,7 @@ define(function(require) {
     	_siblings:'articles',
         _children: 'blocks'
     });
-    
+
     return ArticleModel;
 
 });

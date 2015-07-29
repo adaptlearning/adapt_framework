@@ -37,11 +37,11 @@ define(function(require) {
         },
 
         loadData: function() {
-            
+
         }
 
     });
-   
+
    return ConfigModel;
 
 });

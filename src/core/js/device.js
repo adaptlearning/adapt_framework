@@ -5,12 +5,12 @@ define(function(require) {
     var Bowser = require('coreJS/libraries/bowser');
 
     Adapt.device = {};
-    
+
     var $window = $(window);
-    
+
     // Check whether device is touch enabled
     Adapt.device.touch = Modernizr.touch;
-      
+
     Adapt.once('app:dataReady', function() {
         // The theme.json will have been loaded at this point
         Adapt.device.screenSize = checkScreenSize();
@@ -19,9 +19,9 @@ define(function(require) {
     });
 
     Adapt.device.screenWidth = $window.width();
-    
+
     function checkScreenSize() {
-       
+
         var screenSize;
 
         if (Adapt.device.screenWidth > Adapt.config.get('screenSize').medium) {
@@ -33,7 +33,7 @@ define(function(require) {
         }
         return screenSize;
     }
-        
+
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
         Adapt.device.screenWidth = $window.width();
         Adapt.trigger('device:resize', Adapt.device.screenWidth);
@@ -46,11 +46,11 @@ define(function(require) {
 
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
-        
+
     }, 100);
-        
+
     $window.on('resize', onWindowResize);
-    
+
     var browser = Bowser.name;
     var version = Bowser.version;
     var OS = Bowser.osversion;
@@ -69,7 +69,7 @@ define(function(require) {
         } else if (platform.indexOf("Linux") != -1) {
             return "Linux";
         }
-        
+
         return "PlatformUnknown";
 
     }
@@ -79,7 +79,7 @@ define(function(require) {
     Adapt.device.browser = browser ? browser.toLowerCase() : "";
     Adapt.device.version = version ? version.toLowerCase() : "";
     Adapt.device.OS = OS ? OS.toLowerCase() : "";
-    
+
     $("html").addClass(browserString);
-    
+
 });
