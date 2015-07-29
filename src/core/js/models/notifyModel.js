@@ -1,4 +1,4 @@
-// License - http://github.com/adaptlearning/adapt_framework/LICENSE
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
 
 	var Backbone = require('backbone');
