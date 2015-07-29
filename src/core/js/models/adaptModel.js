@@ -40,6 +40,12 @@ define(function (require) {
                 this.setupChildListeners();
             }
             this.init();
+            _.defer(_.bind(function() {
+                if (this._children) {
+                    this.checkCompletionStatus();
+                    this.checkInteractionCompletionStatus();
+                }
+            }, this));
         },
 
         setupChildListeners: function() {

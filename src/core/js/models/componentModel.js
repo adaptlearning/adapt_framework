@@ -26,7 +26,7 @@ define(function(require) {
                 var attempts = this.get('_attempts');
                 this.set({
                     _attemptsLeft: attempts,
-                    _isCorrect: false,
+                    _isCorrect: undefined,
                     _isSubmitted: false,
                     _buttonState: 'submit'
                 });
