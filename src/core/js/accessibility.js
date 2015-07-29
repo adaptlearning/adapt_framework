@@ -1,9 +1,4 @@
-/*
-* Accessibility
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Kirsty Hames, Daryl Hedley
-*/
-
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');

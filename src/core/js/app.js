@@ -1,9 +1,4 @@
-/*
-* App
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley, Fabien O'Carroll, Chris Jones
-*/
-
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 require([
     'coreJS/adapt',
     'coreJS/router',

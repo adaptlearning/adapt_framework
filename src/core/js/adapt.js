@@ -1,9 +1,4 @@
-/*
-* Adapt
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley, Fabien O'Carroll
-*/
-
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require){
 
     var _ = require('underscore');

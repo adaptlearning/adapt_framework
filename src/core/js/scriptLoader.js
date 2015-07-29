@@ -1,8 +1,4 @@
-/*
-* ScriptLoader
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley
-*/
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 (function() {
 
     //Test for ie8

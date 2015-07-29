@@ -1,9 +1,4 @@
-/*
-* Adapt
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@gmail.com>
-*/
-
+// License - http://github.com/adaptlearning/adapt_framework/LICENSE
 define(function(require) {
 
 	var Backbone = require('backbone');

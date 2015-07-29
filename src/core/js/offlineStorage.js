@@ -1,9 +1,4 @@
-/*
-* offlineStorage
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Oliver Foster <oliver.foster@kineo.com>
-*/
-
+// License - http://github.com/adaptlearning/adapt_framework/LICENSE
 define([
 	'coreJS/adapt'
 ], function(Adapt) {

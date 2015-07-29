@@ -1,8 +1,4 @@
-/*
-* Drawer
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@hotmail.com>
-*/
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
 	
 	var DrawerView = require('coreViews/drawerView');

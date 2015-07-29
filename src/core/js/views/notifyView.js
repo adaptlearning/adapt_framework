@@ -1,9 +1,4 @@
-/*
-* NotifyView
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@hotmail.com>
-*/
-
+// License - http://github.com/adaptlearning/adapt_framework/LICENSE
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');

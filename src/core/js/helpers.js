@@ -1,8 +1,4 @@
-/*
-* Adapt
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Alan Bourne, Chris Jones, Daryl Hedley
-*/
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require){
 
     var Handlebars = require('handlebars'),

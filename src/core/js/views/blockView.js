@@ -1,9 +1,4 @@
-/*
-* BlockView
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley
-*/
-
+// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
     
 	var AdaptView = require('coreViews/adaptView');
