@@ -1,4 +1,3 @@
-// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function(require) {
 
     var Backbone = require('backbone');
@@ -231,7 +230,7 @@ define(function(require) {
             this._isCustomViewVisible = false;
             this.removeShadowEvent();
 
-            
+
         },
 
         addShadowEvent: function() {

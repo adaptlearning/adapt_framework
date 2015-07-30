@@ -1,4 +1,3 @@
-// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 define(function() {
 
     var Adapt = require('coreJS/adapt');

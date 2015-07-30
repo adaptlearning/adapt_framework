@@ -1,4 +1,3 @@
-// License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
 require([
     'coreJS/adapt',
     'coreJS/router',
