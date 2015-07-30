@@ -84,7 +84,8 @@ define(function(require) {
     Adapt.device.browser = browser ? browser.toLowerCase() : "";
     Adapt.device.version = version ? version.toLowerCase() : "";
     Adapt.device.OS = OS ? OS.toLowerCase() : "";
-    
+    browserString = browserString.replace("Internet Explorer", "ie");
+
     $("html").addClass(browserString);
     
 });
