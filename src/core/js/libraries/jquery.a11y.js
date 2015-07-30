@@ -54,48 +54,84 @@
             event.stopPropagation();
         }
 
-        function preventScroll(e) {
+        function preventScroll(event) {
             var state = $.a11y.state;
             var options = $.a11y.options;
 
             if (options.isDebug) console.log("preventScroll1")
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
-                var scrollingParent = getScrollingParent(e);
+                var scrollingParent = getScrollingParent(event);
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
             if (options.isDebug) console.log("preventScroll2")
 
-            e = e || window.event;
-            if (e.preventDefault)
-              e.preventDefault();
-            e.returnValue = false;  
+            event.preventDefault();
+            return false; 
         }
 
         var scrollKeys = {37: 1, 38: 1, 39: 1, 40: 1};
-        function preventScrollKeys(e) {
+        function preventScrollKeys(event) {
             var state = $.a11y.state;
             var options = $.a11y.options;
 
             if (options.isDebug) console.log("preventScroll1")
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
-                var scrollingParent = getScrollingParent(e);
+                var scrollingParent = getScrollingParent(event);
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
             }
 
             if (options.isDebug) console.log("preventScroll2")
 
-            if (scrollKeys[e.keyCode]) {
-                preventScroll(e);
+            if (scrollKeys[event.keyCode]) {
+                preventScroll(event);
                 return false;
             }
         }
 
         function getScrollingParent(event) {
             var $element = $(event.target);
-            var directionY = event.wheelDeltaY < 0 ? "down" : "up";
+
+            var isTouchEvent = event.type == "touchmove";
+
+            var deltaY; 
+            var directionY;
+
+            if (isTouchEvent) {
+                //touch events
+
+                var state = $.a11y.state;
+                if (!state.scrollStartEvent || !state.scrollStartEvent.originalEvent ) return $element;
+
+                //iOS previous + current scroll pos
+                var currentY = event.originalEvent.pageY;
+                var previousY = state.scrollStartEvent.originalEvent.pageY;
+
+                if (currentY === 0 || currentY == previousY) {
+                    //android chrome current scroll pos
+                    currentY = event.originalEvent.touches[0].pageY;
+                    previousY = state.scrollStartEvent.originalEvent.touches[0].pageY;
+                }
+                
+                //touch: delta calculated from touchstart pos vs touchmove pos
+                deltaY = currentY - previousY;
+                if (deltaY === 0) return $('body');
+
+                directionY = deltaY > 0 ? "up" : "down";
+
+            } else {
+
+                //mouse events
+
+                //desktop: chrome & safari delta || firefox & ie delta inverted
+                deltaY = event.originalEvent.wheelDeltaY || event.originalEvent.deltaY !== undefined ? -event.originalEvent.deltaY : event.originalEvent.wheelDelta || undefined;
+                if (deltaY === 0) return $('body');
+                
+                directionY = deltaY > 0 ? "up" : "down";
+
+            }           
 
             var itemParents = $element.parents();
             var lastScrolling = null;
@@ -450,21 +486,37 @@
             $element.limitedScrollTo();
         }
 
+        function onScrollStartCapture(event) {
+            var state = $.a11y.state;
+            state.scrollStartEvent = event;
+            return true;
+        }
+
+        function onScrollEndCapture(event) {
+            var state = $.a11y.state;
+            state.scrollStartEvent = null;
+            return true;
+        }
+
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
-            var event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
-            $(window).on(event, preventScroll);
-            $(document).on(event, preventScroll);
+            var scrollEventName = "wheel mousewheel";
+            $(window).on(scrollEventName, preventScroll);
+            $(document).on(scrollEventName, preventScroll);
+            $(window).on("touchstart", onScrollStartCapture); // mobile
             $(window).on("touchmove", preventScroll); // mobile
+            $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
 
         function a11y_removeScrollListeners() {
-            var event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
-            $(window).off(event, preventScroll);
-            $(document).off(event, preventScroll);
+            var scrollEventName = "wheel mousewheel";
+            $(window).off(scrollEventName, preventScroll);
+            $(document).off(scrollEventName, preventScroll);
+            $(window).off("touchstart", onScrollStartCapture); // mobile
             $(window).off("touchmove", preventScroll); // mobile
+            $(window).off("touchend", onScrollEndCapture); // mobile
             $(document).off("keydown", preventScrollKeys);  
         }
 
@@ -585,7 +637,8 @@
             focusStack: [],
             tabIndexes: {},
             elementUIDIndex: 0,
-            scrollDisabledElements: null
+            scrollDisabledElements: null,
+            scrollStartEvent: null
         };
 
         $.a11y.ready = function() {
