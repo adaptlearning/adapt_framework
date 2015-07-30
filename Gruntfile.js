@@ -22,6 +22,12 @@ module.exports = function(grunt) {
         return false;
     }
 
+    var isPluginExcluded = function(pluginType, pluginPath) {
+        var optionVal = grunt.option(pluginType);
+        var isExcluded = optionVal && pluginPath.indexOf(optionVal) === -1;
+        return isExcluded;
+    }
+
     var getSourceDir = function() {
         var sourcedir = appendSlash(grunt.option('sourcedir')) || 'src/';
         return sourcedir;
@@ -633,6 +639,9 @@ module.exports = function(grunt) {
             //iterate through plugins in plugin type folder
             grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + pluginType + '/*').forEach(function(path) {
                 var currentPluginPath = path;
+
+                // if specific plugin has been specified with grunt.option, don't carry on
+                if(isPluginExcluded(pluginType, path)) return;
 
                 //read bower.json and properties.schema for current plugin
                 var currentSchemaJson = grunt.file.readJSON(currentPluginPath + '/' + 'properties.schema');
