@@ -664,8 +664,9 @@ module.exports = function(grunt) {
             //read course json and overlay onto defaults object
             var currentCourseJson = _.deepExtend(grunt.file.readJSON(currentCourseJsonFile), defaultsObject);
 
-            //write modified course json
-            grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson));
+            //write modified course json to build
+            var courseOutputPath = currentCourseJsonFile.replace(grunt.config.get('sourcedir'),grunt.config.get('outputdir'));
+            grunt.file.write(courseOutputPath, JSON.stringify(currentCourseJson));
         });
     });
 
