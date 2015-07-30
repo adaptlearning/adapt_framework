@@ -666,7 +666,7 @@ module.exports = function(grunt) {
         });
 
         //iterate through lanugage folders
-        grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + 'course/*').forEach(function(path) {
+        grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('outputdir') + 'course/*').forEach(function(path) {
             var currentCourseFolder = path;
             var currentCourseJsonFile = currentCourseFolder + '/' + 'course.json';
 
@@ -674,8 +674,7 @@ module.exports = function(grunt) {
             var currentCourseJson = _.deepExtend(defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
 
             //write modified course json to build
-            var courseOutputPath = currentCourseJsonFile.replace(grunt.config.get('sourcedir'),grunt.config.get('outputdir'));
-            grunt.file.write(courseOutputPath, JSON.stringify(currentCourseJson));
+            grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson));
         });
     });
 
