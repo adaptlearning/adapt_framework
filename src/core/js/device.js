@@ -74,10 +74,11 @@ define(function(require) {
     }
 
     var browserString = browser + " version-" + version + " OS-" + OS;
-	/*MAKE DEVICE IDENTIFICATION UNIFORM CASE*/
+	/* MAKE DEVICE IDENTIFICATION UNIFORM CASE */
     Adapt.device.browser = browser ? browser.toLowerCase() : "";
     Adapt.device.version = version ? version.toLowerCase() : "";
     Adapt.device.OS = OS ? OS.toLowerCase() : "";
+    browserString = browserString.replace("Internet Explorer", "ie");
 
     $("html").addClass(browserString);
 
