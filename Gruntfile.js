@@ -628,42 +628,33 @@ module.exports = function(grunt) {
 
         //iterate through plugin types
         _.each(pluginTypes, function(pluginType, pluginTypeIndex) {
-
             var pluginCategory = pluginCategories[pluginTypeIndex];
 
             //iterate through plugins in plugin type folder
             grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + pluginType + '/*').forEach(function(path) {
-                
                 var currentPluginPath = path;
 
                 //read bower.json and properties.schema for current plugin
                 var currentSchemaJson = grunt.file.readJSON(currentPluginPath + '/' + 'properties.schema');
                 var currentBowerJson  = grunt.file.readJSON(currentPluginPath + '/' + 'bower.json');
-                
+
                 if (!currentSchemaJson || ! currentBowerJson) return;
 
                 //get plugin name from schema
                 var currentPluginName = currentBowerJson[pluginCategory];
-                
-                if (!currentPluginName) return;
-                
-                if (!currentSchemaJson.globals) return;
+
+                if (!currentPluginName || !currentSchemaJson.globals) return;
 
                 //iterate through schema globals attributes
                 _.each(currentSchemaJson.globals, function(item, attributeName) {
-
                     //translate schema attribute into globals object
                     var pluginTypeDefaults = globalsObject['_'+ pluginType] = globalsObject['_'+ pluginType] || {};
                     var pluginDefaults =  pluginTypeDefaults["_" + currentPluginName] = pluginTypeDefaults["_" + currentPluginName] || {};
 
                     pluginDefaults[attributeName] = item['default'];
-
                 });
-                    
             });
-
         });
-
 
         //iterate through lanugage folders
         grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + 'course/*').forEach(function(path) {
@@ -671,12 +662,11 @@ module.exports = function(grunt) {
             var currentCourseJsonFile = currentCourseFolder + '/' + 'course.json';
 
             //read course json and overlay onto defaults object
-            var currentCourseJson = _.deepExtend(defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
+            var currentCourseJson = _.deepExtend(grunt.file.readJSON(currentCourseJsonFile), defaultsObject);
 
             //write modified course json
             grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson));
         });
-
     });
 
     /*
@@ -711,7 +701,8 @@ module.exports = function(grunt) {
             'server-build',
             'adapt_insert_tracking_ids',
             'adapt_remove_tracking_ids',
-            'adapt_reset_tracking_ids'
+            'adapt_reset_tracking_ids',
+            'schema-defaults'
         ];
 
         grunt.log.writeln('');
