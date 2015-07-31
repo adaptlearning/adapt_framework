@@ -22,6 +22,12 @@ module.exports = function(grunt) {
         return false;
     }
 
+    var isPluginExcluded = function(pluginType, pluginPath) {
+        var optionVal = grunt.option(pluginType);
+        var isExcluded = optionVal && pluginPath.indexOf(optionVal) === -1;
+        return isExcluded;
+    }
+
     var getSourceDir = function() {
         var sourcedir = appendSlash(grunt.option('sourcedir')) || 'src/';
         return sourcedir;
@@ -594,7 +600,7 @@ module.exports = function(grunt) {
         grunt.log.ok('Starting server in "' + grunt.config.get('outputdir') + '" using port ' + grunt.config.get('connect.server.options.port'));
     });
 
-    grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'tracking-insert']);
+    grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'schema-defaults', 'tracking-insert']);
     grunt.registerTask('server-build', 'Builds the course without JSON [used by the authoring tool]', ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
@@ -615,6 +621,66 @@ module.exports = function(grunt) {
         if(isPluginInstalled('adapt-contrib-spoor')) {
             grunt.task.run(['adapt_reset_tracking_ids']);
         }
+    });
+
+    grunt.registerTask('schema-defaults', 'Manufactures the course.json defaults', function() {
+        //import underscore and underscore-deep-extend
+        var _ = require('underscore');
+        _.mixin({deepExtend: require('underscore-deep-extend')(_) });
+
+        //list all plugin types
+        var pluginTypes = [ "components", "extensions", "menu", "theme" ];
+        //list authoring tool plugin categories
+        var pluginCategories = [ "component", "extension", "menu", "theme" ];
+
+        //setup defaults object
+        var defaultsObject = { _globals: {} };
+        var globalsObject = defaultsObject._globals;
+
+        //iterate through plugin types
+        _.each(pluginTypes, function(pluginType, pluginTypeIndex) {
+            var pluginCategory = pluginCategories[pluginTypeIndex];
+
+            //iterate through plugins in plugin type folder
+            grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + pluginType + '/*').forEach(function(path) {
+                var currentPluginPath = path;
+
+                // if specific plugin has been specified with grunt.option, don't carry on
+                if(isPluginExcluded(pluginType, path)) return;
+
+                //read bower.json and properties.schema for current plugin
+                var currentSchemaJson = grunt.file.readJSON(currentPluginPath + '/' + 'properties.schema');
+                var currentBowerJson  = grunt.file.readJSON(currentPluginPath + '/' + 'bower.json');
+
+                if (!currentSchemaJson || ! currentBowerJson) return;
+
+                //get plugin name from schema
+                var currentPluginName = currentBowerJson[pluginCategory];
+
+                if (!currentPluginName || !currentSchemaJson.globals) return;
+
+                //iterate through schema globals attributes
+                _.each(currentSchemaJson.globals, function(item, attributeName) {
+                    //translate schema attribute into globals object
+                    var pluginTypeDefaults = globalsObject['_'+ pluginType] = globalsObject['_'+ pluginType] || {};
+                    var pluginDefaults =  pluginTypeDefaults["_" + currentPluginName] = pluginTypeDefaults["_" + currentPluginName] || {};
+
+                    pluginDefaults[attributeName] = item['default'];
+                });
+            });
+        });
+
+        //iterate through lanugage folders
+        grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('outputdir') + 'course/*').forEach(function(path) {
+            var currentCourseFolder = path;
+            var currentCourseJsonFile = currentCourseFolder + '/' + 'course.json';
+
+            //read course json and overlay onto defaults object
+            var currentCourseJson = _.deepExtend(defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
+
+            //write modified course json to build
+            grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson));
+        });
     });
 
     /*
@@ -649,7 +715,8 @@ module.exports = function(grunt) {
             'server-build',
             'adapt_insert_tracking_ids',
             'adapt_remove_tracking_ids',
-            'adapt_reset_tracking_ids'
+            'adapt_reset_tracking_ids',
+            'schema-defaults'
         ];
 
         grunt.log.writeln('');
