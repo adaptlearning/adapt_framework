@@ -624,6 +624,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('schema-defaults', 'Manufactures the course.json defaults', function() {
+        var fs = require("fs");
         //import underscore and underscore-deep-extend
         var _ = require('underscore');
         _.mixin({deepExtend: require('underscore-deep-extend')(_) });
@@ -648,9 +649,14 @@ module.exports = function(grunt) {
                 // if specific plugin has been specified with grunt.option, don't carry on
                 if(isPluginExcluded(pluginType, path)) return;
 
+                var currentSchemaPath = currentPluginPath + "/" + "properties.schema";
+                var currentBowerPath = currentPluginPath + "/" + "bower.json";
+
+                if (!fs.existsSync(currentSchemaPath) || !fs.existsSync(currentBowerPath)) return;
+
                 //read bower.json and properties.schema for current plugin
-                var currentSchemaJson = grunt.file.readJSON(currentPluginPath + '/' + 'properties.schema');
-                var currentBowerJson  = grunt.file.readJSON(currentPluginPath + '/' + 'bower.json');
+                var currentSchemaJson = grunt.file.readJSON(currentSchemaPath);
+                var currentBowerJson  = grunt.file.readJSON(currentBowerPath);
 
                 if (!currentSchemaJson || ! currentBowerJson) return;
 
