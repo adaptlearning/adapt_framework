@@ -3,10 +3,9 @@
     "_defaultDirection": "ltr",
     "_questionWeight": 1,
     "_accessibility": {
-        "_isEnabled": false,
+        "_isEnabled": true,
         "_shouldSupportLegacyBrowsers": true,
-        "_isTextProcessorEnabled": true,
-        "_disableTextSelectOnClasses": ".size-small .size-medium .size-large"
+        "_isTextProcessorEnabled": true
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",
@@ -14,7 +13,7 @@
         "_duration": 400
     },
     "_spoor": {
-        "_isEnabled": true,
+		"_isEnabled": true,
         "_tracking": {
             "_requireCourseCompleted": true,
             "_requireAssessmentPassed": true,
@@ -25,5 +24,6 @@
             "_onTrackingCriteriaMet": "completed",
             "_onAssessmentFailure": "incomplete"
         }
-    }
+    },
+    "_showIds": true
 }
