@@ -1,33 +1,33 @@
 {
     "_id": "course",
     "_type": "course",
-    "title": "Welcome to Adapt Learning - v2.0.0",
-    "displayTitle": "Welcome to Adapt Learning - v2.0.0",
-    "body": "This release is aimed at developers who want to get involved with the Adapt Open Source initiative. Select a menu option below to find out more.",
+    "title": "Adapt Version 2.0 demonstration",
+    "displayTitle": "Adapt Version 2.0 demonstration",
+    "body": "Welcome to the demonstration build for Version 2.0 of the Adapt framework.<br><br>We’ve added some major new items of functionality to Adapt for this release, most notably accessibility to WAI level AA, Right to Left language support and greatly improved assessments. If you’d like to find out more about this, along with the the other improvements we’ve made then please read the release notes (Link to follow for demo).               ",
     "_buttons": {
         "_submit": {
             "buttonText": "Submit",
-            "ariaLabel": "Select here to submit your answer."
+            "ariaLabel": "Submit your answer by clicking here."
         },
         "_reset": {
             "buttonText": "Reset",
-            "ariaLabel": ""
+            "ariaLabel": "Reset the question by clicking here."
         },
         "_showCorrectAnswer": {
-            "buttonText": "Correct Answer",
-            "ariaLabel": ""
+            "buttonText": "Correct answer",
+            "ariaLabel": "Show the correct answer by clicking here."
         },
         "_hideCorrectAnswer": {
-            "buttonText": "My Answer",
-            "ariaLabel": ""
+            "buttonText": "My answer",
+            "ariaLabel": "Show the answer you gave by clicking here."
         },
         "_showFeedback": {
             "buttonText": "Show feedback",
-            "ariaLabel": ""
+            "ariaLabel": "View the question feedback again by clicking here."
         },
         "remainingAttemptsText": "attempts remaining",
         "remainingAttemptText": "final attempt",
-        "disabledAriaLabel": "This button is disabled at the moment"
+        "disabledAriaLabel": "This button is disabled at the moment."
     },
     "_globals": {
         "_components": {
@@ -60,8 +60,7 @@
                 "instruction": ""
             },
             "_media": {
-                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen.",
-                "transcriptButton": "Alternatively you can select the link below for the transcript.",
+                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen. Alternatively you can select the link below for the transcript.",
                 "instruction": ""
             },
             "_narrative": {
@@ -112,7 +111,7 @@
                 "closeResources": "Close resources",
                 "resourcesEnd": "You have reached the end of the list of resources.",
                 "drawerBack": "Back to drawer",
-                "drawer": "Side drawer",
+                "drawer": "Top of side drawer",
                 "closePopup": "Close popup",
                 "next": "Next",
                 "done": "Done",
@@ -128,22 +127,22 @@
                 "menuBack": "Back to menu",
                 "menuIndicatorHeading": "Menu item heading ",
                 "pageLevelProgress": "Page sections",
-                "pageLevelProgressIndicatorBar": "You have completed ",
+                "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
                 "pageLevelProgressEnd": "You have reached the end of the list of page sections."
             }
         }
     },
-    "_latestTrackingId": 16,
+    "_latestTrackingId": 20,
     "_pageLevelProgress": {
         "_isEnabled": true,
-        "_altText": "of components completed on this page"
+        "_altText": "of components completed on this page."
     },
     "_resources": {
         "title": "Resources",
-        "description": "Click here to view resources for this course",
+        "description": "View resources for this course by clicking here.",
         "_filterButtons": {
             "all": "All",
-            "document": "PDF",
+            "document": "Document",
             "media": "Media",
             "link": "Link"
         },
@@ -156,26 +155,26 @@
         "_resourcesItems": [
             {
                 "_type": "document",
-                "title": "Button idea",
-                "description": "Click here to see a proposed button idea",
-                "_link": "course/en/pdf/adapt-framework-prototypes-buttons.pdf"
+                "title": "Vanilla Theme Swatch",
+                "description": "See the swatch for the default vanilla by clicking here.",
+                "_link": "course/en/images/vanilla-swatch.jpg"
             },
             {
                 "_type": "media",
                 "title": "Adapt Learning YouTube Channel",
-                "description": "Fancy catching up on some Adapt material",
+                "description": "Fancy catching up on some Adapt material? Click here.",
                 "_link": "https://www.youtube.com/channel/UCW8SlSFuCc--B66Gf9fAEcQ"
             },
             {
                 "_type": "link",
                 "title": "Community Site",
-                "description": "Click here to view our community site",
+                "description": "View our community site by clicking here.",
                 "_link": "https://community.adaptlearning.org"
             }
         ]
     },
     "_assessment": {
-        "_postTotalScoreToLMS": true,
+        "_postTotalScoreToLms": true,
         "_isPercentageBased": true,
         "_scoreToPass": 75
     },
