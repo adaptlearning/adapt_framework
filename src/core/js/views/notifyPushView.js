@@ -1,8 +1,3 @@
-/*
-* Notify Push
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@hotmail.com>
-*/
 define(function(require) {
 
 	var Backbone = require('backbone');
@@ -33,11 +28,11 @@ define(function(require) {
 		},
 
 		render: function() {
-          
+
             var data = this.model.toJSON();
             var template = Handlebars.templates['notifyPush'];
             this.$el.html(template(data)).appendTo('#wrapper');
-            
+
             _.defer(_.bind(function() {
                 this.postRender();
             }, this));

@@ -1,9 +1,3 @@
-/*
- * Adapt
- * License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
- * Maintainers - Daryl Hedley <darylhedley@gmail.com>, Aniket Dharia
- */
-
 define(function (require) {
 
     var Backbone = require('backbone');
@@ -41,7 +35,7 @@ define(function (require) {
             if (this._children) {
                 //if parent is optional, apply to children
                 if (this.get('_isOptional')) this.setOptional(true);
-    
+
                 this.setupChildListeners();
             }
             this.init();
@@ -62,7 +56,7 @@ define(function (require) {
                 "change:_isComplete": this.checkCompletionStatus,
                 "change:_isInteractionComplete": this.checkInteractionCompletionStatus
             }, this);
-            
+
         },
 
         init: function() {},
@@ -71,7 +65,7 @@ define(function (require) {
             if (!this.get("_canReset") && !force) return;
 
             type = type || true;
-            
+
             switch (type) {
             case "hard": case true:
                 this.set({
@@ -80,7 +74,7 @@ define(function (require) {
                     _isInteractionComplete: false,
                 });
                 break;
-            case "soft": 
+            case "soft":
                 this.set({
                     _isEnabled: true,
                     _isInteractionComplete: false
@@ -158,11 +152,11 @@ define(function (require) {
             function searchChildren(children) {
                 var models = children.models;
                 for (var i = 0, len = models.length; i < len; i++) {
-                    var model = models[i];  
+                    var model = models[i];
                     var childrensModels = model.getChildren().models;
                     allDescendants.push(childrensModels);
                     flattenedDescendants = _.flatten(allDescendants);
-                } 
+                }
 
                 returnedDescedants = new Backbone.Collection(flattenedDescendants);
 
@@ -194,7 +188,7 @@ define(function (require) {
 
             if (this.get('_type') == 'block' && childrenCollection.length == 2
                 && childrenCollection.models[0].get('_layout') !== 'left') {
-                // Components may have a 'left' or 'right' _layout, 
+                // Components may have a 'left' or 'right' _layout,
                 // so ensure they appear in the correct order
                 // Re-order component models to correct it
                 childrenCollection.comparator = '_layout';

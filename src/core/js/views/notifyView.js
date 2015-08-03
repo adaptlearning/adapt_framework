@@ -1,9 +1,3 @@
-/*
-* NotifyView
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@hotmail.com>
-*/
-
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
@@ -34,7 +28,7 @@ define(function(require) {
 
         setupEscapeKey: function() {
             var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isEnabled;
-            
+
             if (!hasAccessibility && ! this.escapeKeyAttached) {
                 $(window).on("keyup", this._onKeyUp);
                 this.escapeKeyAttached = true;
@@ -113,9 +107,9 @@ define(function(require) {
 
             if (notifyHeight > windowHeight) {
                 this.$('.notify-popup').css({
-                    'height':'100%', 
-                    'top':0, 
-                    'overflow-y': 'scroll', 
+                    'height':'100%',
+                    'top':0,
+                    'overflow-y': 'scroll',
                     '-webkit-overflow-scrolling': 'touch'
                 });
             } else {
@@ -127,7 +121,7 @@ define(function(require) {
 
         showNotify: function() {
 
-            
+
 
             if (this.$("img").length > 0) {
                 this.$el.imageready( _.bind(loaded, this));
@@ -156,11 +150,11 @@ define(function(require) {
                     this.$('.notify-popup').css("visibility", "visible");
 
                 } else {
-                    
+
                     this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
                         this.$('.notify-popup').css("visibility", "visible");
                     }, this) });
-                
+
                 }
 
                 /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
@@ -174,7 +168,7 @@ define(function(require) {
         },
 
         closeNotify: function (event) {
-            
+
             if (this.disableAnimation) {
 
                 this.$('.notify-popup').css("visibility", "hidden");

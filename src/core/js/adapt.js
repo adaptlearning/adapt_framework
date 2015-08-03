@@ -1,22 +1,16 @@
-/*
-* Adapt
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley, Fabien O'Carroll
-*/
-
 define(function(require){
 
     var _ = require('underscore');
     var Backbone = require('backbone');
     var Helpers = require('coreHelpers');
-    
+
     var Adapt = {};
     Adapt.location = {};
     Adapt.componentStore = {};
     var mappedIds = {};
 
     _.extend(Adapt, Backbone.Events);
-    
+
     Adapt.initialize = _.once(function() {
         Backbone.history.start();
         Adapt.trigger('adapt:initialize');
@@ -24,7 +18,7 @@ define(function(require){
 
     Adapt.scrollTo = function(selector, settings) {
         // Get the current location - this is set in the router
-        var location = (Adapt.location._contentType) ? 
+        var location = (Adapt.location._contentType) ?
             Adapt.location._contentType : Adapt.location.currentLocation;
         // Trigger initial scrollTo event
         Adapt.trigger(location+':scrollTo', selector);
@@ -33,7 +27,7 @@ define(function(require){
         if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
-        
+
         var navigationHeight = $(".navigation").outerHeight();
 
         if (!settings.offset) settings.offset = { top: -navigationHeight, left: 0 };
@@ -50,7 +44,7 @@ define(function(require){
             $(selector).a11y_focus();
             Adapt.trigger(location+':scrolledTo', selector);
         }, settings.duration+300);
-        
+
     }
 
     Adapt.navigateToElement = function(selector, settings) {
@@ -80,7 +74,7 @@ define(function(require){
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true});
     }
-    
+
     Adapt.register = function(name, object) {
         // Used to register components
         // Store the component view
@@ -88,12 +82,12 @@ define(function(require){
             throw Error('This component already exists in your project');
         object.template = name;
         Adapt.componentStore[name] = object;
-        
+
     }
 
     // Used to map ids to collections
     Adapt.setupMapping = function() {
-        
+
         // Setup course Id
         mappedIds[Adapt.course.get('_id')] = "course";
 
@@ -129,7 +123,7 @@ define(function(require){
         return Adapt[Adapt.mapById(id)]._byAdaptID[id][0];
 
     }
-    
+
     return Adapt;
-    
+
 });

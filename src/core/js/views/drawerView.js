@@ -1,9 +1,3 @@
-/*
-* Drawer
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@hotmail.com>, Himanshu Rajotia <himanshu.rajotia@credipoint.com>
-*/
-
 define(function(require) {
 
     var Backbone = require('backbone');
@@ -164,7 +158,7 @@ define(function(require) {
                 $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: function() {
                     $("#shadow").removeClass("display-none");
                 }});
-                    
+
                 var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
                 var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
                 var direction={};
@@ -210,7 +204,7 @@ define(function(require) {
                 var direction={};
                 direction[this.drawerDir]=-this.$el.width();
                 this.$el.css(direction).addClass('display-none');
-                
+
                 $('#shadow').addClass("display-none");
 
                 Adapt.trigger('drawer:closed');
@@ -226,17 +220,17 @@ define(function(require) {
                     this.$el.addClass('display-none');
                     Adapt.trigger('drawer:closed');
                 }, this));
-                
+
                 $('#shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
                     $('#shadow').addClass("display-none");
                 }});
 
             }
-            
+
             this._isCustomViewVisible = false;
             this.removeShadowEvent();
 
-            
+
         },
 
         addShadowEvent: function() {

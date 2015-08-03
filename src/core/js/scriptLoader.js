@@ -1,12 +1,7 @@
-/*
-* ScriptLoader
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley
-*/
 (function() {
 
     //Test for ie8
-    var IE = (function() { 
+    var IE = (function() {
         if (document.documentMode) {
             return document.documentMode;
         }

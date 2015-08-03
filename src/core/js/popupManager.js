@@ -1,9 +1,3 @@
-/*
-* popupManager
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Kirsty Hames, Daryl Hedley
-*/
-
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
@@ -18,7 +12,7 @@ define(function(require) {
     });
 
     Adapt.on('popup:closed', function() {
-        	
+
         //restore tab indexes
         $.a11y_popdown();
 

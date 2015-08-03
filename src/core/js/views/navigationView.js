@@ -1,25 +1,19 @@
-/*
-* NavigationView
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley
-*/
-
 define(function(require) {
-    
+
     var Backbone = require('backbone');
     var Handlebars = require('handlebars');
     var Adapt = require('coreJS/adapt');
 
     var NavigationView = Backbone.View.extend({
-        
+
         className: "navigation",
-        
+
         initialize: function() {
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
             this.preRender();
         },
-        
+
         events: {
             'click a':'triggerEvent'
         },
@@ -28,7 +22,7 @@ define(function(require) {
             Adapt.trigger('navigationView:preRender', this);
             this.render();
         },
-        
+
         render: function() {
             var template = Handlebars.templates[this.template]
             this.$el.html(template({_globals: Adapt.course.get("_globals")})).appendTo('#wrapper');
@@ -37,7 +31,7 @@ define(function(require) {
             }, this));
             return this;
         },
-        
+
         triggerEvent: function(event) {
             event.preventDefault();
             var currentEvent = $(event.currentTarget).attr('data-event');
@@ -55,9 +49,9 @@ define(function(require) {
         showNavigationButton: function() {
             $('.navigation-back-button').removeClass('display-none');
         }
-        
+
     });
-    
+
     return NavigationView;
-    
+
 });

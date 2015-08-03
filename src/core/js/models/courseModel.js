@@ -1,16 +1,10 @@
-/*
-* Adapt
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@gmail.com>
-*/
-
 define(function(require) {
 
     var AdaptModel = require('coreModels/adaptModel');
     var Adapt = require('coreJS/adapt');
 
     var CourseModel = AdaptModel.extend({
-    
+
         initialize: function(attrs, options) {
             this.url = options.url;
 
@@ -19,7 +13,7 @@ define(function(require) {
                 this.fetch();
             }
         },
-        
+
         loadedData: function() {
             Adapt.trigger('courseModel:dataLoaded');
             this.setupListeners();
@@ -34,9 +28,9 @@ define(function(require) {
         },
 
         _children: "contentObjects"
-    
+
     });
-    
+
     return CourseModel;
 
 });

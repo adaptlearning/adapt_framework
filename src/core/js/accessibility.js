@@ -1,9 +1,3 @@
-/*
-* Accessibility
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Kirsty Hames, Daryl Hedley
-*/
-
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
@@ -27,7 +21,7 @@ define(function(require) {
 
             //TRIGGER SETUP ON DATA LOADED AND TOGGLE BUTTON
             Adapt.once('app:dataLoaded', this.setupAccessibility, Accessibility);
-            Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility); 
+            Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility);
 
             //SETUP RENDERING HELPERS
             Adapt.once('app:dataLoaded', this.setupHelpers, Accessibility);
@@ -56,7 +50,7 @@ define(function(require) {
 
             // Check if accessibility is active
             if (this.isActive()) {
-                
+
                 this.onNavigationEnd();
                 this.setupDocument();
                 this.setupLegacy();
@@ -72,13 +66,13 @@ define(function(require) {
                 this.revertPopupListeners();
                 this.revertUsageInstructions();
                 this.revertLogging();
-            
+
             }
 
         },
 
         setupHelpers: function() {
-            
+
             //MAKE $.a11y_text and $.a11y_normalize IN GLOBAL HANDLEBARS HELPERS a11y_text and a11y_normalize
             var config = Adapt.config.has('_accessibility')
                 ? Adapt.config.get("_accessibility")
@@ -88,7 +82,7 @@ define(function(require) {
                 //ALLOW ENABLE/DISABLE OF a11y_text HELPER
                 if (config && config._isTextProcessorEnabled === false) {
                     return text;
-                } else { 
+                } else {
                     return $.a11y_text(text);
                 }
             });
@@ -134,7 +128,7 @@ define(function(require) {
             var bottomoffset = 0;
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;
-            $.a11y.options.OS = Adapt.device.OS.toLowerCase();     
+            $.a11y.options.OS = Adapt.device.OS.toLowerCase();
             $.a11y.options.isTouchDevice = Modernizr.touch;
 
             if (this.isActive()) {
@@ -199,7 +193,7 @@ define(function(require) {
 
             this.configureA11yLibrary();
             $.a11y_update();
-            
+
             //MAKE FOCUS RIGHT
             this._hasTabPosition = false
             this.focusInitial();
@@ -215,14 +209,14 @@ define(function(require) {
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
             this._isLoaded = true;
-            
-             //Remove button  
+
+             //Remove button
             this.$accessibilityToggle.remove();
 
             //Force accessibility on
             Adapt.config.get('_accessibility')._isEnabled = true;
             Adapt.config.get('_accessibility')._isActive = true;
-            
+
             Adapt.trigger('accessibility:toggle', true);
 
         },
@@ -231,7 +225,7 @@ define(function(require) {
             if (!this._isLoaded) return;
 
             var isActive = this.isActive();
-            
+
             $.a11y(isActive);
 
             if (isActive) {
@@ -247,13 +241,13 @@ define(function(require) {
         },
 
         isActive: function() {
-            return Adapt.config.has('_accessibility') 
+            return Adapt.config.has('_accessibility')
                 && Adapt.config.get('_accessibility')._isEnabled
                 && Adapt.config.get('_accessibility')._isActive;
         },
 
         isEnabled: function() {
-            return Adapt.config.has('_accessibility') 
+            return Adapt.config.has('_accessibility')
                 && Adapt.config.get('_accessibility')._isEnabled
         },
 
@@ -277,7 +271,7 @@ define(function(require) {
         setupLegacyFocusClasser: function() {
             this.removeLegacyFocusClasser();
 
-            // On focus add class of focused, on blur remove class 
+            // On focus add class of focused, on blur remove class
             this._legacyFocusElements = $(this._tabIndexElements);
             this._legacyFocusElements
                 .on('focus', this.onElementFocused)
@@ -289,7 +283,7 @@ define(function(require) {
         },
 
 
-        setupUsageInstructions: function() {            
+        setupUsageInstructions: function() {
             if (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions) {
                 this.$accessibilityInstructions.remove();
                 return;
@@ -317,7 +311,7 @@ define(function(require) {
             $($.a11y).on("reading", this.onRead);
         },
 
-        
+
 
         revertDocument: function() {
             this.$html.removeClass('accessibility');
@@ -363,7 +357,7 @@ define(function(require) {
             $($.a11y).off("reading", this.onRead);
         },
 
-        
+
         focusInitial: function() {
             if (!this.isActive()) return;
 
@@ -376,7 +370,7 @@ define(function(require) {
                 if (!this._hasUsageInstructionRead) {
 
                     $("#accessibility-instructions").focusNoScroll();
-                    
+
                     this._hasUsageInstructionRead = true;
 
                 } else {
@@ -393,7 +387,7 @@ define(function(require) {
                                 }
                                 break;
 
-                            case "menu": 
+                            case "menu":
                             default:
                                 if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
@@ -416,9 +410,9 @@ define(function(require) {
                     }, 250);
 
                 }
-                
+
             }, this), 1000);
-            
+
         },
 
         onElementFocused: function(event) {
@@ -437,8 +431,8 @@ define(function(require) {
         onPop: function() {
             //MAKE SURE POPUP IS CONFIGURED CORRECTLY WITH ARIA LABELS, TABINDEXES ETC
             if (this.isActive()) {
-                $.a11y_update();  
-            } 
+                $.a11y_update();
+            }
         },
 
         onKeyUp: function(event) {
@@ -451,7 +445,7 @@ define(function(require) {
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
             if (Accessibility.isActive() && Accessibility._hasTabPosition) return;
-                   
+
             //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
             Accessibility.$accessibilityToggle.focus();
 

@@ -1,9 +1,3 @@
-/*
-* Adapt
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley <darylhedley@gmail.com>
-*/
-
 define(function(require) {
 
     var Adapt = require('coreJS/adapt');
@@ -26,7 +20,7 @@ define(function(require) {
             type = type || true;
 
             AdaptModel.prototype.reset.call(this, type, force);
-            
+
             if (this.get("_isQuestionType")) {
                 var attempts = this.get('_attempts');
                 this.set({
@@ -41,7 +35,7 @@ define(function(require) {
         _parent:'blocks',
     	_siblings:'components'
     });
-    
+
     return ComponentModel;
 
 });

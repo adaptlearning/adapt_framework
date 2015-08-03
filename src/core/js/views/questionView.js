@@ -1,9 +1,3 @@
-/*
-* QuestionView
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Daryl Hedley
-*/
-
 define(function(require) {
 
     var Handlebars = require('handlebars');
@@ -12,12 +6,12 @@ define(function(require) {
     var ButtonsView = require('coreViews/buttonsView');
 
     var QuestionView = ComponentView.extend({
-    
+
         className: function() {
             return "component "
-            + "question-component " 
+            + "question-component "
             + this.model.get('_component')
-            + "-component " + this.model.get('_id') 
+            + "-component " + this.model.get('_id')
             + " " + this.model.get('_classes')
             + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
@@ -37,7 +31,7 @@ define(function(require) {
             this.setupDefaultSettings();
             // Blank method for setting up questions before rendering
             this.setupQuestion();
-            
+
         },
 
         // Used in the question view to disabled the question when _isEnabled has been set to false
@@ -87,9 +81,9 @@ define(function(require) {
                     this.model.set('_buttonState', 'hideCorrectAnswer');
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
-                        this.onHideCorrectAnswerClicked(); 
+                        this.onHideCorrectAnswerClicked();
                     }, this));
-                    
+
                 } else {
                     this.model.set('_buttonState', 'submit');
                     // Defer is added to allow the component to render
@@ -135,7 +129,7 @@ define(function(require) {
                 } else {
                     // Backwards compatibility with v1.x
                     var buttons = [];
-                    
+
                     for (var key in compButtons) {
                         var index = '_' + key;
 
@@ -148,15 +142,15 @@ define(function(require) {
                             };
                         }
                     }
-                    
+
                     // HACK - Append other missing values
                     buttons['_showFeedback'] = {
                         buttonText: 'Show feedback',
                         ariaLabel: 'Show feedback'
                     };
-                    
-                    this.model.set('_buttons', buttons);    
-                }              
+
+                    this.model.set('_buttons', buttons);
+                }
             }
         },
 
@@ -209,35 +203,35 @@ define(function(require) {
 
             // Used to update the amount of attempts the question has
             this.updateAttempts();
-            
+
             // Used to set attributes on the model after being submitted
             // Also adds a class of submitted
             this.setQuestionAsSubmitted();
-            
+
             // Used to remove instruction error that is set when
             // the user has interacted in the wrong way
             this.removeInstructionError();
-            
+
             // Used to store the users answer for later
             // This is a blank method given to the question
             this.storeUserAnswer();
 
             // Used to set question as correct:true/false
-            // Calls isCorrect which is blank for the question 
+            // Calls isCorrect which is blank for the question
             // to fill out and return a boolean
             this.markQuestion();
-            
+
             // Used by the question to set the score on the model
             this.setScore();
-            
+
             // Used by the question to display markings on the component
             this.showMarking();
-            
+
             // Used to check if the question is complete
             // Triggers setCompletionStatus and adds class to widget
             this.checkQuestionCompletion();
-            
-            // Used to setup the feedback by checking against 
+
+            // Used to setup the feedback by checking against
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
@@ -314,7 +308,7 @@ define(function(require) {
         checkQuestionCompletion: function() {
 
             var isComplete = false;
-            
+
             if (this.model.get('_isCorrect') || this.model.get('_attemptsLeft') === 0) {
                 isComplete = true;
             }
@@ -341,7 +335,7 @@ define(function(require) {
                 if (isCorrect || !canShowModuleAnswer) {
 					//use correct instead of complete to signify button state
                     this.model.set('_buttonState', 'correct');
-                    
+
                 } else {
 
                     switch(buttonState) {
@@ -385,7 +379,7 @@ define(function(require) {
         setupCorrectFeedback: function() {
 
             this.model.set({
-                feedbackTitle: this.model.get('title'), 
+                feedbackTitle: this.model.get('title'),
                 feedbackMessage: this.model.get("_feedback").correct
             });
 
@@ -422,10 +416,10 @@ define(function(require) {
             }
 
         },
-        
+
         // Used to show feedback based upon whether _canShowFeedback is true
         showFeedback: function() {
-                
+
             if (this.model.get('_canShowFeedback')) {
                 Adapt.trigger('questionView:showFeedback', this);
             } else {
@@ -489,11 +483,11 @@ define(function(require) {
         // hide the correct answer
         // Should use the values stored in storeUserAnswer
         hideCorrectAnswer: function() {}
-        
+
     }, {
         _isQuestionType: true
     });
-    
+
     return QuestionView;
 
 });

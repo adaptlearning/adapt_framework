@@ -1,9 +1,3 @@
-/*
-* Accessibility View
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Kirsty Hames, Daryl Hedley
-*/
-
 define(function(require) {
 
     var Backbone = require('backbone');
@@ -22,19 +16,19 @@ define(function(require) {
         },
 
         render: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') 
+            var hasAccessibility = Adapt.config.has('_accessibility')
                 && Adapt.config.get('_accessibility')._isEnabled;
-            
+
             if (!hasAccessibility) {
                 return;
             } else {
                 var isActive = Adapt.config.get('_accessibility')._isActive;
                 var offLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
                 var onLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
-    
+
                 var toggleText = isActive ? offLabel : onLabel;
-    
-                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);                
+
+                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);
             }
         },
 
@@ -52,7 +46,7 @@ define(function(require) {
             Backbone.history.navigate(window.location.hash, {trigger: true});
 
             this.render();
-        }    
+        }
 
     });
 

@@ -1,9 +1,3 @@
-/*
-* Adapt
-* License - https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE
-* Maintainers - Brian Quinn, Daryl Hedley <darylhedley@gmail.com>
-*/
-
 define(function(require) {
 
     var Backbone = require('backbone');
@@ -42,11 +36,11 @@ define(function(require) {
         },
 
         loadData: function() {
-            
+
         }
 
     });
-   
+
    return ConfigModel;
 
 });
