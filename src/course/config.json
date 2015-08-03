@@ -24,6 +24,5 @@
             "_onTrackingCriteriaMet": "completed",
             "_onAssessmentFailure": "incomplete"
         }
-    },
-    "_showIds": true
+    }
 }
