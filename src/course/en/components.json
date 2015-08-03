@@ -1,1462 +1,1098 @@
 [
-  {
-    "_id": "c-05",
-    "_parentId": "b-05",
-    "_type": "component",
-    "_component": "text",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Our first look at a component",
-    "displayTitle": "Our first look at a component",
-    "body": "This component you're reading is a text component. All components take this form of a title and body - except a blank component. However it's important to realise that title and body attributes are not needed. <br><br>Take for instance the media component opposite or below on a smaller device - has no body attribute. Instead of the HTML being rendered Adapt simply doesn't render it. The title attribute is simply a break tag to push the media component level with the opposite component.",
-    "instruction": "",
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-10",
-    "_parentId": "b-05",
-    "_type": "component",
-    "_component": "media",
-    "_classes": "media-top-padding",
-    "_layout": "right",
-    "title": "Media component",
-    "displayTitle": "",
-    "body": "",
-    "instruction": "",
-    "_setCompletionOn": "play",
-    "_media": {
-      "mp4": "course/en/video/big_buck_bunny.mp4",
-      "ogv": "course/en/video/big_buck_bunny.ogv",
-      "poster": "course/en/video/big_buck_bunny-small.jpg"
-    },
-    "_transcript": {
-      "_inlineTranscript": false,
-      "_externalTranscript": true,
-      "inlineTranscriptButton": "Transcript",
-      "inlineTranscriptCloseButton": "Close Transcript",
-      "inlineTranscriptBody": "Transcript body text should go here",
-      "transcriptLinkButton": "Transcript",
-      "transcriptLink": "assets/transcript.pdf"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": false
-    }
-  },
-  {
-    "_id": "c-15",
-    "_parentId": "b-10",
-    "_classes": "",
-    "_type": "component",
-    "_component": "hotgraphic",
-    "_layout": "full",
-    "_isOptional": true,
-    "title": "Key Facts",
-    "displayTitle": "Key Facts",
-    "body": "We live in a multi-device world. The growth of internet enabled devices such as smartphones, tablets and laptops means that increasingly we have to deliver learning solutions that work on all devices. This is not as simple as a desktop and mobile solution; what is required is a multi-device solution.",
-    "instruction": "Select the hotspots on the image below for more.",
-    "_graphic": {
-      "src": "course/en/images/hotgraphic.png",
-      "alt": "alt text"
-    },
-    "_items": [
-      {
-        "title": "Introduction",
-        "body": "With the advent of modern browsers, frameworks, developments in HTML 5 and responsive design approaches we're now able to create engaging learning that will work, regardless of the device being used.<br><br>In addition, Libraries such as Backbone, Underscore and Handlebars have rapidly sped up development and enabled the production of fast single page applications (SPAs) that improve the user experience.",
-        "_graphic": {
-          "src": "course/en/images/html5.png",
-          "alt": "Hot graphic pop-up pin. Select here to open."
-        },
-        "strapline": "Introduction",
-        "_top": 58,
-        "_left": 23
-      },
-      {
-        "title": "What is responsive elearning?",
-        "body": "Responsive elearning Design takes its inspiration from Responsive Web Design; an approach to design that ensures a single version of a website (or an elearning course created as a web app) can provide a viewing experience optimised to complement a variety of different devices, from desktop monitor to smartphone.This tailored viewing experience is achieved by:<ul><li>providing dynamic layouts which allow for the resizing of onscreen elements to make the most of the space available (fluid grid concept)</li><li>automatically detecting the characteristics of the device being used and applying an appropriate style to all onscreen elements (Media queries and CSS)</li><li>ensuring all images can be scaled to complement the device being used at the time</li></ul>",
-        "_graphic": {
-          "src": "course/en/images/devices.png",
-          "alt": "Hot graphic pop-up pin. Select here to open."
-        },
-        "strapline": "What is responsive elearning?",
-        "_top": 60,
-        "_left": 80
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-20",
-    "_parentId": "b-15",
-    "_type": "component",
-    "_component": "accordion",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Scrolling: Some considerations",
-    "displayTitle": "Scrolling: Some considerations",
-    "body": "Here are some reasons why we think scrolling is perfectly fine – and even desirable:",
-    "instruction": "Select the headings below to reveal the text.",
-    "_items": [
-      {
-        "alt": "Your learners already do it",
-        "title": "Your learners already do it",
-        "body": "Visit a website today and vertical scrolling will most likely factor into the overall design of the site.  Users understand what’s expected of them and are scrolling down the page to read content.  Feedback from our user trialling of scrolling page designs supports the assertion that users ‘get it’. Actually, they preferred this approach over more traditional template designs.<br><br>Surely we want to present learning that uses conventions our audience is most comfortable with?"
-      },
-      {
-        "alt": "Device proof your learning",
-        "title": "Device proof your learning",
-        "body": "More and more learners are accessing content on a wide range of devices and each of these devices will display pages differently. The only thing you can guarantee is if you’re accessing content on a smartphone vertical scrolling will be required. Why not embrace this and place responsive design and vertical scrolling at the heart of your design?"
-      },
-      {
-        "alt": "Meaningful navigation",
-        "title": "Meaningful navigation",
-        "body": "It's common sense to cluster any related content on a single page that’s either as short or as long as it needs to be.  Not only does this reduce any unnecessary navigation, it also helps the learner make sense of the structure and the relationship between content. Navigation becomes meaningful, rather than a by-product of the template size."
-      },
-      {
-        "alt": "‘Everything above the fold’ might be old hat but...",
-        "title": "‘Everything above the fold’ might be old hat but...",
-        "body": "...The principle remains. Due to the variety of devices used to access web content you’ll only be able to guarantee the first 400 or 500 pixels of a page will be visible, so there’s no harm in putting the important stuff first and hooking your learners early. In fact, we advocate this as good practice, regardless of what page layouts are being used."
-      },
-      {
-        "alt": "More flexibility",
-        "title": "More flexibility",
-        "body": "Scrolling pages still allow you to present content via interactive elements (we call them components instead of templates), but with a scrolling page there is far more flexibility in how these elements are presented. Layouts can now vary in size and the density of content, which in turn creates more space for branding to be incorporated. Or indeed some precious white space to give the content space to breathe.  Overruns are also a thing of the past meaning localisation of content becomes a simpler proposition as well."
-      },
-      {
-        "alt": "Don’t throw the baby out with the bath water",
-        "title": "Don’t throw the baby out with the bath water",
-        "body": "None of the above means we stop following instructional design best practice.  We continue to put the learner at the heart of what we produce, writing well-structured which follows an appropriate learning model. It’s more about looking around at what is going on within the wider web community and taking note of changes in best practice and the nature of how content, is being accessed."
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-30",
-    "_parentId": "b-15",
-    "_type": "component",
-    "_component": "mcq",
-    "_classes": "",
-    "_layout": "right",
-    "_attempts": 2,
-    "_questionWeight": 1,
-    "_isRandom": true,
-    "_selectable": 4,
-    "title": "Key benefits of a vertical scrolling approach",
-    "displayTitle": "Key benefits of a vertical scrolling approach",
-    "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
-    "instruction": "Select one or more options from the list below and select Submit.",
-    "_items": [
-      {
-        "text": "Vertical scrolling as a means of navigation on the web is common place and therefore familiar to users",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "Placing scrolling at the heart of your approach means designs are more mobile friendly",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "It reduces the need for unnecessary navigation as pages can be as long as they need to be",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "It means that you no longer need to first gain your learners' attention",
-        "_shouldBeSelected": false
-      }
-    ],
-    "_feedback": {
-      "correct": "That’s correct. To continue close this tutor pop-up.",
-      "_incorrect": {
-        "notFinal": "Sorry, that’s not right. To continue close this tutor pop-up.",
-        "final": "Final feedback! Sorry, that’s not right. To continue close this tutor pop-up."
-      },
-      "_partlyCorrect": {
-        "notFinal": "That’s not quite right. To continue close this tutor pop-up.",
-        "final": "Final feedback! That’s not quite right. To continue close this tutor pop-up."
-      }
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-35",
-    "_parentId": "b-20",
-    "_type": "component",
-    "_classes": "",
-    "_layout": "full",
-    "_component": "narrative",
-    "title": "What’s coming next?",
-    "displayTitle": "What’s coming next?",
-    "body": "Find out what’s on the roadmap for 2014 for Adapt Learning.",
-    "instruction": "",
-    "_items": [
-      {
-        "title": "Improvements",
-        "body": "Over the next few months we’ll be working on a number of developments to improve Adapt Learning to ensure it’s the leading elearning framework for responsive content. At the heart of these developments are two key pieces of work.",
-        "_graphic": {
-          "src": "course/en/images/narrative.png",
-          "alt": "narrative alt text"
-        },
-        "strapline": "Improvements"
-      },
-      {
-        "title": "1: Plug-in Friendly Architecture",
-        "body": "We’re in the process of reworking the codebase to ensure a plugin friendly approach. This will help us to establish an extensive and vibrant open source community to support the framework and adhere to the principles of collaborative development.",
-        "_graphic": {
-          "src": "course/en/images/narrative_1.png",
-          "alt": "narrative 1 alt text"
-        },
-        "strapline": "1: Plug-in Friendly Architecture"
-      },
-      {
-        "title": "2: Authoring Tool",
-        "body": "We’re also creating an authoring tool to allow non-technical users to create fully featured Adapt elearning courses. The authoring tool will be simple enough for novices to use yet powerful enough to meet the needs of the elearning professional.",
-        "_graphic": {
-          "src": "course/en/images/narrative_2.png",
-          "alt": "narrative 2 alt text"
-        },
-        "strapline": "2: Authoring Tool"
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-200",
-    "_parentId": "b-22",
-    "_type": "component",
-    "_component": "mcq",
-    "_classes": "",
-    "_layout": "left",
-    "_attempts": 1,
-    "_questionWeight": 10,
-    "_isRandom": true,
-    "_selectable": 3,
-    "title": "Getting involved",
-    "displayTitle": "Getting involved",
-    "body": "How can anyone get involved with Adapt?",
-    "instruction": "Select the correct answers below.",
-    "_items": [
-      {
-        "text": "Sign up to the community site",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "Contrib to code on Github",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "Suggest extra features for plugins",
-        "_shouldBeSelected": true
-      }
-    ],
-    "_feedback": {
-      "correct": "That’s correct. To continue close this tutor pop-up.",
-      "_incorrect": {
-        "notFinal": "Sorry, that’s not right. To continue close this tutor pop-up.",
-        "final": "Final feedback! Sorry, that’s not right. To continue close this tutor pop-up."
-      },
-      "_partlyCorrect": {
-        "notFinal": "That’s not quite right. To continue close this tutor pop-up.",
-        "final": "Final feedback! That’s not quite right. To continue close this tutor pop-up."
-      }
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-205",
-    "_parentId": "b-22",
-    "_classes": "",
-    "_layout": "right",
-    "_type": "component",
-    "_component": "matching",
-    "_attempts": 1,
-    "_random": true,
-    "_questionWeight": 10,
-    "title": "Order of a page",
-    "displayTitle": "Order of a page",
-    "body": "Put in order, the elements as they are viewed in a standard Adapt page",
-    "instruction": "Select an options from the drop down list",
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "That's correct. Think A, B, C when creating Adapt courses.",
-      "_incorrect": {
-        "notFinal": "NOT FINAL This feedback will appear if you answered the question incorrectly.",
-        "final": "FINAL This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "NON-FINAL! This feedback will appear if you answered part of the question correctly.",
-        "final": "FINAL! This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "placeholder": "select an option",
-    "_items": [
-      {
-        "text": "First element",
-        "_options": [
-          {
-            "text": "Component",
-            "_isCorrect": false
-          },
-          {
-            "text": "Article",
-            "_isCorrect": true
-          },
-          {
-            "text": "Block",
-            "_isCorrect": false
-          }
-        ]
-      },
-      {
-        "text": "Second element",
-        "_options": [
-          {
-            "text": "Component",
-            "_isCorrect": false
-          },
-          {
-            "text": "Article",
-            "_isCorrect": false
-          },
-          {
-            "text": "Block",
-            "_isCorrect": true
-          }
-        ]
-      },
-      {
-        "text": "Third element",
-        "_options": [
-          {
-            "text": "Component",
-            "_isCorrect": true
-          },
-          {
-            "text": "Article",
-            "_isCorrect": false
-          },
-          {
-            "text": "Block",
-            "_isCorrect": false
-          }
-        ]
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-210",
-    "_parentId": "b-25",
-    "_type": "component",
-    "_component": "textinput",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Extensions",
-    "displayTitle": "Extensions",
-    "body": "Name the two extensions being used on this page?",
-    "instruction": "Fill in your answers below.",
-    "_attempts": 1,
-    "_allowsAnyOrder": false,
-    "_allowsAnyCase": true,
-    "_allowsPunctuation": true,
-    "_questionWeight": 10,
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "This feedback will appear if you answered the question correctly.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_items": [
-      {
-        "prefix": "",
-        "suffix": "",
-        "_answers": [
-          "article assessment",
-          "trickle"
-        ],
-        "placeholder": "Enter answer here"
-      },
-      {
-        "prefix": "",
-        "suffix": "",
-        "_answers": [
-          "trickle",
-          "article assessment"
-        ],
-        "placeholder": "Enter answer here"
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-215",
-    "_parentId": "b-25",
-    "_type": "component",
-    "_component": "gmcq",
-    "_classes": "",
-    "_layout": "right",
-    "_attempts": 1,
-    "_questionWeight": 10,
-    "_isRandom": false,
-    "_selectable": 1,
-    "title": "GMCQ",
-    "displayTitle": "GMCQ",
-    "body": "Which of the following options would you consider to be correct?",
-    "instruction": "Maybe pick option one.",
-    "_items": [
-      {
-        "text": "This is option 1.",
-        "_shouldBeSelected": true,
-        "_graphic": {
-          "alt": "Alt text for option 1",
-          "large": "course/en/images/gqcq-1-large.gif",
-          "small": "course/en/images/gqcq-1-small.gif"
-        }
-      },
-      {
-        "text": "This is option 2.",
-        "_shouldBeSelected": false,
-        "_graphic": {
-          "alt": "Alt text for option 2",
-          "large": "course/en/images/gqcq-2-large.gif",
-          "small": "course/en/images/gqcq-2-small.gif"
-        }
-      }
-    ],
-    "_feedback": {
-      "correct": "Congratulations, this is the correct feedback.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-124",
-    "_parentId": "b-30",
-    "_type": "component",
-    "_component": "mcq",
-    "_classes": "",
-    "_layout": "left",
-    "_attempts": 1,
-    "_questionWeight": 1,
-    "_isRandom": false,
-    "_selectable": 1,
-    "title": "MCQ",
-    "displayTitle": "MCQ",
-    "body": "Which of the following options would you consider to be correct?",
-    "instruction": "Option one again?",
-    "_items": [
-      {
-        "text": "This is option 1.",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "This is option 2.",
-        "_shouldBeSelected": false
-      },
-      {
-        "text": "This is option 3.",
-        "_shouldBeSelected": false
-      }
-    ],
-    "_feedback": {
-      "correct": "Congratulations, this is the correct feedback.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-125",
-    "_parentId": "b-30",
-    "_classes": "",
-    "_layout": "right",
-    "_type": "component",
-    "_component": "matching",
-    "_attempts": 2,
-    "_random": true,
-    "_questionWeight": 10,
-    "title": "Matching",
-    "displayTitle": "Matching",
-    "body": "Basically what you need to do is match the questions below with the drop down box option.",
-    "instruction": "Answers should in the question.",
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "FINAL and NON-FINAL This feedback will appear if you answered the question correctly.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "placeholder": "select an option",
-    "_items": [
-      {
-        "text": "Pick option two",
-        "_options": [
-          {
-            "text": "Option one",
-            "_isCorrect": false
-          },
-          {
-            "text": "Option two (correct)",
-            "_isCorrect": true
-          },
-          {
-            "text": "Option three",
-            "_isCorrect": false
-          }
-        ]
-      },
-      {
-        "text": "Pick option three",
-        "_options": [
-          {
-            "text": "Option one",
-            "_isCorrect": false
-          },
-          {
-            "text": "Option two",
-            "_isCorrect": false
-          },
-          {
-            "text": "Option three (correct)",
-            "_isCorrect": true
-          }
-        ]
-      },
-      {
-        "text": "Pick option one",
-        "_options": [
-          {
-            "text": "Option one (correct)",
-            "_isCorrect": true
-          },
-          {
-            "text": "Option two",
-            "_isCorrect": false
-          },
-          {
-            "text": "Option three",
-            "_isCorrect": false
-          }
-        ]
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id":"c-131",
-    "_parentId":"b-31",
-    "_type":"component",
-    "_component":"assessmentResults",
-    "_classes":"",
-    "_layout":"full",
-    "title":"Results",
-    "displayTitle":"Results",
-    "body":"This component you're reading is a results component.",
-    "instruction":"",
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    },
-    "_assessmentId": "Assessment 1",
-    "_retry": {
-      "button": "Retry Assessment",
-      "feedback": "Why not have another try? You have used {{attemptsSpent}} of {{attempts}} attempt(s), which means you have {{attemptsLeft}} attempt(s) remaining."
-    },
-    "_completionBody": "This component you're reading is a results component.<br>You have finished the assessment.<br>You scored {{{score}}} out of {{{maxScore}}}. {{{feedback}}}",
-    "_bands": [
-      {
-        "_score": 0,
-        "feedback": "Your score was below 25%.",
-        "_allowRetry": true
-      },
-      {
-        "_score": 25,
-        "feedback": "Your score was below 50%.",
-        "_allowRetry": true
-      },
-      {
-        "_score": 50,
-        "feedback": "Good effort, but your score was under 75%.",
-        "_allowRetry": true
-      },
-      {
-        "_score": 75,
-        "feedback": "Great work. You passed your assessment with {{{scoreAsPercent}}}%.",
-        "_allowRetry": true
-      }
-    ]
-  },
-  {
-    "_id":"c-132",
-    "_parentId":"b-32",
-    "_type":"component",
-    "_component":"assessmentResultsTotal",
-    "_classes":"",
-    "_layout":"full",
-    "title":"Total Results",
-    "displayTitle":"Total Results",
-    "body":"This component you're reading is a total results component.",
-    "instruction":"",
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    },
-    "_completionBody": "This component you're reading is a total results component.<br>You have finished the assessment.<br>You scored {{{scoreAsPercent}}}% overall. {{{feedback}}}",
-    "_bands": [
-      {
-        "_score": 0,
-        "feedback": "As your score was below 25% you did not pass your assessments."
-      },
-      {
-        "_score": 25,
-        "feedback": "As your score was below 50% you did not pass your assessments."
-      },
-      {
-        "_score": 50,
-        "feedback": "Good effort, but your score was under 75% and so you did not pass your assessments."
-      },
-      {
-        "_score": 75,
-        "feedback": "Great work. You passed your assessments."
-      }
-    ]
-  },
-  {
-    "_id": "c-55",
-    "_parentId": "b-35",
-    "_type": "component",
-    "_component": "text",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Content is king",
-    "displayTitle": "Content is king",
-    "body": "The internet has proven to be a content based technology with more than 50% of a users time being spent online reading content, with an additional 30% of their time on social media networks.<br><br>So sometimes a simple text component does the job.",
-    "instruction": "",
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-70",
-    "_parentId": "b-35",
-    "_type": "component",
-    "_component": "graphic",
-    "_classes": "",
-    "_layout": "right",
-    "title": "Imagery helps to tell a story",
-    "displayTitle": "Imagery helps to tell a story",
-    "body": "For content that needs a visual effect we have a graphic component. To optimise this for various devices, this  component swaps out images based upon your screen size. Giving the user the best experience possible according to their device's spec.",
-    "instruction": "",
-    "_graphic": {
-      "alt": "alt text",
-      "large": "course/en/images/origami-menu-two.jpg",
-      "small": "course/en/images/origami-menu-two.jpg"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-75",
-    "_parentId": "b-40",
-    "_type": "component",
-    "_component": "accordion",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Headlines to grab attention",
-    "displayTitle": "Headlines to grab attention",
-    "body": "The accordion component enables a content creator to pick some catchy titles that reveal more information.",
-    "instruction": " Select the headings below to reveal the text.",
-    "_items": [
-      {
-        "alt": "Missing title and body elements",
-        "title": "Missing title and body elements",
-        "body": "As mentioned before, title and body elements on components are not compulsory. The same is true for articles and blocks."
-      },
-      {
-        "alt": "Use space",
-        "title": "Use space",
-        "body": "One important learning pattern to remember is to not fill every component. This can lead to a poor user experience on smaller screens. We're used to scrolling on smaller devices so use up the vertical space."
-      },
-      {
-        "alt": "Think about background images for decoration",
-        "title": "Think about background images for decoration",
-        "body": "One way of bringing content to life is adding background images to blocks or articles. We suggest doing this after the content is produced so the imagery can aid the learning."
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-80",
-    "_parentId": "b-40",
-    "_type": "component",
-    "_component": "blank",
-    "_classes": "",
-    "_layout": "right",
-    "_pageLevelProgress": {
-      "_isEnabled": false
-    }
-  },
-  {
-    "_id": "c-85",
-    "_parentId": "b-45",
-    "_classes": "",
-    "_type": "component",
-    "_layout": "full",
-    "_component": "narrative",
-    "title": "Narrative",
-    "displayTitle": "Narrative",
-    "body": "This is optional body text.",
-    "instruction": "Select the forward arrows to move through the narrative on a desktop, or swipe the images and select the plus icons to do so on mobile.",
-    "_items": [
-      {
-        "title": "Tell a story",
-        "body": "Narratives should be used to tell a story or to help learners with a process that needs to be in order.",
-        "_graphic": {
-          "src": "course/en/images/origami-menu-one.jpg",
-          "alt": "Origami birds 1"
-        },
-        "strapline": "Tell a story"
-      },
-      {
-        "title": "Optimised for touch events",
-        "body": "The narrative was built with touch devices in mind - so you can swipe through the images if you device is touch enabled.",
-        "_graphic": {
-          "src": "course/en/images/origami-menu-two.jpg",
-          "alt": "Origami birds 2"
-        },
-        "strapline": "Optimised for touch events"
-      },
-      {
-        "title": "How a narrative looks on mobile",
-        "body": "If viewing on desktop or tablet, this text will appear to the right of the image. On mobile, you’ll need to select the plus icon to reveal this text.",
-        "_graphic": {
-          "src": "course/en/images/origami-menu-three.jpg",
-          "alt": "Origami birds 3"
-        },
-        "strapline": "How a narrative looks on mobile"
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-95",
-    "_parentId": "b-50",
-    "_classes": "",
-    "_type": "component",
-    "_component": "hotgraphic",
-    "_layout": "full",
-    "title": "Hot graphic",
-    "displayTitle": "Hot graphic",
-    "body": "The hot graphic component enables the learner to interact with an image by selecting the hotspots to reveal more. This component will scale down to a narrative when viewed on mobile.",
-    "instruction": "Select the hotspots on the image to reveal the text.",
-    "_graphic": {
-      "src": "course/en/images/origami-hotgraphic.jpg",
-      "alt": "alt text"
-    },
-    "_items": [
-      {
-        "title": "Single components",
-        "body": "Single components are interactions that enable two components in a block. These take up half of a blocks width.",
-        "_graphic": {
-          "src": "course/en/images/origami-menu-two.jpg",
-          "alt": "Hot graphic pop-up pin. Select here to open."
-        },
-        "strapline": "Single components",
-        "_top": 5,
-        "_left": 20
-      },
-      {
-        "title": "Spanned components",
-        "body": "Spanned components are interactions that take up a full block and do not allow another component to sit next to it.",
-        "_graphic": {
-          "src": "course/en/images/origami-menu-three.jpg",
-          "alt": "Hot graphic pop-up pin. Select here to open."
-        },
-        "strapline": "Spanned components",
-        "_top": 25,
-        "_left": 60
-      },
-      {
-        "title": "Single and Spanned components",
-        "body": "Some components are both single and spanned. This means they can sit with another component or fill a whole block. Some exmaples are: Graphic, Text and Media",
-        "_graphic": {
-          "src": "course/en/images/origami-menu-one.jpg",
-          "alt": "Hot graphic pop-up pin. Select here to open."
-        },
-        "strapline": "Single and Spanned components",
-        "_top": 85,
-        "_left": 40
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-102",
-    "_parentId": "b-52",
-    "_type": "component",
-    "_component": "media",
-    "_classes": "",
-    "_layout": "full",
-    "title": "Media component",
-    "displayTitle": "Media component",
-    "body": "As mentioned above in the hot graphic - a media component is both a single and spanned component. Below is a media component spanned.",
-    "instruction": "",
-    "_setCompletionOn": "play",
-    "_media": {
-      "mp4": "course/en/video/big_buck_bunny.mp4",
-      "ogv": "course/en/video/big_buck_bunny.ogv",
-      "poster": "course/en/video/big_buck_bunny-large.jpg"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-105",
-    "_parentId": "b-55",
-    "_type": "component",
-    "_component": "mcq",
-    "_classes": "",
-    "_layout": "left",
-    "_attempts": 1,
-    "_questionWeight": 1,
-    "_isRandom": true,
-    "_selectable": 1,
-    "title": "MCQ",
-    "displayTitle": "MCQ",
-    "body": "A multiple choice question items each have a text attribute and whether the item is correct. An MCQ can also set the items to display in a random order and allow multiple items to be selected.",
-    "instruction": "What does MCQ standard for? Select an item below and select Submit.",
-    "_items": [
-      {
-        "text": "Magical choosing question",
-        "_shouldBeSelected": false
-      },
-      {
-        "text": "Multiple choice question",
-        "_shouldBeSelected": true
-      },
-      {
-        "text": "Machine coded quote",
-        "_shouldBeSelected": false
-      }
-    ],
-    "_feedback": {
-      "correct": "This feedback will appear if you answered the question correctly.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-110",
-    "_parentId": "b-55",
-    "_classes": "",
-    "_layout": "right",
-    "_type": "component",
-    "_component": "matching",
-    "_attempts": 2,
-    "_random": true,
-    "_questionWeight": 10,
-    "title": "Matching",
-    "displayTitle": "Matching",
-    "body": "A matching component allows multiple question stems that each have their own individual drop down. All feedback for questions are passed out through an event system so extensions can display feedback how they want. Core comes bundled with a plugin called Tutor.",
-    "instruction": "Match the questions below with the drop-down box option and select Submit.",
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "This feedback will appear if you answered the question correctly.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "placeholder": "Select an option",
-    "_items": [
-      {
-        "text": "What is the core bundled feedback extension called?",
-        "_options": [
-          {
-            "text": "Feedback plugin",
-            "_isCorrect": false
-          },
-          {
-            "text": "Tutor",
-            "_isCorrect": true
-          },
-          {
-            "text": "Question Feedback",
-            "_isCorrect": false
-          }
-        ]
-      },
-      {
-        "text": "Can I build another extension to show feedback?",
-        "_options": [
-          {
-            "text": "Yes",
-            "_isCorrect": true
-          },
-          {
-            "text": "No",
-            "_isCorrect": false
-          }
-        ]
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-115",
-    "_parentId": "b-60",
-    "_type": "component",
-    "_component": "textinput",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Text input",
-    "displayTitle": "Text input",
-    "body": "Text input allows the learner to input a text field into one of the items. This component can check whether you need items to be case sensitive, allow punctuation and allow items to be inserted in any order.",
-    "instruction": "Name one type of plugin Adapt supports?",
-    "_attempts": 1,
-    "_allowsAnyOrder": false,
-    "_allowsAnyCase": true,
-    "_allowsPunctuation": false,
-    "_questionWeight": 10,
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "That's correct. Adapt allows the following plugins: A theme, components, extensions and a menu.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_items": [
-      {
-        "prefix": "Plugin:",
-        "suffix": "",
-        "_answers": [
-          "theme",
-          "menu",
-          "extension",
-          "component"
-        ],
-        "placeholder": "Enter answer here"
-      }
-    ],
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-120",
-    "_parentId": "b-60",
-    "_type": "component",
-    "_component": "gmcq",
-    "_classes": "",
-    "_layout": "right",
-    "_attempts": 1,
-    "_questionWeight": 1,
-    "_isRandom": false,
-    "_selectable": 1,
-    "title": "GMCQ",
-    "displayTitle": "GMCQ",
-    "body": "Similar to the MCQ, but displays graphical assets instead of text items.",
-    "instruction": "",
-    "_items": [
-      {
-        "text": "This is option 1.",
-        "_shouldBeSelected": true,
-        "_graphic": {
-          "alt": "Alt text for option 1",
-          "large": "course/en/images/gqcq-1-large.gif",
-          "small": "course/en/images/gqcq-1-small.gif"
-        }
-      },
-      {
-        "text": "This is option 2.",
-        "_shouldBeSelected": false,
-        "_graphic": {
-          "alt": "Alt text for option 2",
-          "large": "course/en/images/gqcq-2-large.gif",
-          "small": "course/en/images/gqcq-2-small.gif"
-        }
-      }
-    ],
-    "_feedback": {
-      "correct": "Congratulations, this is the correct feedback.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-126",
-    "_parentId": "b-65",
-    "_type": "component",
-    "_component": "slider",
-    "_classes": "",
-    "_layout": "left",
-    "title": "Slider type component",
-    "displayTitle": "Slider type component",
-    "body": "Question text here",
-    "instruction": "",
-    "_attempts": 2,
-    "_questionWeight": 1,
-    "_showNumber": true,
-    "_showScaleIndicator": true,
-    "labelStart": "incomplete",
-    "labelEnd": "complete",
-    "_scaleStart": 1,
-    "_scaleEnd": 10,
-    "_correctAnswer": "",
-    "_correctRange": {
-      "_bottom": 4,
-      "_top": 9
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "Submit",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "This feedback will appear if you answered the question correctly.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  },
-  {
-    "_id": "c-130",
-    "_parentId": "b-65",
-    "_type": "component",
-    "_component": "slider",
-    "_classes": "",
-    "_layout": "right",
-    "title": "Slider type component",
-    "displayTitle": "Slider type component",
-    "body": "Question text here",
-    "instruction": "What do you think of Adapt?",
-    "_attempts": 1,
-    "_questionWeight": 10,
-    "_showNumber": true,
-    "_showScaleIndicator": true,
-    "labelStart": "Not amazing",
-    "labelEnd": "Amazing",
-    "_scaleStart": 1,
-    "_scaleEnd": 10,
-    "_correctAnswer": "",
-    "_correctRange": {
-      "_bottom": 4,
-      "_top": 9
-    },
-    "_buttons": {
-      "_submit": {
-        "buttonText": "",
-        "ariaLabel": "Select here to submit your answer."
-      },
-      "_reset": {
-        "buttonText": "Reset",
-        "ariaLabel": ""
-      },
-      "_showCorrectAnswer": {
-        "buttonText": "Correct answer",
-        "ariaLabel": ""
-      },
-      "_hideCorrectAnswer": {
-        "buttonText": "My answer",
-        "ariaLabel": ""
-      },
-      "_showFeedback": {
-        "buttonText": "Show feedback",
-        "ariaLabel": ""
-      },
-      "remainingAttemptsText": "attempts remaining",
-      "remainingAttemptText": "final attempt",
-      "disabledAriaLabel": "This button is disabled at the moment"
-    },
-    "_feedback": {
-      "correct": "This feedback will appear if you answered the question correctly.",
-      "_incorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered the question incorrectly."
-      },
-      "_partlyCorrect": {
-        "notFinal": "",
-        "final": "This feedback will appear if you answered part of the question correctly."
-      }
-    },
-    "_pageLevelProgress": {
-      "_isEnabled": true
-    }
-  }
+	{
+		"_id": "c-05",
+		"_parentId": "b-05",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "left",
+		"title": "Introduction",
+		"displayTitle": "",
+		"body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br>These presentation components can be structured in any way to help you create learning experiences that meet the needs of your learners.",
+		"instruction": "Scroll down to see what presentation components are available as part of the Version 2.0 core bundle.",
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-10",
+		"_parentId": "b-05",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"title": "c-10",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-15",
+		"_parentId": "b-10",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "left",
+		"title": "Text components",
+		"displayTitle": "Text components",
+		"body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
+		"instruction": "",
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-20",
+		"_parentId": "b-10",
+		"_type": "component",
+		"_component": "blank",
+		"_classes": "",
+		"_layout": "right",
+		"title": "c-20"
+	},
+	{
+		"_id": "c-25",
+		"_parentId": "b-15",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "full",
+		"title": "Graphic",
+		"displayTitle": "Graphic",
+		"body": "This is the graphic component body. You can introduce your graphic or you may just want to let the graphics do the talking.<br><br>Component can either be single or spanned.",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/full_width.jpg",
+			"small": "course/en/images/full_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-30",
+		"_parentId": "b-20",
+		"_type": "component",
+		"_component": "narrative",
+		"_classes": "",
+		"_layout": "full",
+		"_comment": "setCompletionOn = inview | allItems",
+		"_setCompletionOn": "allItems",
+		"_hasNavigationInTextArea": false,
+		"title": "Narrative",
+		"displayTitle": "Narrative",
+		"body": "The narrative component lets you scroll through a series of images each with some accompanying text.<br><br>This component is always spanned.",
+		"instruction": "Select the arrow to find out more.",
+		"mobileInstruction": "Select the arrow followed by the plus icon to find out more.",
+		"_items": [
+			{
+				"title": "Narrative item 1",
+				"body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning about to follow, to illustrate real world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
+				"_graphic": {
+					"src": "course/en/images/single_width_small.jpg",
+					"alt": "Placeholder graphic."
+				},
+				"strapline": "Narrative item 1"
+			},
+			{
+				"title": "Narrative item 2",
+				"body": "Narratives can also be used to present case studies, where the different displays are used to set the scene, show the key events and then the outcome.",
+				"_graphic": {
+					"src": "course/en/images/single_width_small.jpg",
+					"alt": "Placeholder graphic."
+				},
+				"strapline": "Narrative item 2"
+			},
+			{
+				"title": "Narrative item 3",
+				"body": "The narrative can also be used when you want to illustrate the constituent steps that make up a larger process.",
+				"_graphic": {
+					"src": "course/en/images/single_width_small.jpg",
+					"alt": "Placeholder graphic."
+				},
+				"strapline": "Narrative item 3"
+			}
+		],
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-35",
+		"_parentId": "b-25",
+		"_type": "component",
+		"_component": "hotgraphic",
+		"_classes": "",
+		"_layout": "full",
+		"_comment": "setCompletionOn = inview | allItems",
+		"_setCompletionOn": "allItems",
+		"_canCycleThroughPagination": false,
+		"_hidePagination": false,
+		"_useGraphicsAsPins": false,
+		"title": "Hot graphic",
+		"displayTitle": "Hot graphic",
+		"body": "You can add interactivity to an image by using the <strong>hot graphic</strong>. This component allows you to position icons over an image. When an icon is selected, content associated with its corresponding location is displayed in a window over the image. This component will fall back to a <strong>narrative</strong> when viewed on mobile.<br><br>This component is always spanned.",
+		"instruction": "Select the icons to find out more.",
+		"mobileInstruction": "",
+		"_graphic": {
+			"src": "course/en/images/full_width.jpg",
+			"alt": "Placeholder graphic."
+		},
+		"_items": [
+			{
+				"title": "Hot graphic item 1",
+				"body": "This is display text 1 which we have associated with the tablet image on the desktop.",
+				"_graphic": {
+					"src": "course/en/images/single_width_small.jpg",
+					"alt": "Placeholder graphic.",
+					"_classes": ""
+				},
+				"strapline": "Hot graphic item 1",
+				"_classes": "",
+				"_top": 42,
+				"_left": 8.5
+			},
+			{
+				"title": "Hot graphic item 2",
+				"body": "This is display text 2 which we have linked to the smartphone image.",
+				"_graphic": {
+					"src": "course/en/images/single_width_small.jpg",
+					"alt": "Placeholder graphic.",
+					"_classes": ""
+				},
+				"strapline": "Hot graphic item 2",
+				"_classes": "",
+				"_top": 62,
+				"_left": 26.5
+			},
+			{
+				"title": "Hot graphic item 3",
+				"body": "This is display text 3 which we’ve located over the laptop so you would expect the content to be about PCs.",
+				"_graphic": {
+					"src": "course/en/images/single_width_small.jpg",
+					"alt": "Placeholder graphic.",
+					"_classes": ""
+				},
+				"strapline": "Hot graphic item 3",
+				"_classes": "",
+				"_top": 62,
+				"_left": 49
+			}
+		],
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-40",
+		"_parentId": "b-30",
+		"_type": "component",
+		"_component": "media",
+		"_classes": "",
+		"_layout": "full",
+		"_comment": "_setCompletionOn = inview | play | ended",
+		"_setCompletionOn": "play",
+		"_useClosedCaptions": false,
+		"title": "Media",
+		"displayTitle": "Media",
+		"body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or just let audio to literally do the talking. This is when the media component comes to the fore.<br><br>Component can be either single or spanned.",
+		"instruction": "Select the play button to start the video.",
+		"_media": {
+			"mp4": "course/en/video/c-40.mp4",
+			"ogv": "course/en/video/c-40.ogv",
+			"poster": "course/en/video/c-40.jpg",
+			"cc": [
+				{
+					"srclang": "",
+					"src": ""
+				}
+			]
+		},
+		"_transcript": {
+			"_inlineTranscript": true,
+			"_externalTranscript": false,
+			"inlineTranscriptButton": "Transcript",
+			"inlineTranscriptCloseButton": "Close Transcript",
+			"inlineTranscriptBody": "Transcript body text should go here",
+			"transcriptLinkButton": "Transcript",
+			"transcriptLink": ""
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-45",
+		"_parentId": "b-35",
+		"_type": "component",
+		"_component": "accordion",
+		"_classes": "",
+		"_layout": "full",
+		"title": "Accordion",
+		"displayTitle": "Accordion",
+		"body": "You can use the <strong>accordion</strong> component to present learners with a series of headings, which once selected, expand to reveal associated text. Select each of the headings below to find out more about how accordions can be used.<br><br>These components can be either single or spanned. If spanned they can also contain a graphic.",
+		"instruction": "Select the headings to find out more.",
+		"_items": [
+			{
+				"title": "Lists",
+				"body": "This is display text 1 and we’re using it to discuss lists.<br><br>If you need to present a list which can standalone as a piece of content, but which can also be explored in more detail, then accordions are a great choice.",
+				"_graphic": {
+					"src": "course/en/images/accordion_full_width.jpg",
+					"alt": "Placeholder graphic."
+				}
+			},
+			{
+				"title": "Steps in a process",
+				"body": "This is display text 2 and now we’re discussing how accordions can be great at presenting a process.<br><br>The headings can be used to present the high level stages in the process which once selected, provide a more extensive explanation of what happens at that specific point.",
+				"_graphic": {
+					"src": "course/en/images/accordion_full_width.jpg",
+					"alt": "Placeholder graphic."
+				}
+			},
+			{
+				"title": "Recaps",
+				"body": "This is display text 3 and we’re now talking about using accordions to provide the learner with a summary.<br><br>Each accordion item corresponds to a key piece of learning presented on the page. When this item is selected a short summary of the learning point is provided.",
+				"_graphic": {
+					"src": "course/en/images/accordion_full_width.jpg",
+					"alt": "Placeholder graphic."
+				}
+			}
+		],
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-60",
+		"_parentId": "b-40",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": true,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 1,
+		"title": "Multiple Choice Question",
+		"displayTitle": "Multiple Choice Question",
+		"body": "In what year was the first recorded instance of a large scale assessment that consists solely of multiple choice questions?",
+		"instruction": "Choose one or more options and select Submit.",
+		"_items": [
+			{
+				"text": "1917",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "1888",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "1953",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "1977",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "Correct feedback text.<br><br>That’s correct. The first large assessment to consist solely of the multiple choice question type was the Army Alpha test, used from <strong>1917</strong> to evaluate U.S. military recruits in the First World War.<br><br>Source: <a href='http://en.wikipedia.org/wiki/Multiple_choice' target='_blank'>Wikipedia</a><br><br><em>Component facts: <strong>Multiple Choice Questions (or MCQs)</strong> are a tried and tested method for presenting learners with a simple text-based question. Component is either single or spanned.</em>",
+			"_incorrect": {
+				"final": "Incorrect feedback text.<br><br>That’s not right. The first large assessment to consist solely of the multiple choice question type was the Army Alpha test, used from <strong>1917</strong> to evaluate U.S. military recruits in the First World War.<br><br>Source: <a href='http://en.wikipedia.org/wiki/Multiple_choice' target='_blank'>Wikipedia</a><br><br><em>Component facts: <strong>Multiple Choice Questions (or MCQs)</strong> are a tried and tested method for presenting learners with a simple text-based question. Component is either single or spanned.</em>"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-62",
+		"_parentId": "b-40",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"title": "c-62",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-65",
+		"_parentId": "b-45",
+		"_type": "component",
+		"_component": "gmcq",
+		"_classes": "col-4",
+		"_layout": "full",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": true,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 1,
+		"title": "Graphical Multiple Choice Question",
+		"displayTitle": "Graphical Multiple Choice Question",
+		"body": "The graphical multiple choice question is an alternative to the standard MCQ, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
+		"instruction": "Choose option 2 and select Submit.",
+		"_items": [
+			{
+				"text": "Option 1",
+				"_shouldBeSelected": false,
+				"_graphic": {
+					"large": "course/en/images/GMCQ_option.png",
+					"small": "course/en/images/GMCQ_option.png",
+					"alt": "Placeholder graphic."
+				}
+			},
+			{
+				"text": "Option 2",
+				"_shouldBeSelected": true,
+				"_graphic": {
+					"large": "course/en/images/GMCQ_option.png",
+					"small": "course/en/images/GMCQ_option.png",
+					"alt": "Placeholder graphic."
+				}
+			},
+			{
+				"text": "Option 3",
+				"_shouldBeSelected": false,
+				"_graphic": {
+					"large": "course/en/images/GMCQ_option.png",
+					"small": "course/en/images/GMCQ_option.png",
+					"alt": "Placeholder graphic."
+				}
+			}
+		],
+		"_feedback": {
+			"correct": "Correct feedback text.<br><br>That’s correct. <strong>Option 2</strong> is what we were looking for!",
+			"_incorrect": {
+				"final": "Incorrect feedback text.<br><br>Sorry, that’s not right. In fact <strong>Option 2</strong> is what we were looking for (the clue was in the instruction text!)."
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-70",
+		"_parentId": "b-50",
+		"_type": "component",
+		"_component": "textinput",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": true,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_allowsAnyCase": true,
+		"_allowsPunctuation": true,
+		"title": "Text Input",
+		"displayTitle": "Text Input",
+		"body": "Can you name one of the three companies that established Adapt as a community led Open Source project?",
+		"instruction": "Input your answers and select Submit.",
+		"_answers": [
+			["City & Guilds Kineo", "Kineo"],
+			["Learning Pool"],
+			["Sponge"]
+		],
+		"_items": [
+			{
+				"prefix": "prefix",
+				"placeholder": "Enter answer here",
+				"suffix": "suffix"
+			},
+			{
+				"prefix": "",
+				"placeholder": "Enter answer here",
+				"suffix": ""
+			},
+			{
+				"prefix": "",
+				"placeholder": "Enter answer here",
+				"suffix": ""
+			}
+		],
+		"_feedback": {
+			"correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.",
+			"_partlyCorrect": {
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
+			},
+			"_incorrect": {
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-72",
+		"_parentId": "b-50",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"title": "c-72",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-75",
+		"_parentId": "b-55",
+		"_type": "component",
+		"_component": "matching",
+		"_classes": "",
+		"_layout": "full",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": true,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"title": "Matching",
+		"displayTitle": "Matching",
+		"body": "Can you identify some of the key facts and figures associated with the Adapt Open Source project?",
+		"instruction": "Choose an option from each drop down list and select Submit.",
+		"placeholder": "Select an option",
+		"_items": [
+			{
+				"text": "The Adapt open source project was formed in:",
+				"_options": [
+					{
+						"text": "2008",
+						"_isCorrect": false
+					},
+					{
+						"text": "2010",
+						"_isCorrect": false
+					},
+					{
+						"text": "2013",
+						"_isCorrect": true
+					},
+					{
+						"text": "2015",
+						"_isCorrect": false
+					}
+				]
+			},
+			{
+				"text": "Adapt adheres to the WCAG 2.0 guidelines to level AA, but when were these published?",
+				"_options": [
+					{
+						"text": "2008",
+						"_isCorrect": true
+					},
+					{
+						"text": "2010",
+						"_isCorrect": false
+					},
+					{
+						"text": "2013",
+						"_isCorrect": false
+					},
+					{
+						"text": "2015",
+						"_isCorrect": false
+					}
+				]
+			},
+			{
+				"text": "Which of these languages would benefit from using the recent addition of Right To Left (RTL) language support within Adapt?",
+				"_options": [
+					{
+						"text": "Portuguese",
+						"_isCorrect": false
+					},
+					{
+						"text": "Hebrew",
+						"_isCorrect": true
+					},
+					{
+						"text": "Finnish",
+						"_isCorrect": false
+					},
+					{
+						"text": "Esperanto",
+						"_isCorrect": false
+					}
+				]
+			}
+		],
+		"_feedback": {
+			"correct": "Correct answer feedback.<br><br>Yes, that’s right. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>",
+			"_partlyCorrect": {
+				"final": "Partially correct answer feedback.<br><br>That’s partially correct. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>"
+			},
+			"_incorrect": {
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-80",
+		"_parentId": "b-60",
+		"_type": "component",
+		"_component": "slider",
+		"_classes": "",
+		"_layout": "full",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": true,
+		"_shouldDisplayAttempts": false,
+		"_showNumber": true,
+		"_showScaleIndicator": true,
+		"_scaleStart": 1,
+		"_scaleEnd": 10,
+		"title": "Slider",
+		"displayTitle": "Slider",
+		"body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulating information but according to a paper by Miller (1956) what ‘magic number’ describes its capacity?",
+		"instruction": "Drag the slider to make your choice and select Submit.",
+		"labelStart": "",
+		"labelEnd": "",
+		"_correctAnswer": "",
+		"_correctRange": {
+			"_bottom": 7,
+			"_top": 7
+		},
+		"_feedback": {
+			"correct": "Correct answer feedback.<br><br>Yes, that’s right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>",
+			"_incorrect": {
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-90",
+		"_parentId": "b-70",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": false,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 4,
+		"title": "To scroll or not to scroll?",
+		"displayTitle": "To scroll or not to scroll?",
+		"body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
+		"instruction": "Choose one or more options and select Submit.",
+		"_items": [
+			{
+				"text": "Scrolling is common place on the web and therefore familiar to the learner",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Scrolling reduces the need for unnecessary navigation as pages can be as long (or as short) as they need to be",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Scrolling helps ensure designs are more mobile friendly",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Scrolling means you no longer need to first gain learners attention",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "correct",
+			"_partlyCorrect": {
+				"final": "final"
+			},
+			"_incorrect": {
+				"final": "final"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-95",
+		"_parentId": "b-70",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-95",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-97",
+		"_parentId": "b-75",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "left",
+		"title": "Introduction",
+		"displayTitle": "",
+		"body": "You’ve just encountered the <strong>Trickle</strong> extension. Trickle can be used to control the presentation of content and the manner in which it can be navigated within an Adapt page. In the example just shown the extension was configured to ensure that no content beyond the first question was visible until that block was registered as completed (the question had been attempted). Once the block was completed, a continue button was shown which, once selected, scrolled the next block into view.<br><br>Trickle can be configured in a variety of ways so please read the wiki for all possible configuration options.",
+		"instruction": "",
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-98",
+		"_parentId": "b-75",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-98",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-100",
+		"_parentId": "b-80",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": false,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 5,
+		"title": "Do you know your plugins?",
+		"displayTitle": "Do you know your plugins?",
+		"body": "Which of the following are types of Adapt plugins?",
+		"instruction": "Choose one or more options and select Submit.",
+		"_items": [
+			{
+				"text": "Component",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Extension",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Schema",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Block",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "App Wrapper",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "correct",
+			"_partlyCorrect": {
+				"final": "final"
+			},
+			"_incorrect": {
+				"final": "final"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-105",
+		"_parentId": "b-80",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-105",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-110",
+		"_parentId": "b-85",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": false,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 1,
+		"title": "It’s as simple as A, B, C",
+		"displayTitle": "It’s as simple as A, B, C",
+		"body": "Can you identify the missing word in the following sequence: Article / ..... /Component.",
+		"instruction": "Choose an option and select Submit.",
+		"_items": [
+			{
+				"text": "Block",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Bridge",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Brace",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Base",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Bearing",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "correct",
+			"_partlyCorrect": {
+				"final": "final"
+			},
+			"_incorrect": {
+				"final": "final"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-115",
+		"_parentId": "b-85",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-115",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-120",
+		"_parentId": "b-90",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": false,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 4,
+		"title": "Content objects",
+		"displayTitle": "Content objects",
+		"body": "What would you be referring to when describing a content object within Adapt?",
+		"instruction": "Choose one or more options and select Submit.",
+		"_items": [
+			{
+				"text": "Page",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Menu",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Component",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Course configuration options",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "correct",
+			"_partlyCorrect": {
+				"final": "final"
+			},
+			"_incorrect": {
+				"final": "final"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-125",
+		"_parentId": "b-90",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-95",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-130",
+		"_parentId": "b-95",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": false,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 1,
+		"title": "Adding titles to icons",
+		"displayTitle": "Adding titles to icons",
+		"body": "Version 2.0 of the framework makes it possible to add titles to the icons shown on the navigation bar. Do you know what JSON file you would need to edit to add a title to an icon?",
+		"instruction": "Choose an option and select Submit.",
+		"_items": [
+			{
+				"text": "course.json",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "config.json",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "contentObjects.json",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "components.json",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "correct",
+			"_partlyCorrect": {
+				"final": "final"
+			},
+			"_incorrect": {
+				"final": "final"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-135",
+		"_parentId": "b-95",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-95",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-140",
+		"_parentId": "b-100",
+		"_type": "component",
+		"_component": "mcq",
+		"_classes": "",
+		"_layout": "left",
+		"_attempts": 1,
+		"_questionWeight": 1,
+		"_canShowModelAnswer": false,
+		"_shouldDisplayAttempts": false,
+		"_isRandom": true,
+		"_selectable": 4,
+		"title": "Control the scroll",
+		"displayTitle": "Control the scroll",
+		"body": "The <strong>Trickle</strong> extension makes it possible to control how the learner scrolls down the page, but what element of a page is it applied to?",
+		"instruction": "Choose an option and select Submit.",
+		"_items": [
+			{
+				"text": "Article",
+				"_shouldBeSelected": true
+			},
+			{
+				"text": "Block",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Component",
+				"_shouldBeSelected": false
+			},
+			{
+				"text": "Other extensions",
+				"_shouldBeSelected": false
+			}
+		],
+		"_feedback": {
+			"correct": "correct",
+			"_partlyCorrect": {
+				"final": "final"
+			},
+			"_incorrect": {
+				"final": "final"
+			}
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-145",
+		"_parentId": "b-100",
+		"_type": "component",
+		"_component": "graphic",
+		"_classes": "",
+		"_layout": "right",
+		"_isOptional": true,
+		"title": "c-95",
+		"displayTitle": "",
+		"body": "",
+		"instruction": "",
+		"_graphic": {
+			"large": "course/en/images/single_width.jpg",
+			"small": "course/en/images/single_width.jpg",
+			"alt": "Placeholder graphic.",
+			"attribution": ""
+		}
+	},
+	{
+		"_id": "c-147",
+		"_parentId": "b-105",
+		"_type": "component",
+		"_component": "text",
+		"_classes": "",
+		"_layout": "full",
+		"title": "c-147",
+		"displayTitle": "",
+		"body": "The new Assessment Results component allows you to specific the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 70% or above, provided four scoring bands each of which has some accompanying feedback. The four score bands were:<br><br><ul><li>0-40% (fail)</li><li>41-69%(fail)</li><li>70-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let’s find out.",
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	},
+	{
+		"_id": "c-150",
+		"_parentId": "b-110",
+		"_type": "component",
+		"_component": "assessmentResults",
+		"_classes": "",
+		"_layout": "full",
+		"_isVisibleBeforeCompletion": false,
+		"_assessmentId": "a-15",
+		"title": "Results",
+		"displayTitle": "Results",
+		"body": "",
+		"instruction": "",
+		"_retry": {
+			"button": "Retry Assessment",
+			"_comment": "use {{attempts}}, {{attemptsSpent}} and {{attemptsLeft}} to display attempts",
+			"feedback": ""
+		},
+		"_comment": "use {{score}}, {{maxScore}} and {{scoreAsPercent}} to display score and percentage",
+		"_completionBody": "{{{feedback}}}",
+		"_bands": [
+			{
+				"_score": 0,
+				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You didn’t do so well in the Adapt assessment demo, but don’t worry. There’s lots of information about the Adapt basics on our site. We’d also suggest you pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
+				"_allowRetry": true
+			},
+			{
+				"_score": 40,
+				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You already know some of the Adapt basics but please explore our site for more information. Also pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
+				"_allowRetry": true
+			},
+			{
+				"_score": 70,
+				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already pretty knowledgeable about Adapt so, if you haven’t already, please consider sharing your expertise on the Adapt community forums.",
+				"_allowRetry": true
+			},
+			{
+				"_score": 100,
+				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already a black belt in Adapt! If you haven’t already, please consider sharing your expertise on the Adapt community forums.",
+				"_allowRetry": false
+			}
+		],
+		"_pageLevelProgress": {
+			"_isEnabled": true
+		}
+	}
 ]
