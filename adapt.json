@@ -14,7 +14,6 @@
         "adapt-contrib-gmcq": "*",
         "adapt-contrib-assessment": "*",
         "adapt-contrib-assessmentResults": "*",
-        "adapt-contrib-assessmentResultsTotal": "*",
         "adapt-contrib-trickle": "*",
         "adapt-contrib-tutor": "*",
         "adapt-contrib-boxMenu": "*",
