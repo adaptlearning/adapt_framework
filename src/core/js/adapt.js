@@ -1,15 +1,25 @@
-define(function(require){
+define([
+    'coreModels/lockingModel',
+    'coreHelpers'
+], function(lockingModel, Helpers) {
 
-    var _ = require('underscore');
-    var Backbone = require('backbone');
-    var Helpers = require('coreHelpers');
+    var AdaptModel = Backbone.Model.extend({
 
-    var Adapt = {};
+        defaults: {
+            _canScroll: true //to stop scrollTo behaviour
+        },
+
+        lockedAttributes: {
+            _canScroll: false
+        }
+
+    });
+
+    var Adapt = new AdaptModel();
+
     Adapt.location = {};
     Adapt.componentStore = {};
     var mappedIds = {};
-
-    _.extend(Adapt, Backbone.Events);
 
     Adapt.initialize = _.once(function() {
         Backbone.history.start();
@@ -36,8 +46,11 @@ define(function(require){
 
         if (settings.offset.left === 0) settings.axis = "y";
 
+        if (Adapt.get("_canScroll") !== false) {
         // Trigger scrollTo plugin
         $.scrollTo(selector, settings);
+        }
+
         // Trigger an event after animation
         // 300 milliseconds added to make sure queue has finished
         _.delay(function() {
