@@ -17,21 +17,24 @@ define([
 			}
 
 			var pluginName  = options.pluginName;
-			var lockingValue = this.lockedAttributes[attrName] = !this.defaults[attrName];
+			if (this.defaults[attrName] !== undefined) {
+				this.lockedAttributes[attrName] = !this.defaults[attrName];
+			}
+			var lockingValue = this.lockedAttributes[attrName];
 			var isAttemptingToLock = lockingValue === attrVal;
 
 			if (isAttemptingToLock) {
 
-				this.setLockValue(attrName, true, {pluginName:pluginName, skipcheck: true});
+				this.setLockState(attrName, true, {pluginName:pluginName, skipcheck: true});
 
 				//console.log(options.pluginName, "locking", attrName, "on", this.get("_id"));
 				return set.call(this, attrName, lockingValue);
 
 			}
 
-			this.setLockValue(attrName, false, {pluginName:pluginName, skipcheck: true});
+			this.setLockState(attrName, false, {pluginName:pluginName, skipcheck: true});
 
-			var totalLockValue = this.getLockValue(attrName, {skipcheck: true})
+			var totalLockValue = this.getLockCount(attrName, {skipcheck: true})
 			//console.log(options.pluginName, "attempting to unlock", attrName, "on", this.get("_id"), "lockValue", totalLockValue, this._lockedAttributesValues[attrName]);
 			if (totalLockValue === 0) {
 				//console.log(options.pluginName, "unlocking", attrName, "on", this.get("_id"));
@@ -61,13 +64,13 @@ define([
 
 		isLocking: function(attrName) {
 			var isCheckingGeneralLockingState = attrName === undefined;
-			var isUsinglockedAttributes = this.lockedAttributes !== undefined;
+			var isUsingLockedAttributes = this.lockedAttributes !== undefined;
 
 			if (isCheckingGeneralLockingState) {
-				return isUsinglockedAttributes;
+				return isUsingLockedAttributes;
 			}
 
-			if (!isUsinglockedAttributes) return false;
+			if (!isUsingLockedAttributes) return false;
 
 			var isAttributeALockingAttribute = this.lockedAttributes[attrName] !== undefined;
 			if (!isAttributeALockingAttribute) return false;
@@ -84,16 +87,18 @@ define([
 		},
 
 		isLocked: function(attrName, options) {
-			if (!(options && options.skipcheck)) { 
+			var shouldSkipCheck = (options && options.skipcheck);
+			if (!shouldSkipCheck) { 
 				var stopProcessing =  !this.isLocking(attrName);
 				if (stopProcessing) return;
 			}
 
-			return this.getLockValue(attrName) > 0;
+			return this.getLockCount(attrName) > 0;
 		},
 
-		getLockValue: function(attrName, options) {
-			if (!(options && options.skipcheck)) { 
+		getLockCount: function(attrName, options) {
+			var shouldSkipCheck = (options && options.skipcheck);
+			if (!shouldSkipCheck) { 
 				var stopProcessing =  !this.isLocking(attrName);
 				if (stopProcessing) return;
 			}
@@ -110,8 +115,9 @@ define([
 			return lockingAttributeValuesSum;
 		},
 
-		setLockValue: function(attrName, value, options) {
-			if (!(options && options.skipcheck)) { 
+		setLockState: function(attrName, value, options) {
+			var shouldSkipCheck = (options && options.skipcheck);
+			if (!shouldSkipCheck) { 
 				var stopProcessing =  !this.isLocking(attrName);
 				if (stopProcessing) return this;
 			}
