@@ -29,7 +29,8 @@ define([
             var args = [].slice.call(arguments, 0, arguments.length);
             if (arguments[arguments.length-1] === null) args.pop();
 
-            
+            //check if the current page is in the progress of navigating to itself
+            //it will redirect to itself if the url was changed and _canNavigate is false
             if (!this._isCircularNavigationInProgress) {
                 //trigger an event pre 'router:location' to allow extensions to stop routing
                 Adapt.trigger("router:navigate", arguments);
@@ -56,6 +57,7 @@ define([
             
             if (this._isCircularNavigationInProgress) {
                 //navigation correction finished
+                //router has successfully renavigated to the current id as the url was changed whilst _canNavigate: false
                 delete this._isCircularNavigationInProgress;
                 return;
             }
