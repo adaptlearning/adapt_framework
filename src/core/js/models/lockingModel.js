@@ -21,7 +21,7 @@ define([
 				this.lockedAttributes[attrName] = !this.defaults[attrName];
 			}
 			var lockingValue = this.lockedAttributes[attrName];
-			var isAttemptingToLock = lockingValue === attrVal;
+			var isAttemptingToLock = (lockingValue === attrVal);
 
 			if (isAttemptingToLock) {
 
@@ -63,8 +63,8 @@ define([
 		},
 
 		isLocking: function(attrName) {
-			var isCheckingGeneralLockingState = attrName === undefined;
-			var isUsingLockedAttributes = this.lockedAttributes !== undefined;
+			var isCheckingGeneralLockingState = (attrName === undefined);
+			var isUsingLockedAttributes = (this.lockedAttributes !== undefined);
 
 			if (isCheckingGeneralLockingState) {
 				return isUsingLockedAttributes;
@@ -110,7 +110,7 @@ define([
 			}
 
 			var lockingAttributeValues = _.values(this._lockedAttributesValues[attrName]);
-			var lockingAttributeValuesSum = _.reduce(lockingAttributeValues, function(memo, value){ return memo + (value ? 1 : 0); }, 0);
+			var lockingAttributeValuesSum = _.reduce(lockingAttributeValues, function(sum, value){ return sum + (value ? 1 : 0); }, 0);
 			
 			return lockingAttributeValuesSum;
 		},
