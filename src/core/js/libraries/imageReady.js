@@ -1,4 +1,123 @@
-// jquery.imageready.js Aug 1, 2013
-// @weblinc, @jsantell, (c) 2012
+//https://github.com/cgkineo/jquery.imageready 2015-08-18
 
-(function(e){e.fn.imageready=function(t,n){function o(){s--;!s&&t()}function u(){var e,t;this.one("load",o);t=navigator.appName.indexOf("Internet Explorer")!=-1?true:false;if(t){var n=this.attr("src"),i=n.match(/\?/)?"&":"?";i+=r.cachePrefix+"="+(new Date).getTime();this.attr("src",n+i)}}var r=e.extend({},e.fn.imageready.defaults,n),i=this.find("img").add(this.filter("img")),s=i.length;if(t==null){t=function(){}}return i.each(function(){var t=e(this);if(!t.attr("src")){o();return}this.complete||this.readyState===4?o():u.call(t)})};e.fn.imageready.defaults={cachePrefix:"random"}})(jQuery)
+;(function( $ ) {
+
+	if ($.fn.imageready) return;
+
+	$.fn.imageready = function(callback, options) {
+		//setup options
+		options = options || {};
+		if (options.allowTimeout === undefined) {
+			options.allowTimeout = $.fn.imageready.allowTimeout;
+			options.timeoutDuration = $.fn.imageready.timeoutDuration;
+		}
+
+		//get all child images
+		var $images = this.find("img").add( this.filter("img") );
+		if ($images.length === 0) return callback();
+		$images.loaded = 0;
+
+		//get all background images
+		this.each(function() {
+			var $backgroundImageElements = $(getElementsByCSSAttributeName.call(this, "background-image"));
+			$backgroundImageElements.each(function() {
+				var $backgroundImage = $(new Image());
+				$backgroundImage.attr("src", $(this).css("background-image"));
+				$images.add($backgroundImage);
+			});
+		});
+
+		//attach load event listeners
+		$images.each(function() {
+			var $this = $(this);
+			if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height > 0 ) {
+				$images.loaded++;
+				return;
+			}
+			$this.one("load", complete);
+		});
+
+		//check if all images have been loaded already
+		if ($images.length <= $images.loaded) {
+			return complete();
+		}
+
+		//setup timeout event
+		var timeoutHandle;
+		if (options.allowTimeout) {
+			timeoutHandle = setTimeout(check, options.timeoutDuration)
+		}
+
+		//callback timeout event
+		function check() {
+			clearTimeout(timeoutHandle);
+			var notLoaded = [];
+			$images.each(function() {
+				var $this = $(this);
+				if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height > 0 ) {
+					console.error("failed to hear load of image", $this.attr("src"));	
+					return;
+				} else {
+					notLoaded.push(this);
+				}
+			});
+			return callback($(notLoaded));
+		}
+
+		//callback load event
+		function complete(event) {
+			clearTimeout(timeoutHandle);
+			if (event && event.target) {
+				$images.loaded++;
+			}
+			if ($images.length <= $images.loaded) {
+				return callback();
+			}
+			timeoutHandle = setTimeout(check, options.timeoutDuration)
+		}
+
+	}
+	$.fn.imageready.timeoutDuration = 10000;
+	$.fn.imageready.allowTimeout = true;
+
+
+	function getElementsByCSSAttributeName(name) {
+		if (name === undefined) throw "Must specify a css attribute name";
+
+		var tags = this.getElementsByTagName('*'), el;
+
+		var rtn = [];
+		for (var i = 0, len = tags.length; i < len; i++) {
+		    el = tags[i];
+		    if (el.currentStyle) { //ie
+
+		    	var scriptName = changeCSSAttributeNameFormat(name);
+		        if( el.currentStyle[scriptName] !== 'none' ) {
+		        	rtn.push(el);		       		
+		        }
+
+		    } else if (window.getComputedStyle) { //other
+		    	
+		        if( document.defaultView.getComputedStyle(el, null).getPropertyValue(name) !== 'none' ) {
+		        	rtn.push(el);
+		        }
+
+		    }
+		}
+		return rtn;
+	}
+
+	function changeCSSAttributeNameFormat(CSSName) {
+		var noDash = CSSName.replace(/-/g," ");
+		var titleCase = toTitleCase(noDash);
+		var noSpace = titleCase.replace(/ /g, "");
+		var lowerCaseStart = noSpace.substr(0,1).toLowerCase() + noSpace.substr(1);
+		return lowerCaseStart;
+	}
+
+	function toTitleCase(str){
+	    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	}
+
+
+}) ( jQuery );
