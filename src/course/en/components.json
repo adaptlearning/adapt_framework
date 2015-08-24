@@ -992,7 +992,7 @@
 			},
 			{
 				"text": "Block",
-				"_shouldBeSelected": false
+				"_shouldBeSelected": true
 			},
 			{
 				"text": "Component",
