@@ -323,7 +323,9 @@ define(function(require) {
         },
 
         recordInteraction:function() {
-            Adapt.trigger('questionView:recordInteraction', this);
+            if (this.model.get('_recordInteraction') != false) {
+                Adapt.trigger('questionView:recordInteraction', this, this.model.get('_recordInteraction') === true);
+            }
         },
 
         // Updates buttons based upon question state by setting
