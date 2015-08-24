@@ -282,12 +282,12 @@
 }
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
-    #a11y-focusguard.touch { 
+    .touch & { 
         position: relative !important;
     }
 
     /*DESTKOP: stop focus making window jump to bottom of page;*/
-    #a11y-focusguard.notouch { 
+    .no-touch & {
         position: fixed !important;
     }
 
