@@ -323,13 +323,7 @@ define(function(require) {
         },
 
         recordInteraction:function() {
-            var config = Adapt.config.get('_spoor');
-            
-            if (!config || config._isEnabled === false || this.model.get('_recordInteraction') === false) return;
-
-            if (this.model.get('_recordInteraction') === true || config._tracking._recordInteractions === true) {
-                Adapt.trigger('questionView:recordInteraction', this);
-            }
+            Adapt.trigger('questionView:recordInteraction', this);
         },
 
         // Updates buttons based upon question state by setting
