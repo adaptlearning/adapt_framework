@@ -231,7 +231,9 @@ define(function(require) {
             // Triggers setCompletionStatus and adds class to widget
             this.checkQuestionCompletion();
 
-            // Used to setup the feedback by checking against
+            this.recordInteraction();
+            
+            // Used to setup the feedback by checking against 
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
@@ -318,6 +320,16 @@ define(function(require) {
                 this.$('.component-widget').addClass('complete show-user-answer');
             }
 
+        },
+
+        recordInteraction:function() {
+            var config = Adapt.config.get('_spoor');
+            
+            if (!config || config._isEnabled === false || this.model.get('_recordInteraction') === false) return;
+
+            if (this.model.get('_recordInteraction') === true || config._tracking._recordInteractions === true) {
+                Adapt.trigger('questionView:recordInteraction', this);
+            }
         },
 
         // Updates buttons based upon question state by setting
@@ -482,8 +494,19 @@ define(function(require) {
         // Used by the question to display the users answer and
         // hide the correct answer
         // Should use the values stored in storeUserAnswer
-        hideCorrectAnswer: function() {}
+        hideCorrectAnswer: function() {},
 
+        // Time elapsed between the time the interaction was made available to the learner for response and the time of the first response
+        getLatency:function() {
+            return null;
+        },
+
+        // a string detailing how the user answered the question
+        getResponse:function() {},
+
+        // a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
+        getResponseType:function() {}
+        
     }, {
         _isQuestionType: true
     });
