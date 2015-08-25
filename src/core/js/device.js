@@ -34,7 +34,7 @@ define(function(require) {
     }
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
-        Adapt.device.screenWidth = $window.width();
+        Adapt.device.screenWidth = window.innerWidth || $window.width();
         Adapt.trigger('device:resize', Adapt.device.screenWidth);
         var newScreenSize = checkScreenSize();
 
