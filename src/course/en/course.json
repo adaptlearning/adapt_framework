@@ -82,6 +82,9 @@
         },
         "_extensions": {
             "_pageLevelProgress": {
+                "pageLevelProgress": "Page sections",
+                "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
+                "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
                 "optionalContent": "Optional Content"
             }
         },
@@ -125,10 +128,7 @@
                 "hotgraphicPopUp": "Hotgraphic popup.",
                 "feedbackPopUp": "Popup opened.",
                 "menuBack": "Back to menu",
-                "menuIndicatorHeading": "Menu item heading ",
-                "pageLevelProgress": "Page sections",
-                "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
-                "pageLevelProgressEnd": "You have reached the end of the list of page sections."
+                "menuIndicatorHeading": "Menu item heading "
             }
         }
     },
