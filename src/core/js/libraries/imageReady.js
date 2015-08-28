@@ -1,8 +1,10 @@
-//https://github.com/cgkineo/jquery.imageready 2015-08-18
+//https://github.com/cgkineo/jquery.imageready 2015-08-28
 
 ;(function( $ ) {
 
 	if ($.fn.imageready) return;
+	
+	var stripCSSURL = /url\(([^)]*)\)/g;
 
 	$.fn.imageready = function(callback, options) {
 		//setup options
@@ -22,7 +24,11 @@
 			var $backgroundImageElements = $(getElementsByCSSAttributeName.call(this, "background-image"));
 			$backgroundImageElements.each(function() {
 				var $backgroundImage = $(new Image());
-				$backgroundImage.attr("src", $(this).css("background-image"));
+				var backgroundImageValue = $(this).css("background-image");
+				var matches = stripCSSURL.exec(backgroundImageValue);
+				if (matches === null) return;
+				var url = matches[1];
+				$backgroundImage.attr("src", url);
 				$images.add($backgroundImage);
 			});
 		});
