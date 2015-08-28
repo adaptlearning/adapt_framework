@@ -103,7 +103,7 @@ define(function(require) {
 
         resizeNotify: function() {
             var windowHeight = $(window).height();
-            var notifyHeight = this.$('.notify-popup').height();
+            var notifyHeight = this.$('.notify-popup').outerHeight();
 
             if (notifyHeight > windowHeight) {
                 this.$('.notify-popup').css({
