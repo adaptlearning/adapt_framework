@@ -53,8 +53,8 @@ define(function(require) {
 
             switch (currentModel.get('_type')) {
                 case 'page': case 'menu':
-                    this.removeViews();
                     this.showLoading();
+                    this.removeViews();
 
                     this.setContentObjectToVisited(currentModel);
 
