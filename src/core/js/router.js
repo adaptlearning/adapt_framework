@@ -39,8 +39,8 @@ define(function(require) {
         },
 
         handleCourse: function() {
-            this.removeViews();
             this.showLoading();
+            this.removeViews();
             Adapt.course.set('_isReady', false);
             this.setContentObjectToVisited(Adapt.course);
             this.updateLocation('course');
