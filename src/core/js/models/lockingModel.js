@@ -9,6 +9,8 @@ define([
 		set: function(attrName, attrVal, options) {
 			var stopProcessing = !this.lockedAttributes || typeof attrName === "object" || typeof attrVal !== "boolean" || !this.isLocking(attrName);
 			if (stopProcessing) return set.apply(this, arguments);
+			
+			options = options || {};
 
 			var isSettingValueForSpecificPlugin = options && options.pluginName;
 			if (!isSettingValueForSpecificPlugin) {
