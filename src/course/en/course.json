@@ -82,7 +82,17 @@
         },
         "_extensions": {
             "_pageLevelProgress": {
+                "pageLevelProgress": "Page sections",
+                "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
+                "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
                 "optionalContent": "Optional Content"
+            }
+        },
+        "_menu": {
+            "_boxmenu": {
+                "ariaRegion": "Menu",
+                "menuItem": "Menu item.",
+                "menuEnd": "You have reached the end of the menu."
             }
         },
         "_accessibility": {
@@ -97,9 +107,6 @@
                 "navigation": "Course navigation bar",
                 "menuLoaded": "Menu Loaded.",
                 "menu": "Menu",
-                "menuItem": "Menu item.",
-                "menuViewButton": "Select here to enter.",
-                "menuEnd": "You have reached the end of the menu.",
                 "page": "Page",
                 "pageLoaded": "Page Loaded.",
                 "pageEnd": "You have reached the end of the page.",
@@ -121,14 +128,9 @@
                 "correct": "Correct",
                 "locked": "Locked",
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
-                "sliderHandle": "Slider handle. Use the left and right arrow keys to move the slider and give your answer. Then tab to the submit button below and press enter.",
-                "hotgraphicPopUp": "Hotgraphic popup.",
                 "feedbackPopUp": "Popup opened.",
                 "menuBack": "Back to menu",
-                "menuIndicatorHeading": "Menu item heading ",
-                "pageLevelProgress": "Page sections",
-                "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
-                "pageLevelProgressEnd": "You have reached the end of the list of page sections."
+                "visited": "Visited"
             }
         }
     },
