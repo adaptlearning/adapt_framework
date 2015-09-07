@@ -1,3 +1,5 @@
+//https://github.com/adaptlearning/jquery.a11y 2015-08-13
+
 (function($, window) {
     
     // JQUERY FILTERS FOR ELEMENTS
@@ -62,7 +64,10 @@
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
                 var scrollingParent = getScrollingParent(event);
-                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
+                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) {
+                    $(window).scroll(); 
+                    return; 
+                }
             }
 
             if (options.isDebug) console.log("preventScroll2")
