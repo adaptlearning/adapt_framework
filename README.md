@@ -40,4 +40,4 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 + To provide feedback, please use the [GitHub Issues](https://github.com/adaptlearning/adapt_framework/issues).
 
 ## License   
-<a href="https://community.adaptlearning.org/ target="_blank"><img src="https://github.com/adaptlearning/documentation/blob/master/04_wiki_assets/plug-ins/images/adapt-logo-mrgn-lft.jpg" alt="adapt learning logo" align="right"></a>  Adapt is licensed under the [GNU General Public License, Version 3](https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE).
+<a href="https://community.adaptlearning.org/" target="_blank"><img src="https://github.com/adaptlearning/documentation/blob/master/04_wiki_assets/plug-ins/images/adapt-logo-mrgn-lft.jpg" alt="adapt learning logo" align="right"></a>  Adapt is licensed under the [GNU General Public License, Version 3](https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE).

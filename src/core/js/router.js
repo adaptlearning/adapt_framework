@@ -39,8 +39,8 @@ define(function(require) {
         },
 
         handleCourse: function() {
-            this.removeViews();
             this.showLoading();
+            this.removeViews();
             Adapt.course.set('_isReady', false);
             this.setContentObjectToVisited(Adapt.course);
             this.updateLocation('course');
@@ -53,8 +53,8 @@ define(function(require) {
 
             switch (currentModel.get('_type')) {
                 case 'page': case 'menu':
-                    this.removeViews();
                     this.showLoading();
+                    this.removeViews();
 
                     this.setContentObjectToVisited(currentModel);
 
