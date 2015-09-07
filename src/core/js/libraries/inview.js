@@ -1,8 +1,4 @@
-/*
-* jquery.onscreen 2014-06-15 https://github.com/cgkineo/jquery.onscreen
-* License - http://github.com/adaptlearning/adapt_framework/LICENSE
-* Maintainers - Oliver Foster <oliver.foster@kineo.com>
-*/
+// jquery.onscreen 2015-08-13 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 	var expando = $.expando;
@@ -138,12 +134,12 @@
 			//nothing to onscreen
 			stopLoop();
 			$.fn.onscreen.intervalDuration = 250;
-			startLoop();
+			repeatLoop();
 		} else {
 			//something to onscreen
 			stopLoop();
 			$.fn.onscreen.intervalDuration = 125;
-			startLoop();
+			repeatLoop();
 		}
 
 		if  (onScreenHandlers.length > 0) {
@@ -248,8 +244,17 @@
 	//checking loop start and end
 	function startLoop() {
 		loopData.lastEvent = (new Date()).getTime();
-		if (loopData.interval !== null) return;
-		loopData.interval = setInterval(onScreenLoop, $.fn.onscreen.intervalDuration);
+		if (loopData.interval !== null) {
+			stopLoop();
+		}
+		loopData.interval = setTimeout(onScreenLoop, $.fn.onscreen.intervalDuration);
+	}
+
+	function repeatLoop() {
+		if (loopData.interval !== null) {
+			stopLoop();
+		}
+		loopData.interval = setTimeout(onScreenLoop, $.fn.onscreen.intervalDuration);
 	}
 
 	function stopLoop() {
