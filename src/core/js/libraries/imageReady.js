@@ -79,7 +79,9 @@
 			if ($images.length <= $images.loaded) {
 				return callback();
 			}
-			timeoutHandle = setTimeout(check, options.timeoutDuration)
+			if (options.allowTimeout) {
+				timeoutHandle = setTimeout(check, options.timeoutDuration);
+			}
 		}
 
 	}
