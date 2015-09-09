@@ -170,7 +170,7 @@ define(function(require) {
             var documentTitle = courseTitle + pageTitle;
 
             Adapt.once("pageView:ready menuView:ready", function() {
-                document.title = documentTitle;
+                $('title').html(documentTitle);
             });
 
         }
