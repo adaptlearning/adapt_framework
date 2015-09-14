@@ -324,7 +324,7 @@ define(function(require) {
 
         recordInteraction:function() {
             if (this.model.get('_recordInteraction') != false) {
-                Adapt.trigger('questionView:recordInteraction', this, this.model.get('_recordInteraction') === true);
+                Adapt.trigger('questionView:recordInteraction');
             }
         },
 
