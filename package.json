@@ -6,7 +6,7 @@
     "type": "git",
     "url": "git://github.com/adaptlearning/adapt_framework.git"
   },
-  "license": "GPL v3",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
