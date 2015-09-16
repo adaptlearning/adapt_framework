@@ -65,9 +65,9 @@ define(function(require) {
 
         render: function() {
             var template = Handlebars.templates['drawer']
-            $(this.el).html(template({_globals: Adapt.course.get("_globals")})).appendTo('body');
+            $(this.el).html(template({_globals: Adapt.course.get("_globals")})).prependTo('body');
             var shadowTemplate = Handlebars.templates['shadow'];
-            $(shadowTemplate()).appendTo('body');
+            $(shadowTemplate()).prependTo('body');
             // Set defer on post render
             _.defer(_.bind(function() {
                 this.postRender();

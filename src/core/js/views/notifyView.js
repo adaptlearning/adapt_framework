@@ -64,7 +64,7 @@ define(function(require) {
             //hide notify container
             this.$el.css("visibility", "hidden");
             //attach popup + shadow
-            this.$el.html(template(data)).appendTo('body');
+            this.$el.html(template(data)).prependTo('body');
             //hide popup
             this.$('.notify-popup').css("visibility", "hidden");
             //show notify container
