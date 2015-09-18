@@ -80,7 +80,7 @@ define(function(require){
         // Store the component view
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
-        object.template = name;
+        if(!object.template) object.template = name;
         Adapt.componentStore[name] = object;
 
     }
