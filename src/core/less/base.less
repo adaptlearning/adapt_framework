@@ -334,3 +334,16 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.button, button {
+    &.button-reset {
+        background-color: transparent;
+        border: none;
+        .no-touch & {
+            &:hover {
+                background-color: transparent;
+                border: none;
+            }
+        }
+    }
+}
