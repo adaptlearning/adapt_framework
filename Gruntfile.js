@@ -488,13 +488,13 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
-       
+
         var _ = require('underscore');
         var chalk = require('chalk'); // for some nice colouring
 
         var listOfCourseFiles = ['course', 'contentObjects', 'articles', 'blocks', 'components'];
         var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component' ];
-            
+
         // Go through each course folder inside the <%= sourcedir %>course directory
         grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + 'course/*').forEach(function(path) {
 
@@ -503,7 +503,7 @@ module.exports = function(grunt) {
             // Go through each list of declared course files
             listOfCourseFiles.forEach(function(jsonFileName) {
                 var currentJson = grunt.file.readJSON(path + '/' + jsonFileName + '.json');
-                
+
                 //collect all course items in a single array
                 switch (jsonFileName) {
                 case "course":
