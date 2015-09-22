@@ -15,7 +15,7 @@ define(function(require) {
         },
 
         events: {
-            'click a':'triggerEvent'
+            'click button':'triggerEvent'
         },
 
         preRender: function() {
