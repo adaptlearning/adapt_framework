@@ -600,8 +600,13 @@ module.exports = function(grunt) {
         grunt.log.ok('Starting server in "' + grunt.config.get('outputdir') + '" using port ' + grunt.config.get('connect.server.options.port'));
     });
 
+    grunt.registerTask('server-build', 'Builds the course without JSON [used by the authoring tool]', function(mode) {
+        var requireMode = (mode === 'dev') ? 'dev' : 'compile';
+        var tasks = ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:' + requireMode];
+        grunt.task.run(tasks);
+    });
+
     grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'schema-defaults', 'tracking-insert']);
-    grunt.registerTask('server-build', 'Builds the course without JSON [used by the authoring tool]', ['copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'requirejs:compile']);
     grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);
     grunt.registerTask('server', 'Runs a local server using port 9001', ['_log-server', 'concurrent:server']);
