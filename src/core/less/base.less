@@ -334,3 +334,18 @@
     -ms-user-select: none;
     user-select: none;
 }
+
+.button, button {
+    &.base {
+        box-sizing: content-box;
+        background-color: transparent;
+        border: none;
+        text-align: inherit;
+        .no-touch & {
+            &:hover {
+                background-color: transparent;
+                border: none;
+            }
+        }
+    }
+}
