@@ -351,7 +351,7 @@
             var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
             if (!isElementTopOutOfView) return;
 
-            var scrollToPosition = elementTop - topOffset;
+            var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
             if (scrollToPosition < 0) scrollToPosition = 0;
 
             defer(function() {
