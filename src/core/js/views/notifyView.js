@@ -158,7 +158,7 @@ define(function(require) {
                 }
 
                 /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                Adapt.trigger('popup:opened', this.$el);
+                Adapt.trigger('popup:opened', this.$('.notify-popup'));
                 $('body').scrollDisable();
 
                 //set focus to first accessible element
