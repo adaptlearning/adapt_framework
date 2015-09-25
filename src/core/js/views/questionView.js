@@ -111,34 +111,45 @@ define(function(require) {
 
         // Used to setup either global or local button text
         setupButtonSettings: function() {
-            var globButtons = Adapt.course.get("_buttons");
+            var globalButtons = Adapt.course.get("_buttons");
 
             // Checks if local _buttons exists and if not use global
             if (!this.model.has("_buttons")) {
-                this.model.set("_buttons", globButtons);
+                this.model.set("_buttons", globalButtons);
             } else {
                 // check all the components buttons
                 // if they are empty use the global default
-                var compButtons = this.model.get("_buttons");
-
-                if (typeof compButtons.submit == 'undefined') {
-                    for (var key in compButtons) {
-                        if(!compButtons[key].buttonText) compButtons[key].buttonText = globButtons[key].buttonText
-                        if(!compButtons[key].ariaLabel) compButtons[key].ariaLabel = globButtons[key].ariaLabel
+                var componentButtons = this.model.get("_buttons");
+console.log(globalButtons);
+console.log(componentButtons);
+                if (typeof componentButtons.submit == 'undefined') {
+                    for (var key in componentButtons) {
+                        // ARIA labels
+                        if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
+                          componentButtons[key].buttonText = globalButtons[key].buttonText;
+                        }
+                        
+                        if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
+                          componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
+                        }
+                        
+                        if (!componentButtons[key] && globalButtons[key]) {
+                            componentButtons[key] = globalButtons[key];
+                        }
                     }
                 } else {
                     // Backwards compatibility with v1.x
                     var buttons = [];
 
-                    for (var key in compButtons) {
+                    for (var key in componentButtons) {
                         var index = '_' + key;
 
-                        if (!compButtons[key]) {
-                            buttons[index] = globButtons[index];
+                        if (!componentButtons[key]) {
+                            buttons[index] = globalButtons[index];
                         } else {
                             buttons[index] = {
-                                buttonText: compButtons[key],
-                                ariaLabel: compButtons[key]
+                                buttonText: componentButtons[key],
+                                ariaLabel: componentButtons[key]
                             };
                         }
                     }
@@ -160,7 +171,6 @@ define(function(require) {
             if (!this.model.has("_questionWeight")) {
                 this.model.set("_questionWeight", Adapt.config.get("_questionWeight"));
             }
-
         },
 
         // Left blank for question setup - should be used instead of preRender
@@ -237,8 +247,8 @@ define(function(require) {
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
-			// Used to update buttonsView based upon question state
-			// Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
+            // Used to update buttonsView based upon question state
+            // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
             this.updateButtons();
             // Used to trigger an event so plugins can display feedback
             this.showFeedback();
@@ -341,17 +351,18 @@ define(function(require) {
             if (isInteractionComplete) {
 
                 if (isCorrect || !canShowModuleAnswer) {
-					//use correct instead of complete to signify button state
+                    // Use correct instead of complete to signify button state
                     this.model.set('_buttonState', 'correct');
 
                 } else {
 
-                    switch(buttonState) {
-                    case "submit": case "hideCorrectAnswer":
-                        this.model.set('_buttonState', 'showCorrectAnswer');
-                        break;
-                    default:
-                        this.model.set('_buttonState', 'hideCorrectAnswer');
+                    switch (buttonState) {
+                      case "submit": 
+                      case "hideCorrectAnswer":
+                          this.model.set('_buttonState', 'showCorrectAnswer');
+                          break;
+                      default:
+                          this.model.set('_buttonState', 'hideCorrectAnswer');
                     }
 
                 }
