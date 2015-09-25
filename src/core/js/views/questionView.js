@@ -120,8 +120,7 @@ define(function(require) {
                 // check all the components buttons
                 // if they are empty use the global default
                 var componentButtons = this.model.get("_buttons");
-console.log(globalButtons);
-console.log(componentButtons);
+
                 if (typeof componentButtons.submit == 'undefined') {
                     for (var key in componentButtons) {
                         // ARIA labels
