@@ -17,6 +17,7 @@ define(function(require) {
                 document.title = Adapt.course.get('title');
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
+            this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
         },
 
         routes: {
@@ -99,6 +100,12 @@ define(function(require) {
                     return;
                 }
                 this.navigateToParent();
+            }
+        },
+
+        navigateToHomeRoute: function() {
+            if (Adapt.router.get('_canNavigate')) {
+                this.navigate('#', {trigger: true});                
             }
         },
 
