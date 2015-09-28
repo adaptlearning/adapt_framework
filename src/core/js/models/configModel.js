@@ -11,7 +11,8 @@ define(function(require) {
                 medium:760,
                 large:1024
             },
-            _canLoadData:true
+            _canLoadData:true,
+            _disableAnimation:false
         },
 
         initialize: function(attrs, options) {
@@ -27,6 +28,16 @@ define(function(require) {
                     }
                     if(this.get('_defaultDirection')=='rtl'){//We're going to use rtl style
                     	$('html').addClass('dir-rtl');
+                    }
+                    // if _disableAnimation array loop through and set _disableAnimation
+                    var disableAnimationArray = this.get('_disableAnimationFor');
+                    if (disableAnimationArray && disableAnimationArray.length > 0) {
+                        for (var i=0; i < disableAnimationArray.length; i++) {
+                            if ($("html").is(disableAnimationArray[i])) {
+                                this.set('_disableAnimation', true);
+                                console.log('Animation disabled.');
+                            }
+                        }
                     }
                 }, this),
                 error: function() {

@@ -25,5 +25,6 @@
             "_onTrackingCriteriaMet": "completed",
             "_onAssessmentFailure": "incomplete"
         }
-    }
+    },
+    "_disableAnimationFor": [".ie8", ".Chrome"]
 }
