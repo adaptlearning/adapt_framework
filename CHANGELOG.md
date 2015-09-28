@@ -1,6 +1,33 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
+## [2.0.2] - 2015-09-28
+### Added
+- add new button styles to base.less (#732, [ABU-1069](https://adaptlearning.atlassian.net/browse/ABU-1069))
+- add new `_spoor` property `_shouldStoreResponses` to config.json (#701)
+### Changed
+- allow arrows keys to pass into input/select/textareas in a scroll-locked region (#738, [ABU-1071](https://adaptlearning.atlassian.net/browse/ABU-1071))
+- update licence in package.json (#724, #727)
+- ensure loading animation shown before views removed (#719)
+- amend Notify to use `.outerHeight` for more accurate vertical alignment (#716)
+- amend answer to c-140 (#705)
+- updates to the a11y and onscreen libraries (#696, #697)
+### Removed
+- remove redundant labels from course.json
+### Fixed
+- fix to ensure the `remainingAttemptsText` and `remainingAttemptText` get pulled through from `_globals` (#745, #746)
+- restored the `navigateToHomeRoute` function (#743, #744)
+- fix aimed at keeping content centralised on screen to give context to surroundings (#742)
+- fix for Notify focus bug (#740)
+- fix hyperlink to the community site in README.md
+- add missing Page Level Progress, Menu, Visited labels into course.json
+- bug fix for no/touch so the focus guard functions (#710)
+- IE8 responsiveness hotfix (#703)
+
+## [2.0.1] - 2015-08-04
+### Fixed
+- Added file .bowerrc back in; it is needed for the plugin registry system.
+
 ## [2.0.0] - 2015-08-03
 
 This release is by far the biggest we’ve ever done; with the help of 17 contributors, the adapt_framework repository alone has seen over 420 commits, more than 6,400 additions and in excess of 13,400 deletions since we put out version 1.1.1.
