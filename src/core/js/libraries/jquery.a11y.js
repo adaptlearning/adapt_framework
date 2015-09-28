@@ -81,6 +81,8 @@
             var state = $.a11y.state;
             var options = $.a11y.options;
 
+            if ($(event.target).is( domSelectors.nativeTabElements )) return;
+
             if (options.isDebug) console.log("preventScroll1")
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
