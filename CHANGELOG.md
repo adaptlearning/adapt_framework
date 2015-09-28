@@ -5,6 +5,7 @@
 ### Added
 - add new button styles to base.less (#732, [ABU-1069](https://adaptlearning.atlassian.net/browse/ABU-1069))
 - add new `_spoor` property `_shouldStoreResponses` to config.json (#701)
+
 ### Changed
 - allow arrows keys to pass into input/select/textareas in a scroll-locked region (#738, [ABU-1071](https://adaptlearning.atlassian.net/browse/ABU-1071))
 - update licence in package.json (#724, #727)
@@ -12,8 +13,10 @@
 - amend Notify to use `.outerHeight` for more accurate vertical alignment (#716)
 - amend answer to c-140 (#705)
 - updates to the a11y and onscreen libraries (#696, #697)
+
 ### Removed
 - remove redundant labels from course.json
+
 ### Fixed
 - fix to ensure the `remainingAttemptsText` and `remainingAttemptText` get pulled through from `_globals` (#745, #746)
 - restored the `navigateToHomeRoute` function (#743, #744)
