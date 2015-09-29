@@ -29,7 +29,7 @@ define(function(require) {
                     if(this.get('_defaultDirection')=='rtl'){//We're going to use rtl style
                     	$('html').addClass('dir-rtl');
                     }
-                    // if _disableAnimation array loop through and set _disableAnimation
+                    // check if animations should be disabled
                     var disableAnimationArray = this.get('_disableAnimationFor');
                     if (disableAnimationArray && disableAnimationArray.length > 0) {
                         for (var i=0; i < disableAnimationArray.length; i++) {

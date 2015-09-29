@@ -26,5 +26,5 @@
             "_onAssessmentFailure": "incomplete"
         }
     },
-    "_disableAnimationFor": [".ie8", ".Chrome"]
+    "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"]
 }
