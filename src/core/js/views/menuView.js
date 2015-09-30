@@ -36,7 +36,7 @@ define(function(require) {
                     if (this.disableAnimation) {
                         this.$el.css(styleOptions)
                     } else {
-                        this.$el.velocity({'opacity': 1}, 'fast');
+                        this.$el.velocity(styleOptions, 'fast');
                     }
                     $(window).scroll();
                 }, this));
