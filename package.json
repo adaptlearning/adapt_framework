@@ -144,6 +144,7 @@
     "grunt-jsonlint": "~1.0.4",
     "grunt-open": "~0.2.3",
     "grunt-requirejs-bundle": "*",
+    "jit-grunt": "^0.9.1",
     "load-grunt-config": "^0.17.2",
     "lodash": "~2.4.1",
     "matchdep": "~0.3.0",

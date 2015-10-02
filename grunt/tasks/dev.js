@@ -1,8 +1,8 @@
 /**
-* For production
+* For development
 */
 module.exports = function(grunt) {
-    grunt.registerTask('build', 'Creates a production-ready build of the course', [
+    grunt.registerTask('dev', 'Creates a developer-friendly build of the course', [
         '_log-vars',
         'jsonlint',
         'check-json',
@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         'create-json-config',
         'schema-defaults',
         'tracking-insert',
-        'requirejs:compile',
-        'clean:dist'
+        'requirejs:dev',
+        'watch'
     ]);
 }
