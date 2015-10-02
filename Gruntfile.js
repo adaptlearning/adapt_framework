@@ -17,10 +17,6 @@ module.exports = function(grunt) {
     grunt.loadTasks('grunt/tasks');
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
 
-    grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
-        grunt.log.ok('Starting server in "' + grunt.config.get('outputdir') + '" using port ' + grunt.config.get('connect.server.options.port'));
-    });
-
     grunt.registerTask('_build', ['_log-vars','jsonlint', 'check-json', 'copy', 'concat', 'less', 'handlebars', 'bower', 'requirejs-bundle', 'create-json-config', 'schema-defaults', 'tracking-insert']);
     grunt.registerTask('build', 'Creates a production-ready build of the course', ['_build', 'requirejs:compile', 'clean:dist']);
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', ['_build', 'requirejs:dev', 'watch']);

@@ -1,4 +1,15 @@
 module.exports = function(grunt) {
+    // tasks
+    grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
+        grunt.log.ok('Starting server in "' + grunt.config.get('outputdir') + '" using port ' + grunt.config.get('connect.server.options.port'));
+    });
+    grunt.registerTask('_log-vars', 'Logs out user-defined build variables', function() {
+        grunt.log.ok('Using source at "' + grunt.config.get('sourcedir') + '"');
+        grunt.log.ok('Building to "' + grunt.config.get('outputdir') + '"');
+        if (grunt.config.get('theme') !== '**') grunt.log.ok('Using theme "' + grunt.config.get('theme') + '"');
+        if (grunt.config.get('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config.get('menu') + '"');
+    });
+
     var exports = {};
     /*
     * Uses the parent folder name (menu, theme, components, extensions).
