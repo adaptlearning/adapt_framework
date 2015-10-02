@@ -908,10 +908,10 @@
                 var $item = $(item);
                 
                 var elementUID;
-                if ($item.a11y_uid == undefined) {
-                    $item.a11y_uid = "UID" + ++state.elementUIDIndex;
+                if (item.a11y_uid == undefined) {
+                    item.a11y_uid = "UID" + ++state.elementUIDIndex;
                 }
-                elementUID = $item.a11y_uid;
+                elementUID = item.a11y_uid;
 
                 if (storeLastTabIndex) {
                     if (state.tabIndexes[elementUID] === undefined) state.tabIndexes[elementUID] = [];
@@ -968,11 +968,11 @@
                 var previousTabIndex = 0;
 
                 var elementUID;
-                if ($item.a11y_uid == undefined) {
+                if (item.a11y_uid == undefined) {
                     //assign element a unique id
-                    $item.a11y_uid = "UID" + ++state.elementUIDIndex;
+                    item.a11y_uid = "UID" + ++state.elementUIDIndex;
                 }
-                elementUID = $item.a11y_uid;
+                elementUID = item.a11y_uid;
 
 
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length !== 0) {
