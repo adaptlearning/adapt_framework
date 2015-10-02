@@ -2,6 +2,8 @@
 * Tasks related to SCORM tracking setup
 */
 module.exports = function(grunt) {
+    var Helpers = require('../helpers')(grunt);
+
     grunt.loadNpmTasks('adapt-grunt-tracking-ids');
 
     grunt.registerTask('tracking-insert', 'Adds any missing tracking IDs (starting at the highest existing ID)', function() {
