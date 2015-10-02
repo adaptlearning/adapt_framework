@@ -24,7 +24,11 @@ define(function(require){
         Adapt.trigger(location+':scrollTo', selector);
         //Setup duration variable passed upon arguments
         var settings = (settings || {});
-        if (!settings.duration) {
+        var disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
+        if (disableScrollToAnimation) {
+            settings.duration = 0;
+        }
+        else if (!settings.duration) {
             settings.duration = $.scrollTo.defaults.duration;
         }
 
