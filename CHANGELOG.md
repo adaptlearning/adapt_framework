@@ -2,7 +2,7 @@
 - Nothing!
 
 ## [2.0.3] - 2015-10-02
-### Added
+### Fixed
 - fixed popup tab index save/restore [ABU-1075](https://adaptlearning.atlassian.net/browse/ABU-1075)
 
 ## [2.0.2] - 2015-09-28
