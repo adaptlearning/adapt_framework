@@ -19,11 +19,5 @@ module.exports = function(grunt) {
         }
     });
 
-    // load the external tasks
-    // grunt.loadTasks('grunt/tasks');
-
-    // TODO fix above
-    // grunt.loadNpmTasks('grunt-bower-requirejs');
-
     grunt.registerTask('default', ['help']);
 };
