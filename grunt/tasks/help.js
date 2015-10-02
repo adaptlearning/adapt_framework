@@ -6,34 +6,7 @@ module.exports = function(grunt) {
       grunt.registerTask('help', function() {
           var chalk = require('chalk'); // for some nice colouring
           var columnify = require('columnify'); // deals with formatting
-
-          // the following tasks won't be shown
-          var ignoredTasks = [
-              'default',
-              'bower',
-              'concurrent',
-              'clean',
-              'connect',
-              'copy',
-              'handlebars',
-              'less',
-              'requirejs',
-              'watch',
-              'jsonlint',
-              'open',
-              'requirejs-bundle',
-              'concat',
-              'create-json-config',
-              'check-json',
-              '_log-vars',
-              '_log-server',
-              '_build',
-              'server-build',
-              'adapt_insert_tracking_ids',
-              'adapt_remove_tracking_ids',
-              'adapt_reset_tracking_ids',
-              'schema-defaults'
-          ];
+          var config = grunt.config.data.help;
 
           grunt.log.writeln('');
           grunt.log.writeln(chalk.underline('Adapt Learning automated build process'));
@@ -43,10 +16,11 @@ module.exports = function(grunt) {
 
           var taskData = {};
           var maxTaskLength = 0;
-          var maxConsoleWidth = 75; // standard 80 chars + a buffer
+
+          // TODO: find alternate way of getting task list
 
           for(var key in grunt.task._tasks) {
-              if(this.name !== key && -1 === ignoredTasks.indexOf(key)) {
+              if(this.name !== key && -1 === config.ignoredTasks.indexOf(key)) {
                   var task = grunt.task._tasks[key];
                   taskData[chalk.cyan(task.name)] = task.info;
                   if(task.name.length > maxTaskLength) maxTaskLength = task.name.length
@@ -54,7 +28,7 @@ module.exports = function(grunt) {
           }
 
           var options = {
-              maxWidth: maxConsoleWidth - maxTaskLength,
+              maxWidth: config.maxConsoleWidth - maxTaskLength,
               showHeaders: false,
               columnSplitter: '  '
           };
