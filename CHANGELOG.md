@@ -1,6 +1,10 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
+## [2.0.3] - 2015-10-02
+### Added
+- fixed popup tab index save/restore [ABU-1075](https://adaptlearning.atlassian.net/browse/ABU-1075)
+
 ## [2.0.2] - 2015-09-28
 ### Added
 - add new button styles to base.less (#732, [ABU-1069](https://adaptlearning.atlassian.net/browse/ABU-1069))
