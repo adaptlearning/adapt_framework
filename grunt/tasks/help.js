@@ -1,8 +1,8 @@
+/*
+* Lists out the available tasks along with their descriptions.
+* Tasks in the array below will not be listed.
+*/
 module.exports = function(grunt) {
-    /*
-      * Lists out the available tasks along with their descriptions.
-      * Tasks in the array below will not be listed.
-      */
       grunt.registerTask('help', function() {
           var chalk = require('chalk'); // for some nice colouring
           var columnify = require('columnify'); // deals with formatting

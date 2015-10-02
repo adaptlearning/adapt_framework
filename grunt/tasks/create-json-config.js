@@ -1,5 +1,8 @@
+/**
+* This is a simple function to take the course's config.json
+* and append the theme and menu .json
+*/
 module.exports = function(grunt) {
-    // This is a simple function to take the course's config.json and append the theme and menu .json
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
         var customItems = ['theme', 'menu'];
         var configJson = grunt.file.readJSON(grunt.config.get('sourcedir') + 'course/config.json');
