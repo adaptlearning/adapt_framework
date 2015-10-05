@@ -10,7 +10,7 @@ define(function(require) {
         escapeKeyAttached: false,
 
         initialize: function() {
-            this.disableAnimation = $("html").is(".ie8");
+            this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this._isVisible = false;
             this.drawerDir = 'right';
             if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
@@ -146,7 +146,6 @@ define(function(require) {
 
             //delay drawer animation until after background fadeout animation is complete
             if (this.disableAnimation) {
-
                 $('#shadow').removeClass("display-none");
 
                 var direction={};

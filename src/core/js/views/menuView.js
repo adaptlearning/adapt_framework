@@ -18,6 +18,7 @@ define(function(require) {
     	},
 
         preRender: function() {
+            this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
@@ -31,7 +32,12 @@ define(function(require) {
                     $('.loading').hide();
                     $(window).scrollTop(0);
                     Adapt.trigger('menuView:ready', this);
-                    this.$el.velocity({'opacity': 1}, 'fast');
+                    var styleOptions = { opacity: 1 };
+                    if (this.disableAnimation) {
+                        this.$el.css(styleOptions)
+                    } else {
+                        this.$el.velocity(styleOptions, 'fast');
+                    }
                     $(window).scroll();
                 }, this));
             }
