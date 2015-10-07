@@ -81,6 +81,8 @@
             var state = $.a11y.state;
             var options = $.a11y.options;
 
+            if ($(event.target).is( domSelectors.nativeTabElements )) return;
+
             if (options.isDebug) console.log("preventScroll1")
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
@@ -351,7 +353,7 @@
             var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
             if (!isElementTopOutOfView) return;
 
-            var scrollToPosition = elementTop - topOffset;
+            var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
             if (scrollToPosition < 0) scrollToPosition = 0;
 
             defer(function() {
@@ -906,10 +908,10 @@
                 var $item = $(item);
                 
                 var elementUID;
-                if ($item.a11y_uid == undefined) {
-                    $item.a11y_uid = "UID" + ++state.elementUIDIndex;
+                if (item.a11y_uid == undefined) {
+                    item.a11y_uid = "UID" + ++state.elementUIDIndex;
                 }
-                elementUID = $item.a11y_uid;
+                elementUID = item.a11y_uid;
 
                 if (storeLastTabIndex) {
                     if (state.tabIndexes[elementUID] === undefined) state.tabIndexes[elementUID] = [];
@@ -966,11 +968,11 @@
                 var previousTabIndex = 0;
 
                 var elementUID;
-                if ($item.a11y_uid == undefined) {
+                if (item.a11y_uid == undefined) {
                     //assign element a unique id
-                    $item.a11y_uid = "UID" + ++state.elementUIDIndex;
+                    item.a11y_uid = "UID" + ++state.elementUIDIndex;
                 }
-                elementUID = $item.a11y_uid;
+                elementUID = item.a11y_uid;
 
 
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length !== 0) {

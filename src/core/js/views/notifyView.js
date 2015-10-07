@@ -9,7 +9,7 @@ define(function(require) {
         escapeKeyAttached: false,
 
         initialize: function() {
-            this.disableAnimation = $("html").is(".ie8");
+            this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
 
             this.setupEventListeners();
 
@@ -131,9 +131,7 @@ define(function(require) {
 
             function loaded() {
                 if (this.disableAnimation) {
-
                     this.$('.notify-shadow').css("display", "block");
-
                 } else {
 
                     this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
@@ -141,7 +139,6 @@ define(function(require) {
                     }, this)});
 
                 }
-
 
                 this.resizeNotify();
 
@@ -156,9 +153,8 @@ define(function(require) {
                     }, this) });
 
                 }
-
                 /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                Adapt.trigger('popup:opened', this.$el);
+                Adapt.trigger('popup:opened', this.$('.notify-popup'));
                 $('body').scrollDisable();
 
                 //set focus to first accessible element
