@@ -7,7 +7,12 @@
 
  		defaults: {
  			_canNavigate: true
+ 		},
+
+ 		lockedAttributes: {
+ 			_canNavigate: false
  		}
+ 		
  	});
 
  	return RouterModel;

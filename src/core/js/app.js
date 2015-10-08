@@ -15,6 +15,7 @@ require([
     'coreModels/blockModel',
     'coreModels/componentModel',
     'coreJS/offlineStorage',
+    'coreModels/lockingModel',
     'velocity',
     'imageReady',
     'inview',
