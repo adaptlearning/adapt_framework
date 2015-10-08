@@ -404,19 +404,27 @@ define(function(require) {
         },
 
         setupPartlyCorrectFeedback: function() {
-
-            if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
-                this.model.set({
-                    feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._partlyCorrect.final
-                });
+            
+            if(this.model.get('_feedback')._partlyCorrect) {
+                if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
+                    if(this.model.get('_feedback')._partlyCorrect.final) {
+                        this.model.set({
+                            feedbackTitle: this.model.get('title'),
+                            feedbackMessage: this.model.get('_feedback')._partlyCorrect.final
+                        });
+                    } else {
+                        this.setupIncorrectFeedback();
+                    }
+                } else {
+                    this.model.set({
+                        feedbackTitle: this.model.get('title'),
+                        feedbackMessage: this.model.get('_feedback')._partlyCorrect.notFinal
+                    });
+                }
             } else {
-                this.model.set({
-                    feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._partlyCorrect.notFinal
-                });
+                this.setupIncorrectFeedback();
             }
-
+            
         },
 
         setupIncorrectFeedback: function() {
