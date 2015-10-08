@@ -22,7 +22,7 @@
 
 .accessibility.no-touch {
     .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
-        outline: @focus-outline;         
+        outline: @focus-outline;
     }
 }
 
@@ -211,8 +211,8 @@
     }
 }
 
-.component-container:before, .component-container:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.component-container:after { clear: both; }  
+.component-container:before, .component-container:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.component-container:after { clear: both; }
 .component-container { zoom: 1; }
 
 .component-left {
@@ -281,7 +281,7 @@
     line-height: normal !important;
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
-    .touch & { 
+    .touch & {
         position: relative !important;
     }
 
@@ -333,6 +333,14 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+//Default margin for HTML paragraph tag
+body {
+    p {
+        margin-top: @body-text-font-size;
+        margin-bottom: @body-text-font-size;
+    }
 }
 
 .button, button {
