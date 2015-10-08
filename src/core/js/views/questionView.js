@@ -404,6 +404,7 @@ define(function(require) {
         },
 
         setupPartlyCorrectFeedback: function() {
+            
             if(this.model.get('_feedback')._partlyCorrect) {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
                     if(this.model.get('_feedback')._partlyCorrect.final) {
@@ -412,10 +413,7 @@ define(function(require) {
                             feedbackMessage: this.model.get('_feedback')._partlyCorrect.final
                         });
                     } else {
-                        this.model.set({
-                            feedbackTitle: this.model.get('title'),
-                            feedbackMessage: this.model.get('_feedback')._incorrect.final
-                        });
+                        this.setupIncorrectFeedback();
                     }
                 } else {
                     this.model.set({
@@ -426,6 +424,7 @@ define(function(require) {
             } else {
                 this.setupIncorrectFeedback();
             }
+            
         },
 
         setupIncorrectFeedback: function() {
