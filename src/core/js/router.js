@@ -242,7 +242,11 @@ define([
             var documentTitle = courseTitle + pageTitle;
 
             Adapt.once("pageView:ready menuView:ready", function() {
-                $('title').html(documentTitle);
+                if ($("html").is(".ie8")) {
+                    document.title = documentTitle;
+                } else {
+                    $('title').html(documentTitle);
+                }
             });
 
         }
