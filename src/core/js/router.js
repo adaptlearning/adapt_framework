@@ -239,10 +239,10 @@ define([
             }
 
             var courseTitle = Adapt.course.get("title");
-            var documentTitle = courseTitle + pageTitle;
+            var documentTitle = $("<div>" + courseTitle + pageTitle + "</div>").text();
 
             Adapt.once("pageView:ready menuView:ready", function() {
-                $('title').html(documentTitle);
+                document.title = documentTitle;
             });
 
         }
