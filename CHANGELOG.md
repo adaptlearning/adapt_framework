@@ -1,6 +1,10 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
+## [2.0.3] - 2015-10-02
+### Fixed
+- fixed popup tab index save/restore [ABU-1075](https://adaptlearning.atlassian.net/browse/ABU-1075)
+
 ## [2.0.2] - 2015-09-28
 ### Added
 - add new button styles to base.less (#732, [ABU-1069](https://adaptlearning.atlassian.net/browse/ABU-1069))
@@ -192,7 +196,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.2...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v1.1.3...v2.0.0
