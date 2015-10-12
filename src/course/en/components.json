@@ -207,14 +207,7 @@
 		"instruction": "Select the play button to start the video.",
 		"_media": {
 			"mp4": "course/en/video/c-40.mp4",
-			"ogv": "course/en/video/c-40.ogv",
-			"poster": "course/en/video/c-40.jpg",
-			"cc": [
-				{
-					"srclang": "",
-					"src": ""
-				}
-			]
+			"poster": "course/en/video/c-40.jpg"
 		},
 		"_transcript": {
 			"_inlineTranscript": true,
