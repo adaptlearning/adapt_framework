@@ -467,6 +467,7 @@ define(function(require) {
                 _isSubmitted: false
             });
             this.$(".component-widget").removeClass("submitted");
+            this.$('.component-body-inner').a11y_focus();
         },
 
         // Used by the question view to reset the stored user answer
