@@ -61,7 +61,6 @@ module.exports = function(grunt) {
     };
 
     exports.excludedFilter = function(filepath) {
-        console.log(exports.isPluginExcluded(filepath), filepath);
         return !exports.isPluginExcluded(filepath);
     };
 
