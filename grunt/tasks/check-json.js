@@ -7,7 +7,7 @@ module.exports = function(grunt) {
           var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component' ];
 
           // Go through each course folder inside the <%= sourcedir %>course directory
-          grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + 'course/*').forEach(function(path) {
+          grunt.file.expand({filter: 'isDirectory'}, grunt.config('sourcedir') + 'course/*').forEach(function(path) {
 
               var courseItemObjects = [];
 

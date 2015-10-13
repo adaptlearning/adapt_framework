@@ -1,8 +1,25 @@
-module.exports = function(grunt) {
-    var path = require('path');
-    var Helpers = require('./grunt/helpers')(grunt);
+var path = require('path');
 
+// TODO: check this on windows
+var appendSlash = function(dir) {
+    if (dir) {
+        var lastChar = dir.substring(dir.length - 1, dir.length);
+        if (lastChar !== '/') return dir + '/';
+    }
+};
+
+module.exports = function(grunt) {
+    require('time-grunt')(grunt);
+
+    var buildConfig = require('./src/course/config.json').build || {};
     require('load-grunt-config')(grunt, {
+        data: {
+            excludes: buildConfig.excludes || [],
+            sourcedir: appendSlash(grunt.option('sourcedir')) || 'src/',
+            outputdir: appendSlash(grunt.option('outputdir')) || 'build/',
+            theme: grunt.option('theme') || '**',
+            menu: grunt.option('menu') || '**'
+        },
         configPath: path.join(process.cwd(), 'grunt', 'config'),
         jitGrunt: {
             customTasksDir: path.join(process.cwd(), 'grunt', 'tasks'),
@@ -10,14 +27,9 @@ module.exports = function(grunt) {
                 bower: 'grunt-bower-requirejs'
             }
         },
-        data: {
-            sourcedir: Helpers.getSourceDir(),
-            outputdir: Helpers.getOutputDir(),
-            theme: grunt.option('theme') || '**',
-            menu: grunt.option('menu') || '**',
-            pkg: grunt.file.readJSON('package.json')
-        }
     });
+
+    grunt.config('helpers', require('./grunt/helpers')(grunt));
 
     grunt.registerTask('default', ['help']);
 };

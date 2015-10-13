@@ -6,7 +6,7 @@ module.exports = function(grunt) {
       grunt.registerTask('help', function() {
           var chalk = require('chalk'); // for some nice colouring
           var columnify = require('columnify'); // deals with formatting
-          var config = grunt.config.data.help;
+          var config = grunt.config('help');
 
           grunt.log.writeln('');
           grunt.log.writeln(chalk.underline('Adapt Learning automated build process'));

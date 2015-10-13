@@ -25,5 +25,10 @@
             "_onTrackingCriteriaMet": "completed",
             "_onAssessmentFailure": "incomplete"
         }
+    },
+    "build": {
+        "excludes": [
+            "adapt-contrib-media"
+        ]
     }
 }

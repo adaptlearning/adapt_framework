@@ -7,6 +7,10 @@ module.exports = {
             '<%= sourcedir %>theme/theme.js',
             '<%= sourcedir %>less',
             '<%= sourcedir %>templates',
+        ]
+    },
+    output: {
+        src: [
             '<%= outputdir %>adapt/js/adapt.min.js.map'
         ]
     }

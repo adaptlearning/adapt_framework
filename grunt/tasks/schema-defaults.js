@@ -21,11 +21,11 @@ module.exports = function(grunt) {
             var pluginCategory = pluginCategories[pluginTypeIndex];
 
             //iterate through plugins in plugin type folder
-            grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('sourcedir') + pluginType + '/*').forEach(function(path) {
+            grunt.file.expand({filter: 'isDirectory'}, grunt.config('sourcedir') + pluginType + '/*').forEach(function(path) {
                 var currentPluginPath = path;
 
                 // if specific plugin has been specified with grunt.option, don't carry on
-                if(Helpers.isPluginExcluded(pluginType, path)) return;
+                if(Helpers.isPluginExcluded(path, path)) return;
 
                 var currentSchemaPath = currentPluginPath + "/" + "properties.schema";
                 var currentBowerPath = currentPluginPath + "/" + "bower.json";
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         });
 
         //iterate through lanugage folders
-        grunt.file.expand({filter: 'isDirectory'}, grunt.config.get('outputdir') + 'course/*').forEach(function(path) {
+        grunt.file.expand({filter: 'isDirectory'}, grunt.config('outputdir') + 'course/*').forEach(function(path) {
             var currentCourseFolder = path;
             var currentCourseJsonFile = currentCourseFolder + '/' + 'course.json';
 
