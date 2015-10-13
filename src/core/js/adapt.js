@@ -97,7 +97,7 @@ define([
         // Store the component view
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
-        if(!object.template) object.template = name;
+        if(!object.template || object.template != name) object.template = name;
         Adapt.componentStore[name] = object;
 
     }
