@@ -69,7 +69,6 @@ module.exports = function(grunt) {
         else return content;
     };
 
-    // TODO doesn't work (for requirejs)
     exports.excludedRegExp = generateExcludedRegExp();
 
     return exports;

@@ -9,7 +9,6 @@ module.exports = function (grunt, options) {
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
                 optimize: 'none',
-                fileExclusionRegExp: '<%= helpers.excludedRegExp %>',
                 onBuildRead: function(moduleName, path, contents) {
                     return grunt.config('helpers').excludedProcess(contents, path);
                 }
@@ -22,7 +21,6 @@ module.exports = function (grunt, options) {
                 mainConfigFile: './config.js',
                 out: '<%= outputdir %>adapt/js/adapt.min.js',
                 optimize: 'uglify2',
-                fileExclusionRegExp: '<%= helpers.excludedRegExp %>',
                 onBuildRead: function(moduleName, path, contents) {
                     return grunt.config('helpers').excludedProcess(contents, path);
                 }
