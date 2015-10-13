@@ -38,7 +38,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>components/**/assets/**'],
                     dest: '<%= outputdir %>assets/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -51,7 +51,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>components/**/fonts/**'],
                     dest: '<%= outputdir %>adapt/css/fonts/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -64,7 +64,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>extensions/**/assets/**'],
                     dest: '<%= outputdir %>assets/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -77,7 +77,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>extensions/**/fonts/**'],
                     dest: '<%= outputdir %>adapt/css/fonts/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -90,7 +90,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>menu/<%= menu %>/assets/**'],
                     dest: '<%= outputdir %>assets/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -103,7 +103,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>menu/<%= menu %>/fonts/**'],
                     dest: '<%= outputdir %>adapt/css/fonts/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -116,7 +116,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>theme/<%= theme %>/assets/**'],
                     dest: '<%= outputdir %>adapt/css/assets/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -129,7 +129,7 @@ module.exports = function (grunt, options) {
                     src: ['<%= sourcedir %>theme/<%= theme %>/fonts/**'],
                     dest: '<%= outputdir %>adapt/css/fonts/',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     flatten: true
                 }
@@ -164,7 +164,7 @@ module.exports = function (grunt, options) {
                     cwd: '<%= sourcedir %>extensions/',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
-                        return grunt.config('helpers').isPluginExcluded(filepath);
+                        return grunt.config('helpers').excludedFilter(filepath);
                     },
                     rename: function(destFolder, srcFileName) {
                         var endOfRequired = srcFileName.indexOf("required/") + 9;

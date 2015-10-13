@@ -26,12 +26,6 @@ module.exports = function(grunt) {
 
     var exports = {};
 
-    exports.excludedRegExp = generateExcludedRegExp();
-
-    exports.excludedProcess = function(content, filepath) {
-        return content;
-    };
-
     /*
     * Uses the parent folder name (menu, theme, components, extensions).
     * Also caches a list of the installed plugins
@@ -55,16 +49,29 @@ module.exports = function(grunt) {
 
     exports.isPluginExcluded = function(pluginPath) {
         var excludes = grunt.config('excludes');
-        if(!excludes) return true;
+        if(!excludes) return false;
 
         for(var i = 0, count = excludes.length; i < count; i++) {
             if(pluginPath.search(exports.excludedRegExp) !== -1) {
                 grunt.log.writeln('Excluding', pluginPath);
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     };
+
+    exports.excludedFilter = function(filepath) {
+        console.log(exports.isPluginExcluded(filepath), filepath);
+        return !exports.isPluginExcluded(filepath);
+    };
+
+    exports.excludedProcess = function(content, filepath) {
+        if(exports.isPluginExcluded(filepath)) return "";
+        else return content;
+    };
+
+    // TODO doesn't work (for requirejs)
+    exports.excludedRegExp = generateExcludedRegExp();
 
     return exports;
 };

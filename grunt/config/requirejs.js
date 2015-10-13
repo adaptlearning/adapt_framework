@@ -9,7 +9,10 @@ module.exports = function (grunt, options) {
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
                 optimize: 'none',
-                fileExclusionRegExp: /adapt-contrib-media/
+                fileExclusionRegExp: '<%= helpers.excludedRegExp %>',
+                onBuildRead: function(moduleName, path, contents) {
+                    return grunt.config('helpers').excludedProcess(contents, path);
+                }
             }
         },
         compile: {
@@ -19,7 +22,10 @@ module.exports = function (grunt, options) {
                 mainConfigFile: './config.js',
                 out: '<%= outputdir %>adapt/js/adapt.min.js',
                 optimize: 'uglify2',
-                fileExclusionRegExp: '<%= helpers.excludedRegExp %>'
+                fileExclusionRegExp: '<%= helpers.excludedRegExp %>',
+                onBuildRead: function(moduleName, path, contents) {
+                    return grunt.config('helpers').excludedProcess(contents, path);
+                }
             }
         }
     }
