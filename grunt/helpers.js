@@ -1,3 +1,4 @@
+var chalk = require('chalk');
 module.exports = function(grunt) {
     // tasks
     grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
@@ -13,14 +14,12 @@ module.exports = function(grunt) {
 
         if(includes) {
             grunt.log.writeln('The following plugins will be included in the build:');
-
             for(var i = 0, count = includes.length; i < count; i++)
                 grunt.log.writeln('- ' + includes[i]);
             grunt.log.writeln('');
         }
         if (excludes) {
             grunt.log.writeln('The following plugins will be excluded from the build:');
-
             for(var i = 0, count = excludes.length; i < count; i++)
                 grunt.log.writeln('- ' + excludes[i]);
             grunt.log.writeln('');
@@ -81,7 +80,10 @@ module.exports = function(grunt) {
         var isIncluded = includes && pluginPath.search(exports.includedRegExp) !== -1;
         var isExcluded = excludes && pluginPath.search(exports.excludedRegExp) !== -1;
 
-        if(isExcluded || !isIncluded) return false;
+        if(isExcluded || !isIncluded) {
+            grunt.log.writeln('Excluded ' + chalk.magenta(pluginPath));
+            return false;
+        }
         else return true;
     };
 

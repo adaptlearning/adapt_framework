@@ -9,21 +9,24 @@ module.exports = function(grunt) {
                     newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, '');
                     return  newFilePath;
                 },
-                processContent: function(content, filepath) {
-                    return grunt.config('helpers').includedProcess(content, filepath);
-                },
                 partialRegex: /.*/,
                 partialsPathRegex: /\/partials\//
             },
-            files: {
-                '<%= sourcedir %>templates/templates.js': [
-                    '<%= sourcedir %>components/**/*.hbs',
-                    '<%= sourcedir %>core/**/*.hbs',
-                    '<%= sourcedir %>extensions/**/*.hbs',
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
-                    '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
-                ]
-            }
+            files: [
+                {
+                    src: [
+                        '<%= sourcedir %>components/**/*.hbs',
+                        '<%= sourcedir %>core/**/*.hbs',
+                        '<%= sourcedir %>extensions/**/*.hbs',
+                        '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
+                        '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
+                    ],
+                    dest: '<%= sourcedir %>templates/templates.js',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    }
+                }
+            ]
         }
     }
 }
