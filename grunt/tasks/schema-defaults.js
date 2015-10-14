@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                 var currentPluginPath = path;
 
                 // if specific plugin has been specified with grunt.option, don't carry on
-                if(Helpers.isPluginExcluded(path, path)) return;
+                if(Helpers.isPluginIncluded(path, path)) return;
 
                 var currentSchemaPath = currentPluginPath + "/" + "properties.schema";
                 var currentBowerPath = currentPluginPath + "/" + "bower.json";

@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                 baseUrl: '<%= sourcedir %>',
                 moduleName: 'components/components',
                 filter: function(filepath) {
-                    return grunt.config('helpers').excludedFilter(filepath);
+                    return grunt.config('helpers').includedFilter(filepath);
                 }
             }
         },
@@ -18,7 +18,7 @@ module.exports = function(grunt) {
                 baseUrl: '<%= sourcedir %>',
                 moduleName: 'extensions/extensions',
                 filter: function(filepath) {
-                    return grunt.config('helpers').excludedFilter(filepath);
+                    return grunt.config('helpers').includedFilter(filepath);
                 }
             }
         },
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
                 baseUrl: '<%= sourcedir %>',
                 moduleName: 'menu/menu',
                 filter: function(filepath) {
-                    return grunt.config('helpers').excludedFilter(filepath);
+                    return grunt.config('helpers').includedFilter(filepath);
                 }
             }
         },
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 baseUrl: '<%= sourcedir %>',
                 moduleName: 'themes/themes',
                 filter: function(filepath) {
-                    return grunt.config('helpers').excludedFilter(filepath);
+                    return grunt.config('helpers').includedFilter(filepath);
                 }
             }
         }

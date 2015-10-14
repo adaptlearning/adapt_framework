@@ -10,7 +10,7 @@ module.exports = function (grunt, options) {
                 preserveLicenseComments:false,
                 optimize: 'none',
                 onBuildRead: function(moduleName, path, contents) {
-                    return grunt.config('helpers').excludedProcess(contents, path);
+                    return grunt.config('helpers').includedProcess(contents, path);
                 }
             }
         },
@@ -22,7 +22,7 @@ module.exports = function (grunt, options) {
                 out: '<%= outputdir %>adapt/js/adapt.min.js',
                 optimize: 'uglify2',
                 onBuildRead: function(moduleName, path, contents) {
-                    return grunt.config('helpers').excludedProcess(contents, path);
+                    return grunt.config('helpers').includedProcess(contents, path);
                 }
             }
         }

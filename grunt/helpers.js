@@ -4,9 +4,27 @@ module.exports = function(grunt) {
         grunt.log.ok('Starting server in "' + grunt.config('outputdir') + '" using port ' + grunt.config('connect.server.options.port'));
     });
     grunt.registerTask('_log-vars', 'Logs out user-defined build variables', function() {
-        grunt.log.writeln('The following plugins will be excluded from the build:');
-        grunt.log.writeln(grunt.config('excludes').toString());
-        grunt.log.writeln('');
+        var includes = grunt.config('includes');
+        var excludes = grunt.config('excludes');
+
+        if (includes && excludes) {
+            grunt.fail.fatal('Cannot specify includes and excludes. Please check your config.json configuration.');
+        }
+
+        if(includes) {
+            grunt.log.writeln('The following plugins will be included in the build:');
+
+            for(var i = 0, count = includes.length; i < count; i++)
+                grunt.log.writeln('- ' + includes[i]);
+            grunt.log.writeln('');
+        }
+        if (excludes) {
+            grunt.log.writeln('The following plugins will be excluded from the build:');
+
+            for(var i = 0, count = excludes.length; i < count; i++)
+                grunt.log.writeln('- ' + excludes[i]);
+            grunt.log.writeln('');
+        }
 
         grunt.log.ok('Using source at "' + grunt.config('sourcedir') + '"');
         grunt.log.ok('Building to "' + grunt.config('outputdir') + '"');
@@ -14,8 +32,18 @@ module.exports = function(grunt) {
         if (grunt.config('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config('menu') + '"');
     });
 
+    var generateIncludedRegExp = function() {
+        var includes = grunt.config('includes') || [];
+        var re = '';
+        for(var i = 0, count = includes.length; i < count; i++) {
+            re += includes[i];
+            if(i < includes.length-1) re += '|';
+        }
+        return new RegExp(re);
+    };
+
     var generateExcludedRegExp = function() {
-        var excludes = grunt.config('excludes');
+        var excludes = grunt.config('excludes') || [];
         var re = '';
         for(var i = 0, count = excludes.length; i < count; i++) {
             re += excludes[i];
@@ -47,28 +75,26 @@ module.exports = function(grunt) {
         return false;
     };
 
-    exports.isPluginExcluded = function(pluginPath) {
+    exports.isPluginIncluded = function(pluginPath) {
+        var includes = grunt.config('includes');
         var excludes = grunt.config('excludes');
-        if(!excludes) return false;
+        var isIncluded = includes && pluginPath.search(exports.includedRegExp) !== -1;
+        var isExcluded = excludes && pluginPath.search(exports.excludedRegExp) !== -1;
 
-        for(var i = 0, count = excludes.length; i < count; i++) {
-            if(pluginPath.search(exports.excludedRegExp) !== -1) {
-                grunt.log.writeln('Excluding', pluginPath);
-                return true;
-            }
-        }
-        return false;
+        if(isExcluded || !isIncluded) return false;
+        else return true;
     };
 
-    exports.excludedFilter = function(filepath) {
-        return !exports.isPluginExcluded(filepath);
+    exports.includedFilter = function(filepath) {
+        return exports.isPluginIncluded(filepath);
     };
 
-    exports.excludedProcess = function(content, filepath) {
-        if(exports.isPluginExcluded(filepath)) return "";
+    exports.includedProcess = function(content, filepath) {
+        if(!exports.isPluginIncluded(filepath)) return "";
         else return content;
     };
 
+    exports.includedRegExp = generateIncludedRegExp();
     exports.excludedRegExp = generateExcludedRegExp();
 
     return exports;

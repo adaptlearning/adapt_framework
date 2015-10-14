@@ -10,7 +10,7 @@ module.exports = function (grunt, options) {
             ],
             dest: '<%= sourcedir %>less/adapt.less',
             filter: function(filepath) {
-                return grunt.config('helpers').excludedFilter(filepath);
+                return grunt.config('helpers').includedFilter(filepath);
             }
         }
     }

@@ -10,7 +10,7 @@ module.exports = function(grunt) {
                     return  newFilePath;
                 },
                 processContent: function(content, filepath) {
-                    return grunt.config('helpers').excludedProcess(content, filepath);
+                    return grunt.config('helpers').includedProcess(content, filepath);
                 },
                 partialRegex: /.*/,
                 partialsPathRegex: /\/partials\//
