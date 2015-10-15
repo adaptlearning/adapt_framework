@@ -150,5 +150,8 @@
     "matchdep": "~0.3.0",
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5"
+  },
+  "dependencies": {
+    "time-grunt": "^1.2.1"
   }
 }
