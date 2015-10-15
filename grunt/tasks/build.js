@@ -6,6 +6,7 @@ module.exports = function(grunt) {
         '_log-vars',
         'jsonlint',
         'check-json',
+        'clean:output',
         'copy',
         'concat',
         'less',
