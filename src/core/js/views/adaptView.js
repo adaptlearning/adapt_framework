@@ -51,6 +51,8 @@ define(function(require) {
                     var ChildView = this.constructor.childView || Adapt.componentStore[model.get("_component")];
                     var $parentContainer = this.$(this.constructor.childContainer);
                     model.set("_nthChild", nthChild);
+                    var type = model.get('_type');
+                    if(!ChildView) debugger;
                     $parentContainer.append(new ChildView({model:model}).$el);
                 }
             }
