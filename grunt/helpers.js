@@ -77,6 +77,10 @@ module.exports = function(grunt) {
     exports.isPluginIncluded = function(pluginPath) {
         var includes = grunt.config('includes');
         var excludes = grunt.config('excludes');
+
+        // carry on as normal if no includes/excludes
+        if(!includes && !excludes) return true;
+
         var isIncluded = includes && pluginPath.search(exports.includedRegExp) !== -1;
         var isExcluded = excludes && pluginPath.search(exports.excludedRegExp) !== -1;
 

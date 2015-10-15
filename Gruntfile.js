@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
     require('load-grunt-config')(grunt, {
         data: {
-            includes: defaultIncludes.concat(buildConfig.includes),
+            includes: buildConfig.includes ? defaultIncludes.concat(buildConfig.includes) : undefined,
             excludes: buildConfig.excludes,
             sourcedir: appendSlash(grunt.option('sourcedir')) || 'src/',
             outputdir: appendSlash(grunt.option('outputdir')) || 'build/',
