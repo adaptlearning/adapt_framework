@@ -16,6 +16,7 @@ define([
                 document.title = Adapt.course.get('title');
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
+            this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
             this.listenTo(Adapt, "router:navigateTo", this.handleRoute);
         },
 
@@ -159,6 +160,12 @@ define([
                     return;
                 }
                 this.navigateToParent();
+            }
+        },
+        
+        navigateToHomeRoute: function(force) {
+            if (Adapt.router.get('_canNavigate') || force ) {
+                this.navigate('#', {trigger: true});                
             }
         },
 
