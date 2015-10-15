@@ -44,6 +44,8 @@ define(function() {
                 $icon.removeClass('icon-tick');
                 $icon.addClass('display-none');
                 this.$el.removeClass("submitted");
+                this.model.set('feedbackMessage', undefined);
+                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
 
             } else {
 
