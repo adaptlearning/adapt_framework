@@ -6,6 +6,7 @@ module.exports = function(grunt) {
         var requireMode = (mode === 'dev') ? 'dev' : 'compile';
 
         grunt.task.run([
+            '_log-vars',
             'copy',
             'concat',
             'less',

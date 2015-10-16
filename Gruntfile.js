@@ -19,7 +19,13 @@ module.exports = function(grunt) {
         'menu/menu.js',
         'theme/theme.js'
     ];
-    var buildConfig = require('./src/course/config.json').build || {};
+   
+    // Selectively load the course.json 
+    // 'outputdir' will be passed in a call to server-build, i.e. from the authoring tool
+    var buildConfigPath = grunt.option('outputdir') 
+      ? './' + grunt.option('outputdir') + '/course/config.json'
+      : './src/course/config.json';
+    var buildConfig = require(buildConfigPath).build || {};
 
     require('load-grunt-config')(grunt, {
         data: {

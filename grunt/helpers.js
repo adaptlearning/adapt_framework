@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             grunt.fail.fatal('Cannot specify includes and excludes. Please check your config.json configuration.');
         }
 
-        if(includes) {
+        if (includes) {
             grunt.log.writeln('The following plugins will be included in the build:');
             for(var i = 0, count = includes.length; i < count; i++)
                 grunt.log.writeln('- ' + includes[i]);
@@ -79,16 +79,19 @@ module.exports = function(grunt) {
         var excludes = grunt.config('excludes');
 
         // carry on as normal if no includes/excludes
-        if(!includes && !excludes) return true;
+        if (!includes && !excludes) return true;
 
         var isIncluded = includes && pluginPath.search(exports.includedRegExp) !== -1;
         var isExcluded = excludes && pluginPath.search(exports.excludedRegExp) !== -1;
 
-        if(isExcluded || !isIncluded) {
-            grunt.log.writeln('Excluded ' + chalk.magenta(pluginPath));
+        if (isExcluded || !isIncluded) {
+//            grunt.log.writeln('Excluded ' + chalk.magenta(pluginPath));
             return false;
         }
-        else return true;
+        else {
+          // grunt.log.writeln('Included ' + chalk.green(pluginPath));
+          return true;
+        }
     };
 
     exports.includedFilter = function(filepath) {
