@@ -17,6 +17,7 @@ define([
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
             this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
+            this.listenTo(Adapt, 'navigation:parentButton', this.navigateToParent);
             this.listenTo(Adapt, "router:navigateTo", this.handleRoute);
         },
 
