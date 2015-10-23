@@ -1,4 +1,4 @@
-// jquery.onscreen 2015-08-13 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2015-10-23 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 	var expando = $.expando;
