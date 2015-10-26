@@ -10,7 +10,7 @@ define(function(require) {
         $accessibilityToggle: $("#accessibility-toggle"),
 
         _tabIndexElements: 'a, button, input, select, textarea, [tabindex]',
-        _hasTabPosition: false,
+        _isButtonRedirectionOn: true,
         _hasUsageInstructionRead: false,
         _isLoaded: false,
         _hasCourseLoaded: false,
@@ -210,7 +210,7 @@ define(function(require) {
             this.setNavigationBar();
 
             //MAKE FOCUS RIGHT
-            this._hasTabPosition = false
+            this._isButtonRedirectionOn = true;
             this.focusInitial();
 
         },
@@ -259,7 +259,7 @@ define(function(require) {
             } else {
 
                 //OTHERWISE ENABLE TAB REDIRECTION TO TOGGLE BUTTON
-                this._hasTabPosition = false;
+                this._isButtonRedirectionOn = true;
             }
         },
 
@@ -384,7 +384,7 @@ define(function(require) {
         focusInitial: function() {
             if (!this.isActive()) return;
 
-            this._hasTabPosition = true;
+            this._isButtonRedirectionOn = false;
 
             _.delay(_.bind(function() {
                 //ENABLED DOCUMENT READING
@@ -467,7 +467,7 @@ define(function(require) {
             if ($.a11y.userInteracted) return;
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
-            if (Accessibility.isActive() && Accessibility._hasTabPosition) return;
+            if (Accessibility.isActive() && !Accessibility._isButtonRedirectionOn) return;
 
             //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
             Accessibility.$accessibilityToggle.focus();
@@ -476,7 +476,7 @@ define(function(require) {
 
         onFocusInstructions: function(event) {
             //HIDE INSTRUCTIONS FROM TAB WRAP AROUND AFTER LEAVING INSTRUCTIONS
-            if (!Accessibility._hasTabPosition) return;
+            if (Accessibility._isButtonRedirectionOn) return;
             if (!Accessibility._isLoaded) return;
             $(event.target).addClass("a11y-ignore-focus");
         }
