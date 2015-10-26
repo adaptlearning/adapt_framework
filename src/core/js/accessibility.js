@@ -11,10 +11,19 @@ define(function(require) {
 
         _tabIndexElements: 'a, button, input, select, textarea, [tabindex]',
         _isButtonRedirectionOn: true,
+        _hasUserTabbed: false,
         _hasUsageInstructionRead: false,
         _isLoaded: false,
         _hasCourseLoaded: false,
         _legacyFocusElements: undefined,
+
+        reset: function() {
+            _.extend(this, {
+                _isButtonRedirectionOn: true,
+                _hasUserTabbed: false,
+                _hasUsageInstructionRead: false
+            });
+        },
 
         initialize: function() {
             //RUN ONCE
@@ -58,20 +67,20 @@ define(function(require) {
                 Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
             }
 
-            if (!this.isEnabled()) return;
+            this.reset();
 
             this.checkTabCapture();
 
+            this.configureA11yLibrary();
+			
             // Check if accessibility is active
             if (this.isActive()) {
 
-                this.onNavigationEnd();
                 this.setupDocument();
                 this.setupLegacy();
                 this.setupPopupListeners()
                 this.setupUsageInstructions();
                 this.setupLogging();
-                this.focusInitial();
 
             } else {
 
@@ -188,12 +197,18 @@ define(function(require) {
 
         onNavigationStart: function() {
             this._isLoaded = false;
+            this._hasUserTabbed = false;
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
             $("#a11y-focuser").focusNoScroll();
             $.a11y_on(false, '#wrapper');
         },
 
-        onNavigationEnd: function() {
+        onNavigationEnd: function(view) {
+            //prevent sub-menu items provoking behaviour
+            if (view && view.model) {
+                if (view.model.get("_id") != Adapt.location._currentId) return;
+            }
+
             //always use detached aria labels for divs and spans
             _.defer(function() {
                 $('body').a11y_aria_label(true);
@@ -211,7 +226,9 @@ define(function(require) {
 
             //MAKE FOCUS RIGHT
             this._isButtonRedirectionOn = true;
-            this.focusInitial();
+            _.delay(_.bind(function() {
+                this.focusInitial();
+            }, this), 500);
 
         },
 
@@ -251,16 +268,11 @@ define(function(require) {
 
             $.a11y(isActive);
 
-            if (isActive) {
+            //IF ACCESSIBILTY TURNED ON QUIT
+            if (isActive) return;
 
-                //IF ACCESSIBILTY TURNED ON GOTO FIRST FOCUSABLE ITEM
-                this.focusInitial();
-
-            } else {
-
-                //OTHERWISE ENABLE TAB REDIRECTION TO TOGGLE BUTTON
-                this._isButtonRedirectionOn = true;
-            }
+            //OTHERWISE ENABLE TAB REDIRECTION TO TOGGLE BUTTON
+            this._isButtonRedirectionOn = true;
         },
 
         isActive: function() {
@@ -386,15 +398,17 @@ define(function(require) {
 
             this._isButtonRedirectionOn = false;
 
-            _.delay(_.bind(function() {
+            var debouncedInitial = _.debounce(_.bind(function() {
                 //ENABLED DOCUMENT READING
                 $.a11y_on(true, '#wrapper');
 
                 if (!this._hasUsageInstructionRead) {
 
-                    $("#accessibility-instructions").focusNoScroll();
-
                     this._hasUsageInstructionRead = true;
+
+                    if (this._hasUserTabbed) return;
+	
+                    $("#accessibility-instructions").focusNoScroll();
 
                 } else {
 
@@ -405,14 +419,14 @@ define(function(require) {
 
                         switch (currentModel.get("_type")) {
                             case "page":
-                                if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
                                 }
                                 break;
 
                             case "menu":
                             default:
-                                if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
                                 }
                                 break;
@@ -421,20 +435,21 @@ define(function(require) {
                         $.a11y_alert(alertText);
                     }
 
-                     _.delay(function() {
+                     _.delay(_.bind(function() {
                         var windowScrollTop = $(window).scrollTop();
                         var documentScrollTop = $(document).scrollTop();
 
                         //prevent auto scrolling to top when scroll has been initiated
-                        if (windowScrollTop > 0 || documentScrollTop > 0) return;
+                        if (windowScrollTop > 0 || documentScrollTop > 0 || this._hasUserTabbed) return;
 
                         $.a11y_focus();
 
-                    }, 250);
+                    }, this), 250);
 
                 }
 
             }, this), 1000);
+            debouncedInitial();
 
         },
 
@@ -465,6 +480,7 @@ define(function(require) {
 
             //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
             if ($.a11y.userInteracted) return;
+            Accessibility._hasUserTabbed = true;
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
             if (Accessibility.isActive() && !Accessibility._isButtonRedirectionOn) return;
@@ -485,5 +501,7 @@ define(function(require) {
 
 
     Accessibility.initialize();
+
+    return Accessibility;
 
 });
