@@ -31,7 +31,7 @@
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>',
-            "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button"></a>',
+            "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
             "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>',
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
         };
