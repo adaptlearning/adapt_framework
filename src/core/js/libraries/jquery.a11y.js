@@ -547,7 +547,9 @@
                 $focusguard = $(domInjectElements.focusguard);
             }
 
-            $focusguard.remove().appendTo($('body')).attr("tabindex", 0);
+            var $currentFloor = $.a11y.state.floorStack[$.a11y.state.floorStack.length-1];
+
+            $focusguard.remove().appendTo($currentFloor).attr("tabindex", 0);
 
             $focusguard.off("click").off("focus");
 
@@ -643,6 +645,7 @@
         };
         $.a11y.state = {
             $activeElement: null,
+            floorStack: [$("body")],
             focusStack: [],
             tabIndexes: {},
             elementUIDIndex: 0,
@@ -944,6 +947,8 @@
 
             var options = $.a11y.options;
 
+            $.a11y.state.floorStack.push(this);
+
             this.a11y_only(container, true);
 
             if (this.length > 0) $(this[0]).limitedScrollTo();
@@ -964,6 +969,8 @@
         $.a11y_popdown = function() {
             var options = $.a11y.options;
             var state = $.a11y.state;
+
+            $.a11y.state.floorStack.pop();
 
             $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).each(function(index, item) {
                 var $item = $(item);
