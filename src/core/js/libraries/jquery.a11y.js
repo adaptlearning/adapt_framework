@@ -680,7 +680,6 @@
                 a11y_reattachFocusGuard();
             }
 
-            if (options.isDebug) console.log("a11y_ready");
             if (options.isDebug) {
                 console.log("a11y_ready");
                 a11y_debug();
