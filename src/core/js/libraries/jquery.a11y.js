@@ -618,6 +618,16 @@
             });
         }
 
+        function a11y_debug() {
+
+            if ($.a11y.state.isDebugApplied) return;
+
+            $.a11y.state.isDebugApplied = true;
+
+            $("body").on("focus blur click change", "*", function(event) {
+                console.log("a11y_debug", event.type, event.currentTarget);
+            });
+        }
         //TURN ON ACCESSIBILITY FEATURES
         $.a11y = function(isOn, options) {
             if ($.a11y.options.isDebug) console.log("$.a11y called", isOn, options )
@@ -671,6 +681,10 @@
             }
 
             if (options.isDebug) console.log("a11y_ready");
+            if (options.isDebug) {
+                console.log("a11y_ready");
+                a11y_debug();
+            }
 
         };
 
