@@ -22,7 +22,7 @@ define(function(require) {
 
             //TRIGGER SETUP ON DATA LOADED AND TOGGLE BUTTON
             Adapt.once('app:dataLoaded', function() {
-				//check if accessibility mode should be restored
+                //check if accessibility mode should be restored
                 this._hasCourseLoaded = true;
                 Adapt.config.get("_accessibility")._isActive = Adapt.offlineStorage.get("a11y") || false;
                 this.setupAccessibility();
@@ -54,6 +54,7 @@ define(function(require) {
             if (!this.isEnabled()) return;
 
             if (this._hasCourseLoaded) {
+                //save accessibility state
                 Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
             }
 
