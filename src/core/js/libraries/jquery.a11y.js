@@ -479,7 +479,7 @@
 
             var $element = $(event.target);
 
-			a11y_triggerReadEvent($element);
+            a11y_triggerReadEvent($element);
 
             if (options.isDebug) console.log("focus", $element[0]);
             
