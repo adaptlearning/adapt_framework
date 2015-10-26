@@ -13,6 +13,7 @@ define(function(require) {
         _hasTabPosition: false,
         _hasUsageInstructionRead: false,
         _isLoaded: false,
+        _hasCourseLoaded: false,
         _legacyFocusElements: undefined,
 
         initialize: function() {
@@ -20,7 +21,14 @@ define(function(require) {
             if (this._isLoaded) return;
 
             //TRIGGER SETUP ON DATA LOADED AND TOGGLE BUTTON
-            Adapt.once('app:dataLoaded', this.setupAccessibility, Accessibility);
+            Adapt.once('app:dataLoaded', function() {
+				//check if accessibility mode should be restored
+                this._hasCourseLoaded = true;
+                Adapt.config.get("_accessibility")._isActive = Adapt.offlineStorage.get("a11y") || false;
+                this.setupAccessibility();
+                
+            }, Accessibility);
+
             Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility);
 
             //SETUP RENDERING HELPERS
@@ -43,6 +51,11 @@ define(function(require) {
 
         setupAccessibility: function() {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
+            if (!this.isEnabled()) return;
+
+            if (this._hasCourseLoaded) {
+                Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
+            }
 
             if (!this.isEnabled()) return;
 
