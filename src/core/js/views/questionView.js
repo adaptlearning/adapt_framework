@@ -260,7 +260,8 @@ define(function(require) {
 
         // Adds a validation error class when the canSubmit returns false
         showInstructionError: function() {
-            this.$(".component-instruction-inner").addClass("validation-error").a11y_focus();
+            this.$(".component-instruction-inner").addClass("validation-error");
+            this.$el.a11y_focus();
         },
 
         // Blank method for question to fill out when the question cannot be submitted
@@ -459,6 +460,13 @@ define(function(require) {
             this.updateButtons();
             this.resetUserAnswer();
             this.resetQuestion();
+            if (this.model.get("_isReady")) {
+                //if the model is already rendered, focus on the first tabbable element
+                //onResetClicked is called as part of the checkIfResetOnRevisit function and as a button click
+                _.defer(_.bind(function(){
+                    this.$el.a11y_focus();
+                }, this));
+            }
         },
 
         setQuestionAsReset: function() {
@@ -467,7 +475,17 @@ define(function(require) {
                 _isSubmitted: false
             });
             this.$(".component-widget").removeClass("submitted");
-            this.$('.component-body-inner').a11y_focus();
+            
+            try {
+                //try to get the current page location
+                var currentModel = Adapt.findById(Adapt.location._currentId);
+                if (currentModel.get("_isReady")) {
+                    //if the page is ready, focus on the first tabbable item
+                    //otherwise will try to set focus as page loads and components are rendered
+                    this.$el.a11y_focus();
+                }
+            } catch(e) {}
+            
         },
 
         // Used by the question view to reset the stored user answer
