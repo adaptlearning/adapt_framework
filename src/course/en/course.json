@@ -85,6 +85,7 @@
                 "pageLevelProgress": "Page sections",
                 "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
                 "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
+                "pageLevelProgressMenuBar": "You have completed ",
                 "optionalContent": "Optional Content"
             }
         },
