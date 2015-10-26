@@ -43,12 +43,12 @@
         }
         stringTrim.regex = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
-        function defer(func, that) {
+        function defer(func, that, t) {
             var thisHandle = that || this;
             var args = arguments;
-            setTimeout(function() {
+            return setTimeout(function() {
                 func.apply(thisHandle, args);
-            },0);
+            }, t||0);
         }
 
         function preventDefault(event) {
@@ -369,7 +369,7 @@
 
             defer(function() {
                 var options = $.a11y.options;
-                if (options.isDebug) console.log("focusNoScroll", this);
+                if (options.isDebug) console.log("focusNoScroll", this[0]);
 
                 var y = $(window).scrollTop();
                 this[0].focus();
@@ -390,7 +390,7 @@
             }
 
             var options = $.a11y.options;
-            if (options.isDebug) console.log("focusNoScroll", $element);
+            if (options.isDebug) console.log("focusOrNext", $element[0]);
 
             $(domSelectors.focuser).focusNoScroll();
             $element.focusNoScroll();
@@ -470,7 +470,7 @@
             var $element = $(event.target);
             
             state.$activeElement = $(event.currentTarget);
-            if (options.isDebug) console.log("focusCapture", $element);
+            if (options.isDebug) console.log("focusCapture", $element[0]);
         }
 
         function onFocus(event) {
@@ -479,7 +479,9 @@
 
             var $element = $(event.target);
 
-            if (options.isDebug) console.log("focus", $element);
+			a11y_triggerReadEvent($element);
+
+            if (options.isDebug) console.log("focus", $element[0]);
             
             state.$activeElement = $(event.currentTarget);
 
@@ -534,7 +536,7 @@
                 readText = label.attr("aria-label") || label.text();
             } else readText = $element.attr("aria-label") || $element.text();
 
-            $($.a11y).trigger("reading", stringTrim(readText));
+            $(document).trigger("reading", stringTrim(readText));
         }
 
         function a11y_reattachFocusGuard() {

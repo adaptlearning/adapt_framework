@@ -306,9 +306,9 @@ define(function(require) {
         },
 
         setupLogging: function() {
-            if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._logReading)) return;
+            if (!Adapt.config.get("_accessibility") || !Adapt.config.get("_accessibility")._logReading) return;
 
-            $($.a11y).on("reading", this.onRead);
+            $(document).on("reading", this.onRead);
         },
 
 
