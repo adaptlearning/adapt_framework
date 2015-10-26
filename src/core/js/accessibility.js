@@ -207,11 +207,20 @@ define(function(require) {
 
             this.configureA11yLibrary();
             $.a11y_update();
+            this.setNavigationBar();
 
             //MAKE FOCUS RIGHT
             this._hasTabPosition = false
             this.focusInitial();
 
+        },
+
+        setNavigationBar: function() {
+            if (this.isActive()) {
+                $(".navigation .aria-label").attr("tabindex", 0).removeAttr("aria-hidden");
+            } else {
+                $(".navigation .aria-label").attr("tabindex", -1).attr("aria-hidden", "true");
+            }
         },
 
         touchDeviceCheck: function() {
