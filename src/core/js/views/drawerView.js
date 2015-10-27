@@ -151,12 +151,14 @@ define(function(require) {
                 var direction={};
                 direction[this.drawerDir]=0;
                 this.$el.css(direction);
-
+                complete.call(this);
+                
             } else {
 
-                $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: function() {
+                $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
                     $("#shadow").removeClass("display-none");
-                }});
+                    complete.call(this);
+                }, this)});
 
                 var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
                 var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
@@ -166,11 +168,13 @@ define(function(require) {
 
             }
 
-            this.addShadowEvent();
-            Adapt.trigger('drawer:opened');
-
-            //focus on first tabbable element in drawer
-            this.$el.a11y_focus();
+            function complete() {
+                this.addShadowEvent();
+                Adapt.trigger('drawer:opened');
+                
+                //focus on first tabbable element in drawer
+                this.$el.a11y_focus();
+			}
 
         },
 

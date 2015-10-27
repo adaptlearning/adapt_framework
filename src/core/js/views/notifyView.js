@@ -145,20 +145,25 @@ define(function(require) {
                 if (this.disableAnimation) {
 
                     this.$('.notify-popup').css("visibility", "visible");
-
+                    complete.call(this);
+                    
                 } else {
 
                     this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
                         this.$('.notify-popup').css("visibility", "visible");
+                        complete.call(this);
                     }, this) });
 
                 }
-                /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                Adapt.trigger('popup:opened', this.$('.notify-popup'));
-                $('body').scrollDisable();
-
-                //set focus to first accessible element
-                this.$('.notify-popup').a11y_focus();
+                
+                function complete() {
+                    /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
+                    Adapt.trigger('popup:opened', this.$('.notify-popup'));
+                    $('body').scrollDisable();
+                    
+                    //set focus to first accessible element
+                    this.$('.notify-popup').a11y_focus();
+                }
             }
 
         },
