@@ -394,7 +394,7 @@
             var options = $.a11y.options;
             if (options.isDebug) console.log("focusOrNext", $element[0]);
 
-            $(domSelectors.focuser).focusNoScroll();
+            if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
             $element.focusNoScroll();
 
             return this;
@@ -742,6 +742,7 @@
 
             isOn = isOn === undefined ? true : isOn;
             if (isOn) {
+                $(domSelectors.focuser).focusNoScroll();
                 this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "true").attr("tabindex", "-1").addClass("aria-hidden");
             } else {
                 this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "false").removeAttr("tabindex").removeClass("aria-hidden");
