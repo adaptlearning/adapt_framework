@@ -340,9 +340,7 @@ define(function(require) {
                 usageInstructions = instructionsList.notouch || "";
             }
 
-           this.$accessibilityInstructions
-                .one("blur", this.onFocusInstructions)
-                .html( usageInstructions );
+           this.$accessibilityInstructions.html( usageInstructions );
         },
 
         setupLogging: function() {
@@ -413,7 +411,11 @@ define(function(require) {
 
                     if (this._hasUserTabbed) return;
 	
-                    $("#accessibility-instructions").focusNoScroll();
+                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions)
+	
+                    _.delay(function(){
+                        Accessibility.$accessibilityInstructions.focusNoScroll();
+                    }, 250);
 
                 } else {
 
@@ -499,7 +501,9 @@ define(function(require) {
             //HIDE INSTRUCTIONS FROM TAB WRAP AROUND AFTER LEAVING INSTRUCTIONS
             if (Accessibility._isButtonRedirectionOn) return;
             if (!Accessibility._isLoaded) return;
-            $(event.target).addClass("a11y-ignore-focus");
+            Accessibility.$accessibilityInstructions
+                .addClass("a11y-ignore-focus")
+                .off("blur", Accessibility.onFocusInstructions);
         }
 
     }, Backbone.Events);
