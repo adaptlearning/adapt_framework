@@ -893,13 +893,19 @@
             var options = $.a11y.options;
             if (!options.isAlertsEnabled) return this;
 
-            var $alert = $('<div role="alert" aria-label="'+text+'">');
+            var $alert = $('<div role="alert">'+text+'</div>');
 
             $($.a11y).trigger("reading", text);
-            $("#a11y-selected").append($alert).attr("role","alert");
-            
+            switch(options.OS) {
+            case "mac":
+                $("#a11y-selected").append($alert);
+                break;
+            default:
             $alert.css("visibility","hidden");
+                $("#a11y-selected").append($alert);
             $alert.css("visibility","visible");
+            }
+            
             setTimeout(function() {
                 $alert.remove();
             }, 20000);
