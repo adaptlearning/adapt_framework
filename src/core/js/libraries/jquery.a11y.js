@@ -2,6 +2,8 @@
 
 (function($, window) {
     
+    var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
+    
     // JQUERY FILTERS FOR ELEMENTS
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
@@ -666,6 +668,8 @@
         $.a11y.ready = function() {
             var options = $.a11y.options;
 
+            if (iOS) options.OS = "mac";
+
             a11y_injectControlElements();
 
             if (options.isUserInputControlEnabled) {
@@ -690,6 +694,8 @@
         //REAPPLY ON SIGNIFICANT VIEW CHANGES
         $.a11y_update = function() {
             var options = $.a11y.options;
+
+            if (iOS) options.OS = "mac";
 
             if (options.isRemoveNotAccessiblesEnabled) {
                 a11y_removeNotAccessibles();
