@@ -24,7 +24,7 @@
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
             "wrapStyleElements": "b,i,abbr,strong",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
-            "focusableElements": "a,button,input,select,textarea,[tabindex]",
+            "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
             "ariaLabelElements": "div[aria-label], span[aria-label]",
@@ -352,15 +352,32 @@
 
             var scrollBottomWithTopOffset = scrollTopWithTopOffset + windowAvailableHeight
 
-            var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
-            if (!isElementTopOutOfView) return;
-
             var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
             if (scrollToPosition < 0) scrollToPosition = 0;
 
+            var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
+
+            if (!isElementTopOutOfView) {
+                if ($element.is("select, input['text'], textarea") && iOS) { //ios 9.0.4 bugfix for keyboard and picker input
+                    defer(function(){
+                        if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
+                        $.scrollTo(this.scrollToPosition, { duration: 0 });
+                    }, {scrollToPosition:scrollToPosition}, 1000);
+                }
+                return;
+            };
+
+            if ($element.is("select, input['text'], textarea") && iOS) {  //ios 9.0.4 bugfix for keyboard and picker input
+                defer(function(){
+                    if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
+                    $.scrollTo(this.scrollToPosition, { duration: 0 });
+                }, {scrollToPosition:scrollToPosition}, 1000);
+            } else {
+                if (options.isDebug) console.log("limitedScrollTo", scrollToPosition);
             defer(function() {
-                $.scrollTo(scrollToPosition, { duration: 0 });
-            });
+                    $.scrollTo(this.scrollToPosition, { duration: 0 });
+                }, {scrollToPosition:scrollToPosition});
+            }
 
             return this;
         };
@@ -471,6 +488,9 @@
             event.stopPropagation();
             var $element = $(event.target);
             
+            if (!$element.is(domSelectors.globalTabIndexElements)) return;
+            if (iOS && $element.is("select, input['text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
+            
             state.$activeElement = $(event.currentTarget);
             if (options.isDebug) console.log("focusCapture", $element[0]);
         }
@@ -481,7 +501,9 @@
 
             var $element = $(event.target);
 
+            if (!$element.is(domSelectors.globalTabIndexElements)) return;
             a11y_triggerReadEvent($element);
+            if (iOS && $element.is("select, input['text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
 
             if (options.isDebug) console.log("focus", $element[0]);
             
@@ -591,11 +613,11 @@
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
             $("body")
-                .off("mousedown", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .off("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .off("focus", domSelectors.globalTabIndexElements, onFocus);
 
             $("body")
-                .on("mousedown", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .on("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .on("focus", domSelectors.globalTabIndexElements, onFocus);
         }
 
@@ -618,6 +640,82 @@
                 "aria-hidden": "true",
                 "tabindex": "-1"
             });
+        }
+
+        function a11y_iosSelectFix() { //ios 9.0.4 bugfix for voiceover + keyboard and picker input
+            var scrollPosition = 0;
+
+            function onOpen(event) {
+                scrollPosition = $(window).scrollTop();
+                var $ele = $(event.currentTarget);
+                $ele.one("focusout", blockFocus);
+                hideUp($ele);
+            }
+
+            function hideUp($element) {
+                var $toHide = $(domSelectors.focusableElements);
+                $toHide = $toHide.not($element);
+                $toHide.each(function(index,item) {
+                    var $item = $(item);
+                    item._hideUpPrev = $(item).attr("aria-hidden");
+                    $(item).attr("aria-hidden", true);
+                });
+            }
+            function hideDown($element) {
+                var $toShow = $(domSelectors.focusableElements);
+                $toShow = $toShow.not($element);
+                $toShow.each(function(index,item) {
+                    var $item = $(item);
+                    if (item._hideUpPrev == undefined) {
+                        $(item).removeAttr("aria-hidden");  
+                    } else {
+                        $(item).attr("aria-hidden",item._hideUpPrev);
+                    }
+                    item._hideUpPrev = undefined;
+                });
+            }
+
+            function blockFocus(event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                event.stopPropagation();
+                var $ele = $(event.currentTarget);
+                defer(function() {
+                    this.off("focusout", blockFocus);
+                    this.focus();
+                    defer(function() {
+                        $.scrollTo(scrollPosition, {duration:0});
+                        hideDown(this);
+                    }, this, 1000);
+                }, $ele, 500);
+            }
+
+            $("body").on("click", "select, input[type='text'], textarea", onOpen);
+        }
+
+        function a11y_iosFalseClickFix() {  //ios 9.0.4 bugfix for invalid clicks on input overlays
+            //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
+            //redirect focus back to last item in this instance
+            $("body").on("click", "*", function(event) {
+                var $ele = $(event.target);
+                if (!$ele.is(domSelectors.globalTabIndexElements)) {
+                    var $active = $.a11y.state.$activeElement;
+                    if (iOS && $active.is("select, input['text'], textarea")) return;
+                    defer(function() {
+                        $active.focus();
+                    }, $active, 500)
+                }
+            });
+        }
+
+        function a11y_iosFixes() {
+
+            if ($.a11y.state.isIOSFixesApplied) return;
+
+            $.a11y.state.isIOSFixesApplied = true;
+            a11y_iosSelectFix();
+            a11y_iosFalseClickFix();
+
         }
 
         function a11y_debug() {
@@ -653,7 +751,8 @@
             isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
             isAlertsEnabled: false,
-            isDebug: false
+            isIOSFixesEnabled: true,
+            isDebug: true
         };
         $.a11y.state = {
             $activeElement: null,
@@ -682,6 +781,10 @@
 
             if (options.isFocusWrapEnabled) {
                 a11y_reattachFocusGuard();
+            }
+
+            if (iOS && options.isIOSFixesEnabled) {
+                a11y_iosFixes();
             }
 
             if (options.isDebug) {
