@@ -73,6 +73,8 @@ define(function(require) {
 
             this.configureA11yLibrary();
 			
+            this.touchDeviceCheck();
+			
             // Check if accessibility is active
             if (this.isActive()) {
 
@@ -244,14 +246,17 @@ define(function(require) {
             //SCREEN READER DON@T USE TABBING
             //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
             if (!this.isEnabled()) return;
+
+            if (Modernizr.touch) {
+                 //Remove button
+                this.$accessibilityToggle.remove();
+            }
+
             if (!Modernizr.touch || this.isActive()) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
             this._isLoaded = true;
-
-             //Remove button
-            this.$accessibilityToggle.remove();
 
             //Force accessibility on
             Adapt.config.get('_accessibility')._isEnabled = true;
