@@ -201,8 +201,11 @@ define(function(require) {
             this._isLoaded = false;
             this._hasUserTabbed = false;
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
-            $("#a11y-focuser").focusNoScroll();
-            $.a11y_on(false, '#wrapper');
+            $("#a11y-focuser").a11y_focus(true);
+            _.defer(function() {
+                $.a11y_on(false, '.page');
+                $.a11y_on(false, '.menu');
+            });
         },
 
         onNavigationEnd: function(view) {
@@ -218,9 +221,8 @@ define(function(require) {
 
             this._isLoaded = true;
 
-            if (!this.isActive()) {
-                this.touchDeviceCheck();
-            }
+            $.a11y_on(false, '.page');
+            $.a11y_on(false, '.menu');
 
             this.configureA11yLibrary();
             $.a11y_update();
@@ -403,11 +405,13 @@ define(function(require) {
 
             var debouncedInitial = _.debounce(_.bind(function() {
                 //ENABLED DOCUMENT READING
-                $.a11y_on(true, '#wrapper');
 
                 if (!this._hasUsageInstructionRead) {
 
                     this._hasUsageInstructionRead = true;
+
+                    $.a11y_on(true, '.page');
+                    $.a11y_on(true, '.menu');
 
                     if (this._hasUserTabbed) return;
 	
@@ -419,7 +423,7 @@ define(function(require) {
 
                 } else {
 
-                    if (Adapt.location._currentId) {
+                    if (Adapt.location._currentId && $.a11y.options.OS!="mac") {
                         //required to stop JAWS from auto reading content in IE
                         var currentModel = Adapt.findById(Adapt.location._currentId);
                         var alertText = " ";
@@ -446,16 +450,21 @@ define(function(require) {
                         var windowScrollTop = $(window).scrollTop();
                         var documentScrollTop = $(document).scrollTop();
 
+                        $.a11y_on(true, '.page');
+                        $.a11y_on(true, '.menu');
+
                         //prevent auto scrolling to top when scroll has been initiated
                         if (windowScrollTop > 0 || documentScrollTop > 0 || this._hasUserTabbed) return;
 
+                        _.delay(function(){
                         $.a11y_focus();
+                        }, 500);
 
-                    }, this), 250);
+                    }, this), 500);
 
                 }
 
-            }, this), 1000);
+            }, this), 100);
             debouncedInitial();
 
         },
