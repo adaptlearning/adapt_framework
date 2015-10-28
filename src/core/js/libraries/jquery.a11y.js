@@ -358,7 +358,7 @@
             var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
 
             if (!isElementTopOutOfView) {
-                if ($element.is("select, input['text'], textarea") && iOS) { //ios 9.0.4 bugfix for keyboard and picker input
+                if ($element.is("select, input[type='text'], textarea") && iOS) { //ios 9.0.4 bugfix for keyboard and picker input
                     defer(function(){
                         if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
                         $.scrollTo(this.scrollToPosition, { duration: 0 });
@@ -367,7 +367,7 @@
                 return;
             };
 
-            if ($element.is("select, input['text'], textarea") && iOS) {  //ios 9.0.4 bugfix for keyboard and picker input
+            if ($element.is("select, input[type='text'], textarea") && iOS) {  //ios 9.0.4 bugfix for keyboard and picker input
                 defer(function(){
                     if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
                     $.scrollTo(this.scrollToPosition, { duration: 0 });
@@ -489,7 +489,7 @@
             var $element = $(event.target);
             
             if (!$element.is(domSelectors.globalTabIndexElements)) return;
-            if (iOS && $element.is("select, input['text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
+            if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
             
             state.$activeElement = $(event.currentTarget);
             if (options.isDebug) console.log("focusCapture", $element[0]);
@@ -503,7 +503,7 @@
 
             if (!$element.is(domSelectors.globalTabIndexElements)) return;
             a11y_triggerReadEvent($element);
-            if (iOS && $element.is("select, input['text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
+            if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
 
             if (options.isDebug) console.log("focus", $element[0]);
             
@@ -700,7 +700,7 @@
                 var $ele = $(event.target);
                 if (!$ele.is(domSelectors.globalTabIndexElements)) {
                     var $active = $.a11y.state.$activeElement;
-                    if (iOS && $active.is("select, input['text'], textarea")) return;
+                    if (iOS && $active.is("select, input[type='text'], textarea")) return;
                     defer(function() {
                         $active.focus();
                     }, $active, 500)
@@ -1147,12 +1147,16 @@
                 });
             }
 
-            if (state.$activeElement) {
-                state.$activeElement.focusOrNext();
-                state.$activeElement.limitedScrollTo();
-            } else {
-                $.a11y_focus();
-            }
+            defer(function() {
+
+                if (state.$activeElement) {
+                    state.$activeElement.focusOrNext();
+                    state.$activeElement.limitedScrollTo();
+                } else {
+                    $.a11y_focus();
+                }
+
+            }, this, 500);
 
             return this;
         };
