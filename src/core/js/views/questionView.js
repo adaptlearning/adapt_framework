@@ -123,15 +123,17 @@ define(function(require) {
 
                 if (typeof componentButtons.submit == 'undefined') {
                     for (var key in componentButtons) {
-                        // ARIA labels
-                        if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
-                          componentButtons[key].buttonText = globalButtons[key].buttonText;
+                        if (typeof componentButtons[key] == 'object') {
+                          // ARIA labels
+                          if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
+                            componentButtons[key].buttonText = globalButtons[key].buttonText;
+                          }
+
+                          if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
+                            componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
+                          }
                         }
-                        
-                        if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
-                          componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
-                        }
-                        
+
                         if (!componentButtons[key] && globalButtons[key]) {
                             componentButtons[key] = globalButtons[key];
                         }
@@ -241,8 +243,8 @@ define(function(require) {
             this.checkQuestionCompletion();
 
             this.recordInteraction();
-            
-            // Used to setup the feedback by checking against 
+
+            // Used to setup the feedback by checking against
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
@@ -356,7 +358,7 @@ define(function(require) {
                 } else {
 
                     switch (buttonState) {
-                      case "submit": 
+                      case "submit":
                       case "hideCorrectAnswer":
                           this.model.set('_buttonState', 'showCorrectAnswer');
                           break;
@@ -404,7 +406,7 @@ define(function(require) {
         },
 
         setupPartlyCorrectFeedback: function() {
-            
+
             if(this.model.get('_feedback')._partlyCorrect) {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
                     if(this.model.get('_feedback')._partlyCorrect.final) {
@@ -424,7 +426,7 @@ define(function(require) {
             } else {
                 this.setupIncorrectFeedback();
             }
-            
+
         },
 
         setupIncorrectFeedback: function() {
@@ -521,7 +523,7 @@ define(function(require) {
 
         // a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
         getResponseType:function() {}
-        
+
     }, {
         _isQuestionType: true
     });
