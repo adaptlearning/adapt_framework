@@ -62,7 +62,7 @@ define(function(require) {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
             if (!this.isEnabled()) return;
 
-            if (this._hasCourseLoaded) {
+            if (this._hasCourseLoaded && !Modernizr.touch) {
                 //save accessibility state
                 Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
             }
