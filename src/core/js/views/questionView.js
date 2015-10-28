@@ -400,19 +400,19 @@ define(function(require) {
 
             this.model.set({
                 feedbackTitle: this.model.get('title'),
-                feedbackMessage: this.model.get("_feedback").correct
+                feedbackMessage: this.model.get("_feedback") ? this.model.get("_feedback").correct : ""
             });
 
         },
 
         setupPartlyCorrectFeedback: function() {
 
-            if(this.model.get('_feedback')._partlyCorrect) {
+            if (this.model.get("_feedback") && this.model.get('_feedback')._partlyCorrect) {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
-                    if(this.model.get('_feedback')._partlyCorrect.final) {
+                    if (this.model.get('_feedback')._partlyCorrect.final) {
                         this.model.set({
                             feedbackTitle: this.model.get('title'),
-                            feedbackMessage: this.model.get('_feedback')._partlyCorrect.final
+                            feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.final : ""
                         });
                     } else {
                         this.setupIncorrectFeedback();
@@ -420,7 +420,7 @@ define(function(require) {
                 } else {
                     this.model.set({
                         feedbackTitle: this.model.get('title'),
-                        feedbackMessage: this.model.get('_feedback')._partlyCorrect.notFinal
+                        feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.notFinal : ""
                     });
                 }
             } else {
@@ -431,15 +431,15 @@ define(function(require) {
 
         setupIncorrectFeedback: function() {
 
-            if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._incorrect.notFinal) {
+            if (this.model.get('_attemptsLeft') === 0 || this.model.get('_feedback') && !this.model.get('_feedback')._incorrect.notFinal) {
                 this.model.set({
                     feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._incorrect.final
+                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.final : ""
                 });
             } else {
                 this.model.set({
                     feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._incorrect.notFinal
+                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.notFinal : ""
                 });
             }
 
