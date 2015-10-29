@@ -347,11 +347,11 @@ define(function(require) {
             var isCorrect = this.model.get('_isCorrect');
             var isEnabled = this.model.get('_isEnabled');
             var buttonState = this.model.get('_buttonState');
-            var canShowModuleAnswer = this.model.get('_canShowModelAnswer');
+            var canShowModelAnswer = this.model.get('_canShowModelAnswer');
 
             if (isInteractionComplete) {
 
-                if (isCorrect || !canShowModuleAnswer) {
+                if (isCorrect || !canShowModelAnswer) {
                     // Use correct instead of complete to signify button state
                     this.model.set('_buttonState', 'correct');
 
