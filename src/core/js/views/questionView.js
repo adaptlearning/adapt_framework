@@ -123,15 +123,17 @@ define(function(require) {
 
                 if (typeof componentButtons.submit == 'undefined') {
                     for (var key in componentButtons) {
-                        // ARIA labels
-                        if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
-                          componentButtons[key].buttonText = globalButtons[key].buttonText;
+                        if (typeof componentButtons[key] == 'object') {
+                          // ARIA labels
+                          if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
+                            componentButtons[key].buttonText = globalButtons[key].buttonText;
+                          }
+
+                          if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
+                            componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
+                          }
                         }
-                        
-                        if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
-                          componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
-                        }
-                        
+
                         if (!componentButtons[key] && globalButtons[key]) {
                             componentButtons[key] = globalButtons[key];
                         }
@@ -241,8 +243,8 @@ define(function(require) {
             this.checkQuestionCompletion();
 
             this.recordInteraction();
-            
-            // Used to setup the feedback by checking against 
+
+            // Used to setup the feedback by checking against
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
@@ -356,7 +358,7 @@ define(function(require) {
                 } else {
 
                     switch (buttonState) {
-                      case "submit": 
+                      case "submit":
                       case "hideCorrectAnswer":
                           this.model.set('_buttonState', 'showCorrectAnswer');
                           break;
@@ -398,19 +400,19 @@ define(function(require) {
 
             this.model.set({
                 feedbackTitle: this.model.get('title'),
-                feedbackMessage: this.model.get("_feedback").correct
+                feedbackMessage: this.model.get("_feedback") ? this.model.get("_feedback").correct : ""
             });
 
         },
 
         setupPartlyCorrectFeedback: function() {
-            
-            if(this.model.get('_feedback')._partlyCorrect) {
+
+            if (this.model.get("_feedback") && this.model.get('_feedback')._partlyCorrect) {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
-                    if(this.model.get('_feedback')._partlyCorrect.final) {
+                    if (this.model.get('_feedback')._partlyCorrect.final) {
                         this.model.set({
                             feedbackTitle: this.model.get('title'),
-                            feedbackMessage: this.model.get('_feedback')._partlyCorrect.final
+                            feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.final : ""
                         });
                     } else {
                         this.setupIncorrectFeedback();
@@ -418,26 +420,26 @@ define(function(require) {
                 } else {
                     this.model.set({
                         feedbackTitle: this.model.get('title'),
-                        feedbackMessage: this.model.get('_feedback')._partlyCorrect.notFinal
+                        feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.notFinal : ""
                     });
                 }
             } else {
                 this.setupIncorrectFeedback();
             }
-            
+
         },
 
         setupIncorrectFeedback: function() {
 
-            if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._incorrect.notFinal) {
+            if (this.model.get('_attemptsLeft') === 0 || this.model.get('_feedback') && !this.model.get('_feedback')._incorrect.notFinal) {
                 this.model.set({
                     feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._incorrect.final
+                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.final : ""
                 });
             } else {
                 this.model.set({
                     feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._incorrect.notFinal
+                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.notFinal : ""
                 });
             }
 
@@ -521,7 +523,7 @@ define(function(require) {
 
         // a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
         getResponseType:function() {}
-        
+
     }, {
         _isQuestionType: true
     });
