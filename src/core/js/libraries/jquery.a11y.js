@@ -937,7 +937,7 @@
         $.fn.a11y_text = function() {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return text;
+            if (!options.isTabbableTextEnabled) return this;
 
              for (var i = 0; i < this.length; i++) {
                 this[i].innerHTML = makeHTMLOrTextAccessible(this[i].innerHTML);
