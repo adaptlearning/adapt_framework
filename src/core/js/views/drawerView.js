@@ -10,7 +10,7 @@ define(function(require) {
         escapeKeyAttached: false,
 
         initialize: function() {
-            this.disableAnimation = $("html").is(".ie8");
+            this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this._isVisible = false;
             this.drawerDir = 'right';
             if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
@@ -65,9 +65,9 @@ define(function(require) {
 
         render: function() {
             var template = Handlebars.templates['drawer']
-            $(this.el).html(template({_globals: Adapt.course.get("_globals")})).appendTo('body');
+            $(this.el).html(template({_globals: Adapt.course.get("_globals")})).prependTo('body');
             var shadowTemplate = Handlebars.templates['shadow'];
-            $(shadowTemplate()).appendTo('body');
+            $(shadowTemplate()).prependTo('body');
             // Set defer on post render
             _.defer(_.bind(function() {
                 this.postRender();
@@ -146,18 +146,19 @@ define(function(require) {
 
             //delay drawer animation until after background fadeout animation is complete
             if (this.disableAnimation) {
-
                 $('#shadow').removeClass("display-none");
 
                 var direction={};
                 direction[this.drawerDir]=0;
                 this.$el.css(direction);
-
+                complete.call(this);
+                
             } else {
 
-                $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: function() {
+                $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
                     $("#shadow").removeClass("display-none");
-                }});
+                    complete.call(this);
+                }, this)});
 
                 var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
                 var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
@@ -167,11 +168,13 @@ define(function(require) {
 
             }
 
-            this.addShadowEvent();
-            Adapt.trigger('drawer:opened');
-
-            //focus on first tabbable element in drawer
-            this.$el.a11y_focus();
+            function complete() {
+                this.addShadowEvent();
+                Adapt.trigger('drawer:opened');
+                
+                //focus on first tabbable element in drawer
+                this.$el.a11y_focus();
+			}
 
         },
 

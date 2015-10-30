@@ -217,7 +217,7 @@
 
 .component-left {
     width:100%;
-    float:auto;
+    float:none;
     @media all and (min-width:(@device-width-medium + 1px)) {
         width:50%;
         float:left;
@@ -229,7 +229,7 @@
 
 .component-right {
     width:100%;
-    float:auto;
+    float:none;
     @media all and (min-width:(@device-width-medium + 1px)) {
         width:50%;
         float:right;
@@ -335,17 +335,11 @@
     user-select: none;
 }
 
-.button, button {
-    &.base {
-        box-sizing: content-box;
-        background-color: transparent;
-        border: none;
-        text-align: inherit;
-        .no-touch & {
-            &:hover {
-                background-color: transparent;
-                border: none;
-            }
-        }
+//Default margin for HTML paragraph
+
+body {
+    p {
+        margin-top: @body-text-font-size;
+        margin-bottom: @body-text-font-size;
     }
 }

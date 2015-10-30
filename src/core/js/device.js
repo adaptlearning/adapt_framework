@@ -34,7 +34,7 @@ define(function(require) {
     }
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
-        Adapt.device.screenWidth = $window.width();
+        Adapt.device.screenWidth = window.innerWidth || $window.width();
         Adapt.trigger('device:resize', Adapt.device.screenWidth);
         var newScreenSize = checkScreenSize();
 
@@ -73,6 +73,20 @@ define(function(require) {
 
     }
 
+    function pixelDensity() {
+        var fltPixelDensity = ( window.devicePixelRatio || 1 );
+
+        if( fltPixelDensity >= 3 ) {
+            return 'ultra-high';
+        } else if( fltPixelDensity >= 2 ) {
+            return 'high';
+        } else if( fltPixelDensity >= 1.5 ) {
+            return 'medium';
+        } else {
+            return 'low';
+        }
+    }
+
     var browserString = browser + " version-" + version + " OS-" + OS;
 	/* MAKE DEVICE IDENTIFICATION UNIFORM CASE */
     Adapt.device.browser = browser ? browser.toLowerCase() : "";
@@ -80,6 +94,6 @@ define(function(require) {
     Adapt.device.OS = OS ? OS.toLowerCase() : "";
     browserString = browserString.replace("Internet Explorer", "ie");
 
-    $("html").addClass(browserString);
+    $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 
 });

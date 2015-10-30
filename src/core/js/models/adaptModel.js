@@ -14,7 +14,6 @@ define(function (require) {
             _isResetOnRevisit: false,
             _isAvailable: true,
             _isOptional: false,
-            _isTrackable: true,
             _isReady: false,
             _isVisible: true
         },

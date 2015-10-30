@@ -9,7 +9,7 @@ define(function(require) {
         escapeKeyAttached: false,
 
         initialize: function() {
-            this.disableAnimation = $("html").is(".ie8");
+            this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
 
             this.setupEventListeners();
 
@@ -64,7 +64,7 @@ define(function(require) {
             //hide notify container
             this.$el.css("visibility", "hidden");
             //attach popup + shadow
-            this.$el.html(template(data)).appendTo('body');
+            this.$el.html(template(data)).prependTo('body');
             //hide popup
             this.$('.notify-popup').css("visibility", "hidden");
             //show notify container
@@ -131,9 +131,7 @@ define(function(require) {
 
             function loaded() {
                 if (this.disableAnimation) {
-
                     this.$('.notify-shadow').css("display", "block");
-
                 } else {
 
                     this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
@@ -142,27 +140,30 @@ define(function(require) {
 
                 }
 
-
                 this.resizeNotify();
 
                 if (this.disableAnimation) {
 
                     this.$('.notify-popup').css("visibility", "visible");
-
+                    complete.call(this);
+                    
                 } else {
 
                     this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
                         this.$('.notify-popup').css("visibility", "visible");
+                        complete.call(this);
                     }, this) });
 
                 }
-
-                /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                Adapt.trigger('popup:opened', this.$('.notify-popup'));
-                $('body').scrollDisable();
-
-                //set focus to first accessible element
-                this.$('.notify-popup').a11y_focus();
+                
+                function complete() {
+                    /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
+                    Adapt.trigger('popup:opened', this.$('.notify-popup'));
+                    $('body').scrollDisable();
+                    
+                    //set focus to first accessible element
+                    this.$('.notify-popup').a11y_focus();
+                }
             }
 
         },

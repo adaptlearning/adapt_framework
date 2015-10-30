@@ -85,6 +85,7 @@
                 "pageLevelProgress": "Page sections",
                 "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
                 "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
+                "pageLevelProgressMenuBar": "You have completed ",
                 "optionalContent": "Optional Content"
             }
         },
@@ -99,9 +100,9 @@
             "_accessibilityToggleTextOn": "Turn accessibility on?",
             "_accessibilityToggleTextOff": "Turn accessibility off?",
             "_accessibilityInstructions": {
-                "touch": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page.",
+                "touch": "Usage instructions. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
                 "notouch": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
-                "ipad": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select."
+                "ipad": "Usage instructions for touchscreens. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use right for next. Use left for previous. Use up and down together to select."
             },
             "_ariaLabels": {
                 "navigation": "Course navigation bar",
@@ -154,6 +155,7 @@
             "mediaAria": "View media resources",
             "linkAria": "View resource links"
         },
+        "itemAriaExternal": "This content will open in a new window",
         "_resourcesItems": [
             {
                 "_type": "document",

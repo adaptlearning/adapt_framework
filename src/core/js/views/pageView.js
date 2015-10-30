@@ -14,6 +14,7 @@ define(function(require) {
         },
 
         preRender: function() {
+            this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
         },
@@ -25,7 +26,7 @@ define(function(require) {
                     $(window).scrollTop(0);
                     Adapt.trigger('pageView:ready', this);
                     var styleOptions = { opacity: 1 };
-                    if ($('html').is(".ie8")) {
+                    if (this.disableAnimation) {
                         this.$el.css(styleOptions)
                     } else {
                         this.$el.velocity(styleOptions, 'fast');
