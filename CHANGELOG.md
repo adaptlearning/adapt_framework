@@ -1,6 +1,17 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
+## [2.0.4] - 2015-10-30
+### Headline changes
+- added support for tracking user's responses to SCORM's cmi.interactions
+- update LESS variables to new v2 style
+- various fixes for screenreader, keyboard & ios accessibility
+- performance improvements
+- allow partly correct feedback to be optional in question screens
+- fixes to ensure text labels are pulled through from 'globals' in course.json
+- server-build: add the option to create sourcemaps (https://github.com/adaptlearning/adapt_authoring/issues/811)
+- improvements to the property locking system
+
 ## [2.0.3] - 2015-10-02
 ### Fixed
 - fixed popup tab index save/restore [ABU-1075](https://adaptlearning.atlassian.net/browse/ABU-1075)
@@ -197,6 +208,7 @@ The initial version of the Adapt framework.
 
 
 [unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.3...HEAD
+[2.0.4]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.3...v2.0.4
 [2.0.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.0...v2.0.1
