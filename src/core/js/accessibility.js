@@ -10,17 +10,34 @@ define(function(require) {
         $accessibilityToggle: $("#accessibility-toggle"),
 
         _tabIndexElements: 'a, button, input, select, textarea, [tabindex]',
-        _hasTabPosition: false,
+        _isButtonRedirectionOn: true,
+        _hasUserTabbed: false,
         _hasUsageInstructionRead: false,
         _isLoaded: false,
+        _hasCourseLoaded: false,
         _legacyFocusElements: undefined,
+
+        reset: function() {
+            _.extend(this, {
+                _isButtonRedirectionOn: true,
+                _hasUserTabbed: false,
+                _hasUsageInstructionRead: false
+            });
+        },
 
         initialize: function() {
             //RUN ONCE
             if (this._isLoaded) return;
 
             //TRIGGER SETUP ON DATA LOADED AND TOGGLE BUTTON
-            Adapt.once('app:dataLoaded', this.setupAccessibility, Accessibility);
+            Adapt.once('app:dataLoaded', function() {
+                //check if accessibility mode should be restored
+                this._hasCourseLoaded = true;
+                Adapt.config.get("_accessibility")._isActive = Adapt.offlineStorage.get("a11y") || false;
+                this.setupAccessibility();
+                
+            }, Accessibility);
+
             Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility);
 
             //SETUP RENDERING HELPERS
@@ -43,21 +60,29 @@ define(function(require) {
 
         setupAccessibility: function() {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
-
             if (!this.isEnabled()) return;
+
+            if (this._hasCourseLoaded && !Modernizr.touch) {
+                //save accessibility state
+                Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
+            }
+
+            this.reset();
 
             this.checkTabCapture();
 
+            this.configureA11yLibrary();
+			
+            this.touchDeviceCheck();
+			
             // Check if accessibility is active
             if (this.isActive()) {
 
-                this.onNavigationEnd();
                 this.setupDocument();
                 this.setupLegacy();
                 this.setupPopupListeners()
                 this.setupUsageInstructions();
                 this.setupLogging();
-                this.focusInitial();
 
             } else {
 
@@ -174,12 +199,21 @@ define(function(require) {
 
         onNavigationStart: function() {
             this._isLoaded = false;
+            this._hasUserTabbed = false;
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
-            $("#a11y-focuser").focusNoScroll();
-            $.a11y_on(false, '#wrapper');
+            $("#a11y-focuser").a11y_focus(true);
+            _.defer(function() {
+                $.a11y_on(false, '.page');
+                $.a11y_on(false, '.menu');
+            });
         },
 
-        onNavigationEnd: function() {
+        onNavigationEnd: function(view) {
+            //prevent sub-menu items provoking behaviour
+            if (view && view.model) {
+                if (view.model.get("_id") != Adapt.location._currentId) return;
+            }
+
             //always use detached aria labels for divs and spans
             _.defer(function() {
                 $('body').a11y_aria_label(true);
@@ -187,31 +221,44 @@ define(function(require) {
 
             this._isLoaded = true;
 
-            if (!this.isActive()) {
-                this.touchDeviceCheck();
-            }
+            $.a11y_on(false, '.page');
+            $.a11y_on(false, '.menu');
 
             this.configureA11yLibrary();
             $.a11y_update();
+            this.setNavigationBar();
 
             //MAKE FOCUS RIGHT
-            this._hasTabPosition = false
-            this.focusInitial();
+            this._isButtonRedirectionOn = true;
+            _.delay(_.bind(function() {
+                this.focusInitial();
+            }, this), 500);
 
+        },
+
+        setNavigationBar: function() {
+            if (this.isActive()) {
+                $(".navigation .aria-label").attr("tabindex", 0).removeAttr("aria-hidden");
+            } else {
+                $(".navigation .aria-label").attr("tabindex", -1).attr("aria-hidden", "true");
+            }
         },
 
         touchDeviceCheck: function() {
             //SCREEN READER DON@T USE TABBING
             //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
             if (!this.isEnabled()) return;
+
+            if (Modernizr.touch) {
+                 //Remove button
+                this.$accessibilityToggle.remove();
+            }
+
             if (!Modernizr.touch || this.isActive()) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
             this._isLoaded = true;
-
-             //Remove button
-            this.$accessibilityToggle.remove();
 
             //Force accessibility on
             Adapt.config.get('_accessibility')._isEnabled = true;
@@ -228,16 +275,11 @@ define(function(require) {
 
             $.a11y(isActive);
 
-            if (isActive) {
+            //IF ACCESSIBILTY TURNED ON QUIT
+            if (isActive) return;
 
-                //IF ACCESSIBILTY TURNED ON GOTO FIRST FOCUSABLE ITEM
-                this.focusInitial();
-
-            } else {
-
-                //OTHERWISE ENABLE TAB REDIRECTION TO TOGGLE BUTTON
-                this._hasTabPosition = false;
-            }
+            //OTHERWISE ENABLE TAB REDIRECTION TO TOGGLE BUTTON
+            this._isButtonRedirectionOn = true;
         },
 
         isActive: function() {
@@ -300,15 +342,13 @@ define(function(require) {
                 usageInstructions = instructionsList.notouch || "";
             }
 
-           this.$accessibilityInstructions
-                .one("blur", this.onFocusInstructions)
-                .html( usageInstructions );
+           this.$accessibilityInstructions.html( usageInstructions );
         },
 
         setupLogging: function() {
-            if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._logReading)) return;
+            if (!Adapt.config.get("_accessibility") || !Adapt.config.get("_accessibility")._logReading) return;
 
-            $($.a11y).on("reading", this.onRead);
+            $(document).on("reading", this.onRead);
         },
 
 
@@ -361,35 +401,43 @@ define(function(require) {
         focusInitial: function() {
             if (!this.isActive()) return;
 
-            this._hasTabPosition = true;
+            this._isButtonRedirectionOn = false;
 
-            _.delay(_.bind(function() {
+            var debouncedInitial = _.debounce(_.bind(function() {
                 //ENABLED DOCUMENT READING
-                $.a11y_on(true, '#wrapper');
 
                 if (!this._hasUsageInstructionRead) {
 
-                    $("#accessibility-instructions").focusNoScroll();
-
                     this._hasUsageInstructionRead = true;
+
+                    $.a11y_on(true, '.page');
+                    $.a11y_on(true, '.menu');
+
+                    if (this._hasUserTabbed) return;
+	
+                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions)
+	
+                    _.delay(function(){
+                        Accessibility.$accessibilityInstructions.focusNoScroll();
+                    }, 250);
 
                 } else {
 
-                    if (Adapt.location._currentId) {
+                    if (Adapt.location._currentId && $.a11y.options.OS!="mac") {
                         //required to stop JAWS from auto reading content in IE
                         var currentModel = Adapt.findById(Adapt.location._currentId);
                         var alertText = " ";
 
                         switch (currentModel.get("_type")) {
                             case "page":
-                                if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
                                 }
                                 break;
 
                             case "menu":
                             default:
-                                if (Adapt.course.has("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
                                 }
                                 break;
@@ -398,20 +446,26 @@ define(function(require) {
                         $.a11y_alert(alertText);
                     }
 
-                     _.delay(function() {
+                     _.delay(_.bind(function() {
                         var windowScrollTop = $(window).scrollTop();
                         var documentScrollTop = $(document).scrollTop();
 
+                        $.a11y_on(true, '.page');
+                        $.a11y_on(true, '.menu');
+
                         //prevent auto scrolling to top when scroll has been initiated
-                        if (windowScrollTop > 0 || documentScrollTop > 0) return;
+                        if (windowScrollTop > 0 || documentScrollTop > 0 || this._hasUserTabbed) return;
 
+                        _.delay(function(){
                         $.a11y_focus();
+                        }, 500);
 
-                    }, 250);
+                    }, this), 500);
 
                 }
 
-            }, this), 1000);
+            }, this), 100);
+            debouncedInitial();
 
         },
 
@@ -442,9 +496,10 @@ define(function(require) {
 
             //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
             if ($.a11y.userInteracted) return;
+            Accessibility._hasUserTabbed = true;
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
-            if (Accessibility.isActive() && Accessibility._hasTabPosition) return;
+            if (Accessibility.isActive() && !Accessibility._isButtonRedirectionOn) return;
 
             //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
             Accessibility.$accessibilityToggle.focus();
@@ -453,14 +508,18 @@ define(function(require) {
 
         onFocusInstructions: function(event) {
             //HIDE INSTRUCTIONS FROM TAB WRAP AROUND AFTER LEAVING INSTRUCTIONS
-            if (!Accessibility._hasTabPosition) return;
+            if (Accessibility._isButtonRedirectionOn) return;
             if (!Accessibility._isLoaded) return;
-            $(event.target).addClass("a11y-ignore-focus");
+            Accessibility.$accessibilityInstructions
+                .addClass("a11y-ignore-focus")
+                .off("blur", Accessibility.onFocusInstructions);
         }
 
     }, Backbone.Events);
 
 
     Accessibility.initialize();
+
+    return Accessibility;
 
 });

@@ -247,6 +247,9 @@
 /*INVISIBLE ARIA-LABELS*/
 .aria-label {
     position:absolute !important;
+    &.relative {
+        position:relative !important;
+    }
     left:0px !important;
     width:auto !important;
     height:auto !important;
@@ -258,6 +261,7 @@
     padding:0 !important;
     margin:0 !important;
     line-height: normal !important;
+    z-index:1;
 }
 
     /*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
@@ -279,6 +283,7 @@
     padding:0 !important;
     margin:0 !important;
     line-height: normal !important;
+    z-index:1;
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
     .touch & { 
@@ -306,6 +311,7 @@
     padding:0 !important;
     margin:0 !important;
     line-height: normal !important;
+    z-index:1;
 }
 
 /*FOCUS DISTRACTION*/
@@ -323,6 +329,7 @@
     padding:0 !important;
     margin:0 !important;
     line-height: normal !important;
+    z-index:1;
 }
 
 
