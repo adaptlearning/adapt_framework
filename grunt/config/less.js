@@ -12,7 +12,7 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
                 sourcemaps:true,
-		        compress:false,
+		compress:false,
                 dest: '<%= outputdir %>adapt/css/',
                 cssFilename: "adapt.css",
                 mapFilename: "adapt.css.map",
