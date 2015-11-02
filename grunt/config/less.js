@@ -1,7 +1,7 @@
 module.exports = function (grunt, options) {
     return {
         dev: {
-    options:{
+            options:{
                 mandatory: [
                     '<%= sourcedir %>core/less/*.less'
                 ],
@@ -12,7 +12,7 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
                 sourcemaps:true,
-		compress:false,
+                compress:false,
                 dest: '<%= outputdir %>adapt/css/',
                 cssFilename: "adapt.css",
                 mapFilename: "adapt.css.map",
@@ -20,7 +20,7 @@ module.exports = function (grunt, options) {
                     return grunt.config('helpers').includedFilter(filepath);
                 }
             }
-    },
+        },
         compile: {
             options: {
                 mandatory: [
