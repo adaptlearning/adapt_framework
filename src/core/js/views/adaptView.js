@@ -55,10 +55,9 @@ define(function(require) {
                         model.set("_nthChild", nthChild);
                         $parentContainer.append(new ChildView({model:model}).$el);
                     } else {
-                        throw Error('The component \'' +
-                                    models[i].attributes._id + '\'' +
-                                    ' (\'' + models[i].attributes._component + '\')' +
-                                    ' has not been installed, and so is not available in your project.');
+                        throw 'The component \'' + models[i].attributes._id + '\'' +
+                              ' (\'' + models[i].attributes._component + '\')' +
+                              ' has not been installed, and so is not available in your project.';
                     }
                 }
             }
