@@ -752,7 +752,7 @@
             isSelectedAlertsEnabled: false,
             isAlertsEnabled: false,
             isIOSFixesEnabled: true,
-            isDebug: true
+            isDebug: false
         };
         $.a11y.state = {
             $activeElement: null,
