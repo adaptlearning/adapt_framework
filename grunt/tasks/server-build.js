@@ -8,7 +8,7 @@ module.exports = function(grunt) {
         grunt.task.run([
             '_log-vars',
             'copy',
-            'less',
+            'less:' + requireMode,
             'handlebars',
             'bower',
             'requirejs-bundle',
