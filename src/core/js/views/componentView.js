@@ -6,10 +6,11 @@ define(function(require) {
     var ComponentView = AdaptView.extend({
 
         className: function() {
+            var _classes = this.model.has('_classes') ? " " + this.model.get('_classes'):"";
             return "component "
             + this.model.get('_component')
             + "-component " + this.model.get('_id')
-            + " " + this.model.get('_classes')
+            + _classes
             + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
             + " nth-child-" + this.model.get("_nthChild");
