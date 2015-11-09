@@ -1,6 +1,5 @@
 var path = require('path');
 
-// TODO: check this on windows
 var appendSlash = function(dir) {
     if (dir) {
         var lastChar = dir.substring(dir.length - 1, dir.length);
