@@ -7,9 +7,10 @@ define(function(require) {
     var PageView = AdaptView.extend({
 
         className: function() {
+            var _classes = this.model.has('_classes') ? " " + this.model.get('_classes'):"";
             return "page "
             + this.model.get('_id')
-            + " " + this.model.get('_classes')
+            + _classes
             + " " + this.setVisibility();
         },
 
