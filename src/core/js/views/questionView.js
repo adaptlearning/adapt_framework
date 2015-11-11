@@ -123,15 +123,17 @@ define(function(require) {
 
                 if (typeof componentButtons.submit == 'undefined') {
                     for (var key in componentButtons) {
-                        // ARIA labels
-                        if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
-                          componentButtons[key].buttonText = globalButtons[key].buttonText;
+                        if (typeof componentButtons[key] == 'object') {
+                          // ARIA labels
+                          if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
+                            componentButtons[key].buttonText = globalButtons[key].buttonText;
+                          }
+
+                          if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
+                            componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
+                          }
                         }
-                        
-                        if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
-                          componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
-                        }
-                        
+
                         if (!componentButtons[key] && globalButtons[key]) {
                             componentButtons[key] = globalButtons[key];
                         }
@@ -241,8 +243,8 @@ define(function(require) {
             this.checkQuestionCompletion();
 
             this.recordInteraction();
-            
-            // Used to setup the feedback by checking against 
+
+            // Used to setup the feedback by checking against
             // question isCorrect or isPartlyCorrect
             this.setupFeedback();
 
@@ -260,7 +262,8 @@ define(function(require) {
 
         // Adds a validation error class when the canSubmit returns false
         showInstructionError: function() {
-            this.$(".component-instruction-inner").addClass("validation-error").a11y_focus();
+            this.$(".component-instruction-inner").addClass("validation-error");
+            this.$el.a11y_focus();
         },
 
         // Blank method for question to fill out when the question cannot be submitted
@@ -345,18 +348,18 @@ define(function(require) {
             var isCorrect = this.model.get('_isCorrect');
             var isEnabled = this.model.get('_isEnabled');
             var buttonState = this.model.get('_buttonState');
-            var canShowModuleAnswer = this.model.get('_canShowModelAnswer');
+            var canShowModelAnswer = this.model.get('_canShowModelAnswer');
 
             if (isInteractionComplete) {
 
-                if (isCorrect || !canShowModuleAnswer) {
+                if (isCorrect || !canShowModelAnswer) {
                     // Use correct instead of complete to signify button state
                     this.model.set('_buttonState', 'correct');
 
                 } else {
 
                     switch (buttonState) {
-                      case "submit": 
+                      case "submit":
                       case "hideCorrectAnswer":
                           this.model.set('_buttonState', 'showCorrectAnswer');
                           break;
@@ -398,19 +401,19 @@ define(function(require) {
 
             this.model.set({
                 feedbackTitle: this.model.get('title'),
-                feedbackMessage: this.model.get("_feedback").correct
+                feedbackMessage: this.model.get("_feedback") ? this.model.get("_feedback").correct : ""
             });
 
         },
 
         setupPartlyCorrectFeedback: function() {
-            
-            if(this.model.get('_feedback')._partlyCorrect) {
+
+            if (this.model.get("_feedback") && this.model.get('_feedback')._partlyCorrect) {
                 if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
-                    if(this.model.get('_feedback')._partlyCorrect.final) {
+                    if (this.model.get('_feedback')._partlyCorrect.final) {
                         this.model.set({
                             feedbackTitle: this.model.get('title'),
-                            feedbackMessage: this.model.get('_feedback')._partlyCorrect.final
+                            feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.final : ""
                         });
                     } else {
                         this.setupIncorrectFeedback();
@@ -418,26 +421,26 @@ define(function(require) {
                 } else {
                     this.model.set({
                         feedbackTitle: this.model.get('title'),
-                        feedbackMessage: this.model.get('_feedback')._partlyCorrect.notFinal
+                        feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.notFinal : ""
                     });
                 }
             } else {
                 this.setupIncorrectFeedback();
             }
-            
+
         },
 
         setupIncorrectFeedback: function() {
 
-            if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._incorrect.notFinal) {
+            if (this.model.get('_attemptsLeft') === 0 || this.model.get('_feedback') && !this.model.get('_feedback')._incorrect.notFinal) {
                 this.model.set({
                     feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._incorrect.final
+                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.final : ""
                 });
             } else {
                 this.model.set({
                     feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get('_feedback')._incorrect.notFinal
+                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.notFinal : ""
                 });
             }
 
@@ -459,6 +462,13 @@ define(function(require) {
             this.updateButtons();
             this.resetUserAnswer();
             this.resetQuestion();
+            if (this.model.get("_isReady")) {
+                //if the model is already rendered, focus on the first tabbable element
+                //onResetClicked is called as part of the checkIfResetOnRevisit function and as a button click
+                _.defer(_.bind(function(){
+                    this.$el.a11y_focus();
+                }, this));
+            }
         },
 
         setQuestionAsReset: function() {
@@ -467,7 +477,17 @@ define(function(require) {
                 _isSubmitted: false
             });
             this.$(".component-widget").removeClass("submitted");
-            this.$('.component-body-inner').a11y_focus();
+            
+            try {
+                //try to get the current page location
+                var currentModel = Adapt.findById(Adapt.location._currentId);
+                if (currentModel.get("_isReady")) {
+                    //if the page is ready, focus on the first tabbable item
+                    //otherwise will try to set focus as page loads and components are rendered
+                    this.$el.a11y_focus();
+                }
+            } catch(e) {}
+            
         },
 
         // Used by the question view to reset the stored user answer
@@ -521,7 +541,7 @@ define(function(require) {
 
         // a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
         getResponseType:function() {}
-        
+
     }, {
         _isQuestionType: true
     });

@@ -17,7 +17,8 @@ define([
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
             this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
-            this.listenTo(Adapt, "router:navigateTo", this.handleRoute);
+            this.listenTo(Adapt, 'navigation:parentButton', this.navigateToParent);
+            this.listenTo(Adapt, "router:navigateTo", this.navigateToArguments);
         },
 
         routes: {
@@ -141,6 +142,36 @@ define([
 
         showLoading: function() {
             $('.loading').show();
+        },
+        
+        navigateToArguments: function(args) {
+            args = [].slice.call(args, 0, args.length);
+            if (args[args.length-1] === null) args.pop();
+            switch (args.length) {
+            case 0:
+                this.navigate("#/", {trigger:false, replace:false});
+                break;
+            case 1:
+                var foundId = false;
+                try {
+                    Adapt.findById(args[0]);
+                    foundId = true;
+                } catch(e) {
+
+                }
+                if (foundId) {
+                    this.navigate("#/id/"+args[0], {trigger:false, replace:false});
+                } else {
+                    this.navigate("#/"+args[0], {trigger:false, replace:false});
+                }
+            case 2:
+                this.navigate("#/"+args[0]+"/"+args[1], {trigger:false, replace:false});
+                break;
+            case 3:
+                this.navigate("#/"+args[0]+"/"+args[1]+"/"+args[2], {trigger:false, replace:false});
+                break;
+            }
+            this.handleRoute.apply(this, args);
         },
 
         navigateToPreviousRoute: function(force) {

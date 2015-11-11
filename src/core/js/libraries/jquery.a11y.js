@@ -2,6 +2,8 @@
 
 (function($, window) {
     
+    var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
+    
     // JQUERY FILTERS FOR ELEMENTS
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
@@ -22,7 +24,7 @@
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
             "wrapStyleElements": "b,i,abbr,strong",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
-            "focusableElements": "a,button,input,select,textarea,[tabindex]",
+            "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
             "ariaLabelElements": "div[aria-label], span[aria-label]",
@@ -30,9 +32,9 @@
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>',
-            "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button"></a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1"></a>',
+            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="region">&nbsp;</a>',
+            "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
+            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
         };
 
@@ -43,12 +45,12 @@
         }
         stringTrim.regex = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 
-        function defer(func, that) {
+        function defer(func, that, t) {
             var thisHandle = that || this;
             var args = arguments;
-            setTimeout(function() {
+            return setTimeout(function() {
                 func.apply(thisHandle, args);
-            },0);
+            }, t||0);
         }
 
         function preventDefault(event) {
@@ -350,15 +352,32 @@
 
             var scrollBottomWithTopOffset = scrollTopWithTopOffset + windowAvailableHeight
 
-            var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
-            if (!isElementTopOutOfView) return;
-
             var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
             if (scrollToPosition < 0) scrollToPosition = 0;
 
+            var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
+
+            if (!isElementTopOutOfView) {
+                if ($element.is("select, input[type='text'], textarea") && iOS) { //ios 9.0.4 bugfix for keyboard and picker input
+                    defer(function(){
+                        if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
+                        $.scrollTo(this.scrollToPosition, { duration: 0 });
+                    }, {scrollToPosition:scrollToPosition}, 1000);
+                }
+                return;
+            };
+
+            if ($element.is("select, input[type='text'], textarea") && iOS) {  //ios 9.0.4 bugfix for keyboard and picker input
+                defer(function(){
+                    if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
+                    $.scrollTo(this.scrollToPosition, { duration: 0 });
+                }, {scrollToPosition:scrollToPosition}, 1000);
+            } else {
+                if (options.isDebug) console.log("limitedScrollTo", scrollToPosition);
             defer(function() {
-                $.scrollTo(scrollToPosition, { duration: 0 });
-            });
+                    $.scrollTo(this.scrollToPosition, { duration: 0 });
+                }, {scrollToPosition:scrollToPosition});
+            }
 
             return this;
         };
@@ -369,7 +388,7 @@
 
             defer(function() {
                 var options = $.a11y.options;
-                if (options.isDebug) console.log("focusNoScroll", this);
+                if (options.isDebug) console.log("focusNoScroll", this[0]);
 
                 var y = $(window).scrollTop();
                 this[0].focus();
@@ -390,9 +409,9 @@
             }
 
             var options = $.a11y.options;
-            if (options.isDebug) console.log("focusNoScroll", $element);
+            if (options.isDebug) console.log("focusOrNext", $element[0]);
 
-            $(domSelectors.focuser).focusNoScroll();
+            if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
             $element.focusNoScroll();
 
             return this;
@@ -469,8 +488,11 @@
             event.stopPropagation();
             var $element = $(event.target);
             
+            if (!$element.is(domSelectors.globalTabIndexElements)) return;
+            if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
+            
             state.$activeElement = $(event.currentTarget);
-            if (options.isDebug) console.log("focusCapture", $element);
+            if (options.isDebug) console.log("focusCapture", $element[0]);
         }
 
         function onFocus(event) {
@@ -479,7 +501,11 @@
 
             var $element = $(event.target);
 
-            if (options.isDebug) console.log("focus", $element);
+            if (!$element.is(domSelectors.globalTabIndexElements)) return;
+            a11y_triggerReadEvent($element);
+            if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
+
+            if (options.isDebug) console.log("focus", $element[0]);
             
             state.$activeElement = $(event.currentTarget);
 
@@ -534,7 +560,7 @@
                 readText = label.attr("aria-label") || label.text();
             } else readText = $element.attr("aria-label") || $element.text();
 
-            $($.a11y).trigger("reading", stringTrim(readText));
+            $(document).trigger("reading", stringTrim(readText));
         }
 
         function a11y_reattachFocusGuard() {
@@ -545,7 +571,9 @@
                 $focusguard = $(domInjectElements.focusguard);
             }
 
-            $focusguard.remove().appendTo($('body')).attr("tabindex", 0);
+            var $currentFloor = $.a11y.state.floorStack[$.a11y.state.floorStack.length-1];
+
+            $focusguard.remove().appendTo($currentFloor).attr("tabindex", 0);
 
             $focusguard.off("click").off("focus");
 
@@ -585,11 +613,11 @@
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
             $("body")
-                .off("mousedown", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .off("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .off("focus", domSelectors.globalTabIndexElements, onFocus);
 
             $("body")
-                .on("mousedown", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .on("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .on("focus", domSelectors.globalTabIndexElements, onFocus);
         }
 
@@ -614,6 +642,92 @@
             });
         }
 
+        function a11y_iosSelectFix() { //ios 9.0.4 bugfix for voiceover + keyboard and picker input
+            var scrollPosition = 0;
+
+            function onOpen(event) {
+                scrollPosition = $(window).scrollTop();
+                var $ele = $(event.currentTarget);
+                $ele.one("focusout", blockFocus);
+                hideUp($ele);
+            }
+
+            function hideUp($element) {
+                var $toHide = $(domSelectors.focusableElements);
+                $toHide = $toHide.not($element);
+                $toHide.each(function(index,item) {
+                    var $item = $(item);
+                    item._hideUpPrev = $(item).attr("aria-hidden");
+                    $(item).attr("aria-hidden", true);
+                });
+            }
+            function hideDown($element) {
+                var $toShow = $(domSelectors.focusableElements);
+                $toShow = $toShow.not($element);
+                $toShow.each(function(index,item) {
+                    var $item = $(item);
+                    if (item._hideUpPrev == undefined) {
+                        $(item).removeAttr("aria-hidden");  
+                    } else {
+                        $(item).attr("aria-hidden",item._hideUpPrev);
+                    }
+                    item._hideUpPrev = undefined;
+                });
+            }
+
+            function blockFocus(event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                event.stopPropagation();
+                var $ele = $(event.currentTarget);
+                defer(function() {
+                    this.off("focusout", blockFocus);
+                    this.focus();
+                    defer(function() {
+                        $.scrollTo(scrollPosition, {duration:0});
+                        hideDown(this);
+                    }, this, 1000);
+                }, $ele, 500);
+            }
+
+            $("body").on("click", "select, input[type='text'], textarea", onOpen);
+        }
+
+        function a11y_iosFalseClickFix() {  //ios 9.0.4 bugfix for invalid clicks on input overlays
+            //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
+            //redirect focus back to last item in this instance
+            $("body").on("click", "*", function(event) {
+                var $ele = $(event.target);
+                if (!$ele.is(domSelectors.globalTabIndexElements)) {
+                    var $active = $.a11y.state.$activeElement;
+                    if (iOS && $active.is("select, input[type='text'], textarea")) return;
+                    defer(function() {
+                        $active.focus();
+                    }, $active, 500)
+                }
+            });
+        }
+
+        function a11y_iosFixes() {
+
+            if ($.a11y.state.isIOSFixesApplied) return;
+
+            $.a11y.state.isIOSFixesApplied = true;
+            a11y_iosSelectFix();
+            a11y_iosFalseClickFix();
+
+        }
+
+        function a11y_debug() {
+
+            if ($.a11y.state.isDebugApplied) return;
+
+            $.a11y.state.isDebugApplied = true;
+
+            $("body").on("focus blur click change", "*", function(event) {
+                console.log("a11y_debug", event.type, event.currentTarget);
+            });
+        }
         //TURN ON ACCESSIBILITY FEATURES
         $.a11y = function(isOn, options) {
             if ($.a11y.options.isDebug) console.log("$.a11y called", isOn, options )
@@ -637,10 +751,12 @@
             isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
             isAlertsEnabled: false,
+            isIOSFixesEnabled: true,
             isDebug: false
         };
         $.a11y.state = {
             $activeElement: null,
+            floorStack: [$("body")],
             focusStack: [],
             tabIndexes: {},
             elementUIDIndex: 0,
@@ -650,6 +766,8 @@
 
         $.a11y.ready = function() {
             var options = $.a11y.options;
+
+            if (iOS) options.OS = "mac";
 
             a11y_injectControlElements();
 
@@ -665,13 +783,22 @@
                 a11y_reattachFocusGuard();
             }
 
-            if (options.isDebug) console.log("a11y_ready");
+            if (iOS && options.isIOSFixesEnabled) {
+                a11y_iosFixes();
+            }
+
+            if (options.isDebug) {
+                console.log("a11y_ready");
+                a11y_debug();
+            }
 
         };
 
         //REAPPLY ON SIGNIFICANT VIEW CHANGES
         $.a11y_update = function() {
             var options = $.a11y.options;
+
+            if (iOS) options.OS = "mac";
 
             if (options.isRemoveNotAccessiblesEnabled) {
                 a11y_removeNotAccessibles();
@@ -718,6 +845,7 @@
 
             isOn = isOn === undefined ? true : isOn;
             if (isOn) {
+                $(domSelectors.focuser).focusNoScroll();
                 this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "true").attr("tabindex", "-1").addClass("aria-hidden");
             } else {
                 this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "false").removeAttr("tabindex").removeClass("aria-hidden");
@@ -809,7 +937,7 @@
         $.fn.a11y_text = function() {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return text;
+            if (!options.isTabbableTextEnabled) return this;
 
              for (var i = 0; i < this.length; i++) {
                 this[i].innerHTML = makeHTMLOrTextAccessible(this[i].innerHTML);
@@ -868,13 +996,19 @@
             var options = $.a11y.options;
             if (!options.isAlertsEnabled) return this;
 
-            var $alert = $('<div role="alert" aria-label="'+text+'">');
+            var $alert = $('<div role="alert">'+text+'</div>');
 
             $($.a11y).trigger("reading", text);
-            $("#a11y-selected").append($alert).attr("role","alert");
-            
+            switch(options.OS) {
+            case "mac":
+                $("#a11y-selected").append($alert);
+                break;
+            default:
             $alert.css("visibility","hidden");
+                $("#a11y-selected").append($alert);
             $alert.css("visibility","visible");
+            }
+            
             setTimeout(function() {
                 $alert.remove();
             }, 20000);
@@ -942,6 +1076,8 @@
 
             var options = $.a11y.options;
 
+            $.a11y.state.floorStack.push(this);
+
             this.a11y_only(container, true);
 
             if (this.length > 0) $(this[0]).limitedScrollTo();
@@ -962,6 +1098,8 @@
         $.a11y_popdown = function() {
             var options = $.a11y.options;
             var state = $.a11y.state;
+
+            $.a11y.state.floorStack.pop();
 
             $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).each(function(index, item) {
                 var $item = $(item);
@@ -1009,12 +1147,16 @@
                 });
             }
 
-            if (state.$activeElement) {
-                state.$activeElement.focusOrNext();
-                state.$activeElement.limitedScrollTo();
-            } else {
-                $.a11y_focus();
-            }
+            defer(function() {
+
+                if (state.$activeElement) {
+                    state.$activeElement.focusOrNext();
+                    state.$activeElement.limitedScrollTo();
+                } else {
+                    $.a11y_focus();
+                }
+
+            }, this, 500);
 
             return this;
         };

@@ -48,5 +48,14 @@
 		"_trickle": {
 			"_isEnabled": true
 		}
+	},
+	{
+		"_id": "a-20",
+		"_parentId": "co-15",
+		"_type": "article",
+		"_classes": "",
+		"title": "a-20",
+		"displayTitle": "",
+		"body": ""
 	}
 ]

@@ -43,9 +43,9 @@ define(function(require) {
 
             Adapt.trigger('accessibility:toggle');
 
-            Backbone.history.navigate(window.location.hash, {trigger: true});
-
             this.render();
+            
+            Backbone.history.navigate(window.location.hash || "#/", {trigger: true});
         }
 
     });

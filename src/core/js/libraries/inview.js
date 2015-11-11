@@ -1,4 +1,4 @@
-// jquery.onscreen 2015-08-13 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2015-10-23 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 	var expando = $.expando;
@@ -6,6 +6,11 @@
 	//element + event handler storage
 	var onScreenObjs = {};
 	var inViewObjs = {};
+	var $window = $(window);
+	var wHeight = $window.height();
+	var wWidth = $window.width();
+	var wScrollTop = $window.scrollTop();
+	var wScrollLeft = $window.scrollLeft();
 
 	//jQuery element + event handler attachment / removal
 	$.event.special.onscreen = {
@@ -47,23 +52,26 @@
   		
 		var height = $element.outerHeight();
 		var width = $element.outerWidth();
-		var wHeight = $(window).height();
-		var wWidth = $(window).width();
 		
 		//topleft from topleft of window
-		var top = $element.offset()["top"] - $(window).scrollTop();
-		var left = $element.offset()["left"] - $(window).scrollLeft();
+		var offset = $element.offset();
+		var top = offset["top"] - wScrollTop;
+		var left = offset["left"] - wScrollLeft;
 
 		//bottomright from bottomright of window
 		var bottom = wHeight - (top + height);
 		var right = wWidth - (left + width);
 		
 		//percentages of above
-		var topP = Math.round((100 /  wHeight) * top);
-		var leftP = Math.round((100 / wWidth) * left);
-		var bottomP = Math.round((100 /  wHeight) * (wHeight - (top + height)));
-		var rightP = Math.round((100 / wWidth) * (wWidth - (left + width)));
+		var ratioHeight = (100 /  wHeight);
+		var ratioWidth = (100 / wWidth);
 
+		var right = (left + width);
+
+		var topP = Math.round(ratioHeight * top);
+		var leftP = Math.round(ratioWidth * left);
+		var bottomP = Math.round(ratioHeight * bottom);
+		var rightP = Math.round(ratioWidth * right);
 
 		//inview
 		var inviewH = null;
@@ -98,8 +106,8 @@
 
 		var onscreen = true;
 		if (rightP > 100 || leftP > 100 || bottomP > 100 || topP > 100) onscreen = false;
-		if (!$element.is(":visible") || $element.css("visibility") == "hidden") onscreen = false;
-
+		if ( ($element[0].offsetWidth <= 0 && $element[0].offsetHeight <= 0) || $element.css("display") == "none" || $element.css("visibility") == "hidden") onscreen = false;
+		
 		return { 
 			top: top, 
 			left: left, 
@@ -133,12 +141,12 @@
 		if (onScreenHandlers.length === 0 && inViewHandlers.length === 0) {
 			//nothing to onscreen
 			stopLoop();
-			$.fn.onscreen.intervalDuration = 250;
+			$.fn.onscreen.intervalDuration = 100;
 			repeatLoop();
 		} else {
 			//something to onscreen
 			stopLoop();
-			$.fn.onscreen.intervalDuration = 125;
+			$.fn.onscreen.intervalDuration = 50;
 			repeatLoop();
 		}
 
@@ -191,8 +199,8 @@
 		var measure = getElementOnScreenMeasurements(item.$element);
 
 		//check if measure has the same values as last
-		if (item._onscreen !== undefined && item._onscreen === measure.uniqueMeasurementId) return;
-		item._onscreen = measure.uniqueMeasurementId;
+		if (item._inview !== undefined && item._inview === measure.uniqueMeasurementId) return;
+		item._inview = measure.uniqueMeasurementId;
 
 		var visiblePartY = (measure.percentFromTop > 0 && measure.percentFromTop < 100) && (measure.percentFromBottom > 0 && measure.percentFromBottom < 100) ? "both" : (measure.percentFromTop > 0 && measure.percentFromTop < 100) ? "top" : (measure.percentFromBottom > 0 && measure.percentFromBottom < 100) ? "bottom" : "none";
 		var visiblePartX = (measure.percentFromLeft > 0 && measure.percentFromLeft < 100) && (measure.percentFromRight > 0 && measure.percentFromRight < 100) ? "both" : (measure.percentFromLeft > 0 && measure.percentFromLeft < 100) ? "left" : (measure.percentFromRight > 0 && measure.percentFromRight < 100) ? "right" : "none";
@@ -230,11 +238,11 @@
 
 	//jQuery element function
 	$.fn.onscreen = function() {
-		return getElementOnScreenMeasurements($(this[0]));
+		return getElementOnScreenMeasurements(this);
 	};
 
 	//checking loop interval duration
-	$.fn.onscreen.intervalDuration = 125;
+	$.fn.onscreen.intervalDuration = 50;
 
 	var loopData = {
 		lastEvent: 0,
@@ -243,6 +251,7 @@
 
 	//checking loop start and end
 	function startLoop() {
+		windowScroll();
 		loopData.lastEvent = (new Date()).getTime();
 		if (loopData.interval !== null) {
 			stopLoop();
@@ -251,6 +260,7 @@
 	}
 
 	function repeatLoop() {
+		windowScroll();
 		if (loopData.interval !== null) {
 			stopLoop();
 		}
@@ -262,8 +272,20 @@
 		loopData.interval = null;
 	}
 
+	function windowResize() {
+		wHeight = $window.height();
+		wWidth = $window.width();
+		startLoop();
+	}
+
+	function windowScroll() {
+		wScrollTop = $window.scrollTop();
+		wScrollLeft = $window.scrollLeft();
+	}
+
 	$(window).on("scroll", startLoop);
-	$(window).on("resize", startLoop);
+	$(window).on("mousedown touchstart keydown", startLoop);
+	$(window).on("resize", windowResize);
 
 
 })();
