@@ -192,21 +192,34 @@
 		}
 	},
 	{
-		"_id": "c-5678",
+		"_id": "c-40",
 		"_parentId": "b-30",
 		"_type": "component",
-		"_component": "graphic",
+		"_component": "media",
 		"_classes": "",
-		"_layout": "right",
-		"title": "c-5678",
-		"displayTitle": "",
-		"body": "",
-		"instruction": "",
-		"_graphic": {
-			"large": "course/en/images/single_width.jpg",
-			"small": "course/en/images/single_width.jpg",
-			"alt": "Placeholder graphic.",
-			"attribution": ""
+		"_layout": "full",
+		"_comment": "_setCompletionOn = inview | play | ended",
+		"_setCompletionOn": "play",
+		"_useClosedCaptions": false,
+		"title": "Media",
+		"displayTitle": "Media",
+		"body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or just let audio to literally do the talking. This is when the media component comes to the fore.<br><br>Component can be either single or spanned.",
+		"instruction": "Select the play button to start the video.",
+		"_media": {
+			"mp4": "course/en/video/c-40.mp4",
+			"poster": "course/en/video/c-40.jpg"
+		},
+		"_transcript": {
+			"_inlineTranscript": true,
+			"_externalTranscript": false,
+			"inlineTranscriptButton": "Transcript",
+			"inlineTranscriptCloseButton": "Close Transcript",
+			"inlineTranscriptBody": "Transcript body text should go here",
+			"transcriptLinkButton": "Transcript",
+			"transcriptLink": ""
+		},
+		"_pageLevelProgress": {
+			"_isEnabled": true
 		}
 	},
 	{
@@ -317,7 +330,7 @@
 		"_id": "c-65",
 		"_parentId": "b-45",
 		"_type": "component",
-		"_component": "mcq",
+		"_component": "gmcq",
 		"_classes": "col-4",
 		"_layout": "full",
 		"_attempts": 1,
