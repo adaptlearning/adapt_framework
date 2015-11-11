@@ -1,9 +1,9 @@
 var path = require('path');
 
-// TODO: check this on windows
 var appendSlash = function(dir) {
     if (dir) {
         var lastChar = dir.substring(dir.length - 1, dir.length);
+        // TODO: check the use of / on windows
         if (lastChar !== '/') return dir + '/';
     }
 };
@@ -19,10 +19,10 @@ module.exports = function(grunt) {
         'menu/menu.js',
         'theme/theme.js'
     ];
-   
-    // Selectively load the course.json 
+
+    // Selectively load the course.json
     // 'outputdir' will be passed in a call to server-build, i.e. from the authoring tool
-    var buildConfigPath = grunt.option('outputdir') 
+    var buildConfigPath = grunt.option('outputdir')
       ? './' + grunt.option('outputdir') + '/course/config.json'
       : './src/course/config.json';
     var buildConfig = require(buildConfigPath).build || {};
