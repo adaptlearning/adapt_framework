@@ -2,6 +2,7 @@
 
 (function() {
 	var expando = $.expando;
+	var expandoIndex = 0;
 
 	//element + event handler storage
 	var onScreenObjs = {};
@@ -15,6 +16,7 @@
 	//jQuery element + event handler attachment / removal
 	$.event.special.onscreen = {
 		add: function(data) {
+			checkExpando(this);
 			onScreenObjs[data.guid + "-" + this[expando]] = { 
 				data: data, 
 				$element: $(this) 
@@ -31,6 +33,7 @@
   	};
 	$.event.special.inview = {
 		add: function(data) {
+			checkExpando(this);
 			inViewObjs[data.guid + "-" + this[expando]] = {
 				data: data, 
 				$element: $(this) 
@@ -46,6 +49,9 @@
 		}
   	};
 
+	function checkExpando(element) {
+		if (!element[expando]) element[expando] = ++expandoIndex;
+  	}
 
   	function getElementOnScreenMeasurements($element) {
   		if ($element.length === 0) return;
