@@ -2,7 +2,7 @@
 module.exports = {
     less: {
         files: ['<%= sourcedir %>**/*.less'],
-        tasks: ['concat', 'less']
+        tasks: ['less:dev']
     },
     handlebars: {
         files: ['<%= sourcedir %>**/*.hbs'],
