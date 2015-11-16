@@ -22,6 +22,9 @@
 
     //3. Load adapt
     function loadAdapt() {
+        $.ajaxPrefilter(function( options ) {
+            options.crossDomain = true;
+        });
         Modernizr.load("adapt/js/adapt.min.js");
     }
 
