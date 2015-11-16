@@ -414,7 +414,8 @@
             if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
             $element.focusNoScroll();
 
-            return this;
+            //return element focused
+            return $element;
 
         };
 
@@ -1150,8 +1151,8 @@
             defer(function() {
 
                 if (state.$activeElement) {
-                    state.$activeElement.focusOrNext();
-                    state.$activeElement.limitedScrollTo();
+                    //scroll to focused element
+                    state.$activeElement.focusOrNext().limitedScrollTo();
                 } else {
                     $.a11y_focus();
                 }
