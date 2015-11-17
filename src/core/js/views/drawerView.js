@@ -133,10 +133,14 @@ define(function(require) {
                 this.$('.drawer-back').addClass('display-none');
                 this._isCustomViewVisible = false;
                 this.emptyDrawer();
-                this.renderItems();
-                Adapt.trigger('drawer:openedItemView');
+                if(this.collection.models.length === 1) {
+                    Adapt.trigger(this.collection.models[0].get('eventCallback'));
+                } else {
+                    this.renderItems();
+                    Adapt.trigger('drawer:openedItemView');
+                }
             } else {
-                if (this._hasBackButton) {
+                if (this._hasBackButton && this.collection.models.length > 1) {
                     this.$('.drawer-back').removeClass('display-none');
                 } else {
                     this.$('.drawer-back').addClass('display-none');
