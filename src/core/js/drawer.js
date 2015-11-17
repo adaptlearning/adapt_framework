@@ -26,7 +26,7 @@ define(function(require) {
 		init();
 	})
 	Adapt.on("drawer:opened",function(){
-		var itemsLength = $(".drawer-holder")[0].childElementCount;
+		var itemsLength = $(".drawer-holder").children().length;
 		if(itemsLength == 1) { 
 		      Adapt.trigger("resources:showResources"); 
 		}
