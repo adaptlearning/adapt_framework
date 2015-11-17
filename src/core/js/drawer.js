@@ -25,7 +25,12 @@ define(function(require) {
 	Adapt.once('app:dataReady', function() {
 		init();
 	})
-
+	Adapt.on("drawer:opened",function(){
+		var itemsLength = $(".drawer-holder")[0].childElementCount;
+		if(itemsLength == 1) { 
+		      Adapt.trigger("resources:showResources"); 
+		}
+	});
 	Adapt.drawer = Drawer;
 
 });
