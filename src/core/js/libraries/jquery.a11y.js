@@ -489,7 +489,31 @@
             event.stopPropagation();
             var $element = $(event.target);
             
-            if (!$element.is(domSelectors.globalTabIndexElements)) return;
+            //search out intended click element
+            if (!$element.is(domSelectors.globalTabIndexElements)) {
+                //if element receiving click is not tabbable, search parents
+                var $parents = $element.parents();
+                var $tabbableParents = $parents.filter(domSelectors.globalTabIndexElements);
+                if ($tabbableParents.length === 0) {
+                    //if no tabbable parents, search for proxy elements
+                    var $proxyElements = $parents.filter("[for]");
+
+                    //if no proxy elements, ignore
+                    if ($proxyElements.length === 0) return;
+
+                    //isolate proxy element by id
+                    var $proxyElement = $("#"+$proxyElements.attr("for"));
+                    if (!$proxyElement.is(domSelectors.globalTabIndexElements)) return;
+                    
+                    //use tabbable proxy
+                    $element = $proxyElement;
+                } else {
+                    
+                    //use first tabbable parent
+                    $element = $($tabbableParents[0]);
+                }
+            }
+            
             if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
             
             state.$activeElement = $(event.currentTarget);
@@ -694,28 +718,12 @@
             $("body").on("click", "select, input[type='text'], textarea", onOpen);
         }
 
-        function a11y_iosFalseClickFix() {  //ios 9.0.4 bugfix for invalid clicks on input overlays
-            //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
-            //redirect focus back to last item in this instance
-            $("body").on("click", "*", function(event) {
-                var $ele = $(event.target);
-                if (!$ele.is(domSelectors.globalTabIndexElements)) {
-                    var $active = $.a11y.state.$activeElement;
-                    if (iOS && $active.is("select, input[type='text'], textarea")) return;
-                    defer(function() {
-                        $active.focus();
-                    }, $active, 500)
-                }
-            });
-        }
-
         function a11y_iosFixes() {
 
             if ($.a11y.state.isIOSFixesApplied) return;
 
             $.a11y.state.isIOSFixesApplied = true;
             a11y_iosSelectFix();
-            a11y_iosFalseClickFix();
 
         }
 
