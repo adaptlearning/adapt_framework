@@ -1,0 +1,10 @@
+{
+  "pluginTypes": [
+    "src/core/",
+    "templates/templates.js",
+    "components/components.js",
+    "extensions/extensions.js",
+    "menu/menu.js",
+    "theme/theme.js"
+  ]
+}
