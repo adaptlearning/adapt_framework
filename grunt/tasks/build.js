@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         'copy',
         'less:compile',
         'handlebars',
-        'bower',
+        'bowerRequirejs',
         'requirejs-bundle',
         'create-json-config',
         'schema-defaults',
