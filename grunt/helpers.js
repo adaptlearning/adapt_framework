@@ -1,6 +1,12 @@
+var _ = require('underscore');
 var chalk = require('chalk');
+var fs = require('fs');
+var path = require('path');
+
 module.exports = function(grunt) {
-    // tasks
+
+    // grunt tasks
+
     grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
         grunt.log.ok('Starting server in "' + grunt.config('outputdir') + '" using port ' + grunt.config('connect.server.options.port'));
     });
@@ -31,6 +37,8 @@ module.exports = function(grunt) {
         if (grunt.config('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config('menu') + '"');
     });
 
+    // privates
+
     var generateIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
         var re = '';
@@ -51,7 +59,88 @@ module.exports = function(grunt) {
         return new RegExp(re);
     };
 
+    // exported
+
     var exports = {};
+
+    exports.defaults = {
+        sourcedir: process.cwd() + '/src/',
+        outputdir: process.cwd() + '/build/',
+        theme: '**',
+        menu: '**',
+        includes: [
+            "src/core/",
+            "templates/templates.js",
+            "components/components.js",
+            "extensions/extensions.js",
+            "menu/menu.js",
+            "theme/theme.js"
+        ],
+        pluginTypes: [
+            'components',
+            'extensions',
+            'menu',
+            'theme'
+        ]
+    };
+
+    exports.appendSlash = function(dir) {
+        if (dir) {
+            var lastChar = dir.substring(dir.length - 1, dir.length);
+            // TODO: check the use of / on windows
+            if (lastChar !== '/') return dir + '/';
+        }
+    };
+
+    exports.getIncludes = function(buildIncludes, configData) {
+        var dependencies = [];
+
+        for(var i = 0, count = exports.defaults.pluginTypes.length; i < count; i++) {
+            var dir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
+            var children = fs.readdirSync(dir);
+            for(var j = 0, count = children.length; j < count; j++) {
+                try {
+                    var folderPath = path.join(dir, children[j]);
+
+                    // not a directory, excape!
+                    if(!fs.statSync(folderPath).isDirectory()) continue;
+
+                    var bowerJson = require(path.join(folderPath, 'bower.json'));
+                    for (var key in bowerJson.dependencies) {
+                        if(!_.contains(buildIncludes, key)) dependencies.push(key)
+                    }
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+        }
+        return [].concat(exports.defaults.includes, buildIncludes, dependencies);
+    };
+
+    exports.generateConfigData = function() {
+        var data = {
+            sourcedir: exports.appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
+            outputdir: exports.appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
+            theme: grunt.option('theme') || exports.defaults.theme,
+            menu: grunt.option('menu') || exports.defaults.menu,
+        };
+
+        // Selectively load the course.json ('outputdir' passed by server-build)
+        var prefix = grunt.option('outputdir') ? grunt.option('outputdir') : data.sourcedir;
+        var buildConfigPath = prefix + 'course/config.json';
+
+        try {
+            var buildConfig = require(buildConfigPath).build;
+        }
+        catch(error) {
+            return console.log(error);
+        }
+
+        if(buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
+        if(buildConfig.excludes) data.excludes = buildConfig.excludes;
+
+        return data;
+    };
 
     /*
     * Uses the parent folder name (menu, theme, components, extensions).
@@ -85,12 +174,12 @@ module.exports = function(grunt) {
         var isExcluded = excludes && pluginPath.search(exports.excludedRegExp) !== -1;
 
         if (isExcluded || !isIncluded) {
-//            grunt.log.writeln('Excluded ' + chalk.magenta(pluginPath));
+            // grunt.log.writeln('Excluded ' + chalk.magenta(pluginPath));
             return false;
         }
         else {
-          // grunt.log.writeln('Included ' + chalk.green(pluginPath));
-          return true;
+            // grunt.log.writeln('Included ' + chalk.green(pluginPath));
+            return true;
         }
     };
 
