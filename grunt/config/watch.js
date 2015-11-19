@@ -25,7 +25,7 @@ module.exports = {
             '!<%= sourcedir %>theme/theme.js',
             '!<%= sourcedir %>templates/templates.js'
         ],
-        tasks: ['bower', 'requirejs-bundle', 'requirejs:dev']
+        tasks: ['bowerRequirejs', 'requirejs-bundle', 'requirejs:dev']
     },
     index: {
         files: ['<%= sourcedir %>index.html'],

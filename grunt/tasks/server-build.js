@@ -10,7 +10,7 @@ module.exports = function(grunt) {
             'copy',
             'less:' + requireMode,
             'handlebars',
-            'bower',
+            'bowerRequirejs',
             'requirejs-bundle',
             'requirejs:' + requireMode
         ]);
