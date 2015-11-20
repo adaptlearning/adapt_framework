@@ -28,28 +28,5 @@
     },
     "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"],
     "build": {
-        "includes": [
-            "adapt-contrib-blank",
-            "adapt-contrib-vanilla",
-            "adapt-contrib-text",
-            "adapt-contrib-textInput",
-            "adapt-contrib-graphic",
-            "adapt-contrib-boxMenu",
-            "adapt-contrib-accordion",
-            "adapt-contrib-assessmentResults",
-            "adapt-contrib-gmcq",
-            "adapt-contrib-hotgraphic",
-            "adapt-contrib-matching",
-            "adapt-contrib-mcq",
-            "adapt-contrib-narrative",
-            "adapt-contrib-slider",
-            "adapt-contrib-assessment",
-            "adapt-contrib-bookmarking",
-            "adapt-contrib-pageLevelProgress",
-            "adapt-contrib-resources",
-            "adapt-contrib-spoor",
-            "adapt-contrib-trickle",
-            "adapt-contrib-tutor"
-        ]
     }
 }
