@@ -19,13 +19,13 @@ module.exports = function(grunt) {
         }
 
         if (includes) {
-            grunt.log.writeln('The following plugins will be included in the build:');
+            grunt.log.writeln('The following will be included in the build:');
             for(var i = 0, count = includes.length; i < count; i++)
                 grunt.log.writeln('- ' + includes[i]);
             grunt.log.writeln('');
         }
         if (excludes) {
-            grunt.log.writeln('The following plugins will be excluded from the build:');
+            grunt.log.writeln('The following will be excluded from the build:');
             for(var i = 0, count = excludes.length; i < count; i++)
                 grunt.log.writeln('- ' + excludes[i]);
             grunt.log.writeln('');
@@ -59,6 +59,14 @@ module.exports = function(grunt) {
         return new RegExp(re);
     };
 
+    var appendSlash = function(dir) {
+        if (dir) {
+            var lastChar = dir.substring(dir.length - 1, dir.length);
+            // TODO: check the use of / on windows
+            if (lastChar !== '/') return dir + '/';
+        }
+    };
+
     // exported
 
     var exports = {};
@@ -84,14 +92,6 @@ module.exports = function(grunt) {
         ]
     };
 
-    exports.appendSlash = function(dir) {
-        if (dir) {
-            var lastChar = dir.substring(dir.length - 1, dir.length);
-            // TODO: check the use of / on windows
-            if (lastChar !== '/') return dir + '/';
-        }
-    };
-
     exports.getIncludes = function(buildIncludes, configData) {
         var dependencies = [];
 
@@ -102,7 +102,7 @@ module.exports = function(grunt) {
                 try {
                     var folderPath = path.join(dir, children[j]);
 
-                    // not a directory, excape!
+                    // not a directory, escape!
                     if(!fs.statSync(folderPath).isDirectory()) continue;
 
                     var bowerJson = require(path.join(folderPath, 'bower.json'));
@@ -119,8 +119,8 @@ module.exports = function(grunt) {
 
     exports.generateConfigData = function() {
         var data = {
-            sourcedir: exports.appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
-            outputdir: exports.appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
+            sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
+            outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
         };
@@ -170,11 +170,11 @@ module.exports = function(grunt) {
         // carry on as normal if no includes/excludes
         if (!includes && !excludes) return true;
 
-        var isIncluded = includes && pluginPath.search(exports.includedRegExp) !== -1;
-        var isExcluded = excludes && pluginPath.search(exports.excludedRegExp) !== -1;
+        var isIncluded = includes && pluginPath.search(exports.getIncludedRegExp()) !== -1;
+        var isExcluded = excludes && pluginPath.search(exports.getExcludedRegExp()) !== -1;
 
-        if (isExcluded || !isIncluded) {
-            // grunt.log.writeln('Excluded ' + chalk.magenta(pluginPath));
+        if (isExcluded || isIncluded === false) {
+            // grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
             return false;
         }
         else {
@@ -192,8 +192,15 @@ module.exports = function(grunt) {
         else return content;
     };
 
-    exports.includedRegExp = generateIncludedRegExp();
-    exports.excludedRegExp = generateExcludedRegExp();
+    exports.getIncludedRegExp = function() {
+        var configValue = grunt.config('includedRegExp');
+        return configValue || grunt.config('includedRegExp', generateIncludedRegExp());
+    };
+
+    exports.getExcludedRegExp = function() {
+        var configValue = grunt.config('excludedRegExp');
+        return configValue || grunt.config('excludedRegExp', generateExcludedRegExp());
+    };
 
     return exports;
 };
