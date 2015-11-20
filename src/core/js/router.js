@@ -132,7 +132,7 @@ define([
                 default:
                     //allow navigation
                     Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                    Adapt.navigateToElement('.' + id);
+                    Adapt.navigateToElement('.' + id, {replace:true});
             }
         },
 
