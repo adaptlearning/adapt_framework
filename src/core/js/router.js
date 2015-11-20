@@ -164,6 +164,7 @@ define([
                 } else {
                     this.navigate("#/"+args[0], {trigger:false, replace:false});
                 }
+                break;
             case 2:
                 this.navigate("#/"+args[0]+"/"+args[1], {trigger:false, replace:false});
                 break;
