@@ -89,7 +89,9 @@ define([
             })
         });
 
-        Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true});
+        var shouldReplaceRoute = settings.replace || false;
+
+        Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true, replace: shouldReplaceRoute});
     }
 
     Adapt.register = function(name, object) {

@@ -132,7 +132,7 @@ define([
                 default:
                     //allow navigation
                     Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                    Adapt.navigateToElement('.' + id);
+                    Adapt.navigateToElement('.' + id, {replace:true});
             }
         },
 
@@ -164,6 +164,7 @@ define([
                 } else {
                     this.navigate("#/"+args[0], {trigger:false, replace:false});
                 }
+                break;
             case 2:
                 this.navigate("#/"+args[0]+"/"+args[1], {trigger:false, replace:false});
                 break;
