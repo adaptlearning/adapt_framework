@@ -22,9 +22,16 @@
 
     //3. Load adapt
     function loadAdapt() {
-        $.ajaxPrefilter(function( options ) {
-            options.crossDomain = true;
-        });
+        switch (IE) {
+        case 8: case 9:
+            //ie8 and ie9 don't do crossdomain with jquery normally
+            break;
+        default:
+            //cross domain support for all other browers
+            $.ajaxPrefilter(function( options ) {
+                options.crossDomain = true;
+            });
+        }
         Modernizr.load("adapt/js/adapt.min.js");
     }
 
