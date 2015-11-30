@@ -238,7 +238,7 @@ define(function(require) {
 
         setNavigationBar: function() {
             if (this.isActive()) {
-                $(".navigation .aria-label").attr("tabindex", 0).removeAttr("aria-hidden");
+                $(".navigation .aria-label").attr("tabindex", 0).removeAttr("aria-hidden").removeClass("a11y-ignore");
             } else {
                 $(".navigation .aria-label").attr("tabindex", -1).attr("aria-hidden", "true");
             }

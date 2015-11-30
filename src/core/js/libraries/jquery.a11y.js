@@ -322,9 +322,11 @@
             if (!$element) return false;
 
             if ($element.css("position") == "fixed") return true;
+            if ($element.is(".fixed")) return true;
             var parents = $element.parents();
             for (var i = 0, l = parents.length; i < l; i++) {
                 if ($(parents[i]).css("position") == "fixed") return true;
+                if ($(parents[i]).is(".fixed")) return true;
             }
             return false;
         };
@@ -391,7 +393,9 @@
                 if (options.isDebug) console.log("focusNoScroll", this[0]);
 
                 var y = $(window).scrollTop();
+                try {
                 this[0].focus();
+                } catch(e){}
                 window.scrollTo(null, y);
             }, this);
             return this; //chainability
@@ -402,10 +406,36 @@
 
             var $element = $(this[0]);
 
-            //if the element is not focusable, find the next focusable element in section
-            if (!$element.is(domFilters.focusableElementsFilter)) {
-                var element = $element.nextAll(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter)[0];
-                $element = $(element);
+            var isSpecialElement = $element.is(domSelectors.focuser) || $element.is(domSelectors.focusguard) || $element.is(domSelectors.selected); 
+            var isTabbable = $element.is(domSelectors.focusableElements) && $element.is(domFilters.focusableElementsFilter);
+
+            if (!isSpecialElement && !isTabbable) {
+                //if the element is not focusable, find the next focusable element in section
+                //light processing
+                var $nextElement = $element.nextAll(domSelectors.focusableElements);
+                //filter enabled+visible
+                var $nextElementFiltered = $nextElement.filter(domFilters.focusableElementsFilter);
+                if ($nextElement.length === 0 || $nextElementFiltered.length === 0) {
+                    //if next element isn't focusable find next element in document
+                    //heavy processing
+                    //fetch all parents subsequent siblings
+                    var $parents = $element.parents();
+                    var $nextSiblings = $parents.nextAll();
+                    //filter siblings for focusable
+                    var $nextAllElements = $nextSiblings.find(domSelectors.focusableElements);
+                    //filter enabled+visible focusable items
+                    var $nextAllElementsFiltered = $nextAllElements.filter(domFilters.focusableElementsFilter);
+                    //if none found throw error
+                    if ($nextAllElementsFiltered.length === 0) throw "jquery.a11y: Could not find the next focusable element";
+                    
+                    //return first found element
+                    $element = $($nextAllElementsFiltered[0]);
+
+                } else {
+
+                    //return first found element
+                    $element = $($nextElementFiltered[0]);
+                }
             }
 
             var options = $.a11y.options;
@@ -489,7 +519,31 @@
             event.stopPropagation();
             var $element = $(event.target);
             
-            if (!$element.is(domSelectors.globalTabIndexElements)) return;
+            //search out intended click element
+            if (!$element.is(domSelectors.globalTabIndexElements)) {
+                //if element receiving click is not tabbable, search parents
+                var $parents = $element.parents();
+                var $tabbableParents = $parents.filter(domSelectors.globalTabIndexElements);
+                if ($tabbableParents.length === 0) {
+                    //if no tabbable parents, search for proxy elements
+                    var $proxyElements = $parents.filter("[for]");
+
+                    //if no proxy elements, ignore
+                    if ($proxyElements.length === 0) return;
+
+                    //isolate proxy element by id
+                    var $proxyElement = $("#"+$proxyElements.attr("for"));
+                    if (!$proxyElement.is(domSelectors.globalTabIndexElements)) return;
+                    
+                    //use tabbable proxy
+                    $element = $proxyElement;
+                } else {
+                    
+                    //use tabbable parent
+                    $element = $($tabbableParents[0]);
+                }
+            }
+
             if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
             
             state.$activeElement = $(event.currentTarget);
@@ -697,15 +751,27 @@
         function a11y_iosFalseClickFix() {  //ios 9.0.4 bugfix for invalid clicks on input overlays
             //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
             //redirect focus back to last item in this instance
+            var isPerformingRedirect = false;
+
             $("body").on("click", "*", function(event) {
-                var $ele = $(event.target);
-                if (!$ele.is(domSelectors.globalTabIndexElements)) {
-                    var $active = $.a11y.state.$activeElement;
-                    if (iOS && $active.is("select, input[type='text'], textarea")) return;
-                    defer(function() {
-                        $active.focus();
-                    }, $active, 500)
-                }
+                if (isPerformingRedirect) return;
+
+                onFocusCapture(event);
+
+                var $active = $.a11y.state.$activeElement;
+                if (!$active.is(domSelectors.globalTabIndexElements)) return;
+
+                if (iOS && $active.is("select, input[type='text'], textarea")) return;
+
+                if (options.isDebug) console.log("a11y_iosFalseClickFix", $active[0]);
+
+                isPerformingRedirect = true;
+
+                defer(function() {
+                    $active.focus();
+                    isPerformingRedirect = false;
+                }, 500);
+
             });
         }
 
@@ -1136,7 +1202,7 @@
                 }
             });
 
-            state.$activeElement = state.focusStack.pop();
+            var $activeElement = state.$activeElement = state.focusStack.pop();
 
             $.a11y_update();
 
@@ -1150,7 +1216,8 @@
 
             defer(function() {
 
-                if (state.$activeElement) {
+                if ($activeElement) {
+                    state.$activeElement = $activeElement;
                     //scroll to focused element
                     state.$activeElement.focusOrNext().limitedScrollTo();
                 } else {
