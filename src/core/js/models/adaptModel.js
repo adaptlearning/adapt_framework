@@ -212,6 +212,30 @@ define(function (require) {
             return parent;
         },
 
+        getParents: function() {
+            var context = this;
+            var parents = [];
+            while(true) {
+                if (!context.get("_parentId")) break;
+                context = context.getParent();
+                parents.push(context);
+            }
+            if (parents.length === 0) return null;
+            return new Backbone.Collection(parents);
+        },
+
+        getPath: function() {
+            var context = this;
+            var parents = [context];
+            while(true) {
+                if (!context.get("_parentId")) break;
+                context = context.getParent();
+                parents.push(context);
+            }
+            if (parents.length === 0) return null;
+            return new Backbone.Collection(parents);
+        },
+
         getSiblings: function (passSiblingsAndIncludeSelf) {
             var siblings;
             if (!passSiblingsAndIncludeSelf) {
