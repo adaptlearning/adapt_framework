@@ -66,7 +66,7 @@
 			$images.each(function() {
 				var $this = $(this);
 				if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height() > 0 ) {
-					console.error("failed to hear load of image", $this.attr("src"));	
+					console.error("failed to hear load of image", $this.attr("src"));
 					return;
 				} else {
 					notLoaded.push(this);
@@ -106,7 +106,7 @@
 
 		    	var scriptName = changeCSSAttributeNameFormat(name);
 		        if( el.currentStyle[scriptName] !== 'none' ) {
-		        	rtn.push(el);		       		
+		        	rtn.push(el);
 		        }
 
 		    } else if (window.getComputedStyle) { //other
