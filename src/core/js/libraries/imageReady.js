@@ -36,11 +36,16 @@
 		//attach load event listeners
 		$images.each(function() {
 			var $this = $(this);
-			if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height > 0 ) {
+			if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height() > 0 ) {
 				$images.loaded++;
 				return;
 			}
 			$this.one("load", complete);
+			
+			// hack for onload event not firing for cached images in IE9 http://garage.socialisten.at/2013/06/how-to-fix-the-ie9-image-onload-bug/
+			if(document.documentMode && document.documentMode === 9) {
+				$this.attr("src", $this.attr("src"));
+			}
 		});
 
 		//check if all images have been loaded already
@@ -60,7 +65,7 @@
 			var notLoaded = [];
 			$images.each(function() {
 				var $this = $(this);
-				if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height > 0 ) {
+				if (!$this.attr("src") || this.complete || this.readyState === 4 || $this.height() > 0 ) {
 					console.error("failed to hear load of image", $this.attr("src"));	
 					return;
 				} else {
