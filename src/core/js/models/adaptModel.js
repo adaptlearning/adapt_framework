@@ -224,7 +224,7 @@ define(function (require) {
             }
             
             return parents.length ? new Backbone.Collection(parents) : null;
-        }
+        },
 
         getSiblings: function (passSiblingsAndIncludeSelf) {
             var siblings;
