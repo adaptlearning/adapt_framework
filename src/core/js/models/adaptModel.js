@@ -212,29 +212,19 @@ define(function (require) {
             return parent;
         },
 
-        getParents: function() {
-            var context = this;
+        getParents: function(shouldIncludeChild) {
             var parents = [];
-            while(true) {
-                if (!context.get("_parentId")) break;
-                context = context.getParent();
-                parents.push(context);
-            }
-            if (parents.length === 0) return null;
-            return new Backbone.Collection(parents);
-        },
-
-        getPath: function() {
             var context = this;
-            var parents = [context];
-            while(true) {
-                if (!context.get("_parentId")) break;
+            
+            if (shouldIncludeChild) parents.push(context);
+            
+            while (context.has("_parentId")) {
                 context = context.getParent();
                 parents.push(context);
             }
-            if (parents.length === 0) return null;
-            return new Backbone.Collection(parents);
-        },
+            
+            return parents.length ? new Backbone.Collection(parents) : null;
+        }
 
         getSiblings: function (passSiblingsAndIncludeSelf) {
             var siblings;
