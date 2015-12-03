@@ -1,12 +1,19 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
-## [2.0.6] - 2015-12-03
+## [2.0.7] - 2015-12-03
 ### Headline changes
 - accessibility hotfix, missing variable declararation ios
 
+## [2.0.6] - 2015-12-02
+### Headline changes
+
+- for very slow loading with courses that have cached images in IE9 ABU-1147
+- device:resize events not having accurate screen size info
+- navigation click events not working unless the item clicked is a button element
+
 ## [2.0.5] - 2015-11-30
-Headline changes:
+### Headline changes:
 
 - when there is only one item in the 'drawer', open that item by default
 - added support in IE10 and above (and all other supported browsers) for cross domain requests, allowing course content to be loaded - from a CDN by adding <base href="/*CDN URL HERE*/"> to a locally hosted index.html
