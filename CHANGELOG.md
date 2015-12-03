@@ -1,6 +1,22 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
+## [2.0.6] - 2015-12-03
+### Headline changes
+- accessibility hotfix, missing variable declararation ios
+
+## [2.0.5] - 2015-11-30
+Headline changes:
+
+- when there is only one item in the 'drawer', open that item by default
+- added support in IE10 and above (and all other supported browsers) for cross domain requests, allowing course content to be loaded - from a CDN by adding <base href="/*CDN URL HERE*/"> to a locally hosted index.html
+- many accessibility fixes
+- accessibility state now remembered across sessions (except on touch devices where it's always switched on)
+- better error on component not being installed (#721)
+- various fixes to the default .json that is provided with the framework
+- improvements to the 'inview' library
+- fixes & improvements to router
+
 ## [2.0.4] - 2015-10-30
 ### Headline changes
 - added support for tracking user's responses to SCORM's cmi.interactions
