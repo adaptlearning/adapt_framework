@@ -401,7 +401,7 @@
             return this; //chainability
         };
 
-        $.fn.focusOrNext = function() {
+        $.fn.focusOrNext = function(returnOnly) {
             if (this.length === 0) return this;
 
             var $element = $(this[0]);
@@ -440,9 +440,11 @@
 
             var options = $.a11y.options;
             if (options.isDebug) console.log("focusOrNext", $element[0]);
-
-            if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
-            $element.focusNoScroll();
+            
+            if (returnOnly !== true) {
+                if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
+                $element.focusNoScroll();
+            }
 
             //return element focused
             return $element;
@@ -529,14 +531,20 @@
                     var $proxyElements = $parents.filter("[for]");
 
                     //if no proxy elements, ignore
-                    if ($proxyElements.length === 0) return;
-
-                    //isolate proxy element by id
-                    var $proxyElement = $("#"+$proxyElements.attr("for"));
-                    if (!$proxyElement.is(domSelectors.globalTabIndexElements)) return;
-                    
-                    //use tabbable proxy
-                    $element = $proxyElement;
+                    if ($proxyElements.length === 0) {
+                        //find next focusable element if no proxy element found
+                        $element = $element.focusOrNext(true);
+                    } else {
+                        //isolate proxy element by id
+                        var $proxyElement = $("#"+$proxyElements.attr("for"));
+                        if (!$proxyElement.is(domSelectors.globalTabIndexElements)) {
+                            //find next focusable element if no tabbable element found
+                            $element = $element.focusOrNext(true);
+                        } else {
+                            //use tabbable proxy
+                            $element = $proxyElement;
+                        }
+                    }
                 } else {
                     
                     //use tabbable parent
