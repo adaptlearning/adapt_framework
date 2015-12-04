@@ -552,7 +552,7 @@
                 }
             }
 
-            state.$activeElement = $(event.currentTarget);
+            state.$activeElement = $element;
             if (options.isDebug) console.log("focusCapture", $element[0]);
         }
 
