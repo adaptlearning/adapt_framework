@@ -968,7 +968,7 @@
 
     //MAKE SELECTED
 
-        $.fn.a11y_selected = function(isOn) {
+        $.fn.a11y_selected = function(isOn, noFocus) {
             if (this.length === 0) return this;
 
             var options = $.a11y.options;
@@ -980,15 +980,15 @@
                 switch ($.a11y.options.OS) {
                 case "mac":
                     //ANNOUNCES SELECTION ON A MAC BY ADDING A SPAN AND SHIFTING FOCUS
-                    $("#a11y-selected").focusNoScroll();
+                    if (noFocus !== true) $("#a11y-selected").focusNoScroll();
                     _.delay(function() {
                         selected.prepend($("<span class='a11y-selected aria-label'>selected </span>"))
-                        $(selected).focusNoScroll();
+                        if (noFocus !== true) $(selected).focusNoScroll();
                     },250);
                     break;
                 default:
                     //ANOUNCES THE SELECTION ON TABLETS AND PCS
-                    $.a11y_alert("selected " + selected.text());
+                    if (noFocus !== true) $.a11y_alert("selected " + selected.text());
                     selected.attr( "aria-label", "selected " + selected.text()).addClass("a11y-selected");
                     break;
                 }
