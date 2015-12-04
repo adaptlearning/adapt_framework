@@ -552,8 +552,6 @@
                 }
             }
 
-            if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
-            
             state.$activeElement = $(event.currentTarget);
             if (options.isDebug) console.log("focusCapture", $element[0]);
         }
@@ -566,7 +564,6 @@
 
             if (!$element.is(domSelectors.globalTabIndexElements)) return;
             a11y_triggerReadEvent($element);
-            if (iOS && $element.is("select, input[type='text'], textarea")) return;  //ios 9.0.4 bugfix for keyboard and picker input
 
             if (options.isDebug) console.log("focus", $element[0]);
             
@@ -705,57 +702,6 @@
             });
         }
 
-        function a11y_iosSelectFix() { //ios 9.0.4 bugfix for voiceover + keyboard and picker input
-            var scrollPosition = 0;
-
-            function onOpen(event) {
-                scrollPosition = $(window).scrollTop();
-                var $ele = $(event.currentTarget);
-                $ele.one("focusout", blockFocus);
-                hideUp($ele);
-            }
-
-            function hideUp($element) {
-                var $toHide = $(domSelectors.focusableElements);
-                $toHide = $toHide.not($element);
-                $toHide.each(function(index,item) {
-                    var $item = $(item);
-                    item._hideUpPrev = $(item).attr("aria-hidden");
-                    $(item).attr("aria-hidden", true);
-                });
-            }
-            function hideDown($element) {
-                var $toShow = $(domSelectors.focusableElements);
-                $toShow = $toShow.not($element);
-                $toShow.each(function(index,item) {
-                    var $item = $(item);
-                    if (item._hideUpPrev == undefined) {
-                        $(item).removeAttr("aria-hidden");  
-                    } else {
-                        $(item).attr("aria-hidden",item._hideUpPrev);
-                    }
-                    item._hideUpPrev = undefined;
-                });
-            }
-
-            function blockFocus(event) {
-                event.preventDefault();
-                event.stopImmediatePropagation();
-                event.stopPropagation();
-                var $ele = $(event.currentTarget);
-                defer(function() {
-                    this.off("focusout", blockFocus);
-                    this.focus();
-                    defer(function() {
-                        $.scrollTo(scrollPosition, {duration:0});
-                        hideDown(this);
-                    }, this, 1000);
-                }, $ele, 500);
-            }
-
-            $("body").on("click", "select, input[type='text'], textarea", onOpen);
-        }
-
         function a11y_iosFalseClickFix() {  //ios 9.0.4 bugfix for invalid clicks on input overlays
             //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
             //redirect focus back to last item in this instance
@@ -769,8 +715,6 @@
 
                 var $active = $.a11y.state.$activeElement;
                 if (!$active.is(domSelectors.globalTabIndexElements)) return;
-
-                if (iOS && $active.is("select, input[type='text'], textarea")) return;
 
                 if (options.isDebug) console.log("a11y_iosFalseClickFix", $active[0]);
 
@@ -789,7 +733,6 @@
             if ($.a11y.state.isIOSFixesApplied) return;
 
             $.a11y.state.isIOSFixesApplied = true;
-            a11y_iosSelectFix();
             a11y_iosFalseClickFix();
 
         }
