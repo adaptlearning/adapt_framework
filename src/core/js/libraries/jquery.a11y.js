@@ -752,6 +752,7 @@
             //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
             //redirect focus back to last item in this instance
             var isPerformingRedirect = false;
+            var options = $.a11y.options;
 
             $("body").on("click", "*", function(event) {
                 if (isPerformingRedirect) return;
