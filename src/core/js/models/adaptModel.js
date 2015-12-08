@@ -212,6 +212,20 @@ define(function (require) {
             return parent;
         },
 
+        getParents: function(shouldIncludeChild) {
+            var parents = [];
+            var context = this;
+            
+            if (shouldIncludeChild) parents.push(context);
+            
+            while (context.has("_parentId")) {
+                context = context.getParent();
+                parents.push(context);
+            }
+            
+            return parents.length ? new Backbone.Collection(parents) : null;
+        },
+
         getSiblings: function (passSiblingsAndIncludeSelf) {
             var siblings;
             if (!passSiblingsAndIncludeSelf) {
