@@ -5,6 +5,7 @@
 	if ($.fn.imageready) return;
 	
 	var stripCSSURL = /url\(([^)]*)\)/g;
+	var stripCSSQuotes = /[\"\']/g;
 
 	$.fn.imageready = function(callback, options) {
 		//setup options
@@ -28,8 +29,11 @@
 				var matches = stripCSSURL.exec(backgroundImageValue);
 				if (matches === null) return;
 				var url = matches[1];
+				url = url.replace(stripCSSQuotes, "");
 				$backgroundImage.attr("src", url);
 				$images.add($backgroundImage);
+				$images = $images.add($backgroundImage);
+				$images.loaded = 0;
 			});
 		});
 
