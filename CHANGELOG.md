@@ -1,6 +1,11 @@
 ## [Unreleased][unreleased]
 - Nothing!
 
+## [2.0.8] - 2015-12-04
+### Headline changes
+- accessibility hotfix, remove iOS select fix
+- accessibility hotfix, improved onFocusCapture to find next focusable component if cannot find any other.
+
 ## [2.0.7] - 2015-12-03
 ### Headline changes
 - accessibility hotfix, missing variable declararation ios
@@ -230,7 +235,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...HEAD
+[2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.4...v2.0.5
