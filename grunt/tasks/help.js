@@ -6,7 +6,9 @@ module.exports = function(grunt) {
       grunt.registerTask('help', function() {
           var chalk = require('chalk'); // for some nice colouring
           var columnify = require('columnify'); // deals with formatting
-          var config = grunt.config('help');
+          var config = grunt.config('help') || {
+            maxConsoleWidth: '80',
+          };
 
           grunt.log.writeln('');
           grunt.log.writeln(chalk.underline('Adapt Learning automated build process'));
@@ -17,15 +19,7 @@ module.exports = function(grunt) {
           var taskData = {};
           var maxTaskLength = 0;
 
-          // TODO: find alternate way of getting task list
-
-          for(var key in grunt.task._tasks) {
-              if(this.name !== key && -1 === config.ignoredTasks.indexOf(key)) {
-                  var task = grunt.task._tasks[key];
-                  taskData[chalk.cyan(task.name)] = task.info;
-                  if(task.name.length > maxTaskLength) maxTaskLength = task.name.length
-              }
-          }
+          // TODO: find way of getting task list with async task loading
 
           var options = {
               maxWidth: config.maxConsoleWidth - maxTaskLength,
