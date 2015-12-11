@@ -127,17 +127,19 @@ module.exports = function(grunt) {
 
         // Selectively load the course.json ('outputdir' passed by server-build)
         var prefix = grunt.option('outputdir') ? grunt.option('outputdir') : data.sourcedir;
-        var buildConfigPath = prefix + 'course/config.json';
+        var configPath = prefix + 'course/config.json';
 
         try {
-            var buildConfig = require(buildConfigPath).build;
+            var buildConfig = require(configPath).build;
         }
         catch(error) {
             return console.log(error);
         }
 
-        if(buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
-        if(buildConfig.excludes) data.excludes = buildConfig.excludes;
+        if(buildConfig) {
+            if(buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
+            if(buildConfig.excludes) data.excludes = buildConfig.excludes;
+        }
 
         return data;
     };
