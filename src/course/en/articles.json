@@ -40,7 +40,8 @@
 			"_questions": {
 				"_resetType": "hard",
 				"_canShowFeedback": false,
-				"_canShowMarking": false
+				"_canShowMarking": false,
+				"_canShowModelAnswer": false
 			},
 			"_isResetOnRevisit": true,
 			"_attempts": "infinite"
