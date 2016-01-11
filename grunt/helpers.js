@@ -62,8 +62,7 @@ module.exports = function(grunt) {
     var appendSlash = function(dir) {
         if (dir) {
             var lastChar = dir.substring(dir.length - 1, dir.length);
-            // TODO: check the use of / on windows
-            if (lastChar !== '/') return dir + '/';
+            if (lastChar !== path.sep) return dir + path.sep;
         }
     };
 
@@ -72,8 +71,8 @@ module.exports = function(grunt) {
     var exports = {};
 
     exports.defaults = {
-        sourcedir: process.cwd() + '/src/',
-        outputdir: process.cwd() + '/build/',
+        sourcedir: process.cwd() + path.sep + 'src' + path.sep,
+        outputdir: process.cwd() + path.sep + 'build' + path.sep,
         theme: '**',
         menu: '**',
         includes: [
