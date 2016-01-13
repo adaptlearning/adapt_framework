@@ -19,6 +19,11 @@ module.exports = function(grunt) {
         grunt.log.writeln('');
 
         var maxTaskLength = 0;
+        var taskData = getTaskData();
+
+        for(var task in taskData) {
+            if(task.length > maxTaskLength) maxTaskLength = task.length;
+        }
 
         var options = {
             maxWidth: config.maxConsoleWidth - maxTaskLength,
@@ -27,7 +32,7 @@ module.exports = function(grunt) {
         };
 
         // log everything
-        grunt.log.writeln(columnify(getTaskData(), options));
+        grunt.log.writeln(columnify(taskData, options));
 
         grunt.log.writeln('');
         grunt.log.writeln('Run a task using: grunt [task name]');
@@ -40,13 +45,12 @@ module.exports = function(grunt) {
 function getTaskData() {
     var taskData = {};
     var files = fs.readdirSync(__dirname);
-    var re = new RegExp(/grunt.register(Multi)?Task\('(.+)', '(.*)',/);
+    var re = new RegExp(/grunt.register(Multi)?Task\('(.+?)', '(.*?)',/);
 
     for(var i = 0, count = files.length; i < count; i++) {
         var file = fs.readFileSync(path.join(__dirname, files[i]), 'utf8');
         var match = file.match(re);
         if(match) taskData[match[2]] = match[3] || '';
     }
-
     return taskData;
 }
