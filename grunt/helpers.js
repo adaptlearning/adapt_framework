@@ -127,7 +127,8 @@ module.exports = function(grunt) {
 
         // Selectively load the course.json ('outputdir' passed by server-build)
         var outputdir = grunt.option('outputdir') ? data.outputdir : data.sourcedir;
-        var configPath = path.join(data.root, outputdir, 'course', 'config.json');
+        // add root path if necessary, and point to course/config.json
+        var configPath = path.join(path.resolve(data.root, outputdir), 'course', 'config.json');
 
         try {
             var buildConfig = require(configPath).build;
