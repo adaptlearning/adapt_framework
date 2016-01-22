@@ -75,7 +75,7 @@ require([
             try {
                 Adapt.trigger('app:dataLoaded');
             } catch(e) {
-                deferError(e);
+                outputError(e);
             }
             // Sets up collection mapping
             Adapt.setupMapping();
@@ -83,7 +83,7 @@ require([
             try {
                 Adapt.trigger('app:dataReady');
             } catch(e) {
-                deferError(e);
+                outputError(e);
             }
             // Setups a new navigation view
             // This should be triggered after 'app:dataReady' as plugins might want
@@ -97,11 +97,9 @@ require([
         }
     }
     
-    function deferError(e) {
-        //Allow plugin loading errors to fire without stopping Adapt from loading
-        _.defer(function() {
-            throw e; 
-        });
+    function outputError(e) {
+        //Allow plugin loading errors to output without stopping Adapt from loading
+        console.error(e);
     }
 
     function mapAdaptIdsToObjects () {
