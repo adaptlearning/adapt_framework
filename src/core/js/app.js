@@ -72,11 +72,19 @@ require([
             }
 
             // Triggered to setup model connections in AdaptModel.js
-            Adapt.trigger('app:dataLoaded');
+            try {
+                Adapt.trigger('app:dataLoaded');
+            } catch(e) {
+                deferError(e);
+            }
             // Sets up collection mapping
             Adapt.setupMapping();
             // Triggers once all the data is ready
-            Adapt.trigger('app:dataReady');
+            try {
+                Adapt.trigger('app:dataReady');
+            } catch(e) {
+                deferError(e);
+            }
             // Setups a new navigation view
             // This should be triggered after 'app:dataReady' as plugins might want
             // to manipulate the navigation
@@ -87,6 +95,13 @@ require([
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
 
         }
+    }
+    
+    function deferError(e) {
+        //Allow plugin loading errors to fire without stopping Adapt from loading
+        _.defer(function() {
+            throw e; 
+        });
     }
 
     function mapAdaptIdsToObjects () {
