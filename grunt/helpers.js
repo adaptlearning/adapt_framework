@@ -118,7 +118,7 @@ module.exports = function(grunt) {
 
     exports.generateConfigData = function() {
         var data = {
-            root: path.parse(__dirname).dir,
+            root: __dirname.split(path.sep).slice(0,-1).join(path.sep),
             sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
             outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
             theme: grunt.option('theme') || exports.defaults.theme,
