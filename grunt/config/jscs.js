@@ -20,7 +20,6 @@ module.exports = {
         disallowTrailingComma: true,
         requireCamelCaseOrUpperCaseIdentifiers: true,
         requireCapitalizedConstructors: true,
-        requireCurlyBraces: true,
         requireSpaceAfterLineComment: true,
         requireSpaceAfterBinaryOperators: true,
         requireSpaceBeforeBinaryOperators: true,
