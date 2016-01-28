@@ -1,5 +1,8 @@
 module.exports = function(grunt) {
-      grunt.registerTask('check-json', 'Checks the course json for duplicate IDs, and that each element has a parent', function() {
+      grunt.registerTask('check-json', 'Validates the course json, checks for duplicate IDs, and that each element has a parent', function() {
+          // validates JSON files
+          grunt.task.run('jsonlint');
+
           var _ = require('underscore');
           var chalk = require('chalk'); // for some nice colouring
 
@@ -94,6 +97,9 @@ module.exports = function(grunt) {
               //if any error has occured, stop processing.
               if (hasErrored) {
                   grunt.fail.fatal('Oops, looks like you have some json errors.');
+              }
+              else {
+                  grunt.log.ok('No issues found, your JSON is a-ok!');
               }
 
           });

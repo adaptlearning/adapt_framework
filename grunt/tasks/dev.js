@@ -4,7 +4,6 @@
 module.exports = function(grunt) {
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', [
         '_log-vars',
-        'jsonlint',
         'check-json',
         'copy',
         'less:dev',
