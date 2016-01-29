@@ -277,7 +277,6 @@ define(function (require) {
 
         setOptional: function(value) {
             this.set({_isOptional: value});
-            if (this._children) this.setOnChildren('_isOptional', value);
         }
 
 
