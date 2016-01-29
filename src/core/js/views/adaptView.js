@@ -1,8 +1,6 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Handlebars = require('handlebars');
-    var Adapt = require('coreJS/adapt');
+define([
+    'coreJS/adapt'
+], function(Adapt) {
 
     var AdaptView = Backbone.View.extend({
 
@@ -49,7 +47,14 @@ define(function(require) {
                 if (model.get('_isAvailable')) {
                     nthChild ++;
 
-                    var ChildView = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+                    var ChildView;
+                    var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+
+                    //use view+model object
+                    if (ViewModelObject.view) ChildView = ViewModelObject.view;
+                    //use view only object
+                    else ChildView = ViewModelObject;
+
                     if (ChildView) {
                         var $parentContainer = this.$(this.constructor.childContainer);
                         model.set("_nthChild", nthChild);
