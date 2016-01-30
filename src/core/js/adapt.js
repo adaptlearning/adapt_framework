@@ -110,6 +110,7 @@ define([
         
         Adapt.componentStore[name] = object;
 
+        return object;
     }
 
     // Used to map ids to collections
