@@ -5,7 +5,7 @@ define([
 
     var QuestionModel = ComponentModel.extend({
 
-    	defaults: function() {
+        defaults: function() {
             return _.extend({
                 '_isQuestionType': true
             }, ComponentModel.prototype.defaults);
@@ -16,7 +16,7 @@ define([
 
             type = type || true;
 
-            AdaptModel.prototype.reset.call(this, type, force);
+            ComponentModel.prototype.reset.call(this, type, force);
 
             var attempts = this.get('_attempts');
             this.set({
