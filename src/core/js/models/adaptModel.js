@@ -20,7 +20,7 @@ define(function (require) {
 
         initialize: function () {
             // Wait until data is loaded before setting up model
-            Adapt.once('app:dataLoaded', this.setupModel, this);
+            this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
 
         },
 
@@ -50,11 +50,11 @@ define(function (require) {
 
             if (!this.getChildren()) return;
 
-            Adapt[this._children].on({
+            this.listenTo(Adapt[this._children], {
                 "change:_isReady": this.checkReadyStatus,
                 "change:_isComplete": this.checkCompletionStatus,
                 "change:_isInteractionComplete": this.checkInteractionCompletionStatus
-            }, this);
+            });
 
         },
 
@@ -92,29 +92,35 @@ define(function (require) {
         },
 
         checkCompletionStatus: function () {
-            // Filter children based upon whether they are available
-            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
-            // Check if any return _isComplete:false
-            // If not - set this model to _isComplete: true
-            if (availableChildren.findWhere({_isComplete: false, _isOptional: false})) {
-                //cascade reset to menu
-                this.set({_isComplete:false});
-                return;
-            }
-            this.set({_isComplete: true});
+            //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            _.defer(_.bind(function() {
+                // Filter children based upon whether they are available
+                var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+                // Check if any return _isComplete:false
+                // If not - set this model to _isComplete: true
+                if (availableChildren.findWhere({_isComplete: false, _isOptional: false})) {
+                    //cascade reset to menu
+                    this.set({_isComplete:false});
+                    return;
+                }
+                this.set({_isComplete: true});
+            }, this));
         },
 
         checkInteractionCompletionStatus: function () {
-            // Filter children based upon whether they are available
-            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
-            // Check if any return _isInteractionComplete:false
-            // If not - set this model to _isInteractionComplete: true
-            if (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false})) {
-                //cascade reset to menu
-                this.set({_isInteractionComplete:false});
-                return;
-            }
-            this.set({_isInteractionComplete: true});
+            //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            _.defer(_.bind(function() {
+                // Filter children based upon whether they are available
+                var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
+                // Check if any return _isInteractionComplete:false
+                // If not - set this model to _isInteractionComplete: true
+                if (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false})) {
+                    //cascade reset to menu
+                    this.set({_isInteractionComplete:false});
+                    return;
+                }
+                this.set({_isInteractionComplete: true});
+            }, this));
         },
 
         findAncestor: function (ancestors) {
