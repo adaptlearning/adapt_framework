@@ -6,7 +6,7 @@ module.exports = {
     },
     handlebars: {
         files: ['<%= sourcedir %>**/*.hbs'],
-        tasks: ['handlebars', 'requirejs:dev']
+        tasks: ['handlebars', 'javascript:dev']
     },
     courseJson: {
         files: ['<%= sourcedir %>course/**/*.json'],
@@ -25,7 +25,7 @@ module.exports = {
             '!<%= sourcedir %>theme/theme.js',
             '!<%= sourcedir %>templates/templates.js'
         ],
-        tasks: ['bowerRequirejs', 'requirejs-bundle', 'requirejs:dev']
+        tasks: ['javascript:dev']
     },
     index: {
         files: ['<%= sourcedir %>index.html'],

@@ -8,12 +8,10 @@ module.exports = function(grunt) {
         'copy',
         'less:dev',
         'handlebars',
-        'bowerRequirejs',
-        'requirejs-bundle',
         'create-json-config',
         'schema-defaults',
         'tracking-insert',
-        'requirejs:dev',
+        'javascript:dev',
         'watch'
     ]);
 }

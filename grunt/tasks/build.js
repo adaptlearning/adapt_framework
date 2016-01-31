@@ -9,12 +9,10 @@ module.exports = function(grunt) {
         'copy',
         'less:compile',
         'handlebars',
-        'bowerRequirejs',
-        'requirejs-bundle',
         'create-json-config',
         'schema-defaults',
         'tracking-insert',
-        'requirejs:compile',
+        'javascript:compile',
         'clean:dist'
     ]);
 }
