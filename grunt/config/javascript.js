@@ -24,6 +24,7 @@ module.exports = function (grunt, options) {
                         "theme/theme": "plugins"
                     }
                 },
+                
                 paths: {
                     "components/components": "plugins",
                     "extensions/extensions": "plugins",
@@ -34,11 +35,28 @@ module.exports = function (grunt, options) {
                 preserveLicenseComments:false,
                 optimize: 'none',
                 onBuildRead: function(moduleName, path, contents) {
-                    var taskIncludes = [
-                        "src/core/",
-                        "plugin"
+                    var isIncludedInBuild = grunt.config('helpers').includedFilter( path );
+
+                    var includes = [
+                        "src/core",
+                        "plugins"
                     ];
-                    return grunt.config('helpers').includedProcess(taskIncludes, contents, path);
+
+                    var re = '';
+                    for(var i = 0, count = includes.length; i < count; i++) {
+                        re += includes[i];
+                        if(i < includes.length-1) re += '|';
+                    }
+                    var isIncludedByTask = (new RegExp(re, "i")).test( path );
+
+                    if (!isIncludedByTask && !isIncludedInBuild) {
+                        //console.log(path, "excluded");
+                        return "";
+                    }
+
+                    //console.log(path, "included");
+
+                    return contents;
                 }
             }
         },
@@ -74,11 +92,28 @@ module.exports = function (grunt, options) {
                 },
                 optimize: 'uglify2',
                 onBuildRead: function(moduleName, path, contents) {
-                    var taskIncludes = [
-                        "src/core/",
-                        "plugin"
+                    var isIncludedInBuild = grunt.config('helpers').includedFilter( path );
+
+                    var includes = [
+                        "src/core",
+                        "plugins"
                     ];
-                    return grunt.config('helpers').includedProcess(contents, path);
+
+                    var re = '';
+                    for(var i = 0, count = includes.length; i < count; i++) {
+                        re += includes[i];
+                        if(i < includes.length-1) re += '|';
+                    }
+                    var isIncludedByTask = (new RegExp(re, "i")).test( path );
+
+                    if (!isIncludedByTask && !isIncludedInBuild) {
+                        //console.log(path, "excluded");
+                        return "";
+                    }
+
+                    //console.log(path, "included");
+
+                    return contents;
                 }
             }
         }
