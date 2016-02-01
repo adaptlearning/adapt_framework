@@ -13,21 +13,21 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/bower.json',
                     '<%= sourcedir %>theme/<%= theme %>/bower.json'
                 ],
-                pluginsPath: '<%= sourcedir %>/plugins.js',
+                pluginsPath: '<%= sourcedir %>core/plugins.js',
                 //translate old style bundle references into something that does exist
                 map: {
                     "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins"
+                        "components/components": "core/plugins",
+                        "extensions/extensions": "core/plugins",
+                        "menu/menu": "core/plugins",
+                        "theme/theme": "core/plugins"
                     }
                 },
                 paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
+                    "components/components": "core/plugins",
+                    "extensions/extensions": "core/plugins",
+                    "menu/menu": "core/plugins",
+                    "theme/theme": "core/plugins"
                 },
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
@@ -50,21 +50,21 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/bower.json',
                     '<%= sourcedir %>theme/<%= theme %>/bower.json'
                 ],
-                pluginsPath: '<%= sourcedir %>/plugins.js',
+                pluginsPath: '<%= sourcedir %>/core/plugins.js',
                 //translate old style bundle references into something that does exist
                 map: {
                     "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins"
+                        "components/components": "core/plugins",
+                        "extensions/extensions": "core/plugins",
+                        "menu/menu": "core/plugins",
+                        "theme/theme": "core/plugins"
                     }
                 },
                 paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
+                    "components/components": "core/plugins",
+                    "extensions/extensions": "core/plugins",
+                    "menu/menu": "core/plugins",
+                    "theme/theme": "core/plugins"
                 },
                 optimize: 'uglify2',
                 onBuildRead: function(moduleName, path, contents) {

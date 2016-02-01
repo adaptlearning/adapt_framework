@@ -1,7 +1,7 @@
 module.exports = function(grunt) {
 
 	var convertSlashes = /\\/g;
-	var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"plugins","menu/menu":"plugins","theme/theme":"plugins","components/components":"plugins" } } });';
+	var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"core/plugins","menu/menu":"core/plugins","theme/theme":"core/plugins","components/components":"core/plugins" } } });';
 
     grunt.registerMultiTask('javascript', 'Compile JavaScript files', function() {
 
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 			}
 
 			options.shim = options.shim || {};
-			options.shim["plugins"] = {deps:[]};
+			options.shim["core/plugins"] = {deps:[]};
 
 			for (var i = 0, l = options.plugins.length; i < l; i++) {
 				var src = options.plugins[i];
@@ -41,9 +41,9 @@ module.exports = function(grunt) {
 
 					var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
 
-					options.shim["plugins"].deps.push(requireJSMainPathNoExt);
+					options.shim["core/plugins"].deps.push(requireJSMainPathNoExt);
 
-				});	
+				});
 			}
 
 		}
