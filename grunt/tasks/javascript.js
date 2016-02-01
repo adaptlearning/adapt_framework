@@ -1,8 +1,7 @@
 module.exports = function(grunt) {
 
 	var convertSlashes = /\\/g;
-	var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"core/plugins","menu/menu":"core/plugins","theme/theme":"core/plugins","components/components":"core/plugins" } } });';
-
+	
     grunt.registerMultiTask('javascript', 'Compile JavaScript files', function() {
 
   		var requirejs = require('requirejs');
@@ -13,6 +12,7 @@ module.exports = function(grunt) {
 		var options = this.options({});
 
 		if (options.plugins) {
+			var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"'+options.pluginsModule+'","menu/menu":"'+options.pluginsModule+'","theme/theme":"'+options.pluginsModule+'","components/components":"'+options.pluginsModule+'" } } });';
 
 			if (!fs.existsSync(options.pluginsPath)) {
 				//make endpoint for plugin attachment
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 			}
 
 			options.shim = options.shim || {};
-			options.shim["core/plugins"] = {deps:[]};
+			options.shim[options.pluginsModule] = {deps:[]};
 
 			for (var i = 0, l = options.plugins.length; i < l; i++) {
 				var src = options.plugins[i];
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 
 					var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
 
-					options.shim["core/plugins"].deps.push(requireJSMainPathNoExt);
+					options.shim[options.pluginsModule].deps.push(requireJSMainPathNoExt);
 
 				});
 			}

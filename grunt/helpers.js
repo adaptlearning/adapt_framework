@@ -76,12 +76,7 @@ module.exports = function(grunt) {
         theme: '**',
         menu: '**',
         includes: [
-            "src/core/",
-            "templates/templates.js",
-            "components/components.js",
-            "extensions/extensions.js",
-            "menu/menu.js",
-            "theme/theme.js"
+            
         ],
         pluginTypes: [
             'components',
@@ -91,7 +86,7 @@ module.exports = function(grunt) {
         ]
     };
 
-    exports.getIncludes = function(buildIncludes, configData) {
+    exports.getIncludes = function(taskIncludes, buildIncludes, configData) {
         var dependencies = [];
 
         for(var i = 0, count = exports.defaults.pluginTypes.length; i < count; i++) {
@@ -113,7 +108,7 @@ module.exports = function(grunt) {
                 }
             }
         }
-        return [].concat(exports.defaults.includes, buildIncludes, dependencies);
+        return [].concat(taskIncludes, exports.defaults.includes, buildIncludes, dependencies);
     };
 
     exports.generateConfigData = function() {

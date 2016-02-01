@@ -13,27 +13,32 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/bower.json',
                     '<%= sourcedir %>theme/<%= theme %>/bower.json'
                 ],
-                pluginsPath: '<%= sourcedir %>core/plugins.js',
+                pluginsPath: '<%= sourcedir %>plugins.js',
+                pluginsModule: 'plugins',
                 //translate old style bundle references into something that does exist
                 map: {
                     "*": {
-                        "components/components": "core/plugins",
-                        "extensions/extensions": "core/plugins",
-                        "menu/menu": "core/plugins",
-                        "theme/theme": "core/plugins"
+                        "components/components": "plugins",
+                        "extensions/extensions": "plugins",
+                        "menu/menu": "plugins",
+                        "theme/theme": "plugins"
                     }
                 },
                 paths: {
-                    "components/components": "core/plugins",
-                    "extensions/extensions": "core/plugins",
-                    "menu/menu": "core/plugins",
-                    "theme/theme": "core/plugins"
+                    "components/components": "plugins",
+                    "extensions/extensions": "plugins",
+                    "menu/menu": "plugins",
+                    "theme/theme": "plugins"
                 },
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
                 optimize: 'none',
                 onBuildRead: function(moduleName, path, contents) {
-                    return grunt.config('helpers').includedProcess(contents, path);
+                    var taskIncludes = [
+                        "src/core/",
+                        "plugin"
+                    ];
+                    return grunt.config('helpers').includedProcess(taskIncludes, contents, path);
                 }
             }
         },
@@ -50,24 +55,29 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/bower.json',
                     '<%= sourcedir %>theme/<%= theme %>/bower.json'
                 ],
-                pluginsPath: '<%= sourcedir %>/core/plugins.js',
+                pluginsPath: '<%= sourcedir %>/plugins.js',
+                pluginsModule: 'plugins',
                 //translate old style bundle references into something that does exist
                 map: {
                     "*": {
-                        "components/components": "core/plugins",
-                        "extensions/extensions": "core/plugins",
-                        "menu/menu": "core/plugins",
-                        "theme/theme": "core/plugins"
+                        "components/components": "plugins",
+                        "extensions/extensions": "plugins",
+                        "menu/menu": "plugins",
+                        "theme/theme": "plugins"
                     }
                 },
                 paths: {
-                    "components/components": "core/plugins",
-                    "extensions/extensions": "core/plugins",
-                    "menu/menu": "core/plugins",
-                    "theme/theme": "core/plugins"
+                    "components/components": "plugins",
+                    "extensions/extensions": "plugins",
+                    "menu/menu": "plugins",
+                    "theme/theme": "plugins"
                 },
                 optimize: 'uglify2',
                 onBuildRead: function(moduleName, path, contents) {
+                    var taskIncludes = [
+                        "src/core/",
+                        "plugin"
+                    ];
                     return grunt.config('helpers').includedProcess(contents, path);
                 }
             }
