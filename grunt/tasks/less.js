@@ -1,12 +1,14 @@
 module.exports = function(grunt) {
-      grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
+		var convertSlashes = /\\/g;
+
+      	grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
 			var less = require('less');
 			var _ = require('underscore');
 			var path = require("path");
 			var done = this.async();
 			var options = this.options({});
 
-			var rootPath = path.posix.join(options.baseUrl, "../");
+			var rootPath = path.posix.join(path.posix.resolve(options.baseUrl), "../").replace(convertSlashes, "/");
 
 			var imports = "";
 
@@ -14,6 +16,8 @@ module.exports = function(grunt) {
 				for (var i = 0, l = options.mandatory.length; i < l; i++) {
 					var src = options.mandatory[i];
 					grunt.file.expand({}, src).forEach(function(lessPath) {
+						console.log(lessPath);
+						console.log(rootPath);
 						lessPath = path.posix.normalize(lessPath);
 						var trimmed = lessPath.substr(rootPath.length);
 						imports+= "@import '" + trimmed + "';\n";
