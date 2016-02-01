@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 			if (!fs.existsSync(options.pluginsPath)) {
 				//make endpoint for plugin attachment
 				//apply client side patch
-				grunt.file.write(options.pluginsPath, pluginsClientSidePatch);
+				fs.writeFileSync(options.pluginsPath, pluginsClientSidePatch);
 			}
 
 			options.shim = options.shim || {};
