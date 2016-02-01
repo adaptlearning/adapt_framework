@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+	var convertSlashes = /\\/g;
 	var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"plugins","menu/menu":"plugins","theme/theme":"plugins","components/components":"plugins" } } });';
 
     grunt.registerMultiTask('javascript', 'Compile JavaScript files', function() {
@@ -28,17 +29,17 @@ module.exports = function(grunt) {
 
 					if (bowerJSONPath === undefined) return;
 
-					var pluginPath = path.posix.dirname(bowerJSONPath);
+					var pluginPath = path.dirname(bowerJSONPath);
 
 					var bowerJSON = grunt.file.readJSON(bowerJSONPath);
 
 					var requireJSRootPath = pluginPath.substr(options.baseUrl.length);
 
-					var requireJSMainPath = path.posix.join(requireJSRootPath, bowerJSON.main);
+					var requireJSMainPath = path.join(requireJSRootPath, bowerJSON.main);
 
 					var ext = path.extname(requireJSMainPath);
 
-					var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length);
+					var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
 
 					options.shim["plugins"].deps.push(requireJSMainPathNoExt);
 
