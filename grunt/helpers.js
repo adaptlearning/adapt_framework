@@ -48,7 +48,6 @@ module.exports = function(grunt) {
             re += '\/' + includes[i].toLowerCase() + '\/';
             if(i < includes.length-1) re += '|';
         }
-        console.log(re);
         return new RegExp(re, "i");
     };
 
@@ -107,7 +106,7 @@ module.exports = function(grunt) {
                         if(!_.contains(buildIncludes, key)) dependencies.push(key)
                     }
                 } catch(error) {
-                    console.log(error);
+                    grunt.log.error(error);
                 }
             }
         }
@@ -132,7 +131,7 @@ module.exports = function(grunt) {
             var buildConfig = require(configPath).build;
         }
         catch(error) {
-            return console.log(error);
+            return grunt.log.error(error);
         }
 
         if(buildConfig) {
