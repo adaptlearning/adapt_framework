@@ -2,6 +2,7 @@ module.exports = function (grunt, options) {
     return {
         dev: {
             options:{
+                baseUrl: '<%= sourcedir %>',
                 mandatory: [
                     '<%= sourcedir %>core/less/*.less'
                 ],
@@ -23,6 +24,7 @@ module.exports = function (grunt, options) {
         },
         compile: {
             options: {
+                baseUrl: '<%= sourcedir %>',
                 mandatory: [
                     '<%= sourcedir %>core/less/*.less'
                 ],

@@ -43,20 +43,21 @@ module.exports = function(grunt) {
         var includes = grunt.config('includes') || [];
         var re = '';
         for(var i = 0, count = includes.length; i < count; i++) {
-            re += includes[i];
+            re += '\/' + includes[i].toLowerCase() + '\/';
             if(i < includes.length-1) re += '|';
         }
-        return new RegExp(re);
+        console.log(re);
+        return new RegExp(re, "i");
     };
 
     var generateExcludedRegExp = function() {
         var excludes = grunt.config('excludes') || [];
         var re = '';
         for(var i = 0, count = excludes.length; i < count; i++) {
-            re += excludes[i];
+            re += '\/' + excludes[i].toLowerCase() + '\/';
             if(i < excludes.length-1) re += '|';
         }
-        return new RegExp(re);
+        return new RegExp(re, "i");
     };
 
     var appendSlash = function(dir) {
@@ -76,12 +77,7 @@ module.exports = function(grunt) {
         theme: '**',
         menu: '**',
         includes: [
-            "src/core/",
-            "templates/templates.js",
-            "components/components.js",
-            "extensions/extensions.js",
-            "menu/menu.js",
-            "theme/theme.js"
+
         ],
         pluginTypes: [
             'components',

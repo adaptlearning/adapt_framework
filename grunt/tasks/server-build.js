@@ -10,9 +10,7 @@ module.exports = function(grunt) {
             'copy',
             'less:' + requireMode,
             'handlebars',
-            'bowerRequirejs',
-            'requirejs-bundle',
-            'requirejs:' + requireMode
+            'javascript:' + requireMode
         ]);
     });
 }
