@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         var includes = grunt.config('includes') || [];
         var re = '';
         for(var i = 0, count = includes.length; i < count; i++) {
-            re += includes[i].toLowerCase();
+            re += '\/' + includes[i].toLowerCase() + '\/';
             if(i < includes.length-1) re += '|';
         }
         console.log(re);
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
         var excludes = grunt.config('excludes') || [];
         var re = '';
         for(var i = 0, count = excludes.length; i < count; i++) {
-            re += excludes[i].toLowerCase();
+            re += '\/' + excludes[i].toLowerCase() + '\/';
             if(i < excludes.length-1) re += '|';
         }
         return new RegExp(re, "i");
