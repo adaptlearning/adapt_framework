@@ -14,7 +14,14 @@ module.exports = function(grunt) {
 		if (options.plugins) {
 			var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"'+options.pluginsModule+'","menu/menu":"'+options.pluginsModule+'","theme/theme":"'+options.pluginsModule+'","components/components":"'+options.pluginsModule+'" } } });';
 
-			if (!fs.existsSync(options.pluginsPath)) {
+			var doesPluginPathExists = true;
+			try {
+				fs.statSync(options.pluginsPath);
+			} catch(e) {
+				doesPluginPathExists = false;
+			}
+
+			if (!doesPluginPathExists) {
 				//make endpoint for plugin attachment
 				//apply client side patch
 				fs.writeFileSync(options.pluginsPath, pluginsClientSidePatch);
