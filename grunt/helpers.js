@@ -5,6 +5,8 @@ var path = require('path');
 
 module.exports = function(grunt) {
 
+    var convertSlashes = /\\/g;
+
     // grunt tasks
 
     grunt.registerTask('_log-server', 'Logs out user-defined build variables', function() {
@@ -163,6 +165,8 @@ module.exports = function(grunt) {
     };
 
     exports.isPluginIncluded = function(pluginPath) {
+        pluginPath = pluginPath.replace(convertSlashes, "/");
+
         var includes = grunt.config('includes');
         var excludes = grunt.config('excludes');
 
