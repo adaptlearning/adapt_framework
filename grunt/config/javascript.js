@@ -21,10 +21,13 @@ module.exports = function (grunt, options) {
                         "components/components": "plugins",
                         "extensions/extensions": "plugins",
                         "menu/menu": "plugins",
-                        "theme/theme": "plugins"
+                        "theme/theme": "plugins",
+                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
+                        "templates": "plugins",
+                        "templates/templates": "plugins"
                     }
                 },
-                
+
                 paths: {
                     "components/components": "plugins",
                     "extensions/extensions": "plugins",
@@ -81,7 +84,10 @@ module.exports = function (grunt, options) {
                         "components/components": "plugins",
                         "extensions/extensions": "plugins",
                         "menu/menu": "plugins",
-                        "theme/theme": "plugins"
+                        "theme/theme": "plugins",
+                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
+                        "templates": "plugins",
+                        "templates/templates": "plugins"
                     }
                 },
                 paths: {
