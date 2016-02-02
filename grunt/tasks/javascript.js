@@ -56,8 +56,9 @@ module.exports = function(grunt) {
 		}
 
 		requirejs.optimize(options, function() {
-			console.log("done");
 			done();
+		}, function(error) {
+			grunt.fail.fatal(error);
 		});
 
   	});
