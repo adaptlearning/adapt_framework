@@ -16,7 +16,17 @@
     - No more bundle files (i.e. `components.js`/`extensions.js`/`menu.js`/`theme.js`)
     - Uses requirejs node module directly (no more grunt-contrib-requirejs)
   - New custom LESS compiler...**with sourcemaps!**
-  - Removed dependency on `adapt-grunt-tracking-ids` (now implemented directly in [tracking-insert](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-insert.js), [tracking-remove](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-remove.js) and [tracking-reset](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-reset.js))
+  - Removed a number of dependencies on grunt/npm plugins:
+    - `adapt-grunt-tracking-ids` is now implemented directly in [tracking-insert](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-insert.js), [tracking-remove](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-remove.js) and [tracking-reset](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-reset.js)
+    - assemble-less
+    - bower
+    - grunt-bower-requirejs
+    - grunt-contrib-concat
+    - grunt-contrib-less
+    - grunt-contrib-requirejs
+    - grunt-requirejs-bundle
+    - lodash
+    - matchdep
   - Added ability to include/exclude specific plugins (#723)
     - If **excludes** are specified, all plugins are included **excluding** those listed
     - If **includes** are specified, **only** those plugins listed will be included
@@ -24,8 +34,6 @@
   - Build folder cleaned before a new build to remove any lingering files
   - Added code style checking/enforcement using [jshint](https://github.com/gruntjs/grunt-contrib-jshint)/[jscs](https://github.com/jscs-dev/grunt-jscs)
   - Added ['time-grunt'](https://github.com/sindresorhus/time-grunt) to show execution time for tasks
-- assessmentResults feedback bands no longer need to be listed in a specific order (#846)
-- By default, media component is now set to complete when transcript is viewed
 - Minor course `.json` amends
 
 ### Fixed
@@ -36,7 +44,6 @@
 - `imageReady`: fixed background image checks
 - We now defer any errors with bad plugins until after Adapt has loaded
 - `_isOptional` setting no longer cascades to children (#923)
-- hotGraphic's `_isComplete` condition no longer set `onCompletionStatus` (#844, #875)
 
 
 ## [2.0.6] - 2015-12-02
