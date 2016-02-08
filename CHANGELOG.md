@@ -1,9 +1,10 @@
 ## [Unreleased][unreleased]
 
 ### Fixed
-- Accessibility: remove iOS select fix
-- Accessibility: improved `onFocusCapture` to find next focusable component if cannot find any other.
-- Accessibility: missing variable declararation, iOS
+- Accessibility: 
+  - Remove iOS select fix
+  - Improved `onFocusCapture` to find next focusable component if cannot find any other.
+  - Missing variable declararation, iOS
 
 
 ## [2.0.6] - 2015-12-02
@@ -17,7 +18,7 @@
 ## [2.0.5] - 2015-11-30
 
 ### Added 
-- Support for cross-domain requests (**in supported browsers** - for IE, this is only supported in 10+). <br>*For CDN use, add `<base href="/*CDN URL HERE*/">` to a locally hosted index.html*
+- Support for cross-domain requests (**in supported browsers** - for IE, this is only supported in 10+).
 - Accessibility state now remembered across sessions (except on touch devices where it's always switched on)
 
 ### Changed
