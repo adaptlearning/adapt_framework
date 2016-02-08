@@ -26,5 +26,7 @@
             "_onAssessmentFailure": "incomplete"
         }
     },
-    "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"]
+    "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"],
+    "build": {
+    }
 }
