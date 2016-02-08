@@ -1,15 +1,45 @@
 ## [Unreleased][unreleased]
 
+## [2.0.7] - 2016-02-08
+
+### Added
+- New `getParents` helper function (returns an array where [0] = first parent and [x] = last parent)
+- New `getPath` helper function (returns an array from [0] = current model and [x] = last parent)
+- `esc` button now closes Notify popup (when a11y is off)
+
+### Changed
+- Lots of improvements to the grunt build process:
+  - All configs has been split into separate files per task (see [`grunt/config`](https://github.com/adaptlearning/adapt_framework/tree/master/grunt/config) - uses [load-grunt-config](https://github.com/firstandthird/load-grunt-config))
+  - All Tasks have been split into separate files (see [`grunt/tasks`](https://github.com/adaptlearning/adapt_framework/tree/master/grunt/tasks))
+  - Everything is now loaded asynchronously as and when it's needed (using [jit-grunt](https://www.npmjs.com/package/jit-grunt))
+  - New custom Javascript compiler:
+    - No more bundle files (i.e. `components.js`/`extensions.js`/`menu.js`/`theme.js`)
+    - Uses requirejs node module directly (no more grunt-contrib-requirejs)
+  - New custom LESS compiler...**with sourcemaps!**
+  - Removed dependency on `adapt-grunt-tracking-ids` (now implemented directly in [tracking-insert](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-insert.js), [tracking-remove](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-remove.js) and [tracking-reset](https://github.com/adaptlearning/adapt_framework/blob/master/grunt/tasks/tracking-reset.js))
+  - Added ability to include/exclude specific plugins (#723)
+    - If **excludes** are specified, all plugins are included **excluding** those listed
+    - If **includes** are specified, **only** those plugins listed will be included
+    - If no includes/excludes are specified, all plugins are built, as before
+  - Build folder cleaned before a new build to remove any lingering files
+  - Added code style checking/enforcement using [jshint](https://github.com/gruntjs/grunt-contrib-jshint)/[jscs](https://github.com/jscs-dev/grunt-jscs)
+  - Added ['time-grunt'](https://github.com/sindresorhus/time-grunt) to show execution time for tasks
+- Minor course `.json` amends
+
+### Removed
+
 ### Fixed
-- Accessibility: 
+- Accessibility:
   - Remove iOS select fix
   - Improved `onFocusCapture` to find next focusable component if cannot find any other.
   - Missing variable declararation, iOS
-
+- `imageReady`: fixed background image checks
+- We now defer any errors with bad plugins until after Adapt has loaded
+- `_isOptional` setting no longer cascades to children (#923)
 
 ## [2.0.6] - 2015-12-02
 
-### Fixed 
+### Fixed
 - Slow-loading courses with cached images in IE9 (ABU-1147)
 - Issue with `device:resize` events not having accurate screen size info
 - Navigation click events not working unless the item clicked is a button element
@@ -17,7 +47,7 @@
 
 ## [2.0.5] - 2015-11-30
 
-### Added 
+### Added
 - Support for cross-domain requests (**in supported browsers** - for IE, this is only supported in 10+).
 - Accessibility state now remembered across sessions (except on touch devices where it's always switched on)
 
@@ -27,7 +57,7 @@
 - Various amends to the default course `.json` files provided with the framework
 - Improvements to the 'inview' library
 
-### Fixed 
+### Fixed
 - Lots of minor accessibility fixes
 - Various router fixes
 
@@ -235,7 +265,7 @@ width and height.
 - The vanilla theme now includes an extended list of variables.
 - Functional LESS has been moved from the theme into core.
 
-### Removed 
+### Removed
 - Mediator has been replaced with `lockedAttributes`.
 
 
@@ -243,11 +273,12 @@ width and height.
 
 The initial version of the Adapt framework.
 
-### Added 
+### Added
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...HEAD
+[2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.4...v2.0.5
 [2.0.4]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.3...v2.0.4
