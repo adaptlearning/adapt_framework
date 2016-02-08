@@ -144,9 +144,7 @@
     "load-grunt-config": "^0.17.2",
     "underscore": "~1.6.0",
     "underscore-deep-extend": "0.0.5",
-    "requirejs": "^2.1.22"
-  },
-  "dependencies": {
+    "requirejs": "^2.1.22",
     "time-grunt": "^1.2.1"
   }
 }
