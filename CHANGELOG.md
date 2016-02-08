@@ -24,9 +24,9 @@
   - Build folder cleaned before a new build to remove any lingering files
   - Added code style checking/enforcement using [jshint](https://github.com/gruntjs/grunt-contrib-jshint)/[jscs](https://github.com/jscs-dev/grunt-jscs)
   - Added ['time-grunt'](https://github.com/sindresorhus/time-grunt) to show execution time for tasks
+- assessmentResults feedback bands no longer need to be listed in a specific order (#846)
+- By default, media component is now set to complete when transcript is viewed
 - Minor course `.json` amends
-
-### Removed
 
 ### Fixed
 - Accessibility:
@@ -36,11 +36,13 @@
 - `imageReady`: fixed background image checks
 - We now defer any errors with bad plugins until after Adapt has loaded
 - `_isOptional` setting no longer cascades to children (#923)
+- hotGraphic's `_isComplete` condition no longer set `onCompletionStatus` (#844, #875)
+
 
 ## [2.0.6] - 2015-12-02
 
 ### Fixed
-- Slow-loading courses with cached images in IE9 (ABU-1147)
+- Cached images causing slow loading in IE9 (ABU-1147)
 - Issue with `device:resize` events not having accurate screen size info
 - Navigation click events not working unless the item clicked is a button element
 
