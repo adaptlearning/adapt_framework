@@ -1,78 +1,89 @@
 ## [Unreleased][unreleased]
-- Nothing!
 
-## [2.0.8] - 2015-12-04
-### Headline changes
-- accessibility hotfix, remove iOS select fix
-- accessibility hotfix, improved onFocusCapture to find next focusable component if cannot find any other.
+### Fixed
+- Accessibility: remove iOS select fix
+- Accessibility: improved `onFocusCapture` to find next focusable component if cannot find any other.
+- Accessibility: missing variable declararation, iOS
 
-## [2.0.7] - 2015-12-03
-### Headline changes
-- accessibility hotfix, missing variable declararation ios
 
 ## [2.0.6] - 2015-12-02
-### Headline changes
 
-- for very slow loading with courses that have cached images in IE9 ABU-1147
-- device:resize events not having accurate screen size info
-- navigation click events not working unless the item clicked is a button element
+### Fixed 
+- Slow-loading courses with cached images in IE9 (ABU-1147)
+- Issue with `device:resize` events not having accurate screen size info
+- Navigation click events not working unless the item clicked is a button element
+
 
 ## [2.0.5] - 2015-11-30
-### Headline changes:
 
-- when there is only one item in the 'drawer', open that item by default
-- added support in IE10 and above (and all other supported browsers) for cross domain requests, allowing course content to be loaded - from a CDN by adding <base href="/*CDN URL HERE*/"> to a locally hosted index.html
-- many accessibility fixes
-- accessibility state now remembered across sessions (except on touch devices where it's always switched on)
-- better error on component not being installed (#721)
-- various fixes to the default .json that is provided with the framework
-- improvements to the 'inview' library
-- fixes & improvements to router
+### Added 
+- Support for cross-domain requests (**in supported browsers** - for IE, this is only supported in 10+). <br>*For CDN use, add `<base href="/*CDN URL HERE*/">` to a locally hosted index.html*
+- Accessibility state now remembered across sessions (except on touch devices where it's always switched on)
+
+### Changed
+- If there's only one item in the drawer, it's now opened by default
+- More descriptive error thrown when attempting to render a missing component (#721)
+- Various amends to the default course `.json` files provided with the framework
+- Improvements to the 'inview' library
+
+### Fixed 
+- Lots of minor accessibility fixes
+- Various router fixes
+
 
 ## [2.0.4] - 2015-10-30
-### Headline changes
-- added support for tracking user's responses to SCORM's cmi.interactions
-- update LESS variables to new v2 style
-- various fixes for screenreader, keyboard & ios accessibility
-- performance improvements
-- allow partly correct feedback to be optional in question screens
-- fixes to ensure text labels are pulled through from 'globals' in course.json
-- server-build: add the option to create sourcemaps (https://github.com/adaptlearning/adapt_authoring/issues/811)
-- improvements to the property locking system
+
+### Added
+- Support for tracking user's responses to SCORM's cmi.interactions
+- `server-build`: add the option to create sourcemaps (https://github.com/adaptlearning/adapt_authoring/issues/811)
+
+### Changed
+- Update LESS variables to new v2 style
+- Performance improvements
+- Allow partly correct feedback to be optional in question screens
+- Property locking system improved
+
+### Fixed
+- Various fixes for screenreader, keyboard & ios accessibility
+- Ensure text labels are pulled through from 'globals' in course.json
+
 
 ## [2.0.3] - 2015-10-02
 ### Fixed
-- fixed popup tab index save/restore [ABU-1075](https://adaptlearning.atlassian.net/browse/ABU-1075)
+- Popup tab index save/restore [ABU-1075](https://adaptlearning.atlassian.net/browse/ABU-1075)
+
 
 ## [2.0.2] - 2015-09-28
 ### Added
-- add new button styles to base.less (#732, [ABU-1069](https://adaptlearning.atlassian.net/browse/ABU-1069))
-- add new `_spoor` property `_shouldStoreResponses` to config.json (#701)
+- New button styles to base.less (#732, [ABU-1069](https://adaptlearning.atlassian.net/browse/ABU-1069))
+- New `_spoor` property `_shouldStoreResponses` to config.json (#701)
 
 ### Changed
-- allow arrows keys to pass into input/select/textareas in a scroll-locked region (#738, [ABU-1071](https://adaptlearning.atlassian.net/browse/ABU-1071))
-- update licence in package.json (#724, #727)
-- ensure loading animation shown before views removed (#719)
-- amend Notify to use `.outerHeight` for more accurate vertical alignment (#716)
-- amend answer to c-140 (#705)
-- updates to the a11y and onscreen libraries (#696, #697)
+- Allow arrows keys to pass into input/select/textareas in a scroll-locked region (#738, [ABU-1071](https://adaptlearning.atlassian.net/browse/ABU-1071))
+- Update licence in package.json (#724, #727)
+- Ensure loading animation shown before views removed (#719)
+- Amend Notify to use `.outerHeight` for more accurate vertical alignment (#716)
+- Amend answer to c-140 (#705)
+- Updates to the a11y and onscreen libraries (#696, #697)
 
 ### Removed
-- remove redundant labels from course.json
+- Redundant labels from course.json
 
 ### Fixed
-- fix to ensure the `remainingAttemptsText` and `remainingAttemptText` get pulled through from `_globals` (#745, #746)
-- restored the `navigateToHomeRoute` function (#743, #744)
-- fix aimed at keeping content centralised on screen to give context to surroundings (#742)
-- fix for Notify focus bug (#740)
-- fix hyperlink to the community site in README.md
-- add missing Page Level Progress, Menu, Visited labels into course.json
-- bug fix for no/touch so the focus guard functions (#710)
+- Ensure the `remainingAttemptsText` and `remainingAttemptText` get pulled through from `_globals` (#745, #746)
+- Restored the `navigateToHomeRoute` function (#743, #744)
+- Fix aimed at keeping content centralised on screen to give context to surroundings (#742)
+- Notify focus bug (#740)
+- Hyperlink to the community site in README.md
+- Missing Page Level Progress, Menu, Visited labels into course.json
+- Bug fix for no/touch so the focus guard functions (#710)
 - IE8 responsiveness hotfix (#703)
+
 
 ## [2.0.1] - 2015-08-04
 ### Fixed
 - Added file .bowerrc back in; it is needed for the plugin registry system.
+
 
 ## [2.0.0] - 2015-08-03
 
@@ -235,8 +246,7 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...HEAD
-[2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...HEAD
 [2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.4...v2.0.5
