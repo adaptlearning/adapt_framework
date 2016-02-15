@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         'schema-defaults',
         'tracking-insert',
         'javascript:compile',
-        'clean:dist'
+        'clean:dist',
+        'replace'
     ]);
 }
