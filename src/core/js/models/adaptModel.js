@@ -10,6 +10,7 @@ define(function (require) {
             _canReset: false,
             _isComplete: false,
             _isInteractionComplete: false,
+            _requireCompletionOf: 'all',
             _isEnabled: true,
             _isResetOnRevisit: false,
             _isAvailable: true,
@@ -96,14 +97,27 @@ define(function (require) {
             _.defer(_.bind(function() {
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
-                // Check if any return _isComplete:false
-                // If not - set this model to _isComplete: true
-                if (availableChildren.findWhere({_isComplete: false, _isOptional: false})) {
-                    //cascade reset to menu
-                    this.set({_isComplete:false});
-                    return;
+                
+                var requireCompletionOf = this.get("_requireCompletionOf") 
+                    ? this.get("_requireCompletionOf").toLowerCase() 
+                    : "all";
+    
+                var isComplete = false;
+    
+                switch (requireCompletionOf) {
+                case "any":
+                    //if returns then at least one is complete
+                    isComplete = (availableChildren.findWhere({_isComplete: true, _isOptional: false}) !== undefined);
+                    break;
+                default:
+                    // Check if any return _isComplete:false
+                    // If not - set this model to _isComplete: true
+                    isComplete = (availableChildren.findWhere({_isComplete: false, _isOptional: false}) === undefined);
+                    break;
                 }
-                this.set({_isComplete: true});
+    
+                this.set({_isComplete:isComplete});
+                
             }, this));
         },
 
@@ -112,14 +126,27 @@ define(function (require) {
             _.defer(_.bind(function() {
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
-                // Check if any return _isInteractionComplete:false
-                // If not - set this model to _isInteractionComplete: true
-                if (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false})) {
-                    //cascade reset to menu
-                    this.set({_isInteractionComplete:false});
-                    return;
+                
+                var requireCompletionOf = this.get("_requireCompletionOf") 
+                    ? this.get("_requireCompletionOf").toLowerCase() 
+                    : "all";
+    
+                var isInteractionComplete = false;
+    
+                switch (requireCompletionOf) {
+                case "any":
+                    //if returns then at least one is complete
+                    isInteractionComplete = (availableChildren.findWhere({_isComplete: true, _isOptional: false}) !== undefined);
+                    break;
+                default:
+                    // Check if any return _isComplete:false
+                    // If not - set this model to _isComplete: true
+                    isInteractionComplete = (availableChildren.findWhere({_isComplete: false, _isOptional: false}) === undefined);
+                    break;
                 }
-                this.set({_isInteractionComplete: true});
+    
+                this.set({_isInteractionComplete:isInteractionComplete});
+                
             }, this));
         },
 
