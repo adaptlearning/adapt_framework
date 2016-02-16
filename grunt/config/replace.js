@@ -2,7 +2,7 @@ module.exports = function (grunt, options) {
 
   var courseDir = options.sourcedir + 'course/';
 
-  if (options.outputdir.indexOf('courses')) {
+  if (options.outputdir.indexOf('build/') > -1) {
     courseDir = options.outputdir + 'course/';
   }
 
