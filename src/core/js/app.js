@@ -14,6 +14,7 @@ require([
     'coreModels/articleModel',
     'coreModels/blockModel',
     'coreModels/componentModel',
+    'coreModels/questionModel',
     'coreJS/offlineStorage',
     'coreModels/lockingModel',
     'velocity',
@@ -27,7 +28,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel) {
+], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel, QuestionModel) {
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
@@ -138,7 +139,25 @@ require([
         });
 
         Adapt.components = new AdaptCollection(null, {
-            model: ComponentModel,
+            model: function(json) {
+
+                //use view+model object
+                var ViewModelObject = Adapt.componentStore[json._component];
+
+                //if model defined for component use component model
+                if (ViewModelObject.model) {
+                    return new ViewModelObject.model(json);
+                }
+
+                var View = ViewModelObject.view || ViewModelObject;
+                //if question type use question model
+                if (View._isQuestionType) {
+                    return new QuestionModel(json);
+                }
+
+                //otherwise use component model
+                return new ComponentModel(json);
+            },
             url: courseFolder + "components.json"
         });
     }

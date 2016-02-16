@@ -99,9 +99,18 @@ define([
         // Store the component view
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
-        if(!object.template) object.template = name;
+
+        if (object.view) {
+            //use view+model object
+            if(!object.view.template) object.view.template = name;
+        } else {
+            //use view object
+            if(!object.template) object.template = name;
+        }
+        
         Adapt.componentStore[name] = object;
 
+        return object;
     }
 
     // Used to map ids to collections
