@@ -15,6 +15,14 @@ module.exports = function (grunt, options) {
     courseJson.description = '';
   }
 
+  // A shim for edge cases where xAPI has not been configured.
+  if (!configJson.hasOwnProperty('_xapi')) {
+    configJson._xapi = {
+      'activityID': '',
+      '_isEnabled': false
+    };
+  }
+
   // Combine the course and config JSON so both can be passet to replace.  
   var json = {
     'course': courseJson,
