@@ -92,7 +92,6 @@ define(function(require) {
             event.preventDefault();
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
-            Adapt.trigger('notify:closed');
         },
 
         resetNotifySize: function() {
@@ -121,7 +120,7 @@ define(function(require) {
 
         showNotify: function() {
 
-
+            Adapt.trigger('notify:opened', this);
 
             if (this.$("img").length > 0) {
                 this.$el.imageready( _.bind(loaded, this));
@@ -191,6 +190,7 @@ define(function(require) {
 
             $('body').scrollEnable();
             Adapt.trigger('popup:closed');
+            Adapt.trigger('notify:closed');
         }
 
     });
