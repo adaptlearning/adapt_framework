@@ -7,8 +7,24 @@
         }
         return false;
     })();
+    
+    //2. Setup require for old style module declarations
+    function setupRequireJS() {
+        requirejs.config({
+            map: {
+                '*': {
+                    coreJS: 'core/js',
+                    coreViews: 'core/js/views',
+                    coreModels: 'core/js/models',
+                    coreCollections: 'core/js/collections',
+                    coreHelpers: 'core/js/helpers'
+                }
+            }
+        });
+        loadJQuery();
+    }
 
-    //2. Load jquery
+    //3. Load jquery
     function loadJQuery() {
         Modernizr.load([
             {
@@ -20,7 +36,7 @@
         ]);
     }
 
-    //3. Load adapt
+    //4. Load adapt
     function loadAdapt() {
         switch (IE) {
         case 8: case 9:
@@ -47,7 +63,7 @@
         },
         {
             load: "libraries/require.js",
-            complete: loadJQuery
+            complete: setupRequireJS
         }
     ]);
 
