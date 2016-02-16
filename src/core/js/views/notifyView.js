@@ -47,7 +47,6 @@ define(function(require) {
             event.preventDefault();
 
             this.closeNotify();
-            Adapt.trigger('notify:closed');
         },
 
         events: {
