@@ -22,6 +22,7 @@ define([
     var mappedIds = {};
 
     Adapt.initialize = _.once(function() {
+        Adapt.trigger('adapt:start');
         Backbone.history.start();
         Adapt.trigger('adapt:initialize');
     });
