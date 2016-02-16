@@ -1,0 +1,29 @@
+language: node_js
+node_js:
+  - 4.3
+branches:
+  only:
+    - master
+    - develop
+    - /^release\/.*$/
+sudo: required
+cache:
+  directories:
+    - node_modules
+before_script:
+  - npm install -g grunt-cli
+  - npm install -g adapt-cli
+  - adapt install
+script:
+  - grunt jscs
+  - grunt jshint
+  - grunt build &> /dev/null
+  - . v2_build_test.sh
+notifications:
+  email: false
+  webhooks:
+    on_success: change
+    on_failure: always
+    on_start: never
+    urls:
+      - https://webhooks.gitter.im/e/d5df1da533aaa23c1e9c
