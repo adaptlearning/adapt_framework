@@ -10,6 +10,11 @@ module.exports = function (grunt, options) {
   var defaultLanguage = configJson._defaultLanguage || 'en';
   var courseJson = grunt.file.readJSON(courseDir + defaultLanguage + '/course.json');
 
+  // Backwards compatibility for courses missing 'description'
+  if (!courseJson.hasOwnProperty('description')) {
+    courseJson.description = '';
+  }
+
   // Combine the course and config JSON so both can be passet to replace.  
   var json = {
     'course': courseJson,
