@@ -219,7 +219,7 @@
 
 		if (item._inviewPreviousState !== undefined ) {
 			//check previous state and current state
-			var scrolledOver = (item._measurePreviousState.percentFromBottom < 0 && measure.percentFromBottom > 100 );
+			var scrolledOver = (item._measurePreviousState.percentFromBottom <= 0 && measure.percentFromBottom >= 100 );
 			
 			//if inview state hasn't changed, don't retrigger event
 			if (item._inviewPreviousState[0] === inviewState[0] &&
