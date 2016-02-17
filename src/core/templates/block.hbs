@@ -1,0 +1,33 @@
+{{! Maintainers - Daryl Hedley}}
+{{! .component-container: Adapt will place the blocks components inside this class}}
+<div class="block-inner">
+    {{! Check if a page title exist and render it}}
+    {{#if displayTitle}}
+        <div class="block-title">
+            <div role="heading" tabindex="0" class="block-title-inner h3"  aria-level="3">
+                {{{displayTitle}}}
+            </div>
+        </div>
+    {{/if}}
+
+    {{! Check if page body exists and render it}}
+    {{#if body}}
+        <div class="block-body">
+            <div class="block-body-inner">
+                {{{a11y_text body}}}
+            </div>
+        </div>
+    {{/if}}
+
+    {{! Check if page body exists and render it}}
+    {{#if instruction}}
+        <div class="block-instruction">
+            <div class="block-instruction-inner">
+                {{{a11y_text instruction}}}
+            </div>
+        </div>
+    {{/if}}
+
+    <div class="component-container">
+    </div>
+</div>
