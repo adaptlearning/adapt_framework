@@ -10,7 +10,7 @@ define(function (require) {
             _canReset: false,
             _isComplete: false,
             _isInteractionComplete: false,
-            _requireCompletionOf: 'all',
+            _requireCompletionOf: -1,
             _isEnabled: true,
             _isResetOnRevisit: false,
             _isAvailable: true,
@@ -98,22 +98,17 @@ define(function (require) {
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
                 
-                var requireCompletionOf = this.get("_requireCompletionOf") 
-                    ? this.get("_requireCompletionOf").toLowerCase() 
-                    : "all";
-    
                 var isComplete = false;
-    
-                switch (requireCompletionOf) {
-                case "any":
-                    //if returns then at least one is complete
-                    isComplete = (availableChildren.findWhere({_isComplete: true, _isOptional: false}) !== undefined);
-                    break;
-                default:
+                
+                //number of mandatory children that must be complete or -1 for all
+                var requireCompletionOf = this.get("_requireCompletionOf");
+                
+                if (requireCompletionOf > -1) {
+                    isComplete = (availableChildren.where({_isComplete: true, _isOptional: false}).length >= requireCompletionOf );
+                } else {
                     // Check if any return _isComplete:false
                     // If not - set this model to _isComplete: true
                     isComplete = (availableChildren.findWhere({_isComplete: false, _isOptional: false}) === undefined);
-                    break;
                 }
     
                 this.set({_isComplete:isComplete});
@@ -127,22 +122,17 @@ define(function (require) {
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
                 
-                var requireCompletionOf = this.get("_requireCompletionOf") 
-                    ? this.get("_requireCompletionOf").toLowerCase() 
-                    : "all";
-    
                 var isInteractionComplete = false;
-    
-                switch (requireCompletionOf) {
-                case "any":
-                    //if returns then at least one is complete
-                    isInteractionComplete = (availableChildren.findWhere({_isComplete: true, _isOptional: false}) !== undefined);
-                    break;
-                default:
-                    // Check if any return _isComplete:false
-                    // If not - set this model to _isComplete: true
-                    isInteractionComplete = (availableChildren.findWhere({_isComplete: false, _isOptional: false}) === undefined);
-                    break;
+                
+                //number of mandatory children that must be complete or -1 for all
+                var requireCompletionOf = this.get("_requireCompletionOf")
+                
+                if (requireCompletionOf > -1) {
+                    isInteractionComplete = (availableChildren.where({_isInteractionComplete: true, _isOptional: false}).length >= requireCompletionOf);
+                } else {
+                    // Check if any return _isInteractionComplete:false
+                    // If not - set this model to _isInteractionComplete: true
+                    isInteractionComplete = (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false}) === undefined);
                 }
     
                 this.set({_isInteractionComplete:isInteractionComplete});
