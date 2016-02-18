@@ -213,10 +213,12 @@ define([
             }
         },
 
-        navigateToParent: function() {
-            var parentId = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId}).get("_parentId");
-            var route = (parentId === Adapt.course.get("_id")) ? "#/" : "#/id/" + parentId;
-            this.navigate(route, { trigger: true });
+        navigateToParent: function(force) {
+            if (Adapt.router.get('_canNavigate') || force) {
+                var parentId = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId}).get("_parentId");
+                var route = (parentId === Adapt.course.get("_id")) ? "#/" : "#/id/" + parentId;
+                this.navigate(route, { trigger: true });  
+            }
         },
 
         setContentObjectToVisited: function(model) {
