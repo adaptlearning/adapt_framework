@@ -1,26 +1,7 @@
 define([
     'coreJS/adapt'
 ], function(Adapt) {
-
-    /*example
-
-        "_start": {
-            "_isEnabled": true,
-            "_screenSize": [
-                {
-                    "_className": ".size-small.touch, .size-medium.touch",
-                    "_id": "co-05"
-                },
-                {
-                    "_className": ".size-small.no-touch, .size-medium.no-touch",
-                    "_id": "co-10"
-                }
-            ],
-            "_id": "course",
-            "_force": true
-        },
-    */
-
+    
     var StartController = function() {
         this.initialize();
     };
@@ -72,23 +53,27 @@ define([
 
         getStartId: function() {
             var startId = this.model.get("_id");
-            var screenSize = this.model.get("_screenSize");
+            var startIds = this.model.get("_startIds");
 
-            var hasScreenSizeConfiguration = (screenSize && screenSize.length > 0);
-            if (hasScreenSizeConfiguration) {
-                /* takes
-                    [
-                        {
-                            "_className": ".small.touch",
-                            "_id": "co-30"
-                        }
-                    ]
-                */
-                for (var i = 0, l =  screenSize.length; i < l; i++) {
-                    var item = screenSize[i];
+            var hasStartIdsConfiguration = (startIds && startIds.length > 0);
+            if (hasStartIdsConfiguration) {
+                for (var i = 0, l =  startIds.length; i < l; i++) {
+                    var item = startIds[i];
                     var className =  item._className;
+                    
+                    var model;
+                    try {
+                        model = Adapt.findById(item._id);
+                    } catch(e) {
+                        console.log("startController: cannot find id", item._id);
+                        continue;
+                    }
+                    
+                    if (item._skipIfComplete) {
+                        if (model.get("_isComplete")) continue;
+                    }
 
-                    if ($("html").is(className)) {
+                    if (className || $("html").is(className)) {
                         startId = item._id;
                         break;
                     }
@@ -100,11 +85,9 @@ define([
 
     });
 
-
     Adapt.once("adapt:start", function() {
         new StartController();
     });
-
 
     return StartController;
 
