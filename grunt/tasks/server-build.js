@@ -10,7 +10,8 @@ module.exports = function(grunt) {
             'copy',
             'less:' + requireMode,
             'handlebars',
-            'javascript:' + requireMode
+            'javascript:' + requireMode,
+            'replace'
         ]);
     });
 }
