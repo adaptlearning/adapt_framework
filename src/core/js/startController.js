@@ -60,6 +60,7 @@ define([
                 for (var i = 0, l =  startIds.length; i < l; i++) {
                     var item = startIds[i];
                     var className =  item._className;
+                    var skipIfComplete = item._skipIfComplete;
                     
                     var model;
                     try {
@@ -69,7 +70,7 @@ define([
                         continue;
                     }
                     
-                    if (item._skipIfComplete) {
+                    if (skipIfComplete) {
                         if (model.get("_isComplete")) continue;
                     }
 
