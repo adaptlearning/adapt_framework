@@ -21,6 +21,11 @@ module.exports = function (grunt, options) {
       'activityID': '',
       '_isEnabled': false
     };
+  } else {
+    // xAPI has been enabled, check if the activityID has been set.
+    if (configJson._xapi.hasOwnProperty('activityID') && configJson._xapi.activityID == '') {
+      grunt.log.writeln('WARNING: xAPI activityID has not been set');
+    }
   }
 
   // Combine the course and config JSON so both can be passet to replace.  
@@ -48,5 +53,4 @@ module.exports = function (grunt, options) {
       ]
     }
   }
-
 }
