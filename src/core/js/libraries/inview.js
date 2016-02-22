@@ -208,8 +208,8 @@
 		if (item._inview !== undefined && item._inview === measure.uniqueMeasurementId) return;
 		item._inview = measure.uniqueMeasurementId;
 
-		var visiblePartY = (measure.percentFromTop > 0 && measure.percentFromTop < 100) && (measure.percentFromBottom > 0 && measure.percentFromBottom < 100) ? "both" : (measure.percentFromTop > 0 && measure.percentFromTop < 100) ? "top" : (measure.percentFromBottom > 0 && measure.percentFromBottom < 100) ? "bottom" : "none";
-		var visiblePartX = (measure.percentFromLeft > 0 && measure.percentFromLeft < 100) && (measure.percentFromRight > 0 && measure.percentFromRight < 100) ? "both" : (measure.percentFromLeft > 0 && measure.percentFromLeft < 100) ? "left" : (measure.percentFromRight > 0 && measure.percentFromRight < 100) ? "right" : "none";
+		var visiblePartY = (measure.percentFromTop >= 0 && measure.percentFromTop <= 100) && (measure.percentFromBottom >= 0 && measure.percentFromBottom <= 100) ? "both" : (measure.percentFromTop >= 0 && measure.percentFromTop <= 100) ? "top" : (measure.percentFromBottom >= 0 && measure.percentFromBottom <= 100) ? "bottom" : "none";
+		var visiblePartX = (measure.percentFromLeft >= 0 && measure.percentFromLeft <= 100) && (measure.percentFromRight >= 0 && measure.percentFromRight <= 100) ? "both" : (measure.percentFromLeft >= 0 && measure.percentFromLeft <= 100) ? "left" : (measure.percentFromRight >= 0 && measure.percentFromRight <= 100) ? "right" : "none";
 
 		var inviewState = [
 			measure.onscreen, //inview true/false
@@ -219,7 +219,7 @@
 
 		if (item._inviewPreviousState !== undefined ) {
 			//check previous state and current state
-			var scrolledOver = (item._measurePreviousState.percentFromBottom < 0 && measure.percentFromBottom > 100 );
+			var scrolledOver = (item._measurePreviousState.percentFromBottom <= 0 && measure.percentFromBottom >= 100 );
 			
 			//if inview state hasn't changed, don't retrigger event
 			if (item._inviewPreviousState[0] === inviewState[0] &&
