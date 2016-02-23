@@ -1,8 +1,14 @@
-module.exports = {
+module.exports = function (grunt, options) {
+
+  var host = grunt.option('host') || "localhost";
+
+  return {
     server: {
-        path: 'http://localhost:<%= connect.server.options.port %>/'
+      path: 'http://'+host+':<%= connect.server.options.port %>/'
     },
     spoor: {
-        path: 'http://localhost:<%= connect.server.options.port %>/scorm_test_harness.html'
+      path: 'http://'+host+':<%= connect.server.options.port %>/scorm_test_harness.html'
     }
+  }
+
 }

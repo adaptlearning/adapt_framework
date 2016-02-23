@@ -106,7 +106,7 @@ module.exports = function(grunt) {
                     if (!fs.statSync(folderPath).isDirectory()) continue;
 
                     var bowerJson = require(path.join(folderPath, 'bower.json'));
-                    
+
                     for (var key in bowerJson.dependencies) {
                         if (!_.contains(buildIncludes, key)) dependencies.push(key)
                     }
@@ -115,7 +115,7 @@ module.exports = function(grunt) {
                 }
             }
         }
-        
+
         return [].concat(exports.defaults.includes, buildIncludes, dependencies);
     };
 
