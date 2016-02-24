@@ -15,6 +15,9 @@ module.exports = function (grunt, options) {
                 ],
                 pluginsPath: '<%= sourcedir %>plugins.js',
                 pluginsModule: 'plugins',
+                pluginsFilter: function(filepath) {
+                    return grunt.config('helpers').includedFilter(filepath);
+                },
                 //translate old style bundle references into something that does exist
                 map: {
                     "*": {
@@ -27,7 +30,6 @@ module.exports = function (grunt, options) {
                         "templates/templates": "plugins"
                     }
                 },
-
                 paths: {
                     "components/components": "plugins",
                     "extensions/extensions": "plugins",
@@ -36,31 +38,7 @@ module.exports = function (grunt, options) {
                 },
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
-                optimize: 'none',
-                onBuildRead: function(moduleName, path, contents) {
-                    var isIncludedInBuild = grunt.config('helpers').includedFilter( path );
-
-                    var includes = [
-                        "src/core",
-                        "plugins"
-                    ];
-
-                    var re = '';
-                    for(var i = 0, count = includes.length; i < count; i++) {
-                        re += includes[i];
-                        if(i < includes.length-1) re += '|';
-                    }
-                    var isIncludedByTask = (new RegExp(re, "i")).test( path );
-
-                    if (!isIncludedByTask && !isIncludedInBuild) {
-                        //console.log(path, "excluded");
-                        return "";
-                    }
-
-                    //console.log(path, "included");
-
-                    return contents;
-                }
+                optimize: 'none'
             }
         },
         compile: {
@@ -78,6 +56,9 @@ module.exports = function (grunt, options) {
                 ],
                 pluginsPath: '<%= sourcedir %>/plugins.js',
                 pluginsModule: 'plugins',
+                pluginsFilter: function(filepath) {
+                    return grunt.config('helpers').includedFilter(filepath);
+                },
                 //translate old style bundle references into something that does exist
                 map: {
                     "*": {
@@ -96,31 +77,7 @@ module.exports = function (grunt, options) {
                     "menu/menu": "plugins",
                     "theme/theme": "plugins"
                 },
-                optimize: 'uglify2',
-                onBuildRead: function(moduleName, path, contents) {
-                    var isIncludedInBuild = grunt.config('helpers').includedFilter( path );
-
-                    var includes = [
-                        "src/core",
-                        "plugins"
-                    ];
-
-                    var re = '';
-                    for(var i = 0, count = includes.length; i < count; i++) {
-                        re += includes[i];
-                        if(i < includes.length-1) re += '|';
-                    }
-                    var isIncludedByTask = (new RegExp(re, "i")).test( path );
-
-                    if (!isIncludedByTask && !isIncludedInBuild) {
-                        //console.log(path, "excluded");
-                        return "";
-                    }
-
-                    //console.log(path, "included");
-
-                    return contents;
-                }
+                optimize: 'uglify2'
             }
         }
     }
