@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
 
 	var convertSlashes = /\\/g;
-	
-    grunt.registerMultiTask('javascript', 'Compile JavaScript files', function() {
 
-  		var requirejs = require('requirejs');
+	grunt.registerMultiTask('javascript', 'Compile JavaScript files', function() {
+
+		var requirejs = require('requirejs');
 		var _ = require('underscore');
 		var path = require("path");
 		var fs = require("fs");
@@ -52,7 +52,6 @@ module.exports = function(grunt) {
 
 				});
 			}
-
 		}
 
 		requirejs.optimize(options, function() {
@@ -60,6 +59,5 @@ module.exports = function(grunt) {
 		}, function(error) {
 			grunt.fail.fatal(error);
 		});
-
-  	});
+	});
 };
