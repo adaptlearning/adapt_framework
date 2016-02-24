@@ -28,7 +28,7 @@ module.exports = function (grunt, options) {
     }
   }
 
-  // Combine the course and config JSON so both can be passet to replace.  
+  // Combine the course and config JSON so both can be passed to replace.  
   var json = {
     'course': courseJson,
     'config': configJson
