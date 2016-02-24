@@ -74,7 +74,7 @@ define([
                         if (model.get("_isComplete")) continue;
                     }
 
-                    if (className || $("html").is(className)) {
+                    if (!className || $("html").is(className)) {
                         startId = item._id;
                         break;
                     }
