@@ -90,25 +90,18 @@ module.exports = function(grunt) {
 
     exports.getIncludes = function(buildIncludes, configData) {
         var dependencies = [];
-        var pluginTypeCount = exports.defaults.pluginTypes.length;
 
         // Iterate over the plugin types.
-        for (var i = 0; i < pluginTypeCount; i++) {
-            var dir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
-            var children = fs.readdirSync(dir);
-            
-            // Iterate over the plugins for this type.
-            for (var j = 0; j < children.length; j++) {
+        for (var i = 0; i < exports.defaults.pluginTypes.length; i++) {
+            var pluginTypeDir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
+            // grab a list of the installed (and included) plugins for this type
+            var plugins = _.intersection(fs.readdirSync(pluginTypeDir),buildIncludes);
+            for (var j = 0; j < plugins.length; j++) {
                 try {
-                    var folderPath = path.join(dir, children[j]);
-
-                    // Escape if this is not a directory.
-                    if (!fs.statSync(folderPath).isDirectory()) continue;
-
-                    var bowerJson = require(path.join(folderPath, 'bower.json'));
+                    var bowerJson = require(path.join(pluginTypeDir, plugins[j], 'bower.json'));
 
                     for (var key in bowerJson.dependencies) {
-                        if (!_.contains(buildIncludes, key)) dependencies.push(key)
+                        if (!_.contains(buildIncludes, key)) dependencies.push(key);
                     }
                 } catch(error) {
                     grunt.log.error(error);
