@@ -368,7 +368,7 @@ define([
 
             // Used to setup either global or local question weight/score
             setupWeightSettings: function() {
-                return this.model.setupWeightSettings
+                return this.model.setupWeightSettings();
             },
 
             // Use to check if the user is allowed to submit the question
