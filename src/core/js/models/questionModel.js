@@ -14,6 +14,7 @@ define([
             // Extend from the ComponentModel defaults
             return _.extend({
                 '_isQuestionType': true,
+                '_shouldDisplayAttempts': false,
                 '_canShowModelAnswer': true,
                 '_questionWeight': Adapt.config.get("_questionWeight"),
             }, ComponentModel.prototype.defaults);
