@@ -93,7 +93,9 @@ define(function (require) {
 
         checkCompletionStatus: function () {
             //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            Adapt.checkingCompletion();
             _.defer(_.bind(function() {
+
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
                 // Check if any return _isComplete:false
@@ -101,14 +103,18 @@ define(function (require) {
                 if (availableChildren.findWhere({_isComplete: false, _isOptional: false})) {
                     //cascade reset to menu
                     this.set({_isComplete:false});
+                    Adapt.checkedCompletion();
                     return;
                 }
                 this.set({_isComplete: true});
+                Adapt.checkedCompletion();
+                
             }, this));
         },
 
         checkInteractionCompletionStatus: function () {
             //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            Adapt.checkingCompletion();
             _.defer(_.bind(function() {
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
@@ -117,9 +123,12 @@ define(function (require) {
                 if (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false})) {
                     //cascade reset to menu
                     this.set({_isInteractionComplete:false});
+                    Adapt.checkedCompletion();
                     return;
                 }
                 this.set({_isInteractionComplete: true});
+                Adapt.checkedCompletion();
+
             }, this));
         },
 

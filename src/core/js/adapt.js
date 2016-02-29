@@ -6,11 +6,41 @@ define([
     var AdaptModel = Backbone.Model.extend({
 
         defaults: {
-            _canScroll: true //to stop scrollTo behaviour
+            _canScroll: true, //to stop scrollTo behaviour,
+            _outstandingCompletionChecks: 0
         },
 
         lockedAttributes: {
             _canScroll: false
+        },
+
+        //call when entering an asynchronous completion check
+        checkingCompletion: function() {
+            var outstandingChecks = this.get("_outstandingCompletionChecks");
+            this.set("_outstandingCompletionChecks", outstandingChecks++);
+        },
+
+        //call when exiting an asynchronous completion check
+        checkedCompletion: function() {
+            var outstandingChecks = this.get("_outstandingCompletionChecks");
+            this.set("_outstandingCompletionChecks", outstandingChecks--);
+        },
+
+        //wait until there are no outstanding completion checks
+        deferUntilCompletionChecked: function(callback) {
+
+            if (this.get("_outstandingCompletionChecks") === 0) return callback();
+
+            var checkIfAnyChecksOutstanding = function(model, outstandingChecks) {
+                if (outstandingChecks !== 0) return;
+
+                Adapt.off("change:_outstandingCompletionChecks", checkIfAnyChecksOutstanding);
+
+                callback();
+            };
+
+            Adapt.on("change:_outstandingCompletionChecks", checkIfAnyChecksOutstanding);
+
         }
 
     });
@@ -22,9 +52,17 @@ define([
     var mappedIds = {};
 
     Adapt.initialize = _.once(function() {
-        Adapt.trigger('adapt:start');
-        Backbone.history.start();
-        Adapt.trigger('adapt:initialize');
+
+        //wait until no more completion checking 
+        Adapt.deferUntilCompletionChecked(function() {
+
+            //start adapt in a full restored state
+            Adapt.trigger('adapt:start');
+            Backbone.history.start();
+            Adapt.trigger('adapt:initialize');
+
+        });
+
     });
 
     Adapt.scrollTo = function(selector, settings) {
