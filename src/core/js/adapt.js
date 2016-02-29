@@ -17,13 +17,13 @@ define([
         //call when entering an asynchronous completion check
         checkingCompletion: function() {
             var outstandingChecks = this.get("_outstandingCompletionChecks");
-            this.set("_outstandingCompletionChecks", outstandingChecks++);
+            this.set("_outstandingCompletionChecks", ++outstandingChecks);
         },
 
         //call when exiting an asynchronous completion check
         checkedCompletion: function() {
             var outstandingChecks = this.get("_outstandingCompletionChecks");
-            this.set("_outstandingCompletionChecks", outstandingChecks--);
+            this.set("_outstandingCompletionChecks", --outstandingChecks);
         },
 
         //wait until there are no outstanding completion checks
