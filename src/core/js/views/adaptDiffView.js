@@ -133,7 +133,7 @@ define([
 
         },
 
-        addChildView: function(view) {
+        registerChildView: function(view) {
             if (!this.hasChildren) {
                 throw "hasChildren is set to false for this view";
             }
