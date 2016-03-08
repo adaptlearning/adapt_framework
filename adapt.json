@@ -2,9 +2,9 @@
     "dependencies": {
         "adapt-contrib-vanilla": "*",
         "adapt-contrib-text": "*",
-        "adapt-contrib-narrative": "*",
+        "adapt-contrib-narrative": "enhancement/921",
         "adapt-contrib-media": "*",
-        "adapt-contrib-hotgraphic": "*",
+        "adapt-contrib-hotgraphic": "enhancement/921",
         "adapt-contrib-blank": "*",
         "adapt-contrib-accordion": "*",
         "adapt-contrib-graphic": "*",

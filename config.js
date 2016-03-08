@@ -10,6 +10,7 @@ require.config({
         inview: 'core/js/libraries/inview',
         a11y: 'core/js/libraries/jquery.a11y',
         scrollTo: 'core/js/libraries/scrollTo',
+        DOMDiffer: 'core/js/libraries/DOMDiffer',
         templates: 'templates/templates'
     },
     shim: {
