@@ -107,8 +107,10 @@ define([
             // Do not allow render if the view has been removed
             if (this.isRemoved) return;
 
-            this.trigger("preRender", this);
-            this.preRender();
+            var isFirstRender = !this.hasRendered;
+
+            this.trigger("preRender", this, isFirstRender);
+            this.preRender(isFirstRender);
 
             var template = Handlebars.templates[this.constructor.template];
             var renderedHTML = template(this.getRenderData());;
@@ -128,22 +130,25 @@ define([
 
                 //var totalTime = (new Date()).getTime() - startTime;
 
-                //console.log("diffing", totalTime+"ms", diff.length + "changes");
+                //console.log("diffing", totalTime+"ms", diff.length + "changes", diff);
 
             } else {
 
                  // Push renderedHTML straight into DOM
                 this.el.innerHTML = renderedHTML;
 
-                this.hasRendered = true;
             }
 
             _.defer(_.bind(function() {
                 // Don't continue after remove
                 if (this.isRemoved) return;
                 
-                this.postRender();
-                this.trigger("postRender", this);
+                var isFirstRender = !this.hasRendered;
+
+                this.postRender(isFirstRender);
+                this.trigger("postRender", this, isFirstRender);
+
+                this.hasRendered = true;
 
             }, this));
 
@@ -216,7 +221,7 @@ define([
         },
 
         // Override with post render code
-        postRender: function postRender() {},
+        postRender: function postRender(isFirstRender) {},
 
         // Override to handle child views
         registerChildView: function registerChildView(view) {
