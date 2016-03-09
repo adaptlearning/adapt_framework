@@ -1,4 +1,4 @@
-//https://github.com/oliverfoster/DOMDiffer 2016-03-02
+//https://github.com/oliverfoster/DOMDiffer 2016-03-09
 
 // Uses CommonJS, AMD or browser globals to register library
 (function (root, factory) {
@@ -23,12 +23,18 @@
 
         setOptions: function setOptions(options) {
 
-            this.options = options || {};;
+            this.options = options || {};
+
+            this._ignoreAttributesWithPrefix = null;
+            this._ignoreAttributes = null;
+            this._ignoreClass = null;
 
             var ignoreAttributesWithPrefix = this.options.ignoreAttributesWithPrefix;
             var ignoreAttributes = this.options.ignoreAttributes;
+            var ignoreClasses = this.options.ignoreClasses;
             if ((!ignoreAttributesWithPrefix  || !ignoreAttributesWithPrefix.length )
-                && (!ignoreAttributes  || !ignoreAttributes.length )) return;
+                && (!ignoreAttributes  || !ignoreAttributes.length )
+                && (!ignoreClasses  || !ignoreClasses.length )) return;
 
             var regex = "";
             var lastIndex;
@@ -43,31 +49,18 @@
                     }
                 }
                 regex+=")";
-
-                if (regex && ignoreAttributes && ignoreAttributes.length > 0) {
-                    regex += "|";
-                }
-            }
+                this._ignoreAttributesWithPrefix = new RegExp(regex, "i");
+            }            
 
             if (ignoreAttributes && ignoreAttributes.length > 0) {
-                regex+="^("
-                lastIndex = ignoreAttributes.length-1;
+                this._ignoreAttributes = {};
                 for (var i = 0, l = ignoreAttributes.length; i < l; i++) {
-                    var attribute = ignoreAttributes[i];
-                    regex+=this._escapeRegExp(attribute);
-                    if (i !== lastIndex) {
-                        regex+="|";
-                    }
+                    this._ignoreAttributes[ignoreAttributes[i]] = true;
                 }
-                regex+=")$";
             }
-
-            this._ignoreAttributes = new RegExp(regex, "i");
-
-            this._ignoreClass = {};
-
-            if (this.options.ignoreClasses) {
-                var ignoreClasses = this.options.ignoreClasses;
+            
+            if (ignoreClasses) {
+                this._ignoreClass = {};
                 for (var i = 0, l = ignoreClasses.length; i < l; i++) {
                     this._ignoreClass[ignoreClasses[i]] = true;
                 }
@@ -197,14 +190,19 @@
             var attributeName;
             var attributeValue;
             var forbiddenAttribute;
+
             for (var i = 0, l = nodeAttributes.length; i < l; i++) {
                 attribute = nodeAttributes.item(i);
                 attributeName = attribute.name;
                 attributeValue = attribute.value;
 
                 if (this._ignoreAttributes) {
-                    forbiddenAttribute = this._ignoreAttributes.test(attributeName);
-                    if (forbiddenAttribute) continue;
+                    if (this._ignoreAttributes[attributeName]) continue;
+                }
+
+                if (this._ignoreAttributesWithPrefix) {
+                    forbiddenAttribute = this._ignoreAttributesWithPrefix.test(attributeName);
+                    if (forbiddenAttribute) continue;   
                 }
 
                 vNodeAttributes[attributeName] = attributeValue;
@@ -219,7 +217,9 @@
                     className = classes[c];
                     if (!className) continue;
 
-                    if (this._ignoreClass[className]) continue;
+                    if (this._ignoreClass) {
+                        if (this._ignoreClass[className]) continue;
+                    }
 
                     vNodeClasses[className] = true;
                 }
@@ -320,7 +320,11 @@
                 byDestinationUid: {}
             };
 
-            this._compareAndRemoveFVNodes(fVSource2, fVDestination2, 0.20, sourceMatches, uidIndexes, options);
+            fVSource2.unmatchedCount = fVSource2.length;
+            for (var minRating = 1; minRating >= 0.20; minRating-=0.20) {
+                if (!fVSource2.unmatchedCount) break;
+                this._compareAndRemoveFVNodes(fVSource2, fVDestination2, minRating, sourceMatches, uidIndexes, options);
+            }
             var removes = this._createRemoveMatches(fVSource2, sourceMatches, uidIndexes);
             this._createAddMatches(fVDestination2, sourceMatches, uidIndexes);
 
@@ -366,13 +370,26 @@
         _compareAndRemoveFVNodes: function _compareAndRemoveFVNodes(fVSource, fVDestination, minRate, sourceMatches, uidIndexes, options) {
             if (!fVSource.length  || !fVDestination.length ) return;
 
+            var mode = 0;
+            if (fVSource.unmatchedCount > 50) mode = 1;
+
             //always remove root containers as matches first
-            if (fVSource[0].parentUid === -1 && fVDestination[0].parentUid === -1) {
+            if (fVSource[0] && fVDestination[0] && fVSource[0].parentUid === -1 && fVDestination[0].parentUid === -1) {
                 var source = fVSource[0];
                 var destination = fVDestination[0];
-                var rate = this._rateCompare(source, destination);
-                fVSource[0] = undefined;
-                fVDestination[0] = undefined;
+                var rate = this._rateCompare(source, destination, minRate);
+
+                switch(mode) {
+                case 0:
+                    fVSource[0] = undefined;
+                    fVDestination[0] = undefined;
+                    break;
+                case 1:
+                    fVSource.splice(0,1);
+                    fVDestination.splice(0,1);
+                }
+
+                fVSource.unmatchedCount--;
                 var diffObj = {
                     source: source,
                     destination: destination,
@@ -413,20 +430,39 @@
 
             for (var sIndex = 0; sIndex < sourceLength; sIndex++) {
 
+                if (fVSource.unmatchedCount > 50) mode = 1;
+                else mode = 0;
+
                 source = fVSource[sIndex];
-                if (!source) continue;
+                if (!source) {
+                    switch (mode) {
+                    case 1:
+                        fVSource.splice(sIndex,1);
+                        sIndex--;
+                        sourceLength--;
+                    }
+                    continue;
+                }
                 sourceUid = source.uid;
 
                 for (var dIndex = 0; dIndex < destinationLength; dIndex++) {
 
                     destination = fVDestination[dIndex];
-                    if (!destination) continue;
+                    if (!destination) {
+                        switch (mode) {
+                        case 1:
+                            fVDestination.splice(dIndex,1);
+                            dIndex--;
+                            destinationLength--;
+                        }
+                        continue;
+                    }
                     destinationUid = destination.uid;
 
                     if (destination.nodeType !== source.nodeType) continue;
                     if (source.nodeName !== destination.nodeName) continue;
 
-                    rate = this._rateCompare(destination, source);
+                    rate = this._rateCompare(destination, source, minRate);
 
                     if (rate < minRate || rate <= maxRating) continue;
 
@@ -435,8 +471,19 @@
                     maxRatedIndex = dIndex;
                     if (rate !== 1) continue;
 
-                    fVSource[sIndex] = undefined;
-                    fVDestination[dIndex] = undefined;
+                    switch(mode) {
+                    case 0:
+                        fVSource[sIndex] = undefined;
+                        fVDestination[dIndex] = undefined;
+                        break;
+                    case 1:
+                        fVSource.splice(sIndex,1);
+                        fVDestination.splice(dIndex,1);
+                        sourceLength--;
+                        destinationLength--;
+                    }
+                    
+                    fVSource.unmatchedCount--;
                     diffObj = {
                         source: source,
                         destination: destination,
@@ -463,8 +510,19 @@
 
                 if (!maxRated) continue;
 
-                fVSource[sIndex] = undefined;
-                fVDestination[maxRatedIndex] = undefined;
+                switch(mode) {
+                case 0:
+                    fVSource[sIndex] = undefined;
+                    fVDestination[maxRatedIndex] = undefined;
+                    break;
+                case 1:
+                    fVSource.splice(sIndex,1);
+                    fVDestination.splice(maxRatedIndex,1);
+                    sourceLength--;
+                    destinationLength--;
+                }
+
+                fVSource.unmatchedCount--;
                 diffObj = {
                     source: source,
                     destination: maxRated,
@@ -491,7 +549,7 @@
         }, 
 
         //create a percentage difference value for two vnodes
-        _rateCompare: function _rateCompare(vdestination, vsource) {
+        _rateCompare: function _rateCompare(vdestination, vsource, minRate) {
             var value = 0;
 
             var rate = -1;
@@ -501,9 +559,13 @@
                 value+=vsource.id===vdestination.id?3:0;
                 value+=vsource.depth === vdestination.depth? 3 : 0;
 
+                if (minRate > 0.36 && value < 6) return -1;
+
                 value+=this._keyValueCompare(vsource.classes, vdestination.classes) * 3;
 
-                value+=this._keyValueCompare(vsource.attributes, vdestination.attributes) * 2;
+                if (minRate > 0.53 && value < 9) return -1;
+
+                value+=this._keyValueCompareIgnore(vsource.attributes, vdestination.attributes, {"style":true}) * 2;
 
                 value+=(vsource.childNodes.length) === (vdestination.childNodes.length)? 2 : 0;
                 value+=vsource.childNodes.length === vdestination.childNodes.length? 2 : 0;
@@ -516,6 +578,9 @@
                 break;
             case 3:
                 value+=vsource.depth === vdestination.depth? 3 : 0;
+
+                if (minRate > 0.43 && value < 3) return -1;
+
                 value+=vsource.index === vdestination.index? 1 : 0;
 
                 value+=vsource.trimmed === vdestination.trimmed? 2 : 0;
@@ -541,7 +606,7 @@
 
                 value+=this._keyValueCompare(vsource.classes, vdestination.classes) * 3;
 
-                value+=this._keyValueCompare(vsource.attributes, vdestination.attributes) * 2;
+                value+=this._keyValueCompareIgnore(vsource.attributes, vdestination.attributes, {"style":true}) * 2;
 
                 rate = (value / 8);
 
@@ -570,7 +635,7 @@
 
                 value+=this._keyValueCompare(vsource.classes, vdestination.classes) * 3;
 
-                value+=this._keyValueCompare(vsource.attributes, vdestination.attributes) * 2;
+                value+=this._keyValueCompareIgnore(vsource.attributes, vdestination.attributes, {"style":true}) * 2;
                 
                 value+=vsource.index === vdestination.index? 1 : 0;
 
@@ -602,6 +667,27 @@
                 }
             }
             for (var k2 in object2) {
+                if (object1[k2] === undefined) {
+                    totalKeys++;
+                }
+            }
+            if (!totalKeys) return 1;
+            return (matchingValues / totalKeys) || -1;
+        },
+
+        _keyValueCompareIgnore: function _keyValueCompareIgnore(object1, object2, ignores) {
+            var matchingValues = 0;
+            var totalKeys = 0;
+            var o2value;
+            for (var k1 in object1) {
+                if (ignores[k1]) continue;
+                totalKeys++;
+                if (object1[k1] === object2[k1]) {
+                    matchingValues++;
+                }
+            }
+            for (var k2 in object2) {
+                if (ignores[k2]) continue;
                 if (object1[k2] === undefined) {
                     totalKeys++;
                 }
@@ -952,7 +1038,6 @@
                     || diff.changeHierachyData
                     || diff.changeChildren
                     ) {
-                    diff.isIncluded = true;
                     diffs.push(diff);
                 }
 
@@ -972,7 +1057,6 @@
                     || diff.changeIndex
                     || diff.changeHierachyData
                     ) {
-                    diff.isIncluded = true;
                     diffs.push(diff);
                 }
                 break;
@@ -982,7 +1066,6 @@
 
         _sanitizeDifferential: function _sanitizeDifferential(differential) {
             for (var i = 0, diff; diff = differential[i++];) {
-                //delete diff.isIncluded;
                 delete diff.source;
                 delete diff.destination;
                 delete diff.isEqual;
@@ -1460,7 +1543,7 @@
                         return false;
                     }
                 } else {
-                    rate = this._rateCompare(vNode1, vNode2);
+                    rate = this._rateCompare(vNode1, vNode2, 0);
                     var ncrate = this._rateCompareNoChildren(vNode1, vNode2);
                     if (rate !== 1 && ncrate !== 1) {
                         if (options.forDebug) {

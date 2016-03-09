@@ -116,12 +116,19 @@ define([
             if (this.hasRendered) {
 
                 // Push renderedHTML into temporary DOM node
-                ddTemp.innerHTML = renderedHTML
+                ddTemp.innerHTML = renderedHTML;
+
+                //var startTime = (new Date()).getTime();
 
                 // Update this.el from ddTemp
-                ddInstance.nodeUpdateNode(this.el, ddTemp, {
-                    ignoreContainer: true
+                var diff = ddInstance.nodeUpdateNode(this.el, ddTemp, {
+                    ignoreContainer: true,
+                    returnDiff: true
                 });
+
+                //var totalTime = (new Date()).getTime() - startTime;
+
+                //console.log("diffing", totalTime+"ms", diff.length + "changes");
 
             } else {
 
@@ -288,10 +295,12 @@ define([
         ],
 
         // Ignore accessibility attributes on rerender
-        ignoreAttributesWithPrefix: [
+        ignoreAttributes: [
             "tabindex",
-            "aria"
-        ]
+            "aria-hidden"
+        ],
+
+        ignoreAttributesWithPrefix: []
 
     };
 
