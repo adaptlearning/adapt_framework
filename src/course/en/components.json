@@ -200,14 +200,21 @@
 		"_layout": "full",
 		"_comment": "_setCompletionOn = inview | play | ended",
 		"_setCompletionOn": "play",
-		"_useClosedCaptions": false,
+		"_useClosedCaptions": true,
+		"_allowFullscreen": true,
 		"title": "Media",
 		"displayTitle": "Media",
 		"body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or just let audio to literally do the talking. This is when the media component comes to the fore.<br><br>Component can be either single or spanned.",
 		"instruction": "Select the play button to start the video.",
 		"_media": {
 			"mp4": "course/en/video/c-40.mp4",
-			"poster": "course/en/video/c-40.jpg"
+			"poster": "course/en/video/c-40.jpg",
+			"cc": [
+	            {
+	                "srclang": "en",
+	                "src": "course/en/video/c-40.vtt"
+	            }
+	        ]
 		},
 		"_transcript": {
 			"_inlineTranscript": true,
