@@ -6,7 +6,7 @@
         "adapt-contrib-media": "*",
         "adapt-contrib-hotgraphic": "enhancement-921",
         "adapt-contrib-blank": "*",
-        "adapt-contrib-accordion": "*",
+        "adapt-contrib-accordion": "enhancement-921",
         "adapt-contrib-graphic": "*",
         "adapt-contrib-matching": "*",
         "adapt-contrib-textInput": "*",
