@@ -210,11 +210,11 @@
 			"mp4": "course/en/video/c-40.mp4",
 			"poster": "course/en/video/c-40.jpg",
 			"cc": [
-	            {
-	                "srclang": "en",
-	                "src": "course/en/video/c-40.vtt"
-	            }
-	        ]
+				{
+					"srclang": "en",
+					"src": "course/en/video/c-40.vtt"
+				}
+		    ]
 		},
 		"_transcript": {
 			"_inlineTranscript": true,
