@@ -94,7 +94,9 @@ define(function (require) {
 
         checkCompletionStatus: function () {
             //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            Adapt.checkingCompletion();
             _.defer(_.bind(function() {
+
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
                 
@@ -112,12 +114,14 @@ define(function (require) {
                 }
     
                 this.set({_isComplete:isComplete});
+                Adapt.checkedCompletion();
                 
             }, this));
         },
 
         checkInteractionCompletionStatus: function () {
             //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            Adapt.checkingCompletion();
             _.defer(_.bind(function() {
                 // Filter children based upon whether they are available
                 var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
@@ -136,7 +140,8 @@ define(function (require) {
                 }
     
                 this.set({_isInteractionComplete:isInteractionComplete});
-                
+                Adapt.checkedCompletion();
+
             }, this));
         },
 

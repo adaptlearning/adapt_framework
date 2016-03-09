@@ -2,6 +2,7 @@ define([
     'coreJS/adapt',
     'coreModels/routerModel',
     'coreViews/pageView',
+    'coreJS/startController'
 ], function(Adapt, RouterModel, PageView) {
 
     Adapt.router = new RouterModel(null, {reset: true});
