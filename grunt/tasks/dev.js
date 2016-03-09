@@ -12,6 +12,7 @@ module.exports = function(grunt) {
         'schema-defaults',
         'tracking-insert',
         'javascript:dev',
+        'replace',
         'watch'
     ]);
 }

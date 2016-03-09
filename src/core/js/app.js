@@ -144,6 +144,10 @@ require([
                 //use view+model object
                 var ViewModelObject = Adapt.componentStore[json._component];
 
+				if(!ViewModelObject) {
+                    throw new Error(json._component + ' component not found. Is it installed and included?');
+		        }
+
                 //if model defined for component use component model
                 if (ViewModelObject.model) {
                     return new ViewModelObject.model(json);
