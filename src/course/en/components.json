@@ -201,7 +201,7 @@
 		"_comment": "_setCompletionOn = inview | play | ended",
 		"_setCompletionOn": "play",
 		"_useClosedCaptions": true,
-		"_allowFullscreen": true,
+		"_allowFullScreen": true,
 		"title": "Media",
 		"displayTitle": "Media",
 		"body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or just let audio to literally do the talking. This is when the media component comes to the fore.<br><br>Component can be either single or spanned.",
