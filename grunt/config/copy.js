@@ -135,7 +135,7 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
-        main: {
+        scriptLoader: {
             files: [
                 {
                     expand: true,
@@ -143,7 +143,11 @@ module.exports = function (grunt, options) {
                     dest: '<%= outputdir %>adapt/js/',
                     filter: 'isFile',
                     flatten: true
-                },
+                }
+            ]
+        },
+        libraries: {
+            files: [
                 {
                     expand: true,
                     src: [
@@ -157,7 +161,11 @@ module.exports = function (grunt, options) {
                     dest: '<%= outputdir %>libraries/',
                     filter: 'isFile',
                     flatten: true
-                },
+                }
+            ]
+        },
+        required: {
+            files: [
                 {
                     expand: true,
                     src: ['*/required/**/*'],
