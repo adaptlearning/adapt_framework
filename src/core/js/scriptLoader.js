@@ -7,7 +7,7 @@
         }
         return false;
     })();
-    
+
     //2. Setup require for old style module declarations
     function setupRequireJS() {
         requirejs.config({
@@ -31,12 +31,21 @@
                 test: IE == 8,
                 yep: 'libraries/jquery.js',
                 nope: 'libraries/jquery.v2.js',
-                complete: loadAdapt
+                complete: checkJQueryStatus
             }
         ]);
     }
 
-    //4. Load adapt
+    //4. Wait until JQuery gets loaded completly
+    function checkJQueryStatus() {
+        if(window.jQuery === undefined) {
+            setTimeout(checkJQueryStatus, 100);
+        } else {
+            loadAdapt();
+        }
+    }
+
+    //5. Load adapt
     function loadAdapt() {
         switch (IE) {
         case 8: case 9:
