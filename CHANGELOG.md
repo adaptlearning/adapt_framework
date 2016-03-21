@@ -1,5 +1,29 @@
 ## [Unreleased][unreleased]
 
+## [2.0.8] - 2016-03-21
+
+### Added
+- New documentation for [config.json](https://github.com/adaptlearning/adapt_framework/wiki/Configure-your-project-with-config.json) and [course.json](https://github.com/adaptlearning/adapt_framework/wiki/Content-starts-with-course.json)
+- New 'start controller' functionality to allow for single page courses and start pages ([#906](https://github.com/adaptlearning/adapt_framework/issues/906))
+- New property 'requireCompletionOf' to allow for author to specify how many components in a block need to be completed in order for the block to be completed ([#910](https://github.com/adaptlearning/adapt_framework/issues/910))
+- Added support to for string substitution in XML files for the `grunt dev`, `build` and `server-build` tasks ([#939](https://github.com/adaptlearning/adapt_framework/issues/939))
+- Added questionModel and component models, move model behaviour from views into relevant models([#925](https://github.com/adaptlearning/adapt_framework/issues/925))
+
+### Changed
+- Updates to index.html to remove invalid/unnecessary markup ([#997](https://github.com/adaptlearning/adapt_framework/issues/997))
+- Better error message for when components.json references a component that isn't installed ([#974](https://github.com/adaptlearning/adapt_framework/issues/974))
+- port number can now be passed as an optional parameter to the `grunt server` task ([#917](https://github.com/adaptlearning/adapt_framework/issues/917))
+- remove requirejs `coreJS` and `coreViews` mappings ([#929](https://github.com/adaptlearning/adapt_framework/issues/929))
+
+
+### Fixed
+- JQuery not always loading fast enough ([#579](https://github.com/adaptlearning/adapt_framework/issues/579))
+- Component "left" and "right" layout getting ignored on mobile when JSON does not match order ([#636](https://github.com/adaptlearning/adapt_framework/issues/636) and [#985](https://github.com/adaptlearning/adapt_framework/issues/985))
+- Issues with the inview library that would sometimes prevent components with 'inview' completion from being marked as completed ([#956](https://github.com/adaptlearning/adapt_framework/pull/956))
+- function `navigateToParent` in router.js wasn't checking `_canNavigate` ([#961](https://github.com/adaptlearning/adapt_framework/issues/961))
+- ordered list items weren't included in reset.less ([#960](https://github.com/adaptlearning/adapt_framework/pull/960))
+- completion cascade not happening the right order ([#927](https://github.com/adaptlearning/adapt_framework/issues/927))
+
 ## [2.0.7] - 2016-02-08
 
 ### Added
@@ -286,7 +310,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...HEAD
+[2.0.8]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.5...v2.0.6
 [2.0.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.4...v2.0.5
