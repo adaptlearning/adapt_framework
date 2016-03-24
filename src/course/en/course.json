@@ -142,6 +142,7 @@
         "_altText": "of components completed on this page."
     },
     "_resources": {
+        "_isEnabled": true,
         "title": "Resources",
         "description": "View resources for this course by clicking here.",
         "_filterButtons": {
