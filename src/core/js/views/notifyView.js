@@ -91,6 +91,7 @@ define(function(require) {
             event.preventDefault();
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
+            Adapt.trigger("notify:cancelled");
         },
 
         resetNotifySize: function() {
