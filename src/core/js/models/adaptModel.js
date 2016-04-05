@@ -7,6 +7,7 @@ define(function (require) {
 
         defaults: {
             _canShowFeedback: true,
+            _classes: "",
             _canReset: false,
             _isComplete: false,
             _isInteractionComplete: false,
