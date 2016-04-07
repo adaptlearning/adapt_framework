@@ -367,7 +367,7 @@ define(function (require) {
         },
 
         shouldLock: function(lockedBy) {
-            if (!lockedBy) return;
+            if (!lockedBy) return false;
 
             for (var i = lockedBy.length - 1; i >= 0; i--) {
                 var id = lockedBy[i];
@@ -379,6 +379,8 @@ define(function (require) {
                     console.log("Locking: ID \"" + id + "\" not found");
                 }
             }
+
+            return false;
         }
 
     });
