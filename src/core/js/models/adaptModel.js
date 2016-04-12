@@ -311,7 +311,11 @@ define(function (require) {
         },
 
         checkLocking: function() {
-            switch (this.get("_lockType")) {
+            var lockType = this.get("_lockType");
+
+            if (!lockType) return;
+
+            switch (lockType) {
                 case "sequential":
                     this.setSequentialLocking();
                     break;
@@ -323,6 +327,10 @@ define(function (require) {
                     break;
                 case "custom":
                     this.setCustomLocking();
+                    break;
+                default:
+                    console.warn("AdaptModel.checkLocking: unknown _lockType \"" +
+                        lockType + "\" found on " + this.get("_id"));
             }
         },
 
