@@ -40,6 +40,8 @@ define(function (require) {
 
                 this.setupChildListeners();
             }
+
+            this.checkLocking();
             this.init();
             _.defer(_.bind(function() {
                 if (this._children) {
@@ -370,11 +372,13 @@ define(function (require) {
             for (var i = 0, j = children.length; i < j; i++) {
                 var child = children[i];
 
-                child.set("_isLocked", this.shouldLock(child.get("_lockedBy")));
+                child.set("_isLocked", this.shouldLock(child));
             }
         },
 
-        shouldLock: function(lockedBy) {
+        shouldLock: function(child) {
+            var lockedBy = child.get("_lockedBy");
+
             if (!lockedBy) return false;
 
             for (var i = lockedBy.length - 1; i >= 0; i--) {
@@ -384,7 +388,8 @@ define(function (require) {
                     if (!Adapt.findById(id).get("_isComplete")) return true;
                 }
                 catch (e) {
-                    console.log("Locking: ID \"" + id + "\" not found");
+                    console.warn("AdaptModel.shouldLock: unknown _lockedBy ID \"" + id +
+                        "\" found on " + child.get("_id"));
                 }
             }
 
