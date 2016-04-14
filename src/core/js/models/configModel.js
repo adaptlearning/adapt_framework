@@ -7,12 +7,13 @@ define(function(require) {
 
         defaults: {
             screenSize : {
-                small:520,
-                medium:760,
-                large:1024
+                small: 520,
+                medium: 760,
+                large: 1024
             },
-            _canLoadData:true,
-            _disableAnimation:false
+            _forceRouteLocking: false,
+            _canLoadData: true,
+            _disableAnimation: false
         },
 
         initialize: function(attrs, options) {

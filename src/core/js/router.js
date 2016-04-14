@@ -114,7 +114,7 @@ define([
             switch (type) {
                 case 'page':
                 case 'menu':
-                    if (currentModel.get('_isLocked')) {
+                    if (currentModel.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
                         console.log('Unable to navigate to locked id: ' + id);
                         Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
                         return Backbone.history.history.back();
