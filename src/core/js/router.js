@@ -106,10 +106,11 @@ define([
             var type = '';
             
             if (!currentModel) {
+                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
                 return;
-            } else {
-                type = currentModel.get('_type');
             }
+
+            type = currentModel.get('_type');
 
             switch (type) {
                 case 'page':
@@ -117,7 +118,11 @@ define([
                     if (currentModel.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
                         console.log('Unable to navigate to locked id: ' + id);
                         Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                        return Backbone.history.history.back();
+                        if (Adapt.location._previousId === undefined) {
+                            return this.navigate("#/", {trigger:true, replace:true});
+                        } else {
+                            return Backbone.history.history.back();
+                        }
                     } else {
                         this.showLoading();
                         this.removeViews();
