@@ -177,8 +177,8 @@ define(function(require) {
                 Adapt.trigger('drawer:opened');
                 
                 //focus on first tabbable element in drawer
-                this.$el.a11y_focus();
-			}
+                this.$el.find('.drawer-close-button').attr('tabindex',-1).a11y_focus();
+	    }
 
         },
 
