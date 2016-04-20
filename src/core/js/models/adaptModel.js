@@ -17,7 +17,8 @@ define(function (require) {
             _isAvailable: true,
             _isOptional: false,
             _isReady: false,
-            _isVisible: true
+            _isVisible: true,
+            _isLocked: false
         },
 
         initialize: function () {
@@ -39,6 +40,8 @@ define(function (require) {
 
                 this.setupChildListeners();
             }
+
+            this.checkLocking();
             this.init();
             _.defer(_.bind(function() {
                 if (this._children) {
@@ -118,6 +121,7 @@ define(function (require) {
                 Adapt.checkedCompletion();
                 
             }, this));
+            this.checkLocking();
         },
 
         checkInteractionCompletionStatus: function () {
@@ -306,8 +310,91 @@ define(function (require) {
 
         setOptional: function(value) {
             this.set({_isOptional: value});
-        }
+        },
 
+        checkLocking: function() {
+            var lockType = this.get("_lockType");
+
+            if (!lockType) return;
+
+            switch (lockType) {
+                case "sequential":
+                    this.setSequentialLocking();
+                    break;
+                case "unlockFirst":
+                    this.setUnlockFirstLocking();
+                    break;
+                case "lockLast":
+                    this.setLockLastLocking();
+                    break;
+                case "custom":
+                    this.setCustomLocking();
+                    break;
+                default:
+                    console.warn("AdaptModel.checkLocking: unknown _lockType \"" +
+                        lockType + "\" found on " + this.get("_id"));
+            }
+        },
+
+        setSequentialLocking: function() {
+            var children = this.getChildren().models;
+
+            for (var i = 1, j = children.length; i < j; i++) {
+                children[i].set("_isLocked", !children[i - 1].get("_isComplete"));
+            }
+        },
+
+        setUnlockFirstLocking: function() {
+            var children = this.getChildren().models;
+            var isFirstChildComplete = children[0].get("_isComplete");
+
+            for (var i = 1, j = children.length; i < j; i++) {
+                children[i].set("_isLocked", !isFirstChildComplete);
+            }
+        },
+
+        setLockLastLocking: function() {
+            var children = this.getChildren().models;
+            var lastIndex = children.length - 1;
+
+            for (var i = lastIndex - 1; i >= 0; i--) {
+                if (!children[i].get("_isComplete")) {
+                    return children[lastIndex].set("_isLocked", true);
+                }
+            }
+
+            children[lastIndex].set("_isLocked", false);
+        },
+
+        setCustomLocking: function() {
+            var children = this.getChildren().models;
+
+            for (var i = 0, j = children.length; i < j; i++) {
+                var child = children[i];
+
+                child.set("_isLocked", this.shouldLock(child));
+            }
+        },
+
+        shouldLock: function(child) {
+            var lockedBy = child.get("_lockedBy");
+
+            if (!lockedBy) return false;
+
+            for (var i = lockedBy.length - 1; i >= 0; i--) {
+                var id = lockedBy[i];
+
+                try {
+                    if (!Adapt.findById(id).get("_isComplete")) return true;
+                }
+                catch (e) {
+                    console.warn("AdaptModel.shouldLock: unknown _lockedBy ID \"" + id +
+                        "\" found on " + child.get("_id"));
+                }
+            }
+
+            return false;
+        }
 
     });
 
