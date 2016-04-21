@@ -41,9 +41,11 @@ define(function (require) {
                 this.setupChildListeners();
             }
 
-            this.checkLocking();
             this.init();
+            
             _.defer(_.bind(function() {
+                this.checkLocking();
+                
                 if (this._children) {
                     this.checkCompletionStatus();
                     this.checkInteractionCompletionStatus();
