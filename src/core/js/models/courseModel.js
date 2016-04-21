@@ -6,6 +6,8 @@ define(function(require) {
     var CourseModel = AdaptModel.extend({
 
         initialize: function(attrs, options) {
+            AdaptModel.prototype.initialize.apply(this, arguments);
+
             this.url = options.url;
 
             this.on('sync', this.loadedData, this);
@@ -16,15 +18,6 @@ define(function(require) {
 
         loadedData: function() {
             Adapt.trigger('courseModel:dataLoaded');
-            this.setupListeners();
-        },
-
-        setupListeners: function() {
-            Adapt[this._children].on({
-                "change:_isReady": this.checkReadyStatus,
-                "change:_isComplete": this.checkCompletionStatus,
-                "change:_isInteractionComplete": this.checkInteractionCompletionStatus
-            }, this);
         },
 
         _children: "contentObjects"

@@ -1,5 +1,6 @@
 var path = require('path');
 var fs = require('fs');
+var _ = require('underscore');
 
 module.exports = function (grunt, options) {
 
@@ -37,6 +38,10 @@ module.exports = function (grunt, options) {
       }
     }
 
+    // Ensure that only whitelisted attributes can be replaced.
+    courseJson = _.pick(courseJson, 'title', 'displayTitle', 'body', 'description');
+    configJson = _.pick(configJson, '_xapi', '_spoor');
+    
     // Combine the course and config JSON so both can be passed to replace.  
     var json = {
       'course': courseJson,
