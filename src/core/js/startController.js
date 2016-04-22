@@ -62,10 +62,9 @@ define([
                     var className =  item._className;
                     var skipIfComplete = item._skipIfComplete;
                     
-                    var model;
-                    try {
-                        model = Adapt.findById(item._id);
-                    } catch(e) {
+                    var model = Adapt.findById(item._id);
+                    
+                    if (!model) {
                         console.log("startController: cannot find id", item._id);
                         continue;
                     }

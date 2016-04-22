@@ -172,14 +172,7 @@ define([
                 this.navigate("#/", {trigger:false, replace:false});
                 break;
             case 1:
-                var foundId = false;
-                try {
-                    Adapt.findById(args[0]);
-                    foundId = true;
-                } catch(e) {
-
-                }
-                if (foundId) {
+                if (Adapt.findById(args[0])) {
                     this.navigate("#/id/"+args[0], {trigger:false, replace:false});
                 } else {
                     this.navigate("#/"+args[0], {trigger:false, replace:false});
