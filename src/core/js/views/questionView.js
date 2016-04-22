@@ -481,7 +481,7 @@ define(function(require) {
             try {
                 //try to get the current page location
                 var currentModel = Adapt.findById(Adapt.location._currentId);
-                if (currentModel.get("_isReady")) {
+                if (currentModel && currentModel.get("_isReady")) {
                     //if the page is ready, focus on the first tabbable item
                     //otherwise will try to set focus as page loads and components are rendered
                     this.$el.a11y_focus();
