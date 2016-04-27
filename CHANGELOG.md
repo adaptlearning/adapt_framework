@@ -1,5 +1,23 @@
 ## [Unreleased][unreleased]
 
+## [2.0.9] - 2016-03-27
+
+### Added
+- new 'locking' feature enables course authors to lock parts of the course until other parts have been completed ([#905](https://github.com/adaptlearning/adapt_framework/issues/905)). Documentation for this feature can be found [here](https://github.com/adaptlearning/adapt_framework/wiki/Locking-objects-with-'_isLocked'-and-'_lockType'). Note that locking needs to be supported in the menu plugin you are using - support for this has been added to adapt-contrib-boxmenu in [v2.0.4](https://github.com/adaptlearning/adapt-contrib-boxmenu/releases/tag/v2.0.4) 
+- new 'notify:cancelled' event added ([#1009](https://github.com/adaptlearning/adapt_framework/issues/1009))
+
+### Changed
+- various amends to the default content that bring it in line with changes to some of the core plugins, such as:
+  - added `_isEnabled` property to `_resources` object in course.json
+  - added `_useClosedCaptions`, `_allowFullscreen` and `cc` to the media component in components.json
+  - added an example .vtt captions file to the video folder
+  - removed `instruction` from the `_globals` object in course.json ([#1031](https://github.com/adaptlearning/adapt_framework/issues/1031))
+
+### Fixed
+- Leaving out the `_classes` property would cause a class of "undefined" to be added to the class list ([#804](https://github.com/adaptlearning/adapt_framework/issues/804))
+- Intermittent error in the Grunt 'replace' tasks for authoring tool users ([#1021](https://github.com/adaptlearning/adapt_framework/issues/1021))
+- Temporary workaround for some LESS variables not being defined in the core theme ([#1006](https://github.com/adaptlearning/adapt_framework/issues/1006)) 
+
 ## [2.0.8] - 2016-03-21
 
 ### Added
@@ -310,7 +328,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.9...HEAD
+[2.0.9]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...v2.0.9
 [2.0.8]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...v2.0.7
 [2.0.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.5...v2.0.6
