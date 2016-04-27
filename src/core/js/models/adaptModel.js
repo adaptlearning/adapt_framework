@@ -41,12 +41,15 @@ define(function (require) {
                 this.setupChildListeners();
             }
 
-            this.checkLocking();
             this.init();
+            
             _.defer(_.bind(function() {
                 if (this._children) {
                     this.checkCompletionStatus();
+                    
                     this.checkInteractionCompletionStatus();
+                    
+                    this.checkLocking();
                 }
             }, this));
         },
@@ -57,7 +60,7 @@ define(function (require) {
 
             this.listenTo(Adapt[this._children], {
                 "change:_isReady": this.checkReadyStatus,
-                "change:_isComplete": this.checkCompletionStatus,
+                "change:_isComplete": this.onIsComplete,
                 "change:_isInteractionComplete": this.checkInteractionCompletionStatus
             });
 
@@ -117,11 +120,10 @@ define(function (require) {
                     isComplete = (availableChildren.where({_isComplete: true, _isOptional: false}).length >= requireCompletionOf );
                 }
     
-                this.set({_isComplete:isComplete});
-                Adapt.checkedCompletion();
+                this.set({_isComplete: isComplete});
                 
+                Adapt.checkedCompletion();
             }, this));
-            this.checkLocking();
         },
 
         checkInteractionCompletionStatus: function () {
@@ -394,6 +396,12 @@ define(function (require) {
             }
 
             return false;
+        },
+        
+        onIsComplete: function() {
+            this.checkCompletionStatus();
+            
+            this.checkLocking();
         }
 
     });
