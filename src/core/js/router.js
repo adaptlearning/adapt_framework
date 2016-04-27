@@ -94,7 +94,7 @@ define([
             this.setContentObjectToVisited(Adapt.course);
             this.updateLocation('course');
             Adapt.once('menuView:ready', function() {
-                //allow navigation
+                // Allow navigation
                 Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
             });
             Adapt.trigger('router:menu', Adapt.course);
@@ -103,37 +103,56 @@ define([
         handleId: function(id) {
 
             var currentModel = Adapt.findById(id);
+            var type = '';
+            
+            if (!currentModel) {
+                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                return;
+            }
 
-            switch (currentModel.get('_type')) {
-                case 'page': case 'menu':
-                    this.showLoading();
-                    this.removeViews();
+            type = currentModel.get('_type');
 
-                    this.setContentObjectToVisited(currentModel);
-
-                    if (currentModel.get('_type') == 'page') {
-                        var location = 'page-' + id;
-                        this.updateLocation(location, 'page', id);
-                        Adapt.once('pageView:ready', function() {
-                            //allow navigation
-                            Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                        });
-                        Adapt.trigger('router:page', currentModel);
-                        this.$wrapper.append(new PageView({model:currentModel}).$el);
+            switch (type) {
+                case 'page':
+                case 'menu':
+                    if (currentModel.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
+                        console.log('Unable to navigate to locked id: ' + id);
+                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                        if (Adapt.location._previousId === undefined) {
+                            return this.navigate("#/", {trigger:true, replace:true});
+                        } else {
+                            return Backbone.history.history.back();
+                        }
                     } else {
-                        var location = 'menu-' + id;
-                        this.updateLocation(location, 'menu', id);
-                        Adapt.once('menuView:ready', function() {
-                            //allow navigation
-                            Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                        });
-                        Adapt.trigger('router:menu', currentModel);
-                    }
+                        this.showLoading();
+                        this.removeViews();
+
+                        this.setContentObjectToVisited(currentModel);
+
+                        if (type == 'page') {
+                            var location = 'page-' + id;
+                            this.updateLocation(location, 'page', id);
+                            Adapt.once('pageView:ready', function() {
+                                // Allow navigation
+                                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                            });
+                            Adapt.trigger('router:page', currentModel);
+                            this.$wrapper.append(new PageView({model: currentModel}).$el);
+                        } else {
+                            var location = 'menu-' + id;
+                            this.updateLocation(location, 'menu', id);
+                            Adapt.once('menuView:ready', function() {
+                                // Allow navigation
+                                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                            });
+                            Adapt.trigger('router:menu', currentModel);
+                        }
+                    } 
                 break;
                 default:
                     //allow navigation
                     Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                    Adapt.navigateToElement('.' + id, {replace:true});
+                    Adapt.navigateToElement('.' + id, {replace: true});
             }
         },
 
@@ -153,14 +172,7 @@ define([
                 this.navigate("#/", {trigger:false, replace:false});
                 break;
             case 1:
-                var foundId = false;
-                try {
-                    Adapt.findById(args[0]);
-                    foundId = true;
-                } catch(e) {
-
-                }
-                if (foundId) {
+                if (Adapt.findById(args[0])) {
                     this.navigate("#/id/"+args[0], {trigger:false, replace:false});
                 } else {
                     this.navigate("#/"+args[0], {trigger:false, replace:false});

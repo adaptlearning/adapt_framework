@@ -176,7 +176,6 @@ define([
     Adapt.mapById = function(id) {
         // Returns collection name that contains this models Id
         return mappedIds[id];
-
     }
 
     Adapt.findById = function(id) {
@@ -187,7 +186,14 @@ define([
             return Adapt.course;
         }
 
-        return Adapt[Adapt.mapById(id)]._byAdaptID[id][0];
+        var collectionType = Adapt.mapById(id);
+
+        if (!collectionType) {
+            console.warn('Adapt.findById() unable to find collection type for id: ' + id);
+            return;
+        }
+
+        return Adapt[collectionType]._byAdaptID[id][0];
 
     }
 
