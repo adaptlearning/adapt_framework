@@ -34,7 +34,7 @@ Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/
 + [Gitter](https://gitter.im/orgs/adaptlearning/rooms)
 + [Community Site](https://community.adaptlearning.org/)  
 + [Technical Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4) 
-+ [Bugs / Feature Requests](https://adaptlearning.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10100&issuetype=1&priority=6&components=10201)  
++ [Bugs / Feature Requests](https://github.com/adaptlearning/adapt_framework/issues/new?title=please%20enter%20a%20brief%20summary%20of%20the%20issue%20here&body=please%20provide%20a%20full%20description%20of%20the%20problem,%20including%20steps%20on%20how%20to%20replicate,%20what%20browser(s)/device(s)%20the%20problem%20occurs%20on%20and,%20where%20helpful,%20screenshots.)  
 + [Responsive e-Learning Forum](https://community.adaptlearning.org/mod/forum/view.php?id=56)  
 
 ## Contributing to Adapt  
