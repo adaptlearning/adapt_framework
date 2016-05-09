@@ -81,7 +81,7 @@ define([
     };
 
     // Compatibility references
-    helpers['if_value_equal'] = helpers['equals'];
+    helpers['if_value_equals'] = helpers['equals'];
     helpers['numbers'] = helpers['inc'];
     helpers['lowerCase'] = helpers['lowercase'];
 
