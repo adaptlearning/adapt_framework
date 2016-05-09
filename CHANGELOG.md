@@ -1,5 +1,15 @@
 ## [Unreleased][unreleased]
 
+## [2.0.10] - 2016-05-09
+
+### Changed
+- enhancement-967: questionView model code > questionModel ([#981](https://github.com/adaptlearning/adapt_framework/pull/981))
+- change issues link from Jira to Github 
+
+### Fixed
+- issue-1047: downgrade less library ([#1047](https://github.com/adaptlearning/adapt_framework/pull/1047))
+
+
 ## [2.0.9] - 2016-03-27
 
 ### Added
@@ -328,7 +338,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.9...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.10...HEAD
+[2.0.10]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.9...v2.0.10
 [2.0.9]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...v2.0.9
 [2.0.8]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8
 [2.0.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.6...v2.0.7
