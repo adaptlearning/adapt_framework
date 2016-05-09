@@ -141,7 +141,7 @@
     "grunt-replace": "^0.11.0",
     "jit-grunt": "^0.9.1",
     "jshint-stylish": "^2.1.0",
-    "less": "^2.5.3",
+    "less": "2.6.1",
     "load-grunt-config": "^0.17.2",
     "requirejs": "^2.1.22",
     "time-grunt": "^1.2.1",
