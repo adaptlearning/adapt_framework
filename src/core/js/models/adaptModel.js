@@ -99,6 +99,13 @@ define(function (require) {
             this.set({_isReady: true});
         },
 
+        setCompletionStatus: function() {
+            if (this.get('_isVisible')) {
+                this.set('_isComplete', true);
+                this.set('_isInteractionComplete', true);
+            }
+        },
+
         checkCompletionStatus: function () {
             //defer to allow other change:_isComplete handlers to fire before cascasing to parent
             Adapt.checkingCompletion();

@@ -1,9 +1,11 @@
-define(function(require) {
+define([
+    'coreJS/adapt',
+    'coreViews/componentView',
+    'coreViews/buttonsView',
+    'coreModels/questionModel'
+], function(Adapt, ComponentView, ButtonsView, QuestionModel) {
 
-    var Handlebars = require('handlebars');
-    var ComponentView = require('coreViews/componentView');
-    var Adapt = require('coreJS/adapt');
-    var ButtonsView = require('coreViews/buttonsView');
+    var useQuestionModelOnly = false;
 
     var QuestionView = ComponentView.extend({
 
@@ -28,7 +30,7 @@ define(function(require) {
             // Checks to see if the question should be reset on revisit
             this.checkIfResetOnRevisit();
             // This method helps setup default settings on the model
-            this.setupDefaultSettings();
+            this._runModelCompatibleFunction("setupDefaultSettings");
             // Blank method for setting up questions before rendering
             this.setupQuestion();
 
@@ -99,81 +101,6 @@ define(function(require) {
         // Used by the question to reset the question when revisiting the component
         resetQuestionOnRevisit: function(type) {},
 
-        // Calls default methods to setup on questions
-        setupDefaultSettings: function() {
-            if(this.model.get("_canShowModelAnswer") === undefined) {
-                this.model.set("_canShowModelAnswer", true);
-            }
-
-            this.setupButtonSettings();
-            this.setupWeightSettings();
-        },
-
-        // Used to setup either global or local button text
-        setupButtonSettings: function() {
-            var globalButtons = Adapt.course.get("_buttons");
-
-            // Checks if local _buttons exists and if not use global
-            if (!this.model.has("_buttons")) {
-                this.model.set("_buttons", globalButtons);
-            } else {
-                // check all the components buttons
-                // if they are empty use the global default
-                var componentButtons = this.model.get("_buttons");
-
-                if (typeof componentButtons.submit == 'undefined') {
-                    for (var key in componentButtons) {
-                        if (typeof componentButtons[key] == 'object') {
-                          // ARIA labels
-                          if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
-                            componentButtons[key].buttonText = globalButtons[key].buttonText;
-                          }
-
-                          if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
-                            componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
-                          }
-                        }
-
-                        if (!componentButtons[key] && globalButtons[key]) {
-                            componentButtons[key] = globalButtons[key];
-                        }
-                    }
-                } else {
-                    // Backwards compatibility with v1.x
-                    var buttons = [];
-
-                    for (var key in componentButtons) {
-                        var index = '_' + key;
-
-                        if (!componentButtons[key]) {
-                            buttons[index] = globalButtons[index];
-                        } else {
-                            buttons[index] = {
-                                buttonText: componentButtons[key],
-                                ariaLabel: componentButtons[key]
-                            };
-                        }
-                    }
-
-                    // HACK - Append other missing values
-                    buttons['_showFeedback'] = {
-                        buttonText: 'Show feedback',
-                        ariaLabel: 'Show feedback'
-                    };
-
-                    this.model.set('_buttons', buttons);
-                }
-            }
-        },
-
-        // Used to setup either global or local question weight/score
-        setupWeightSettings: function() {
-            // Checks if questionWeight exists and if not use global
-            if (!this.model.has("_questionWeight")) {
-                this.model.set("_questionWeight", Adapt.config.get("_questionWeight"));
-            }
-        },
-
         // Left blank for question setup - should be used instead of preRender
         setupQuestion: function() {},
 
@@ -202,22 +129,23 @@ define(function(require) {
 
         // Triggered when the submit button is clicked
         onSubmitClicked: function() {
-
             // canSubmit is setup in questions and should return a boolean
             // If the question stops the user form submitting - show instruction error
             // and give a blank method, onCannotSubmit to the question
-            if(!this.canSubmit()) {
+            var canSubmit = this._runModelCompatibleFunction("canSubmit");
+
+            if(!canSubmit) {
                 this.showInstructionError();
                 this.onCannotSubmit();
                 return;
             }
 
             // Used to update the amount of attempts the question has
-            this.updateAttempts();
+            this._runModelCompatibleFunction("updateAttempts");
 
             // Used to set attributes on the model after being submitted
             // Also adds a class of submitted
-            this.setQuestionAsSubmitted();
+            this._runModelCompatibleFunction("setQuestionAsSubmitted");
 
             // Used to remove instruction error that is set when
             // the user has interacted in the wrong way
@@ -225,40 +153,37 @@ define(function(require) {
 
             // Used to store the users answer for later
             // This is a blank method given to the question
-            this.storeUserAnswer();
+            this._runModelCompatibleFunction("storeUserAnswer");
 
             // Used to set question as correct:true/false
             // Calls isCorrect which is blank for the question
             // to fill out and return a boolean
-            this.markQuestion();
+            this._runModelCompatibleFunction("markQuestion", "isCorrect");
 
             // Used by the question to set the score on the model
-            this.setScore();
+            this._runModelCompatibleFunction("setScore");
 
             // Used by the question to display markings on the component
             this.showMarking();
 
             // Used to check if the question is complete
             // Triggers setCompletionStatus and adds class to widget
-            this.checkQuestionCompletion();
+            this._runModelCompatibleFunction("checkQuestionCompletion");
 
             this.recordInteraction();
 
             // Used to setup the feedback by checking against
             // question isCorrect or isPartlyCorrect
-            this.setupFeedback();
+            this._runModelCompatibleFunction("setupFeedback");
 
             // Used to update buttonsView based upon question state
             // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
-            this.updateButtons();
+            this._runModelCompatibleFunction("updateButtons");
+
             // Used to trigger an event so plugins can display feedback
             this.showFeedback();
 
         },
-
-        // Use to check if the user is allowed to submit the question
-        // Maybe the user has to select an item?
-        canSubmit: function() {},
 
         // Adds a validation error class when the canSubmit returns false
         showInstructionError: function() {
@@ -269,21 +194,11 @@ define(function(require) {
         // Blank method for question to fill out when the question cannot be submitted
         onCannotSubmit: function() {},
 
-        // Used to update the amount of attempts the user has left
-        updateAttempts: function() {
-            if (!this.model.get('_attemptsLeft')) {
-                this.model.set("_attemptsLeft", this.model.get('_attempts'));
-            }
-            this.model.set("_attemptsLeft", this.model.get('_attemptsLeft') - 1);
-        },
 
         // Used to set _isEnabled and _isSubmitted on the model
         // Also adds a 'submitted' class to the widget
         setQuestionAsSubmitted: function() {
-            this.model.set({
-                _isEnabled: false,
-                _isSubmitted: true
-            });
+            this.model.setQuestionAsSubmitted();
             this.$(".component-widget").addClass("submitted");
         },
 
@@ -291,27 +206,6 @@ define(function(require) {
         removeInstructionError: function() {
             this.$(".component-instruction-inner").removeClass("validation-error");
         },
-
-        // This is important for returning or showing the users answer
-        // This should preserve the state of the users answers
-        storeUserAnswer: function() {},
-
-        // Sets _isCorrect:true/false based upon isCorrect method below
-        markQuestion: function() {
-
-            if (this.isCorrect()) {
-                this.model.set('_isCorrect', true);
-            } else {
-                this.model.set('_isCorrect', false);
-            }
-
-        },
-
-        // Should return a boolean based upon whether to question is correct or not
-        isCorrect: function() {},
-
-        // Used to set the score based upon the _questionWeight
-        setScore: function() {},
 
         // This is important and should give the user feedback on how they answered the question
         // Normally done through ticks and crosses by adding classes
@@ -321,14 +215,9 @@ define(function(require) {
         // Calls setCompletionStatus and adds complete classes
         checkQuestionCompletion: function() {
 
-            var isComplete = false;
-
-            if (this.model.get('_isCorrect') || this.model.get('_attemptsLeft') === 0) {
-                isComplete = true;
-            }
+            var isComplete = this.model.checkQuestionCompletion();
 
             if (isComplete) {
-                this.setCompletionStatus();
                 this.$('.component-widget').addClass('complete show-user-answer');
             }
 
@@ -338,112 +227,6 @@ define(function(require) {
             if (this.model.get('_recordInteraction') === true || !this.model.has('_recordInteraction')) {
                 Adapt.trigger('questionView:recordInteraction', this);
             }
-        },
-
-        // Updates buttons based upon question state by setting
-        // _buttonState on the model which buttonsView listens to
-        updateButtons: function() {
-
-            var isInteractionComplete = this.model.get('_isInteractionComplete');
-            var isCorrect = this.model.get('_isCorrect');
-            var isEnabled = this.model.get('_isEnabled');
-            var buttonState = this.model.get('_buttonState');
-            var canShowModelAnswer = this.model.get('_canShowModelAnswer');
-
-            if (isInteractionComplete) {
-
-                if (isCorrect || !canShowModelAnswer) {
-                    // Use correct instead of complete to signify button state
-                    this.model.set('_buttonState', 'correct');
-
-                } else {
-
-                    switch (buttonState) {
-                      case "submit":
-                      case "hideCorrectAnswer":
-                          this.model.set('_buttonState', 'showCorrectAnswer');
-                          break;
-                      default:
-                          this.model.set('_buttonState', 'hideCorrectAnswer');
-                    }
-
-                }
-
-            } else {
-
-                if (isEnabled) {
-                    this.model.set('_buttonState', 'submit');
-                } else {
-                    this.model.set('_buttonState', 'reset');
-                }
-            }
-
-        },
-
-        // Used to setup the correct, incorrect and partly correct feedback
-        setupFeedback: function() {
-
-            if (this.model.get('_isCorrect')) {
-                this.setupCorrectFeedback();
-            } else if (this.isPartlyCorrect()) {
-                this.setupPartlyCorrectFeedback();
-            } else {
-                this.setupIncorrectFeedback();
-            }
-
-        },
-
-        // Used by the question to determine if the question is incorrect or partly correct
-        // Should return a boolean
-        isPartlyCorrect: function() {},
-
-        setupCorrectFeedback: function() {
-
-            this.model.set({
-                feedbackTitle: this.model.get('title'),
-                feedbackMessage: this.model.get("_feedback") ? this.model.get("_feedback").correct : ""
-            });
-
-        },
-
-        setupPartlyCorrectFeedback: function() {
-
-            if (this.model.get("_feedback") && this.model.get('_feedback')._partlyCorrect) {
-                if (this.model.get('_attemptsLeft') === 0 || !this.model.get('_feedback')._partlyCorrect.notFinal) {
-                    if (this.model.get('_feedback')._partlyCorrect.final) {
-                        this.model.set({
-                            feedbackTitle: this.model.get('title'),
-                            feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.final : ""
-                        });
-                    } else {
-                        this.setupIncorrectFeedback();
-                    }
-                } else {
-                    this.model.set({
-                        feedbackTitle: this.model.get('title'),
-                        feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._partlyCorrect.notFinal : ""
-                    });
-                }
-            } else {
-                this.setupIncorrectFeedback();
-            }
-
-        },
-
-        setupIncorrectFeedback: function() {
-
-            if (this.model.get('_attemptsLeft') === 0 || this.model.get('_feedback') && !this.model.get('_feedback')._incorrect.notFinal) {
-                this.model.set({
-                    feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.final : ""
-                });
-            } else {
-                this.model.set({
-                    feedbackTitle: this.model.get('title'),
-                    feedbackMessage: this.model.get("_feedback") ? this.model.get('_feedback')._incorrect.notFinal : ""
-                });
-            }
-
         },
 
         // Used to show feedback based upon whether _canShowFeedback is true
@@ -459,8 +242,11 @@ define(function(require) {
 
         onResetClicked: function() {
             this.setQuestionAsReset();
-            this.updateButtons();
-            this.resetUserAnswer();
+            
+            this._runModelCompatibleFunction("updateButtons");
+
+            this._runModelCompatibleFunction("resetUserAnswer");
+
             this.resetQuestion();
             if (this.model.get("_isReady")) {
                 //if the model is already rendered, focus on the first tabbable element
@@ -472,10 +258,7 @@ define(function(require) {
         },
 
         setQuestionAsReset: function() {
-            this.model.set({
-                _isEnabled: true,
-                _isSubmitted: false
-            });
+            this.model.setQuestionAsReset();
             this.$(".component-widget").removeClass("submitted");
             
             // Attempt to get the current page location
@@ -487,9 +270,6 @@ define(function(require) {
             }
         },
 
-        // Used by the question view to reset the stored user answer
-        resetUserAnswer: function() {},
-
         // Used by the question view to reset the look and feel of the component.
         // This could also include resetting item data
         // This is triggered when the reset button is clicked so it shouldn't
@@ -498,7 +278,9 @@ define(function(require) {
 
         onShowCorrectAnswerClicked: function() {
             this.setQuestionAsShowCorrect();
-            this.updateButtons();
+
+            this._runModelCompatibleFunction("updateButtons");
+
             this.showCorrectAnswer();
         },
 
@@ -513,9 +295,12 @@ define(function(require) {
 
         onHideCorrectAnswerClicked: function() {
             this.setQuestionAsHideCorrect();
-            this.updateButtons();
+
+            this._runModelCompatibleFunction("updateButtons");
+
             this.hideCorrectAnswer();
         },
+
 
         setQuestionAsHideCorrect: function() {
             this.$(".component-widget")
@@ -537,12 +322,177 @@ define(function(require) {
         getResponse:function() {},
 
         // a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
-        getResponseType:function() {}
+        getResponseType:function() {},
+
+        // This function is overridden if useQuestionModeOnly: false. see below.
+        _runModelCompatibleFunction: function(name, lookForViewOnlyFunction) {
+            return this.model[name](); //questionModel Only
+        }
 
     }, {
         _isQuestionType: true
     });
 
-    return QuestionView;
+
+    //allows us to turn on and off the questionView style and use the separated questionModel+questionView style only
+    if (useQuestionModelOnly) return QuestionView;
+
+    /*BACKWARDS COMPATIBILITY SECTION
+    * This section below is only for compatibility between the separated questionView+questionModel and the old questionView
+    * Remove this section in when all components use questionModel and there is no need to have model behaviour in the questionView
+    */
+
+    var viewOnlyCompatibleQuestionView = QuestionView.extend({
+
+        /* All of these functions have been moved to the questionModel.js file. 
+         * On the rare occasion that they have not been overridden by the component and 
+                that they call the view only questionView version, 
+                these functions are included as redirects to the new Question Model.
+                It is very unlikely that these are needed but they are included to ensure compatibility.
+         * If you need to override these in your component you should now make and register a component model.
+         * Please remove them from your question component's view.
+        */
+
+            // Calls default methods to setup on questions
+            setupDefaultSettings: function() {
+                return this.model.setupDefaultSettings();
+            },
+
+            // Used to setup either global or local button text
+            setupButtonSettings: function() {
+                return this.model.setupButtonSettings();
+            },
+
+            // Used to setup either global or local question weight/score
+            setupWeightSettings: function() {
+                return this.model.setupWeightSettings();
+            },
+
+            // Use to check if the user is allowed to submit the question
+            // Maybe the user has to select an item?
+            canSubmit: function() {
+                return this.model.canSubmit();
+            },
+
+            // Used to update the amount of attempts the user has left
+            updateAttempts: function() {
+                return this.model.updateAttempts();
+            },
+
+            // This is important for returning or showing the users answer
+            // This should preserve the state of the users answers
+            storeUserAnswer: function() {
+                return this.model.storeUserAnswer();
+            },
+
+            // Used by the question view to reset the stored user answer
+            resetUserAnswer: function() {
+                return this.model.resetUserAnswer();
+            },
+
+            // Sets _isCorrect:true/false based upon isCorrect method below
+            markQuestion: function() {
+
+                if (this._isInViewOnlyCompatibleMode("isCorrect")) {
+
+                    if (this.isCorrect()) {
+                        this.model.set('_isCorrect', true);
+                    } else {
+                        this.model.set('_isCorrect', false);
+                    }
+
+                } else {
+                    return this.model.markQuestion();
+                }
+            },
+
+            // Should return a boolean based upon whether to question is correct or not
+            isCorrect: function() {
+                return this.model.isCorrect();
+            },
+
+            // Used to set the score based upon the _questionWeight
+            setScore: function() {
+                return this.model.setScore();
+            },
+
+            // Updates buttons based upon question state by setting
+            // _buttonState on the model which buttonsView listens to
+            updateButtons: function() {
+                return this.model.updateButtons();
+            },
+
+            // Used to setup the correct, incorrect and partly correct feedback
+            setupFeedback: function() {
+
+                if (this._isInViewOnlyCompatibleMode("isPartlyCorrect")) {
+
+                    // Use view based feedback where necessary
+                    if (this.model.get('_isCorrect')) {
+                        this._runModelCompatibleFunction("setupCorrectFeedback");
+                    } else if (this.isPartlyCorrect()) {
+                        this._runModelCompatibleFunction("setupPartlyCorrectFeedback");
+                    } else {
+                        this._runModelCompatibleFunction("setupIncorrectFeedback");
+                    }
+
+                } else {
+                    // Use model based feedback
+                    this.model.setupFeedback();
+                }
+
+            },
+
+            // Used by the question to determine if the question is incorrect or partly correct
+            // Should return a boolean
+            isPartlyCorrect: function() {
+                return this.model.isPartlyCorrect();
+            },
+
+            setupCorrectFeedback: function() {
+                return this.model.setupCorrectFeedback();
+            },
+
+            setupPartlyCorrectFeedback: function() {
+                return this.model.setupPartlyCorrectFeedback();
+            },
+
+            setupIncorrectFeedback: function() {
+                return this.model.setupIncorrectFeedback();
+            },
+
+
+        //Helper functions for compatibility layer
+        _runModelCompatibleFunction: function(name, lookForViewOnlyFunction) {
+            if (this._isInViewOnlyCompatibleMode(name, lookForViewOnlyFunction)) {
+                return this[name](); //questionView
+            } else {
+                return this.model[name](); //questionModel
+            }
+        },
+
+        _isInViewOnlyCompatibleMode: function(name, lookForViewOnlyFunction) {
+            //return false uses the model function questionModel
+            //return true uses the view only function questionView
+
+            var checkForFunction = (lookForViewOnlyFunction || name);
+
+            //if the function does NOT exist on the view at all, use the model only
+            if (!this.constructor.prototype[checkForFunction]) return false; //questionModel
+
+            //if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
+            if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView.prototype[checkForFunction]) return false; //questionModel
+
+            //if the function DOES exist on the view and does NOT match the compatibility function above, use the view function
+            return true; //questionView
+        }
+
+    }, {
+        _isQuestionType: true
+    });
+
+    return viewOnlyCompatibleQuestionView;
+
+    /*END OF BACKWARDS COMPATIBILITY SECTION*/
 
 });
