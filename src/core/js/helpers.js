@@ -7,6 +7,10 @@ define([
         lowercase: function(text) {
             return text.toLowerCase();
         },
+        
+        capitalise:  function(text) {
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        },
 
         inc: function(index) {
             return index+1;
@@ -14,10 +18,6 @@ define([
 
         dec: function(index) {
             return index-1;
-        },
-
-        capitalise:  function(text) {
-            return text.charAt(0).toUpperCase() + text.slice(1);
         },
 
         odd: function (index) {
