@@ -41,8 +41,8 @@ define([
                 if (value <= text) return block.fn(this);
                 break;
             case ">":
-                break;
                 if (value > text) return block.fn(this);
+                break;
             case "<":
                 if (value < text) return block.fn(this);
                 break;
