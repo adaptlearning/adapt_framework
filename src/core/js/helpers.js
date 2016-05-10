@@ -31,7 +31,7 @@ define([
         compare: function(value, operator, text, block) {
             // Comparison operators
             switch (operator) {
-            case case "===":
+            case "===":
                 if (value === text) return block.fn(this);
                 break;
             case "=": case "==":
