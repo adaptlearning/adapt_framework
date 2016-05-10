@@ -1,43 +1,99 @@
-define(function(require){
+define([
+    'handlebars'
+], function(Handlebars){
 
-    var Handlebars = require('handlebars'),
-        helpers = {
-            lowerCase: function(text) {
-                return text.toLowerCase();
-            },
-            numbers: function(index) {
-                return index +1;
-            },
-            capitalise:  function(text) {
-                return text.charAt(0).toUpperCase() + text.slice(1);
-            },
-            odd: function (index) {
-                return (index +1) % 2 === 0  ? 'even' : 'odd';
-            },
-            if_value_equals: function(value, text, block) {
-                if (value === text) {
-                    return block.fn(this);
-                } else {
-                    return block.inverse(this);
-                }
-            },
-            math: function(lvalue, operator, rvalue, options) {
-                lvalue = parseFloat(lvalue);
-                rvalue = parseFloat(rvalue);
-                switch (operator) {
-                case "+": return lvalue + rvalue;
-                case "-": return lvalue - rvalue;
-                case "*": return lvalue * rvalue;
-                case "/": return lvalue / rvalue;
-                case "%": return lvalue % rvalue;
-                }
+    var helpers = {
+
+        lowercase: function(text) {
+            return text.toLowerCase();
+        },
+        
+        capitalise:  function(text) {
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        },
+
+        inc: function(index) {
+            return index+1;
+        },
+
+        dec: function(index) {
+            return index-1;
+        },
+
+        odd: function (index) {
+            return (index +1) % 2 === 0  ? 'even' : 'odd';
+        },
+
+        equals: function(value, text, block) {
+            return helpers.compare.call(this, value, "==", text, block);
+        },
+
+        compare: function(value, operator, text, block) {
+            // Comparison operators
+            switch (operator) {
+            case "===":
+                if (value === text) return block.fn(this);
+                break;
+            case "=": case "==":
+                if (value == text) return block.fn(this);
+                break;
+            case ">=":
+                if (value >= text) return block.fn(this);
+                break;
+            case "<=":
+                if (value <= text) return block.fn(this);
+                break;
+            case ">":
+                if (value > text) return block.fn(this);
+                break;
+            case "<":
+                if (value < text) return block.fn(this);
+                break;
             }
-        };
+            return block.inverse(this);
+        },
 
-    for(var name in helpers) {
-       if(helpers.hasOwnProperty(name)) {
+        math: function(lvalue, operator, rvalue, options) {
+            // Mathematical operators
+            lvalue = parseFloat(lvalue);
+            rvalue = parseFloat(rvalue);
+            switch (operator) {
+            case "+": return lvalue + rvalue;
+            case "-": return lvalue - rvalue;
+            case "*": return lvalue * rvalue;
+            case "/": return lvalue / rvalue;
+            case "%": return lvalue % rvalue;
+            }
+        },
+
+        compile: function(template) {
+            // Allow JSON to be a template
+            return Handlebars.compile(template)(this);
+        },
+
+        compile_a11y_text: function(template) {
+            // Allow JSON to be a template and accessible text
+            return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template));
+        },
+
+        compile_a11y_normalize: function(template) {
+            // Allow JSON to be a template and normalized text
+            return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template));
+        }
+
+    };
+
+    // Compatibility references
+    helpers['if_value_equals'] = helpers['equals'];
+    helpers['numbers'] = helpers['inc'];
+    helpers['lowerCase'] = helpers['lowercase'];
+
+    for (var name in helpers) {
+        if (helpers.hasOwnProperty(name)) {
              Handlebars.registerHelper(name, helpers[name]);
         }
     }
+
     return helpers;
+
 });
