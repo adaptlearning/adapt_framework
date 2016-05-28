@@ -210,7 +210,7 @@ define([
         
         navigateToHomeRoute: function(force) {
             if (Adapt.router.get('_canNavigate') || force ) {
-                this.navigate('#', {trigger: true});                
+                this.navigate('#/', {trigger: true});
             }
         },
 
