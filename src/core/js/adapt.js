@@ -173,6 +173,10 @@ define([
 
     }
 
+    Adapt.resetMapping = function () {
+        mappedIds = {};
+    }
+
     Adapt.mapById = function(id) {
         // Returns collection name that contains this models Id
         return mappedIds[id];
