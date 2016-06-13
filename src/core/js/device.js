@@ -17,7 +17,9 @@ define(function(require) {
         $('html').addClass("size-"+Adapt.device.screenSize);
     });
 
-    Adapt.device.screenWidth = $window.width();
+    Adapt.device.screenWidth = isAppleDevice()
+        ? screen.width
+        : window.innerWidth || $window.width();
 
     function checkScreenSize() {
 
@@ -34,7 +36,11 @@ define(function(require) {
     }
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
-        Adapt.device.screenWidth = window.innerWidth || $window.width();
+
+        Adapt.device.screenWidth = isAppleDevice()
+            ? screen.width
+            : window.innerWidth || $window.width();
+
         var newScreenSize = checkScreenSize();
 
         if (newScreenSize !== Adapt.device.screenSize) {
@@ -45,7 +51,7 @@ define(function(require) {
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
 
-	Adapt.trigger('device:resize', Adapt.device.screenWidth);
+	    Adapt.trigger('device:resize', Adapt.device.screenWidth);
 
     }, 100);
 
@@ -57,6 +63,10 @@ define(function(require) {
 
     // Bowser only checks against navigator.userAgent so if the OS is undefined, do a check on the navigator.platform
     if (OS == undefined) OS = getPlatform();
+
+    function isAppleDevice() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
 
     function getPlatform() {
 
@@ -71,7 +81,6 @@ define(function(require) {
         }
 
         return "PlatformUnknown";
-
     }
 
     function pixelDensity() {
