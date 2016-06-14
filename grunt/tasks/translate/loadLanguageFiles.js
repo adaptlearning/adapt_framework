@@ -34,7 +34,7 @@ module.exports = function (grunt) {
       var content = "";
       var lines = [];
       var options = {
-        delimiter: grunt.config("translate.csvDel")
+        delimiter: grunt.config("translate.csvDelimiter")
       };
       
       async.each(langFiles, _parser, _cb);
