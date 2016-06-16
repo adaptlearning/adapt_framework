@@ -2,54 +2,61 @@ define(function(require) {
 
     var Adapt = require('coreJS/adapt');
     var Bowser = require('coreJS/libraries/bowser');
-
-    Adapt.device = {};
-
     var $window = $(window);
 
-    // Check whether device is touch enabled
-    Adapt.device.touch = Modernizr.touch;
+    Adapt.device = {
+        touch: Modernizr.touch,
+        screenWidth: isAppleDevice() ? screen.width : window.innerWidth || $window.width()
+    };
 
     Adapt.once('app:dataReady', function() {
-        // The theme.json will have been loaded at this point
         Adapt.device.screenSize = checkScreenSize();
 
-        $('html').addClass("size-"+Adapt.device.screenSize);
+        $('html').addClass("size-" + Adapt.device.screenSize);
+
+        // As Adapt.config is available it's ok to bind the 'resize'.
+        $window.on('resize', onWindowResize);
     });
 
-    Adapt.device.screenWidth = $window.width();
-
+    /**
+     * Compares the calculated screen width to the breakpoints defined in config.json.
+     * 
+     * @returns {string} 'large', 'medium' or 'small'
+     */
     function checkScreenSize() {
-
+        var screenSizeConfig = Adapt.config.get('screenSize');
         var screenSize;
 
-        if (Adapt.device.screenWidth > Adapt.config.get('screenSize').medium) {
+        if (Adapt.device.screenWidth > screenSizeConfig.medium) {
             screenSize = 'large';
-        } else if (Adapt.device.screenWidth > Adapt.config.get('screenSize').small) {
+        } else if (Adapt.device.screenWidth > screenSizeConfig.small) {
             screenSize = 'medium';
         } else {
             screenSize = 'small';
         }
+
         return screenSize;
     }
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
-        Adapt.device.screenWidth = window.innerWidth || $window.width();
+        // Calculate the screen width.
+        Adapt.device.screenWidth = isAppleDevice()
+            ? screen.width
+            : window.innerWidth || $window.width();
+
         var newScreenSize = checkScreenSize();
 
         if (newScreenSize !== Adapt.device.screenSize) {
             Adapt.device.screenSize = newScreenSize;
 
-            $('html').removeClass("size-small size-medium size-large").addClass("size-"+Adapt.device.screenSize);
+            $('html').removeClass("size-small size-medium size-large").addClass("size-" + Adapt.device.screenSize);
 
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
 
-	Adapt.trigger('device:resize', Adapt.device.screenWidth);
+	    Adapt.trigger('device:resize', Adapt.device.screenWidth);
 
     }, 100);
-
-    $window.on('resize', onWindowResize);
 
     var browser = Bowser.name;
     var version = Bowser.version;
@@ -57,6 +64,10 @@ define(function(require) {
 
     // Bowser only checks against navigator.userAgent so if the OS is undefined, do a check on the navigator.platform
     if (OS == undefined) OS = getPlatform();
+
+    function isAppleDevice() {
+        return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
 
     function getPlatform() {
 
@@ -71,7 +82,6 @@ define(function(require) {
         }
 
         return "PlatformUnknown";
-
     }
 
     function pixelDensity() {
