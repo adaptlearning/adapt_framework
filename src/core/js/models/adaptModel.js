@@ -187,9 +187,11 @@ define(function (require) {
                 var models = children.models;
                 for (var i = 0, len = models.length; i < len; i++) {
                     var model = models[i];
-                    var childrensModels = model.getChildren().models;
-                    allDescendants.push(childrensModels);
-                    flattenedDescendants = _.flatten(allDescendants);
+                    if (model.get('_isAvailable')) {
+                        var childrensModels = model.getChildren().models;
+                        allDescendants.push(childrensModels);
+                        flattenedDescendants = _.flatten(allDescendants);
+                    }
                 }
 
                 returnedDescedants = new Backbone.Collection(flattenedDescendants);
