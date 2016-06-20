@@ -43,7 +43,9 @@ module.exports = function (grunt) {
         delimiter: grunt.config("translate.csvDelimiter")
       };
       
-      async.each(["course","contentObjects","articles","blocks","components"], _saveFile, _cb);
+      var fileNames = Object.keys(inputs);
+      
+      async.each(fileNames, _saveFile, _cb);
       
       function _saveFile (name, _cb) {
         csv.stringify(inputs[name], options, function (error, output) {
