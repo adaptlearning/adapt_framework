@@ -80,22 +80,27 @@ require([
             }
             // Sets up collection mapping
             Adapt.setupMapping();
-            // Triggers once all the data is ready
-            try {
-                Adapt.trigger('app:dataReady');
-            } catch(e) {
-                outputError(e);
-            }
-            // Setups a new navigation view
-            // This should be triggered after 'app:dataReady' as plugins might want
-            // to manipulate the navigation
-            new NavigationView();
-            // Called once Adapt is ready to begin
-            Adapt.initialize();
-            // Remove event listeners
-            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
 
+            if (!Adapt.isWaitingForPlugins()) triggerDataReady();
+            else Adapt.once('plugins:ready', triggerDataReady);
         }
+    }
+
+    function triggerDataReady() {
+        // Triggers once all the data is ready
+        try {
+            Adapt.trigger('app:dataReady');
+        } catch(e) {
+            outputError(e);
+        }
+        // Setups a new navigation view
+        // This should be triggered after 'app:dataReady' as plugins might want
+        // to manipulate the navigation
+        new NavigationView();
+        // Called once Adapt is ready to begin
+        Adapt.initialize();
+        // Remove event listeners
+        Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
     }
     
     function outputError(e) {
@@ -170,5 +175,4 @@ require([
     Adapt.once('configModel:loadCourseData', loadCourseData);
 
     Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
-
 });

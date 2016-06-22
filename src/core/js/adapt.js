@@ -7,11 +7,17 @@ define([
 
         defaults: {
             _canScroll: true, //to stop scrollTo behaviour,
-            _outstandingCompletionChecks: 0
+            _outstandingCompletionChecks: 0,
+            _pluginWaitCount:0
         },
 
         lockedAttributes: {
             _canScroll: false
+        },
+
+        initialize: function () {
+            this.listenTo(this, 'plugin:beginWait', this.onPluginBeginWait);
+            this.listenTo(this, 'plugin:endWait', this.onPluginEndWait);
         },
 
         //call when entering an asynchronous completion check
@@ -41,8 +47,26 @@ define([
 
             Adapt.on("change:_outstandingCompletionChecks", checkIfAnyChecksOutstanding);
 
-        }
+        },
 
+        isWaitingForPlugins:function() {
+            return this.get('_pluginWaitCount') > 0;
+        },
+
+        checkPluginsReady:function() {
+            if (this.isWaitingForPlugins()) return;
+            this.trigger('plugins:ready');
+        },
+
+        onPluginBeginWait:function() {
+            this.set('_pluginWaitCount', this.get('_pluginWaitCount') + 1);
+            this.checkPluginsReady();
+        },
+
+        onPluginEndWait:function() {
+            this.set('_pluginWaitCount', this.get('_pluginWaitCount') - 1);
+            this.checkPluginsReady();
+        }
     });
 
     var Adapt = new AdaptModel();

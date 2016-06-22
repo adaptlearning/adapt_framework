@@ -82,9 +82,10 @@ define([
                     pluginLocation = pluginLocation + '-' + action;
                 }
             }
-            this.updateLocation(pluginLocation);
-            Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
-            Adapt.trigger('router:plugin', pluginName, location, action);
+            this.updateLocation(pluginLocation, null, null, _.bind(function() {
+                Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
+                Adapt.trigger('router:plugin', pluginName, location, action);
+            }, this));
         },
 
         handleCourse: function() {
@@ -92,12 +93,13 @@ define([
             this.removeViews();
             Adapt.course.set('_isReady', false);
             this.setContentObjectToVisited(Adapt.course);
-            this.updateLocation('course');
-            Adapt.once('menuView:ready', function() {
-                // Allow navigation
-                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-            });
-            Adapt.trigger('router:menu', Adapt.course);
+            this.updateLocation('course', null, null, _.bind(function() {
+                Adapt.once('menuView:ready', function() {
+                    //allow navigation
+                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                });
+                Adapt.trigger('router:menu', Adapt.course);
+            }, this));
         },
 
         handleId: function(id) {
@@ -131,21 +133,23 @@ define([
 
                         if (type == 'page') {
                             var location = 'page-' + id;
-                            this.updateLocation(location, 'page', id);
-                            Adapt.once('pageView:ready', function() {
-                                // Allow navigation
-                                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                            });
-                            Adapt.trigger('router:page', currentModel);
-                            this.$wrapper.append(new PageView({model: currentModel}).$el);
+                            this.updateLocation(location, 'page', id, _.bind(function() {
+                                Adapt.once('pageView:ready', function() {
+                                    //allow navigation
+                                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                                });
+                                Adapt.trigger('router:page', currentModel);
+                                this.$wrapper.append(new PageView({model:currentModel}).$el);
+                            }, this));
                         } else {
                             var location = 'menu-' + id;
-                            this.updateLocation(location, 'menu', id);
-                            Adapt.once('menuView:ready', function() {
-                                // Allow navigation
-                                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                            });
-                            Adapt.trigger('router:menu', currentModel);
+                            this.updateLocation(location, 'menu', id, _.bind(function() {
+                                Adapt.once('menuView:ready', function() {
+                                    //allow navigation
+                                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                                });
+                                Adapt.trigger('router:menu', currentModel);
+                            }, this));
                         }
                     } 
                 break;
@@ -238,7 +242,7 @@ define([
             model.set('_isVisited', true);
         },
 
-        updateLocation: function(currentLocation, type, id) {
+        updateLocation: function(currentLocation, type, id, onComplete) {
             // Handles updating the location
             Adapt.location._previousId = Adapt.location._currentId;
             Adapt.location._previousContentType = Adapt.location._contentType;
@@ -251,7 +255,7 @@ define([
                 Adapt.location._currentId = null;
                 Adapt.location._contentType = null;
 
-            } else if (arguments.length === 3) {
+            } else if (_.isString(id)) {
                 Adapt.location._currentId = id;
                 Adapt.location._contentType = type;
                 if (type === 'menu') {
@@ -279,6 +283,9 @@ define([
 
             // Trigger event when location changes
             Adapt.trigger('router:location', Adapt.location);
+
+            if (!Adapt.isWaitingForPlugins()) onComplete();
+            else Adapt.once('plugins:ready', onComplete);
         },
 
         setDocumentTitle: function() {
