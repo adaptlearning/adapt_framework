@@ -90,15 +90,16 @@ define([
 
         handleCourse: function() {
             this.showLoading();
-            this.removeViews();
-            Adapt.course.set('_isReady', false);
-            this.setContentObjectToVisited(Adapt.course);
-            this.updateLocation('course', null, null, _.bind(function() {
-                Adapt.once('menuView:ready', function() {
-                    //allow navigation
-                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                });
-                Adapt.trigger('router:menu', Adapt.course);
+            this.removeViews(_.bind(function() {
+                Adapt.course.set('_isReady', false);
+                this.setContentObjectToVisited(Adapt.course);
+                this.updateLocation('course', null, null, _.bind(function() {
+                    Adapt.once('menuView:ready', function() {
+                        //allow navigation
+                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                    });
+                    Adapt.trigger('router:menu', Adapt.course);
+                }, this));
             }, this));
         },
 
@@ -127,30 +128,31 @@ define([
                         }
                     } else {
                         this.showLoading();
-                        this.removeViews();
+                        this.removeViews(_.bind(function() {
 
-                        this.setContentObjectToVisited(currentModel);
+                            this.setContentObjectToVisited(currentModel);
 
-                        if (type == 'page') {
-                            var location = 'page-' + id;
-                            this.updateLocation(location, 'page', id, _.bind(function() {
-                                Adapt.once('pageView:ready', function() {
-                                    //allow navigation
-                                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                                });
-                                Adapt.trigger('router:page', currentModel);
-                                this.$wrapper.append(new PageView({model:currentModel}).$el);
-                            }, this));
-                        } else {
-                            var location = 'menu-' + id;
-                            this.updateLocation(location, 'menu', id, _.bind(function() {
-                                Adapt.once('menuView:ready', function() {
-                                    //allow navigation
-                                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                                });
-                                Adapt.trigger('router:menu', currentModel);
-                            }, this));
-                        }
+                            if (type == 'page') {
+                                var location = 'page-' + id;
+                                this.updateLocation(location, 'page', id, _.bind(function() {
+                                    Adapt.once('pageView:ready', function() {
+                                        //allow navigation
+                                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                                    });
+                                    Adapt.trigger('router:page', currentModel);
+                                    this.$wrapper.append(new PageView({model:currentModel}).$el);
+                                }, this));
+                            } else {
+                                var location = 'menu-' + id;
+                                this.updateLocation(location, 'menu', id, _.bind(function() {
+                                    Adapt.once('menuView:ready', function() {
+                                        //allow navigation
+                                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                                    });
+                                    Adapt.trigger('router:menu', currentModel);
+                                }, this));
+                            }
+                        }, this));
                     } 
                 break;
                 default:
@@ -160,8 +162,11 @@ define([
             }
         },
 
-        removeViews: function() {
+        removeViews: function(onComplete) {
             Adapt.trigger('remove');
+
+            if (!Adapt.isWaitingForPlugins()) onComplete();
+            else Adapt.once('plugins:ready', onComplete);
         },
 
         showLoading: function() {
