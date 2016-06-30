@@ -165,8 +165,11 @@ define([
         removeViews: function(onComplete) {
             Adapt.trigger('remove');
 
-            if (!Adapt.isWaitingForPlugins()) onComplete();
-            else Adapt.once('plugins:ready', onComplete);
+            if (!Adapt.isWaitingForPlugins()) {
+                onComplete();
+            } else {
+                Adapt.once('plugins:ready', onComplete);
+            }
         },
 
         showLoading: function() {

@@ -81,8 +81,11 @@ require([
             // Sets up collection mapping
             Adapt.setupMapping();
 
-            if (!Adapt.isWaitingForPlugins()) triggerDataReady();
-            else Adapt.once('plugins:ready', triggerDataReady);
+            if (!Adapt.isWaitingForPlugins()) {
+                triggerDataReady();
+            } else {
+                Adapt.once('plugins:ready', triggerDataReady);
+            }
         }
     }
 
