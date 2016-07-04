@@ -9,6 +9,7 @@ define(function(require) {
         className: "navigation",
 
         initialize: function() {
+            this.listenToOnce(Adapt, 'courseModel:dataLoading', this.onRemove);
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
             this.preRender();
