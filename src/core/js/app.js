@@ -41,7 +41,7 @@ require([
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
-    function checkDataIsLoaded() {
+    Adapt.checkDataIsLoaded = function () {
         if (Adapt.contentObjects.models.length > 0
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
@@ -89,7 +89,7 @@ require([
             // Setups a new navigation view
             // This should be triggered after 'app:dataReady' as plugins might want
             // to manipulate the navigation
-            new NavigationView();
+            Adapt.navigation = new NavigationView();
             // Called once Adapt is ready to begin
             Adapt.initialize();
             // Remove event listeners
@@ -113,7 +113,9 @@ require([
     // This function is called when the config model triggers 'configModel:loadCourseData'
     // Once the config model is loaded get the course files
     // This enables plugins to tap in before the course files are loaded & also to change the default language
-    function loadCourseData() {
+    Adapt.loadCourseData = function() {
+        Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', Adapt.checkDataIsLoaded);
+
         // All code that needs to run before adapt starts should go here
         var language = Adapt.config.get('_defaultLanguage');
 
@@ -167,8 +169,7 @@ require([
     }
 
     // Events that are triggered by the main Adapt content collections and models
-    Adapt.once('configModel:loadCourseData', loadCourseData);
+    Adapt.once('configModel:loadCourseData', Adapt.loadCourseData);
 
-    Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', checkDataIsLoaded);
 
 });
