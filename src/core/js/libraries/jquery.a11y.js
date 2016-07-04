@@ -1147,10 +1147,14 @@
 
                 if (previousTabIndex === -1) {
                     //hide element from screen reader
-                    $item.attr('aria-hidden', true).addClass("aria-hidden");
-                } else {
-                    //show element to screen reader
-                    $item.removeAttr('aria-hidden').removeClass("aria-hidden");
+                    return $item.attr('aria-hidden', true).addClass("aria-hidden");
+                }
+
+                //show element to screen reader
+                $item.removeAttr('aria-hidden').removeClass("aria-hidden");
+                
+                if ($item.is(domSelectors.hideableElements)) {
+                    $item.removeAttr("tabindex");
                 }
             });
 
