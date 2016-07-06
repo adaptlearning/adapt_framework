@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     }
         
     // checks lookUpTable if path exists and if set to true
-    function _schouldExportText (file, component, path) {
+    function _shouldExportText (file, component, path) {
       if (Helper.modelTypeMap[file] === "component") {
         
         if (_lookupHasKey("models",Helper.modelTypeMap[file],path) || _lookupHasKey("components",component,path)) {
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
     }
     
     function _collectTexts (data, path, lookupPath, file, id, component) {
-      if (_schouldExportText(file, component, lookupPath)) {
+      if (_shouldExportText(file, component, lookupPath)) {
         if (data) {
           global.translate.exportTextData.push({
             file: file,
