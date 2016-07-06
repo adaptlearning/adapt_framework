@@ -48,7 +48,7 @@ require([
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
 
-            mapAdaptIdsToObjects();
+            Adapt.mapAdaptIdsToObjects();
 
             if (typeof Adapt.course.get('_buttons').submit !== 'undefined') {
                 // Backwards compatibility with v1.x
@@ -103,7 +103,7 @@ require([
         console.error(e);
     }
 
-    function mapAdaptIdsToObjects () {
+    Adapt.mapAdaptIdsToObjects = function() {
         Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy("_id");
         Adapt.articles._byAdaptID = Adapt.articles.groupBy("_id");
         Adapt.blocks._byAdaptID = Adapt.blocks.groupBy("_id");
