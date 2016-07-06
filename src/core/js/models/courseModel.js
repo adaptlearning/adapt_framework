@@ -7,6 +7,7 @@ define(function(require) {
 
         initialize: function(attrs, options) {
             AdaptModel.prototype.initialize.apply(this, arguments);
+            Adapt.trigger('courseModel:dataLoading');
 
             this.url = options.url;
 
