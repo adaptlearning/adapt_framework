@@ -182,7 +182,8 @@ define([
 
             // Used to trigger an event so plugins can display feedback
             this.showFeedback();
-
+            
+            this.onSubmitted();
         },
 
         // Adds a validation error class when the canSubmit returns false
@@ -194,6 +195,8 @@ define([
         // Blank method for question to fill out when the question cannot be submitted
         onCannotSubmit: function() {},
 
+        // Blank method for question to fill out when the question was succesfully submitted
+        onSubmitted: function() {},
 
         // Used to set _isEnabled and _isSubmitted on the model
         // Also adds a 'submitted' class to the widget
