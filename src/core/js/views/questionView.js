@@ -195,7 +195,7 @@ define([
         // Blank method for question to fill out when the question cannot be submitted
         onCannotSubmit: function() {},
 
-        // Blank method for question to fill out when the question was succesfully submitted
+        // Blank method for question to fill out when the question was successfully submitted
         onSubmitted: function() {},
 
         // Used to set _isEnabled and _isSubmitted on the model
