@@ -16,6 +16,7 @@ define([
                 '_isQuestionType': true,
                 '_shouldDisplayAttempts': false,
                 '_canShowModelAnswer': true,
+                '_canShowMarking': true,
                 '_questionWeight': Adapt.config.get("_questionWeight"),
             }, ComponentModel.prototype.defaults);
         },
