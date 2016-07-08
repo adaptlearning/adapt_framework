@@ -128,18 +128,21 @@ define(function() {
 
             } else {
                 this.$('.buttons-display-inner').addClass('visibility-hidden');
-                var $icon = this.$('.buttons-marking-icon').removeClass('display-none');
-                if (isCorrect) {
-                    $icon.addClass('icon-tick');
-                } else {
-                    $icon.addClass('icon-cross');
-                }
+                this.showMarking();
             }
 
             if (shouldDisplayAttempts) {
                 this.$('.buttons-display-inner').html(attemptsString);
             }
 
+        },
+
+        showMarking: function() {
+            if (!this.model.get('_canShowMarking') return;
+
+            this.$('.buttons-marking-icon')
+                .removeClass('display-none')
+                .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
         }
 
     });
