@@ -138,7 +138,7 @@ define(function() {
         },
 
         showMarking: function() {
-            if (!this.model.get('_canShowMarking') return;
+            if (!this.model.get('_canShowMarking')) return;
 
             this.$('.buttons-marking-icon')
                 .removeClass('display-none')
