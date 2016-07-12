@@ -7,26 +7,29 @@ module.exports = function (grunt) {
   grunt.registerTask("_loadLanguageFiles", function () {
     
     var next = this.async();
-    var langFiles = grunt.config("translate.langFiles");
+    var langFiles;
+    var inputFolder;
     global.translate.importData = [];
     
+    checkInputFolder();
     readLangFiles();
     processLangFiles();
     
+    function checkInputFolder () {
+      if (grunt.file.isDir("languagefiles", grunt.config("translate.targetLang"))) {
+        inputFolder = path.join("languagefiles", grunt.config("translate.targetLang"));
+      } else {
+        throw grunt.util.error(grunt.config("translate.targetLang") + " Folder does not exist. Please create this Folder in the languagefiles directory.");
+      }
+    }
     
     function readLangFiles () {
-      
-      // check if files exist
-      if (typeof langFiles === "string") {
-        langFiles = langFiles.split(",");
-      }
 
-      for (var i = 0; i < langFiles.length; i++) {
-        if (grunt.file.exists("languagefiles", langFiles[i])) {
-          langFiles[i] = path.join("languagefiles",langFiles[i]);
-        } else {
-          throw grunt.util.error(langFiles[i] + " not found");
-        }
+      // check if files exist
+      langFiles = grunt.file.expand(path.join(inputFolder,"*." + grunt.config('translate.format')));
+
+      if (langFiles.length === 0) {
+        throw grunt.util.error("No languagefiles found to process in folder " + grunt.config('translate.targetLang'));
       }
     }
   
@@ -84,16 +87,15 @@ module.exports = function (grunt) {
       var isValid = item.hasOwnProperty("file") && item.hasOwnProperty("id") && item.hasOwnProperty("path") && item.hasOwnProperty("value");
       
       if (!isValid) {
-        throw grunt.util.error("Sorry, the imported Files are not valid");
+        throw grunt.util.error("Sorry, the imported File is not valid");
       }
       next();
     }
     
     function processLangFiles () {
-      var format = path.parse(langFiles[0]).ext;
 
-      switch (format) {
-        case ".csv":
+      switch (grunt.config('translate.format')) {
+        case "csv":
           _parseCsvFiles();
           break;
         

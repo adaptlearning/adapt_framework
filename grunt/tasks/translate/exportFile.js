@@ -9,13 +9,13 @@ module.exports = function (grunt) {
     
     var next = this.async();
     
-    grunt.file.mkdir("languagefiles");
+    grunt.file.mkdir("languagefiles/"+grunt.config("translate.masterLang"));
     formatExport();
     
     
     
     function formatExport () {
-      var filename = "export_"+grunt.config("translate.masterLang");
+      var filename = "export";
       
       switch (grunt.config("translate.format")) {
         case "csv":
@@ -40,6 +40,7 @@ module.exports = function (grunt) {
       }, {});
       
       var options = {
+        quotedString: true,
         delimiter: grunt.config("translate.csvDelimiter")
       };
       
@@ -52,7 +53,7 @@ module.exports = function (grunt) {
           if (error) {
             _cb(error);
           } else {
-            var src = path.join("languagefiles",name+"_"+filename+".csv");
+            var src = path.join("languagefiles", grunt.config("translate.masterLang"), name+".csv");
             grunt.file.write(src, output);
             _cb();
           }
@@ -68,7 +69,7 @@ module.exports = function (grunt) {
     }
     
     function _exportRaw (filename) {
-      grunt.file.write(path.join("languagefiles",filename+".json"), JSON.stringify(global.translate.exportTextData," ", 4));
+      grunt.file.write(path.join("languagefiles", grunt.config("translate.masterLang"), filename+".json"), JSON.stringify(global.translate.exportTextData," ", 4));
       next();
     }
     
