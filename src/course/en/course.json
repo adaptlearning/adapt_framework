@@ -43,16 +43,16 @@
             },
             "_hotgraphic": {
                 "ariaRegion": "Below is a component which allows you to select hot spots over an image. Select a hot spot to trigger a popup that includes an image with display text. Select the close button to close the popup.",
-                "ariaPoupupLabel": "Hotgraphic popup"
+                "ariaPopupLabel": "Hotgraphic popup"
             },
             "_matching": {
                 "ariaRegion": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button."
             },
             "_mcq": {
-                "ariaRegion": "This component is a multiple choice question. Once you have selected an option select the submit button below."
+                "ariaRegion": "This component is a multiple choice question. Once you have selected an option select the submit button below"
             },
             "_media": {
-                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen. Alternatively you can select the link below for the transcript.",
+                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen.",
                 "transcriptButton": "Alternatively you can select the link below for the transcript."
             },
             "_narrative": {
