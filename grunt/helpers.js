@@ -37,6 +37,7 @@ module.exports = function(grunt) {
         grunt.log.ok('Building to "' + grunt.config('outputdir') + '"');
         if (grunt.config('theme') !== '**') grunt.log.ok('Using theme "' + grunt.config('theme') + '"');
         if (grunt.config('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config('menu') + '"');
+        if (grunt.config('languages') !== '**') grunt.log.ok('The following languages will be included in the build "' + grunt.config('languages') + '"');
     });
 
     // privates
@@ -77,6 +78,7 @@ module.exports = function(grunt) {
         outputdir: process.cwd() + path.sep + 'build' + path.sep,
         theme: '**',
         menu: '**',
+        languages: '**',
         includes: [
 
         ],
@@ -113,12 +115,21 @@ module.exports = function(grunt) {
     };
 
     exports.generateConfigData = function() {
+
+        var languageFolders = "";
+        if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
+          languageFolders = "{" + grunt.option('languages') + "}";
+        } else {
+          languageFolders = grunt.option('languages');
+        }
+
         var data = {
             root: __dirname.split(path.sep).slice(0,-1).join(path.sep),
             sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
             outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
+            languages: languageFolders || exports.defaults.languages
         };
 
         // Selectively load the course.json ('outputdir' passed by server-build)
