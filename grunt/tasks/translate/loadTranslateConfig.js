@@ -1,8 +1,6 @@
 module.exports = function (grunt) {
 
-  grunt.registerTask("_loadTranslateConfig", function () {
-
-    var adaptConfig = grunt.file.readJSON("adapt.json");
+  grunt.registerTask("_getTranslateConfig", function () {
 
     // options masterLang, targetLang, format, files, csvDelimiter
     if (grunt.option("masterLang")) {
@@ -28,6 +26,10 @@ module.exports = function (grunt) {
 
     if (grunt.option("csvDelimiter")) {
       grunt.config.set('translate.csvDelimiter', grunt.option('csvDelimiter'));
+    }
+
+    if (grunt.option("replace")) {
+      grunt.config.set('translate.shouldReplaceExisting', true);
     }
 
   });

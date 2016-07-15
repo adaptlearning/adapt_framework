@@ -11,9 +11,15 @@ module.exports = function (grunt) {
     var masterLang = grunt.config("translate.masterLang");
     var srcPath = grunt.config("sourcedir");
     
+    checkCourseExists();
     copyCourse();
     getCourseDate();
     
+    function checkCourseExists () {
+      if (grunt.file.isDir(srcPath, "course", targetLang) && !grunt.config('translate.shouldReplaceExisting')) {
+        throw grunt.util.error(targetLang+" folder already exist, to replace the content in this folder, please add a --replace flag to the grunt task.");
+      }
+    }
     
     function copyCourse () {
       grunt.file.copy(path.join(srcPath,"course",masterLang,"course.json"), path.join(srcPath,"course",targetLang,"course.json"));

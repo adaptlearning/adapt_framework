@@ -7,6 +7,11 @@ module.exports = function (grunt) {
     var srcPath = grunt.config("sourcedir");
     var lang = grunt.config("translate.masterLang");
     
+    // check if master language course exists
+    if (!grunt.file.isDir(srcPath, "course", lang)) {
+        throw grunt.util.error("Folder "+lang+" does not exist in your Adapt course.");
+    }
+
     global.translate.courseData = {};
     global.translate.courseData.config = grunt.file.readJSON(path.join(srcPath,"course","config.json"));
     global.translate.courseData.course = grunt.file.readJSON(path.join(srcPath,"course",lang,"course.json"));

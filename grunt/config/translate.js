@@ -4,7 +4,8 @@ module.exports = function (grunt) {
         masterLang: "en",
         targetLang: null,
         format: "json",
-        csvDelimiter: ","
+        csvDelimiter: ",",
+        "shouldReplaceExisting": false
     };
 
 };

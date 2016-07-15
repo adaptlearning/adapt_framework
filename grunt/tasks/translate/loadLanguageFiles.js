@@ -16,7 +16,10 @@ module.exports = function (grunt) {
     processLangFiles();
     
     function checkInputFolder () {
-      if (grunt.file.isDir("languagefiles", grunt.config("translate.targetLang"))) {
+
+      if (grunt.config("translate.targetLang") === null) {
+        throw grunt.util.error('Target language option is missing, please add --targetLang=<languageCode>');
+      } else if (grunt.file.isDir("languagefiles", grunt.config("translate.targetLang"))) {
         inputFolder = path.join("languagefiles", grunt.config("translate.targetLang"));
       } else {
         throw grunt.util.error(grunt.config("translate.targetLang") + " Folder does not exist. Please create this Folder in the languagefiles directory.");
