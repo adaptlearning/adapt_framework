@@ -1,11 +1,11 @@
 module.exports = function (grunt) {
-    
-  return {
-    masterLang: "en",
-    targetLang: null,
-    format: "raw",
-    csvDelimiter: ",",
-    langFiles: ""
-  };
-  
+
+    return {
+        masterLang: "en",
+        targetLang: null,
+        format: "json",
+        csvDelimiter: ",",
+        "shouldReplaceExisting": false
+    };
+
 };
