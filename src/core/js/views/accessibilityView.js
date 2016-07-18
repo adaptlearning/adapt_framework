@@ -28,7 +28,9 @@ define(function(require) {
 
                 var toggleText = isActive ? offLabel : onLabel;
 
-                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". " + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton);
+                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". "
+                    + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton + ". "
+                    + $.a11y_normalize(toggleText));
             }
         },
 
