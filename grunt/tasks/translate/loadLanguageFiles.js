@@ -1,6 +1,8 @@
 var csv = require("csv");
 var path = require("path");
 var async = require("async");
+var jschardet = require("jschardet");
+var iconv = require("iconv-lite");
 
 module.exports = function (grunt) {
   
@@ -45,8 +47,18 @@ module.exports = function (grunt) {
       
       async.each(langFiles, _parser, _cb);
       
-      function _parser (item) {
-        csv.parse(grunt.file.read(item), options, function (error, output) {
+      function _parser (filename) {
+        var fileBuffer = grunt.file.read(filename, {encoding: null});
+        var detected = jschardet.detect(fileBuffer);
+        var fileContent;
+
+        if (iconv.encodingExists(detected.encoding)) {
+          fileContent = iconv.decode(fileBuffer, detected.encoding);
+        } else {
+          fileContent = iconv.decode(fileBuffer, 'utf8');
+        }
+
+        csv.parse(fileContent, options, function (error, output) {
           if (error) {
             _cb(error);
           } else {
