@@ -92,7 +92,7 @@ define([
                 // Do not allow access to the menu when the start controller is enabled.
                 var startController = Adapt.course.get('_start');
                 
-                if (startController._isEnabled == true && startController._force == true) {
+                if (startController._isEnabled == true && startController._isMenuDisabled == true) {
                     return;
                 }
             }
