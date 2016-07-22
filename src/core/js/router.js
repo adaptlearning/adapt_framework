@@ -88,6 +88,15 @@ define([
         },
 
         handleCourse: function() {
+            if (Adapt.course.has('_start')) {
+                // Do not allow access to the menu when the start controller is enabled.
+                var startController = Adapt.course.get('_start');
+                
+                if (startController._isEnabled == true && startController._isMenuDisabled == true) {
+                    return;
+                }
+            }
+
             this.showLoading();
             this.removeViews();
             Adapt.course.set('_isReady', false);
