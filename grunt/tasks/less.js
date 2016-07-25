@@ -32,6 +32,25 @@ module.exports = function(grunt) {
 						imports+= "@import '" + trimmed + "';\n";
 					});	
 				}
+
+				if (options.config) {
+					var screenSize = {
+						"small": 520,
+				        "medium": 760,
+				        "large": 900
+					};
+					try {
+						var configjson = JSON.parse(grunt.file.read(options.config).toString());
+						screenSize = configjson.screenSize || screenSize;
+					} catch (e) {}
+
+					console.log(screenSize);
+
+					imports += "\n@adapt-device-small:"+screenSize.small+";";
+					imports += "\n@adapt-device-medium:"+screenSize.medium+";";
+					imports += "\n@adapt-device-large:"+screenSize.large+";";
+					
+				}
 			}
 
 			var sourcemaps;
