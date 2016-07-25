@@ -35,9 +35,9 @@ module.exports = function(grunt) {
 
 				if (options.config) {
 					var screenSize = {
-						"small": 520,
-				        "medium": 760,
-				        "large": 900
+                        "small": 520,
+                        "medium": 760,
+                        "large": 900
 					};
 					try {
 						var configjson = JSON.parse(grunt.file.read(options.config).toString());
