@@ -1,0 +1,29 @@
+<div class="{{_component}}-header component-header">
+    <div class="{{_component}}-header-inner component-header-inner">
+
+        {{#if displayTitle}}
+        <div class="{{_component}}-title component-title">
+            <div role="heading" tabindex="0" class="{{_component}}-title-inner component-title-inner"  aria-level="4">
+                {{{displayTitle}}}
+            </div>
+        </div>
+        {{/if}}
+        
+        {{#if body}}
+        <div class="{{_component}}-body component-body">
+            <div class="{{_component}}-body-inner component-body-inner">
+                {{{a11y_text body}}}
+            </div>
+        </div>
+        {{/if}}
+        
+        {{#if instruction}}
+        <div class="{{_component}}-instruction component-instruction">
+            <div class="{{_component}}-instruction-inner component-instruction-inner">
+                {{{a11y_text instruction}}}
+            </div>
+        </div>
+        {{/if}}
+
+    </div>
+</div>

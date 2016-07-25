@@ -1,0 +1,36 @@
+<div class="page-inner article-container" role="main" aria-label="{{_globals._accessibility._ariaLabels.page}}">
+
+    	<div class="page-header">
+    		<div class="page-header-inner clearfix">
+
+    			<div class="page-header-content">
+    				<div class="page-header-content-inner">
+
+					    {{#if displayTitle}}
+					    <div class="page-title">
+					        <div class="page-title-inner h1" tabindex="0" role="heading" aria-level="1">
+					            {{{displayTitle}}}
+					        </div>
+					    </div>
+					    {{/if}}
+
+					    {{#if body}}
+					    <div class="page-body">
+					        <div class="page-body-inner">
+					            {{#if pageBody}}
+					            	{{{a11y_text pageBody}}}
+					            {{else}}
+					            	{{{a11y_text body}}}
+					            {{/if}}
+					        </div>
+					    </div>
+					    {{/if}}
+
+    				</div>
+    			</div>
+
+    		</div>
+    	</div>
+
+</div>
+<div class="aria-label relative a11y-ignore-focus prevent-default" tabindex="0" role="region">{{_globals._accessibility._ariaLabels.pageEnd}}</div>

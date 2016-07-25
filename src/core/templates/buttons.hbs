@@ -1,0 +1,18 @@
+<div class="buttons-inner">
+    <div class="buttons-cluster clearfix">
+        {{#unless _shouldDisplayAttempts}}
+        <div class="buttons-marking-icon icon display-none">
+        </div>
+        {{/unless}}
+        <button class="buttons-action" aria-label="{{_buttons._submit.ariaLabel}}">{{{_buttons._submit.buttonText}}}</button>
+        <button class="buttons-feedback" aria-label="{{_buttons._showFeedback.ariaLabel}}" disabled="true">{{{_buttons._showFeedback.buttonText}}}</button>
+    </div>
+    {{#if _shouldDisplayAttempts}}
+    <div class="buttons-display">
+        <div class="buttons-marking-icon icon display-none">
+        </div>
+        <div class="buttons-display-inner">
+        </div>
+    </div>
+    {{/if}}
+</div>
