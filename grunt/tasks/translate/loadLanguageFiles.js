@@ -54,8 +54,10 @@ module.exports = function (grunt) {
 
         if (iconv.encodingExists(detected.encoding)) {
           fileContent = iconv.decode(fileBuffer, detected.encoding);
+          grunt.log.debug(filename+' - encoding detected: '+detected.encoding);
         } else {
           fileContent = iconv.decode(fileBuffer, 'utf8');
+          grunt.log.debug(filename+' - encoding not detected, used utf-8 instead');
         }
 
         csv.parse(fileContent, options, function (error, output) {
