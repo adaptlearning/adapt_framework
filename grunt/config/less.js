@@ -4,12 +4,12 @@ module.exports = function (grunt, options) {
             options:{
                 baseUrl: '<%= sourcedir %>',
                 mandatory: [
-                    '<%= sourcedir %>core/less/*.less'
+                    '<%= sourcedir %>core/less/**/*.less'
                 ],
                 src: [
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>components/**/*.less',
                     '<%= sourcedir %>extensions/**/*.less',
+                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',                    
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
                 sourcemaps:true,
@@ -26,12 +26,12 @@ module.exports = function (grunt, options) {
             options: {
                 baseUrl: '<%= sourcedir %>',
                 mandatory: [
-                    '<%= sourcedir %>core/less/*.less'
+                    '<%= sourcedir %>core/less/**/*.less'
                 ],
                 src: [
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>components/**/*.less',
                     '<%= sourcedir %>extensions/**/*.less',
+                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
                 sourcemaps: false,
