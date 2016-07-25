@@ -129,11 +129,11 @@ define(function(require) {
             });
 
             Handlebars.registerHelper('a11y_attrs_heading', function(level) {
-                return 'role="heading" aria-level="'+level+'" tabindex="0"';
+                return ' role="heading" aria-level="'+level+'" tabindex="0" ';
             });
 
             Handlebars.registerHelper('a11y_attrs_tabbable', function() {
-                return 'role="region" tabindex="0"';
+                return ' role="region" tabindex="0" ';
             });
 
         },
