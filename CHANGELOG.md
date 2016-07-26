@@ -1,5 +1,28 @@
 ## [Unreleased][unreleased]
 
+## [2.0.11] - 2016-07-26
+### Added
+- global text support ([#1049](https://github.com/adaptlearning/adapt_framework/issues/1049))
+- abstract implementation of `onSubmitted` to allow question component plugins to extend this in the same way they can for `onCannotSubmit` ([#1124](https://github.com/adaptlearning/adapt_framework/issues/1124))
+- ability to completely hide the feedback button ([#1073](https://github.com/adaptlearning/adapt_framework/issues/1073))
+
+### Changed
+- standardised handlebars helper names ([#1049](https://github.com/adaptlearning/adapt_framework/issues/1049))
+- updated core libraries and npm modules to more recent versions ([#1061](https://github.com/adaptlearning/adapt_framework/pull/1061))
+- allow Drawer to be closed by Esc keypress when accessibility is not active ([#938](https://github.com/adaptlearning/adapt_framework/issues/938))
+- different method of calculating screen width for better compatibility with iOS ([#1096](https://github.com/adaptlearning/adapt_framework/issues/1096))
+- various changes in preparation for the language picker functionality ([#1120](https://github.com/adaptlearning/adapt_framework/issues/1120))
+- various changes in preparation for moving `_canShowMarking` into core code ([#1046](https://github.com/adaptlearning/adapt_framework/issues/1046))
+- Allow user to be prevented from navigating to the menu using the browser's back button when the start controller is active ([#1037](https://github.com/adaptlearning/adapt_framework/issues/1037) & [#1152](https://github.com/adaptlearning/adapt_framework/issues/1152))
+
+### Fixed
+- accessibility library occasionally throwing error 'Could not find the next focusable element' ([#1015](https://github.com/adaptlearning/adapt_framework/issues/1015))
+- using the `navigateToHomeRoute` function causing the page to jump to the top ([#1079](https://github.com/adaptlearning/adapt_framework/issues/1079))
+- tabindex being incorrectly applied to a11y-hideable elements ([#1093](https://github.com/adaptlearning/adapt_framework/issues/1093))
+- default values not being copied into course.json from schema files ([#991](https://github.com/adaptlearning/adapt_framework/issues/991))
+- global properties in course.json out-of-date/inconsistent ([#1136](https://github.com/adaptlearning/adapt_framework/pull/1136))
+- bug with question marking introduced in v2.0.10 ([#1114](https://github.com/adaptlearning/adapt_framework/issues/1114))
+
 ## [2.0.10] - 2016-05-09
 
 ### Changed
@@ -338,7 +361,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.10...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.11...HEAD
+[2.0.11]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.10...v2.0.11
 [2.0.10]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.9...v2.0.10
 [2.0.9]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...v2.0.9
 [2.0.8]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8
