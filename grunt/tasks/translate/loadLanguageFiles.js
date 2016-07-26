@@ -3,6 +3,8 @@ var path = require("path");
 var async = require("async");
 var jschardet = require("jschardet");
 var iconv = require("iconv-lite");
+var fs = require('fs');
+var _ = require('underscore');
 
 module.exports = function (grunt) {
   
@@ -14,6 +16,7 @@ module.exports = function (grunt) {
     global.translate.importData = [];
     
     checkInputFolder();
+    autoDetectFormat();
     readLangFiles();
     processLangFiles();
     
@@ -21,13 +24,49 @@ module.exports = function (grunt) {
 
       if (grunt.config("translate.targetLang") === null) {
         throw grunt.util.error('Target language option is missing, please add --targetLang=<languageCode>');
-      } else if (grunt.file.isDir("languagefiles", grunt.config("translate.targetLang"))) {
-        inputFolder = path.join("languagefiles", grunt.config("translate.targetLang"));
-      } else {
+      } else if (!grunt.file.isDir("languagefiles", grunt.config("translate.targetLang"))) {
         throw grunt.util.error(grunt.config("translate.targetLang") + " Folder does not exist. Please create this Folder in the languagefiles directory.");
       }
+      
+      inputFolder = path.join("languagefiles", grunt.config("translate.targetLang"));
     }
     
+    function autoDetectFormat () {
+      if (grunt.option('format')) {
+        // ignore autodetect mode if format is set
+        return;
+      }
+
+      var fileExtensions = [];
+      grunt.file.recurse(inputFolder, function(abspath, rootdir, subdir, filename) {
+        fileExtensions.push(path.extname(filename));
+      });
+
+      var uniqueExtensions = _.uniq(fileExtensions);
+
+      if (uniqueExtensions.length !== 1) {
+        // autodetect failed, continue
+        grunt.log.debug('format autodetection failed');
+        return;
+      }
+
+      switch (uniqueExtensions[0]) {
+        case ".csv":
+          grunt.config('translate.format', 'csv');
+          grunt.log.debug('format autodetected as csv');
+          break;
+
+        case ".json":
+          grunt.config('translate.format', 'json');
+          grunt.log.debug('format autodetected as json');
+          break;
+        
+        default:
+          throw grunt.util.error('Format of the language file is not supported: '+uniqueExtensions[0]);
+          break;
+      }
+    }
+
     function readLangFiles () {
 
       // check if files exist
