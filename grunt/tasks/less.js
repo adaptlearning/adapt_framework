@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 						screenSize = configjson.screenSize || screenSize;
 					} catch (e) {}
 
-					console.log(screenSize);
+					console.log("sreen size:", screenSize);
 
 					imports += "\n@adapt-device-small:"+screenSize.small+";";
 					imports += "\n@adapt-device-medium:"+screenSize.medium+";";
