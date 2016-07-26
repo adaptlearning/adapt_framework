@@ -117,11 +117,11 @@ define(function(require) {
             });
 
             Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return '<div class="aria-label a11y-ignore-focus prevent-default" tabindex="0" role="region">'+text+'</div>';
+                return '<div class="aria-label prevent-default" tabindex="0" role="region">'+text+'</div>';
             });
 
             Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return '<div class="aria-label relative a11y-ignore-focus prevent-default" tabindex="0" role="region">'+text+'</div>';
+                return '<div class="aria-label relative prevent-default" tabindex="0" role="region">'+text+'</div>';
             });
 
             Handlebars.registerHelper('a11y_wrap_focus', function(text) {
