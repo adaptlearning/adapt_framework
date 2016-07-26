@@ -30,6 +30,7 @@ define(function() {
         postRender: function() {
             this.updateAttemptsCount();
             this.checkResetSubmittedState();
+            this.checkFeedbackState();
             this.onButtonStateChanged(null, this.model.get('_buttonState'));
             this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
         },
@@ -108,6 +109,14 @@ define(function() {
 
             this.updateAttemptsCount();
         },
+
+        checkFeedbackState: function(){
+            if(!this.model.get('_canShowFeedback')){
+                this.$('.buttons-action').addClass('buttons-action-fullwidth');
+                this.$('.buttons-feedback').addClass('no-feedback');
+            }
+        },
+
 
         updateAttemptsCount: function(model, changedAttribute) {
             var isInteractionComplete = this.model.get('_isInteractionComplete');
