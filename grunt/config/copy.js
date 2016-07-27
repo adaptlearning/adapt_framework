@@ -31,6 +31,19 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
+        coreAssets: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>core/assets/**'],
+                    dest: '<%= outputdir %>assets/',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    },
+                    flatten: true
+                }
+            ]
+        },
         componentAssets: {
             files: [
                 {
@@ -89,6 +102,19 @@ module.exports = function (grunt, options) {
                     expand: true,
                     src: ['<%= sourcedir %>menu/<%= menu %>/assets/**'],
                     dest: '<%= outputdir %>assets/',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    },
+                    flatten: true
+                }
+            ]
+        },
+        coreFonts: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>core/fonts/**'],
+                    dest: '<%= outputdir %>adapt/css/fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },

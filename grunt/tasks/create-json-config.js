@@ -10,6 +10,10 @@ module.exports = function(grunt) {
         customItems.forEach(function (customItem) {
             // As any theme folder may be used, we need to first find the location of the
             // theme.json file
+
+			//if no theme or menu folder exists, skip
+            if (!grunt.file.exists(grunt.config('sourcedir') + customItem + '/')) return;
+
             var customItemJsonFile;
             grunt.file.recurse(grunt.config('sourcedir') + customItem + '/', function(abspath, rootdir, subdir, filename) {
                 if (filename == customItem + '.json') {
