@@ -1,0 +1,33 @@
+{{! .block-container: Adapt will place the articles blocks inside this class}}
+<div class="article-inner block-container">
+
+    <div class="article-header">
+        {{! Check if a page title exist and render it}}
+        {{#if displayTitle}}
+        <div class="article-title">
+            <div role="heading" tabindex="0" class="article-title-inner h2"  aria-level="2">
+                {{{displayTitle}}}
+            </div>
+        </div>
+        {{/if}}
+
+        {{! Check if page body exists and render it}}
+        {{#if body}}
+        <div class="article-body">
+            <div class="article-body-inner">
+                {{{a11y_text body}}}
+            </div>
+        </div>
+        {{/if}}
+
+        {{! Check if page body exists and render it}}
+        {{#if instruction}}
+        <div class="article-instruction">
+            <div class="article-instruction-inner">
+                {{{a11y_text instruction}}}
+            </div>
+        </div>
+        {{/if}}
+    </div>
+
+</div>
