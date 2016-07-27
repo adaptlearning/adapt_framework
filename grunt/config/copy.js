@@ -31,6 +31,19 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
+        coreAssets: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>core/assets/**'],
+                    dest: '<%= outputdir %>assets/',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    },
+                    flatten: true
+                }
+            ]
+        },
         componentAssets: {
             files: [
                 {
