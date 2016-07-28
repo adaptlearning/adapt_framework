@@ -11,6 +11,24 @@ module.exports = function(grunt) {
 			var rootPath = path.join(path.resolve(options.baseUrl), "../").replace(convertSlashes, "/");
 
 			var imports = "";
+			
+			if (options.src && options.config) {
+				var screenSize = {
+					"small": 520,
+					"medium": 760,
+					"large": 900
+				};
+				try {
+					var configjson = JSON.parse(grunt.file.read(options.config).toString());
+					screenSize = configjson.screenSize || screenSize;
+				} catch (e) {}
+
+				console.log("screen size:", screenSize);
+
+				imports += "\n@adapt-device-small:"+screenSize.small+";";
+				imports += "\n@adapt-device-medium:"+screenSize.medium+";";
+				imports += "\n@adapt-device-large:"+screenSize.large+";\n";
+			}
 
 			if (options.mandatory) {
 				for (var i = 0, l = options.mandatory.length; i < l; i++) {
@@ -31,25 +49,6 @@ module.exports = function(grunt) {
 						var trimmed = lessPath.substr(rootPath.length);
 						imports+= "@import '" + trimmed + "';\n";
 					});	
-				}
-
-				if (options.config) {
-					var screenSize = {
-						"small": 520,
-						"medium": 760,
-						"large": 900
-					};
-					try {
-						var configjson = JSON.parse(grunt.file.read(options.config).toString());
-						screenSize = configjson.screenSize || screenSize;
-					} catch (e) {}
-
-					console.log("screen size:", screenSize);
-
-					imports += "\n@adapt-device-small:"+screenSize.small+";";
-					imports += "\n@adapt-device-medium:"+screenSize.medium+";";
-					imports += "\n@adapt-device-large:"+screenSize.large+";";
-					
 				}
 			}
 
