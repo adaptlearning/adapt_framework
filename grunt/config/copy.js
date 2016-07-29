@@ -36,7 +36,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>core/assets/**'],
-                    dest: '<%= outputdir %>assets/',
+                    dest: '<%= outputdir %>adapt/css/assets/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
