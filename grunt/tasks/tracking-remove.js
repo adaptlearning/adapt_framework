@@ -18,12 +18,12 @@ module.exports = function(grunt) {
             grunt.file.write(blocksPath, JSON.stringify(blocks, null, "    "));
         }
         
-        var blocksFiles = grunt.file.expand(options.blocksFile)
-        var courseFiles = grunt.file.expand(options.blocksFile)
+        var blocksFiles = grunt.file.expand(options.blocksFile);
+        var courseFiles = grunt.file.expand(options.courseFile);
         
         for (var i = 0; i < blocksFiles.length; i++) {
             removeTrackingIds(blocksFiles[i], courseFiles[i]);
         }
         
     });
-}
+};

@@ -8,8 +8,8 @@ module.exports = function(grunt) {
             _latestTrackingId: -1,
         });
 
-        var blocksFiles = grunt.file.expand(options.blocksFile)
-        var courseFiles = grunt.file.expand(options.blocksFile)
+        var blocksFiles = grunt.file.expand(options.blocksFile);
+        var courseFiles = grunt.file.expand(options.courseFile);
         
         for (var i = 0; i < blocksFiles.length; i++) {
             resetTrackingIds(blocksFiles[i], courseFiles[i]);
@@ -33,4 +33,4 @@ module.exports = function(grunt) {
         }
 
     });
-}
+};

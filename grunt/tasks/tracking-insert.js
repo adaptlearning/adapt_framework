@@ -9,9 +9,9 @@ module.exports = function(grunt) {
             _trackingIdsSeen: []
         });
         
-        var blocksFiles = grunt.file.expand(options.blocksFile)
-        var courseFiles = grunt.file.expand(options.blocksFile)
-        
+        var blocksFiles = grunt.file.expand(options.blocksFile);
+        var courseFiles = grunt.file.expand(options.courseFile);
+
         for (var i = 0; i < blocksFiles.length; i++) {
             insertTrackingIds(blocksFiles[i], courseFiles[i]);
             options._latestTrackingId = -1;
@@ -50,4 +50,4 @@ module.exports = function(grunt) {
         }
         
     });
-}
+};
