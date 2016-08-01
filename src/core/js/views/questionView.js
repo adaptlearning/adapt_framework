@@ -484,7 +484,14 @@ define([
             if (!this.constructor.prototype[checkForFunction]) return false; //questionModel
 
             //if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
-            if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction]) return false; //questionModel
+            if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
+                switch (checkForFunction) {
+                case "setupFeedback":
+                case "markQuestion": 
+                    return true; //questionView   
+                }
+                return false; //questionModel
+            }
 
             //if the function DOES exist on the view and does NOT match the compatibility function above, use the view function
             return true; //questionView
