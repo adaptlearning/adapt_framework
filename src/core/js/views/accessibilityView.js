@@ -23,8 +23,8 @@ define(function(require) {
                 return;
             } else {
                 var isActive = Adapt.config.get('_accessibility')._isActive;
-                var offLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOff;
-                var onLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility._accessibilityToggleTextOn;
+                var offLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility.accessibilityToggleTextOff;
+                var onLabel = Adapt.course.get('_globals') && Adapt.course.get('_globals')._accessibility.accessibilityToggleTextOn;
 
                 var toggleText = isActive ? offLabel : onLabel;
 
