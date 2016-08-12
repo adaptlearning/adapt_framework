@@ -1,0 +1,145 @@
+// Custom Colors
+// =============
+
+@white: #ffffff;
+@black: #4b4e4f;
+@blue: #078292;
+@light-grey: #78909c;
+@mid-grey: #546e7a;
+@dark-grey: #37474f;
+@red: #f26c4f;
+@green: #82ca9c;
+
+
+// Main Colors
+// ===========
+
+// Components
+@primary-color: @blue;
+@primary-color-inverted: @white;
+// Buttons
+@secondary-color: @black;
+@secondary-color-inverted: @white;
+// Navigation Bar
+@tertiary-color: @white;
+@tertiary-color-inverted: @black;
+// Drawer
+@quaternary-color: @dark-grey;
+@quaternary-color-inverted: @white;
+// Body
+@foreground-color: @black;
+@background-color: @white;
+@foreground-color-inverted: @white;
+@background-color-inverted: @mid-grey;
+// Validation States
+@validation-error: @red;
+@validation-success: @green;
+// Disabled States
+@disabled-color: #727272;
+@disabled-color-inverted: #ccc;
+
+@transparency: rgba(255,255,255,0.8);
+@transparency-fallback-png: url('assets/transparency-light.png');
+
+// Detailed Color setup
+// ====================
+
+// Body
+@font-color: @foreground-color;
+@font-color-inverted: @foreground-color-inverted;
+@title-color: @primary-color;
+@title-color-inverted: @primary-color-inverted;
+
+// Buttons
+@button-color: @secondary-color;
+@button-color-hover: darken(@button-color, 40%);
+@button-color-disabled: @disabled-color;
+
+@button-text-color: @secondary-color-inverted;
+@button-text-color-hover: @secondary-color-inverted;
+@button-text-color-disabled: @disabled-color-inverted;
+
+@button-border-color: @button-color;
+@button-border-color-hover: @button-color-hover;
+@button-border-color-disabled: @button-color-disabled;
+
+// Navigation 
+@navigation-color: @tertiary-color;
+
+@navigation-icon-color: @tertiary-color-inverted;
+@navigation-icon-color-hover: darken(@navigation-icon-color, 40%);
+
+@navigation-progress-color: @navigation-icon-color;
+@navigation-progress-color-hover: darken(@navigation-progress-color, 40%);
+
+@navigation-progress-background-color: @navigation-color;
+@navigation-progress-background-color-hover: darken(@navigation-color, 40%);
+
+@navigation-progress-border-color: @navigation-icon-color;
+
+// Drawer
+@drawer-color: @quaternary-color;
+@drawer-border-color: darken(@drawer-color, 20%);
+
+@drawer-icon-color: @quaternary-color-inverted;
+@drawer-icon-color-hover: darken(@drawer-icon-color, 40%);
+
+@drawer-item-color: @drawer-color;
+@drawer-item-color-hover: darken(@drawer-item-color, 40%);
+@drawer-item-color-selected: @drawer-item-color-hover;
+@drawer-item-color-disabled: @item-color-disabled;
+
+@drawer-item-text-color: @quaternary-color-inverted;
+@drawer-item-text-color-hover: @drawer-item-text-color;
+@drawer-item-text-color-selected: @drawer-item-text-color;
+@drawer-item-text-color-disabled: @item-text-color-disabled;
+
+@drawer-progress-color: @drawer-item-text-color;
+@drawer-progress-color-hover: darken(@drawer-progress-color, 40%);
+
+@drawer-progress-border-color: darken(@drawer-item-color, 20%);
+
+// Components
+@component-background-color: darken(@background-color, 10%);
+
+@item-color: @primary-color;
+@item-color-hover: darken(@item-color, 20%);
+@item-color-disabled: @disabled-color;
+@item-color-visited: desaturate(@item-color, 90%);
+@item-color-selected: @item-color-hover;
+
+@item-text-color: @primary-color-inverted;
+@item-text-color-hover: @item-text-color;
+@item-text-color-disabled: @item-text-color;
+@item-text-color-visited: @item-text-color;
+@item-text-color-selected: @item-text-color;
+
+@item-body-color: @background-color;
+@item-body-text-color: @foreground-color;
+
+@item-border-color: @item-color;
+@item-border-color-hover: @item-color-hover;
+@item-border-color-disabled: @item-color-disabled;
+@item-border-color-visited: @item-color-visited;
+@item-border-color-selected: @item-color-selected;
+@item-border-color-inverted: @item-text-color;
+
+// Menu
+@menu-item-color: @primary-color;
+@menu-item-text-color: @primary-color-inverted;
+@menu-item-progress-color: darken(@menu-item-color, 20%);
+@menu-item-progress-fill-color: @menu-item-text-color;
+@menu-item-progress-border-color: transparent;
+
+// Notify
+@notify-color: @primary-color;
+@notify-text-color: @primary-color-inverted;
+
+@notify-icon-color: @notify-text-color;
+@notify-icon-color-hover: darken(@notify-color, 20%);
+
+@notify-button-color: @notify-text-color;
+@notify-button-color-hover: darken(@notify-color, 20%);
+
+@notify-button-text-color: @notify-color;
+@notify-button-text-color-hover: @notify-text-color;

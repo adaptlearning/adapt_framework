@@ -1,0 +1,24 @@
+// Navigation styling
+// ==================
+
+.navigation {
+    width: 100%;
+    overflow: hidden;
+    background-color: @navigation-color;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    height: (@navigation-padding * 2) + @icon-size;
+
+    .ie8 & {
+        max-width: @ie8-max-width;
+    }
+
+    .icon {
+        padding: @navigation-padding;
+        color: @navigation-icon-color;
+        .transition-color;
+
+        .no-touch &:hover {
+            color: @navigation-icon-color-hover;
+        }
+    }
+}

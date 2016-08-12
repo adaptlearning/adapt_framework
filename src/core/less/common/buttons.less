@@ -1,0 +1,141 @@
+// Button styling
+// ==============
+
+.button, button {
+    font-family: @font-family;
+    background-color: @button-color;
+    color: @button-text-color;
+    padding: @button-padding-top @button-padding-right+10 @button-padding-bottom @button-padding-left+10; // Added left / right padding in case buttons aren't centrally aligned
+    text-decoration: none;
+    text-align: center;
+    display:inline-block;
+    border: @button-border;
+    .transition-all-colors;
+    .button-text;
+
+    .no-touch &:hover {
+        background-color: @button-color-hover;
+        color: @button-text-color-hover;
+        border-color: @button-border-color-hover;
+    }
+
+    &.base { 
+    	// Override button styles on <a> tags coverted to <button> tags
+    	// Could be improved so that buttons are divided into groups, default / submit / nav / icon
+    	background-color: transparent;
+    	padding: 0;
+    	text-align: left;
+        -webkit-transition: none;
+        -moz-transition: none;
+        -ms-transition: none;
+        transition: none;
+
+    	.no-touch &:hover {
+    		background-color: transparent;
+    	}
+    	
+    	.dir-rtl & {
+    		text-align: right;
+    	}
+    }
+
+    .disabled-style() {
+        background-color: @button-color-disabled!important;
+        border-color: @button-border-color-disabled!important;
+        color: @button-text-color-disabled!important;
+        cursor:default;
+
+        .no-touch &:hover {
+            border-color: @button-border-color-disabled;
+        }
+    }
+
+    &.disabled, &:disabled { .disabled-style; }
+    // IE8 fix needed to be in its own line
+    &[disabled="disabled"] { .disabled-style; }
+}
+
+.buttons {
+    margin-top: @button-margin-top;
+    margin-bottom: @button-margin-bottom;
+    position:relative;
+
+    button {
+        width:49.5%;
+        float:left;
+
+        .dir-rtl & {
+            float: right;
+        }
+
+        &.buttons-action {
+            margin-right: 0.5%;
+        }
+
+        &.buttons-feedback {
+            margin-left: 0.5%;
+        }
+
+        &.buttons-action-fullwidth {
+            width: 99%;
+            margin-left: 0.5%;
+        }
+
+        &.no-feedback {
+            display: none;
+        }
+    }
+
+    .buttons-display {
+        position:relative;
+        border: @button-border;
+        border-top:none;
+        background-color: @background-color-inverted;
+        color: @foreground-color-inverted;
+    }
+
+    .buttons-marking-icon {
+        position:absolute;
+        left:50%;
+        top:50%;
+        width: 42px;
+        height: 42px;
+        font-size: 32px;
+        line-height: 42px;
+        text-align: center;
+        border-radius: 50%;
+        margin-left: -21px;
+        margin-top: -21px;
+        color: @button-text-color;
+        border: @button-border;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+
+        .dir-rtl & {
+            left: inherit;
+            margin-left: inherit;
+            margin-right: -(40px/2);
+            right: 50%;
+        }
+        
+        &.icon-tick {
+            background-color: @validation-success;
+        }
+
+        &.icon-cross {
+            background-color: @validation-error;
+        }
+
+        @media all and (max-width: @device-width-small) {
+            width: 38px;
+            height: 38px;
+            line-height: 38px;
+            margin-left: -20px;
+            margin-top: -20px;
+        }
+    }
+
+    .buttons-display-inner {
+        padding: @button-padding;
+        text-align: center;
+    }
+}
