@@ -1,35 +1,46 @@
-// Custom Colors
+//
+// Color variables
+// --------------------------------------------------
+
+
+// global Colors
 // =============
 
 @white: #ffffff;
 @black: #4b4e4f;
 @blue: #078292;
-@light-grey: #78909c;
-@mid-grey: #546e7a;
-@dark-grey: #37474f;
 @red: #f26c4f;
 @green: #82ca9c;
 
+//Themes colors
+@base-color:#078292;
+@light-color:#ffffff;
+@dark-color:#4b4e4f;
+
+//Gray colors for use across adapt.
+@light-grey: #78909c;
+@mid-grey: #546e7a;
+@dark-grey: #37474f;
 
 // Main Colors
 // ===========
 
 // Components
-@primary-color: @blue;
-@primary-color-inverted: @white;
+@primary-color: @base-color;
+@primary-color-inverted: @light-color;
 // Buttons
-@secondary-color: @black;
-@secondary-color-inverted: @white;
+@secondary-color: @dark-color;
+@secondary-color-inverted: @light-color;
 // Navigation Bar
-@tertiary-color: @white;
-@tertiary-color-inverted: @black;
+@tertiary-color: @light-color;
+@tertiary-color-inverted: @dark-color;
 // Drawer
 @quaternary-color: @dark-grey;
-@quaternary-color-inverted: @white;
+@quaternary-color-inverted: @light-color;
 // Body
-@foreground-color: @black;
-@background-color: @white;
-@foreground-color-inverted: @white;
+@foreground-color: @dark-color;
+@background-color: @light-color;
+@foreground-color-inverted: @light-color;
 @background-color-inverted: @mid-grey;
 // Validation States
 @validation-error: @red;
@@ -37,7 +48,7 @@
 // Disabled States
 @disabled-color: #727272;
 @disabled-color-inverted: #ccc;
-
+// Mask
 @transparency: rgba(255,255,255,0.8);
 @transparency-fallback-png: url('assets/transparency-light.png');
 
@@ -63,7 +74,7 @@
 @button-border-color-hover: @button-color-hover;
 @button-border-color-disabled: @button-color-disabled;
 
-// Navigation 
+// Navigation
 @navigation-color: @tertiary-color;
 
 @navigation-icon-color: @tertiary-color-inverted;
