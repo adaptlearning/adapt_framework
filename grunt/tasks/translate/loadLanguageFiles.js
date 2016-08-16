@@ -112,12 +112,13 @@ module.exports = function (grunt) {
     function processLangFiles () {
 
       switch (grunt.config('translate.format')) {
-        case "csv":
-          _parseCsvFiles();
+        case "json":
+          _parseJsonFile();
           break;
         
+        case "csv":
         default:
-          _parseJsonFile();
+          _parseCsvFiles();
           break;
       }
     }

@@ -13,13 +13,14 @@ module.exports = function (grunt) {
 
     if (grunt.option("format")) {
       switch (grunt.option("format")) {
-        case "csv":
-          grunt.config.set('translate.format', 'csv');
+        case "raw":
+        case "json":
+          grunt.config.set('translate.format', 'json');      
           break;
         
-        case "json":
+        case "csv":
         default:
-          grunt.config.set('translate.format', 'json');      
+          grunt.config.set('translate.format', 'csv');
           break;
       }
     }

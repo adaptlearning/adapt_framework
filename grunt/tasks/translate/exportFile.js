@@ -18,12 +18,13 @@ module.exports = function (grunt) {
       var filename = "export";
       
       switch (grunt.config("translate.format")) {
-        case "csv":
-          _exportCSV(filename);
+        case "json":
+          _exportRaw(filename);
           break;
         
+        case "csv":
         default:
-          _exportRaw(filename);
+          _exportCSV(filename);
           break;
       }
     }

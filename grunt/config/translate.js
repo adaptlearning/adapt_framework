@@ -3,7 +3,7 @@ module.exports = function (grunt) {
     return {
         masterLang: "en",
         targetLang: null,
-        format: "json",
+        format: "csv",
         csvDelimiter: ",",
         "shouldReplaceExisting": false
     };
