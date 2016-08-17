@@ -41,7 +41,7 @@ define(function(require) {
     function getScreenWidth() {
         return isAppleDevice()
             ? getAppleScreenWidth()
-            : window.innerWidth || $window.width()
+            : window.innerWidth || $window.width();
     }
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
