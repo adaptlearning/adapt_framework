@@ -6,7 +6,7 @@ define(function(require) {
 
     Adapt.device = {
         touch: Modernizr.touch,
-        screenWidth: isAppleDevice() ? screen.width : window.innerWidth || $window.width()
+        screenWidth: getScreenWidth()
     };
 
     Adapt.once('app:dataReady', function() {
@@ -38,11 +38,15 @@ define(function(require) {
         return screenSize;
     }
 
+    function getScreenWidth() {
+        return isAppleDevice()
+            ? getAppleScreenWidth()
+            : window.innerWidth || $window.width();
+    }
+
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
         // Calculate the screen width.
-        Adapt.device.screenWidth = isAppleDevice()
-            ? screen.width
-            : window.innerWidth || $window.width();
+        Adapt.device.screenWidth = getScreenWidth();
 
         var newScreenSize = checkScreenSize();
 
@@ -67,6 +71,10 @@ define(function(require) {
 
     function isAppleDevice() {
         return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+
+    function getAppleScreenWidth() {
+        return (Math.abs(window.orientation) === 90) ? screen.height : screen.width;
     }
 
     function getPlatform() {
