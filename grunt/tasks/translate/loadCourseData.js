@@ -1,4 +1,6 @@
 var path = require("path");
+var jschardet = require("jschardet");
+var iconv = require("iconv-lite");
 
 module.exports = function (grunt) {
   
@@ -12,13 +14,38 @@ module.exports = function (grunt) {
         throw grunt.util.error("Folder "+lang+" does not exist in your Adapt course.");
     }
 
+    var fileMap = {
+        "config": [srcPath,"course","config.json"],
+        "course": [srcPath,"course",lang,"course.json"],
+        "contentObjects": [srcPath,"course",lang,"contentObjects.json"],
+        "articles": [srcPath,"course",lang,"articles.json"],
+        "blocks": [srcPath,"course",lang,"blocks.json"],
+        "components": [srcPath,"course",lang,"components.json"]
+    };
+
     global.translate.courseData = {};
-    global.translate.courseData.config = grunt.file.readJSON(path.join(srcPath,"course","config.json"));
-    global.translate.courseData.course = grunt.file.readJSON(path.join(srcPath,"course",lang,"course.json"));
-    global.translate.courseData.contentObjects = grunt.file.readJSON(path.join(srcPath,"course",lang,"contentObjects.json"));
-    global.translate.courseData.articles = grunt.file.readJSON(path.join(srcPath,"course",lang,"articles.json"));
-    global.translate.courseData.blocks = grunt.file.readJSON(path.join(srcPath,"course",lang,"blocks.json"));
-    global.translate.courseData.components = grunt.file.readJSON(path.join(srcPath,"course",lang,"components.json"));
+
+    for (var file in fileMap) {
+        if (fileMap.hasOwnProperty(file)) {
+            var src = path.join.apply(null, fileMap[file]);
+            var fileBuffer = grunt.file.read(src, {encoding: null});
+
+            // decode course files
+            var detected = jschardet.detect(fileBuffer);
+            var fileAsString;
+
+            if (iconv.encodingExists(detected.encoding)) {
+                fileAsString = iconv.decode(fileBuffer, detected.encoding);
+                grunt.log.debug(file+' - encoding detected: '+detected.encoding);
+            } else {
+                fileAsString = iconv.decode(fileBuffer, 'utf8');
+                grunt.log.debug(file+' - encoding not detected, used utf-8 instead');
+            }
+
+            global.translate.courseData[file] = JSON.parse(fileAsString);
+        }
+    }
+
   });
   
 };
