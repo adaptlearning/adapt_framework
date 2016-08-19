@@ -10,7 +10,7 @@
     text-align: center;
     display:inline-block;
     border: @button-border;
-    .transition-all-colors;
+    //.transition-all-colors;
     .button-text;
 
     .no-touch &:hover {
@@ -19,7 +19,7 @@
         border-color: @button-border-color-hover;
     }
 
-    &.base { 
+    &.base {
     	// Override button styles on <a> tags coverted to <button> tags
     	// Could be improved so that buttons are divided into groups, default / submit / nav / icon
     	background-color: transparent;
@@ -33,7 +33,7 @@
     	.no-touch &:hover {
     		background-color: transparent;
     	}
-    	
+
     	.dir-rtl & {
     		text-align: right;
     	}
@@ -116,7 +116,7 @@
             margin-right: -(40px/2);
             right: 50%;
         }
-        
+
         &.icon-tick {
             background-color: @validation-success;
         }

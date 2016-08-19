@@ -4,6 +4,10 @@
 .notify {
 
     .notify-popup {
+        position: fixed;
+        top: 50%;
+        width:100%;
+        z-index: 550;
         background-color: @notify-color;
         color: @notify-text-color;
 
@@ -28,6 +32,7 @@
     }
 
     .notify-popup-content {
+      .responsive-layout;
         .ie8 & {
             max-width: @ie8-max-width;
             margin: 0 auto;
@@ -35,6 +40,7 @@
     }
 
     .notify-popup-content-inner {
+        position:relative;
         padding-left: 0px;
 
         .dir-rtl & {
@@ -53,7 +59,7 @@
     }
 
     .notify-popup-title {
-        margin-bottom: @notify-title-padding-bottom;
+        margin-bottom: @notify-title-margin-bottom;
         padding-right: 60px;
         .dir-rtl & {
             padding-right: inherit;
@@ -81,20 +87,34 @@
     .notify-popup-content-inner {
         .notify-popup-icon {
             position: absolute;
+            right: 0px;
+            left: inherit;
+            top: 0px;
+            padding-bottom: (@notify-padding-bottom / 3);
+            .dir-rtl & {
+                right: inherit;
+                left: 0px;
+            }
+
             .icon {
                 font-size: 60px;
                 height: 60px;
                 width: 60px;
                 color: @notify-icon-color;
                 margin: 0;
+
+                @media all and (max-width:(@device-width-medium - 1px)) {
+                    float:none;
+                    margin: 0 auto;
+                }
             }
-            right: 0px;
-            left: inherit;
-            padding-bottom: (@notify-padding-bottom / 3);
-            .dir-rtl & {
-                right: inherit;
-                left: 0px;
+
+            @media all and (max-width:(@device-width-medium - 1px)) {
+                float:none;
+                margin: 0px auto;
+                position:static;
             }
+
         }
     }
 
@@ -112,7 +132,7 @@
         display:inline-block;
         border: none;
         min-width: 100px;
-        .transition-all-colors;
+        //.transition-all-colors;
         .button-text;
 
         .no-touch &:hover {
@@ -129,7 +149,8 @@
         position:absolute;
         top: 0px;
         right:0px;
-        .transition-border-color;
+        display:inline-block;
+        //.transition-border-color;
 
         .no-touch &:hover {
             border-color: @notify-icon-color-hover;
@@ -147,7 +168,7 @@
 
     .notify-popup-icon-close {
         color: @notify-icon-color;
-        .transition-color;
+        //.transition-color;
 
         .no-touch &:hover {
             color: @notify-icon-color-hover;
@@ -155,7 +176,18 @@
     }
 
     .notify-shadow {
+        display: none;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 549;
         background-color: @transparency;
+        .dir-rtl & {
+            left:inherit;
+            right:0px;
+        }
 
         .no-opacity & {
             background-image: @transparency-fallback-png;
@@ -230,75 +262,5 @@
         .no-touch &:hover {
             color: @notify-icon-color-hover;
         }
-    }
-}
-
-
-
-
-
-
-
-// Notify styling
-// ==============
-
-.notify {
-
-    .notify-popup {
-        position: fixed;
-        top: 50%;
-        width:100%;
-        z-index: 550;
-    }
-
-    .notify-popup-icon {
-        position: absolute;
-        left: 0px;
-        .dir-rtl & {
-            left:inherit;
-            right:0px;
-        }
-        top: 0px;
-        .icon {
-            @media all and (max-width:(@device-width-medium - 1px)) {
-                float:none;
-                margin: 0 auto;
-            }
-        }
-        @media all and (max-width:(@device-width-medium - 1px)) {
-            float:none;
-            margin: 0px auto;
-            position:static;
-        }
-    }
-
-    .notify-popup-content {
-        .responsive-layout;
-        .ie8 & {
-            max-width: @ie8-max-width;
-            margin:0 auto;
-        }
-    }
-
-    .notify-popup-content-inner {
-        position:relative;
-    }
-
-    .notify-popup-done {
-        display:inline-block;
-    }
-
-    .notify-shadow {
-        display: none;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        .dir-rtl & {
-            left:inherit;
-            right:0px;
-        }
-        width: 100%;
-        height: 100%;
-        z-index: 549;
     }
 }

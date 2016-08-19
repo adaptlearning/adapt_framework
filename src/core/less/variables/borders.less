@@ -1,9 +1,22 @@
-// THIS IS WHERE WE CAN DECLARE ANY OTHER VARIABLES (ie. device-width, border-width etc.)
+// border variables setup
+// ==============
+
+//outline width
+@outline-width:3px;
+
+//border width
+@border-width:3px;
+@border-top-width:@border-width;
+@border-right-width:@border-width;
+@border-bottom-width:@border-width;
+@border-left-width:@border-width;
 
 
-// Borders and Outlines
-// ====================
+// Detailed outline setup
+// =======================
+@focus-outline: @outline-width solid orange; //focus outline is displayed when accessibility is enabled
 
-@focus-outline: 3px solid orange; //focus outline is displayed when accessibility is enabled
+// Detailed border setup
+// =======================
 @button-border: 0px solid @button-border-color;
-@item-border: 3px solid @item-border-color;
+@item-border: @border-width solid @item-border-color;

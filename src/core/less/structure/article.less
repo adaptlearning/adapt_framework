@@ -5,13 +5,14 @@
     background-color: @background-color;
 
     .article-inner {
-        padding: @article-padding-top 0 @article-padding-bottom;
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: (@article-padding-top / 2) 0 (@article-padding-bottom / 2);
-        }
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: (@article-padding-top / 3) 0 (@article-padding-bottom / 3);
-        }
+        padding: (@padding*3) 0 (@padding*3);  //@article-padding
+
+        // @media all and (max-width: (@device-width-large + 20px)) {
+        //     padding: (@article-padding-top / 2) 0 (@article-padding-bottom / 2);
+        // }
+        // @media all and (max-width: (@device-width-small + 20px)) {
+        //     padding: (@article-padding-top / 3) 0 (@article-padding-bottom / 3);
+        // }
     }
 
     .article-header {
