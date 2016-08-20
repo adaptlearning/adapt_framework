@@ -2,11 +2,10 @@
 // ===============
 
 .article {
-    background-color: @background-color;
+    //background-color: @background-color;
 
     .article-inner {
-        padding: (@padding*3) 0 (@padding*3);  //@article-padding
-
+        padding: @article-padding-top 0 @article-padding-bottom;
         // @media all and (max-width: (@device-width-large + 20px)) {
         //     padding: (@article-padding-top / 2) 0 (@article-padding-bottom / 2);
         // }
@@ -20,13 +19,13 @@
         margin: auto;
         padding: 0;
 
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: 0 20px;
-        }
-
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: 0 10px;
-        }
+        // @media all and (max-width: (@device-width-large + 20px)) {
+        //     padding: 0 20px;
+        // }
+        //
+        // @media all and (max-width: (@device-width-small + 20px)) {
+        //     padding: 0 10px;
+        // }
     }
 
     .article-title {
@@ -34,7 +33,7 @@
         color: @title-color;
         text-align: left;
 
-        .dir-rtl & {
+        .dir-rtl & {  //shift global
             text-align: right;
         }
     }
@@ -49,6 +48,7 @@
 
     .article-instruction {
         margin-bottom: @article-instruction-margin-bottom;
-        .instruction-text;
+        //.instruction-text;
+        font-weight: @instruction-text-font-weight;
     }
 }

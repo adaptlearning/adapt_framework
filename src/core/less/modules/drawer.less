@@ -14,6 +14,11 @@
     -webkit-overflow-scrolling: touch;
     z-index:501;
 
+    .dir-rtl & {
+        right:inherit;
+        left:-320px;
+    }
+
     .drawer-toolbar {
         position: absolute;
         width:100%;
@@ -23,7 +28,7 @@
 
     .drawer-back {
         float: left;
-        .dir-rtl & {
+        .dir-rtl & { // shift global
             float:right;
         }
         &.show {
@@ -33,7 +38,7 @@
 
     .drawer-close {
         float: right;
-        .dir-rtl & {
+        .dir-rtl & { // shift global
             float: left;
         }
     }

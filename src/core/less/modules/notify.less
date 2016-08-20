@@ -20,15 +20,15 @@
         position: relative;
         max-width: @device-width-large;
         margin: auto;
-        padding: @notify-padding-top 0 @notify-padding-bottom;
+        padding: @notify-padding-top 10px @notify-padding-bottom;
 
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: (@notify-padding-top / 2) 20px (@notify-padding-bottom / 2);
-        }
-
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: (@notify-padding-top / 3) 10px (@notify-padding-bottom / 3);
-        }
+        // @media all and (max-width: (@device-width-large + 20px)) {
+        //     padding: (@notify-padding-top / 2) 20px (@notify-padding-bottom / 2);
+        // }
+        //
+        // @media all and (max-width: (@device-width-small + 20px)) {
+        //     padding: (@notify-padding-top / 3) 10px (@notify-padding-bottom / 3);
+        // }
     }
 
     .notify-popup-content {
@@ -91,7 +91,7 @@
             left: inherit;
             top: 0px;
             padding-bottom: (@notify-padding-bottom / 3);
-            .dir-rtl & {
+            .dir-rtl & {  //shift global
                 right: inherit;
                 left: 0px;
             }
@@ -160,7 +160,7 @@
             }
         }
 
-        .dir-rtl & {
+        .dir-rtl & {  //shift global
             left: 0px;
             right: inherit;
         }
@@ -184,14 +184,15 @@
         height: 100%;
         z-index: 549;
         background-color: @transparency;
-        .dir-rtl & {
+        .dir-rtl & {  //shift global
             left:inherit;
             right:0px;
         }
+        .no-opacity;
 
-        .no-opacity & {
-            background-image: @transparency-fallback-png;
-        }
+        // .no-opacity & {  //shift global
+        //     background-image: @transparency-fallback-png;
+        // }
     }
 }
 

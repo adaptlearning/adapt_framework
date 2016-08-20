@@ -3,19 +3,20 @@
 
 .block {
     position: relative;
-    background-color: @background-color;
+    //background-color: @background-color;
 
     .block-inner {
         max-width: @device-width-large;
         margin: auto;
         padding: @block-padding-top 0 @block-padding-bottom;
         // reduce padding as screen width decreases
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: (@block-padding-top / 2) 20px (@block-padding-bottom / 2);
-        }
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: (@block-padding-top / 3) 10px (@block-padding-bottom / 3);
-        }
+
+        // @media all and (max-width: (@device-width-large + 20px)) {
+        //     padding: (@block-padding-top / 2) 20px (@block-padding-bottom / 2);
+        // }
+        // @media all and (max-width: (@device-width-small + 20px)) {
+        //     padding: (@block-padding-top / 3) 10px (@block-padding-bottom / 3);
+        // }
     }
 
     .block-title {
@@ -23,7 +24,7 @@
         color: @title-color;
         text-align: left;
 
-        .dir-rtl & {
+        .dir-rtl & { //shift global
             text-align: right;
         }
     }
@@ -34,6 +35,7 @@
 
     .block-instruction {
         margin-bottom: @block-instruction-margin-bottom;
-        .instruction-text;
+        //.instruction-text;
+        font-weight: @instruction-text-font-weight;
     }
 }
