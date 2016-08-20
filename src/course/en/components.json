@@ -41,7 +41,7 @@
 		"_layout": "left",
 		"title": "Text components",
 		"displayTitle": "Text components",
-		"body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
+		"body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we've used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn't always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
 		"instruction": "",
 		"_pageLevelProgress": {
 			"_isEnabled": true
@@ -95,7 +95,7 @@
 		"_items": [
 			{
 				"title": "Narrative item 1",
-				"body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning about to follow, to illustrate real world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
+				"body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning about to follow, to illustrate real world application of the learning or to show the impact on people when the learning hasn't been applied correctly.",
 				"_graphic": {
 					"src": "course/en/images/single_width_small.jpg",
 					"alt": "Placeholder graphic."
@@ -175,7 +175,7 @@
 			},
 			{
 				"title": "Hot graphic item 3",
-				"body": "This is display text 3 which we’ve located over the laptop so you would expect the content to be about PCs.",
+				"body": "This is display text 3 which we've located over the laptop so you would expect the content to be about PCs.",
 				"_graphic": {
 					"src": "course/en/images/single_width_small.jpg",
 					"alt": "Placeholder graphic.",
@@ -243,7 +243,7 @@
 		"_items": [
 			{
 				"title": "Lists",
-				"body": "This is display text 1 and we’re using it to discuss lists.<br><br>If you need to present a list which can standalone as a piece of content, but which can also be explored in more detail, then accordions are a great choice.",
+				"body": "This is display text 1 and we're using it to discuss lists.<br><br>If you need to present a list which can standalone as a piece of content, but which can also be explored in more detail, then accordions are a great choice.",
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
@@ -251,7 +251,7 @@
 			},
 			{
 				"title": "Steps in a process",
-				"body": "This is display text 2 and now we’re discussing how accordions can be great at presenting a process.<br><br>The headings can be used to present the high level stages in the process which once selected, provide a more extensive explanation of what happens at that specific point.",
+				"body": "This is display text 2 and now we're discussing how accordions can be great at presenting a process.<br><br>The headings can be used to present the high level stages in the process which once selected, provide a more extensive explanation of what happens at that specific point.",
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
@@ -259,7 +259,7 @@
 			},
 			{
 				"title": "Recaps",
-				"body": "This is display text 3 and we’re now talking about using accordions to provide the learner with a summary.<br><br>Each accordion item corresponds to a key piece of learning presented on the page. When this item is selected a short summary of the learning point is provided.",
+				"body": "This is display text 3 and we're now talking about using accordions to provide the learner with a summary.<br><br>Each accordion item corresponds to a key piece of learning presented on the page. When this item is selected a short summary of the learning point is provided.",
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
@@ -306,9 +306,9 @@
 			}
 		],
 		"_feedback": {
-			"correct": "Correct feedback text.<br><br>That’s correct. The first large assessment to consist solely of the multiple choice question type was the Army Alpha test, used from <strong>1917</strong> to evaluate U.S. military recruits in the First World War.<br><br>Source: <a href='http://en.wikipedia.org/wiki/Multiple_choice' target='_blank'>Wikipedia</a><br><br><em>Component facts: <strong>Multiple Choice Questions (or MCQs)</strong> are a tried and tested method for presenting learners with a simple text-based question. Component is either single or spanned.</em>",
+			"correct": "Correct feedback text.<br><br>That's correct. The first large assessment to consist solely of the multiple choice question type was the Army Alpha test, used from <strong>1917</strong> to evaluate U.S. military recruits in the First World War.<br><br>Source: <a href='http://en.wikipedia.org/wiki/Multiple_choice' target='_blank'>Wikipedia</a><br><br><em>Component facts: <strong>Multiple Choice Questions (or MCQs)</strong> are a tried and tested method for presenting learners with a simple text-based question. Component is either single or spanned.</em>",
 			"_incorrect": {
-				"final": "Incorrect feedback text.<br><br>That’s not right. The first large assessment to consist solely of the multiple choice question type was the Army Alpha test, used from <strong>1917</strong> to evaluate U.S. military recruits in the First World War.<br><br>Source: <a href='http://en.wikipedia.org/wiki/Multiple_choice' target='_blank'>Wikipedia</a><br><br><em>Component facts: <strong>Multiple Choice Questions (or MCQs)</strong> are a tried and tested method for presenting learners with a simple text-based question. Component is either single or spanned.</em>"
+				"final": "Incorrect feedback text.<br><br>That's not right. The first large assessment to consist solely of the multiple choice question type was the Army Alpha test, used from <strong>1917</strong> to evaluate U.S. military recruits in the First World War.<br><br>Source: <a href='http://en.wikipedia.org/wiki/Multiple_choice' target='_blank'>Wikipedia</a><br><br><em>Component facts: <strong>Multiple Choice Questions (or MCQs)</strong> are a tried and tested method for presenting learners with a simple text-based question. Component is either single or spanned.</em>"
 			}
 		},
 		"_pageLevelProgress": {
@@ -380,9 +380,9 @@
 			}
 		],
 		"_feedback": {
-			"correct": "Correct feedback text.<br><br>That’s correct. <strong>Option 2</strong> is what we were looking for!",
+			"correct": "Correct feedback text.<br><br>That's correct. <strong>Option 2</strong> is what we were looking for!",
 			"_incorrect": {
-				"final": "Incorrect feedback text.<br><br>Sorry, that’s not right. In fact <strong>Option 2</strong> is what we were looking for (the clue was in the instruction text!)."
+				"final": "Incorrect feedback text.<br><br>Sorry, that's not right. In fact <strong>Option 2</strong> is what we were looking for (the clue was in the instruction text!)."
 			}
 		},
 		"_pageLevelProgress": {
@@ -430,12 +430,12 @@
 			}
 		],
 		"_feedback": {
-			"correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.",
+			"correct": "Correct answer feedback.<br><br>That's correct. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.",
 			"_partlyCorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
+				"final": "Incorrect answer feedback.<br><br>Sorry, that's not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
 			},
 			"_incorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
+				"final": "Incorrect answer feedback.<br><br>Sorry, that's not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
 			}
 		},
 		"_pageLevelProgress": {
@@ -543,12 +543,12 @@
 			}
 		],
 		"_feedback": {
-			"correct": "Correct answer feedback.<br><br>Yes, that’s right. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>",
+			"correct": "Correct answer feedback.<br><br>Yes, that's right. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>",
 			"_partlyCorrect": {
-				"final": "Partially correct answer feedback.<br><br>That’s partially correct. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>"
+				"final": "Partially correct answer feedback.<br><br>That's partially correct. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>"
 			},
 			"_incorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>"
+				"final": "Incorrect answer feedback.<br><br>Sorry, that's not right. Adapt was established as an Open Source project in 2013. The Web Accessibility Initiative (WAI) published the WCAG 2.0 guidelines in 2008 and Hebrew is the only language of the four shown which reads right to left.<br><br><em>Component facts: The <strong>matching</strong> component lets you match a series of questions or statements with the corresponding options from the dropdown box. Component is either single or spanned.</em>"
 			}
 		},
 		"_pageLevelProgress": {
@@ -572,15 +572,15 @@
 		"_scaleEnd": 10,
 		"title": "Slider",
 		"displayTitle": "Slider",
-		"body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulating information but according to a paper by Miller (1956) what ‘magic number’ describes its capacity?",
+		"body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulating information but according to a paper by Miller (1956) what 'magic number' describes its capacity?",
 		"instruction": "Drag the slider to make your choice and select Submit.",
 		"labelStart": "",
 		"labelEnd": "",
 		"_correctAnswer": "7",
 		"_feedback": {
-			"correct": "Correct answer feedback.<br><br>Yes, that’s right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>",
+			"correct": "Correct answer feedback.<br><br>Yes, that's right. According to Miller's paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller's <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>",
 			"_incorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>"
+				"final": "Incorrect answer feedback.<br><br>Sorry, that's not right. According to Miller's paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller's <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>"
 			}
 		},
 		"_pageLevelProgress": {
@@ -663,7 +663,7 @@
 		"_layout": "left",
 		"title": "Introduction",
 		"displayTitle": "",
-		"body": "You’ve just encountered the <strong>Trickle</strong> extension. Trickle can be used to control the presentation of content and the manner in which it can be navigated within an Adapt page. In the example just shown the extension was configured to ensure that no content beyond the first question was visible until that block was registered as completed (the question had been attempted). Once the block was completed, a continue button was shown which, once selected, scrolled the next block into view.<br><br>Trickle can be configured in a variety of ways so please read the wiki for all possible configuration options.",
+		"body": "You've just encountered the <strong>Trickle</strong> extension. Trickle can be used to control the presentation of content and the manner in which it can be navigated within an Adapt page. In the example just shown the extension was configured to ensure that no content beyond the first question was visible until that block was registered as completed (the question had been attempted). Once the block was completed, a continue button was shown which, once selected, scrolled the next block into view.<br><br>Trickle can be configured in a variety of ways so please read the wiki for all possible configuration options.",
 		"instruction": "",
 		"_pageLevelProgress": {
 			"_isEnabled": true
@@ -772,8 +772,8 @@
 		"_shouldDisplayAttempts": false,
 		"_isRandom": true,
 		"_selectable": 1,
-		"title": "It’s as simple as A, B, C",
-		"displayTitle": "It’s as simple as A, B, C",
+		"title": "It's as simple as A, B, C",
+		"displayTitle": "It's as simple as A, B, C",
 		"body": "Can you identify the missing word in the following sequence: Article / ..... /Component.",
 		"instruction": "Choose an option and select Submit.",
 		"_items": [
@@ -1040,7 +1040,7 @@
 		"_layout": "full",
 		"title": "c-147",
 		"displayTitle": "",
-		"body": "The new Assessment Results component allows you to specific the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 70% or above, provided four scoring bands each of which has some accompanying feedback. The four score bands were:<br><br><ul><li>0-40% (fail)</li><li>41-69%(fail)</li><li>70-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let’s find out.",
+		"body": "The new Assessment Results component allows you to specific the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 70% or above, provided four scoring bands each of which has some accompanying feedback. The four score bands were:<br><br><ul><li>0-40% (fail)</li><li>41-69%(fail)</li><li>70-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let's find out.",
 		"_pageLevelProgress": {
 			"_isEnabled": true
 		}
@@ -1068,22 +1068,22 @@
 		"_bands": [
 			{
 				"_score": 0,
-				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You didn’t do so well in the Adapt assessment demo, but don’t worry. There’s lots of information about the Adapt basics on our site. We’d also suggest you pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
+				"feedback": "You didn't pass, achieving a score of {{scoreAsPercent}}%.<br><br>You didn't do so well in the Adapt assessment demo, but don't worry. There's lots of information about the Adapt basics on our site. We'd also suggest you pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
 				"_allowRetry": true
 			},
 			{
 				"_score": 40,
-				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You already know some of the Adapt basics but please explore our site for more information. Also pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
+				"feedback": "You didn't pass, achieving a score of {{scoreAsPercent}}%.<br><br>You already know some of the Adapt basics but please explore our site for more information. Also pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
 				"_allowRetry": true
 			},
 			{
 				"_score": 70,
-				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already pretty knowledgeable about Adapt so, if you haven’t already, please consider sharing your expertise on the Adapt community forums.",
+				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You're clearly already pretty knowledgeable about Adapt so, if you haven't already, please consider sharing your expertise on the Adapt community forums.",
 				"_allowRetry": true
 			},
 			{
 				"_score": 100,
-				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already a black belt in Adapt! If you haven’t already, please consider sharing your expertise on the Adapt community forums.",
+				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You're clearly already a black belt in Adapt! If you haven't already, please consider sharing your expertise on the Adapt community forums.",
 				"_allowRetry": false
 			}
 		],
