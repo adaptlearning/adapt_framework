@@ -2,7 +2,7 @@
 
 ## [2.0.12] - 2016-08-22
 ### Added
-- Accessibility-specific handlebars helpers ([](https://github.com/adaptlearning/adapt_framework/issues/1051))
+- Accessibility-specific handlebars helpers ([#1051](https://github.com/adaptlearning/adapt_framework/issues/1051))
 
 ### Changed
 - Various changes relating to ongoing work to allow Adapt to load and function even when no theme is installed ([#953](https://github.com/adaptlearning/adapt_framework/issues/953))
