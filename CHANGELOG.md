@@ -10,6 +10,7 @@
 ### Fixed
 - Issue with partially correct feedback not showing for adapt-contrib-matching component ([#1187](https://github.com/adaptlearning/adapt_framework/issues/1187))
 - Ongoing issue with correctly detecting screen width on iOS devices ([#1096](https://github.com/adaptlearning/adapt_framework/issues/1096))
+
 ## [2.0.11] - 2016-07-26
 ### Added
 - global text support ([#1049](https://github.com/adaptlearning/adapt_framework/issues/1049))
