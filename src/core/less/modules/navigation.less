@@ -2,7 +2,6 @@
 // ==================
 
 .navigation {
-    // .responsive-layout;
     position:fixed;
     top:0;
     z-index:500;
@@ -11,29 +10,21 @@
     background-color: @navigation-color;
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     height: (@navigation-padding * 2) + @icon-size;
-
-    .ie8 & {
-        max-width: @ie8-max-width;
-    }
+    .ie8-max-width;
 
     .navigation-back-button {
         float:left;
-        .dir-rtl & {  //shift global
-            float:right;
-        }
+        .direction-right-to-left .float-right;
     }
 
     .navigation-drawer-toggle-button {
         float:right;
-        .dir-rtl & {  //shift global
-            float:left;
-        }
+        .direction-right-to-left .float-left;
     }
 
     .icon {
         padding: @navigation-padding;
         color: @navigation-icon-color;
-        //.transition-color;
 
         .no-touch &:hover {
             color: @navigation-icon-color-hover;

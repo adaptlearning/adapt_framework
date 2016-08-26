@@ -10,14 +10,11 @@
     z-index: 5000;
     background-color: @transparency;
     text-align: center;
-    .dir-rtl & { //shift global
+    .dir-rtl & {
         left:auto;
         right:0;
     }
-
-    .no-opacity & {
-    	background-image: @transparency-fallback-png;
-    }
+    .no-opacity;
 
     .loader-gif {
         background-image: url(assets/ajax-loader.gif);

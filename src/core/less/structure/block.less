@@ -3,7 +3,6 @@
 
 .block {
     position: relative;
-    //background-color: @background-color;
 
     .block-inner {
         max-width: @device-width-large;
@@ -11,22 +10,19 @@
         padding: @block-padding-top 0 @block-padding-bottom;
         // reduce padding as screen width decreases
 
-        // @media all and (max-width: (@device-width-large + 20px)) {
-        //     padding: (@block-padding-top / 2) 20px (@block-padding-bottom / 2);
-        // }
-        // @media all and (max-width: (@device-width-small + 20px)) {
-        //     padding: (@block-padding-top / 3) 10px (@block-padding-bottom / 3);
-        // }
+        @media all and (max-width: (@device-width-large + 20px)) {
+            padding: (@block-padding-top / 2) 20px (@block-padding-bottom / 2);
+        }
+        @media all and (max-width: (@device-width-small + 20px)) {
+            padding: (@block-padding-top / 3) 10px (@block-padding-bottom / 3);
+        }
     }
 
     .block-title {
         margin-bottom: @block-title-margin-bottom;
         color: @title-color;
         text-align: left;
-
-        .dir-rtl & { //shift global
-            text-align: right;
-        }
+        .direction-right-to-left .text-align-right;
     }
 
     .block-body{
@@ -35,7 +31,14 @@
 
     .block-instruction {
         margin-bottom: @block-instruction-margin-bottom;
-        //.instruction-text;
         font-weight: @instruction-text-font-weight;
     }
+
+  	&.background-color-inverted {
+  		background-color: @background-color-inverted;
+  		color: @font-color-inverted;
+  		.component-inner {
+  			background-color: transparent !important;
+  		}
+  	}
 }

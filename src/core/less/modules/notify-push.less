@@ -1,0 +1,71 @@
+// Notify push styling
+// ==============
+
+.notify-push {
+    position:fixed;
+    right:20px;
+    width:380px;
+    background-color: @notify-color;
+    transition:all 0.3s;
+    opacity:0;
+    margin-top:-30px;
+    color:#fff;
+    z-index:50;
+    border: 1px solid @notify-text-color;
+    border-radius:3px;
+
+    .dir-rtl & {
+        left: 20px;
+        right: inherit;
+    }
+
+    @media all and (max-width:@device-width-medium) {
+        width:90%;
+        max-width:380px;
+        right:5%;
+
+	    .dir-rtl & {
+          left: 5%;
+	        right: inherit;
+	    }
+    }
+
+    &.show {
+        margin-top: 0px;
+        opacity: 1;
+    }
+}
+
+.notify-push-inner {
+    padding:30px 0px 30px 30px;
+    margin-right:(30px + @icon-size*2);
+    cursor: pointer;
+
+    .dir-rtl & {
+        margin-left: (30px + @icon-size*2);
+        margin-right: inherit;
+        padding: 30px 30px 30px 0px;
+    }
+}
+
+.notify-push-close {
+    display: inline-block;
+    position:absolute;
+    right:30px;
+    top:50%;
+    margin-top:-(@icon-size/2);
+    text-decoration: none;
+
+    .dir-rtl & {
+        left: 30px;
+        right: inherit;
+    }
+
+    .icon {
+        color: @notify-icon-color;
+
+        .no-touch &:hover {
+            color: @notify-icon-color-hover;
+        }
+    }
+}

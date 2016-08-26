@@ -1,3 +1,9 @@
+.ie8 & {
+    body {
+        font-family: Arial, sans-serif;
+    }
+}
+
 .ie8.size-medium, .ie8.size-large {
     .component-left {
         width:50%;
@@ -32,9 +38,15 @@
     }
 }
 
-.no-opacity{
+.no-opacity(){
   .no-opacity &{
       background-image: @transparency-fallback-png;
-    //  color: red;
+  }
+}
+
+.ie8-max-width(){
+  .ie8 & {
+      max-width: @ie8-max-width;
+      margin: 0 auto;
   }
 }

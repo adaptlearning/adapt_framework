@@ -10,7 +10,6 @@
     text-align: center;
     display:inline-block;
     border: @button-border;
-    //.transition-all-colors;
     .button-text;
 
     .no-touch &:hover {
@@ -25,18 +24,15 @@
     	background-color: transparent;
     	padding: 0;
     	text-align: left;
-        -webkit-transition: none;
-        -moz-transition: none;
-        -ms-transition: none;
-        transition: none;
+      -webkit-transition: none;
+      -moz-transition: none;
+      -ms-transition: none;
+      transition: none;
 
     	.no-touch &:hover {
     		background-color: transparent;
     	}
-
-    	.dir-rtl & {
-    		text-align: right;
-    	}
+      .direction-right-to-left .text-align-right;
     }
 
     .disabled-style() {
@@ -49,7 +45,6 @@
             border-color: @button-border-color-disabled;
         }
     }
-
     &.disabled, &:disabled { .disabled-style; }
     // IE8 fix needed to be in its own line
     &[disabled="disabled"] { .disabled-style; }
