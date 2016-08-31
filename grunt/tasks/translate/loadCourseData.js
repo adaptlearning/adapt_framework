@@ -1,6 +1,4 @@
 var path = require("path");
-var jschardet = require("jschardet");
-var iconv = require("iconv-lite");
 
 module.exports = function (grunt) {
   
@@ -28,21 +26,8 @@ module.exports = function (grunt) {
     for (var file in fileMap) {
         if (fileMap.hasOwnProperty(file)) {
             var src = path.join.apply(null, fileMap[file]);
-            var fileBuffer = grunt.file.read(src, {encoding: null});
 
-            // decode course files
-            var detected = jschardet.detect(fileBuffer);
-            var fileAsString;
-
-            if (iconv.encodingExists(detected.encoding)) {
-                fileAsString = iconv.decode(fileBuffer, detected.encoding);
-                grunt.log.debug(file+' - encoding detected: '+detected.encoding);
-            } else {
-                fileAsString = iconv.decode(fileBuffer, 'utf8');
-                grunt.log.debug(file+' - encoding not detected, used utf-8 instead');
-            }
-
-            global.translate.courseData[file] = JSON.parse(fileAsString);
+            global.translate.courseData[file] = grunt.file.readJSON(src);
         }
     }
 
