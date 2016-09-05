@@ -55,7 +55,7 @@ module.exports = function (grunt) {
             _cb(error);
           } else {
             var src = path.join("languagefiles", grunt.config("translate.masterLang"), name+".csv");
-            grunt.file.write(src, output);
+            grunt.file.write(src, "\ufeff" + output);
             _cb();
           }
         });
