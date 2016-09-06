@@ -86,8 +86,8 @@
             }
         },
         "_accessibility": {
-            "_accessibilityToggleTextOn": "Turn accessibility on?",
-            "_accessibilityToggleTextOff": "Turn accessibility off?",
+            "accessibilityToggleTextOn": "Turn accessibility on?",
+            "accessibilityToggleTextOff": "Turn accessibility off?",
             "_accessibilityInstructions": {
                 "touch": "Usage instructions. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
                 "notouch": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
