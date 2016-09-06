@@ -19,6 +19,16 @@
                     coreCollections: 'core/js/collections',
                     coreHelpers: 'core/js/helpers'
                 }
+            },
+            paths: {
+                underscore: 'libraries/underscore',
+                backbone: 'libraries/backbone',
+                handlebars: 'libraries/handlebars',
+                velocity: 'libraries/velocity',
+                imageReady: 'libraries/imageReady',
+                inview: 'libraries/inview',
+                a11y: 'libraries/jquery.a11y',
+                scrollTo: 'libraries/scrollTo'
             }
         });
         loadJQuery();
@@ -41,8 +51,22 @@
         if(window.jQuery === undefined) {
             setTimeout(checkJQueryStatus, 100);
         } else {
-            loadAdapt();
+            loadFoundationLibraries();
         }
+    }
+
+    function loadFoundationLibraries() {
+        require([
+            "underscore",
+            "backbone",
+            "handlebars",
+            "velocity",
+            "imageReady",
+            "inview",
+            "a11y",
+            "scrollTo",
+            "templates"
+        ], loadAdapt);
     }
 
     //5. Load adapt
