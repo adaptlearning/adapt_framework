@@ -223,6 +223,15 @@
       "validators": [],
       "title": "Generate sourcemap",
       "help": "Creates a JavaScript sourcemap for the output code - useful for debugging (in browsers that support it)."
+    },
+    "_forceRouteLocking": {
+      "type": "bool",
+      "default": "true",
+      "isSetting": true,
+      "inputType": {"type": "Boolean", "options": [true, false]},
+      "validators": [],
+      "title": "Enforce route locking",
+      "help": "If menu locking is enabled, this setting prevents navigating to locked routes"
     }
   }
 }

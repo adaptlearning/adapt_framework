@@ -39,6 +39,15 @@
       "title": "Is this optional?",
       "help": "If set to 'true' this component does not have to be completed"
     },
+    "_isAvailable": {
+      "type": "bool",
+      "default": "true",
+      "isSetting": true,
+      "inputType": {"type": "Boolean", "options": [true, false]},
+      "validators": [],
+      "title": "Is this available?",
+      "help": "If set to 'false' this will not be displayed"
+    },
     "_parentId": {
       "type":"objectid",
       "required":true

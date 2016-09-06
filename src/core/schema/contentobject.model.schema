@@ -70,6 +70,15 @@
       "help": "Indicate how long this page or section should take to complete",
       "translatable": true
     },
+    "_lockedBy": {
+      "type": "array",
+      "required": false,
+      "default": [],
+      "title": "Locked by",
+      "inputType": "List",
+      "validators": [],
+      "help": "If the course is using a 'custom' Menu Lock Type, this should contain the unique ID of the item(s) which must be completed before this is unlocked"
+    },
     "_classes": {
       "type":"string",
       "default":"",
@@ -86,6 +95,15 @@
       "validators": [],
       "title": "Is this optional?",
       "help": "If set to 'true' this does not have to be completed"
+    },
+    "_isAvailable": {
+      "type": "bool",
+      "default": "true",
+      "isSetting": true,
+      "inputType": {"type": "Boolean", "options": [true, false]},
+      "validators": [],
+      "title": "Is this available?",
+      "help": "If set to 'false' this will not be displayed"
     },
     "_extensions": {
       "type": "object"
