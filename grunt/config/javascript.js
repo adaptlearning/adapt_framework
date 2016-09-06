@@ -46,6 +46,11 @@ module.exports = function (grunt, options) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
                 optimize: 'uglify2'
+            },
+            files: {
+              '<%= outputdir %>adapt/js/adapt.min.js': [
+                '<%= sourcedir %>/**/*.js'
+              ]
             }
         }
     }
