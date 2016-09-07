@@ -18,24 +18,6 @@ module.exports = function (grunt, options) {
                 pluginsFilter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
-                //translate old style bundle references into something that does exist
-                map: {
-                    "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins",
-                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
-                        "templates": "plugins",
-                        "templates/templates": "plugins"
-                    }
-                },
-                paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
-                },
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
                 optimize: 'none'
@@ -54,30 +36,21 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/bower.json',
                     '<%= sourcedir %>theme/<%= theme %>/bower.json'
                 ],
+                preserveLicenseComments:false,
+                uglify2: {
+                    compress: false
+                },
                 pluginsPath: '<%= sourcedir %>/plugins.js',
                 pluginsModule: 'plugins',
                 pluginsFilter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
-                //translate old style bundle references into something that does exist
-                map: {
-                    "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins",
-                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
-                        "templates": "plugins",
-                        "templates/templates": "plugins"
-                    }
-                },
-                paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
-                },
                 optimize: 'uglify2'
+            },
+            files: {
+              '<%= outputdir %>adapt/js/adapt.min.js': [
+                '<%= sourcedir %>/**/*.js'
+              ]
             }
         }
     }

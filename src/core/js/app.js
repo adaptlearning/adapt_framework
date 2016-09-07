@@ -17,17 +17,7 @@ require([
     'coreModels/questionModel',
     'coreJS/offlineStorage',
     'coreModels/lockingModel',
-    'velocity',
-    'imageReady',
-    'inview',
-    'handlebars',
-    'templates',
-    'jquery',
-    'scrollTo',
-    'components/components',
-    'extensions/extensions',
-    'menu/menu',
-    'theme/theme'
+    'plugins'
 ], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel, QuestionModel) {
 
     // Append loading template and show

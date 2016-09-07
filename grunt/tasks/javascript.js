@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 		var options = this.options({});
 
 		if (options.plugins) {
-			var pluginsClientSidePatch = 'requirejs.config({map: { "*": { "extensions/extensions":"'+options.pluginsModule+'","menu/menu":"'+options.pluginsModule+'","theme/theme":"'+options.pluginsModule+'","components/components":"'+options.pluginsModule+'" } } });';
+			var pluginsClientSidePatch = '';
 
 			var doesPluginPathExists = true;
 			try {

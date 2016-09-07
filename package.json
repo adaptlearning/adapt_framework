@@ -137,6 +137,7 @@
     "grunt-contrib-watch": "~1.0.0",
     "grunt-jscs": "~2.8.0",
     "grunt-jsonlint": "~1.0.7",
+    "grunt-newer": "^1.2.0",
     "grunt-open": "~0.2.3",
     "grunt-replace": "~1.0.1",
     "jit-grunt": "~0.10.0",
