@@ -52,7 +52,9 @@ module.exports = function (grunt) {
             if (!description.hasOwnProperty('items')) {
               // handles "inputType": "List" edge-case
               break;
-            } else if (description.items.type === "object") {
+            }
+
+            if (description.items.type === "object") {
               _traverseSchemas(description.items.properties, store, _path+attributeName+"/", shouldPickValue);
             } else {
               var next = {};
