@@ -41,6 +41,7 @@ module.exports = function (grunt, options) {
                 pluginsFilter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
+                preserveLicenseComments:false,
                 optimize: 'uglify2',
                 uglify2: {
                     compress: false
