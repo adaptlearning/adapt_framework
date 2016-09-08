@@ -7,7 +7,7 @@ All Adapt grunt commands are run from the root directory of the Adapt course whe
 Lists out all available tasks along with descriptions. Useful to quickly look up what's available without having to leave the command line. <br/>_**Note**: Simply running `grunt` will have the same effect._ 
 
 **build**  
-`grunt build [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outdir=xx]`  
+`grunt build [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx]`  
 Compiles all files in `src` to create a production-ready minified/compressed version of your course. Includes a variety of error-checking tasks.  
 `--languages` Specifies which language folder/s should be built. Can take any value that matches the name of an existing */src/course/* subfolder. Defaults to `en`.  
 `--menu` If more than one menu is present in the */src/menu* folder, specifies the name of the menu to include in the build.  
@@ -16,7 +16,7 @@ Compiles all files in `src` to create a production-ready minified/compressed ver
 `--outputdir`  Specifies the absolute path to parent folder where the build will be written. Defaults to the path to */build*. 
 
 **dev**  
-`grunt dev [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outdir=xx]`   
+`grunt dev [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx]`   
 The same as `build`, with a few notable *developer-friendly* differences:  
 -Includes [source maps](http://blog.teamtreehouse.com/introduction-source-maps) for both JavaScript and Less.  
 -Runs the `watch` task, which monitors the source code for any file changes and updates the build when changes occur.  
@@ -29,7 +29,7 @@ _**Note**: This task is included in the `build` and `dev` tasks, so there is usu
 **tracking-insert**  
 `grunt tracking-insert`  
 Adds missing tracking IDs to the *blocks.json* file. Run `tracking-reset` if sequential numbering is desirable.  
-_**Note**: this task runs during the `build` and `dev` tasks, so there is usually no need to run it manually._ 
+_**Note**: This task runs during the `build` and `dev` tasks, so there is usually no need to run it manually._ 
 
 **tracking-remove**  
 `grunt tracking-remove`  
@@ -41,12 +41,13 @@ _**Note**: Unused tracking IDs rarely have a detrimental effect._
 Resets all tracking IDs in the *blocks.json* file starting sequentially from 0.  
 
 **server**  
-`grunt server [--port=xxxx]`  
+`grunt server [--host=x.x.x.x] [--port=xxxx]`  
 Runs a local server on your machine and opens a browser window ready for you to test your course locally. Check the output for the URL.  
+`--host` Specifies the host. Defaults to `"localhost"`.  
 `--port` Specifies the port. Defaults to `9001`.
 
 **`server-scorm`**  
-`grunt server-scorm [--port=xxxx]`  
+`grunt server-scorm [--host=x.x.x.x] [--port=xxxx]`  
 Same as above, but provides a dummy SCORM interface to allow you to test the tracking of your course.  
 
 **`translate:export`**  
@@ -63,7 +64,7 @@ Imports translated text files and creates a new language version of the course.
 `--masterLang` Specifies which language folder to use as the "template". Can take any value that matches the name of an existing */src/course/* subfolder. Defaults to `en`.  
 `--format` Specifies the format of the files being imported. Defaults to `csv`.  
 `--csvDelimiter` Specifies the field delimiter used in CSV files being imported. Defaults to `,`.  
-`--replace` Indicates that an existing folder named with the value of targetLang should be overwritten with the imported texts.  
+`--replace` Indicates that an existing folder named with the value of `targetLang` should be overwritten with the imported texts.  
 
 **Additional Build Notes**  
 By default, all installed plug-ins are included in the build process. Sometimes the developer may install plug-ins that are used only during development or that are not yet being used by the content. Doing so bloats the build needlessly. This can be avoided by adding a `build` object to *course/config.json*. It allows the developer to specify explicitly which plug-ins will be included in the build or excluded from the build. The `build` object contains values for one of two arrays: `excludes` or `includes`.  
