@@ -18,24 +18,6 @@ module.exports = function (grunt, options) {
                 pluginsFilter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
-                //translate old style bundle references into something that does exist
-                map: {
-                    "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins",
-                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
-                        "templates": "plugins",
-                        "templates/templates": "plugins"
-                    }
-                },
-                paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
-                },
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
                 optimize: 'none'
@@ -59,25 +41,10 @@ module.exports = function (grunt, options) {
                 pluginsFilter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
-                //translate old style bundle references into something that does exist
-                map: {
-                    "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins",
-                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
-                        "templates": "plugins",
-                        "templates/templates": "plugins"
-                    }
-                },
-                paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
-                },
-                optimize: 'uglify2'
+                optimize: 'uglify2',
+                uglify2: {
+                    compress: false
+                }
             }
         }
     }

@@ -173,12 +173,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: [
-                        '<%= sourcedir %>core/js/libraries/require.js',
-                        '<%= sourcedir %>core/js/libraries/modernizr.js',
-                        '<%= sourcedir %>core/js/libraries/json2.js',
-                        '<%= sourcedir %>core/js/libraries/consoles.js',
-                        '<%= sourcedir %>core/js/libraries/jquery.js',
-                        '<%= sourcedir %>core/js/libraries/jquery.v2.js'
+                        '<%= sourcedir %>core/js/libraries/*.js'
                     ],
                     dest: '<%= outputdir %>libraries/',
                     filter: 'isFile',
@@ -186,8 +181,21 @@ module.exports = function (grunt, options) {
                 },
                 {
                     expand: true,
-                    src: ['*/required/**/*'],
-                    cwd: '<%= sourcedir %>extensions/',
+                    src: ['**/libraries/**/*'],
+                    cwd: '<%= sourcedir %>',
+                    dest: '<%= outputdir %>/libraries/',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    },
+                    rename: function(destFolder, srcFileName) {
+                        var endOfRequired = srcFileName.indexOf("libraries/") + 9;
+                        return destFolder + srcFileName.substr(endOfRequired);
+                    }
+                },
+                {
+                    expand: true,
+                    src: ['**/required/**/*'],
+                    cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
