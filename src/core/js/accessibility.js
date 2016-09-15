@@ -169,7 +169,7 @@ define(function(require) {
 
         configureA11yLibrary: function() {
 
-            var topOffset = $('.navigation').height()+10;
+            var topOffset = $('.navigation').height();
             var bottomoffset = 0;
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;
