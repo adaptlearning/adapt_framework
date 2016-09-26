@@ -9,26 +9,27 @@ define(function(require) {
 	Drawer.addItem = function(drawerObject, eventCallback) {
 		drawerObject.eventCallback = eventCallback;
 		DrawerCollection.add(drawerObject);
-	}
+	};
 
 	Drawer.triggerCustomView = function(view, hasBackButton) {
 		if (hasBackButton !== false) {
 			hasBackButton = true;
 		}
 		Adapt.trigger('drawer:triggerCustomView', view, hasBackButton);
-	}
+	};
 
 	var init = function() {
 		new DrawerView({collection: DrawerCollection});
-	}
+	};
 
 	Adapt.once('app:dataReady', function() {
 		init();
-	})
+	});
 
 	Adapt.on('languagePicker:languageChange', function() {
+		Adapt.trigger('drawer:empty');
 		DrawerCollection.reset();
-	})
+	});
 
 	Adapt.drawer = Drawer;
 
