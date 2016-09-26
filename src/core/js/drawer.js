@@ -26,6 +26,10 @@ define(function(require) {
 		init();
 	})
 
+	Adapt.on('languagePicker:languageChange', function() {
+		DrawerCollection.reset();
+	})
+
 	Adapt.drawer = Drawer;
 
 });
