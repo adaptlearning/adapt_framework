@@ -26,7 +26,7 @@ define(function(require) {
 		init();
 	});
 
-	Adapt.on('languagePicker:languageChange', function() {
+	Adapt.on('app:languageChanged', function() {
 		Adapt.trigger('drawer:empty');
 		DrawerCollection.reset();
 	});
