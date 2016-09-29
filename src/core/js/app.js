@@ -1,22 +1,23 @@
 require([
-    'coreJS/adapt',
-    'coreJS/router',
-    'coreJS/drawer',
-    'coreJS/device',
-    'coreJS/popupManager',
-    'coreJS/notify',
-    'coreJS/accessibility',
-    'coreViews/navigationView',
-    'coreJS/adaptCollection',
-    'coreModels/configModel',
-    'coreModels/courseModel',
-    'coreModels/contentObjectModel',
-    'coreModels/articleModel',
-    'coreModels/blockModel',
-    'coreModels/componentModel',
-    'coreModels/questionModel',
-    'coreJS/offlineStorage',
-    'coreModels/lockingModel',
+    'core/js/adapt',
+    'core/js/router',
+    'core/js/startController',
+    'core/js/drawer',
+    'core/js/device',
+    'core/js/popupManager',
+    'core/js/notify',
+    'core/js/accessibility',
+    'core/js/views/navigationView',
+    'core/js/adaptCollection',
+    'core/js/models/configModel',
+    'core/js/models/courseModel',
+    'core/js/models/contentObjectModel',
+    'core/js/models/articleModel',
+    'core/js/models/blockModel',
+    'core/js/models/componentModel',
+    'core/js/models/questionModel',
+    'core/js/offlineStorage',
+    'core/js/models/lockingModel',
     'velocity',
     'imageReady',
     'inview',
@@ -28,7 +29,7 @@ require([
     'extensions/extensions',
     'menu/menu',
     'theme/theme'
-], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel, QuestionModel) {
+], function (Adapt, Router, StartController, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel, QuestionModel) {
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
@@ -54,7 +55,13 @@ require([
                 Adapt.trigger('app:languageChanged', newLanguage);
 
                 _.defer(function() {
-                    Backbone.history.navigate('#/', { trigger: true, replace: true });
+                    var startController = new StartController();
+                    var hash = '#/';
+
+                    if (startController.isEnabled())
+                        hash = startController.getStartHash();
+                    
+                    Backbone.history.navigate(hash, { trigger: true, replace: true });
                 });
             }
 
