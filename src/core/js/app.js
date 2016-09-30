@@ -56,6 +56,11 @@ require([
                 _.defer(function() {
                     Backbone.history.navigate('#/', { trigger: true, replace: true });
                 });
+            } else {
+                // make sure _defaultLanguage is stored in offlineStorage
+                if (Adapt.offlineStorage.get('lang') === undefined) {
+                    Adapt.offlineStorage.set('lang', Adapt.config.get('_defaultLanguage'));
+                }
             }
 
             if (typeof Adapt.course.get('_buttons').submit !== 'undefined') {
