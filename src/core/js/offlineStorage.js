@@ -18,7 +18,7 @@ define([
 		 * it's ready before we can safely use offlineStorage
 		 */
 		initialize: function(handler) {
-			ready = false;
+			this.ready = false;
 			this._handler = handler;
 		},
 
