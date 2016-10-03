@@ -32,7 +32,7 @@ require([
 ], function (Adapt, Router, StartController, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel, QuestionModel) {
 
     // Append loading template and show
-    window.Handlebars = _.extend(require("handlebars"), window.Handlebars)
+    window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
 
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
@@ -162,9 +162,9 @@ require([
                 //use view+model object
                 var ViewModelObject = Adapt.componentStore[json._component];
 
-				if(!ViewModelObject) {
+                if(!ViewModelObject) {
                     throw new Error(json._component + ' component not found. Is it installed and included?');
-		        }
+                }
 
                 //if model defined for component use component model
                 if (ViewModelObject.model) {
