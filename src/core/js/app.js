@@ -64,8 +64,9 @@ require([
                     var startController = new StartController();
                     var hash = '#/';
 
-                    if (startController.isEnabled())
-                        hash = startController.getStartHash();
+                    if (startController.isEnabled()) {
+                        hash = startController.getStartHash(true);
+                    }
                     
                     Backbone.history.navigate(hash, { trigger: true, replace: true });
                 });
