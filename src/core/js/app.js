@@ -199,14 +199,17 @@ require([
     function onConfigModelLoadCourseData() {
         var language = Adapt.config.get('_activeLanguage');
 
-        if (language) Adapt.loadCourseData();
-        else Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
+        if (language) {
+            Adapt.loadCourseData();
+        } else {
+            Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
+        }
     }
 
     // Events that are triggered by the main Adapt content collections and models
     Adapt.once({
         'configModel:dataLoaded': onConfigModelDataLoaded,
-        'configModel:loadCourseData': Adapt.onConfigModelLoadCourseData
+        'configModel:loadCourseData': onConfigModelLoadCourseData
     });
 
 
