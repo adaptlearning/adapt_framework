@@ -38,10 +38,16 @@ require([
 
     // Create config model
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
+    Adapt.config.on({
+        'change:_activeLanguage': onLanguageChange,
+        'change:_defaultDirection': onDirectionChange
+    });
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
-    Adapt.checkDataIsLoaded = function(newLanguage) {
+    Adapt.checkDataIsLoaded = function(isLanguageChange) {
+        var language = Adapt.config.get('_activeLanguage');
+
         if (Adapt.contentObjects.models.length > 0
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
@@ -50,8 +56,8 @@ require([
 
             mapAdaptIdsToObjects();
 
-            if (newLanguage) {
-                Adapt.trigger('app:languageChanged', newLanguage);
+            if (isLanguageChange) {
+                Adapt.trigger('app:languageChanged', language);
 
                 _.defer(function() {
                     Backbone.history.navigate('#/', { trigger: true, replace: true });
@@ -102,6 +108,7 @@ require([
             Adapt.initialize();
             // Remove event listeners
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+
         }
     }
     
@@ -120,13 +127,13 @@ require([
     // This function is called when the config model triggers 'configModel:loadCourseData'
     // Once the config model is loaded get the course files
     // This enables plugins to tap in before the course files are loaded & also to change the default language
-    Adapt.loadCourseData = function(newLanguage) {
+    Adapt.loadCourseData = function(isLanguageChange) {
         Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
-            Adapt.checkDataIsLoaded(newLanguage);
+            Adapt.checkDataIsLoaded(isLanguageChange);
         });
 
         // All code that needs to run before adapt starts should go here
-        var language = newLanguage || Adapt.config.get('_defaultLanguage');
+        var language = Adapt.config.get('_activeLanguage');
 
         var courseFolder = "course/" + language +"/";
 
@@ -155,9 +162,9 @@ require([
                 //use view+model object
                 var ViewModelObject = Adapt.componentStore[json._component];
 
-				if(!ViewModelObject) {
+                if(!ViewModelObject) {
                     throw new Error(json._component + ' component not found. Is it installed and included?');
-		        }
+                }
 
                 //if model defined for component use component model
                 if (ViewModelObject.model) {
@@ -177,27 +184,29 @@ require([
         });
     }
 
-    function onConfigModelDataLoaded() {
-        Adapt.config.on({
-            'change:_defaultLanguage': onDefaultLanguageChange,
-            'change:_defaultDirection': onDefaultDirectionChange
-        });
-    }
-
-    function onDefaultLanguageChange(model, language) {
+    function onLanguageChange(model, language) {
         Adapt.offlineStorage.set('lang', language);
-        Adapt.loadCourseData(language);
+        Adapt.loadCourseData(true);
     }
 
-    function onDefaultDirectionChange(model, direction) {
+    function onDirectionChange(model, direction) {
         $('html').toggleClass('dir-rtl', direction === 'rtl');
     }
 
+    /**
+    * Before we actually go to load the course data, we first need to check to see if a language has been set
+    * If it has we can go ahead and start loading; if it hasn't, apply the defaultLanguage from config.json
+    */
+    function onLoadCourseData() {
+        if (Adapt.config.get('_activeLanguage')) {
+            Adapt.loadCourseData();
+        } else {
+            Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
+        }
+    }
+
     // Events that are triggered by the main Adapt content collections and models
-    Adapt.once({
-        'configModel:dataLoaded': onConfigModelDataLoaded,
-        'configModel:loadCourseData': Adapt.loadCourseData
-    });
+    Adapt.once('configModel:loadCourseData', onLoadCourseData);
 
 
 });
