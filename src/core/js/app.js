@@ -196,6 +196,10 @@ require([
         $('html').toggleClass('dir-rtl', direction === 'rtl');
     }
 
+    /**
+    * Before we actually go to load the course data, we first need to check to see if a language has been set
+    * If it has we can go ahead and start loading; if it hasn't, apply the defaultLanguage from config.json
+    */
     function onConfigModelLoadCourseData() {
         if (Adapt.config.get('_activeLanguage')) {
             Adapt.loadCourseData();
