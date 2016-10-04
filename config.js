@@ -10,7 +10,10 @@ require.config({
         inview: 'empty:',
         a11y: 'empty:',
         scrollTo: 'empty:',
-        libraries: 'empty:'
+        libraries: 'empty:',
+        bowser: 'empty:',
+        'core/js/libraries/bowser': 'empty:',
+        'coreJS/libraries/bowser': 'empty:'
     },
     map: {
         '*': {

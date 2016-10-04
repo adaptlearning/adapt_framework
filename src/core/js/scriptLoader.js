@@ -17,7 +17,9 @@
                     coreViews: 'core/js/views',
                     coreModels: 'core/js/models',
                     coreCollections: 'core/js/collections',
-                    coreHelpers: 'core/js/helpers'
+                    coreHelpers: 'core/js/helpers',
+                    'coreJS/libraries/bowser': 'libraries/bowser',
+                    'core/js/libraries/bowser': 'libraries/bowser'
                 }
             },
             paths: {
@@ -28,7 +30,8 @@
                 imageReady: 'libraries/imageReady',
                 inview: 'libraries/inview',
                 a11y: 'libraries/jquery.a11y',
-                scrollTo: 'libraries/scrollTo'
+                scrollTo: 'libraries/scrollTo',
+                bowser: 'libraries/bowser'
             }
         });
         loadJQuery();
