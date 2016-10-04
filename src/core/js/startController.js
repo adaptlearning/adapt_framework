@@ -12,13 +12,15 @@ define([
 
         initialize: function() {
             this.model = new Backbone.Model(Adapt.course.get("_start"));
-
-            this.setStartLocation();
         },
 
         setStartLocation: function() {
             if (!this.isEnabled()) return;
 
+            window.location.hash = this.getStartHash();
+        },
+
+        getStartHash: function() {
             var startId = this.getStartId();
 
             var hasStartId = (startId)
@@ -43,7 +45,7 @@ define([
                 startHash = hasLocationHash ? window.location.hash : startHash;
             }
 
-            window.location.hash = startHash;
+            return startHash;
         },
 
         isEnabled: function() {
@@ -86,7 +88,8 @@ define([
     });
 
     Adapt.once("adapt:start", function() {
-        new StartController();
+        var startController = new StartController();
+        startController.setStartLocation();
     });
 
     return StartController;
