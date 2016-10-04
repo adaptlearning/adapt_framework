@@ -37,7 +37,10 @@ require([
     $('#wrapper').append(template());
 
     // Create config model
-    Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
+    Adapt.config = new ConfigModel(null, { url: 'course/config.json', reset: true }).on({
+        'change:_activeLanguage': onLanguageChange,
+        'change:_defaultDirection': onDirectionChange
+    });
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
@@ -180,13 +183,6 @@ require([
         });
     }
 
-    function onConfigModelDataLoaded() {
-        Adapt.config.on({
-            'change:_activeLanguage': onLanguageChange,
-            'change:_defaultDirection': onDirectionChange
-        });
-    }
-
     function onLanguageChange(model, language) {
         Adapt.offlineStorage.set('lang', language);
         Adapt.loadCourseData(true);
@@ -200,7 +196,7 @@ require([
     * Before we actually go to load the course data, we first need to check to see if a language has been set
     * If it has we can go ahead and start loading; if it hasn't, apply the defaultLanguage from config.json
     */
-    function onConfigModelLoadCourseData() {
+    function onLoadCourseData() {
         if (Adapt.config.get('_activeLanguage')) {
             Adapt.loadCourseData();
         } else {
@@ -209,10 +205,7 @@ require([
     }
 
     // Events that are triggered by the main Adapt content collections and models
-    Adapt.once({
-        'configModel:dataLoaded': onConfigModelDataLoaded,
-        'configModel:loadCourseData': onConfigModelLoadCourseData
-    });
+    Adapt.once('configModel:loadCourseData', onLoadCourseData);
 
 
 });
