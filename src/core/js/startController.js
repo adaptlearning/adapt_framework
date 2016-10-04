@@ -1,5 +1,5 @@
 define([
-    'coreJS/adapt'
+    'core/js/adapt'
 ], function(Adapt) {
     
     var StartController = function() {
@@ -94,5 +94,4 @@ define([
 
     return StartController;
 
-
-})
+});

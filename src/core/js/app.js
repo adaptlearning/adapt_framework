@@ -118,7 +118,7 @@ require([
             Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
 
         }
-    }
+    };
     
     function outputError(e) {
         //Allow plugin loading errors to output without stopping Adapt from loading
@@ -190,7 +190,7 @@ require([
             },
             url: courseFolder + "components.json"
         });
-    }
+    };
 
     function onLanguageChange(model, language) {
         Adapt.offlineStorage.set('lang', language);
@@ -215,6 +215,5 @@ require([
 
     // Events that are triggered by the main Adapt content collections and models
     Adapt.once('configModel:loadCourseData', onLoadCourseData);
-
 
 });
