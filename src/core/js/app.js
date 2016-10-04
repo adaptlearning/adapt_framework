@@ -37,7 +37,8 @@ require([
     $('#wrapper').append(template());
 
     // Create config model
-    Adapt.config = new ConfigModel(null, { url: 'course/config.json', reset: true }).on({
+    Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
+    Adapt.config.on({
         'change:_activeLanguage': onLanguageChange,
         'change:_defaultDirection': onDirectionChange
     });
