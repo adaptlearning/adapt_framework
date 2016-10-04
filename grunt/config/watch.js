@@ -10,7 +10,7 @@ module.exports = {
     },
     courseJson: {
         files: ['<%= sourcedir %>course/**/*.json'],
-        tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults']
+        tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
         files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.json'],

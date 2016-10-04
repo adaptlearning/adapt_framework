@@ -30,6 +30,7 @@ define(function() {
         postRender: function() {
             this.updateAttemptsCount();
             this.checkResetSubmittedState();
+            this.checkFeedbackState();
             this.onButtonStateChanged(null, this.model.get('_buttonState'));
             this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
         },
@@ -109,6 +110,16 @@ define(function() {
             this.updateAttemptsCount();
         },
 
+        checkFeedbackState: function(){
+            if (!this.model.get('_canShowFeedback')) {
+                // If feedback should be hidden, the 'Submit' button should stretch
+                // to fill the space and the 'Feedback' button should be hidden.
+                // (These classes must be implemented in the theme.)
+                this.$('.buttons-action').addClass('buttons-action-fullwidth');
+                this.$('.buttons-feedback').addClass('no-feedback');
+            }
+        },
+
         updateAttemptsCount: function(model, changedAttribute) {
             var isInteractionComplete = this.model.get('_isInteractionComplete');
             var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')
@@ -128,18 +139,21 @@ define(function() {
 
             } else {
                 this.$('.buttons-display-inner').addClass('visibility-hidden');
-                var $icon = this.$('.buttons-marking-icon').removeClass('display-none');
-                if (isCorrect) {
-                    $icon.addClass('icon-tick');
-                } else {
-                    $icon.addClass('icon-cross');
-                }
+                this.showMarking();
             }
 
             if (shouldDisplayAttempts) {
                 this.$('.buttons-display-inner').html(attemptsString);
             }
 
+        },
+
+        showMarking: function() {
+            if (!this.model.get('_canShowMarking')) return;
+
+            this.$('.buttons-marking-icon')
+                .removeClass('display-none')
+                .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
         }
 
     });

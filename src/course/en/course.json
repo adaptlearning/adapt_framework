@@ -35,26 +35,25 @@
             "_accordion": {
                 "ariaRegion": "This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels."
             },
-            "_blank": {
-                "ariaRegion": ""
-            },
             "_gmcq": {
                 "ariaRegion": "This component is a graphical multiple choice question. Once you have selected an option select the submit button below."
             },
             "_graphic": {
                 "ariaRegion": ""
             },
-            "_hotGraphic": {
-                "ariaRegion": "Below is a component which allows you to select hot spots over an image. Select a hot spot to trigger a popup that includes an image with display text. Select the close button to close the popup."
+            "_hotgraphic": {
+                "ariaRegion": "Below is a component which allows you to select hot spots over an image. Select a hot spot to trigger a popup that includes an image with display text. Select the close button to close the popup.",
+                "ariaPopupLabel": "Hotgraphic popup"
             },
             "_matching": {
                 "ariaRegion": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button."
             },
             "_mcq": {
-                "ariaRegion": "This component is a multiple choice question. Once you have selected an option select the submit button below."
+                "ariaRegion": "This component is a multiple choice question. Once you have selected an option select the submit button below"
             },
             "_media": {
-                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen. Alternatively you can select the link below for the transcript."
+                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen.",
+                "transcriptButton": "Alternatively you can select the link below for the transcript."
             },
             "_narrative": {
                 "ariaRegion": "This component displays an image gallery with accompanying text. Use the next and back navigation controls to work through the narrative."
@@ -65,29 +64,30 @@
             "_text": {
                 "ariaRegion": ""
             },
-            "_textInput": {
+            "_textinput": {
                 "ariaRegion": "This question component requires you to input your answer in the textbox provided. When you have answered the question select the submit button below."
             }
         },
         "_extensions": {
             "_pageLevelProgress": {
                 "pageLevelProgress": "Page sections",
-                "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
                 "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
                 "pageLevelProgressMenuBar": "You have completed ",
+                "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
                 "optionalContent": "Optional Content"
             }
         },
         "_menu": {
             "_boxmenu": {
                 "ariaRegion": "Menu",
+                "durationLabel": "Duration:",
                 "menuItem": "Menu item.",
                 "menuEnd": "You have reached the end of the menu."
             }
         },
         "_accessibility": {
-            "_accessibilityToggleTextOn": "Turn accessibility on?",
-            "_accessibilityToggleTextOff": "Turn accessibility off?",
+            "accessibilityToggleTextOn": "Turn accessibility on?",
+            "accessibilityToggleTextOff": "Turn accessibility off?",
             "_accessibilityInstructions": {
                 "touch": "Usage instructions. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
                 "notouch": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
