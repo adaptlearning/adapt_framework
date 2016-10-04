@@ -197,9 +197,7 @@ require([
     }
 
     function onConfigModelLoadCourseData() {
-        var language = Adapt.config.get('_activeLanguage');
-
-        if (language) {
+        if (Adapt.config.get('_activeLanguage')) {
             Adapt.loadCourseData();
         } else {
             Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
