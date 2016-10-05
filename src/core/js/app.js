@@ -26,8 +26,7 @@ require([
 
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
-
-    // Create config model
+    
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
     Adapt.config.on({
         'change:_activeLanguage': onLanguageChange,
