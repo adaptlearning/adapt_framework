@@ -1,24 +1,25 @@
 require([
-    'coreJS/adapt',
-    'coreJS/router',
-    'coreJS/drawer',
-    'coreJS/device',
-    'coreJS/popupManager',
-    'coreJS/notify',
-    'coreJS/accessibility',
-    'coreViews/navigationView',
-    'coreJS/adaptCollection',
-    'coreModels/configModel',
-    'coreModels/courseModel',
-    'coreModels/contentObjectModel',
-    'coreModels/articleModel',
-    'coreModels/blockModel',
-    'coreModels/componentModel',
-    'coreModels/questionModel',
-    'coreJS/offlineStorage',
-    'coreModels/lockingModel',
+    'core/js/adapt',
+    'core/js/adaptCollection',
+    'core/js/startController',
+    'core/js/models/articleModel',
+    'core/js/models/blockModel',
+    'core/js/models/configModel',
+    'core/js/models/contentObjectModel',
+    'core/js/models/componentModel',
+    'core/js/models/courseModel',
+    'core/js/models/questionModel',
+    'core/js/views/navigationView',
+    'core/js/accessibility',
+    'core/js/offlineStorage',
+    'core/js/device',
+    'core/js/drawer',
+    'core/js/notify',
+    'core/js/popupManager',
+    'core/js/router',
+    'core/js/models/lockingModel',
     'plugins'
-], function (Adapt, Router, Drawer, Device, PopupManager, Notify, Accessibility, NavigationView, AdaptCollection, ConfigModel, CourseModel, ContentObjectModel, ArticleModel, BlockModel, ComponentModel, QuestionModel) {
+], function (Adapt, AdaptCollection, StartController, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
@@ -82,30 +83,26 @@ require([
                 // Replace the existing property
                 Adapt.course.set('_buttons', buttons);
             }
-
-            // Triggered to setup model connections in AdaptModel.js
+            
             try {
-                Adapt.trigger('app:dataLoaded');
+                Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
             } catch(e) {
                 outputError(e);
             }
-            // Sets up collection mapping
+            
             Adapt.setupMapping();
-            // Triggers once all the data is ready
+            
             try {
                 Adapt.trigger('app:dataReady');
             } catch(e) {
                 outputError(e);
             }
-            // Setups a new navigation view
-            // This should be triggered after 'app:dataReady' as plugins might want
-            // to manipulate the navigation
-            Adapt.navigation = new NavigationView();
-            // Called once Adapt is ready to begin
-            Adapt.initialize();
-            // Remove event listeners
-            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
 
+            Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+            
+            Adapt.initialize();
+            
+            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
         }
     };
     
