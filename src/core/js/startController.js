@@ -1,5 +1,5 @@
 define([
-    'coreJS/adapt'
+    'core/js/adapt'
 ], function(Adapt) {
     
     var StartController = function() {
@@ -20,7 +20,7 @@ define([
             window.location.hash = this.getStartHash();
         },
 
-        getStartHash: function() {
+        getStartHash: function(alwaysForce) {
             var startId = this.getStartId();
 
             var hasStartId = (startId)
@@ -28,7 +28,7 @@ define([
                 : false;
 
             var isRouteSpecified = (_.indexOf(window.location.href,"#") > -1);
-            var shouldForceStartId = this.model.get("_force");
+            var shouldForceStartId = alwaysForce || this.model.get("_force");
             var shouldNavigateToStartId = hasStartId && (!isRouteSpecified || shouldForceStartId);
 
             var startHash = "#/";
@@ -94,5 +94,4 @@ define([
 
     return StartController;
 
-
-})
+});
