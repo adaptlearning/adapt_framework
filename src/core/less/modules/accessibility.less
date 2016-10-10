@@ -1,3 +1,22 @@
+// accessibility styling
+// =================
+
+//accessibility-common class for avoid common code repetation
+.accessibility-common (){
+    left:0px !important;
+    top:0px !important;
+    width:auto !important;
+    height:auto !important;
+    overflow:auto !important;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
+    color: rgba(0,0,0,0) !important;
+    background: rgba(0,0,0,0) !important;
+    font-size: 1px !important;
+    padding:0 !important;
+    margin:0 !important;
+    line-height: normal !important;
+    z-index:1;
+}
 
 .accessibility.no-touch {
     .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
@@ -44,18 +63,7 @@
     &.relative {
         position:relative !important;
     }
-    left:0px !important;
-    width:auto !important;
-    height:auto !important;
-    overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
-    color: rgba(0,0,0,0) !important;
-    background: rgba(0,0,0,0) !important;
-    font-size: 1px !important;
-    padding:0 !important;
-    margin:0 !important;
-    line-height: normal !important;
-    z-index:1;
+    .accessibility-common;
 }
 
 /*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
@@ -65,19 +73,7 @@
 
 /*HIDDEN FOCUS GUARD*/
 #a11y-focusguard {
-    left:0px !important;
-    bottom:0px !important;
-    width:auto !important;
-    height:auto !important;
-    overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
-    color: rgba(0,0,0,0) !important;
-    background: rgba(0,0,0,0) !important;
-    font-size: 1px !important;
-    padding:0 !important;
-    margin:0 !important;
-    line-height: normal !important;
-    z-index:1;
+    .accessibility-common;
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
     .touch & {
@@ -92,35 +88,11 @@
 /*HIDDEN FOCUS/ALERT ELEMENT */
 #a11y-selected, #a11y-selected * {
     position:fixed !important;
-    left:0px !important;
-    bottom:0px !important;
-    width:auto !important;
-    height:auto !important;
-    overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
-    color: rgba(0,0,0,0) !important;
-    background: rgba(0,0,0,0) !important;
-    font-size: 1px !important;
-    padding:0 !important;
-    margin:0 !important;
-    line-height: normal !important;
-    z-index:1;
+    .accessibility-common;
 }
 
 /*FOCUS DISTRACTION*/
 #a11y-focuser {
     position:fixed !important;
-    left:0px !important;
-    top:0px !important;
-    width:auto !important;
-    height:auto !important;
-    overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
-    color: rgba(0,0,0,0) !important;
-    background: rgba(0,0,0,0) !important;
-    font-size: 1px !important;
-    padding:0 !important;
-    margin:0 !important;
-    line-height: normal !important;
-    z-index:1;
+    .accessibility-common;
 }

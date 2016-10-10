@@ -2,37 +2,22 @@
 // ===============
 
 .article {
-    //background-color: @background-color;
+    background-color: @article-background-color;
 
     .article-inner {
-        padding: @article-padding-top 0 @article-padding-bottom;
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: (@article-padding-top / 2) 0 (@article-padding-bottom / 2);
-        }
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: (@article-padding-top / 3) 0 (@article-padding-bottom / 3);
-        }
+        padding: @article-padding-all;
     }
 
     .article-header {
         max-width: @device-width-large;
         margin: auto;
         padding: 0;
-
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: 0 20px;
-        }
-
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: 0 10px;
-        }
     }
 
     .article-title {
         margin-bottom: @article-title-margin-bottom;
         color: @title-color;
-        text-align: left;
-        .direction-right-to-left .text-align-right;
+        .text-align-left;
     }
 
     .article-title-inner {

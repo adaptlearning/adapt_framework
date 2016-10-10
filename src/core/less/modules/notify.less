@@ -21,14 +21,6 @@
         max-width: @device-width-large;
         margin: auto;
         padding: @notify-padding-top 10px @notify-padding-bottom;
-
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: (@notify-padding-top / 2) 20px (@notify-padding-bottom / 2);
-        }
-
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: (@notify-padding-top / 3) 10px (@notify-padding-bottom / 3);
-        }
     }
 
     .notify-popup-content {
@@ -57,19 +49,19 @@
 
     .notify-popup-title {
         margin-bottom: @notify-title-margin-bottom;
-        padding-right: 60px;
+        padding-right: @notify-padding-right;
         .dir-rtl & {
             padding-right: inherit;
-            padding-left: 60px;
+            padding-left: @notify-padding-left;
         }
     }
 
     .notify-type-prompt {
         .notify-popup-body {
-            padding-right: 60px;
+            padding-right: @notify-padding-right;
             .dir-rtl & {
                 padding-right: inherit;
-                padding-left: 60px;
+                padding-left: @notify-padding-left;
             }
         }
     }
@@ -114,7 +106,6 @@
 
         }
     }
-
 
     .notify-popup-buttons {
         text-align: center;
@@ -171,11 +162,7 @@
 
     .notify-shadow {
         display: none;
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        width: 100%;
-        height: 100%;
+        .position-fixed;
         z-index: 549;
         background-color: @transparency;
         .dir-rtl & {

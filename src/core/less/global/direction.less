@@ -1,56 +1,23 @@
+// =========================
+// Directions
+// =========================
 
-.direction-left-to-right() {
-
-  .float-right() {
-    .dir-ltr & {
-        float:right;
-    }
-  }
-
-  .float-left() {
-    .dir-ltr & {
-        float:left;
-    }
-  }
-
-  .text-align-right(){
-    .dir-ltr & {
-        text-align: right;
-    }
-  }
-
-  .text-align-left(){
-    .dir-ltr & {
-        text-align: left;
-    }
-  }
-
+.float-left(){
+	float: left;
+	.dir-rtl & { float: right; }
 }
 
-.direction-right-to-left() {
+.float-right(){
+	float: right;
+	.dir-rtl & { float: left; }
+}
 
-  .float-right() {
-    .dir-rtl & {
-        float:right;
-    }
-  }
+.text-align-left(){
+	text-align: left;
+	.dir-rtl & { text-align: right; }
+}
 
-  .float-left() {
-    .dir-rtl & {
-        float:left;
-    }
-  }
-
-  .text-align-right(){
-    .dir-rtl & {
-        text-align: right;
-    }
-  }
-
-  .text-align-left(){
-    .dir-rtl & {
-        text-align: left;
-    }
-  }
-
+.text-align-right(){
+	text-align: right;
+	.dir-rtl & { text-align: left; }
 }

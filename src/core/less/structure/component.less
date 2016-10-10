@@ -1,97 +1,69 @@
 // Component styling
 // =================
 
-.component-container{
-  zoom: 1;
+.component {
+  position:relative;
 
-      &:before, &:after{
-        content: "\0020";
-        display: block;
-        height: 0;
-        overflow: hidden;
-      }
-      &:after{
-        clear: both;
-      }
-
-      .component {
-        position:relative;
-
-        &.component-left {
-            width:100%;
-            float:none;
-            @media all and (min-width:(@device-width-medium + 1px)) {
-                width:50%;
-                float:left;
-                .component-inner {
-                    margin-right:5%;
-                }
-            }
-        }
-
-        &.component-right {
-            width:100%;
-            float:none;
-            @media all and (min-width:(@device-width-medium + 1px)) {
-                width:50%;
-                float:right;
-                .component-inner {
-                    margin-left:5%;
-                }
-            }
-        }
-
+  &.component-left {
+      width:100%;
+      float:none;
+      @media all and (min-width:(@device-width-medium + 1px)) {
+          width:50%;
+          float:left;
           .component-inner {
-              background-color: @component-background-color;
-              padding: @component-padding;
-          }
-
-          .component-title{
-              margin-bottom: @component-title-margin-bottom;
-              color: @title-color;
-              text-align: left;
-              .direction-right-to-left .text-align-right;
-          }
-
-          .component-title-inner {
-              padding: 0px;
-          }
-
-          .component-body{
-              margin: @component-body-margin-top 0px @component-body-margin-bottom;
-
-              a {
-                text-decoration: underline;
-                color: @font-color;
-              }
-          }
-
-          .component-body-inner{
-              padding: 0px;
-          }
-
-          .component-instruction {
-              margin-bottom: @component-instruction-margin-bottom;
-              font-weight: @instruction-text-font-weight;
-          }
-
-          .component-instruction-inner {
-              &.validation-error {
-                  color: @validation-error;
-              }
-          }
-
-          // to replicate padding between blocks when components drop into a single column
-
-          @media all and (max-width: (@device-width-small)) {
-
-              &.component-left {
-                  padding: 0 0 (@block-padding / 3);
-              }
-
-              &.component-right {
-                  padding: (@block-padding / 3) 0 0;
-              }
+              margin-right:5%;
           }
       }
+  }
+
+  &.component-right {
+      width:100%;
+      float:none;
+      @media all and (min-width:(@device-width-medium + 1px)) {
+          width:50%;
+          float:right;
+          .component-inner {
+              margin-left:5%;
+          }
+      }
+  }
+
+    .component-inner {
+        background-color: @component-background-color;
+        padding: @component-padding-all;
+    }
+
+    .component-title{
+        margin-bottom: @component-title-margin-bottom;
+        color: @title-color;
+        .text-align-left;
+    }
+
+    .component-title-inner {
+        padding: 0px;
+    }
+
+    .component-body{
+        margin: @component-body-margin-all;
+
+        a {
+          text-decoration: underline;
+          color: @font-color;
+        }
+    }
+
+    .component-body-inner{
+        padding: 0px;
+    }
+
+    .component-instruction {
+        margin-bottom: @component-instruction-margin-bottom;
+        font-weight: @instruction-text-font-weight;
+    }
+
+    .component-instruction-inner {
+        &.validation-error {
+            color: @validation-error;
+        }
+    }
 }

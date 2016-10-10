@@ -1,44 +1,20 @@
-//
-// Color variables
-// --------------------------------------------------
+//colors styling
+//===============
 
-//Themes colors
-@base-color:#474747;
-@light-color:#f5f5f5;
-@dark-color:#212121;
-
-//Gray colors for use across adapt.
-
-@light-grey: #f5f5f5;
-@mid-grey: #757575;
-@dark-grey: #212121;
-
-// Main Colors
-// ===========
-
-// Components
-@primary-color: @base-color;
-@primary-color-inverted: @light-color;
-// Buttons
-@secondary-color: @dark-color;
-@secondary-color-inverted: @light-color;
-// Navigation Bar
-@tertiary-color: @light-color;
-@tertiary-color-inverted: @dark-color;
-// Drawer
-@quaternary-color: @dark-grey;
-@quaternary-color-inverted: @light-color;
 // Body
-@foreground-color: @dark-color;
-@background-color: @light-color;
-@foreground-color-inverted: @light-color;
-@background-color-inverted: @mid-grey;
+@foreground-color: #212121;
+@background-color: #f5f5f5;
+@foreground-color-inverted: #f5f5f5;
+@background-color-inverted: #757575;
+
 // Validation States
 @validation-error: #f26c4f;
 @validation-success: #82ca9c;
+
 // Disabled States
 @disabled-color: #727272;
 @disabled-color-inverted: #ccc;
+
 // Mask
 @transparency: rgba(255,255,255,0.8);
 @transparency-fallback-png: url('assets/transparency-light.png');
@@ -49,16 +25,16 @@
 // Body
 @font-color: @foreground-color;
 @font-color-inverted: @foreground-color-inverted;
-@title-color: @primary-color;
-@title-color-inverted: @primary-color-inverted;
+@title-color: #474747;
+@title-color-inverted: #f5f5f5;
 
 // Buttons
-@button-color: @secondary-color;
+@button-color: #212121;
 @button-color-hover: darken(@button-color, 40%);
 @button-color-disabled: @disabled-color;
 
-@button-text-color: @secondary-color-inverted;
-@button-text-color-hover: @secondary-color-inverted;
+@button-text-color: #f5f5f5;
+@button-text-color-hover: #f5f5f5;
 @button-text-color-disabled: @disabled-color-inverted;
 
 @button-border-color: @button-color;
@@ -66,9 +42,9 @@
 @button-border-color-disabled: @button-color-disabled;
 
 // Navigation
-@navigation-color: @tertiary-color;
+@navigation-color: #f5f5f5;
 
-@navigation-icon-color: @tertiary-color-inverted;
+@navigation-icon-color: #212121;
 @navigation-icon-color-hover: darken(@navigation-icon-color, 40%);
 
 @navigation-progress-color: @navigation-icon-color;
@@ -80,10 +56,10 @@
 @navigation-progress-border-color: @navigation-icon-color;
 
 // Drawer
-@drawer-color: @quaternary-color;
+@drawer-color: #212121;
 @drawer-border-color: darken(@drawer-color, 20%);
 
-@drawer-icon-color: @quaternary-color-inverted;
+@drawer-icon-color: #f5f5f5;
 @drawer-icon-color-hover: darken(@drawer-icon-color, 40%);
 
 @drawer-item-color: @drawer-color;
@@ -91,7 +67,7 @@
 @drawer-item-color-selected: @drawer-item-color-hover;
 @drawer-item-color-disabled: @item-color-disabled;
 
-@drawer-item-text-color: @quaternary-color-inverted;
+@drawer-item-text-color: #f5f5f5;
 @drawer-item-text-color-hover: @drawer-item-text-color;
 @drawer-item-text-color-selected: @drawer-item-text-color;
 @drawer-item-text-color-disabled: @item-text-color-disabled;
@@ -101,16 +77,25 @@
 
 @drawer-progress-border-color: darken(@drawer-item-color, 20%);
 
+//page
+@page-background-color: #fff;
+
+//article
+@article-background-color: #fff;
+
+//block
+@block-background-color: #fff;
+
 // Components
 @component-background-color: darken(@background-color, 10%);
 
-@item-color: @primary-color;
+@item-color: #474747;
 @item-color-hover: darken(@item-color, 20%);
 @item-color-disabled: @disabled-color;
 @item-color-visited: desaturate(@item-color, 90%);
 @item-color-selected: @item-color-hover;
 
-@item-text-color: @primary-color-inverted;
+@item-text-color: #f5f5f5;
 @item-text-color-hover: @item-text-color;
 @item-text-color-disabled: @item-text-color;
 @item-text-color-visited: @item-text-color;
@@ -127,15 +112,15 @@
 @item-border-color-inverted: @item-text-color;
 
 // Menu
-@menu-item-color: @primary-color;
-@menu-item-text-color: @primary-color-inverted;
+@menu-item-color: #474747;
+@menu-item-text-color: #f5f5f5;
 @menu-item-progress-color: darken(@menu-item-color, 20%);
 @menu-item-progress-fill-color: @menu-item-text-color;
 @menu-item-progress-border-color: transparent;
 
 // Notify
-@notify-color: @primary-color;
-@notify-text-color: @primary-color-inverted;
+@notify-color: #474747;
+@notify-text-color: #f5f5f5;
 
 @notify-icon-color: @notify-text-color;
 @notify-icon-color-hover: darken(@notify-color, 20%);
