@@ -248,6 +248,14 @@ define(function(require) {
 
         removeShadowEvent: function() {
             $('#shadow').off('click touchstart');
+        },
+
+        remove: function() {
+            Backbone.View.prototype.remove.apply(this, arguments);
+
+            Adapt.trigger('drawer:empty');
+            this.collection.reset();
+            $('#shadow').remove();
         }
 
     });

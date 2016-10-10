@@ -19,16 +19,16 @@ define(function(require) {
 	};
 
 	var init = function() {
-		new DrawerView({collection: DrawerCollection});
+		var drawerView = new DrawerView({collection: DrawerCollection});
+
+		Adapt.on('app:languageChanged', function() {
+			drawerView.remove();
+			drawerView = new DrawerView({collection: DrawerCollection}); 
+		});
 	};
 
 	Adapt.once('app:dataReady', function() {
 		init();
-	});
-
-	Adapt.on('app:languageChanged', function() {
-		Adapt.trigger('drawer:empty');
-		DrawerCollection.reset();
 	});
 
 	Adapt.drawer = Drawer;
