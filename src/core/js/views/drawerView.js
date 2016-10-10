@@ -252,6 +252,7 @@ define(function(require) {
 
         remove: function() {
             Backbone.View.prototype.remove.apply(this, arguments);
+            $(window).off("keyup", this._onKeyUp);
 
             Adapt.trigger('drawer:empty');
             this.collection.reset();
