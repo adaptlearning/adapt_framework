@@ -183,7 +183,11 @@ require([
     }
 
     function onDirectionChange(model, direction) {
-        $('html').toggleClass('dir-rtl', direction === 'rtl');
+        if (direction === 'rtl') {
+            $('html').removeClass('dir-ltr').addClass('dir-rtl');
+        } else {
+            $('html').removeClass('dir-rtl').addClass('dir-ltr');
+        }
     }
 
     /**
