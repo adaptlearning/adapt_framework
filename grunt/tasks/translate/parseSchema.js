@@ -138,27 +138,3 @@ module.exports = function (grunt) {
   });
   
 };
-
-/*
-
-global.translate.schemaData = {
-  models: {
-    article: {globals: {}, properties: {}}
-    block: {globals: {}, properties: {}}
-    component: {globals: {}, properties: {}}
-    config: {globals: {}, properties: {}}
-    contentObjects: {globals: {}, properties: {}}
-    course: {globals: {}, properties: {}}
-  },
-  components: {
-    "bower.component": {globals: {}, properties: {}}
-  },
-  extensions: {
-    "bower.targetAttribute": {globals: {}, properties: {}}
-  },
-  menu: {
-    "bower.targetAttribute": {globals: {}, properties: {}}
-  }
-}
-
-*/

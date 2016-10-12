@@ -77,22 +77,3 @@ module.exports = function (grunt) {
   });
   
 };
-
-/*
-
-global.translate.exportTextData = [
-  {
-    "file": "course",
-    "id": "course",
-    "path": "/title",
-    "value": "Adapt Version 2.0 demonstartion"
-  },
-  {
-    "file": "course",
-    "id": "course",
-    "path": "/displayTitle",
-    "value": "Adapt Version 2.0 demonstration"
-  }
-]
-
-*/
