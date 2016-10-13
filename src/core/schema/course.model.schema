@@ -30,6 +30,14 @@
       "help": "This is the title that will be displayed on the main menu",
       "translatable": true
     },
+    "description": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
+    },
     "body": {
       "type": "string",
       "default": "",

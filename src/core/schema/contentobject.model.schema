@@ -21,6 +21,13 @@
       "help": "When viewing a menu/page - this is the title that will be displayed on the menu/page",
       "translatable": true
     },
+    "pageBody":{
+      "type":"string",
+      "default" : "",
+      "inputType":"TextArea",
+      "validators": [],
+      "translatable": true
+    },
     "body":{
       "type":"string",
       "default" : "",
