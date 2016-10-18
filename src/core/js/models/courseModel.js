@@ -13,7 +13,11 @@ define(function(require) {
 
             this.on('sync', this.loadedData, this);
             if (this.url) {
-                this.fetch();
+                this.fetch({
+                    error: _.bind(function(model, xhr, options) {
+                        console.error("ERROR: unable to load file " + this.url);
+                    }, this)
+                });
             }
         },
 

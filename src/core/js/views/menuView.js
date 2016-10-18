@@ -34,7 +34,7 @@ define(function(require) {
                     Adapt.trigger('menuView:ready', this);
                     var styleOptions = { opacity: 1 };
                     if (this.disableAnimation) {
-                        this.$el.css(styleOptions)
+                        this.$el.css(styleOptions);
                     } else {
                         this.$el.velocity(styleOptions, 'fast');
                     }

@@ -139,6 +139,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -171,6 +172,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -203,6 +205,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -235,6 +238,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -267,6 +271,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -299,6 +304,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -331,6 +337,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },
@@ -363,6 +370,7 @@
                 "_autoHide": true,
                 "_className": "",
                 "text": "Continue",
+                "startText": "Begin",
                 "finalText": "Finish",
                 "_component": "trickle-button"
             },

@@ -15,7 +15,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['**/*', '!**/*.json'],
+                    src: ['<%=languages%>/**/*', '!**/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }
@@ -25,7 +25,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['**/*.json'],
+                    src: ['<%=languages%>/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }

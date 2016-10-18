@@ -1,5 +1,5 @@
 define([
-    'coreJS/adapt'
+    'core/js/adapt'
 ], function(Adapt) {
     
     var StartController = function() {
@@ -12,13 +12,15 @@ define([
 
         initialize: function() {
             this.model = new Backbone.Model(Adapt.course.get("_start"));
-
-            this.setStartLocation();
         },
 
         setStartLocation: function() {
             if (!this.isEnabled()) return;
 
+            window.location.hash = this.getStartHash();
+        },
+
+        getStartHash: function(alwaysForce) {
             var startId = this.getStartId();
 
             var hasStartId = (startId)
@@ -26,7 +28,7 @@ define([
                 : false;
 
             var isRouteSpecified = (_.indexOf(window.location.href,"#") > -1);
-            var shouldForceStartId = this.model.get("_force");
+            var shouldForceStartId = alwaysForce || this.model.get("_force");
             var shouldNavigateToStartId = hasStartId && (!isRouteSpecified || shouldForceStartId);
 
             var startHash = "#/";
@@ -43,7 +45,7 @@ define([
                 startHash = hasLocationHash ? window.location.hash : startHash;
             }
 
-            window.location.hash = startHash;
+            return startHash;
         },
 
         isEnabled: function() {
@@ -86,10 +88,10 @@ define([
     });
 
     Adapt.once("adapt:start", function() {
-        new StartController();
+        var startController = new StartController();
+        startController.setStartLocation();
     });
 
     return StartController;
 
-
-})
+});

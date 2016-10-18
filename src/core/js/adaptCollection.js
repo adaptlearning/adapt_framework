@@ -9,7 +9,12 @@ define(function(require) {
 
             this.once('reset', this.loadedData, this);
             if (this.url) {
-                this.fetch({reset:true});
+                this.fetch({
+                    reset:true,
+                    error: _.bind(function(model, xhr, options) {
+                        console.error("ERROR: unable to load file " + this.url);
+                    }, this)
+                });
             }
         },
 
