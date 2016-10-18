@@ -1,5 +1,20 @@
 ## [Unreleased][unreleased]
 
+## [2.0.13] - 2016-10-17
+### Added
+- accessibility icon (part of [#1182](https://github.com/adaptlearning/adapt_framework/issues/1182))
+
+### Changed
+- removed underscore from accessibility toggle button labels ([#1139](https://github.com/adaptlearning/adapt_framework/issues/1139))
+- removed `durationLabel` from contentObjects.json as it hasn't been required since v2.0.3 of boxmenu ([#1148](https://github.com/adaptlearning/adapt_framework/issues/1148))
+- amends to JavaScript compilation to make it faster ([#1228](https://github.com/adaptlearning/adapt_framework/issues/1228))
+
+### Fixed
+- accessibility toggle button has no state ([#1172](https://github.com/adaptlearning/adapt_framework/issues/1172))
+- tracking ids grunt task only working in 'en' folders ([#370](https://github.com/adaptlearning/adapt_framework/issues/370))
+- accessibility causing PLP scroll to jump down the page after scrolling to component ([#1241](https://github.com/adaptlearning/adapt_framework/issues/1241))
+- changing screen sizes in theme.json not persisted when running watch ([#752](https://github.com/adaptlearning/adapt_framework/issues/752))
+
 ## [2.0.12] - 2016-08-22
 ### Added
 - Accessibility-specific handlebars helpers ([#1051](https://github.com/adaptlearning/adapt_framework/issues/1051))
@@ -372,7 +387,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.12...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.13...HEAD
+[2.0.13]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.12...v2.0.13
 [2.0.12]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.11...v2.0.12
 [2.0.11]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.10...v2.0.11
 [2.0.10]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.9...v2.0.10
