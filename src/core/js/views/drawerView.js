@@ -10,7 +10,6 @@ define(function(require) {
         escapeKeyAttached: false,
 
         initialize: function(options) {
-            this.forceCheckVisibility = options.forceCheckVisibility || false;
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this._isVisible = false;
             this.drawerDir = 'right';
@@ -79,6 +78,8 @@ define(function(require) {
         // Set tabindex for select elements
         postRender: function() {
             this.$('a, button, input, select, textarea').attr('tabindex', -1);
+
+            this.checkIfDrawerIsAvailable();
         },
 
         openCustomView: function(view, hasBackButton) {
