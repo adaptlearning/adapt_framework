@@ -108,11 +108,11 @@
 		var inviewHeightP = Math.round((100 / height) * inviewV);
 		var inviewWidthP = Math.round((100 / width) * inviewH);
 
-		var uniq = ""+top+left+bottom+right+height+width+wHeight+wWidth;
-
 		var onscreen = true;
 		if (rightP > 100 || leftP > 100 || bottomP > 100 || topP > 100) onscreen = false;
 		if ( ($element[0].offsetWidth <= 0 && $element[0].offsetHeight <= 0) || $element.css("display") == "none" || $element.css("visibility") == "hidden") onscreen = false;
+
+        var uniq = ""+top+left+bottom+right+height+width+wHeight+wWidth+onscreen;
 		
 		return { 
 			top: top, 
