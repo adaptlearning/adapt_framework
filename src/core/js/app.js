@@ -47,7 +47,6 @@ require([
             mapAdaptIdsToObjects();
 
             if (isLanguageChange) {
-                Adapt.trigger('app:languageChanged', language);
 
                 _.defer(function() {
                     var startController = new StartController();
@@ -90,6 +89,8 @@ require([
             }
             
             Adapt.setupMapping();
+
+            isLanguageChange && Adapt.trigger('app:languageChanged', language);
             
             try {
                 Adapt.trigger('app:dataReady');
@@ -111,6 +112,9 @@ require([
     }
 
     function mapAdaptIdsToObjects () {
+        // Clear any existing mappings, as they are no longer valid.
+        Adapt.mappedIds = {};
+
         Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy("_id");
         Adapt.articles._byAdaptID = Adapt.articles.groupBy("_id");
         Adapt.blocks._byAdaptID = Adapt.blocks.groupBy("_id");
