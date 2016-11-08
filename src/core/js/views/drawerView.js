@@ -27,7 +27,6 @@ define(function(require) {
         setupEventListeners: function() {
             this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
             this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
-            this.listenTo(Adapt, 'app:dataReady', this.checkIfDrawerIsAvailable);
             this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
             this.listenTo(Adapt, 'remove', this.onCloseDrawer);
             this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
