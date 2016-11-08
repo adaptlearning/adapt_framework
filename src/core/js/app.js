@@ -91,7 +91,7 @@ require([
                     Backbone.history.navigate(hash, { trigger: true, replace: true });
                 });
             }
-            
+
             try {
                 Adapt.trigger('app:dataReady');
             } catch(e) {
@@ -112,9 +112,6 @@ require([
     }
 
     function mapAdaptIdsToObjects () {
-        // Clear any existing mappings, as they are no longer valid.
-        Adapt.mappedIds = {};
-
         Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy("_id");
         Adapt.articles._byAdaptID = Adapt.articles.groupBy("_id");
         Adapt.blocks._byAdaptID = Adapt.blocks.groupBy("_id");

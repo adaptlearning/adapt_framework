@@ -154,6 +154,8 @@ define([
 
     // Used to map ids to collections
     Adapt.setupMapping = function() {
+        // Clear any existing mappings.
+        Adapt.mappedIds = {};
 
         // Setup course Id
         Adapt.mappedIds[Adapt.course.get('_id')] = "course";
