@@ -92,9 +92,11 @@ define(function(require) {
         },
 
         checkIfDrawerIsAvailable: function() {
-            if(this.collection.length == 0) {
+            if (this.collection.length == 0) {
                 $('.navigation-drawer-toggle-button').addClass('display-none');
                 Adapt.trigger('drawer:noItems');
+            } else {
+                $('.navigation-drawer-toggle-button').removeClass('display-none');
             }
         },
 
