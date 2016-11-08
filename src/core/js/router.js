@@ -166,7 +166,7 @@ define([
         },
 
         removeViews: function() {
-            Adapt.trigger('remove');
+            Adapt.remove();
         },
 
         showLoading: function() {
