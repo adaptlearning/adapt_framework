@@ -9,7 +9,7 @@ define(function(require) {
         disableAnimation: false,
         escapeKeyAttached: false,
 
-        initialize: function(options) {
+        initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this._isVisible = false;
             this.drawerDir = 'right';
