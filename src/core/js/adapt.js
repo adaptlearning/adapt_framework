@@ -199,6 +199,14 @@ define([
 
     }
 
+    Adapt.remove = function() {
+        Adapt.trigger('preRemove');
+        Adapt.trigger('remove');
+        _.defer(function() {
+            Adapt.trigger('postRemove');
+        })
+    }
+
     return Adapt;
 
 });
