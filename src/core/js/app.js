@@ -46,21 +46,6 @@ require([
 
             mapAdaptIdsToObjects();
 
-            if (isLanguageChange) {
-                Adapt.trigger('app:languageChanged', language);
-
-                _.defer(function() {
-                    var startController = new StartController();
-                    var hash = '#/';
-
-                    if (startController.isEnabled()) {
-                        hash = startController.getStartHash(true);
-                    }
-                    
-                    Backbone.history.navigate(hash, { trigger: true, replace: true });
-                });
-            }
-
             if (typeof Adapt.course.get('_buttons').submit !== 'undefined') {
                 // Backwards compatibility with v1.x
                 var oldButtons = Adapt.course.get('_buttons');
@@ -91,6 +76,22 @@ require([
             
             Adapt.setupMapping();
             
+            if (isLanguageChange) {
+
+                Adapt.trigger('app:languageChanged', language);
+
+                _.defer(function() {
+                    var startController = new StartController();
+                    var hash = '#/';
+
+                    if (startController.isEnabled()) {
+                        hash = startController.getStartHash(true);
+                    }
+                    
+                    Backbone.history.navigate(hash, { trigger: true, replace: true });
+                });
+            }
+
             try {
                 Adapt.trigger('app:dataReady');
             } catch(e) {

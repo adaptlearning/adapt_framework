@@ -23,7 +23,7 @@ define(function(require) {
 
 		Adapt.on('app:languageChanged', function() {
 			drawerView.remove();
-			drawerView = new DrawerView({collection: DrawerCollection}); 
+			drawerView = new DrawerView({collection: DrawerCollection});
 		});
 	};
 

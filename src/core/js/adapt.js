@@ -49,7 +49,7 @@ define([
 
     Adapt.location = {};
     Adapt.componentStore = {};
-    var mappedIds = {};
+    Adapt.mappedIds = {};
 
     Adapt.initialize = _.once(function() {
 
@@ -154,9 +154,11 @@ define([
 
     // Used to map ids to collections
     Adapt.setupMapping = function() {
+        // Clear any existing mappings.
+        Adapt.mappedIds = {};
 
         // Setup course Id
-        mappedIds[Adapt.course.get('_id')] = "course";
+        Adapt.mappedIds[Adapt.course.get('_id')] = "course";
 
         // Setup each collection
         var collections = ["contentObjects", "articles", "blocks", "components"];
@@ -166,20 +168,16 @@ define([
             var models = Adapt[collection].models;
             for (var j = 0, lenj = models.length; j < lenj; j++) {
                 var model = models[j];
-                mappedIds[model.get('_id')] = collection;
+                Adapt.mappedIds[model.get('_id')] = collection;
 
             }
         }
 
     }
 
-    Adapt.resetMapping = function () {
-        mappedIds = {};
-    }
-
     Adapt.mapById = function(id) {
         // Returns collection name that contains this models Id
-        return mappedIds[id];
+        return Adapt.mappedIds[id];
     }
 
     Adapt.findById = function(id) {

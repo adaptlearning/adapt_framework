@@ -27,7 +27,6 @@ define(function(require) {
         setupEventListeners: function() {
             this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
             this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
-            this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
             this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
             this.listenTo(Adapt, 'remove', this.onCloseDrawer);
             this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
@@ -78,6 +77,8 @@ define(function(require) {
         // Set tabindex for select elements
         postRender: function() {
             this.$('a, button, input, select, textarea').attr('tabindex', -1);
+
+            this.checkIfDrawerIsAvailable();
         },
 
         openCustomView: function(view, hasBackButton) {
@@ -90,9 +91,11 @@ define(function(require) {
         },
 
         checkIfDrawerIsAvailable: function() {
-            if(this.collection.length == 0) {
+            if (this.collection.length == 0) {
                 $('.navigation-drawer-toggle-button').addClass('display-none');
                 Adapt.trigger('drawer:noItems');
+            } else {
+                $('.navigation-drawer-toggle-button').removeClass('display-none');
             }
         },
 
