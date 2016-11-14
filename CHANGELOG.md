@@ -1,5 +1,14 @@
 ## [Unreleased][unreleased]
 
+## [2.0.15] - 2016-11-14
+### Added
+- `preRemove` and `postRemove` events
+
+### Fixed
+- Inview not accounting for visibility and display none in change comparisons (#1299)
+- Resources drawer appearing when changing language (#1295)
+- Performance issue in authoring tool with Grunt copyMain task(#1312)
+
 ## [2.0.14] - 2016-10-18
 ### Added
 - support for multilanguage/course localisation.
