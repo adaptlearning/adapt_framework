@@ -1,4 +1,4 @@
 module.exports = {
-    server: ['connect:server', 'open:server'],
+    server: ['connect:server'],
     spoor: ['connect:spoorOffline', 'open:spoor']
 }
