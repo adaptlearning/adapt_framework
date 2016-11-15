@@ -41,14 +41,14 @@ define(function(require) {
 
         hideNavigationButton: function(model) {
             if (model.get('_type') === "course") {
-                $('.navigation-back-button').addClass('display-none');
+                $('.navigation-back-button, .navigation-home-button').addClass('display-none');
             } else {
                 this.showNavigationButton();
             }
         },
 
         showNavigationButton: function() {
-            $('.navigation-back-button').removeClass('display-none');
+            $('.navigation-back-button, .navigation-home-button').removeClass('display-none');
         }
 
     });
