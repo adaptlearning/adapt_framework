@@ -42,20 +42,19 @@ define([
         setupOnScreenHandler: function() {
             var onscreen = this.model.get('_onScreen');
 
-            if (onscreen && onscreen._isEnabled) {
+            if (!onscreen || !onscreen._isEnabled) return;
 
-                this.$el.on('onscreen', _.bind(function (e, m) {
+            this.$el.on('onscreen', _.bind(function (e, m) {
 
-                    if (!m.onscreen) return;
+                if (!m.onscreen) return;
 
-                    var minVerticalInview = onscreen._percentInviewVertical || 33;
+                var minVerticalInview = onscreen._percentInviewVertical || 33;
 
-                    if (m.percentInviewVertical < minVerticalInview) return;
+                if (m.percentInviewVertical < minVerticalInview) return;
 
-                    this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen');
+                this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen');
 
-                }, this));
-            }
+            }, this));
         },
 
         addChildren: function() {
