@@ -47,7 +47,8 @@
                 data: data, 
                 $element: $element,
                 type: type,
-                _onscreen: isLocked ? null : measurements.get($element).uniqueMeasurementId
+                _onscreen: isLocked ? null : measurements.get($element).uniqueMeasurementId,
+                _hasTriggered: false
             });
             handlers.shouldReProcess = true;
 
@@ -85,7 +86,8 @@
 
                     //check if measure has the same values as last
                     var wasPreviouslyMeasured = (item._onscreen !== undefined);
-                    if (wasPreviouslyMeasured) {
+
+                    if (wasPreviouslyMeasured && item._hasTriggered) {
                         var hasMeasureChanged = (item._onscreen != measure.uniqueMeasurementId);
                         if (!hasMeasureChanged) {
                             continue;
@@ -93,6 +95,7 @@
                     }
 
                     item._onscreen = measure.uniqueMeasurementId;
+                    item._hasTriggered = true;
 
                     switch (item.type) {
                     case handlers.TYPE.onscreen:
