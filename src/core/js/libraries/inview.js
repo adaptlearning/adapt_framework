@@ -1,297 +1,484 @@
-// jquery.onscreen 2015-10-23 https://github.com/adaptlearning/jquery.onscreen
+'use strict';
+// jquery.onscreen 2016-11-04 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
-	var expando = $.expando;
-	var expandoIndex = 0;
 
-	//element + event handler storage
-	var onScreenObjs = {};
-	var inViewObjs = {};
-	var $window = $(window);
-	var wHeight = $window.height();
-	var wWidth = $window.width();
-	var wScrollTop = $window.scrollTop();
-	var wScrollLeft = $window.scrollLeft();
+    //ENUMERATION SUPPORT
+    function ENUM(e){for(var i=0,l=e.length;i<l;i++){var n=e[i].toLowerCase();this[n]=(new Number(i));this[n].string=n;}}
 
-	//jQuery element + event handler attachment / removal
-	$.event.special.onscreen = {
-		add: function(data) {
-			checkExpando(this);
-			onScreenObjs[data.guid + "-" + this[expando]] = { 
-				data: data, 
-				$element: $(this) 
-			};
-		},
+    //handler id generation
+    var expando = {
+        index: 0,
 
-		remove: function(data) {
-			try { 
-				delete onScreenObjs[data.guid + "-" + this[expando]]; 
-			} catch(e) {
+        check: function(element) {
+            //check that the element has a valid jquery expando property, or make one
 
-			}
-		}
-  	};
-	$.event.special.inview = {
-		add: function(data) {
-			checkExpando(this);
-			inViewObjs[data.guid + "-" + this[expando]] = {
-				data: data, 
-				$element: $(this) 
-			};
-		},
+            var hasExpando = (element[$.expando]);
+            if (hasExpando) return;
 
-		remove: function(data) {
-			try { 
-				delete inViewObjs[data.guid + "-" + this[expando]]; 
-			} catch(e) {
+            element[$.expando] = ++expando.index;
 
-			}
-		}
-  	};
+        },
 
-	function checkExpando(element) {
-		if (!element[expando]) element[expando] = ++expandoIndex;
-  	}
+        make: function(element, data) {
+            //make a unique event id from the element's expando property and the event handler guid
 
-  	function getElementOnScreenMeasurements($element) {
-  		if ($element.length === 0) return;
-  		
-		var height = $element.outerHeight();
-		var width = $element.outerWidth();
-		
-		//topleft from topleft of window
-		var offset = $element.offset();
-		var top = offset["top"] - wScrollTop;
-		var left = offset["left"] - wScrollLeft;
+            expando.check(element);
+            return data.guid + "-" + element[$.expando];
 
-		//bottomright from bottomright of window
-		var bottom = wHeight - (top + height);
-		var right = wWidth - (left + width);
-		
-		//percentages of above
-		var ratioHeight = (100 /  wHeight);
-		var ratioWidth = (100 / wWidth);
+        }
+    };
 
-		var right = (left + width);
+    //handler functions
+    var handlers = {
+        //types definition
+        TYPE: new ENUM(["onscreen", "inview"]),
+        INVIEW_STATES: new ENUM(["none", "top", "bottom", "left", "right", "both"]),
 
-		var topP = Math.round(ratioHeight * top);
-		var leftP = Math.round(ratioWidth * left);
-		var bottomP = Math.round(ratioHeight * bottom);
-		var rightP = Math.round(ratioWidth * right);
+        registered: [],
+        shouldReProcess: true,
 
-		//inview
-		var inviewH = null;
-		if (left+width > 0 && right < 0 && left < 0) {
-			inviewH = width;
-		} else if (left < 0) { //offscreen left
-			inviewH = (width + left);
-		} else if (left + width > wWidth) { //offscreen right
-			inviewH = (wWidth - left);
-		} else { //fully inscreen
-			inviewH = width;
-		}
+        register: function(element, data, type) {
+            var isLocked = locking.isLocked();
 
-		var inviewV = null;
-		if (top+height > 0 && bottom < 0 && top < 0) {
-			inviewV = height;
-		} else if (top < 0) { //offscreen top
-			inviewV = (height + top);
-		} else if (top + height > wHeight) { //offscreen bottom
-			inviewV = (wHeight - top);
-		} else { //fully inscreen
-			inviewV = height;
-		}
+            var $element = $(element);
+            handlers.registered.push({ 
+                id: expando.make(element, data),
+                data: data, 
+                $element: $element,
+                type: type,
+                _onscreen: isLocked ? null : measurements.get($element).uniqueMeasurementId
+            });
+            handlers.shouldReProcess = true;
 
-		var area = height * width;
-		var inviewArea = inviewV * inviewH;
-		var inviewP = Math.round((100 / area) * inviewArea);
-		var inviewHeightP = Math.round((100 / height) * inviewV);
-		var inviewWidthP = Math.round((100 / width) * inviewH);
+        },
 
-		var onscreen = true;
-		if (rightP > 100 || leftP > 100 || bottomP > 100 || topP > 100) onscreen = false;
-		if ( ($element[0].offsetWidth <= 0 && $element[0].offsetHeight <= 0) || $element.css("display") == "none" || $element.css("visibility") == "hidden") onscreen = false;
+        unregister: function(element, data, type) {
 
-		var uniq = ""+top+left+bottom+right+height+width+wHeight+wWidth+onscreen;
-		
-		return { 
-			top: top, 
-			left: left, 
-			bottom: bottom, 
-			right: right, 
-			percentFromTop: topP, 
-			percentFromLeft: leftP, 
-			percentFromBottom: bottomP, 
-			percentFromRight: rightP, 
-			percentInview: inviewP, 
-			percentInviewHorizontal: inviewWidthP,
-			percentInviewVertical: inviewHeightP,
-			onscreen: onscreen,
-			uniqueMeasurementId: uniq 
-		};
-	}
+            var registered = handlers.registered;
 
-	function checkLoopExpired() {
-		if ((new Date()).getTime() - loopData.lastEvent > 500) {
-			stopLoop()
-			return true;
-		}
-	}
+            var findId = expando.make(element, data);
+            for (var i = registered.length-1, l = -1; i > l; i--) {
+                var item = registered[i]
+                if (item.id != findId || item.type != type) continue;
+                registered.splice(i,1);
+                handlers.shouldReProcess = true;
+            }
 
-	function onScreenLoop () {
-		if (checkLoopExpired()) return;
+        },
 
-		var onScreenHandlers = getEventHandlers("onscreen");
-		var inViewHandlers = getEventHandlers("inview");
+        process: function() {
 
-		if (onScreenHandlers.length === 0 && inViewHandlers.length === 0) {
-			//nothing to onscreen
-			stopLoop();
-			$.fn.onscreen.intervalDuration = 100;
-			repeatLoop();
-		} else {
-			//something to onscreen
-			stopLoop();
-			$.fn.onscreen.intervalDuration = 50;
-			repeatLoop();
-		}
+            var registered = handlers.registered;
+            var registeredCount;
 
-		if  (onScreenHandlers.length > 0) {
-			var items = onScreenHandlers;
-			for (var i = 0; i < items.length; i++) {
-				var item = items[i];
-				triggerOnScreen(item);
-			}
-		}
-		if  (inViewHandlers.length > 0) {
-			var items = inViewHandlers;
-			for (var i = 0; i < items.length; i++) {
-				var item = items[i];
-				triggerInview(item);
-			}
-		}
+            handlers.shouldReProcess = true;
+            while (handlers.shouldReProcess) {
+                handlers.shouldReProcess = false;
+                
+                registeredCount = registered.length;
+                if  (registeredCount == 0) return;
+                
+                for (var i = 0; i < registeredCount; i++) {
+                    var item = registered[i];
+                    var measure = measurements.get(item.$element);
 
-	}
+                    //check if measure has the same values as last
+                    var wasPreviouslyMeasured = (item._onscreen !== undefined);
+                    if (wasPreviouslyMeasured) {
+                        var hasMeasureChanged = (item._onscreen != measure.uniqueMeasurementId);
+                        if (!hasMeasureChanged) {
+                            continue;
+                        }
+                    }
 
-	function getEventHandlers(eventName) {
-		var items = [];
-		
-		switch (eventName) {
-		case "inview":
-			for (var k in inViewObjs) {
-				items.push(inViewObjs[k]);
-			}
-			break;
-		case "onscreen":
-			for (var k in onScreenObjs) {
-				items.push(onScreenObjs[k]);
-			}
-			break;
-		}
+                    item._onscreen = measure.uniqueMeasurementId;
 
-		return items;
-	}
+                    switch (item.type) {
+                    case handlers.TYPE.onscreen:
+                        handlers.processOnScreen(item, measure);
+                        break;
+                    case handlers.TYPE.inview:
+                        handlers.processInView(item, measure);
+                    }
+                    if (handlers.shouldReProcess) {
+                        break;
+                    }
+                }
+            }
 
-	function triggerOnScreen(item) {
-		var measure = getElementOnScreenMeasurements(item.$element);
-		//check if measure has the same values as last
-		if (item._onscreen !== undefined && item._onscreen === measure.uniqueMeasurementId) return;
-		item._onscreen = measure.uniqueMeasurementId;
+        },
 
-		item.$element.trigger('onscreen', measure );
-	}
+        processOnScreen: function(item, measure) {
 
-	function triggerInview(item) {
-		var measure = getElementOnScreenMeasurements(item.$element);
+            item.$element.trigger('onscreen', measure);
 
-		//check if measure has the same values as last
-		if (item._inview !== undefined && item._inview === measure.uniqueMeasurementId) return;
-		item._inview = measure.uniqueMeasurementId;
+        },
 
-		var visiblePartY = (measure.percentFromTop >= 0 && measure.percentFromTop <= 100) && (measure.percentFromBottom >= 0 && measure.percentFromBottom <= 100) ? "both" : (measure.percentFromTop >= 0 && measure.percentFromTop <= 100) ? "top" : (measure.percentFromBottom >= 0 && measure.percentFromBottom <= 100) ? "bottom" : "none";
-		var visiblePartX = (measure.percentFromLeft >= 0 && measure.percentFromLeft <= 100) && (measure.percentFromRight >= 0 && measure.percentFromRight <= 100) ? "both" : (measure.percentFromLeft >= 0 && measure.percentFromLeft <= 100) ? "left" : (measure.percentFromRight >= 0 && measure.percentFromRight <= 100) ? "right" : "none";
+        processInView: function(item, measure) {
 
-		var inviewState = [
-			measure.onscreen, //inview true/false
-			visiblePartX, //left, right, both, none
-			visiblePartY //top, bottom, both, none
-		];
+            var isTopOnScreen = (measure.percentFromTop >= 0 && measure.percentFromTop <= 100); 
+            var isBottomOnScreen = (measure.percentFromBottom >= 0 && measure.percentFromBottom <= 100);
+            var isLeftOnScreen = (measure.percentFromLeft >= 0 && measure.percentFromLeft <= 100);
+            var isRightOnScreen = (measure.percentFromRight >= 0 && measure.percentFromRight <= 100);
 
-		if (item._inviewPreviousState !== undefined ) {
-			//check previous state and current state
-			var scrolledOver = (item._measurePreviousState.percentFromBottom <= 0 && measure.percentFromBottom >= 100 );
-			
-			//if inview state hasn't changed, don't retrigger event
-			if (item._inviewPreviousState[0] === inviewState[0] &&
-				item._inviewPreviousState[1] === inviewState[1] && 
-				item._inviewPreviousState[2] === inviewState[2] &&
-				!scrolledOver) return;
+            var visiblePartY;
+            if (isTopOnScreen && isBottomOnScreen) visiblePartY = handlers.INVIEW_STATES.both.string;
+            else if (isTopOnScreen) visiblePartY = handlers.INVIEW_STATES.top.string;
+            else if (isBottomOnScreen) visiblePartY = handlers.INVIEW_STATES.bottom.string;
+            else visiblePartY = handlers.INVIEW_STATES.none.string;
 
-			if (scrolledOver) {
-				//make sure to trigger a scrolled over both top and bottom event
-				inviewState[0] = true;
-				inviewState[1] = "both";
-				inviewState[2] = "both";
-			}
-		}
+            var visiblePartX;
+            if (isLeftOnScreen && isRightOnScreen) visiblePartX = handlers.INVIEW_STATES.both.string;
+            else if (isLeftOnScreen) visiblePartX = handlers.INVIEW_STATES.left.string;
+            else if (isRightOnScreen) visiblePartX = handlers.INVIEW_STATES.right.string;
+            else visiblePartX = handlers.INVIEW_STATES.none.string;
 
-		item._inviewPreviousState = inviewState;
-		item._measurePreviousState = measure;
+            var inviewState = [
+                measure.onscreen, //inview true/false
+                visiblePartX, //left, right, both, none
+                visiblePartY //top, bottom, both, none
+            ];
 
-		item.$element.trigger('inview', inviewState );
-	}
+            if (item._inviewPreviousState !== undefined ) {
+                //this is for browsers which pause javascript execution on scroll
 
+                //check previous state and current state
+                var wasScrolledOver = (item._measurePreviousState.percentFromBottom <= 0 && measure.percentFromBottom >= 100 );
+                
+                //if inview state hasn't changed, don't retrigger event
+                if (item._inviewPreviousState[0] == inviewState[0] &&
+                    item._inviewPreviousState[1] == inviewState[1] && 
+                    item._inviewPreviousState[2] == inviewState[2] &&
+                    !wasScrolledOver) return;
 
-	//jQuery element function
-	$.fn.onscreen = function() {
-		return getElementOnScreenMeasurements(this);
-	};
+                if (wasScrolledOver) {
+                    //make sure to trigger a scrolled over both top and bottom event
+                    inviewState[0] = true;
+                    inviewState[1] = "both";
+                    inviewState[2] = "both";
+                }
+            }
 
-	//checking loop interval duration
-	$.fn.onscreen.intervalDuration = 50;
+            item._inviewPreviousState = inviewState;
+            item._measurePreviousState = measure;
 
-	var loopData = {
-		lastEvent: 0,
-		interval: null
-	};
+            setTimeout(function() {
+                item.$element.trigger('inview', inviewState );
+            }, 0);
 
-	//checking loop start and end
-	function startLoop() {
-		windowScroll();
-		loopData.lastEvent = (new Date()).getTime();
-		if (loopData.interval !== null) {
-			stopLoop();
-		}
-		loopData.interval = setTimeout(onScreenLoop, $.fn.onscreen.intervalDuration);
-	}
+        }
+    };
 
-	function repeatLoop() {
-		windowScroll();
-		if (loopData.interval !== null) {
-			stopLoop();
-		}
-		loopData.interval = setTimeout(onScreenLoop, $.fn.onscreen.intervalDuration);
-	}
+    //checking loop management
+    var loop = {
 
-	function stopLoop() {
-		clearInterval(loopData.interval);
-		loopData.interval = null;
-	}
+        lastStartEvent: 0,
+        timeoutHandle: null,
+        intervalDuration: 100,
 
-	function windowResize() {
-		wHeight = $window.height();
-		wWidth = $window.width();
-		startLoop();
-	}
+        start: function() {
 
-	function windowScroll() {
-		wScrollTop = $window.scrollTop();
-		wScrollLeft = $window.scrollLeft();
-	}
+            loop.lastStartEvent = (new Date()).getTime();
+            loop.repeat();
 
-	$(window).on("scroll", startLoop);
-	$(window).on("mousedown touchstart keydown", startLoop);
-	$(window).on("resize", windowResize);
+        },
 
+        repeat: function() {
+            
+            loop.stop();
+            loop.timeoutHandle = setTimeout(loop.main, loop.intervalDuration);
+
+        },
+
+        hasExpired: function() {
+
+            var timeSinceLast = (new Date()).getTime() - loop.lastStartEvent;
+            if (timeSinceLast < 1500) return;
+            
+            loop.stop()
+            return true;
+        },
+
+        main: function() {
+
+            if (loop.hasExpired()) return;
+
+            if (handlers.registered.length == 0) {
+                //nothing to check
+                loop.stop();
+                //slow down to save cycles
+                loop.intervalDuration = 200;
+                loop.repeat();
+            } else {
+                //something to check
+                loop.stop();
+                //speed up to make more responsive
+                loop.intervalDuration = 100;
+                loop.repeat();
+            }
+
+            if (locking.isLocked()) return;
+
+            handlers.process();
+
+        },
+
+        stop: function() {
+
+            var intervalAttached = (loop.timeoutHandle !== null);
+            if (!intervalAttached) return;
+
+            clearTimeout(loop.timeoutHandle);
+            loop.timeoutHandle = null;
+
+        }
+
+    };
+
+    //jQuery element + event handler attachment / removal
+    $.extend($.event.special, {
+
+        onscreen: {
+
+            add: function(data) {
+                handlers.register(this, data, handlers.TYPE.onscreen);
+            },
+
+            remove: function(data) { 
+                handlers.unregister(this, data, handlers.TYPE.onscreen);
+            }
+
+        },
+
+        inview: {
+
+            add: function(data) {
+                handlers.register(this, data, handlers.TYPE.inview);
+            },
+
+            remove: function(data) {
+                handlers.unregister(this, data, handlers.TYPE.inview);
+            }
+
+        }
+
+    });
+
+    //jQuery interfaces
+    //element functions
+    $.extend($.fn, {
+
+        onscreen: function onscreen(callback) {
+
+            if (callback) {
+                //standard event attachment jquery api behaviour
+                this.on("onscreen", callback);
+                return this;
+            }
+
+            return measurements.get(this);
+
+        },
+
+        inview: function inview(callback) {
+
+            if (callback) {
+                //standard event attachment jquery api behaviour
+                this.on("inview", callback);
+                return this;
+            }
+
+            return measurements.get(this);
+
+        }
+
+    });
+    
+    //interface to allow for inview/onscreen to be disabled
+    var locking =  {
+        locks: [],
+
+        lock: function(name) {
+
+            if (locking.isLocked(name)) return;
+            locking.locks.push(name);
+
+        },
+
+        unlock: function(name) {
+
+            if (!locking.isLocked(name)) return;
+
+            for (var i = 0, l = locking.locks.length; i < l; i++) {
+                var lock = locking.locks[i];
+                if (lock == name) {
+                    locking.locks.splice(i,1);
+                    break;
+                }
+            }
+
+            loop.start();
+
+        },
+
+        isLocked: function(name) {
+
+            if (!name) return (locking.locks.length > 0);
+
+            for (var i = 0, l = locking.locks.length; i < l; i++) {
+                var lock = locking.locks[i];
+                if (lock == name) {
+                    return true;
+                }
+            }
+            return false;
+            
+        }
+
+    };
+
+    //force an inview check - standard trigger event jquery api behaviour
+    $.inview = $.onscreen = function() {
+        loop.start();
+    };
+    //attach locking interface to $.inview.lock(name); etc
+    $.extend($.inview, locking);
+
+    //window size handlers
+    var wndw = {
+
+        $el: $(window),
+        height: null,
+        width: null,
+        heightRatio: null,
+        widthRatio: null,
+
+        resize: function() {
+            wndw.height = wndw.$el.height();
+            wndw.width = wndw.$el.width();
+            wndw.heightRatio = (100 / wndw.height);
+            wndw.widthRatio = (100 / wndw.width);
+            loop.start();
+        }
+
+    };  
+
+    var measurements = {
+
+        supplimentDimensions: false,
+
+        featureDetect: function() {
+            
+            var body = $("body")[0].getBoundingClientRect();
+            //make sure to get height and width independently if getBoundingClientRect doesn't return height and width;
+            measurements.supplimentDimensions = (body.width === undefined);
+            
+        },
+
+        get: function get($element) {
+
+            if ($element.length == 0) return;
+
+            var el = $element[0];
+            var offset =  el.getBoundingClientRect();
+            
+            var height;
+            var width;
+            if (measurements.supplimentDimensions) {
+                //ie8 requires this as getBoundingClientRect doesn't return height and width
+                height = el.offsetHeight;
+                width = el.offsetWidth;
+            } else {
+                height = offset.height;
+                width = offset.width;
+            }
+            
+            //topleft from topleft of window
+            var top = offset["top"];
+            var left = offset["left"];
+
+            //bottomright from bottomright of window
+            var bottom = wndw.height - (top + height);
+            var right = wndw.width - (left + width)
+
+            //percentages of above
+            var percentFromTop = Math.round(wndw.heightRatio * top);
+            var percentFromLeft = Math.round(wndw.widthRatio * left);
+            var percentFromBottom = Math.round(wndw.heightRatio * bottom);
+            var percentFromRight = Math.round(wndw.widthRatio * right);
+
+            //inview
+            var inviewHorizontal = null;
+            if (left+width > 0 && right < 0 && left < 0) {
+                inviewHorizontal = width;
+            } else if (left < 0) { //offscreen left
+                inviewHorizontal = (width + left);
+            } else if (left + width > wndw.width) { //offscreen right
+                inviewHorizontal = (wndw.width - left);
+            } else { //fully inscreen
+                inviewHorizontal = width;
+            }
+
+            var inviewVertical = null;
+            if (top+height > 0 && bottom < 0 && top < 0) {
+                inviewVertical = height;
+            } else if (top < 0) { //offscreen top
+                inviewVertical = (height + top);
+            } else if (top + height > wndw.height) { //offscreen bottom
+                inviewVertical = (wndw.height - top);
+            } else { //fully inscreen
+                inviewVertical = height;
+            }
+
+            var percentInviewVertical = Math.round((100 / height) * inviewVertical);
+            var percentInviewHorizontal = Math.round((100 / width) * inviewHorizontal);
+
+            var elementArea = height * width;
+            var inviewArea = inviewVertical * inviewHorizontal;
+            var percentInview = Math.round((100 / elementArea) * inviewArea);
+
+            var onscreen = true;
+            var offScreenSide = (percentFromRight > 100 || percentFromLeft > 100 || percentFromBottom > 100 || percentFromTop > 100);
+            if (offScreenSide) onscreen = false;
+
+            var hasNoSize = (height <= 0 && width <= 0);
+            if (hasNoSize) onscreen = false;
+
+            var cssHidden = (el.style.display == "none" || el.style.visibility == "hidden");
+            if (cssHidden) onscreen = false;
+            //do we need to look at parent's display: none and visibility:hidden ^?
+
+            var uniqueMeasurementId = ""+top+left+bottom+right+height+width+wndw.height+wndw.width+onscreen;
+            
+            return { 
+                top: top, 
+                left: left, 
+                bottom: bottom,
+                right: right, 
+                percentFromTop: percentFromTop, 
+                percentFromLeft: percentFromLeft, 
+                percentFromBottom: percentFromBottom, 
+                percentFromRight: percentFromRight, 
+                percentInview: percentInview, 
+                percentInviewHorizontal: percentInviewHorizontal,
+                percentInviewVertical: percentInviewVertical,
+                onscreen: onscreen,
+                uniqueMeasurementId: uniqueMeasurementId,
+                timestamp: (new Date()).getTime()
+            };
+
+        }
+
+    };
+
+    //attach event handlers
+    $(window).on({
+        "scroll mousedown touchstart keydown": loop.start,
+        "resize": wndw.resize
+    });
+
+    measurements.featureDetect();
+    wndw.resize();
 
 })();
