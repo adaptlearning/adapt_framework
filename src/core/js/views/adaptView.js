@@ -44,7 +44,7 @@ define([
 
             if (!onscreen || !onscreen._isEnabled) return;
 
-            this.$el.on('onscreen', _.bind(function (e, m) {
+            this.$el.on('onscreen.adaptView', _.bind(function (e, m) {
 
                 if (!m.onscreen) return;
 
@@ -52,7 +52,7 @@ define([
 
                 if (m.percentInviewVertical < minVerticalInview) return;
 
-                this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen');
+                this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen.adaptView');
 
             }, this));
         },
@@ -112,7 +112,7 @@ define([
         },
 
         remove: function() {
-            this.$el.off('onscreen');
+            this.$el.off('onscreen.adaptView');
             this._isRemoved = true;
             this.model.setOnChildren('_isReady', false);
             this.model.set('_isReady', false);
