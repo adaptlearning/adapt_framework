@@ -115,7 +115,7 @@ require([
 
     function configureInview() {
         
-        var adaptConfig = Adapt.course.get("_inview");
+        var adaptConfig = Adapt.config.get("_inview");
 
         var allowScrollOver = (adaptConfig && adaptConfig._allowScrollOver === false ? false : true);
 
