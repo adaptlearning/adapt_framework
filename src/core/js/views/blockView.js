@@ -1,6 +1,6 @@
-define(function(require) {
-
-	var AdaptView = require('coreViews/adaptView');
+define([
+    'core/js/views/adaptView'
+    ], function(AdaptView) {
 
     var BlockView = AdaptView.extend({
 
