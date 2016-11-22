@@ -75,36 +75,47 @@ require([
             }
             
             Adapt.setupMapping();
-            
-            if (isLanguageChange) {
-
-                Adapt.trigger('app:languageChanged', language);
-
-                _.defer(function() {
-                    var startController = new StartController();
-                    var hash = '#/';
-
-                    if (startController.isEnabled()) {
-                        hash = startController.getStartHash(true);
-                    }
-                    
-                    Backbone.history.navigate(hash, { trigger: true, replace: true });
-                });
-            }
 
             try {
-                Adapt.trigger('app:dataReady');
+                Adapt.trigger('app:dataLoaded');
             } catch(e) {
                 outputError(e);
             }
 
-            Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-            
-            Adapt.initialize();
-            
-            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+            if (!Adapt.isWaitingForPlugins()) triggerDataReady();
+            else Adapt.once('plugins:ready', triggerDataReady);
         }
     };
+
+    function triggerDataReady() {
+        if (isLanguageChange) {
+
+            Adapt.trigger('app:languageChanged', language);
+
+            _.defer(function() {
+                var startController = new StartController();
+                var hash = '#/';
+
+                if (startController.isEnabled()) {
+                    hash = startController.getStartHash(true);
+                }
+                
+                Backbone.history.navigate(hash, { trigger: true, replace: true });
+            });
+        }
+        
+        try {
+            Adapt.trigger('app:dataReady');
+        } catch(e) {
+            outputError(e);
+        }
+
+        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+        
+        Adapt.initialize();
+        
+        Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+    }
     
     function outputError(e) {
         //Allow plugin loading errors to output without stopping Adapt from loading
