@@ -1,0 +1,681 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/system/basicContent.schema",
+  "properties": {
+    "heroImage": {
+      "type": "string",
+      "default": "",
+      "inputType": "Asset:image",
+      "validators": [],
+      "editorOnly": true
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "New Course Title",
+      "inputType": "Text",
+      "validators": [
+        "required"
+      ],
+      "translatable": true
+    },
+    "displayTitle": {
+      "type": "string",
+      "required": false,
+      "default": "New Course Title",
+      "inputType": "DisplayTitle",
+      "validators": [],
+      "help": "This is the title that will be displayed on the main menu",
+      "translatable": true
+    },
+    "description": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
+    },
+    "body": {
+      "type": "string",
+      "default": "",
+      "inputType": "TextArea",
+      "validators": [],
+      "translatable": true
+    },
+    "_extensions": {
+      "type": "object"
+    },
+    "_latestTrackingId": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "_start": {
+      "type": "object",
+      "title": "Start settings",
+      "properties": {
+        "_isEnabled": {
+          "type": "boolean",
+          "default": false,
+          "editorOnly": true,
+          "inputType": {
+            "type": "Boolean",
+            "options": [
+              true,
+              false
+            ]
+          },
+          "validators": [],
+          "title": "Enable start controller",
+          "help": "When this is set to 'true', you can control which page is rendered when a course loads, potentially bypassing the menu"
+        },
+        "_startIds": {
+          "type": "array",
+          "title": "Start List",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "title": "ID",
+                "inputType": "Text",
+                "required": true
+              },
+              "_skipIfComplete": {
+                "type": "boolean",
+                "default": false,
+                "editorOnly": true,
+                "inputType": {
+                  "type": "Boolean",
+                  "options": [
+                    true,
+                    false
+                  ]
+                },
+                "validators": [],
+                "title": "Skip if complete",
+                "help": "When this is set to 'true', the page will not be selected as the first page if it has been already viewed/completed"
+              },
+              "_className": {
+                "type": "string",
+                "inputType": "Text",
+                "required": true,
+                "title": "Classes",
+                "help": "Optional comma-separated list of class names which will be used to select this start page"
+              }
+            }
+          }
+        },
+        "_force": {
+          "type": "boolean",
+          "default": false,
+          "editorOnly": true,
+          "inputType": {
+            "type": "Boolean",
+            "options": [
+              true,
+              false
+            ]
+          },
+          "validators": [],
+          "title": "Force routing",
+          "help": "When this is set to 'true', the routing will be forced to the appropriate start page, regardless of the URL"
+        },
+        "_isMenuDisabled": {
+          "type": "boolean",
+          "default": false,
+          "editorOnly": true,
+          "inputType": {
+            "type": "Boolean",
+            "options": [
+              true,
+              false
+            ]
+          },
+          "validators": [],
+          "title": "Disable menu",
+          "help": "When this is set to 'true', the user will be prevented from seeing or navigating to the main menu"
+        }
+      }
+    },
+    "_globals": {
+      "type": "object",
+      "properties": {
+        "_accessibility": {
+          "type": "object",
+          "title": "Accessibility",
+          "required": true,
+          "properties": {
+            "_accessibilityToggleTextOn": {
+              "type": "string",
+              "title": "Toggle on label",
+              "default": "Turn accessibility on?",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "_accessibilityToggleTextOff": {
+              "type": "string",
+              "title": "Toggle off label",
+              "default": "Turn accessibility off?",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "_accessibilityInstructions": {
+              "type": "object",
+              "title": "Accessibility instructions",
+              "properties": {
+                "touch": {
+                  "type": "string",
+                  "title": "For touch devices",
+                  "default": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page.",
+                  "inputType": "Text",
+                  "required": true,
+                  "validators": [
+                    "required"
+                  ],
+                  "translatable": true
+                },
+                "notouch": {
+                  "type": "string",
+                  "title": "For non-touch devices",
+                  "default": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
+                  "inputType": "Text",
+                  "required": true,
+                  "validators": [
+                    "required"
+                  ],
+                  "translatable": true
+                },
+                "ipad": {
+                  "type": "string",
+                  "title": "For iPad",
+                  "default": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select.",
+                  "inputType": "Text",
+                  "required": true,
+                  "validators": [
+                    "required"
+                  ],
+                  "translatable": true
+                }
+              }
+            },
+            "_ariaLabels": {
+              "type": "object",
+              "title": "ARIA labels",
+              "properties": {
+                "navigation": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Course navigation bar",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "menuLoaded": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Menu loaded",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "menu": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Menu",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "menuItem": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Menu item",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "menuViewButton": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Select here to enter",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "page": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Page",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "pageLoaded": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Page loaded",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "previous": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Back",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "navigationBack": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Navigate back",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "navigationDrawer": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Open course resources and search",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "closeResources": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Close resources",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "drawerBack": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Back to drawer",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "drawer": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Side drawer",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "closePopup": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Close popup",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "next": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Next",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "done": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Done",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "complete": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Complete",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "incomplete": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Incomplete",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "correct": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Correct",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "locked": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Locked",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "accessibilityToggleButton": {
+                  "type": "string",
+                  "title": "",
+                  "default": "By selecting this button you can set whether accessibility is turned on or off",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "feedbackPopUp": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Popup opened",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "visited": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Visited",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "menuBack": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Back to menu",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "menuIndicatorHeading": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Menu item heading ",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "_buttons": {
+      "type": "object",
+      "default": "",
+      "title": "",
+      "isSetting": false,
+      "properties": {
+        "_submit": {
+          "type": "object",
+          "title": "Submit",
+          "properties": {
+            "buttonText": {
+              "type": "string",
+              "default": "Submit",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "ariaLabel": {
+              "type": "string",
+              "title": "ARIA label",
+              "default": "Submit",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            }
+          }
+        },
+        "_reset": {
+          "type": "object",
+          "title": "Reset",
+          "properties": {
+            "buttonText": {
+              "type": "string",
+              "default": "Reset",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "ariaLabel": {
+              "type": "string",
+              "title": "ARIA label",
+              "default": "Reset",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            }
+          }
+        },
+        "_showCorrectAnswer": {
+          "type": "object",
+          "title": "Show correct answer",
+          "properties": {
+            "buttonText": {
+              "type": "string",
+              "default": "Show correct answer",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "ariaLabel": {
+              "type": "string",
+              "title": "ARIA label",
+              "default": "Show correct answer",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            }
+          }
+        },
+        "_hideCorrectAnswer": {
+          "type": "object",
+          "title": "Hide correct answer",
+          "properties": {
+            "buttonText": {
+              "type": "string",
+              "default": "Hide correct answer",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "ariaLabel": {
+              "type": "string",
+              "title": "ARIA label",
+              "default": "Hide correct answer",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            }
+          }
+        },
+        "_showFeedback": {
+          "type": "object",
+          "title": "Show feedback",
+          "properties": {
+            "buttonText": {
+              "type": "string",
+              "default": "Show feedback",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "ariaLabel": {
+              "type": "string",
+              "title": "ARIA label",
+              "default": "Show feedback",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            }
+          }
+        },
+        "remainingAttemptsText": {
+          "type": "string",
+          "title": "Remaining attempts label",
+          "default": "remaining attempts",
+          "inputType": "Text",
+          "required": true,
+          "validators": [
+            "required"
+          ],
+          "translatable": true
+        },
+        "remainingAttemptText": {
+          "type": "string",
+          "title": "Final attempt label",
+          "default": "final attempt",
+          "inputType": "Text",
+          "required": true,
+          "validators": [
+            "required"
+          ],
+          "translatable": true
+        },
+        "disabledAriaLabel": {
+          "type": "string",
+          "title": "Disabled ARIA label",
+          "default": "This button is disabled at the moment",
+          "inputType": "Text",
+          "required": true,
+          "validators": [
+            "required"
+          ],
+          "translatable": true
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "inputType": "Tags",
+      "items": {
+        "type": "objectid",
+        "inputType": "Text",
+        "required": false,
+        "editorOnly": true,
+        "ref": "tag"
+      },
+      "title": "Tags",
+      "help": "Add tags to your course by entering one or more words, separated with a comma (,)",
+      "editorOnly": true
+    },
+    "_classes": {
+      "type": "string",
+      "default": "",
+      "isSetting": true,
+      "inputType": "Text",
+      "validators": [],
+      "title": "Classes"
+    },
+    "_isSelected": {
+      "type": "boolean",
+      "default": false,
+      "editorOnly": true
+    },
+    "_hasPreview": {
+      "type": "boolean",
+      "default": false,
+      "editorOnly": true
+    },
+    "_isShared": {
+      "type": "boolean",
+      "default": false,
+      "editorOnly": true,
+      "inputType": {
+        "type": "Boolean",
+        "options": [
+          true,
+          false
+        ]
+      },
+      "validators": [],
+      "title": "Share with other users",
+      "help": "When this is set to 'true', your colleagues will be able to see this course from the 'Shared courses' option"
+    },
+    "themeSettings": {
+      "type": "object"
+    },
+    "menuSettings": {
+      "type": "object"
+    },
+    "_lockType": {
+      "type": "string",
+      "default": "",
+      "inputType": {
+        "type": "Select",
+        "options": [
+          "",
+          "custom",
+          "lockLast",
+          "sequential",
+          "unlockFirst"
+        ]
+      },
+      "title": "Menu lock type",
+      "help": "Defines which (if any) locking mechanism will be used for menu items",
+      "validators": []
+    },
+    "customStyle": {
+      "type": "string",
+      "default": "",
+      "inputType": "CodeEditor:less",
+      "validators": [],
+      "title": "Custom CSS/LESS code",
+      "help": "Add any custom CSS or valid LESS code here"
+    },
+    "externalReferences": {
+      "type" : "object"
+    }
+  }
+}

@@ -182,7 +182,8 @@ define([
 
             // Used to trigger an event so plugins can display feedback
             this.showFeedback();
-
+            
+            this.onSubmitted();
         },
 
         // Adds a validation error class when the canSubmit returns false
@@ -194,6 +195,8 @@ define([
         // Blank method for question to fill out when the question cannot be submitted
         onCannotSubmit: function() {},
 
+        // Blank method for question to fill out when the question was successfully submitted
+        onSubmitted: function() {},
 
         // Used to set _isEnabled and _isSubmitted on the model
         // Also adds a 'submitted' class to the widget
@@ -342,7 +345,7 @@ define([
     * Remove this section in when all components use questionModel and there is no need to have model behaviour in the questionView
     */
 
-    var viewOnlyCompatibleQuestionView = QuestionView.extend({
+    var viewOnlyCompatibleQuestionView = {
 
         /* All of these functions have been moved to the questionModel.js file. 
          * On the rare occasion that they have not been overridden by the component and 
@@ -481,17 +484,25 @@ define([
             if (!this.constructor.prototype[checkForFunction]) return false; //questionModel
 
             //if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
-            if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView.prototype[checkForFunction]) return false; //questionModel
+            if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
+                switch (checkForFunction) {
+                case "setupFeedback":
+                case "markQuestion": 
+                    return true; //questionView   
+                }
+                return false; //questionModel
+            }
 
             //if the function DOES exist on the view and does NOT match the compatibility function above, use the view function
             return true; //questionView
         }
 
-    }, {
+    };
+    
+    //return question view class extended with the compatibility layer
+    return QuestionView.extend(viewOnlyCompatibleQuestionView, {
         _isQuestionType: true
     });
-
-    return viewOnlyCompatibleQuestionView;
 
     /*END OF BACKWARDS COMPATIBILITY SECTION*/
 

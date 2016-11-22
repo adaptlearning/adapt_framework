@@ -116,6 +116,26 @@ define(function(require) {
                 return $.a11y_normalize(text);
             });
 
+            Handlebars.registerHelper('a11y_aria_label', function(text) {
+                return '<div class="aria-label prevent-default" tabindex="0" role="region">'+text+'</div>';
+            });
+
+            Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
+                return '<div class="aria-label relative prevent-default" tabindex="0" role="region">'+text+'</div>';
+            });
+
+            Handlebars.registerHelper('a11y_wrap_focus', function(text) {
+                return '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>';
+            });
+
+            Handlebars.registerHelper('a11y_attrs_heading', function(level) {
+                return ' role="heading" aria-level="'+level+'" tabindex="0" ';
+            });
+
+            Handlebars.registerHelper('a11y_attrs_tabbable', function() {
+                return ' role="region" tabindex="0" ';
+            });
+
         },
 
         setupToggleButton: function() {
@@ -149,7 +169,7 @@ define(function(require) {
 
         configureA11yLibrary: function() {
 
-            var topOffset = $('.navigation').height()+10;
+            var topOffset = $('.navigation').height();
             var bottomoffset = 0;
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;

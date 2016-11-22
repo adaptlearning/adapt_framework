@@ -15,8 +15,8 @@ module.exports = function(grunt) {
             files: [
                 {
                     src: [
-                        '<%= sourcedir %>components/**/*.hbs',
                         '<%= sourcedir %>core/**/*.hbs',
+                        '<%= sourcedir %>components/**/*.hbs',
                         '<%= sourcedir %>extensions/**/*.hbs',
                         '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
                         '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'

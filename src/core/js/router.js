@@ -82,25 +82,31 @@ define([
                     pluginLocation = pluginLocation + '-' + action;
                 }
             }
-            this.updateLocation(pluginLocation, null, null, _.bind(function() {
-                Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
-                Adapt.trigger('router:plugin', pluginName, location, action);
-            }, this));
+            this.updateLocation(pluginLocation);
+            Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
+            Adapt.trigger('router:plugin', pluginName, location, action);
         },
 
         handleCourse: function() {
+            if (Adapt.course.has('_start')) {
+                // Do not allow access to the menu when the start controller is enabled.
+                var startController = Adapt.course.get('_start');
+                
+                if (startController._isEnabled == true && startController._isMenuDisabled == true) {
+                    return;
+                }
+            }
+
             this.showLoading();
-            this.removeViews(_.bind(function() {
-                Adapt.course.set('_isReady', false);
-                this.setContentObjectToVisited(Adapt.course);
-                this.updateLocation('course', null, null, _.bind(function() {
-                    Adapt.once('menuView:ready', function() {
-                        //allow navigation
-                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                    });
-                    Adapt.trigger('router:menu', Adapt.course);
-                }, this));
-            }, this));
+            this.removeViews();
+            Adapt.course.set('_isReady', false);
+            this.setContentObjectToVisited(Adapt.course);
+            this.updateLocation('course');
+            Adapt.once('menuView:ready', function() {
+                // Allow navigation
+                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+            });
+            Adapt.trigger('router:menu', Adapt.course);
         },
 
         handleId: function(id) {
@@ -128,31 +134,28 @@ define([
                         }
                     } else {
                         this.showLoading();
-                        this.removeViews(_.bind(function() {
+                        this.removeViews();
 
-                            this.setContentObjectToVisited(currentModel);
+                        this.setContentObjectToVisited(currentModel);
 
-                            if (type == 'page') {
-                                var location = 'page-' + id;
-                                this.updateLocation(location, 'page', id, _.bind(function() {
-                                    Adapt.once('pageView:ready', function() {
-                                        //allow navigation
-                                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                                    });
-                                    Adapt.trigger('router:page', currentModel);
-                                    this.$wrapper.append(new PageView({model:currentModel}).$el);
-                                }, this));
-                            } else {
-                                var location = 'menu-' + id;
-                                this.updateLocation(location, 'menu', id, _.bind(function() {
-                                    Adapt.once('menuView:ready', function() {
-                                        //allow navigation
-                                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                                    });
-                                    Adapt.trigger('router:menu', currentModel);
-                                }, this));
-                            }
-                        }, this));
+                        if (type == 'page') {
+                            var location = 'page-' + id;
+                            this.updateLocation(location, 'page', id);
+                            Adapt.once('pageView:ready', function() {
+                                // Allow navigation
+                                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                            });
+                            Adapt.trigger('router:page', currentModel);
+                            this.$wrapper.append(new PageView({model: currentModel}).$el);
+                        } else {
+                            var location = 'menu-' + id;
+                            this.updateLocation(location, 'menu', id);
+                            Adapt.once('menuView:ready', function() {
+                                // Allow navigation
+                                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                            });
+                            Adapt.trigger('router:menu', currentModel);
+                        }
                     } 
                 break;
                 default:
@@ -162,14 +165,8 @@ define([
             }
         },
 
-        removeViews: function(onComplete) {
-            Adapt.trigger('remove');
-
-            if (!Adapt.isWaitingForPlugins()) {
-                onComplete();
-            } else {
-                Adapt.once('plugins:ready', onComplete);
-            }
+        removeViews: function() {
+            Adapt.remove();
         },
 
         showLoading: function() {
@@ -250,7 +247,7 @@ define([
             model.set('_isVisited', true);
         },
 
-        updateLocation: function(currentLocation, type, id, onComplete) {
+        updateLocation: function(currentLocation, type, id) {
             // Handles updating the location
             Adapt.location._previousId = Adapt.location._currentId;
             Adapt.location._previousContentType = Adapt.location._contentType;
@@ -263,7 +260,7 @@ define([
                 Adapt.location._currentId = null;
                 Adapt.location._contentType = null;
 
-            } else if (_.isString(id)) {
+            } else if (arguments.length === 3) {
                 Adapt.location._currentId = id;
                 Adapt.location._contentType = type;
                 if (type === 'menu') {
@@ -291,9 +288,6 @@ define([
 
             // Trigger event when location changes
             Adapt.trigger('router:location', Adapt.location);
-
-            if (!Adapt.isWaitingForPlugins()) onComplete();
-            else Adapt.once('plugins:ready', onComplete);
         },
 
         setDocumentTitle: function() {

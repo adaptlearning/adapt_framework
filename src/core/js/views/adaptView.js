@@ -12,6 +12,7 @@ define([
             this._isRemoved = false;
             this.preRender();
             this.render();
+            this.setupOnScreenHandler();
         },
 
         preRender: function() {},
@@ -36,6 +37,24 @@ define([
             }, this));
 
             return this;
+        },
+
+        setupOnScreenHandler: function() {
+            var onscreen = this.model.get('_onScreen');
+
+            if (!onscreen || !onscreen._isEnabled) return;
+
+            this.$el.on('onscreen.adaptView', _.bind(function (e, m) {
+
+                if (!m.onscreen) return;
+
+                var minVerticalInview = onscreen._percentInviewVertical || 33;
+
+                if (m.percentInviewVertical < minVerticalInview) return;
+
+                this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen.adaptView');
+
+            }, this));
         },
 
         addChildren: function() {
@@ -93,17 +112,12 @@ define([
         },
 
         remove: function() {
-            Adapt.trigger('plugin:beginWait');
-
-            _.defer(_.bind(function() {
-                this._isRemoved = true;
-                this.model.setOnChildren('_isReady', false);
-                this.model.set('_isReady', false);
-                this.$el.remove();
-                this.stopListening();
-                Adapt.trigger('plugin:endWait');
-            }, this));
-            
+            this.$el.off('onscreen.adaptView');
+            this._isRemoved = true;
+            this.model.setOnChildren('_isReady', false);
+            this.model.set('_isReady', false);
+            this.$el.remove();
+            this.stopListening();
             return this;
         },
 

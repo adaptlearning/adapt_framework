@@ -1,5 +1,67 @@
 ## [Unreleased][unreleased]
 
+## [2.0.15] - 2016-11-14
+### Added
+- `preRemove` and `postRemove` events
+
+### Fixed
+- Inview not accounting for visibility and display none in change comparisons (#1299)
+- Resources drawer appearing when changing language (#1295)
+- Performance issue in authoring tool with Grunt copyMain task(#1312)
+
+## [2.0.14] - 2016-10-18
+### Added
+- support for multilanguage/course localisation.
+
+## [2.0.13] - 2016-10-17
+### Added
+- accessibility icon (part of [#1182](https://github.com/adaptlearning/adapt_framework/issues/1182))
+
+### Changed
+- removed underscore from accessibility toggle button labels ([#1139](https://github.com/adaptlearning/adapt_framework/issues/1139))
+- removed `durationLabel` from contentObjects.json as it hasn't been required since v2.0.3 of boxmenu ([#1148](https://github.com/adaptlearning/adapt_framework/issues/1148))
+- amends to JavaScript compilation to make it faster ([#1228](https://github.com/adaptlearning/adapt_framework/issues/1228))
+
+### Fixed
+- accessibility toggle button has no state ([#1172](https://github.com/adaptlearning/adapt_framework/issues/1172))
+- tracking ids grunt task only working in 'en' folders ([#370](https://github.com/adaptlearning/adapt_framework/issues/370))
+- accessibility causing PLP scroll to jump down the page after scrolling to component ([#1241](https://github.com/adaptlearning/adapt_framework/issues/1241))
+- changing screen sizes in theme.json not persisted when running watch ([#752](https://github.com/adaptlearning/adapt_framework/issues/752))
+
+## [2.0.12] - 2016-08-22
+### Added
+- Accessibility-specific handlebars helpers ([#1051](https://github.com/adaptlearning/adapt_framework/issues/1051))
+
+### Changed
+- Various changes relating to ongoing work to allow Adapt to load and function even when no theme is installed ([#953](https://github.com/adaptlearning/adapt_framework/issues/953))
+
+### Fixed
+- Issue with partially correct feedback not showing for adapt-contrib-matching component ([#1187](https://github.com/adaptlearning/adapt_framework/issues/1187))
+- Ongoing issue with correctly detecting screen width on iOS devices ([#1096](https://github.com/adaptlearning/adapt_framework/issues/1096))
+
+## [2.0.11] - 2016-07-26
+### Added
+- global text support ([#1049](https://github.com/adaptlearning/adapt_framework/issues/1049))
+- abstract implementation of `onSubmitted` to allow question component plugins to extend this in the same way they can for `onCannotSubmit` ([#1124](https://github.com/adaptlearning/adapt_framework/issues/1124))
+- ability to completely hide the feedback button ([#1073](https://github.com/adaptlearning/adapt_framework/issues/1073))
+
+### Changed
+- standardised handlebars helper names ([#1049](https://github.com/adaptlearning/adapt_framework/issues/1049))
+- updated core libraries and npm modules to more recent versions ([#1061](https://github.com/adaptlearning/adapt_framework/pull/1061))
+- allow Drawer to be closed by Esc keypress when accessibility is not active ([#938](https://github.com/adaptlearning/adapt_framework/issues/938))
+- different method of calculating screen width for better compatibility with iOS ([#1096](https://github.com/adaptlearning/adapt_framework/issues/1096))
+- various changes in preparation for the language picker functionality ([#1120](https://github.com/adaptlearning/adapt_framework/issues/1120))
+- various changes in preparation for moving `_canShowMarking` into core code ([#1046](https://github.com/adaptlearning/adapt_framework/issues/1046))
+- Allow user to be prevented from navigating to the menu using the browser's back button when the start controller is active ([#1037](https://github.com/adaptlearning/adapt_framework/issues/1037) & [#1152](https://github.com/adaptlearning/adapt_framework/issues/1152))
+
+### Fixed
+- accessibility library occasionally throwing error 'Could not find the next focusable element' ([#1015](https://github.com/adaptlearning/adapt_framework/issues/1015))
+- using the `navigateToHomeRoute` function causing the page to jump to the top ([#1079](https://github.com/adaptlearning/adapt_framework/issues/1079))
+- tabindex being incorrectly applied to a11y-hideable elements ([#1093](https://github.com/adaptlearning/adapt_framework/issues/1093))
+- default values not being copied into course.json from schema files ([#991](https://github.com/adaptlearning/adapt_framework/issues/991))
+- global properties in course.json out-of-date/inconsistent ([#1136](https://github.com/adaptlearning/adapt_framework/pull/1136))
+- bug with question marking introduced in v2.0.10 ([#1114](https://github.com/adaptlearning/adapt_framework/issues/1114))
+
 ## [2.0.10] - 2016-05-09
 
 ### Changed
@@ -338,7 +400,11 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.10...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.14...HEAD
+[2.0.14]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.13...v2.0.14
+[2.0.13]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.12...v2.0.13
+[2.0.12]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.11...v2.0.12
+[2.0.11]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.10...v2.0.11
 [2.0.10]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.9...v2.0.10
 [2.0.9]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.8...v2.0.9
 [2.0.8]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.7...v2.0.8

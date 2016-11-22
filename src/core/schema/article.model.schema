@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/system/content.schema",
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "New Article Title",
+      "inputType": "Text",
+      "validators": ["required"],
+      "translatable": true
+    },
+    "displayTitle": {
+      "type": "string",
+      "required": false,
+      "default": "New Article Title",
+      "inputType": "DisplayTitle",
+      "validators": [],
+      "help": "When viewing an article - this is the title that will be displayed on the page",
+      "translatable": true
+    },
+    "body": {
+      "type": "string",
+      "default": "",
+      "inputType": "TextArea",
+      "validators": [],
+      "translatable": true
+    },
+    "_classes": {
+      "type": "string",
+      "default": "",
+      "isSetting": true,
+      "inputType": "Text",
+      "validators": [],
+      "title": "Classes",
+      "help": "Used to style or manipulate the look and feel of this Article. These are predefined in the theme."
+    },
+    "_isOptional": {
+      "type": "bool",
+      "default": "false",
+      "isSetting": true,
+      "inputType": {
+        "type": "Boolean",
+        "options": [true, false]
+      },
+      "validators": [],
+      "title": "Is this optional?",
+      "help": "If set to 'true' this article, any block, and components within it, do not have to be completed"
+    },
+    "_isAvailable": {
+      "type": "bool",
+      "default": "true",
+      "isSetting": true,
+      "inputType": {"type": "Boolean", "options": [true, false]},
+      "validators": [],
+      "title": "Is this available?",
+      "help": "If set to 'false' this will not be displayed"
+    },
+    "_extensions": {
+      "type": "object"
+    }
+  }
+}

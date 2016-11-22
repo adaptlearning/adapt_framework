@@ -1,0 +1,125 @@
+{
+  "type":"object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/system/content.schema",
+  "properties": {
+    "title": {
+      "type":"string",
+      "required":true,
+      "default": "New Menu/Page Title",
+      "inputType":"Text",
+      "validators": ["required"],
+      "translatable": true
+    },
+    "displayTitle": {
+      "type":"string",
+      "required":false,
+      "default": "New Menu/Page Title",
+      "inputType":"DisplayTitle",
+      "validators": [],
+      "help": "When viewing a menu/page - this is the title that will be displayed on the menu/page",
+      "translatable": true
+    },
+    "pageBody":{
+      "type":"string",
+      "default" : "",
+      "inputType":"TextArea",
+      "validators": [],
+      "translatable": true
+    },
+    "body":{
+      "type":"string",
+      "default" : "",
+      "inputType":"TextArea",
+      "validators": [],
+      "translatable": true
+    },
+    "_graphic": {
+      "type": "object",
+      "title": "",
+      "properties": {
+        "alt": {
+          "type": "string",
+          "required": false,
+          "default": "",
+          "inputType": "Text",
+          "validators": [],
+          "help": "This is the alternative text that is displayed when the image is not visible. This is also used by screen readers.",
+          "translatable": true
+        },
+        "src": {
+          "type": "string",
+          "required": false,
+          "default": "",
+          "inputType": "Asset:image",
+          "validators": [],
+          "help": "This is the link to the image."
+        }
+      }
+    },
+    "linkText": {
+      "type": "string",
+      "required": false,
+      "title": "Button link text",
+      "default": "View",
+      "inputType": "Text",
+      "validators" : ["required"],
+      "translatable": true
+    },
+    "duration": {
+      "type": "string",
+      "required": false,
+      "title": "Duration",
+      "default": "",
+      "inputType": "Text",
+      "validators" : [""],
+      "help": "Indicate how long this page or section should take to complete",
+      "translatable": true
+    },
+    "_lockedBy": {
+      "type": "array",
+      "required": false,
+      "default": [],
+      "title": "Locked by",
+      "inputType": "List",
+      "validators": [],
+      "help": "If the course is using a 'custom' Menu Lock Type, this should contain the unique ID of the item(s) which must be completed before this is unlocked"
+    },
+    "_classes": {
+      "type":"string",
+      "default":"",
+      "isSetting": true,
+      "inputType":"Text",
+      "validators": [],
+      "title": "Classes"
+    },
+    "_isOptional": {
+      "type": "bool",
+      "default": "false",
+      "isSetting": true,
+      "inputType": {"type": "Boolean", "options": [true, false]},
+      "validators": [],
+      "title": "Is this optional?",
+      "help": "If set to 'true' this does not have to be completed"
+    },
+    "_isAvailable": {
+      "type": "bool",
+      "default": "true",
+      "isSetting": true,
+      "inputType": {"type": "Boolean", "options": [true, false]},
+      "validators": [],
+      "title": "Is this available?",
+      "help": "If set to 'false' this will not be displayed"
+    },
+    "_extensions": {
+      "type": "object"
+    },
+    "_sortOrder": {
+      "type": "number",
+      "required": true,
+      "default": 1,
+      "editorOnly": true
+    }
+  }
+}

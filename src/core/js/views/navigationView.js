@@ -9,6 +9,7 @@ define(function(require) {
         className: "navigation",
 
         initialize: function() {
+            this.listenToOnce(Adapt, 'courseModel:dataLoading', this.remove);
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
             this.preRender();
@@ -40,14 +41,14 @@ define(function(require) {
 
         hideNavigationButton: function(model) {
             if (model.get('_type') === "course") {
-                $('.navigation-back-button').addClass('display-none');
+                $('.navigation-back-button, .navigation-home-button').addClass('display-none');
             } else {
                 this.showNavigationButton();
             }
         },
 
         showNavigationButton: function() {
-            $('.navigation-back-button').removeClass('display-none');
+            $('.navigation-back-button, .navigation-home-button').removeClass('display-none');
         }
 
     });

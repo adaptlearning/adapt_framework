@@ -425,11 +425,14 @@
                     var $nextAllElements = $nextSiblings.find(domSelectors.focusableElements);
                     //filter enabled+visible focusable items
                     var $nextAllElementsFiltered = $nextAllElements.filter(domFilters.focusableElementsFilter);
-                    //if none found throw error
-                    if ($nextAllElementsFiltered.length === 0) throw "jquery.a11y: Could not find the next focusable element";
                     
-                    //return first found element
-                    $element = $($nextAllElementsFiltered[0]);
+                    //if none found go to focuser
+                    if ($nextAllElementsFiltered.length === 0) {
+                        $element = $(domSelectors.focuser);
+                    } else {
+                        //return first found element
+                        $element = $($nextAllElementsFiltered[0]);
+                    }
 
                 } else {
 
