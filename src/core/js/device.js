@@ -4,13 +4,12 @@ define(function(require) {
     var Bowser = require('coreJS/libraries/bowser');
     var $window = $(window);
 
-    Adapt.device = {
-        touch: Modernizr.touch,
-        screenWidth: getScreenWidth(),
-        screenHeight: getScreenHeight(),
-        orientation: getScreenOrientation(),
-        aspectRatio: getScreenAspectRatio()
-    };
+    Adapt.device = {};
+    Adapt.device['touch'] = Modernizr.touch;
+    Adapt.device['screenWidth'] = getScreenWidth();
+    Adapt.device['screenHeight'] = getScreenHeight();
+    Adapt.device['orientation'] = getScreenOrientation();
+    Adapt.device['aspectRatio'] = getScreenAspectRatio();
 
     Adapt.once('app:dataReady', function() {
         Adapt.device.screenSize = checkScreenSize();
