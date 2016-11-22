@@ -6,7 +6,10 @@ define(function(require) {
 
     Adapt.device = {
         touch: Modernizr.touch,
-        screenWidth: getScreenWidth()
+        screenWidth: getScreenWidth(),
+        screenHeight: getScreenHeight(),
+        orientation: getScreenOrientation(),
+        aspectRatio: getScreenAspectRatio()
     };
 
     Adapt.once('app:dataReady', function() {
