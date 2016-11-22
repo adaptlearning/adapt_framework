@@ -44,9 +44,22 @@ define(function(require) {
             : window.innerWidth || $window.width();
     }
 
+    function getScreenHeight() {
+        return isAppleDevice()
+            ? getAppleScreenHeight()
+            : window.innerHeight || $window.height();
+    }
+
+    function getScreenOrientation() {
+        return (Adapt.device.screenWidth >= Adapt.device.screenHeight) ? 'landscape' : 'portrait';
+    }
+
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
-        // Calculate the screen width.
+        // Calculate the screen properties:
         Adapt.device.screenWidth = getScreenWidth();
+        Adapt.device.screenHeight = getScreenHeight();
+        Adapt.device.orientation = getScreenOrientation();
+        Adapt.device.aspectRatio = Adapt.device.screenWidth / Adapt.device.screenHeight;
 
         var newScreenSize = checkScreenSize();
 
@@ -58,7 +71,7 @@ define(function(require) {
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
 
-	    Adapt.trigger('device:resize', Adapt.device.screenWidth);
+        Adapt.trigger('device:resize', Adapt.device.screenWidth);
 
     }, 100);
 
@@ -75,6 +88,10 @@ define(function(require) {
 
     function getAppleScreenWidth() {
         return (Math.abs(window.orientation) === 90) ? screen.height : screen.width;
+    }
+
+    function getAppleScreenHeight() {
+        return (Math.abs(window.orientation) === 90) ? screen.width : screen.height;
     }
 
     function getPlatform() {
