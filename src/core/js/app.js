@@ -82,12 +82,14 @@ require([
                 outputError(e);
             }
 
-            if (!Adapt.isWaitingForPlugins()) triggerDataReady();
-            else Adapt.once('plugins:ready', triggerDataReady);
+            if (!Adapt.isWaitingForPlugins()) triggerDataReady(isLanguageChange);
+            else Adapt.once('plugins:ready', function() {
+                triggerDataReady(isLanguageChange);
+            });
         }
     };
 
-    function triggerDataReady() {
+    function triggerDataReady(isLanguageChange) {
         if (isLanguageChange) {
 
             Adapt.trigger('app:languageChanged', language);
