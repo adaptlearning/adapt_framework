@@ -82,10 +82,10 @@ define([
                     pluginLocation = pluginLocation + '-' + action;
                 }
             }
-            this.updateLocation(pluginLocation, null, null, _.bind(function() {
+            this.updateLocation(pluginLocation, null, null, function() {
                 Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
                 Adapt.trigger('router:plugin', pluginName, location, action);
-            }, this));
+            });
         },
 
         handleCourse: function() {

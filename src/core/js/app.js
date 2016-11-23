@@ -35,9 +35,7 @@ require([
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
-    Adapt.checkDataIsLoaded = function(isLanguageChange) {
-        var language = Adapt.config.get('_activeLanguage');
-
+    Adapt.checkDataIsLoaded = function(language) {
         if (Adapt.contentObjects.models.length > 0
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
@@ -82,15 +80,15 @@ require([
                 outputError(e);
             }
 
-            if (!Adapt.isWaitingForPlugins()) triggerDataReady(isLanguageChange);
+            if (!Adapt.isWaitingForPlugins()) triggerDataReady(language);
             else Adapt.once('plugins:ready', function() {
-                triggerDataReady(isLanguageChange);
+                triggerDataReady(language);
             });
         }
     };
 
-    function triggerDataReady(isLanguageChange) {
-        if (isLanguageChange) {
+    function triggerDataReady(language) {
+        if (language) {
 
             Adapt.trigger('app:languageChanged', language);
 
@@ -134,13 +132,10 @@ require([
     // This function is called when the config model triggers 'configModel:loadCourseData'
     // Once the config model is loaded get the course files
     // This enables plugins to tap in before the course files are loaded & also to change the default language
-    Adapt.loadCourseData = function(isLanguageChange) {
+    Adapt.loadCourseData = function(language) {
         Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
-            Adapt.checkDataIsLoaded(isLanguageChange);
+            Adapt.checkDataIsLoaded(language);
         });
-
-        // All code that needs to run before adapt starts should go here
-        var language = Adapt.config.get('_activeLanguage');
 
         var courseFolder = "course/" + language +"/";
 
@@ -193,7 +188,7 @@ require([
 
     function onLanguageChange(model, language) {
         Adapt.offlineStorage.set('lang', language);
-        Adapt.loadCourseData(true);
+        Adapt.loadCourseData(language);
     }
 
     function onDirectionChange(model, direction) {
