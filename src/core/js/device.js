@@ -56,12 +56,16 @@ define(function(require) {
         return (Adapt.device.screenWidth >= Adapt.device.screenHeight) ? 'landscape' : 'portrait';
     }
 
+    function getScreenAspectRatio() {
+        return Adapt.device.screenWidth / Adapt.device.screenHeight;
+    }
+
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
         // Calculate the screen properties:
         Adapt.device.screenWidth = getScreenWidth();
         Adapt.device.screenHeight = getScreenHeight();
         Adapt.device.orientation = getScreenOrientation();
-        Adapt.device.aspectRatio = Adapt.device.screenWidth / Adapt.device.screenHeight;
+        Adapt.device.aspectRatio = getScreenAspectRatio();
 
         var newScreenSize = checkScreenSize();
 
