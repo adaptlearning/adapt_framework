@@ -24,6 +24,7 @@ require([
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
 
+    removeInitialLoadingMessage();
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
     
@@ -201,6 +202,10 @@ require([
         } else {
             Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
         }
+    }
+
+    function removeInitialLoadingMessage() {
+        $('#initial-loading').remove();
     }
 
     // Events that are triggered by the main Adapt content collections and models
