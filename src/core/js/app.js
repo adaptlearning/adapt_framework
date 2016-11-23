@@ -132,10 +132,13 @@ require([
     // This function is called when the config model triggers 'configModel:loadCourseData'
     // Once the config model is loaded get the course files
     // This enables plugins to tap in before the course files are loaded & also to change the default language
-    Adapt.loadCourseData = function(language) {
+    Adapt.loadCourseData = function(newLanguage) {
         Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
-            Adapt.checkDataIsLoaded(language);
+            Adapt.checkDataIsLoaded(newLanguage);
         });
+
+        // All code that needs to run before adapt starts should go here
+        var language = Adapt.config.get('_activeLanguage');
 
         var courseFolder = "course/" + language +"/";
 
