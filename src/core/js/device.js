@@ -5,11 +5,11 @@ define(function(require) {
     var $window = $(window);
 
     Adapt.device = {};
-    Adapt.device['touch'] = Modernizr.touch;
-    Adapt.device['screenWidth'] = getScreenWidth();
-    Adapt.device['screenHeight'] = getScreenHeight();
-    Adapt.device['orientation'] = getScreenOrientation();
-    Adapt.device['aspectRatio'] = getScreenAspectRatio();
+    Adapt.device.touch = Modernizr.touch;
+    Adapt.device.screenWidth = getScreenWidth();
+    Adapt.device.screenHeight = getScreenHeight();
+    Adapt.device.orientation = getScreenOrientation();
+    Adapt.device.aspectRatio = getScreenAspectRatio();
 
     Adapt.once('app:dataReady', function() {
         Adapt.device.screenSize = checkScreenSize();
