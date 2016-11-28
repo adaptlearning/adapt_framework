@@ -48,9 +48,18 @@ function getTaskData() {
     var re = new RegExp(/grunt.register(Multi)?Task\('(.+?)', '(.*?)',/);
 
     for(var i = 0, count = files.length; i < count; i++) {
-        var file = fs.readFileSync(path.join(__dirname, files[i]), 'utf8');
+        
+        var filePath = path.join(__dirname, files[i]);
+        var fileStat = fs.statSync(filePath);
+        
+        //skip directories
+        if (fileStat.isDirectory()) continue;
+        
+        var file = fs.readFileSync(filePath, 'utf8');
         var match = file.match(re);
         if(match) taskData[match[2]] = match[3] || '';
+        
     }
     return taskData;
 }
+
