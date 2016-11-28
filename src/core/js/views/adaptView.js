@@ -112,12 +112,18 @@ define([
         },
 
         remove: function() {
-            this.$el.off('onscreen.adaptView');
-            this._isRemoved = true;
-            this.model.setOnChildren('_isReady', false);
-            this.model.set('_isReady', false);
-            this.$el.remove();
-            this.stopListening();
+            Adapt.trigger('plugin:beginWait');
+
+            _.defer(_.bind(function() {
+                this.$el.off('onscreen.adaptView');
+                this._isRemoved = true;
+                this.model.setOnChildren('_isReady', false);
+                this.model.set('_isReady', false);
+                this.$el.remove();
+                this.stopListening();
+                Adapt.trigger('plugin:endWait');
+            }, this));
+
             return this;
         },
 

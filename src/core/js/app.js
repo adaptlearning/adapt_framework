@@ -35,9 +35,7 @@ require([
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
-    Adapt.checkDataIsLoaded = function(isLanguageChange) {
-        var language = Adapt.config.get('_activeLanguage');
-
+    Adapt.checkDataIsLoaded = function(newLanguage) {
         if (Adapt.contentObjects.models.length > 0
             && Adapt.articles.models.length > 0
             && Adapt.blocks.models.length > 0
@@ -75,36 +73,49 @@ require([
             }
             
             Adapt.setupMapping();
-            
-            if (isLanguageChange) {
-
-                Adapt.trigger('app:languageChanged', language);
-
-                _.defer(function() {
-                    var startController = new StartController();
-                    var hash = '#/';
-
-                    if (startController.isEnabled()) {
-                        hash = startController.getStartHash(true);
-                    }
-                    
-                    Backbone.history.navigate(hash, { trigger: true, replace: true });
-                });
-            }
 
             try {
-                Adapt.trigger('app:dataReady');
+                Adapt.trigger('app:dataLoaded');
             } catch(e) {
                 outputError(e);
             }
 
-            Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-            
-            Adapt.initialize();
-            
-            Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+            if (!Adapt.isWaitingForPlugins()) triggerDataReady(newLanguage);
+            else Adapt.once('plugins:ready', function() {
+                triggerDataReady(newLanguage);
+            });
         }
     };
+
+    function triggerDataReady(newLanguage) {
+        if (newLanguage) {
+
+            Adapt.trigger('app:languageChanged', newLanguage);
+
+            _.defer(function() {
+                var startController = new StartController();
+                var hash = '#/';
+
+                if (startController.isEnabled()) {
+                    hash = startController.getStartHash(true);
+                }
+                
+                Backbone.history.navigate(hash, { trigger: true, replace: true });
+            });
+        }
+        
+        try {
+            Adapt.trigger('app:dataReady');
+        } catch(e) {
+            outputError(e);
+        }
+
+        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+        
+        Adapt.initialize();
+        
+        Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+    }
     
     function outputError(e) {
         //Allow plugin loading errors to output without stopping Adapt from loading
@@ -121,9 +132,9 @@ require([
     // This function is called when the config model triggers 'configModel:loadCourseData'
     // Once the config model is loaded get the course files
     // This enables plugins to tap in before the course files are loaded & also to change the default language
-    Adapt.loadCourseData = function(isLanguageChange) {
+    Adapt.loadCourseData = function(newLanguage) {
         Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
-            Adapt.checkDataIsLoaded(isLanguageChange);
+            Adapt.checkDataIsLoaded(newLanguage);
         });
 
         // All code that needs to run before adapt starts should go here
@@ -180,7 +191,7 @@ require([
 
     function onLanguageChange(model, language) {
         Adapt.offlineStorage.set('lang', language);
-        Adapt.loadCourseData(true);
+        Adapt.loadCourseData(language);
     }
 
     function onDirectionChange(model, direction) {
