@@ -8,6 +8,23 @@
         return false;
     })();
 
+    // Inject loading spinner into wrapper
+    domReady(function() {
+        var spinner = document.createElement("div");
+        var attr = document.createAttribute("class");
+        attr.value = "loading";
+        spinner.attributes.setNamedItem(attr);
+        spinner.innerHTML = 
+            '<style>' +
+            '.loading {position: fixed!important;background-color:transparent;text-align: center;}'+
+            '.loading .loader-gif {background-image: url(adapt/css/assets/ajax-loader.gif);background-repeat: no-repeat;background-position: center;width: 128px;height: 128px;position: absolute;top: 50%;left: 50%;margin-top: -64px;margin-left: -64px;}' +
+            '</style>' +
+            '<div class="loader-gif"><div role="heading" tabindex="0" class="h3" aria-level="1">Loading...</div></div>';
+
+        document.getElementById('wrapper').appendChild(spinner);
+    });
+
+
     //2. Setup require for old style module declarations
     function setupRequireJS() {
         requirejs.config({
@@ -103,5 +120,8 @@
             complete: setupRequireJS
         }
     ]);
+
+    // native domReady helper ie8+
+    function domReady(e){var t=!1,n=function(){document.addEventListener?(document.removeEventListener("DOMContentLoaded",d),window.removeEventListener("load",d)):(document.detachEvent("onreadystatechange",d),window.detachEvent("onload",d))},d=function(){t||!document.addEventListener&&"load"!==event.type&&"complete"!==document.readyState||(t=!0,n(),e())};if("complete"===document.readyState)e();else if(document.addEventListener)document.addEventListener("DOMContentLoaded",d),window.addEventListener("load",d);else{document.attachEvent("onreadystatechange",d),window.attachEvent("onload",d);var o=!1;try{o=null==window.frameElement&&document.documentElement}catch(a){}o&&o.doScroll&&!function c(){if(!t){try{o.doScroll("left")}catch(d){return setTimeout(c,50)}t=!0,n(),e()}}()}}
 
 })();
