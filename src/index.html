@@ -12,36 +12,9 @@
 		<link href="adapt/css/adapt.css" type="text/css" rel="stylesheet">
 		<script src="libraries/modernizr.js" type="text/javascript"></script>
 		<script src="adapt/js/scriptLoader.js" type="text/javascript"></script>
-		<style>
-			#initial-loading {
-				position: fixed;
-				background-color: transparent;
-				text-align: center;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-			}
-			#initial-loading .loader-gif {
-				background-image: url('adapt/css/assets/ajax-loader.gif');
-				background-repeat: no-repeat;
-				background-position: center;
-				width: 128px;
-				height: 128px;
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				margin-top: -64px;
-				margin-left: -64px;
-			}
-		</style>
 	</head>
 
 	<body>
-		<div id="initial-loading">
-    		<div class="loader-gif"><div role="heading" tabindex="0" class="h3" aria-level="1">Loading...</div></div>
-		</div>
-
 		<button id="accessibility-toggle" class="base button a11y-ignore-focus"></button>
 		<span id="accessibility-instructions" class="aria-label" role="region" tabindex="0"></span>
 		<div id="wrapper">
