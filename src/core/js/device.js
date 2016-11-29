@@ -14,8 +14,9 @@ define(function(require) {
 
         $('html').addClass("size-" + Adapt.device.screenSize);
 
-        // As Adapt.config is available it's ok to bind the 'resize'.
+        // As Adapt.config is available it's ok to bind the 'resize' and 'orientationchange'.
         $window.on('resize', onWindowResize);
+        $window.on('orientationchange', onOrientationChange);
     });
 
     /**
@@ -61,7 +62,28 @@ define(function(require) {
 	    Adapt.trigger('device:resize', Adapt.device.screenWidth);
 
     }, 100);
-
+    var onOrientationChange = _.debounce(function() {
+        var windowOrientation = window.orientation,
+            windowOrientationName;
+        Adapt.device.orientation = windowOrientation;
+        switch (windowOrientation) {
+            case -90:
+            case 90:
+                $('html').removeClass("orientation-portrait");
+                windowOrientationName = 'landscape';
+                break;
+            default:
+                $('html').removeClass("orientation-landscape");
+                windowOrientationName = 'portrait';
+                break;
+        }
+        Adapt.device.orientationName = windowOrientationName;
+        $('html').addClass("orientation-" + windowOrientationName);
+        Adapt.trigger('device:orientationchange', windowOrientation, windowOrientationName);
+    }, 100);
+    //need to be called once to check the orientation and add the required class
+    onOrientationChange();
+	
     var browser = Bowser.name;
     var version = Bowser.version;
     var OS = Bowser.osversion;
