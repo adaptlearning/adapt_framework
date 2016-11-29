@@ -14,12 +14,7 @@
         var attr = document.createAttribute("class");
         attr.value = "loading";
         spinner.attributes.setNamedItem(attr);
-        spinner.innerHTML = 
-            '<style>' +
-            '.loading {position: fixed!important;background-color:transparent;text-align: center;}'+
-            '.loading .loader-gif {background-image: url(adapt/css/assets/ajax-loader.gif);background-repeat: no-repeat;background-position: center;width: 128px;height: 128px;position: absolute;top: 50%;left: 50%;margin-top: -64px;margin-left: -64px;}' +
-            '</style>' +
-            '<div class="loader-gif"><div role="heading" tabindex="0" class="h3" aria-level="1">Loading...</div></div>';
+        spinner.innerHTML = '<div class="loader-gif"><div role="heading" tabindex="0" class="h3" aria-level="1">Loading...</div></div>';
 
         document.getElementById('wrapper').appendChild(spinner);
     });
