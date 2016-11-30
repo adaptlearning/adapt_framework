@@ -66,19 +66,22 @@ define([
             }
         },
 
-        compile: function(template) {
+        compile: function(template, context) {
             // Allow JSON to be a template
-            return Handlebars.compile(template)(this);
+            if (!template) return "";
+            return Handlebars.compile(template)(context || this);
         },
 
-        compile_a11y_text: function(template) {
+        compile_a11y_text: function(template, context) {
             // Allow JSON to be a template and accessible text
-            return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template));
+            if (!template) return "";
+            return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template, context));
         },
 
-        compile_a11y_normalize: function(template) {
+        compile_a11y_normalize: function(template, context) {
             // Allow JSON to be a template and normalized text
-            return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template));
+            if (!template) return "";
+            return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
         }
 
     };
