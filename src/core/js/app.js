@@ -23,9 +23,6 @@ require([
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
-
-    var template = Handlebars.templates['loading'];
-    $('#wrapper').append(template());
     
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
     Adapt.config.on({
