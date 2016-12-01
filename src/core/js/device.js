@@ -63,10 +63,8 @@ define(function(require) {
 
     }, 100);
     var onOrientationChange = _.debounce(function() {
-        var windowOrientation = window.orientation,
-            windowOrientationName;
-        Adapt.device.orientation = windowOrientation;
-        switch (windowOrientation) {
+        var windowOrientationName;
+        switch (window.orientation) {
             case -90:
             case 90:
                 $('html').removeClass("orientation-portrait");
@@ -77,9 +75,9 @@ define(function(require) {
                 windowOrientationName = 'portrait';
                 break;
         }
-        Adapt.device.orientationName = windowOrientationName;
+        Adapt.device.orientation = windowOrientationName;
         $('html').addClass("orientation-" + windowOrientationName);
-        Adapt.trigger('device:orientationchange', windowOrientation, windowOrientationName);
+        Adapt.trigger('device:orientationchange', windowOrientationName);
     }, 100);
     //need to be called once to check the orientation and add the required class
     onOrientationChange();
