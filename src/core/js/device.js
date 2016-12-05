@@ -99,6 +99,11 @@ define(function(require) {
                     break;
                 }
             }
+
+            // Set consistency with the Bowser flags.
+            if (os == 'win') {
+                os = 'windows';
+            }
         }
 
         return os;
