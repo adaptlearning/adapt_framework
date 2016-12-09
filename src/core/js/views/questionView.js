@@ -27,6 +27,9 @@ define([
         preRender: function() {
             // Setup listener for _isEnabled
             this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
+
+            this.listenTo(this.model, 'question:refresh', this.refresh);
+
             // Checks to see if the question should be reset on revisit
             this.checkIfResetOnRevisit();
             // This method helps setup default settings on the model
@@ -182,7 +185,7 @@ define([
 
             // Used to trigger an event so plugins can display feedback
             this.showFeedback();
-            
+
             this.onSubmitted();
         },
 
@@ -245,7 +248,7 @@ define([
 
         onResetClicked: function() {
             this.setQuestionAsReset();
-            
+
             this._runModelCompatibleFunction("updateButtons");
 
             this._runModelCompatibleFunction("resetUserAnswer");
@@ -263,7 +266,7 @@ define([
         setQuestionAsReset: function() {
             this.model.setQuestionAsReset();
             this.$(".component-widget").removeClass("submitted");
-            
+
             // Attempt to get the current page location
             var currentModel = Adapt.findById(Adapt.location._currentId);
             if (currentModel && currentModel.get("_isReady")) {
@@ -278,6 +281,21 @@ define([
         // This is triggered when the reset button is clicked so it shouldn't
         // be a full reset
         resetQuestion: function() {},
+
+        refresh: function() {
+          this._runModelCompatibleFunction("updateButtons");
+
+          if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+            this.showMarking();
+          }
+
+          if (this.buttonsView) {
+            _.defer(_.bind(function() {
+                this.buttonsView.refresh();
+              }, this)
+            );
+          }
+        },
 
         onShowCorrectAnswerClicked: function() {
             this.setQuestionAsShowCorrect();
@@ -303,7 +321,6 @@ define([
 
             this.hideCorrectAnswer();
         },
-
 
         setQuestionAsHideCorrect: function() {
             this.$(".component-widget")
@@ -347,9 +364,9 @@ define([
 
     var viewOnlyCompatibleQuestionView = {
 
-        /* All of these functions have been moved to the questionModel.js file. 
-         * On the rare occasion that they have not been overridden by the component and 
-                that they call the view only questionView version, 
+        /* All of these functions have been moved to the questionModel.js file.
+         * On the rare occasion that they have not been overridden by the component and
+                that they call the view only questionView version,
                 these functions are included as redirects to the new Question Model.
                 It is very unlikely that these are needed but they are included to ensure compatibility.
          * If you need to override these in your component you should now make and register a component model.
@@ -487,8 +504,8 @@ define([
             if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
                 switch (checkForFunction) {
                 case "setupFeedback":
-                case "markQuestion": 
-                    return true; //questionView   
+                case "markQuestion":
+                    return true; //questionView
                 }
                 return false; //questionModel
             }
@@ -498,7 +515,7 @@ define([
         }
 
     };
-    
+
     //return question view class extended with the compatibility layer
     return QuestionView.extend(viewOnlyCompatibleQuestionView, {
         _isQuestionType: true
