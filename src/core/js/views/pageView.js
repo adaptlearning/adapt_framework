@@ -27,9 +27,15 @@ define(function(require) {
                     Adapt.trigger('pageView:ready', this);
                     var styleOptions = { opacity: 1 };
                     if (this.disableAnimation) {
-                        this.$el.css(styleOptions)
+                        this.$el.css(styleOptions);
+                        $.inview();
                     } else {
-                        this.$el.velocity(styleOptions, 'fast');
+                        this.$el.velocity(styleOptions, {
+                            duration: 'fast',
+                            complete: function() {
+                                $.inview();
+                            }
+                        });
                     }
                     $(window).scroll();
                 }, this));

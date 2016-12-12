@@ -42,6 +42,8 @@ require([
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
 
+            configureInview();
+
             mapAdaptIdsToObjects();
 
             if (typeof Adapt.course.get('_buttons').submit !== 'undefined') {
@@ -120,6 +122,18 @@ require([
     function outputError(e) {
         //Allow plugin loading errors to output without stopping Adapt from loading
         console.error(e);
+    }
+
+    function configureInview() {
+        
+        var adaptConfig = Adapt.config.get("_inview");
+
+        var allowScrollOver = (adaptConfig && adaptConfig._allowScrollOver === false ? false : true);
+
+        $.inview.config({
+            allowScrollOver: allowScrollOver
+        });
+
     }
 
     function mapAdaptIdsToObjects () {
