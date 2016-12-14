@@ -1,6 +1,82 @@
 /*!
-  * Bowser - a browser detector - v0.7.3
-  * https://github.com/ded/bowser
-  * MIT License | (c) Dustin Diaz 2014
-  */
-!function(e,t){typeof module!="undefined"&&module.exports?module.exports.browser=t():typeof define=="function"&&define.amd?define(t):this[e]=t()}("bowser",function(){function t(t){function n(e){var n=t.match(e);return n&&n.length>1&&n[1]||""}function r(e){var n=t.match(e);return n&&n.length>1&&n[2]||""}var i=n(/(ipod|iphone|ipad)/i).toLowerCase(),s=/like android/i.test(t),o=!s&&/android/i.test(t),u=n(/edge\/(\d+(\.\d+)?)/i),a=n(/version\/(\d+(\.\d+)?)/i),f=/tablet/i.test(t),l=!f&&/[^-]mobi/i.test(t),c;/opera|opr/i.test(t)?c={name:"Opera",opera:e,version:a||n(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)}:/windows phone/i.test(t)?(c={name:"Windows Phone",windowsphone:e},u?(c.msedge=e,c.version=u):(c.msie=e,c.version=n(/iemobile\/(\d+(\.\d+)?)/i))):/msie|trident/i.test(t)?c={name:"Internet Explorer",msie:e,version:n(/(?:msie |rv:)(\d+(\.\d+)?)/i)}:/chrome.+? edge/i.test(t)?c={name:"Microsoft Edge",msedge:e,version:u}:/chrome|crios|crmo/i.test(t)?c={name:"Chrome",chrome:e,version:n(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)}:i?(c={name:i=="iphone"?"iPhone":i=="ipad"?"iPad":"iPod"},a&&(c.version=a)):/sailfish/i.test(t)?c={name:"Sailfish",sailfish:e,version:n(/sailfish\s?browser\/(\d+(\.\d+)?)/i)}:/seamonkey\//i.test(t)?c={name:"SeaMonkey",seamonkey:e,version:n(/seamonkey\/(\d+(\.\d+)?)/i)}:/firefox|iceweasel/i.test(t)?(c={name:"Firefox",firefox:e,version:n(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)},/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(t)&&(c.firefoxos=e)):/silk/i.test(t)?c={name:"Amazon Silk",silk:e,version:n(/silk\/(\d+(\.\d+)?)/i)}:o?c={name:"Android",version:a}:/phantom/i.test(t)?c={name:"PhantomJS",phantom:e,version:n(/phantomjs\/(\d+(\.\d+)?)/i)}:/blackberry|\bbb\d+/i.test(t)||/rim\stablet/i.test(t)?c={name:"BlackBerry",blackberry:e,version:a||n(/blackberry[\d]+\/(\d+(\.\d+)?)/i)}:/(web|hpw)os/i.test(t)?(c={name:"WebOS",webos:e,version:a||n(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)},/touchpad\//i.test(t)&&(c.touchpad=e)):/bada/i.test(t)?c={name:"Bada",bada:e,version:n(/dolfin\/(\d+(\.\d+)?)/i)}:/tizen/i.test(t)?c={name:"Tizen",tizen:e,version:n(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i)||a}:/safari/i.test(t)?c={name:"Safari",safari:e,version:a}:c={name:n(/^(.*)\/(.*) /),version:r(/^(.*)\/(.*) /)},!c.msedge&&/(apple)?webkit/i.test(t)?(c.name=c.name||"Webkit",c.webkit=e,!c.version&&a&&(c.version=a)):!c.opera&&/gecko\//i.test(t)&&(c.name=c.name||"Gecko",c.gecko=e,c.version=c.version||n(/gecko\/(\d+(\.\d+)?)/i)),!c.msedge&&(o||c.silk)?c.android=e:i&&(c[i]=e,c.ios=e);var h="";c.windowsphone?h=n(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i):i?(h=n(/os (\d+([_\s]\d+)*) like mac os x/i),h=h.replace(/[_\s]/g,".")):o?h=n(/android[ \/-](\d+(\.\d+)*)/i):c.webos?h=n(/(?:web|hpw)os\/(\d+(\.\d+)*)/i):c.blackberry?h=n(/rim\stablet\sos\s(\d+(\.\d+)*)/i):c.bada?h=n(/bada\/(\d+(\.\d+)*)/i):c.tizen&&(h=n(/tizen[\/\s](\d+(\.\d+)*)/i)),h&&(c.osversion=h);var p=h.split(".")[0];if(f||i=="ipad"||o&&(p==3||p==4&&!l)||c.silk)c.tablet=e;else if(l||i=="iphone"||i=="ipod"||o||c.blackberry||c.webos||c.bada)c.mobile=e;return c.msedge||c.msie&&c.version>=10||c.chrome&&c.version>=20||c.firefox&&c.version>=20||c.safari&&c.version>=6||c.opera&&c.version>=10||c.ios&&c.osversion&&c.osversion.split(".")[0]>=6||c.blackberry&&c.version>=10.1?c.a=e:c.msie&&c.version<10||c.chrome&&c.version<20||c.firefox&&c.version<20||c.safari&&c.version<6||c.opera&&c.version<10||c.ios&&c.osversion&&c.osversion.split(".")[0]<6?c.c=e:c.x=e,c}var e=!0,n=t(typeof navigator!="undefined"?navigator.userAgent:"");return n.test=function(e){for(var t=0;t<e.length;++t){var r=e[t];if(typeof r=="string"&&r in n)return!0}return!1},n._detect=t,n})
+ * Bowser - a browser detector - v1.5.0
+ * https://github.com/ded/bowser
+ * MIT License | (c) Dustin Diaz 2015
+ */
+!function(name,definition){if(typeof module!='undefined'&&module.exports)module.exports.browser=definition()
+else if(typeof define=='function'&&define.amd)define(definition)
+else this[name]=definition()}('bowser',function(){var t=true
+function detect(ua){function getFirstMatch(regex){var match=ua.match(regex);return(match&&match.length>1&&match[1])||'';}
+function getSecondMatch(regex){var match=ua.match(regex);return(match&&match.length>1&&match[2])||'';}
+var iosdevice=getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase(),likeAndroid=/like android/i.test(ua),android=!likeAndroid&&/android/i.test(ua),nexusMobile=/nexus\s*[0-6]\s*/i.test(ua),nexusTablet=!nexusMobile&&/nexus\s*[0-9]+/i.test(ua),chromeos=/CrOS/.test(ua),silk=/silk/i.test(ua),sailfish=/sailfish/i.test(ua),tizen=/tizen/i.test(ua),webos=/(web|hpw)os/i.test(ua),windowsphone=/windows phone/i.test(ua),samsungBrowser=/SamsungBrowser/i.test(ua),windows=!windowsphone&&/windows/i.test(ua),mac=!iosdevice&&!silk&&/macintosh/i.test(ua),linux=!android&&!sailfish&&!tizen&&!webos&&/linux/i.test(ua),edgeVersion=getFirstMatch(/edge\/(\d+(\.\d+)?)/i),versionIdentifier=getFirstMatch(/version\/(\d+(\.\d+)?)/i),tablet=/tablet/i.test(ua),mobile=!tablet&&/[^-]mobi/i.test(ua),xbox=/xbox/i.test(ua),result
+if(/opera/i.test(ua)){ result={name:'Opera',opera:t,version:versionIdentifier||getFirstMatch(/(?:opera|opr|opios)[\s\/](\d+(\.\d+)?)/i)}}else if(/opr|opios/i.test(ua)){ result={name:'Opera',opera:t,version:getFirstMatch(/(?:opr|opios)[\s\/](\d+(\.\d+)?)/i)||versionIdentifier}}
+else if(/SamsungBrowser/i.test(ua)){result={name:'Samsung Internet for Android',samsungBrowser:t,version:versionIdentifier||getFirstMatch(/(?:SamsungBrowser)[\s\/](\d+(\.\d+)?)/i)}}
+else if(/coast/i.test(ua)){result={name:'Opera Coast',coast:t,version:versionIdentifier||getFirstMatch(/(?:coast)[\s\/](\d+(\.\d+)?)/i)}}
+else if(/yabrowser/i.test(ua)){result={name:'Yandex Browser',yandexbrowser:t,version:versionIdentifier||getFirstMatch(/(?:yabrowser)[\s\/](\d+(\.\d+)?)/i)}}
+else if(/ucbrowser/i.test(ua)){result={name:'UC Browser',ucbrowser:t,version:getFirstMatch(/(?:ucbrowser)[\s\/](\d+(?:\.\d+)+)/i)}}
+else if(/mxios/i.test(ua)){result={name:'Maxthon',maxthon:t,version:getFirstMatch(/(?:mxios)[\s\/](\d+(?:\.\d+)+)/i)}}
+else if(/epiphany/i.test(ua)){result={name:'Epiphany',epiphany:t,version:getFirstMatch(/(?:epiphany)[\s\/](\d+(?:\.\d+)+)/i)}}
+else if(/puffin/i.test(ua)){result={name:'Puffin',puffin:t,version:getFirstMatch(/(?:puffin)[\s\/](\d+(?:\.\d+)?)/i)}}
+else if(/sleipnir/i.test(ua)){result={name:'Sleipnir',sleipnir:t,version:getFirstMatch(/(?:sleipnir)[\s\/](\d+(?:\.\d+)+)/i)}}
+else if(/k-meleon/i.test(ua)){result={name:'K-Meleon',kMeleon:t,version:getFirstMatch(/(?:k-meleon)[\s\/](\d+(?:\.\d+)+)/i)}}
+else if(windowsphone){result={name:'Windows Phone',windowsphone:t}
+if(edgeVersion){result.msedge=t
+result.version=edgeVersion}
+else{result.msie=t
+result.version=getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)}}
+else if(/msie|trident/i.test(ua)){result={name:'Internet Explorer',msie:t,version:getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)}}else if(chromeos){result={name:'Chrome',chromeos:t,chromeBook:t,chrome:t,version:getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)}}else if(/chrome.+? edge/i.test(ua)){result={name:'Microsoft Edge',msedge:t,version:edgeVersion}}
+else if(/vivaldi/i.test(ua)){result={name:'Vivaldi',vivaldi:t,version:getFirstMatch(/vivaldi\/(\d+(\.\d+)?)/i)||versionIdentifier}}
+else if(sailfish){result={name:'Sailfish',sailfish:t,version:getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)}}
+else if(/seamonkey\//i.test(ua)){result={name:'SeaMonkey',seamonkey:t,version:getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)}}
+else if(/firefox|iceweasel|fxios/i.test(ua)){result={name:'Firefox',firefox:t,version:getFirstMatch(/(?:firefox|iceweasel|fxios)[ \/](\d+(\.\d+)?)/i)}
+if(/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)){result.firefoxos=t}}
+else if(silk){result={name:'Amazon Silk',silk:t,version:getFirstMatch(/silk\/(\d+(\.\d+)?)/i)}}
+else if(/phantom/i.test(ua)){result={name:'PhantomJS',phantom:t,version:getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)}}
+else if(/slimerjs/i.test(ua)){result={name:'SlimerJS',slimer:t,version:getFirstMatch(/slimerjs\/(\d+(\.\d+)?)/i)}}
+else if(/blackberry|\bbb\d+/i.test(ua)||/rim\stablet/i.test(ua)){result={name:'BlackBerry',blackberry:t,version:versionIdentifier||getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)}}
+else if(webos){result={name:'WebOS',webos:t,version:versionIdentifier||getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)};/touchpad\//i.test(ua)&&(result.touchpad=t)}
+else if(/bada/i.test(ua)){result={name:'Bada',bada:t,version:getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)};}
+else if(tizen){result={name:'Tizen',tizen:t,version:getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i)||versionIdentifier};}
+else if(/qupzilla/i.test(ua)){result={name:'QupZilla',qupzilla:t,version:getFirstMatch(/(?:qupzilla)[\s\/](\d+(?:\.\d+)+)/i)||versionIdentifier}}
+else if(/chromium/i.test(ua)){result={name:'Chromium',chromium:t,version:getFirstMatch(/(?:chromium)[\s\/](\d+(?:\.\d+)?)/i)||versionIdentifier}}
+else if(/chrome|crios|crmo/i.test(ua)){result={name:'Chrome',chrome:t,version:getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)}}
+else if(android){result={name:'Android',version:versionIdentifier}}
+else if(/safari|applewebkit/i.test(ua)){result={name:'Safari',safari:t}
+if(versionIdentifier){result.version=versionIdentifier}}
+else if(iosdevice){result={name:iosdevice=='iphone'?'iPhone':iosdevice=='ipad'?'iPad':'iPod'} 
+if(versionIdentifier){result.version=versionIdentifier}}
+else if(/googlebot/i.test(ua)){result={name:'Googlebot',googlebot:t,version:getFirstMatch(/googlebot\/(\d+(\.\d+))/i)||versionIdentifier}}
+else{result={name:getFirstMatch(/^(.*)\/(.*) /),version:getSecondMatch(/^(.*)\/(.*) /)};} 
+if(!result.msedge&&/(apple)?webkit/i.test(ua)){if(/(apple)?webkit\/537\.36/i.test(ua)){result.name=result.name||"Blink"
+result.blink=t}else{result.name=result.name||"Webkit"
+result.webkit=t}
+if(!result.version&&versionIdentifier){result.version=versionIdentifier}}else if(!result.opera&&/gecko\//i.test(ua)){result.name=result.name||"Gecko"
+result.gecko=t
+result.version=result.version||getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)} 
+if(!result.windowsphone&&!result.msedge&&(android||result.silk)){result.android=t}else if(!result.windowsphone&&!result.msedge&&iosdevice){result[iosdevice]=t
+result.ios=t}else if(mac){result.mac=t}else if(xbox){result.xbox=t}else if(windows){result.windows=t}else if(linux){result.linux=t} 
+var osVersion='';if(result.windowsphone){osVersion=getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);}else if(iosdevice){osVersion=getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);osVersion=osVersion.replace(/[_\s]/g,'.');}else if(android){osVersion=getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);}else if(result.webos){osVersion=getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);}else if(result.blackberry){osVersion=getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);}else if(result.bada){osVersion=getFirstMatch(/bada\/(\d+(\.\d+)*)/i);}else if(result.tizen){osVersion=getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);}
+if(osVersion){result.osversion=osVersion;} 
+var osMajorVersion=osVersion.split('.')[0];if(tablet||nexusTablet||iosdevice=='ipad'||(android&&(osMajorVersion==3||(osMajorVersion>=4&&!mobile)))||result.silk){result.tablet=t}else if(mobile||iosdevice=='iphone'||iosdevice=='ipod'||android||nexusMobile||result.blackberry||result.webos||result.bada){result.mobile=t}
+ 
+if(result.msedge||(result.msie&&result.version>=10)||(result.yandexbrowser&&result.version>=15)||(result.vivaldi&&result.version>=1.0)||(result.chrome&&result.version>=20)||(result.samsungBrowser&&result.version>=4)||(result.firefox&&result.version>=20.0)||(result.safari&&result.version>=6)||(result.opera&&result.version>=10.0)||(result.ios&&result.osversion&&result.osversion.split(".")[0]>=6)||(result.blackberry&&result.version>=10.1)||(result.chromium&&result.version>=20)){result.a=t;}
+else if((result.msie&&result.version<10)||(result.chrome&&result.version<20)||(result.firefox&&result.version<20.0)||(result.safari&&result.version<6)||(result.opera&&result.version<10.0)||(result.ios&&result.osversion&&result.osversion.split(".")[0]<6)||(result.chromium&&result.version<20)){result.c=t}else result.x=t
+return result}
+var bowser=detect(typeof navigator!=='undefined'?navigator.userAgent||'':'')
+bowser.test=function(browserList){for(var i=0;i<browserList.length;++i){var browserItem=browserList[i];if(typeof browserItem==='string'){if(browserItem in bowser){return true;}}}
+return false;}
+function getVersionPrecision(version){return version.split(".").length;}
+function map(arr,iterator){var result=[],i;if(Array.prototype.map){return Array.prototype.map.call(arr,iterator);}
+for(i=0;i<arr.length;i++){result.push(iterator(arr[i]));}
+return result;}
+function compareVersions(versions){ var precision=Math.max(getVersionPrecision(versions[0]),getVersionPrecision(versions[1]));var chunks=map(versions,function(version){var delta=precision-getVersionPrecision(version);version=version+new Array(delta+1).join(".0");return map(version.split("."),function(chunk){return new Array(20-chunk.length).join("0")+chunk;}).reverse();}); while(--precision>=0){if(chunks[0][precision]>chunks[1][precision]){return 1;}
+else if(chunks[0][precision]===chunks[1][precision]){if(precision===0){ return 0;}}
+else{return-1;}}}
+function isUnsupportedBrowser(minVersions,strictMode,ua){var _bowser=bowser; if(typeof strictMode==='string'){ua=strictMode;strictMode=void(0);}
+if(strictMode===void(0)){strictMode=false;}
+if(ua){_bowser=detect(ua);}
+var version=""+_bowser.version;for(var browser in minVersions){if(minVersions.hasOwnProperty(browser)){if(_bowser[browser]){if(typeof minVersions[browser]!=='string'){throw new Error('Browser version in the minVersion map should be a string: '+browser+': '+String(minVersions));}
+return compareVersions([version,minVersions[browser]])<0;}}}
+return strictMode;}
+function check(minVersions,strictMode,ua){return!isUnsupportedBrowser(minVersions,strictMode,ua);}
+bowser.isUnsupportedBrowser=isUnsupportedBrowser;bowser.compareVersions=compareVersions;bowser.check=check;bowser._detect=detect;return bowser});

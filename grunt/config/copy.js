@@ -15,7 +15,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['**/*', '!**/*.json'],
+                    src: ['<%=languages%>/**/*', '!**/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }
@@ -25,7 +25,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['**/*.json'],
+                    src: ['<%=languages%>/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }
@@ -181,7 +181,7 @@ module.exports = function (grunt, options) {
                 },
                 {
                     expand: true,
-                    src: ['**/libraries/**/*'],
+                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>/libraries/',
                     filter: function(filepath) {
@@ -194,7 +194,7 @@ module.exports = function (grunt, options) {
                 },
                 {
                     expand: true,
-                    src: ['**/required/**/*'],
+                    src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
