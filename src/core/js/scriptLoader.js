@@ -85,7 +85,7 @@
         ], loadAdapt);
     }
 
-    //6. Load adapt
+    //7. Load adapt
     function loadAdapt() {
         switch (IE) {
         case 8: case 9:
