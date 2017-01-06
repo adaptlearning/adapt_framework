@@ -51,7 +51,7 @@ define(function(require) {
             Adapt.on("device:changed", this.setupNoSelect);
 
             //Configure the accessibility library
-            this.listenToOnce(Adapt, "app:dataReady", this.configureA11yLibrary)
+            this.listenToOnce(Adapt, "app:dataReady", this.configureA11yLibrary);
 
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
             this.listenTo(Adapt, 'router:location', this.onNavigationStart);
@@ -80,7 +80,7 @@ define(function(require) {
 
                 this.setupDocument();
                 this.setupLegacy();
-                this.setupPopupListeners()
+                this.setupPopupListeners();
                 this.setupUsageInstructions();
                 this.setupLogging();
 
@@ -274,7 +274,7 @@ define(function(require) {
                 this.$accessibilityToggle.remove();
             }
 
-            if (!Modernizr.touch || this.isActive()) return;
+            if (!Modernizr.touch || this.isActive() || Adapt.config.get("_accessibility")._isDisabledOnTouchDevices) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
@@ -310,7 +310,7 @@ define(function(require) {
 
         isEnabled: function() {
             return Adapt.config.has('_accessibility')
-                && Adapt.config.get('_accessibility')._isEnabled
+                && Adapt.config.get('_accessibility')._isEnabled;
         },
 
         setupDocument: function() {
@@ -375,7 +375,7 @@ define(function(require) {
 
         revertDocument: function() {
             this.$html.removeClass('accessibility');
-            $.a11y(false)
+            $.a11y(false);
             $.a11y_on(false, "body > *");
             $.a11y_on(true, "#accessibility-toggle");
         },
@@ -407,8 +407,7 @@ define(function(require) {
         revertUsageInstructions: function() {
             if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions)) return;
 
-            this.$accessibilityInstructions
-                .off("blur", this.onFocusInstructions)
+            this.$accessibilityInstructions.off("blur", this.onFocusInstructions);
         },
 
         revertLogging: function() {
@@ -435,7 +434,7 @@ define(function(require) {
 
                     if (this._hasUserTabbed) return;
 	
-                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions)
+                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions);
 	
                     _.delay(function(){
                         Accessibility.$accessibilityInstructions.focusNoScroll();
