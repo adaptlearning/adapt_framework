@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2016-11-16 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2017-01-05 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 
@@ -400,7 +400,14 @@
             if ($element.length == 0) return;
 
             var el = $element[0];
-            var offset =  el.getBoundingClientRect();
+            var offset;
+
+            try {
+                offset = el.getBoundingClientRect();
+            } catch (e) {
+                // IE11 throws an error if the element isn't present in the DOM
+                offset = { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
+            }
             
             var height;
             var width;
