@@ -158,6 +158,21 @@ define(function(require) {
         return (Math.abs(window.orientation) === 90) ? screen.width : screen.height;
     }
 
+    function getAppleDeviceType() {
+        var type = '';
+
+        var flags = ['iphone', 'ipad', 'ipod'];
+
+        for (var i = 0; i < flags.length; i++) {
+            if (Bowser[flags[i]]) {
+                type = flags[i];
+                break;
+            }
+        }
+
+        return type;
+    }
+
     function pixelDensity() {
         var pixelDensity = (window.devicePixelRatio || 1);
 
@@ -174,7 +189,7 @@ define(function(require) {
 
     // Convert 'msie' to 'ie' for backwards compatibility
     var browserString = (Adapt.device.browser.toLowerCase() === 'msie') ? 'ie' : Adapt.device.browser.toLowerCase();
-    browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.os;
+    browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.os + ' ' + getAppleDeviceType();
 
     $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 });
