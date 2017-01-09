@@ -392,7 +392,10 @@ define(function (require) {
                 var id = lockedBy[i];
 
                 try {
-                    if (!Adapt.findById(id).get("_isComplete")) return true;
+                    var model = Adapt.findById(id);
+
+                    if (!model.get("_isAvailable")) continue;
+                    if (!model.get("_isComplete")) return true;
                 }
                 catch (e) {
                     console.warn("AdaptModel.shouldLock: unknown _lockedBy ID \"" + id +
