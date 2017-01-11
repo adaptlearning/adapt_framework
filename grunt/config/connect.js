@@ -15,7 +15,8 @@ module.exports = function (grunt, options) {
       options: {
         port: port,
         base: '<%= outputdir %>',
-        keepalive:true
+        keepalive:true,
+        open:true
       }
     }
   }
