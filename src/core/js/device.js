@@ -10,7 +10,7 @@ define(function(require) {
         screenHeight: getScreenHeight(),
         browser: Bowser.name,
         version: Bowser.version,
-        os: getOperatingSystem(),
+        OS: getOperatingSystem(),
         osVersion: Bowser.osversion || '',
         renderingEngine: getRenderingEngine()
     };
@@ -189,7 +189,7 @@ define(function(require) {
 
     // Convert 'msie' to 'ie' for backwards compatibility
     var browserString = (Adapt.device.browser.toLowerCase() === 'msie') ? 'ie' : Adapt.device.browser.toLowerCase();
-    browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.os + ' ' + getAppleDeviceType();
+    browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
 
     $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 });

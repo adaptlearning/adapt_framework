@@ -173,7 +173,7 @@ define(function(require) {
             var bottomoffset = 0;
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;
-            $.a11y.options.OS = Adapt.device.os.toLowerCase();
+            $.a11y.options.OS = Adapt.device.OS.toLowerCase();
             $.a11y.options.isTouchDevice = Modernizr.touch;
 
             if (this.isActive()) {
