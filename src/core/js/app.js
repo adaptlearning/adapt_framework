@@ -23,7 +23,10 @@ require([
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
-    
+
+    var template = Handlebars.templates['loading'];     
+    $('#wrapper').append(template());
+
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
     Adapt.config.on({
         'change:_activeLanguage': onLanguageChange,
@@ -38,6 +41,8 @@ require([
             && Adapt.blocks.models.length > 0
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
+
+            configureInview();
 
             mapAdaptIdsToObjects();
 
@@ -117,6 +122,18 @@ require([
     function outputError(e) {
         //Allow plugin loading errors to output without stopping Adapt from loading
         console.error(e);
+    }
+
+    function configureInview() {
+        
+        var adaptConfig = Adapt.config.get("_inview");
+
+        var allowScrollOver = (adaptConfig && adaptConfig._allowScrollOver === false ? false : true);
+
+        $.inview.config({
+            allowScrollOver: allowScrollOver
+        });
+
     }
 
     function mapAdaptIdsToObjects () {

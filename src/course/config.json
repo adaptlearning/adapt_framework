@@ -4,6 +4,7 @@
     "_questionWeight": 1,
     "_accessibility": {
         "_isEnabled": true,
+        "_isDisabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true
     },
