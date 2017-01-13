@@ -283,6 +283,8 @@ define([
         resetQuestion: function() {},
 
         refresh: function() {
+          this.renderState();
+          
           this._runModelCompatibleFunction("updateButtons");
 
           if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {

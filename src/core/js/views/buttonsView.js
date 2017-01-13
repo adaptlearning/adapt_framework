@@ -110,13 +110,13 @@ define(function() {
         },
 
         checkFeedbackState: function(){
-            if (!this.model.get('_canShowFeedback')) {
           // If feedback should be hidden, the 'Submit' button should stretch
           // to fill the space and the 'Feedback' button should be hidden.
           // (These classes must be implemented in the theme.)
-                this.$('.buttons-action').addClass('buttons-action-fullwidth');
-                this.$('.buttons-feedback').addClass('no-feedback');
-            }
+          this.$('.buttons-action').toggleClass('buttons-action-fullwidth', !this.model.get('_canShowFeedback'));
+          this.$('.buttons-action').toggleClass('buttons-action-enlarge', !this.model.get('_canShowFeedback'));
+          this.$('.buttons-feedback').toggleClass('no-feedback', !this.model.get('_canShowFeedback'));
+          this.$('.buttons-marking-icon').toggleClass('no-feedback', !this.model.get('_canShowFeedback'));
         },
 
         updateAttemptsCount: function(model, changedAttribute) {
