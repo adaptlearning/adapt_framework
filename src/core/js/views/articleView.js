@@ -1,17 +1,23 @@
-define(function(require) {
-
-    var AdaptView = require('coreViews/adaptView');
-    var BlockView = require('coreViews/blockView');
+define([
+    'core/js/views/adaptView',
+    'core/js/views/blockView'
+], function(AdaptView, BlockView) {
 
     var ArticleView = AdaptView.extend({
 
+        attributes: function() {
+            return {
+                "data-adapt-id": this.model.get('_id')
+            };
+        },
+
         className: function() {
-            return "article "
-            + this.model.get('_id')
-            + " " + this.model.get('_classes')
-            + " " + this.setVisibility()
-            + " nth-child-"
-            + this.model.get("_nthChild");
+            return "article " +
+            this.model.get('_id') +
+            " " + this.model.get('_classes') +
+            " " + this.setVisibility() +
+            " nth-child-" +
+            this.model.get("_nthChild");
         }
 
     }, {

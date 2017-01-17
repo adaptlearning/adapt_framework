@@ -1,18 +1,24 @@
-define(function(require) {
-
-    var Adapt = require("coreJS/adapt");
-    var AdaptView = require('coreViews/adaptView');
+define([
+    'core/js/adapt',
+    'core/js/views/adaptView'
+], function(Adapt, AdaptView) {
 
     var ComponentView = AdaptView.extend({
 
+        attributes: function() {
+            return {
+                "data-adapt-id": this.model.get('_id')
+            };
+        },
+
         className: function() {
-            return "component "
-            + this.model.get('_component')
-            + "-component " + this.model.get('_id')
-            + " " + this.model.get('_classes')
-            + " " + this.setVisibility()
-            + " component-" + this.model.get('_layout')
-            + " nth-child-" + this.model.get("_nthChild");
+            return "component " + 
+            this.model.get('_component') + 
+            "-component " + this.model.get('_id') + 
+            " " + this.model.get('_classes') + 
+            " " + this.setVisibility() + 
+            " component-" + this.model.get('_layout') + 
+            " nth-child-" + this.model.get("_nthChild");
         },
 
         initialize: function(){
