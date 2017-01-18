@@ -5,12 +5,6 @@ define([
 
     var ComponentView = AdaptView.extend({
 
-        attributes: function() {
-            return {
-                "data-adapt-id": this.model.get('_id')
-            };
-        },
-
         className: function() {
             return "component " + 
             this.model.get('_component') + 

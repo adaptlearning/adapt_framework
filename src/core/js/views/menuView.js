@@ -5,12 +5,6 @@ define([
 
     var MenuView = AdaptView.extend({
 
-        attributes: function() {
-            return {
-                "data-adapt-id": this.model.get('_id')
-            };
-        },
-
     	className: function() {
             var visible = "visibility-hidden";
             if (this.model.get('_isVisible')) {

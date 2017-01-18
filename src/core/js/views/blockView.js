@@ -4,12 +4,6 @@ define([
 
     var BlockView = AdaptView.extend({
 
-        attributes: function() {
-            return {
-                "data-adapt-id": this.model.get('_id')
-            };
-        },
-
         className: function() {
             return "block " + 
             this.model.get('_id') +

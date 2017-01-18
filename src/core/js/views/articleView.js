@@ -4,13 +4,7 @@ define([
 ], function(AdaptView, BlockView) {
 
     var ArticleView = AdaptView.extend({
-
-        attributes: function() {
-            return {
-                "data-adapt-id": this.model.get('_id')
-            };
-        },
-
+        
         className: function() {
             return "article " +
             this.model.get('_id') +
