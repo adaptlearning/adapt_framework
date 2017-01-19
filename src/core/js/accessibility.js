@@ -77,7 +77,6 @@ define(function(require) {
 			
             // Check if accessibility is active
             if (this.isActive()) {
-
                 this.setupDocument();
                 this.setupLegacy();
                 this.setupPopupListeners();
@@ -315,6 +314,11 @@ define(function(require) {
 
         setupDocument: function() {
             this.$html.addClass('accessibility');
+
+            if (Adapt.config.get('_accessibility')._isTextProcessorEnabled) {
+                this.$html.addClass('text-to-speech');
+            }
+
             $.a11y(true)
             $.a11y_on(true, "body > *");
         },
@@ -374,7 +378,7 @@ define(function(require) {
 
 
         revertDocument: function() {
-            this.$html.removeClass('accessibility');
+            this.$html.removeClass('accessibility text-to-speech');
             $.a11y(false);
             $.a11y_on(false, "body > *");
             $.a11y_on(true, "#accessibility-toggle");
