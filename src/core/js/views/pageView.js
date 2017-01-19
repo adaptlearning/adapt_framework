@@ -1,16 +1,16 @@
-define(function(require) {
-
-    var AdaptView = require('coreViews/adaptView');
-    var ArticleView = require('coreViews/articleView');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt',
+    'core/js/views/adaptView',
+    'core/js/views/articleView'
+], function(Adapt, AdaptView, ArticleView) {
 
     var PageView = AdaptView.extend({
-
+        
         className: function() {
-            return "page "
-            + this.model.get('_id')
-            + " " + this.model.get('_classes')
-            + " " + this.setVisibility();
+            return "page " + 
+            this.model.get('_id') + 
+            " " + this.model.get('_classes') + 
+            " " + this.setVisibility();
         },
 
         preRender: function() {

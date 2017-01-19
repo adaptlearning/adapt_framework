@@ -1,7 +1,7 @@
-define(function(require) {
-
-    var AdaptView = require('coreViews/adaptView');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt',
+    'core/js/views/adaptView'
+], function(Adapt, AdaptView) {
 
     var MenuView = AdaptView.extend({
 
@@ -10,11 +10,11 @@ define(function(require) {
             if (this.model.get('_isVisible')) {
                 visible = "";
             }
-    		return 'menu '
-            + 'menu-'
-            + this.model.get('_id')
-            + " " + this.model.get('_classes')
-            + " " + this.setVisibility();
+    		return 'menu ' +
+            'menu-' +
+            this.model.get('_id') +
+            " " + this.model.get('_classes') +
+            " " + this.setVisibility();
     	},
 
         preRender: function() {
