@@ -1,5 +1,24 @@
 ## [Unreleased][unreleased]
 
+## [2.0.16] - 2017-01-19
+
+### Added
+- Latest version of the inview/jquery.onscreen library ([#1302](https://github.com/adaptlearning/adapt_framework/issues/1302)) - full list of changes [here](https://github.com/adaptlearning/jquery.onscreen/issues/6).
+- Add CSS classes to elements when 'on screen' ([#1100](https://github.com/adaptlearning/adapt_framework/issues/1100))
+- Added `screenHeight`, `orientation` and `aspectRatio` properties to `Adapt.device` ([#1331](https://github.com/adaptlearning/adapt_framework/issues/1331))
+- Updated to version v1.5.0 of the Bowser library ([#1337](https://github.com/adaptlearning/adapt_framework/issues/1337)), re-worked device.js to take advantage of new Bowser features ([#1349](https://github.com/adaptlearning/adapt_framework/pull/1349))
+- Option to disable automatic switching-on of accessibility on touch devices ([#1370](https://github.com/adaptlearning/adapt_framework/issues/1370))
+- ES5 shim for IE8 ([#1346](https://github.com/adaptlearning/adapt_framework/pull/1346))
+- Added `getAvailableChildren` to adaptModel ([#1373](https://github.com/adaptlearning/adapt_framework/issues/1373))
+- Added `text-to-speech` class to the `html` when `_isTextProcessorEnabled` is `true` ([#1384](https://github.com/adaptlearning/adapt_framework/issues/1384))
+- Added a `data-adapt-id` attribute to the HTML for pages, menus, articles, blocks + components ([#1380](https://github.com/adaptlearning/adapt_framework/issues/1380))
+
+### Fixed
+- Hide the 'home' button in the navigation when at the top level of the course structure ([#1315](https://github.com/adaptlearning/adapt_framework/issues/1315))
+- XML substitutions are not replaced when building an xAPI course from the Adapt Authoring Tool ([#1324](https://github.com/adaptlearning/adapt_framework/issues/1324))
+- Updated Handlebars compile helpers to allow them to take `undefined` and to allow specified context ([#1347](https://github.com/adaptlearning/adapt_framework/issues/1347))
+- Locking not taking into account availability of children ([#1373](https://github.com/adaptlearning/adapt_framework/issues/1373))
+
 ## [2.0.15] - 2016-11-14
 ### Added
 - `preRemove` and `postRemove` events
@@ -400,7 +419,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.14...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.16...HEAD
+[2.0.16]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.15...v2.0.16
+[2.0.15]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.14...v2.0.15
 [2.0.14]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.13...v2.0.14
 [2.0.13]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.12...v2.0.13
 [2.0.12]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.11...v2.0.12
