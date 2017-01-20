@@ -1,6 +1,6 @@
 ## [Unreleased][unreleased]
 
-## [2.0.16] - 2017-01-19
+## [2.0.16] - 2017-01-20
 
 ### Added
 - Latest version of the inview/jquery.onscreen library ([#1302](https://github.com/adaptlearning/adapt_framework/issues/1302)) - full list of changes [here](https://github.com/adaptlearning/jquery.onscreen/issues/6).
