@@ -80,6 +80,15 @@
           "validators": [],
           "title": "Enable text reader support?",
           "help": "If set to 'true' the course will add focusing to assist text reader software"
+        },
+        "_isSkipNavigationEnabled": {
+          "type": "bool",
+          "default": "true",
+          "isSetting": false,
+          "inputType": {"type": "Boolean", "options": [true, false]},
+          "validators": [],
+          "title": "Enable Skip Navigation link?",
+          "help": "If set to 'true' a 'Skip Navigation' link will appear allowing users to jump to content"
         }
       }
     },
