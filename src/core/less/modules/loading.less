@@ -1,0 +1,32 @@
+// Loading overlay styling
+// =======================
+
+.loading {
+    width: 100%;
+    height: 100%;
+    position: fixed !important; // Needs to be fixed otherwise loading layout can be incorrect
+    top: 0;
+    left: 0;
+    z-index: 5000;
+    background-color: @transparency;
+    text-align: center;
+    .dir-rtl & {
+        left:auto;
+        right:0;
+    }
+    .no-opacity;
+
+    .loader-gif {
+        background-image: url(assets/ajax-loader.gif);
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 128px;
+        height: 128px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -64px;
+        margin-left: -64px;
+        .item-title;
+    }
+}

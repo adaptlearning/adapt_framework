@@ -1,0 +1,51 @@
+// Button styling
+// ==============
+
+.button, button {
+    font-family: @font-family;
+    background-color: @button-color;
+    color: @button-text-color;
+    padding: @button-padding-top @button-padding-right+10 @button-padding-bottom @button-padding-left+10; // Added left / right padding in case buttons aren't centrally aligned
+    text-decoration: none;
+    text-align: center;
+    display:inline-block;
+    border: @button-border;
+    .button-text;
+
+    .no-touch &:hover {
+        background-color: @button-color-hover;
+        color: @button-text-color-hover;
+        border-color: @button-border-color-hover;
+    }
+
+    &.base {
+    	// Override button styles on <a> tags coverted to <button> tags
+    	// Could be improved so that buttons are divided into groups, default / submit / nav / icon
+    	background-color: transparent;
+    	padding: 0;
+    	text-align: left;
+      -webkit-transition: none;
+      -moz-transition: none;
+      -ms-transition: none;
+      transition: none;
+
+    	.no-touch &:hover {
+    		background-color: transparent;
+    	}
+      .direction-right-to-left .text-align-right;
+    }
+
+    .disabled-style() {
+        background-color: @button-color-disabled!important;
+        border-color: @button-border-color-disabled!important;
+        color: @button-text-color-disabled!important;
+        cursor:default;
+
+        .no-touch &:hover {
+            border-color: @button-border-color-disabled;
+        }
+    }
+    &.disabled, &:disabled { .disabled-style; }
+    // IE8 fix needed to be in its own line
+    &[disabled="disabled"] { .disabled-style; }
+}

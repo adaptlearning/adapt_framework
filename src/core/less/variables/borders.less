@@ -1,0 +1,22 @@
+// border variables setup
+// ==============
+
+//outline width
+@outline-width:3px;
+
+//border width
+@border-width:3px;
+@border-width-top:@border-width;
+@border-width-right:@border-width;
+@border-width-bottom:@border-width;
+@border-width-left:@border-width;
+@border-width-all:@border-width-top @border-width-right @border-width-bottom @border-width-left;
+
+// Detailed outline setup
+// =======================
+@focus-outline: @outline-width solid orange; //focus outline is displayed when accessibility is enabled
+
+// Detailed border setup
+// =======================
+@button-border: 0px solid @button-border-color;
+@item-border: @border-width solid @item-border-color;

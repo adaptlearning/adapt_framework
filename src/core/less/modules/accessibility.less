@@ -1,0 +1,126 @@
+
+.accessibility.no-touch {
+    .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
+        outline: @focus-outline;
+    }
+}
+
+#accessibility-toggle {
+    position: absolute;
+    top: -1px;
+    left: -25px;
+    .dir-rtl & {
+        left:inherit;
+        right: -25px;
+    }
+    height: 1px;
+    width: 1px;
+    z-index: 0;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    padding: 8px 10px 8px 10px;
+    &:focus {
+        height: auto;
+        width: auto;
+        top: 70px;
+        left: 10px;
+        .dir-rtl & {
+            left:inherit;
+            right: 10px;
+        }
+        z-index: 5000;
+        background: @primary-color;
+        border: 1px solid #fff;
+        color: #fff;
+    }
+}
+
+
+//jquery.a11y start
+/*INVISIBLE ARIA-LABELS*/
+.aria-label {
+    position:absolute !important;
+    &.relative {
+        position:relative !important;
+    }
+    left:0px !important;
+    width:auto !important;
+    height:auto !important;
+    overflow:auto !important;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
+    color: rgba(0,0,0,0) !important;
+    background: rgba(0,0,0,0) !important;
+    font-size: 1px !important;
+    padding:0 !important;
+    margin:0 !important;
+    line-height: normal !important;
+    z-index:1;
+}
+
+/*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
+.aria-label.aria-hidden {
+    display:none !important;
+}
+
+/*HIDDEN FOCUS GUARD*/
+#a11y-focusguard {
+    left:0px !important;
+    bottom:0px !important;
+    width:auto !important;
+    height:auto !important;
+    overflow:auto !important;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
+    color: rgba(0,0,0,0) !important;
+    background: rgba(0,0,0,0) !important;
+    font-size: 1px !important;
+    padding:0 !important;
+    margin:0 !important;
+    line-height: normal !important;
+    z-index:1;
+
+    /*IPAD: Stop accessibility cursor focusing until end of page;*/
+    .touch & {
+        position: relative !important;
+    }
+    /*DESTKOP: stop focus making window jump to bottom of page;*/
+    .no-touch & {
+        position: fixed !important;
+    }
+}
+
+/*HIDDEN FOCUS/ALERT ELEMENT */
+#a11y-selected, #a11y-selected * {
+    position:fixed !important;
+    left:0px !important;
+    bottom:0px !important;
+    width:auto !important;
+    height:auto !important;
+    overflow:auto !important;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
+    color: rgba(0,0,0,0) !important;
+    background: rgba(0,0,0,0) !important;
+    font-size: 1px !important;
+    padding:0 !important;
+    margin:0 !important;
+    line-height: normal !important;
+    z-index:1;
+}
+
+/*FOCUS DISTRACTION*/
+#a11y-focuser {
+    position:fixed !important;
+    left:0px !important;
+    top:0px !important;
+    width:auto !important;
+    height:auto !important;
+    overflow:auto !important;
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
+    color: rgba(0,0,0,0) !important;
+    background: rgba(0,0,0,0) !important;
+    font-size: 1px !important;
+    padding:0 !important;
+    margin:0 !important;
+    line-height: normal !important;
+    z-index:1;
+}

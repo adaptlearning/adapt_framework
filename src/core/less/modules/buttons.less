@@ -1,0 +1,41 @@
+.buttons {
+    margin-top: @button-margin-top;
+    margin-bottom: @button-margin-bottom;
+    position:relative;
+
+    button {
+        width:49.5%;
+        float:left;
+        .direction-right-to-left .float-right;
+
+        &.buttons-action {
+            margin-right: 0.5%;
+        }
+
+        &.buttons-feedback {
+            margin-left: 0.5%;
+        }
+
+        &.buttons-action-fullwidth {
+            width: 99%;
+            margin-left: 0.5%;
+        }
+
+        &.no-feedback {
+            display: none;
+        }
+    }
+
+    .buttons-display {
+        position:relative;
+        border: @button-border;
+        border-top:none;
+        background-color: @background-color-inverted;
+        color: @foreground-color-inverted;
+    }
+
+    .buttons-display-inner {
+        padding: @button-padding;
+        text-align: center;
+    }
+}

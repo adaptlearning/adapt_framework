@@ -1,0 +1,105 @@
+// Drawer styling
+// ==============
+
+.drawer {
+    position:fixed;
+    width:320px;
+    height: 100%;
+    top:0px;
+    right:-320px;
+    background-color: @drawer-color;
+    color: @drawer-item-text-color;
+    overflow-y: auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling: touch;
+    z-index:501;
+
+    .dir-rtl & {
+        right:inherit;
+        left:-320px;
+    }
+
+    .drawer-toolbar {
+        position: absolute;
+        width:100%;
+        top:0;
+        border-bottom: 1px solid @drawer-border-color;
+    }
+
+    .drawer-back {
+        float: left;
+        .direction-right-to-left .float-right;
+
+        &.show {
+            display:inline-block;
+        }
+    }
+
+    .drawer-close {
+        float: right;
+        .direction-right-to-left .float-left;
+    }
+
+    .drawer-toolbar .icon {
+        color: @drawer-icon-color;
+        padding: @navigation-padding;
+
+        .no-touch &:hover {
+            color: @drawer-icon-color-hover;
+        }
+    }
+
+    .drawer-holder {
+        padding-top: ((@navigation-padding * 2) + @icon-size + 1);
+    }
+
+    .drawer-inner {
+        height:100%;
+        border-left: 5px solid @drawer-border-color;
+
+        .dir-rtl & {
+            right:inherit;
+            left:-320px;
+            border-left: inherit;
+            border-right: 5px solid @drawer-border-color;
+        }
+    }
+
+    .drawer-item {
+        display: block;
+        width: 100%;
+        .drawer-item-title {
+            .sub-title;
+        }
+
+        .drawer-item-description {
+        	font-size: @body-text-font-size;
+        	line-height: @body-text-line-height;
+        }
+
+        .drawer-item-open {
+            border-bottom: 1px solid @drawer-item-color;
+            color: @drawer-item-text-color;
+            text-decoration: none;
+            width: 100%;
+
+            .no-touch &:hover {
+                background-color: @drawer-item-color-hover;
+                color: @drawer-item-text-color-hover;
+            }
+        }
+    }
+
+    .drawer-item-open {
+        display:block;
+    }
+
+    .drawer-item-open {
+        padding: @drawer-item-padding-top @drawer-item-padding-right @drawer-item-padding-bottom @drawer-item-padding-left;
+
+        //stops rollover of drawar items on touch devices
+        .no-touch &:hover {
+             background-color: @drawer-color;
+       }
+    }
+}
