@@ -18,6 +18,7 @@ define([
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
             this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
+            this.listenTo(Adapt, 'navigation:skipNavigation', this.skipNavigation);
             this.listenTo(Adapt, 'navigation:parentButton', this.navigateToParent);
             this.listenTo(Adapt, "router:navigateTo", this.navigateToArguments);
         },
@@ -204,6 +205,20 @@ define([
                 break;
             }
             this.handleRoute.apply(this, args);
+        },
+
+        skipNavigation: function() {
+
+            var pageCount = $(".page").length;
+            var pageContent = $(".page-inner");
+            var menuContent = $(".menu");
+
+            if (pageCount == 1) {
+                pageContent.a11y_focus();
+            } else {
+                menuContent.a11y_focus();
+            }
+
         },
 
         navigateToPreviousRoute: function(force) {
