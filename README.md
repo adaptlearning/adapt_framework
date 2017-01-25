@@ -21,7 +21,8 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + Meets WAI AA accessibility standards
 + Right-To-Left compatibility
 + Assessments with support for question banks, randomisation, and customisable feedback  
-+ Step locking and bookmarking  
++ Step locking and bookmarking
++ Multi language and localisation support
 + Customisable theme
 
 Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/adaptlearning/adapt_framework/wiki/Framework-in-five-minutes) of the framework to find out more.
