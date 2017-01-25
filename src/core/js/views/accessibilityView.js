@@ -46,7 +46,7 @@ define(function(require) {
             Adapt.trigger('accessibility:toggle');
 
             this.render();
-            
+
             Backbone.history.navigate(window.location.hash || "#/", {trigger: true});
         }
 
