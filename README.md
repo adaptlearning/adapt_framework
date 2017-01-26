@@ -39,8 +39,7 @@ Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/
 
 ## Contributing to Adapt  
 
-See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt_framework/wiki/Contributing-to-the-Adapt-Framework).
-
+See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt_framework/wiki/Contributing-to-the-Adapt-Project).
 
 ## Troubleshooting, Bugs, and Feedback  
 + For help with troubleshooting, visit the [Technical Discussion Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4).
