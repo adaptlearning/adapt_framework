@@ -107,7 +107,7 @@ define([
 
         var navigationHeight = $(".navigation").outerHeight();
         // prevent scroll issue when component description aria-label coincident with top of component
-        var ariaLabelBuffer = $(selector.is('.component')) ? 5 : 0;
+        var ariaLabelBuffer = $(selector).is('.component') ? 5 : 0;
 
         if (!settings.offset) settings.offset = { top: -navigationHeight - ariaLabelBuffer, left: 0 };
         if (settings.offset.top === undefined) settings.offset.top = -navigationHeight - ariaLabelBuffer;
