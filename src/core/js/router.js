@@ -18,6 +18,7 @@ define([
             });
             this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
             this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
+            this.listenTo(Adapt, 'navigation:skipNavigation', this.skipNavigation);
             this.listenTo(Adapt, 'navigation:parentButton', this.navigateToParent);
             this.listenTo(Adapt, "router:navigateTo", this.navigateToArguments);
         },
@@ -40,7 +41,7 @@ define([
             }
 
             if (Adapt.router.get('_canNavigate')) {
-                
+
                 //disable navigation whilst rendering
                 Adapt.router.set('_canNavigate', false, {pluginName: "adapt"});
 
@@ -57,14 +58,14 @@ define([
                 return this.handleCourse();
             }
 
-            
+
             if (this._isCircularNavigationInProgress) {
                 //navigation correction finished
                 //router has successfully renavigated to the current id as the url was changed whilst _canNavigate: false
                 delete this._isCircularNavigationInProgress;
                 return;
             }
-            
+
             //cancel navigation to stay at current location
             this._isCircularNavigationInProgress = true;
             Adapt.trigger("router:navigationCancelled", arguments);
@@ -92,7 +93,7 @@ define([
             if (Adapt.course.has('_start')) {
                 // Do not allow access to the menu when the start controller is enabled.
                 var startController = Adapt.course.get('_start');
-                
+
                 if (startController._isEnabled == true && startController._isMenuDisabled == true) {
                     return;
                 }
@@ -116,7 +117,7 @@ define([
 
             var currentModel = Adapt.findById(id);
             var type = '';
-            
+
             if (!currentModel) {
                 Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
                 return;
@@ -162,7 +163,7 @@ define([
                                 }, this));
                             }
                         }, this));
-                    } 
+                    }
                 break;
                 default:
                     //allow navigation
@@ -181,7 +182,7 @@ define([
         showLoading: function() {
             $('.loading').show();
         },
-        
+
         navigateToArguments: function(args) {
             args = [].slice.call(args, 0, args.length);
             if (args[args.length-1] === null) args.pop();
@@ -206,6 +207,12 @@ define([
             this.handleRoute.apply(this, args);
         },
 
+        skipNavigation: function() {
+
+             $("."+Adapt.location._contentType).a11y_focus();
+
+        },
+
         navigateToPreviousRoute: function(force) {
             // Sometimes a plugin might want to stop the default navigation
             // Check whether default navigation has changed
@@ -225,7 +232,7 @@ define([
                 this.navigateToParent();
             }
         },
-        
+
         navigateToHomeRoute: function(force) {
             if (Adapt.router.get('_canNavigate') || force ) {
                 this.navigate('#/', {trigger: true});
@@ -233,7 +240,7 @@ define([
         },
 
         navigateToCurrentRoute: function(force) {
-            
+
             if (Adapt.router.get('_canNavigate') || force) {
                 if (!Adapt.location._currentId) {
                     return;
@@ -248,7 +255,7 @@ define([
             if (Adapt.router.get('_canNavigate') || force) {
                 var parentId = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId}).get("_parentId");
                 var route = (parentId === Adapt.course.get("_id")) ? "#/" : "#/id/" + parentId;
-                this.navigate(route, { trigger: true });  
+                this.navigate(route, { trigger: true });
             }
         },
 

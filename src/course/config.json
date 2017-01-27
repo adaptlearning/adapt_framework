@@ -6,7 +6,8 @@
         "_isEnabled": true,
         "_isDisabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
-        "_isTextProcessorEnabled": true
+        "_isTextProcessorEnabled": true,
+        "_isSkipNavigationEnabled": true
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",

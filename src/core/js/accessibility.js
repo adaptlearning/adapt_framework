@@ -35,7 +35,7 @@ define(function(require) {
                 this._hasCourseLoaded = true;
                 Adapt.config.get("_accessibility")._isActive = Adapt.offlineStorage.get("a11y") || false;
                 this.setupAccessibility();
-                
+
             }, Accessibility);
 
             Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility);
@@ -72,9 +72,9 @@ define(function(require) {
             this.checkTabCapture();
 
             this.configureA11yLibrary();
-			
+
             this.touchDeviceCheck();
-			
+
             // Check if accessibility is active
             if (this.isActive()) {
                 this.setupDocument();
@@ -319,6 +319,8 @@ define(function(require) {
                 this.$html.addClass('text-to-speech');
             }
 
+            $('.skip-nav-link').removeClass('a11y-ignore a11y-ignore-focus');
+
             $.a11y(true)
             $.a11y_on(true, "body > *");
         },
@@ -379,6 +381,7 @@ define(function(require) {
 
         revertDocument: function() {
             this.$html.removeClass('accessibility text-to-speech');
+            $('.skip-nav-link').addClass('a11y-ignore a11y-ignore-focus');
             $.a11y(false);
             $.a11y_on(false, "body > *");
             $.a11y_on(true, "#accessibility-toggle");
@@ -437,9 +440,9 @@ define(function(require) {
                     $.a11y_on(true, '.menu');
 
                     if (this._hasUserTabbed) return;
-	
+
                     this.$accessibilityInstructions.one("blur", this.onFocusInstructions);
-	
+
                     _.delay(function(){
                         Accessibility.$accessibilityInstructions.focusNoScroll();
                     }, 250);
