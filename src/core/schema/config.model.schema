@@ -52,7 +52,16 @@
           "inputType": {"type": "Boolean", "options": [true, false]},
           "validators": [],
           "title": "Enable accessibility?",
-          "help": "If set to 'true' accessibility features will be enabled in this course"
+          "help": "If set to 'true', accessibility features will be enabled in this course"
+        },
+        "_isDisabledOnTouchDevices": {
+          "type": "bool",
+          "default": "false",
+          "isSetting": false,
+          "inputType": {"type": "Boolean", "options": [true, false]},
+          "validators": [],
+          "title": "Disable accessibility on touch devices?",
+          "help": "If set to 'true', accessibility features will be disabled on touch devices - useful if you only need accessibility on desktop browsers."
         },
         "_shouldSupportLegacyBrowsers": {
           "type": "bool",
@@ -71,6 +80,15 @@
           "validators": [],
           "title": "Enable text reader support?",
           "help": "If set to 'true' the course will add focusing to assist text reader software"
+        },
+        "_isSkipNavigationEnabled": {
+          "type": "bool",
+          "default": "true",
+          "isSetting": false,
+          "inputType": {"type": "Boolean", "options": [true, false]},
+          "validators": [],
+          "title": "Enable Skip Navigation link?",
+          "help": "If set to 'true' a 'Skip Navigation' link will appear allowing users to jump to content"
         }
       }
     },
