@@ -1,8 +1,14 @@
 define([
-    'coreJS/adapt'
+    'core/js/adapt'
 ], function(Adapt) {
 
     var AdaptView = Backbone.View.extend({
+
+        attributes: function() {
+            return {
+                "data-adapt-id": this.model.get('_id')
+            };
+        },
 
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
