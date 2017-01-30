@@ -28,7 +28,7 @@ define(function() {
         },
 
         postRender: function() {
-          this.refresh();
+            this.refresh();
         },
 
         checkResetSubmittedState: function() {
@@ -72,51 +72,49 @@ define(function() {
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-          //use correct instead of complete to signify button state
-          if (changedAttribute === 'correct') {
-            //disable submit button on correct (i.e. no model answer)
-            this.$('.buttons-action').a11y_cntrl_enabled(false);
+			//use correct instead of complete to signify button state
+            if (changedAttribute === 'correct') {
+				//disable submit button on correct (i.e. no model answer)
+                this.$('.buttons-action').a11y_cntrl_enabled(false);
 
-            if (!this.model.get("_canShowFeedback")) {
-              if (!this.$el.is(".no-state")) {
-                //if no feedback, complete correct and has state, force focus to component state
-                _.defer(_.bind(function() {
-                  $("." + this.model.get("_id") + " .accessibility-state [tabindex]").focusNoScroll();
-                }, this));
-              }
+                if (!this.model.get("_canShowFeedback")) {
+                    if (!this.$el.is(".no-state")) {
+                        //if no feedback, complete correct and has state, force focus to component state
+                        _.defer(_.bind(function() {
+                            $("." + this.model.get("_id") + " .accessibility-state [tabindex]").focusNoScroll();
+                        }, this));
+                    }
+                }
+
+            } else {
+                // Backwords compatibility with v1.x
+                var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
+                var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
+
+                switch (changedAttribute) {
+                    case "submit":
+                    case "showCorrectAnswer":
+                    case "hideCorrectAnswer":
+    				    //make model answer button inaccessible but enabled for visual users
+    				    //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                        this.$('.buttons-action').a11y_cntrl_enabled(false).html(buttonText).attr('aria-label', ariaLabel);
+                        break;
+                    default:
+    				    //enabled button, make accessible and update aria labels and text.
+                        this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                        break;
+                }
             }
 
-          } else {
-            // Backwords compatibility with v1.x
-            var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
-            var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
-
-            switch (changedAttribute) {
-              case "submit":
-              case "showCorrectAnswer":
-              case "hideCorrectAnswer":
-                //make model answer button inaccessible but enabled for visual users
-                //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
-                break;
-              default:
-                //enabled button, make accessible and update aria labels and text.
-                this.$('.buttons-action').a11y_cntrl_enabled(false).html(buttonText).attr('aria-label', ariaLabel);
-                break;
-            }
-          }
-
-          this.updateAttemptsCount();
+            this.updateAttemptsCount();
         },
 
         checkFeedbackState: function(){
-          // If feedback should be hidden, the 'Submit' button should stretch
-          // to fill the space and the 'Feedback' button should be hidden.
-          // (These classes must be implemented in the theme.)
-          this.$('.buttons-action').toggleClass('buttons-action-fullwidth', !this.model.get('_canShowFeedback'));
-          this.$('.buttons-action').toggleClass('buttons-action-enlarge', !this.model.get('_canShowFeedback'));
-          this.$('.buttons-feedback').toggleClass('no-feedback', !this.model.get('_canShowFeedback'));
-          this.$('.buttons-marking-icon').toggleClass('no-feedback', !this.model.get('_canShowFeedback'));
+            var canShowFeedback = this.model.get('_canShowFeedback');
+
+            this.$('.buttons-action').toggleClass('buttons-action-fullwidth buttons-action-enlarge', !canShowFeedback);
+            this.$('.buttons-feedback').toggleClass('no-feedback', !canShowFeedback);
+            this.$('.buttons-marking-icon').toggleClass('no-feedback', !canShowFeedback);
         },
 
         updateAttemptsCount: function(model, changedAttribute) {
@@ -154,15 +152,17 @@ define(function() {
                 .removeClass('display-none')
                 .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
         },
+        
+        refresh: function() {
+            this.updateAttemptsCount();
+            this.checkResetSubmittedState();
+            this.checkFeedbackState();
+            this.onButtonStateChanged(null, this.model.get('_buttonState'));
+            this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
+        }
 
-      refresh: function() {
-        this.updateAttemptsCount();
-        this.checkResetSubmittedState();
-        this.checkFeedbackState();
-        this.onButtonStateChanged(null, this.model.get('_buttonState'));
-        this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
-      }
     });
 
     return ButtonsView;
+
 });

@@ -106,10 +106,10 @@ define([
             this.restoreUserAnswers();
         },
 
-        // Used to restore the user answers
+        // Used to restore the user answers 
         restoreUserAnswers: function() {},
 
-
+        
         //////
         // Submit process
         ////
@@ -302,12 +302,12 @@ define([
 
         // Used by the question view to reset the stored user answer
         resetUserAnswer: function() {},
-
+        
         refresh: function() {
-          this.updateButtons();
-
-          this.trigger('question:refresh');
+            this.updateButtons();
+            this.trigger('question:refresh');
         }
+
     });
 
     return QuestionModel;

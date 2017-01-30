@@ -283,20 +283,17 @@ define([
         resetQuestion: function() {},
 
         refresh: function() {
-          this.renderState();
+            this.renderState();
           
-          this._runModelCompatibleFunction("updateButtons");
+            this._runModelCompatibleFunction("updateButtons");
 
-          if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
-            this.showMarking();
-          }
+            if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+                this.showMarking();
+            }
 
-          if (this.buttonsView) {
-            _.defer(_.bind(function() {
-                this.buttonsView.refresh();
-              }, this)
-            );
-          }
+            if (this.buttonsView) {
+                _.defer(_.bind(this.buttonsView.refresh, this));
+            }
         },
 
         onShowCorrectAnswerClicked: function() {
