@@ -3,7 +3,7 @@
     "_type": "course",
     "title": "Adapt Version 2.0 demonstration",
     "displayTitle": "Adapt Version 2.0 demonstration",
-    "description": "A sample course demonstrating the capabilities of the Adapt Version 2.0",
+    "description": "A sample course demonstrating the capabilities of the Adapt Framework v2.0",
     "body": "Welcome to the demonstration build for Version 2.0 of the Adapt framework.<br><br>We’ve added some major new items of functionality to Adapt for this release, most notably accessibility to WAI level AA, Right to Left language support and greatly improved assessments. If you’d like to find out more about this, along with the the other improvements we’ve made then please read the release notes (Link to follow for demo).               ",
     "_buttons": {
         "_submit": {
