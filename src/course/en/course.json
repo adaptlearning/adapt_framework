@@ -88,6 +88,7 @@
         "_accessibility": {
             "accessibilityToggleTextOn": "Turn accessibility on?",
             "accessibilityToggleTextOff": "Turn accessibility off?",
+            "skipNavigationText": "Skip navigation",
             "_accessibilityInstructions": {
                 "touch": "Usage instructions. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
                 "notouch": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
@@ -95,6 +96,7 @@
             },
             "_ariaLabels": {
                 "navigation": "Course navigation bar",
+                "skipNavigation": "Skip Navigation",
                 "menuLoaded": "Menu Loaded.",
                 "menu": "Menu",
                 "page": "Page",
