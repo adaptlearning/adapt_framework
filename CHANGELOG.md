@@ -10,6 +10,7 @@
 - `getAvailableChildren` to adaptModel ([#1373](https://github.com/adaptlearning/adapt_framework/issues/1373))
 - `text-to-speech` class to the `html` when `_isTextProcessorEnabled` is `true` ([#1384](https://github.com/adaptlearning/adapt_framework/issues/1384))
 - a `data-adapt-id` attribute to the HTML for pages, menus, articles, blocks + components ([#1380](https://github.com/adaptlearning/adapt_framework/issues/1380))
+- allow plugins to interrupt course initialisation/routing, allowing for better performance in IE8 ([#1107](https://github.com/adaptlearning/adapt_framework/issues/1107))
 
 ### Updated
 - inview/jquery.onscreen library ([#1302](https://github.com/adaptlearning/adapt_framework/issues/1302)); full list of changes [here](https://github.com/adaptlearning/jquery.onscreen/issues/6).
