@@ -10,11 +10,6 @@ require.config({
         inview: 'core/js/libraries/inview',
         a11y: 'core/js/libraries/jquery.a11y',
         scrollTo: 'core/js/libraries/scrollTo',
-        coreJS: 'core/js',
-        coreViews: 'core/js/views',
-        coreModels: 'core/js/models',
-        coreCollections: 'core/js/collections',
-        coreHelpers: 'core/js/helpers',
         templates: 'templates/templates'
     },
     shim: {
@@ -65,5 +60,14 @@ require.config({
     ],
     exclude: [
         'jquery'
-    ]
+    ],
+    map: {
+        '*': {
+            coreJS: 'core/js',
+            coreViews: 'core/js/views',
+            coreModels: 'core/js/models',
+            coreCollections: 'core/js/collections',
+            coreHelpers: 'core/js/helpers'
+        }
+    }
 });
