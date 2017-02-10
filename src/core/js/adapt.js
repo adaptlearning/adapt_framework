@@ -105,10 +105,15 @@ define([
             settings.duration = $.scrollTo.defaults.duration;
         }
 
-        var navigationHeight = $(".navigation").outerHeight();
+        var offsetTop = -$(".navigation").outerHeight();
+        // prevent scroll issue when component description aria-label coincident with top of component
+        if (Adapt.config.get('_accessibility')._isActive &&
+            $(selector).hasClass('component')) {
+            offsetTop -= $(selector).find('.aria-label').height() || 0;
+        }
 
-        if (!settings.offset) settings.offset = { top: -navigationHeight, left: 0 };
-        if (settings.offset.top === undefined) settings.offset.top = -navigationHeight;
+        if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
+        if (settings.offset.top === undefined) settings.offset.top = offsetTop;
         if (settings.offset.left === undefined) settings.offset.left = 0;
 
         if (settings.offset.left === 0) settings.axis = "y";
