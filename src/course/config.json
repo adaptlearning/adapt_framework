@@ -2,6 +2,11 @@
     "_defaultLanguage": "en",
     "_defaultDirection": "ltr",
     "_questionWeight": 1,
+    "_logging": {
+        "_isEnabled": true,
+        "_level": "debug",
+        "_console": true
+    },
     "_accessibility": {
         "_isEnabled": true,
         "_isDisabledOnTouchDevices": false,

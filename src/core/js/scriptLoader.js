@@ -60,14 +60,28 @@
 
     //5. Load IE 8 shim
     function loadShim() {
+
+        var isIE8 = (IE == 8);
+
         Modernizr.load([
             {
-                test: IE == 8,
+                test: isIE8,
                 yep: 'libraries/es5-shim.min.js',
                 nope: '',
                 complete: loadFoundationLibraries()
             }
         ]);
+
+        if (isIE8) {
+            fixIE8ConsoleLog();
+        }
+        
+    }
+
+    function fixIE8ConsoleLog() {
+
+        console.log = Function.prototype.call.bind(console.log, console);
+
     }
 
     //6. Load foundation libraries and templates
