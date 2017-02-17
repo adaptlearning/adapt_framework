@@ -43,7 +43,8 @@
             border-color: @button-border-color-disabled;
         }
     }
-    &.disabled, &:disabled { .disabled-style; }
+    &.disabled { .disabled-style; }
+    &:disabled { .disabled-style; }
     // IE8 fix needed to be in its own line
     &[disabled="disabled"] { .disabled-style; }
 }

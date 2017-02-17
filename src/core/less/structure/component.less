@@ -1,6 +1,19 @@
 // Component styling
 // =================
 
+.component-container{
+    zoom: 1;
+    &:before, &:after{
+      content: "\0020";
+      display: block;
+      height: 0;
+      overflow: hidden;
+    }
+    &:after{
+      clear: both;
+    }
+}
+
 .component {
   position:relative;
 
@@ -39,10 +52,6 @@
         .text-align-left;
     }
 
-    .component-title-inner {
-        padding: 0px;
-    }
-
     .component-body{
         margin: @component-body-margin-all;
 
@@ -50,10 +59,6 @@
           text-decoration: underline;
           color: @font-color;
         }
-    }
-
-    .component-body-inner{
-        padding: 0px;
     }
 
     .component-instruction {

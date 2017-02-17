@@ -9,20 +9,6 @@
         max-width: @device-width-large;
         margin: auto;
         padding: @block-padding-all;
-
-        .component-container{
-            zoom: 1;
-            &:before, &:after{
-              content: "\0020";
-              display: block;
-              height: 0;
-              overflow: hidden;
-            }
-            &:after{
-              clear: both;
-            }
-        }
-        
     }
 
     .block-title {
@@ -40,11 +26,4 @@
         font-weight: @instruction-text-font-weight;
     }
 
-  	&.background-color-inverted {
-  		background-color: @background-color-inverted;
-  		color: @font-color-inverted;
-  		.component-inner {
-  			background-color: transparent !important;
-  		}
-  	}
 }
