@@ -292,7 +292,7 @@ define([
             }
 
             if (this.buttonsView) {
-                _.defer(_.bind(this.buttonsView.refresh, this));
+                _.defer(_.bind(this.buttonsView.refresh, this.buttonsView));
             }
         },
 

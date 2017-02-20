@@ -91,18 +91,13 @@ define(function() {
                 var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
                 var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
 
-                switch (changedAttribute) {
-                    case "submit":
-                    case "showCorrectAnswer":
-                    case "hideCorrectAnswer":
-    				    //make model answer button inaccessible but enabled for visual users
-    				    //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                        this.$('.buttons-action').a11y_cntrl_enabled(false).html(buttonText).attr('aria-label', ariaLabel);
-                        break;
-                    default:
-    				    //enabled button, make accessible and update aria labels and text.
-                        this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
-                        break;
+                // Enable the button, make accessible and update aria labels and text
+                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+
+                // Make model answer button inaccessible (but still enabled) for visual users due to 
+                // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                if (changedAttribute == 'showCorrectAnswer' || changedAttribute == 'hideCorrectAnswer') {
+                    this.$('.buttons-action').a11y_cntrl(false);
                 }
             }
 
