@@ -250,6 +250,50 @@
       "validators": [],
       "title": "Enforce route locking",
       "help": "If menu locking is enabled, this setting prevents navigating to locked routes"
+    },
+    "_logging": {
+      "type": "object",
+      "title": "Logging",
+      "properties": {
+        "_isEnabled": {
+          "type": "bool",
+          "default": "true",
+          "required": true,
+          "inputType": {
+            "type": "Boolean",
+            "options": [true, false]
+          },
+          "validators": [],
+          "title": "Enable logging"
+        },
+        "_level": {
+          "type": "string",
+          "required": true,
+          "default" : "info",
+          "title" : "Log Level",
+          "validators": [],
+          "inputType": {
+            "type": "Select",
+            "options": [
+              "debug",
+              "info",
+              "warn",
+              "error",
+              "fatal"
+            ]
+          }
+        },
+        "_console": {
+          "type": "bool",
+          "default": "true",
+          "inputType": {
+            "type": "Boolean",
+            "options": [true, false]
+          },
+          "validators": [],
+          "title": "Write to console"
+        }
+      }
     }
   }
 }
