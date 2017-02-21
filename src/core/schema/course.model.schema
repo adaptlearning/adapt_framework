@@ -432,6 +432,14 @@
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
+                },
+                "languagePicker": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Select course language",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
                 }
               }
             }
