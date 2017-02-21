@@ -48,13 +48,13 @@
 		},
 		"_trickle": {
 			"_isEnabled": true,
-            "_button": {
-                "_isEnabled": true,
-                "text": "Continue",
-                "startText": "Continue",
-                "finalText": "Continue"
-            }
-        }
+			"_button": {
+				"_isEnabled": true,
+				"text": "Continue",
+				"startText": "Continue",
+				"finalText": "Continue"
+			}
+		}
 	},
 	{
 		"_id": "a-20",
