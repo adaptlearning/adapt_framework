@@ -25,7 +25,7 @@ define(function(require) {
         },
 
         render: function() {
-            var template = Handlebars.templates[this.template]
+            var template = Handlebars.templates[this.template];
             this.$el.html(template(
                 {
                     _globals: Adapt.course.get("_globals"),

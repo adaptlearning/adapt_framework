@@ -71,7 +71,7 @@ define(function() {
                 this.$('.buttons-feedback').a11y_cntrl_enabled(true);
             } else {
 				//disable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false)
+                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
             }
         },
 
@@ -122,7 +122,7 @@ define(function() {
 
         updateAttemptsCount: function(model, changedAttribute) {
             var isInteractionComplete = this.model.get('_isInteractionComplete');
-            var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')
+            var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
             var isCorrect = this.model.get('_isCorrect');
             var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
             var attemptsString;
