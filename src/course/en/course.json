@@ -75,6 +75,9 @@
                 "pageLevelProgressMenuBar": "You have completed ",
                 "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
                 "optionalContent": "Optional Content"
+            },
+            "_resources": {
+                "resourcesEnd": "You have reached the end of the list of resources."
             }
         },
         "_menu": {
@@ -97,9 +100,6 @@
                 "navigation": "Course navigation bar",
                 "menuLoaded": "Menu Loaded.",
                 "menu": "Menu",
-                "menuItem": "Menu item.",
-                "menuViewButton": "Select here to enter.",
-                "menuEnd": "You have reached the end of the menu.",
                 "page": "Page",
                 "pageLoaded": "Page Loaded.",
                 "pageEnd": "You have reached the end of the page.",
@@ -109,7 +109,6 @@
                 "close": "Close",
                 "closeDrawer": "Close Drawer",
                 "closeResources": "Close resources",
-                "resourcesEnd": "You have reached the end of the list of resources.",
                 "drawerBack": "Back to drawer",
                 "drawer": "Top of side drawer",
                 "closePopup": "Close popup",
