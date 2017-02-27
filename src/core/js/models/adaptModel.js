@@ -78,7 +78,7 @@ define(function (require) {
                 this.set({
                     _isEnabled: true,
                     _isComplete: false,
-                    _isInteractionComplete: false,
+                    _isInteractionComplete: false
                 });
                 break;
             case "soft":
@@ -135,7 +135,7 @@ define(function (require) {
                 var isInteractionComplete = false;
                 
                 //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf")
+                var requireCompletionOf = this.get("_requireCompletionOf");
                 
                 if (requireCompletionOf === -1) {
                     // Check if any return _isInteractionComplete:false

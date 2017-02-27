@@ -63,16 +63,16 @@ define(function() {
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
             if (changedAttribute && this.model.get('_canShowFeedback')) {
-				//enable feedback button
+                //enable feedback button
                 this.$('.buttons-feedback').a11y_cntrl_enabled(true);
             } else {
-				//disable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false)
+                //disable feedback button
+                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
             }
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-			//use correct instead of complete to signify button state
+            //use correct instead of complete to signify button state
             if (changedAttribute === 'correct') {
 				//disable submit button on correct (i.e. no model answer)
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
@@ -114,7 +114,7 @@ define(function() {
 
         updateAttemptsCount: function(model, changedAttribute) {
             var isInteractionComplete = this.model.get('_isInteractionComplete');
-            var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')
+            var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
             var isCorrect = this.model.get('_isCorrect');
             var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
             var attemptsString;

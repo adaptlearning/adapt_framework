@@ -119,8 +119,8 @@ define([
         if (settings.offset.left === 0) settings.axis = "y";
 
         if (Adapt.get("_canScroll") !== false) {
-        // Trigger scrollTo plugin
-        $.scrollTo(selector, settings);
+            // Trigger scrollTo plugin
+            $.scrollTo(selector, settings);
         }
 
         // Trigger an event after animation
@@ -130,7 +130,7 @@ define([
             Adapt.trigger(location+':scrolledTo', selector);
         }, settings.duration+300);
 
-    }
+    };
 
     Adapt.navigateToElement = function(selector, settings) {
         // Allows a selector to be passed in and Adapt will navigate to this element
@@ -153,14 +153,14 @@ define([
         // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
-                Adapt.scrollTo(selector, settings)
-            })
+                Adapt.scrollTo(selector, settings);
+            });
         });
 
         var shouldReplaceRoute = settings.replace || false;
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true, replace: shouldReplaceRoute});
-    }
+    };
 
     Adapt.register = function(name, object) {
         // Used to register components
@@ -179,7 +179,7 @@ define([
         Adapt.componentStore[name] = object;
 
         return object;
-    }
+    };
 
     // Used to map ids to collections
     Adapt.setupMapping = function() {
@@ -202,12 +202,12 @@ define([
             }
         }
 
-    }
+    };
 
     Adapt.mapById = function(id) {
         // Returns collection name that contains this models Id
         return Adapt.mappedIds[id];
-    }
+    };
 
     Adapt.findById = function(id) {
 
@@ -226,15 +226,15 @@ define([
 
         return Adapt[collectionType]._byAdaptID[id][0];
 
-    }
+    };
 
     Adapt.remove = function() {
         Adapt.trigger('preRemove');
         Adapt.trigger('remove');
         _.defer(function() {
             Adapt.trigger('postRemove');
-        })
-    }
+        });
+    };
 
     return Adapt;
 
