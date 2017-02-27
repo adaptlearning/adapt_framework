@@ -67,16 +67,16 @@ define(function() {
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
             if (changedAttribute && this.model.get('_canShowFeedback')) {
-				//enable feedback button
+                //enable feedback button
                 this.$('.buttons-feedback').a11y_cntrl_enabled(true);
             } else {
-				//disable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false)
+                //disable feedback button
+                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
             }
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-			//use correct instead of complete to signify button state
+            //use correct instead of complete to signify button state
             if (changedAttribute === 'correct') {
 				//disable submit button on correct (i.e. no model answer)
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
@@ -97,12 +97,12 @@ define(function() {
 
                 switch (changedAttribute) {
                     case "showCorrectAnswer": case "hideCorrectAnswer":
-    				    //make model answer button inaccessible but enabled for visual users
-    				    //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                        //make model answer button inaccessible but enabled for visual users
+                        //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
                         this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
                         break;
                     default:
-    				    //enabled button, make accessible and update aria labels and text.
+                        //enabled button, make accessible and update aria labels and text.
                         this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
                 }
             }
@@ -122,7 +122,7 @@ define(function() {
 
         updateAttemptsCount: function(model, changedAttribute) {
             var isInteractionComplete = this.model.get('_isInteractionComplete');
-            var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts')
+            var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
             var isCorrect = this.model.get('_isCorrect');
             var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
             var attemptsString;

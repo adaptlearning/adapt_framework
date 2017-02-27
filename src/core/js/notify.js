@@ -82,6 +82,6 @@ define(function(require) {
 			model: new NotifyModel(notifyObject)
 		});
 
-	};
+	}
 
 });

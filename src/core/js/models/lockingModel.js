@@ -36,7 +36,7 @@ define([
 
 			this.setLockState(attrName, false, {pluginName:pluginName, skipcheck: true});
 
-			var totalLockValue = this.getLockCount(attrName, {skipcheck: true})
+			var totalLockValue = this.getLockCount(attrName, {skipcheck: true});
 			//console.log(options.pluginName, "attempting to unlock", attrName, "on", this.get("_id"), "lockValue", totalLockValue, this._lockedAttributesValues[attrName]);
 			if (totalLockValue === 0) {
 				//console.log(options.pluginName, "unlocking", attrName, "on", this.get("_id"));
