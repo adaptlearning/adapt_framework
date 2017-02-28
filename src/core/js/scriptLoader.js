@@ -44,7 +44,7 @@
             {
                 test: IE == 8,
                 yep: 'libraries/jquery.js',
-                nope: 'libraries/jquery.v3.js',
+                nope: 'libraries/jquery.v2.js',
                 complete: checkJQueryStatus
             }
         ]);
