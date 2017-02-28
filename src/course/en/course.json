@@ -4,7 +4,7 @@
     "title": "Adapt Version 2.0 demonstration",
     "displayTitle": "Adapt Version 2.0 demonstration",
     "description": "A sample course demonstrating the capabilities of the Adapt Framework v2.0",
-    "body": "Welcome to the demonstration build for Version 2.0 of the Adapt framework.<br><br>We’ve added some major new items of functionality to Adapt for this release, most notably accessibility to WAI level AA, Right to Left language support and greatly improved assessments. If you’d like to find out more about this, along with the the other improvements we’ve made then please read the release notes (Link to follow for demo).               ",
+    "body": "Welcome to the demonstration build for Version 2.0 of the Adapt framework.<br><br>We’ve added some major new items of functionality to Adapt for this release, most notably accessibility to WAI level AA, right to left language support and greatly improved assessments. To find out more, visit <a href='https://www.adaptlearning.org/index.php/adapt-framework/' target='_blank'>https://www.adaptlearning.org/index.php/adapt-framework</a>.",
     "_buttons": {
         "_submit": {
             "buttonText": "Submit",
@@ -75,6 +75,9 @@
                 "pageLevelProgressMenuBar": "You have completed ",
                 "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
                 "optionalContent": "Optional Content"
+            },
+            "_resources": {
+                "resourcesEnd": "You have reached the end of the list of resources."
             }
         },
         "_menu": {
@@ -90,9 +93,9 @@
             "accessibilityToggleTextOff": "Turn accessibility off?",
             "skipNavigationText": "Skip navigation",
             "_accessibilityInstructions": {
-                "touch": "Usage instructions. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
+                "touch": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
                 "notouch": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
-                "ipad": "Usage instructions for touchscreens. Use swipe right for next. Use swipe left for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use right for next. Use left for previous. Use up and down together to select."
+                "ipad": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select."
             },
             "_ariaLabels": {
                 "navigation": "Course navigation bar",
@@ -108,7 +111,6 @@
                 "close": "Close",
                 "closeDrawer": "Close Drawer",
                 "closeResources": "Close resources",
-                "resourcesEnd": "You have reached the end of the list of resources.",
                 "drawerBack": "Back to drawer",
                 "drawer": "Top of side drawer",
                 "closePopup": "Close popup",
@@ -126,9 +128,10 @@
             }
         }
     },
-    "_latestTrackingId": 20,
+    "_latestTrackingId": 19,
     "_pageLevelProgress": {
         "_isEnabled": true,
+        "_showPageCompletion": false,
         "_altText": "of components completed on this page."
     },
     "_resources": {
@@ -176,7 +179,7 @@
     },
     "_bookmarking": {
         "_isEnabled": true,
-        "_level": "block",
+        "_level": "component",
         "title": "Bookmarking",
         "body": "Would you like to continue where you left off?",
         "_buttons": {
