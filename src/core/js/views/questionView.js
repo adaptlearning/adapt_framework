@@ -2,8 +2,9 @@ define([
     'coreJS/adapt',
     'coreViews/componentView',
     'coreViews/buttonsView',
-    'coreModels/questionModel'
-], function(Adapt, ComponentView, ButtonsView, QuestionModel) {
+    'coreModels/questionModel',
+    'core/js/enums/questionButtonStateEnum'
+], function(Adapt, ComponentView, ButtonsView, QuestionModel, QUESTION_BUTTON_STATE) {
 
     var useQuestionModelOnly = false;
 
@@ -80,14 +81,14 @@ define([
                 var isInteractionComplete = this.model.get('_isInteractionComplete');
 
                 if (isInteractionComplete) {
-                    this.model.set('_buttonState', 'hideCorrectAnswer');
+                    this.model.set('_buttonState', QUESTION_BUTTON_STATE.hideCorrectAnswer);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onHideCorrectAnswerClicked();
                     }, this));
 
                 } else {
-                    this.model.set('_buttonState', 'submit');
+                    this.model.set('_buttonState', QUESTION_BUTTON_STATE.submit);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onResetClicked();
@@ -113,11 +114,31 @@ define([
         // Used to setup buttonsView and sets up the internal events for the question
         addButtonsView: function() {
             this.buttonsView = new ButtonsView({model: this.model, el: this.$('.buttons')});
-            this.listenTo(this.buttonsView, 'buttons:submit', this.onSubmitClicked);
-            this.listenTo(this.buttonsView, 'buttons:reset', this.onResetClicked);
-            this.listenTo(this.buttonsView, 'buttons:showCorrectAnswer', this.onShowCorrectAnswerClicked);
-            this.listenTo(this.buttonsView, 'buttons:hideCorrectAnswer', this.onHideCorrectAnswerClicked);
-            this.listenTo(this.buttonsView, 'buttons:showFeedback', this.showFeedback);
+
+            this.listenTo(this.buttonsView, 'buttons:action', this.onButtonAction);
+
+        },
+
+        onButtonAction: function(button_state) {
+
+            switch (button_state) {
+            case QUESTION_BUTTON_STATE.submit:
+                this.onSubmitClicked();
+                break;
+            case QUESTION_BUTTON_STATE.reset:
+                this.onResetClicked();
+                break;
+            case QUESTION_BUTTON_STATE.showCorrectAnswer:
+                this.onShowCorrectAnswerClicked();
+                break;
+            case QUESTION_BUTTON_STATE.hideCorrectAnswer:
+                this.onHideCorrectAnswerClicked();
+                break;
+            case QUESTION_BUTTON_STATE.showFeedback:
+                this.showFeedback();
+                break;
+            }
+
         },
 
         // Blank method used just like postRender is for presentational components

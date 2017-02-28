@@ -1,4 +1,7 @@
-define(function() {
+define([
+    'core/js/models/questionModel',
+    'core/js/enums/questionButtonStateEnum'
+], function(QuestionModel, QUESTION_BUTTON_STATE) {
 
     var Adapt = require('coreJS/adapt');
 
@@ -57,12 +60,12 @@ define(function() {
 
         onActionClicked: function() {
             var buttonState = this.model.get('_buttonState');
-            this.trigger('buttons:' + buttonState);
+            this.trigger('buttons:action', QUESTION_BUTTON_STATE(buttonState));
             this.checkResetSubmittedState();
         },
 
         onFeedbackClicked: function() {
-            this.trigger('buttons:showFeedback');
+            this.trigger('buttons:action', QUESTION_BUTTON_STATE.showFeedback);
         },
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
@@ -77,7 +80,10 @@ define(function() {
 
         onButtonStateChanged: function(model, changedAttribute) {
             //use correct instead of complete to signify button state
-            if (changedAttribute === 'correct') {
+            var buttonState = QUESTION_BUTTON_STATE(changedAttribute);
+            
+            if (buttonState == QUESTION_BUTTON_STATE.correct) {
+
 				//disable submit button on correct (i.e. no model answer)
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
 
@@ -91,20 +97,23 @@ define(function() {
                 }
 
             } else {
-                // Backwords compatibility with v1.x
-                var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
-                var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
 
-                switch (changedAttribute) {
-                    case "showCorrectAnswer": case "hideCorrectAnswer":
-                        //make model answer button inaccessible but enabled for visual users
-                        //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                        this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
-                        break;
-                    default:
-                        //enabled button, make accessible and update aria labels and text.
-                        this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                // Backwords compatibility with v1.x
+                var ariaLabel = this.model.get('_buttons')["_" + buttonState.asString].ariaLabel;
+                var buttonText = this.model.get('_buttons')["_" + buttonState.asString].buttonText;
+
+                switch (buttonState) {
+                case QUESTION_BUTTON_STATE.showCorrectAnswer: 
+                case QUESTION_BUTTON_STATE.hideCorrectAnswer:
+                    //make model answer button inaccessible but enabled for visual users
+                    //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                    this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
+                    break;
+                default:
+                    //enabled button, make accessible and update aria labels and text.
+                    this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
                 }
+
             }
 
             this.updateAttemptsCount();
