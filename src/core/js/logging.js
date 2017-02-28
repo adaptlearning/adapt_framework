@@ -7,7 +7,7 @@ define([
 
         _config: {
             _isEnabled: true,
-            _level: LOGGING_LEVEL.INFO.asString, // Default log level
+            _level: LOGGING_LEVEL.info.asString, // Default log level
             _console: true, // Log to console
         },      
         
@@ -43,7 +43,7 @@ define([
             var matches = window.location.search.match(/[?&]loglevel=([a-z]*)/i);
             if (!matches || matches.length < 2) return;
 
-            var override = LOGGING_LEVEL(matches[1].toUpperCase());
+            var override = LOGGING_LEVEL(matches[1]);
             if (!override) return;
 
             this._config._level = override.asString;
@@ -52,23 +52,23 @@ define([
         },
         
         debug: function() {            
-            this._log(LOGGING_LEVEL.DEBUG, Array.prototype.slice.call(arguments));
+            this._log(LOGGING_LEVEL.debug, Array.prototype.slice.call(arguments));
         },
         
         info: function() {
-            this._log(LOGGING_LEVEL.INFO, Array.prototype.slice.call(arguments));
+            this._log(LOGGING_LEVEL.info, Array.prototype.slice.call(arguments));
         },
         
         warn: function() {
-            this._log(LOGGING_LEVEL.WARN, Array.prototype.slice.call(arguments));
+            this._log(LOGGING_LEVEL.warn, Array.prototype.slice.call(arguments));
         },
         
         error: function() {
-            this._log(LOGGING_LEVEL.ERROR, Array.prototype.slice.call(arguments));
+            this._log(LOGGING_LEVEL.error, Array.prototype.slice.call(arguments));
         },
         
         fatal: function() {
-            this._log(LOGGING_LEVEL.FATAL, Array.prototype.slice.call(arguments));
+            this._log(LOGGING_LEVEL.fatal, Array.prototype.slice.call(arguments));
         },
         
         _log: function(level, data) {
@@ -76,13 +76,13 @@ define([
             var isEnabled = (this._config._isEnabled);
             if (!isEnabled) return;
 
-            var isLogLevelAllowed = (level >= LOGGING_LEVEL(this._config._level.toUpperCase()));
+            var isLogLevelAllowed = (level >= LOGGING_LEVEL(this._config._level));
             if (!isLogLevelAllowed) return;
 
             var shouldLogToConsole = (this._config._console);
             if (shouldLogToConsole) {
 
-                var log = [level.asString + ':'];
+                var log = [level.asString.toUpperCase() + ':'];
                 data && log.push.apply(log, data);
 
                 console.log.apply(console, log);
@@ -91,7 +91,7 @@ define([
 
             // Allow error reporting plugins to hook and report to logging systems
             this.trigger('log', level, data);
-            this.trigger('log:' + level.asString.toLowerCase(), level, data);
+            this.trigger('log:' + level.asString, level, data);
 
         }
 

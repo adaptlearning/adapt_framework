@@ -98,7 +98,7 @@ define([
 
             } else {
 
-                // Backwords compatibility with v1.x
+                // Backwords compatibility with v1.x               
                 var ariaLabel = this.model.get('_buttons')["_" + buttonState.asString].ariaLabel;
                 var buttonText = this.model.get('_buttons')["_" + buttonState.asString].buttonText;
 
