@@ -2,11 +2,7 @@ define([
     'core/js/adapt'
 ], function(Adapt) {
     
-    var StartController = function() {
-        this.initialize();
-    };
-
-    _.extend(StartController.prototype, {
+    var StartController = Backbone.Controller.extend({
 
         model: null,
 

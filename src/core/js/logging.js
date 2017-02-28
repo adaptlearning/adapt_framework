@@ -1,5 +1,7 @@
 define(['core/js/adapt'], function(Adapt) {
-    var Logging = Backbone.Model.extend({
+
+    var Logging = Backbone.Controller.extend({
+
         _config: {
             _isEnabled: true,
             _level: 'info', // Default log level
@@ -86,6 +88,7 @@ define(['core/js/adapt'], function(Adapt) {
             // Allow error reporting plugins to hook and report to logging systems
             this.trigger('log:' + level, data);
         }
+        
     });
 
     Adapt.log = new Logging();
