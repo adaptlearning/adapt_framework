@@ -24,19 +24,13 @@ define([
 		},
 
 		set: function(name, value) {
-
-			// Allow state saving plugins to hook into offlineStorage
-			this.trigger("offlineStorage:set", name, value);
-
 			if (!(this._handler && this._handler.set)) return;
 			return this._handler.set.apply(this._handler, arguments);
-
 		},
 
 		get: function(name) {
 			if (!(this._handler && this._handler.get)) return;
 			return this._handler.get.apply(this._handler, arguments);
-			
 		},
 
 		/**
@@ -44,9 +38,6 @@ define([
 		 */
 		setReadyStatus: function() {
 			this.ready = true;
-
-			this.trigger("offlineStorage:ready");
-
 			Adapt.trigger("offlineStorage:ready");
 		}
 
