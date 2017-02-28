@@ -3,7 +3,6 @@ define([
     'core/js/enums/loggingLevelEnum'
 ], function(Adapt, LOGGING_LEVEL) {
 
-    // Used to determine if log call should be printed based on log level
     var Logging = Backbone.Model.extend({
 
         _config: {

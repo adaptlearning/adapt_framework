@@ -1,6 +1,6 @@
 define(function() {
-	
-	var QUESTION_BUTTON_STATE = ENUM([
+
+    var QUESTION_BUTTON_STATE = ENUM([
         'submit',
         'correct',
         'showCorrectAnswer',
