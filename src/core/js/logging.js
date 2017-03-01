@@ -1,13 +1,13 @@
 define([
     'core/js/adapt',
-    'core/js/enums/loggingLevelEnum'
-], function(Adapt, LOGGING_LEVEL) {
+    'core/js/enums/logLevelEnum'
+], function(Adapt, LOG_LEVEL) {
 
     var Logging = Backbone.Model.extend({
 
         _config: {
             _isEnabled: true,
-            _level: LOGGING_LEVEL.info.asString, // Default log level
+            _level: LOG_LEVEL.info.asString, // Default log level
             _console: true, // Log to console
         },      
         
@@ -43,7 +43,7 @@ define([
             var matches = window.location.search.match(/[?&]loglevel=([a-z]*)/i);
             if (!matches || matches.length < 2) return;
 
-            var override = LOGGING_LEVEL(matches[1]);
+            var override = LOG_LEVEL(matches[1]);
             if (!override) return;
 
             this._config._level = override.asString;
@@ -52,23 +52,23 @@ define([
         },
         
         debug: function() {            
-            this._log(LOGGING_LEVEL.debug, Array.prototype.slice.call(arguments));
+            this._log(LOG_LEVEL.debug, Array.prototype.slice.call(arguments));
         },
         
         info: function() {
-            this._log(LOGGING_LEVEL.info, Array.prototype.slice.call(arguments));
+            this._log(LOG_LEVEL.info, Array.prototype.slice.call(arguments));
         },
         
         warn: function() {
-            this._log(LOGGING_LEVEL.warn, Array.prototype.slice.call(arguments));
+            this._log(LOG_LEVEL.warn, Array.prototype.slice.call(arguments));
         },
         
         error: function() {
-            this._log(LOGGING_LEVEL.error, Array.prototype.slice.call(arguments));
+            this._log(LOG_LEVEL.error, Array.prototype.slice.call(arguments));
         },
         
         fatal: function() {
-            this._log(LOGGING_LEVEL.fatal, Array.prototype.slice.call(arguments));
+            this._log(LOG_LEVEL.fatal, Array.prototype.slice.call(arguments));
         },
         
         _log: function(level, data) {
@@ -76,7 +76,7 @@ define([
             var isEnabled = (this._config._isEnabled);
             if (!isEnabled) return;
 
-            var isLogLevelAllowed = (level >= LOGGING_LEVEL(this._config._level));
+            var isLogLevelAllowed = (level >= LOG_LEVEL(this._config._level));
             if (!isLogLevelAllowed) return;
 
             var shouldLogToConsole = (this._config._console);

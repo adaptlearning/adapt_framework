@@ -3,8 +3,8 @@ define([
     'coreViews/componentView',
     'coreViews/buttonsView',
     'coreModels/questionModel',
-    'core/js/enums/questionButtonStateEnum'
-], function(Adapt, ComponentView, ButtonsView, QuestionModel, QUESTION_BUTTON_STATE) {
+    'core/js/enums/buttonStateEnum'
+], function(Adapt, ComponentView, ButtonsView, QuestionModel, BUTTON_STATE) {
 
     var useQuestionModelOnly = false;
 
@@ -81,14 +81,14 @@ define([
                 var isInteractionComplete = this.model.get('_isInteractionComplete');
 
                 if (isInteractionComplete) {
-                    this.model.set('_buttonState', QUESTION_BUTTON_STATE.hideCorrectAnswer);
+                    this.model.set('_buttonState', BUTTON_STATE.hideCorrectAnswer);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onHideCorrectAnswerClicked();
                     }, this));
 
                 } else {
-                    this.model.set('_buttonState', QUESTION_BUTTON_STATE.submit);
+                    this.model.set('_buttonState', BUTTON_STATE.submit);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onResetClicked();
@@ -122,19 +122,19 @@ define([
         onButtonAction: function(button_state) {
 
             switch (button_state) {
-            case QUESTION_BUTTON_STATE.submit:
+            case BUTTON_STATE.submit:
                 this.onSubmitClicked();
                 break;
-            case QUESTION_BUTTON_STATE.reset:
+            case BUTTON_STATE.reset:
                 this.onResetClicked();
                 break;
-            case QUESTION_BUTTON_STATE.showCorrectAnswer:
+            case BUTTON_STATE.showCorrectAnswer:
                 this.onShowCorrectAnswerClicked();
                 break;
-            case QUESTION_BUTTON_STATE.hideCorrectAnswer:
+            case BUTTON_STATE.hideCorrectAnswer:
                 this.onHideCorrectAnswerClicked();
                 break;
-            case QUESTION_BUTTON_STATE.showFeedback:
+            case BUTTON_STATE.showFeedback:
                 this.showFeedback();
                 break;
             }

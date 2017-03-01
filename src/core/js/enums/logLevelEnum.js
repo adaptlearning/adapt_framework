@@ -1,7 +1,7 @@
 define(function() {
 
     // Used to determine if log call should be printed based on log level
-    var LOGGING_LEVEL = ENUM([
+    var LOG_LEVEL = ENUM([
         "debug",
         "info",
         "warn",
@@ -9,6 +9,6 @@ define(function() {
         "fatal"
     ]);
 
-    return LOGGING_LEVEL;
+    return LOG_LEVEL;
 
 })

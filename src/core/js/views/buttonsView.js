@@ -1,7 +1,7 @@
 define([
     'core/js/models/questionModel',
-    'core/js/enums/questionButtonStateEnum'
-], function(QuestionModel, QUESTION_BUTTON_STATE) {
+    'core/js/enums/buttonStateEnum'
+], function(QuestionModel, BUTTON_STATE) {
 
     var Adapt = require('coreJS/adapt');
 
@@ -60,12 +60,12 @@ define([
 
         onActionClicked: function() {
             var buttonState = this.model.get('_buttonState');
-            this.trigger('buttons:action', QUESTION_BUTTON_STATE(buttonState));
+            this.trigger('buttons:action', BUTTON_STATE(buttonState));
             this.checkResetSubmittedState();
         },
 
         onFeedbackClicked: function() {
-            this.trigger('buttons:action', QUESTION_BUTTON_STATE.showFeedback);
+            this.trigger('buttons:action', BUTTON_STATE.showFeedback);
         },
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
@@ -80,9 +80,9 @@ define([
 
         onButtonStateChanged: function(model, changedAttribute) {
             //use correct instead of complete to signify button state
-            var buttonState = QUESTION_BUTTON_STATE(changedAttribute);
+            var buttonState = BUTTON_STATE(changedAttribute);
             
-            if (buttonState == QUESTION_BUTTON_STATE.correct) {
+            if (buttonState == BUTTON_STATE.correct) {
 
 				//disable submit button on correct (i.e. no model answer)
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
@@ -103,8 +103,8 @@ define([
                 var buttonText = this.model.get('_buttons')["_" + buttonState.asString].buttonText;
 
                 switch (buttonState) {
-                case QUESTION_BUTTON_STATE.showCorrectAnswer: 
-                case QUESTION_BUTTON_STATE.hideCorrectAnswer:
+                case BUTTON_STATE.showCorrectAnswer: 
+                case BUTTON_STATE.hideCorrectAnswer:
                     //make model answer button inaccessible but enabled for visual users
                     //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
                     this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
