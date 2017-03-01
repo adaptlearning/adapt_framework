@@ -445,7 +445,7 @@ define(function(require) {
                     this.$accessibilityInstructions.one("blur", this.onFocusInstructions);
 
                     _.delay(function(){
-                        Accessibility.$accessibilityInstructions.focusNoScroll();
+                        Adapt.accessibility.$accessibilityInstructions.focusNoScroll();
                     }, 250);
 
                 } else {
