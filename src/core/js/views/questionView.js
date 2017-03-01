@@ -1,8 +1,8 @@
 define([
-    'coreJS/adapt',
-    'coreViews/componentView',
-    'coreViews/buttonsView',
-    'coreModels/questionModel',
+    'core/js/adapt',
+    'core/js/views/componentView',
+    'core/js/views/buttonsView',
+    'core/js/models/questionModel',
     'core/js/enums/buttonStateEnum'
 ], function(Adapt, ComponentView, ButtonsView, QuestionModel, BUTTON_STATE) {
 
