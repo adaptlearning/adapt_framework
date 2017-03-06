@@ -1,8 +1,7 @@
 define([
     'core/js/adapt',
-    'core/js/models/questionModel',
     'core/js/enums/buttonStateEnum'
-], function(Adapt, QuestionModel, BUTTON_STATE) {
+], function(Adapt, BUTTON_STATE) {
 
     var ButtonsView = Backbone.View.extend({
 
