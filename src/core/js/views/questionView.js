@@ -81,14 +81,14 @@ define([
                 var isInteractionComplete = this.model.get('_isInteractionComplete');
 
                 if (isInteractionComplete) {
-                    this.model.set('_buttonState', BUTTON_STATE.hideCorrectAnswer);
+                    this.model.set('_buttonState', BUTTON_STATE.HIDE_CORRECT_ANSWER);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onHideCorrectAnswerClicked();
                     }, this));
 
                 } else {
-                    this.model.set('_buttonState', BUTTON_STATE.submit);
+                    this.model.set('_buttonState', BUTTON_STATE.SUBMIT);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onResetClicked();
@@ -122,21 +122,21 @@ define([
         onButtonAction: function(button_state) {
 
             switch (button_state) {
-            case BUTTON_STATE.submit:
-                this.onSubmitClicked();
-                break;
-            case BUTTON_STATE.reset:
-                this.onResetClicked();
-                break;
-            case BUTTON_STATE.showCorrectAnswer:
-                this.onShowCorrectAnswerClicked();
-                break;
-            case BUTTON_STATE.hideCorrectAnswer:
-                this.onHideCorrectAnswerClicked();
-                break;
-            case BUTTON_STATE.showFeedback:
-                this.showFeedback();
-                break;
+                case BUTTON_STATE.SUBMIT:
+                    this.onSubmitClicked();
+                    break;
+                case BUTTON_STATE.RESET:
+                    this.onResetClicked();
+                    break;
+                case BUTTON_STATE.SHOW_CORRECT_ANSWER:
+                    this.onShowCorrectAnswerClicked();
+                    break;
+                case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+                    this.onHideCorrectAnswerClicked();
+                    break;
+                case BUTTON_STATE.SHOW_FEEDBACK:
+                    this.showFeedback();
+                    break;
             }
 
         },

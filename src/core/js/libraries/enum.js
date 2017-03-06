@@ -1,4 +1,4 @@
-//2017-02-21 BASIC ENUMERATION SUPPORT https://github.com/cgkineo/enum
+//2017-03-06 BASIC ENUMERATION SUPPORT https://github.com/cgkineo/enum
 (function() {
 
     function ENUM(namesArray, lookupModifierFunction) {
@@ -39,6 +39,8 @@
 
                 // Assign conversion values to entry
                 entry.asString = name;
+                entry.asLowerCase = name.toLowerCase();
+                entry.asUpperCase = name.toUpperCase();
                 entry.asInteger = value;
 
                 // Reference lookup & storage function from each entry

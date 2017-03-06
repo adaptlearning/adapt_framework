@@ -184,17 +184,17 @@ define([
 
                 if (isCorrect || !canShowModelAnswer) {
                     // Use correct instead of complete to signify button state
-                    this.set('_buttonState', BUTTON_STATE.correct);
+                    this.set('_buttonState', BUTTON_STATE.CORRECT);
 
                 } else {
 
                     switch (buttonState) {
-                    case BUTTON_STATE.submit:
-                    case BUTTON_STATE.hideCorrectAnswer:
-                        this.set('_buttonState', BUTTON_STATE.showCorrectAnswer);
-                        break;
-                    default:
-                        this.set('_buttonState', BUTTON_STATE.hideCorrectAnswer);
+                        case BUTTON_STATE.SUBMIT:
+                        case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+                            this.set('_buttonState', BUTTON_STATE.SHOW_CORRECT_ANSWER);
+                            break;
+                        default:
+                            this.set('_buttonState', BUTTON_STATE.HIDE_CORRECT_ANSWER);
                     }
 
                 }
@@ -202,9 +202,9 @@ define([
             } else {
 
                 if (isEnabled) {
-                    this.set('_buttonState', BUTTON_STATE.submit);
+                    this.set('_buttonState', BUTTON_STATE.SUBMIT);
                 } else {
-                    this.set('_buttonState', BUTTON_STATE.reset);
+                    this.set('_buttonState', BUTTON_STATE.RESET);
                 }
             }
 

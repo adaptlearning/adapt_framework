@@ -65,7 +65,7 @@ define([
         },
 
         onFeedbackClicked: function() {
-            this.trigger('buttons:action', BUTTON_STATE.showFeedback);
+            this.trigger('buttons:action', BUTTON_STATE.SHOW_FEEDBACK);
         },
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
@@ -82,7 +82,7 @@ define([
             //use correct instead of complete to signify button state
             var buttonState = BUTTON_STATE(changedAttribute);
             
-            if (buttonState == BUTTON_STATE.correct) {
+            if (buttonState == BUTTON_STATE.CORRECT) {
 
 				//disable submit button on correct (i.e. no model answer)
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
@@ -103,15 +103,15 @@ define([
                 var buttonText = this.model.get('_buttons')["_" + buttonState.asString].buttonText;
 
                 switch (buttonState) {
-                case BUTTON_STATE.showCorrectAnswer: 
-                case BUTTON_STATE.hideCorrectAnswer:
-                    //make model answer button inaccessible but enabled for visual users
-                    //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                    this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
-                    break;
-                default:
-                    //enabled button, make accessible and update aria labels and text.
-                    this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                    case BUTTON_STATE.SHOW_CORRECT_ANSWER: 
+                    case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+                        //make model answer button inaccessible but enabled for visual users
+                        //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                        this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
+                        break;
+                    default:
+                        //enabled button, make accessible and update aria labels and text.
+                        this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
                 }
 
             }
