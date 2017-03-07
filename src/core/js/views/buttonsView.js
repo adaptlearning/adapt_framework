@@ -3,9 +3,21 @@ define([
     'core/js/enums/buttonStateEnum'
 ], function(Adapt, BUTTON_STATE) {
 
+    //convert BUTTON_STATE to property name
+    var textPropertyName = {
+        "SUBMIT": "submit",
+        "CORRECT": "correct",
+        "SHOW_CORRECT_ANSWER": "showCorrectAnswer",
+        "HIDE_CORRECT_ANSWER": "hideCorrectAnswer",
+        "SHOW_FEEDBACK": "showFeedback",
+        "RESET": "reset"
+    };
+
     var ButtonsView = Backbone.View.extend({
 
-        initialize: function() {
+        initialize: function(options) {
+            this.parent = options.parent;
+
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_buttonState', this.onButtonStateChanged);
             this.listenTo(this.model, 'change:feedbackMessage', this.onFeedbackMessageChanged);
@@ -58,12 +70,12 @@ define([
 
         onActionClicked: function() {
             var buttonState = this.model.get('_buttonState');
-            this.trigger('buttons:action', BUTTON_STATE(buttonState));
+            this.trigger('buttons:stateUpdate', BUTTON_STATE(buttonState));
             this.checkResetSubmittedState();
         },
 
         onFeedbackClicked: function() {
-            this.trigger('buttons:action', BUTTON_STATE.SHOW_FEEDBACK);
+            this.trigger('buttons:stateUpdate', BUTTON_STATE.SHOW_FEEDBACK);
         },
 
         onFeedbackMessageChanged: function(model, changedAttribute) {
@@ -96,12 +108,14 @@ define([
 
             } else {
 
-                // Backwords compatibility with v1.x               
-                var ariaLabel = this.model.get('_buttons')["_" + buttonState.asString].ariaLabel;
-                var buttonText = this.model.get('_buttons')["_" + buttonState.asString].buttonText;
+                // Backwords compatibility with v1.x
+                var propertyName = textPropertyName[buttonState.asString];
+
+                var ariaLabel = this.model.get('_buttons')["_" + propertyName] .ariaLabel;
+                var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
                 switch (buttonState) {
-                    case BUTTON_STATE.SHOW_CORRECT_ANSWER: 
+                    case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
                         //make model answer button inaccessible but enabled for visual users
                         //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting

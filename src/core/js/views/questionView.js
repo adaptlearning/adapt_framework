@@ -115,11 +115,11 @@ define([
         addButtonsView: function() {
             this.buttonsView = new ButtonsView({model: this.model, el: this.$('.buttons')});
 
-            this.listenTo(this.buttonsView, 'buttons:action', this.onButtonAction);
+            this.listenTo(this.buttonsView, 'buttons:stateUpdate', this.onButtonStateUpdate);
 
         },
 
-        onButtonAction: function(button_state) {
+        onButtonStateUpdate: function(button_state) {
 
             switch (button_state) {
                 case BUTTON_STATE.SUBMIT:
