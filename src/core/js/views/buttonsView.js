@@ -111,7 +111,7 @@ define([
                 // Backwords compatibility with v1.x
                 var propertyName = textPropertyName[buttonState.asString];
 
-                var ariaLabel = this.model.get('_buttons')["_" + propertyName] .ariaLabel;
+                var ariaLabel = this.model.get('_buttons')["_" + propertyName].ariaLabel;
                 var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
                 switch (buttonState) {
