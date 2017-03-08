@@ -31,7 +31,8 @@
                 inview: 'libraries/inview',
                 a11y: 'libraries/jquery.a11y',
                 scrollTo: 'libraries/scrollTo',
-                bowser: 'libraries/bowser'
+                bowser: 'libraries/bowser',
+                'enum': 'libraries/enum'
             }
         });
         loadJQuery();
@@ -43,7 +44,7 @@
             {
                 test: IE == 8,
                 yep: 'libraries/jquery.js',
-                nope: 'libraries/jquery.v3.js',
+                nope: 'libraries/jquery.v2.js',
                 complete: checkJQueryStatus
             }
         ]);
@@ -95,6 +96,7 @@
             "inview",
             "a11y",
             "scrollTo",
+            "enum",
             "templates"
         ], loadAdapt);
     }
