@@ -1,7 +1,8 @@
 define([
-    'coreJS/adapt',
-    'coreModels/componentModel'
-], function(Adapt, ComponentModel) {
+    'core/js/adapt',
+    'core/js/models/componentModel',
+    'core/js/enums/buttonStateEnum'
+], function(Adapt, ComponentModel, BUTTON_STATE) {
 
     var QuestionModel = ComponentModel.extend({
 
@@ -183,17 +184,17 @@ define([
 
                 if (isCorrect || !canShowModelAnswer) {
                     // Use correct instead of complete to signify button state
-                    this.set('_buttonState', 'correct');
+                    this.set('_buttonState', BUTTON_STATE.CORRECT);
 
                 } else {
 
                     switch (buttonState) {
-                      case "submit":
-                      case "hideCorrectAnswer":
-                          this.set('_buttonState', 'showCorrectAnswer');
-                          break;
-                      default:
-                          this.set('_buttonState', 'hideCorrectAnswer');
+                        case BUTTON_STATE.SUBMIT:
+                        case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+                            this.set('_buttonState', BUTTON_STATE.SHOW_CORRECT_ANSWER);
+                            break;
+                        default:
+                            this.set('_buttonState', BUTTON_STATE.HIDE_CORRECT_ANSWER);
                     }
 
                 }
@@ -201,9 +202,9 @@ define([
             } else {
 
                 if (isEnabled) {
-                    this.set('_buttonState', 'submit');
+                    this.set('_buttonState', BUTTON_STATE.SUBMIT);
                 } else {
-                    this.set('_buttonState', 'reset');
+                    this.set('_buttonState', BUTTON_STATE.RESET);
                 }
             }
 
