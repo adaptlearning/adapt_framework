@@ -1,4 +1,4 @@
-<div class="notify-popup notify-type-{{_type}} {{_classes}}" role="region" aria-label="{{_globals._accessibility._ariaLabels.feedbackPopUp}}">
+<div {{#each _attributes}}{{@key}}="{{this}}" {{/each}} class="notify-popup notify-type-{{_type}} {{_classes}}" role="region" aria-label="{{_globals._accessibility._ariaLabels.feedbackPopUp}}">
     <div class="notify-popup-inner">
         <div class="notify-popup-content">
             <div class="notify-popup-content-inner">
