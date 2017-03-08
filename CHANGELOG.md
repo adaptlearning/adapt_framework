@@ -1,5 +1,20 @@
 ## [Unreleased][unreleased]
 
+## [2.0.17] - 2017-02-28
+
+### Added
+- a button that, when accessibility is active, gives the user the ability to skip over navigation elements and straight into the content [#1388](https://github.com/adaptlearning/adapt_framework/issues/1388)
+- logging module to allow for logging via `Adapt.log` (rather than `console.log`), this allows for several different levels of logging (debug/info/warn/error/fatal) as well as allowing for control over level of logging via config.json as well as allowing for creation of error reporting plugins that can hook into the logging module. Started using new logging module in app.js [#1399](https://github.com/adaptlearning/adapt_framework/issues/1399)
+- support for enumeration (ENUMs) so that we can stop using 'magic strings' and 'magic numbers' within the code and use proper datatypes instead [#1429](https://github.com/adaptlearning/adapt_framework/issues/1429)
+
+### Fixed
+- The `$ grunt server` command sometimes wouldn't open the course in the browser on Windows [#1227](https://github.com/adaptlearning/adapt_framework/issues/1227)
+- sporadic issue with scrolling to components (via Page Level Progress, for example) where the component would be scrolled to the vertical centre of the viewport as opposed to the top [#1400](https://github.com/adaptlearning/adapt_framework/pull/1400)
+
+### Changed
+- formatting & syntax tidy up of some of the core code [#1436](https://github.com/adaptlearning/adapt_framework/pull/1436)
+- various amends to the default course content that is contained in the framework .json following feedback from our QA team [#1411](https://github.com/adaptlearning/adapt_framework/pull/1411)
+
 ## [2.0.16] - 2017-01-20
 
 ### Added
@@ -423,7 +438,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.16...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.17...HEAD
+[2.0.17]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.16...v2.0.17
 [2.0.16]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.15...v2.0.16
 [2.0.15]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.14...v2.0.15
 [2.0.14]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.13...v2.0.14

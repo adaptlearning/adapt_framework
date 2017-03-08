@@ -1,9 +1,10 @@
 define([
-    'coreJS/adapt',
-    'coreViews/componentView',
-    'coreViews/buttonsView',
-    'coreModels/questionModel'
-], function(Adapt, ComponentView, ButtonsView, QuestionModel) {
+    'core/js/adapt',
+    'core/js/views/componentView',
+    'core/js/views/buttonsView',
+    'core/js/models/questionModel',
+    'core/js/enums/buttonStateEnum'
+], function(Adapt, ComponentView, ButtonsView, QuestionModel, BUTTON_STATE) {
 
     var useQuestionModelOnly = false;
 
@@ -80,14 +81,14 @@ define([
                 var isInteractionComplete = this.model.get('_isInteractionComplete');
 
                 if (isInteractionComplete) {
-                    this.model.set('_buttonState', 'hideCorrectAnswer');
+                    this.model.set('_buttonState', BUTTON_STATE.HIDE_CORRECT_ANSWER);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onHideCorrectAnswerClicked();
                     }, this));
 
                 } else {
-                    this.model.set('_buttonState', 'submit');
+                    this.model.set('_buttonState', BUTTON_STATE.SUBMIT);
                     // Defer is added to allow the component to render
                     _.defer(_.bind(function() {
                         this.onResetClicked();
@@ -113,11 +114,31 @@ define([
         // Used to setup buttonsView and sets up the internal events for the question
         addButtonsView: function() {
             this.buttonsView = new ButtonsView({model: this.model, el: this.$('.buttons')});
-            this.listenTo(this.buttonsView, 'buttons:submit', this.onSubmitClicked);
-            this.listenTo(this.buttonsView, 'buttons:reset', this.onResetClicked);
-            this.listenTo(this.buttonsView, 'buttons:showCorrectAnswer', this.onShowCorrectAnswerClicked);
-            this.listenTo(this.buttonsView, 'buttons:hideCorrectAnswer', this.onHideCorrectAnswerClicked);
-            this.listenTo(this.buttonsView, 'buttons:showFeedback', this.showFeedback);
+
+            this.listenTo(this.buttonsView, 'buttons:stateUpdate', this.onButtonStateUpdate);
+
+        },
+
+        onButtonStateUpdate: function(button_state) {
+
+            switch (button_state) {
+                case BUTTON_STATE.SUBMIT:
+                    this.onSubmitClicked();
+                    break;
+                case BUTTON_STATE.RESET:
+                    this.onResetClicked();
+                    break;
+                case BUTTON_STATE.SHOW_CORRECT_ANSWER:
+                    this.onShowCorrectAnswerClicked();
+                    break;
+                case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+                    this.onHideCorrectAnswerClicked();
+                    break;
+                case BUTTON_STATE.SHOW_FEEDBACK:
+                    this.showFeedback();
+                    break;
+            }
+
         },
 
         // Blank method used just like postRender is for presentational components
@@ -486,9 +507,9 @@ define([
             //if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
             if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
                 switch (checkForFunction) {
-                case "setupFeedback":
-                case "markQuestion": 
-                    return true; //questionView   
+                    case "setupFeedback":
+                    case "markQuestion": 
+                        return true; //questionView   
                 }
                 return false; //questionModel
             }

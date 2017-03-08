@@ -39,8 +39,8 @@
 		"_component": "text",
 		"_classes": "",
 		"_layout": "left",
-		"title": "Text components",
-		"displayTitle": "Text components",
+		"title": "Text",
+		"displayTitle": "Text",
 		"body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
 		"instruction": "",
 		"_pageLevelProgress": {
@@ -90,12 +90,12 @@
 		"title": "Narrative",
 		"displayTitle": "Narrative",
 		"body": "The narrative component lets you scroll through a series of images each with some accompanying text.<br><br>This component is always spanned.",
-		"instruction": "Select the arrow to find out more.",
-		"mobileInstruction": "Select the arrow followed by the plus icon to find out more.",
+		"instruction": "Select the arrows to find out more.",
+		"mobileInstruction": "Select the arrows followed by the plus icon to find out more.",
 		"_items": [
 			{
 				"title": "Narrative item 1",
-				"body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning about to follow, to illustrate real world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
+				"body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning to follow, to illustrate real-world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
 				"_graphic": {
 					"src": "course/en/images/single_width_small.jpg",
 					"alt": "Placeholder graphic."
@@ -137,8 +137,8 @@
 		"_canCycleThroughPagination": false,
 		"_hidePagination": false,
 		"_useGraphicsAsPins": false,
-		"title": "Hot graphic",
-		"displayTitle": "Hot graphic",
+		"title": "Hot Graphic",
+		"displayTitle": "Hot Graphic",
 		"body": "You can add interactivity to an image by using the <strong>hot graphic</strong>. This component allows you to position icons over an image. When an icon is selected, content associated with its corresponding location is displayed in a window over the image. This component will fall back to a <strong>narrative</strong> when viewed on mobile.<br><br>This component is always spanned.",
 		"instruction": "Select the icons to find out more.",
 		"mobileInstruction": "",
@@ -243,7 +243,7 @@
 		"_items": [
 			{
 				"title": "Lists",
-				"body": "This is display text 1 and we’re using it to discuss lists.<br><br>If you need to present a list which can standalone as a piece of content, but which can also be explored in more detail, then accordions are a great choice.",
+				"body": "This is display text 1 and we’re using it to discuss lists.<br><br>If you need to present a list that can stand alone as a piece of content, but which can also be explored in more detail, accordions are a great choice.",
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
@@ -251,7 +251,7 @@
 			},
 			{
 				"title": "Steps in a process",
-				"body": "This is display text 2 and now we’re discussing how accordions can be great at presenting a process.<br><br>The headings can be used to present the high level stages in the process which once selected, provide a more extensive explanation of what happens at that specific point.",
+				"body": "This is display text 2 and now we’re discussing how accordions can be great at presenting a process.<br><br>The headings can be used to present the high-level stages in the process, which once selected, provide a more extensive explanation of what happens at that specific point.",
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
@@ -338,7 +338,7 @@
 		"_parentId": "b-45",
 		"_type": "component",
 		"_component": "gmcq",
-		"_classes": "col-4",
+		"_classes": "",
 		"_layout": "full",
 		"_attempts": 1,
 		"_questionWeight": 1,
@@ -350,6 +350,7 @@
 		"displayTitle": "Graphical Multiple Choice Question",
 		"body": "The graphical multiple choice question is an alternative to the standard MCQ, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
 		"instruction": "Choose option 2 and select Submit.",
+		"_columns": 3,
 		"_items": [
 			{
 				"text": "Option 1",
@@ -406,7 +407,7 @@
 		"title": "Text Input",
 		"displayTitle": "Text Input",
 		"body": "Can you name one of the three companies that established Adapt as a community led Open Source project?",
-		"instruction": "Input your answers and select Submit.",
+		"instruction": "Input your answer and select Submit.",
 		"_answers": [
 			["City & Guilds Kineo", "Kineo"],
 			["Learning Pool"],
@@ -414,28 +415,18 @@
 		],
 		"_items": [
 			{
-				"prefix": "prefix",
-				"placeholder": "Enter answer here",
-				"suffix": "suffix"
-			},
-			{
-				"prefix": "",
-				"placeholder": "Enter answer here",
-				"suffix": ""
-			},
-			{
 				"prefix": "",
 				"placeholder": "Enter answer here",
 				"suffix": ""
 			}
 		],
 		"_feedback": {
-			"correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.",
+			"correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>",
 			"_partlyCorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>"
 			},
 			"_incorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers."
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>"
 			}
 		},
 		"_pageLevelProgress": {
@@ -475,11 +466,11 @@
 		"title": "Matching",
 		"displayTitle": "Matching",
 		"body": "Can you identify some of the key facts and figures associated with the Adapt Open Source project?",
-		"instruction": "Choose an option from each drop down list and select Submit.",
+		"instruction": "Choose an option from each dropdown list and select Submit.",
 		"placeholder": "Select an option",
 		"_items": [
 			{
-				"text": "The Adapt open source project was formed in:",
+				"text": "The Adapt Open Source project was formed in:",
 				"_options": [
 					{
 						"text": "2008",
@@ -572,15 +563,19 @@
 		"_scaleEnd": 10,
 		"title": "Slider",
 		"displayTitle": "Slider",
-		"body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulating information but according to a paper by Miller (1956) what ‘magic number’ describes its capacity?",
+		"body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulate information, but according to a paper by Miller (1956) what ‘magic number’ describes its capacity?",
 		"instruction": "Drag the slider to make your choice and select Submit.",
 		"labelStart": "",
 		"labelEnd": "",
-		"_correctAnswer": "7",
+		"_correctAnswer": "",
+		"_correctRange": {
+			"_bottom": 5,
+			"_top": 9
+		},
 		"_feedback": {
-			"correct": "Correct answer feedback.<br><br>Yes, that’s right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>",
+			"correct": "Correct answer feedback.<br><br>Yes, that’s right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance we have set the correct answer to a range of 5-9 due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>",
 			"_incorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance the answer was set as 7 however we could have set the range as 5-9 as the correct option due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>"
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href='http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two' target='_blank'>magical number</a>, <a href='http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures' target='_blank'>chunking</a>, <a href='http://en.wikipedia.org/wiki/Forgetting_curve' target='_blank'>the forgetting curve</a> and <a href='http://en.wikipedia.org/wiki/Spaced_repetition' target='_blank'>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><em>Component facts: The correct answer for a slider component can be an exact number or a range. In this instance we have set the correct answer to a range of 5-9 due to the correct answer being seven plus or minus two. Component is either single or spanned.</em>"
 			}
 		},
 		"_pageLevelProgress": {
@@ -589,7 +584,7 @@
 	},
 	{
 		"_id": "c-90",
-		"_parentId": "b-70",
+		"_parentId": "b-65",
 		"_type": "component",
 		"_component": "mcq",
 		"_classes": "",
@@ -637,7 +632,7 @@
 	},
 	{
 		"_id": "c-95",
-		"_parentId": "b-70",
+		"_parentId": "b-65",
 		"_type": "component",
 		"_component": "graphic",
 		"_classes": "",
@@ -655,42 +650,8 @@
 		}
 	},
 	{
-		"_id": "c-97",
-		"_parentId": "b-75",
-		"_type": "component",
-		"_component": "text",
-		"_classes": "",
-		"_layout": "left",
-		"title": "Introduction",
-		"displayTitle": "",
-		"body": "You’ve just encountered the <strong>Trickle</strong> extension. Trickle can be used to control the presentation of content and the manner in which it can be navigated within an Adapt page. In the example just shown the extension was configured to ensure that no content beyond the first question was visible until that block was registered as completed (the question had been attempted). Once the block was completed, a continue button was shown which, once selected, scrolled the next block into view.<br><br>Trickle can be configured in a variety of ways so please read the wiki for all possible configuration options.",
-		"instruction": "",
-		"_pageLevelProgress": {
-			"_isEnabled": true
-		}
-	},
-	{
-		"_id": "c-98",
-		"_parentId": "b-75",
-		"_type": "component",
-		"_component": "graphic",
-		"_classes": "",
-		"_layout": "right",
-		"_isOptional": true,
-		"title": "c-98",
-		"displayTitle": "",
-		"body": "",
-		"instruction": "",
-		"_graphic": {
-			"large": "course/en/images/single_width.jpg",
-			"small": "course/en/images/single_width.jpg",
-			"alt": "Placeholder graphic.",
-			"attribution": ""
-		}
-	},
-	{
 		"_id": "c-100",
-		"_parentId": "b-80",
+		"_parentId": "b-75",
 		"_type": "component",
 		"_component": "mcq",
 		"_classes": "",
@@ -742,7 +703,7 @@
 	},
 	{
 		"_id": "c-105",
-		"_parentId": "b-80",
+		"_parentId": "b-75",
 		"_type": "component",
 		"_component": "graphic",
 		"_classes": "",
@@ -761,7 +722,7 @@
 	},
 	{
 		"_id": "c-110",
-		"_parentId": "b-85",
+		"_parentId": "b-80",
 		"_type": "component",
 		"_component": "mcq",
 		"_classes": "",
@@ -774,7 +735,7 @@
 		"_selectable": 1,
 		"title": "It’s as simple as A, B, C",
 		"displayTitle": "It’s as simple as A, B, C",
-		"body": "Can you identify the missing word in the following sequence: Article / ..... /Component.",
+		"body": "Can you identify the missing word in the following sequence?<br>Article / ..... / Component.",
 		"instruction": "Choose an option and select Submit.",
 		"_items": [
 			{
@@ -813,7 +774,7 @@
 	},
 	{
 		"_id": "c-115",
-		"_parentId": "b-85",
+		"_parentId": "b-80",
 		"_type": "component",
 		"_component": "graphic",
 		"_classes": "",
@@ -832,7 +793,7 @@
 	},
 	{
 		"_id": "c-120",
-		"_parentId": "b-90",
+		"_parentId": "b-85",
 		"_type": "component",
 		"_component": "mcq",
 		"_classes": "",
@@ -880,7 +841,7 @@
 	},
 	{
 		"_id": "c-125",
-		"_parentId": "b-90",
+		"_parentId": "b-85",
 		"_type": "component",
 		"_component": "graphic",
 		"_classes": "",
@@ -899,7 +860,7 @@
 	},
 	{
 		"_id": "c-130",
-		"_parentId": "b-95",
+		"_parentId": "b-90",
 		"_type": "component",
 		"_component": "mcq",
 		"_classes": "",
@@ -947,7 +908,7 @@
 	},
 	{
 		"_id": "c-135",
-		"_parentId": "b-95",
+		"_parentId": "b-90",
 		"_type": "component",
 		"_component": "graphic",
 		"_classes": "",
@@ -966,7 +927,7 @@
 	},
 	{
 		"_id": "c-140",
-		"_parentId": "b-100",
+		"_parentId": "b-95",
 		"_type": "component",
 		"_component": "mcq",
 		"_classes": "",
@@ -979,7 +940,7 @@
 		"_selectable": 4,
 		"title": "Control the scroll",
 		"displayTitle": "Control the scroll",
-		"body": "The <strong>Trickle</strong> extension makes it possible to control how the learner scrolls down the page, but what element of a page is it applied to?",
+		"body": "The <strong>Trickle</strong> extension makes it possible to control how the learner scrolls down the page, but what elements of a page can it be applied to?",
 		"instruction": "Choose an option and select Submit.",
 		"_items": [
 			{
@@ -1014,7 +975,7 @@
 	},
 	{
 		"_id": "c-145",
-		"_parentId": "b-100",
+		"_parentId": "b-95",
 		"_type": "component",
 		"_component": "graphic",
 		"_classes": "",
@@ -1033,21 +994,23 @@
 	},
 	{
 		"_id": "c-147",
-		"_parentId": "b-105",
+		"_parentId": "b-100",
 		"_type": "component",
 		"_component": "text",
 		"_classes": "",
 		"_layout": "full",
-		"title": "c-147",
+		"title": "Scoring bands",
 		"displayTitle": "",
-		"body": "The new Assessment Results component allows you to specific the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 70% or above, provided four scoring bands each of which has some accompanying feedback. The four score bands were:<br><br><ul><li>0-40% (fail)</li><li>41-69%(fail)</li><li>70-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let’s find out.",
+		"body": "The new Assessment Results component allows you to specify the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 75% or above and provided four scoring bands, each of which has some accompanying feedback. The four scoring bands were:<br><br><ul><li>0-49% (fail)</li><li>50-74% (fail)</li><li>75-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let’s find out.",
+		"_canReset": true,
+		"_isResetOnRevisit": "hard",
 		"_pageLevelProgress": {
 			"_isEnabled": true
 		}
 	},
 	{
 		"_id": "c-150",
-		"_parentId": "b-110",
+		"_parentId": "b-105",
 		"_type": "component",
 		"_component": "assessmentResults",
 		"_classes": "",
@@ -1072,12 +1035,12 @@
 				"_allowRetry": true
 			},
 			{
-				"_score": 40,
+				"_score": 50,
 				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You already know some of the Adapt basics but please explore our site for more information. Also pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
 				"_allowRetry": true
 			},
 			{
-				"_score": 70,
+				"_score": 75,
 				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already pretty knowledgeable about Adapt so, if you haven’t already, please consider sharing your expertise on the Adapt community forums.",
 				"_allowRetry": true
 			},

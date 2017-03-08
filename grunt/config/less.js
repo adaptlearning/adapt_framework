@@ -21,6 +21,12 @@ module.exports = function (grunt, options) {
                 filter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 }
+            },
+            //newer configuration
+            files: {
+              '<%= outputdir %>adapt/css/adapt.css': [
+                '<%= sourcedir %>/**/*.less'
+              ]
             }
         },
         compile: {
