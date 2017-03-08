@@ -194,6 +194,7 @@ define([
                           break;
                       default:
                           this.set('_buttonState', 'hideCorrectAnswer');
+                          break;
                     }
 
                 }
@@ -304,7 +305,6 @@ define([
         resetUserAnswer: function() {},
         
         refresh: function() {
-            this.updateButtons();
             this.trigger('question:refresh');
         }
 

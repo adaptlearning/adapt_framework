@@ -72,9 +72,9 @@ define(function() {
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-            //use correct instead of complete to signify button state
-            if (changedAttribute === 'correct') {
-				//disable submit button on correct (i.e. no model answer)
+            // Use 'correct' instead of 'complete' to signify button state
+            if (changedAttribute === 'correct' || changedAttribute === 'incorrect') {
+                // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
 
                 if (!this.model.get("_canShowFeedback")) {
@@ -87,7 +87,7 @@ define(function() {
                 }
 
             } else {
-                // Backwords compatibility with v1.x
+                // Backwards compatibility with v1.x
                 var ariaLabel = this.model.get('_buttons')["_" + changedAttribute].ariaLabel;
                 var buttonText = this.model.get('_buttons')["_" + changedAttribute].buttonText;
 

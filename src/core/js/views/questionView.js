@@ -282,10 +282,28 @@ define([
         // be a full reset
         resetQuestion: function() {},
 
+        determineButtonState: function() {
+            if (this.model.get('_isInteractionComplete')) {
+                if (this.model.get('_isCorrect')) {
+                    this.model.set('_buttonState', 'correct');
+                } else if (!this.model.get('_canShowModelAnswer')) {
+                    this.model.set('_buttonState', 'incorrect');
+                } else {
+                    this.model.set('_buttonState', 'showCorrectAnswer');
+                }
+            } else {
+                if (this.model.get('_isEnabled')) {
+                    this.model.set('_buttonState', 'submit');
+                } else {
+                    this.model.set('_buttonState', 'reset');
+                }
+            }
+        },
+
         refresh: function() {
             this.renderState();
-          
-            this._runModelCompatibleFunction("updateButtons");
+              
+            this.determineButtonState();
 
             if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
                 this.showMarking();
