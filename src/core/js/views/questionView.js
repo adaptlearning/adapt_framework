@@ -303,28 +303,10 @@ define([
         // be a full reset
         resetQuestion: function() {},
 
-        determineButtonState: function() {
-            if (this.model.get('_isInteractionComplete')) {
-                if (this.model.get('_isCorrect')) {
-                    this.model.set('_buttonState', BUTTON_STATE.CORRECT);
-                } else if (!this.model.get('_canShowModelAnswer')) {
-                    this.model.set('_buttonState', BUTTON_STATE.INCORRECT);
-                } else {
-                    this.model.set('_buttonState', BUTTON_STATE.SHOW_CORRECT_ANSWER);
-                }
-            } else {
-                if (this.model.get('_isEnabled')) {
-                    this.model.set('_buttonState', BUTTON_STATE.SUBMIT);
-                } else {
-                    this.model.set('_buttonState', BUTTON_STATE.RESET);
-                }
-            }
-        },
-
         refresh: function() {
             this.renderState();
-              
-            this.determineButtonState();
+            
+            this.model.set('_buttonState', this.model.getButtonState());
 
             if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
                 this.showMarking();
