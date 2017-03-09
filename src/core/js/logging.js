@@ -3,7 +3,7 @@ define([
     'core/js/enums/logLevelEnum'
 ], function(Adapt, LOG_LEVEL) {
 
-    var Logging = Backbone.Model.extend({
+    var Logging = Backbone.Controller.extend({
 
         _config: {
             _isEnabled: true,

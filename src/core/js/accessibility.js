@@ -4,7 +4,8 @@ define(function(require) {
     var a11y = require('a11y');
     var AccessibilityView = require('coreViews/accessibilityView');
 
-    var Accessibility = _.extend({
+    var Accessibility = Backbone.Controller.extend({
+
         $html: $('html'),
         $accessibilityInstructions: $("#accessibility-instructions"),
         $accessibilityToggle: $("#accessibility-toggle"),
@@ -36,13 +37,13 @@ define(function(require) {
                 Adapt.config.get("_accessibility")._isActive = Adapt.offlineStorage.get("a11y") || false;
                 this.setupAccessibility();
 
-            }, Accessibility);
+            }, this);
 
-            Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility);
+            Adapt.on('accessibility:toggle', this.setupAccessibility, this);
 
             //SETUP RENDERING HELPERS
-            Adapt.once('app:dataLoaded', this.setupHelpers, Accessibility);
-            Adapt.once('app:dataLoaded', this.touchDeviceCheck, Accessibility);
+            Adapt.once('app:dataLoaded', this.setupHelpers, this);
+            Adapt.once('app:dataLoaded', this.touchDeviceCheck, this);
 
             //SETUP NEW VIEW FOR TOGGLE BUTTON
             Adapt.once('app:dataReady', this.setupToggleButton, this);
@@ -444,7 +445,7 @@ define(function(require) {
                     this.$accessibilityInstructions.one("blur", this.onFocusInstructions);
 
                     _.delay(function(){
-                        Accessibility.$accessibilityInstructions.focusNoScroll();
+                        Adapt.accessibility.$accessibilityInstructions.focusNoScroll();
                     }, 250);
 
                 } else {
@@ -522,30 +523,29 @@ define(function(require) {
 
             //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
             if ($.a11y.userInteracted) return;
-            Accessibility._hasUserTabbed = true;
+            Adapt.accessibility._hasUserTabbed = true;
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
-            if (Accessibility.isActive() && !Accessibility._isButtonRedirectionOn) return;
+            if (Adapt.accessibility.isActive() && !Adapt.accessibility._isButtonRedirectionOn) return;
 
             //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
-            Accessibility.$accessibilityToggle.focus();
+            Adapt.accessibility.$accessibilityToggle.focus();
 
         },
 
         onFocusInstructions: function(event) {
             //HIDE INSTRUCTIONS FROM TAB WRAP AROUND AFTER LEAVING INSTRUCTIONS
-            if (Accessibility._isButtonRedirectionOn) return;
-            if (!Accessibility._isLoaded) return;
-            Accessibility.$accessibilityInstructions
+            if (Adapt.accessibility._isButtonRedirectionOn) return;
+            if (!Adapt.accessibility._isLoaded) return;
+            Adapt.accessibility.$accessibilityInstructions
                 .addClass("a11y-ignore-focus")
-                .off("blur", Accessibility.onFocusInstructions);
+                .off("blur", Adapt.accessibility.onFocusInstructions);
         }
 
-    }, Backbone.Events);
+    });
 
+    Adapt.accessibility = new Accessibility();
 
-    Accessibility.initialize();
-
-    return Accessibility;
+    return Adapt.accessibility;
 
 });

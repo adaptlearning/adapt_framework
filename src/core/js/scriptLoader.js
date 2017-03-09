@@ -25,6 +25,7 @@
             paths: {
                 underscore: 'libraries/underscore',
                 backbone: 'libraries/backbone',
+                'backbone.controller': 'libraries/backbone.controller',
                 handlebars: 'libraries/handlebars',
                 velocity: 'libraries/velocity',
                 imageReady: 'libraries/imageReady',
@@ -90,6 +91,7 @@
         require([
             "underscore",
             "backbone",
+            "backbone.controller",
             "handlebars",
             "velocity",
             "imageReady",
