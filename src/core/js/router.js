@@ -31,11 +31,21 @@ define([
 
         handleRoute: function() {
             var args = [].slice.call(arguments, 0, arguments.length);
-            if (arguments[arguments.length-1] === null) args.pop();
+
+            if (args.length) {
+                // Remove any null arguments, starting from the last.
+                for (var i = (args.length - 1); i >= 0; i--) {
+                    if (args[i] === null) {
+                        args.pop();
+                    } else {
+                        break;
+                    }
+                }
+            }
 
             //check if the current page is in the progress of navigating to itself
             //it will redirect to itself if the url was changed and _canNavigate is false
-            if (!this._isCircularNavigationInProgress) {
+            if (this._isCircularNavigationInProgress === false) {
                 //trigger an event pre 'router:location' to allow extensions to stop routing
                 Adapt.trigger("router:navigate", arguments);
             }
@@ -49,10 +59,10 @@ define([
                 switch (args.length) {
                 case 1:
                     //if only one parameter assume id
-                    return this.handleId.apply(this, arguments);
+                    return this.handleId.apply(this, args);
                 case 2:
                     //if two parameters assume plugin
-                    return this.handlePluginRouter.apply(this, arguments);
+                    return this.handlePluginRouter.apply(this, args);
                 }
                 //if < 1 || > 2 parameters, route to course
                 return this.handleCourse();
@@ -86,6 +96,8 @@ define([
             this.updateLocation(pluginLocation, null, null, function() {
                 Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
                 Adapt.trigger('router:plugin', pluginName, location, action);
+
+                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
             });
         },
 
