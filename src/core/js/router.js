@@ -24,23 +24,17 @@ define([
         },
 
         routes: {
-            "":"handleRoute",
-            "id/:id":"handleRoute",
+            "": "handleRoute",
+            "id/:id": "handleRoute",
             ":pluginName(/*location)(/*action)": "handleRoute"
         },
 
         handleRoute: function() {
-            var args = [].slice.call(arguments, 0, arguments.length);
+            var args = _.toArray(arguments);
 
             if (args.length) {
-                // Remove any null arguments, starting from the last.
-                for (var i = (args.length - 1); i >= 0; i--) {
-                    if (args[i] === null) {
-                        args.pop();
-                    } else {
-                        break;
-                    }
-                }
+                // Remove any null arguments.
+                args = _.without(args, null);
             }
 
             //check if the current page is in the progress of navigating to itself
