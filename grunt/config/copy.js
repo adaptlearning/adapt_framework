@@ -1,4 +1,22 @@
 module.exports = function (grunt, options) {
+    
+    
+    var renameAssets = function (destFolder, srcFileName) {
+        var collateAtName = "assets";
+        var collateAtFolder = collateAtName + "/";
+        var startOfCollatePath = srcFileName.indexOf(collateAtFolder) + collateAtFolder.length;
+        var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
+        //ignore the folder alone
+        var testEndsWithCollateName = new RegExp("((?:\\\\|\/)" + collateAtName + ")(?:$|\\\\$|\\\/$)");
+        if (testEndsWithCollateName.test(srcFileName)) {
+            //we have path ending with .../[name] or .../[name]/ discard it
+            return destFolder;
+        }
+        return collatedFilePath;
+    }
+    
+    
+    
     return {
         index: {
             files: [
@@ -54,19 +72,7 @@ module.exports = function (grunt, options) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
                     
-                    rename: function(destFolder, srcFileName) {
-                        var name = "assets",
-                            folder = name + "/",
-                            endOfFolder = srcFileName.indexOf(folder) + folder.length,
-                            output = destFolder + srcFileName.substr(endOfFolder);
-                        //ignore the folder alone
-                        var re = new RegExp("((?:\\\\|\/)" + name + ")(?:$|\\\\$|\\\/$)");
-                        if (re.test(srcFileName)) {
-                            //we have path ending with .../[name] or .../[name]/ discard it
-                            return destFolder;
-                        }
-                        return output;
-                    }
+                    rename: renameAssets
                 }
             ]
         },
@@ -93,19 +99,7 @@ module.exports = function (grunt, options) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
                     
-                    rename: function(destFolder, srcFileName) {
-                        var name = "assets",
-                            folder = name + "/",
-                            endOfFolder = srcFileName.indexOf(folder) + folder.length,
-                            output = destFolder + srcFileName.substr(endOfFolder);
-                        //ignore the folder alone
-                        var re = new RegExp("((?:\\\\|\/)" + name + ")(?:$|\\\\$|\\\/$)");
-                        if (re.test(srcFileName)) {
-                            //we have path ending with .../[name] or .../[name]/ discard it
-                            return destFolder;
-                        }
-                        return output;
-                    }
+                    rename: renameAssets
                 }
             ]
         },
@@ -132,19 +126,7 @@ module.exports = function (grunt, options) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
                     
-                    rename: function(destFolder, srcFileName) {
-                        var name = "assets",
-                            folder = name + "/",
-                            endOfFolder = srcFileName.indexOf(folder) + folder.length,
-                            output = destFolder + srcFileName.substr(endOfFolder);
-                        //ignore the folder alone
-                        var re = new RegExp("((?:\\\\|\/)" + name + ")(?:$|\\\\$|\\\/$)");
-                        if (re.test(srcFileName)) {
-                            //we have path ending with .../[name] or .../[name]/ discard it
-                            return destFolder;
-                        }
-                        return output;
-                    }
+                    rename: renameAssets
                 }
             ]
         },
