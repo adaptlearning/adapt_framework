@@ -1,10 +1,12 @@
+{{! make the _globals object in course.json available to this template}}
+{{import_globals}}
 <div class="{{_component}}-header component-header">
     <div class="{{_component}}-header-inner component-header-inner">
-
+        
         {{#if displayTitle}}
         <div class="{{_component}}-title component-title">
             <div role="heading" tabindex="0" class="{{_component}}-title-inner component-title-inner"  aria-level="4">
-                {{{displayTitle}}}
+                {{{compile displayTitle this}}}
             </div>
         </div>
         {{/if}}
@@ -12,7 +14,7 @@
         {{#if body}}
         <div class="{{_component}}-body component-body">
             <div class="{{_component}}-body-inner component-body-inner">
-                {{{a11y_text body}}}
+                {{{compile_a11y_text body this}}}
             </div>
         </div>
         {{/if}}
@@ -20,7 +22,7 @@
         {{#if instruction}}
         <div class="{{_component}}-instruction component-instruction">
             <div class="{{_component}}-instruction-inner component-instruction-inner">
-                {{{a11y_text instruction}}}
+                {{{compile_a11y_text instruction this}}}
             </div>
         </div>
         {{/if}}
