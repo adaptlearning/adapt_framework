@@ -9,6 +9,8 @@ define([
 
     var Router = Backbone.Router.extend({
 
+        _isCircularNavigationInProgress: false,
+
         initialize: function() {
             this.showLoading();
             // Store #wrapper element to cache for later
@@ -29,19 +31,25 @@ define([
             ":pluginName(/*location)(/*action)": "handleRoute"
         },
 
-        handleRoute: function() {
-            var args = _.toArray(arguments);
+        pruneArguments: function(args) {
+            var prunedArgs = _.toArray(args);
 
-            if (args.length) {
+            if (prunedArgs.length !== 0) {
                 // Remove any null arguments.
-                args = _.without(args, null);
+                prunedArgs = _.without(args, null);
             }
+
+            return prunedArgs;
+        },
+
+        handleRoute: function() {
+            var args = this.pruneArguments(arguments);
 
             //check if the current page is in the progress of navigating to itself
             //it will redirect to itself if the url was changed and _canNavigate is false
             if (this._isCircularNavigationInProgress === false) {
                 //trigger an event pre 'router:location' to allow extensions to stop routing
-                Adapt.trigger("router:navigate", arguments);
+                Adapt.trigger("router:navigate", args);
             }
 
             if (Adapt.router.get('_canNavigate')) {
@@ -51,28 +59,27 @@ define([
 
                 //only navigate if this switch is set
                 switch (args.length) {
-                case 1:
-                    //if only one parameter assume id
-                    return this.handleId.apply(this, args);
-                case 2:
-                    //if two parameters assume plugin
-                    return this.handlePluginRouter.apply(this, args);
+                    case 1:
+                        //if only one parameter assume id
+                        return this.handleId.apply(this, args);
+                    case 2:
+                        //if two parameters assume plugin
+                        return this.handlePluginRouter.apply(this, args);
                 }
                 //if < 1 || > 2 parameters, route to course
                 return this.handleCourse();
             }
 
-
             if (this._isCircularNavigationInProgress) {
                 //navigation correction finished
                 //router has successfully renavigated to the current id as the url was changed whilst _canNavigate: false
-                delete this._isCircularNavigationInProgress;
+                this._isCircularNavigationInProgress = false;
                 return;
             }
 
             //cancel navigation to stay at current location
             this._isCircularNavigationInProgress = true;
-            Adapt.trigger("router:navigationCancelled", arguments);
+            Adapt.trigger("router:navigationCancelled", args);
 
             //reset url to current one
             this.navigateToCurrentRoute(true);
@@ -190,26 +197,27 @@ define([
         },
 
         navigateToArguments: function(args) {
-            args = [].slice.call(args, 0, args.length);
-            if (args[args.length-1] === null) args.pop();
+            args = this.pruneArguments(args);
+
             switch (args.length) {
-            case 0:
-                this.navigate("#/", {trigger:false, replace:false});
-                break;
-            case 1:
-                if (Adapt.findById(args[0])) {
-                    this.navigate("#/id/"+args[0], {trigger:false, replace:false});
-                } else {
-                    this.navigate("#/"+args[0], {trigger:false, replace:false});
-                }
-                break;
-            case 2:
-                this.navigate("#/"+args[0]+"/"+args[1], {trigger:false, replace:false});
-                break;
-            case 3:
-                this.navigate("#/"+args[0]+"/"+args[1]+"/"+args[2], {trigger:false, replace:false});
-                break;
+                case 0:
+                    this.navigate("#/", {trigger:false, replace:false});
+                    break;
+                case 1:
+                    if (Adapt.findById(args[0])) {
+                        this.navigate("#/id/"+args[0], {trigger:false, replace:false});
+                    } else {
+                        this.navigate("#/"+args[0], {trigger:false, replace:false});
+                    }
+                    break;
+                case 2:
+                    this.navigate("#/"+args[0]+"/"+args[1], {trigger:false, replace:false});
+                    break;
+                case 3:
+                    this.navigate("#/"+args[0]+"/"+args[1]+"/"+args[2], {trigger:false, replace:false});
+                    break;
             }
+
             this.handleRoute.apply(this, args);
         },
 
