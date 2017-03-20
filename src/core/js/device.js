@@ -190,7 +190,7 @@ define(function(require) {
     // Convert 'msie' to 'ie' for backwards compatibility
     var browserString = (Adapt.device.browser.toLowerCase() === 'msie') ? 'ie' : Adapt.device.browser.toLowerCase();
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
-    var browserStringAsClasses = browserString.replace('.', '-').toLowerCase();
+    browserString += browserString.replace('.', '-').toLowerCase();
 
-    $("html").addClass(browserStringAsClasses + ' pixel-density-' + pixelDensity());
+    $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 });
