@@ -20,7 +20,7 @@ define([
             } else {
                 // < ie9
                 if (window.location.hash !== hash) window.history.back();
-                window.location.hash = newhash;
+                window.location.hash = hash;
             }
             
         },
