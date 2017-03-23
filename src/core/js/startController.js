@@ -18,9 +18,10 @@ define([
             if ('replaceState' in window.history) {
                 window.history.replaceState('', '', hash);
             } else {
-                // < ie9
-                if (window.location.hash !== hash) window.history.back();
-                window.location.hash = hash;
+                // IE8 does not support window.history.replaceState
+                // This is the best approximation taken from Backbone.Router
+                var href = window.location.href.replace(/(javascript:|#).*$/, '');
+                window.location.replace(href + hash);
             }
             
         },
