@@ -13,7 +13,16 @@ define([
         setStartLocation: function() {
             if (!this.isEnabled()) return;
 
-            window.location.hash = this.getStartHash();
+            var hash = this.getStartHash();
+
+            if ('replaceState' in window.history) {
+                window.history.replaceState('', '', hash);
+            } else {
+                // < ie9
+                if (window.location.hash !== hash) window.history.back();
+                window.location.hash = newhash;
+            }
+            
         },
 
         getStartHash: function(alwaysForce) {
