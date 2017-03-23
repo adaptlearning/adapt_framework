@@ -302,8 +302,23 @@ define([
         },
 
         // Used by the question view to reset the stored user answer
-        resetUserAnswer: function() {}
+        resetUserAnswer: function() {},
+        
+        refresh: function() {
+            this.trigger('question:refresh');
+        },
 
+        getButtonState: function() {
+            if (this.get('_isCorrect')) {
+                return BUTTON_STATE.CORRECT;
+            }
+
+            if (this.get('_attemptsLeft') === 0) {
+                 return this.get('_canShowModelAnswer') ? BUTTON_STATE.SHOW_CORRECT_ANSWER : BUTTON_STATE.INCORRECT;
+            }
+
+            return this.get('_isSubmitted') ? BUTTON_STATE.RESET : BUTTON_STATE.SUBMIT;
+        }
 
     });
 
