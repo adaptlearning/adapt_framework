@@ -1,4 +1,22 @@
 module.exports = function (grunt, options) {
+    
+    
+    var renameAssets = function (destFolder, srcFileName) {
+        var collateAtName = "assets";
+        var collateAtFolder = collateAtName + "/";
+        var startOfCollatePath = srcFileName.indexOf(collateAtFolder) + collateAtFolder.length;
+        var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
+        //ignore the folder alone
+        var testEndsWithCollateName = new RegExp("((?:\\\\|\/)" + collateAtName + ")(?:$|\\\\$|\\\/$)");
+        if (testEndsWithCollateName.test(srcFileName)) {
+            //we have path ending with .../[name] or .../[name]/ discard it
+            return destFolder;
+        }
+        return collatedFilePath;
+    }
+    
+    
+    
     return {
         index: {
             files: [
@@ -53,7 +71,8 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    
+                    rename: renameAssets
                 }
             ]
         },
@@ -79,7 +98,8 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    
+                    rename: renameAssets
                 }
             ]
         },
@@ -105,7 +125,8 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    
+                    rename: renameAssets
                 }
             ]
         },
