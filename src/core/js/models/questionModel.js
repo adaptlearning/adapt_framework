@@ -289,7 +289,7 @@ define([
                 _attemptsLeft: attempts,
                 _isCorrect: undefined,
                 _isSubmitted: false,
-                _buttonState: 'submit'
+                _buttonState: BUTTON_STATE.SUBMIT
             });
         },
 
