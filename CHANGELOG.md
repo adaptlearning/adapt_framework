@@ -23,7 +23,7 @@
 ### Changed
 - Converted instances of 'magic strings' over to the new `ENUM` type added in [2.0.17] ([#1440](https://github.com/adaptlearning/adapt_framework/issues/1440), [#1483](https://github.com/adaptlearning/adapt_framework/pull/1483))
 - Stopped the Grunt tasks from minifying config.json and course.json ([#1461](https://github.com/adaptlearning/adapt_framework/issues/1461))
-- Better segratation of the `copy` and `watch` Grunt tasks ([#1000](https://github.com/adaptlearning/adapt_framework/pull/1000))
+- Better segregation of the `copy` and `watch` Grunt tasks ([#1000](https://github.com/adaptlearning/adapt_framework/pull/1000))
 
 ## [2.0.17] - 2017-02-28
 
