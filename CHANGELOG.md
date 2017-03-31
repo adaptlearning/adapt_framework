@@ -1,5 +1,30 @@
 ## [Unreleased][unreleased]
 
+## [2.0.18] - 2017-03-31
+
+### Added
+- new `diff` Grunt task to allow for a very quick, developer-friendly, rebuild ([#1233](https://github.com/adaptlearning/adapt_framework/issues/1233))
+- new `Backbone.Controller` API ([#1438](https://github.com/adaptlearning/adapt_framework/issues/1438))
+- ability to add attributes to the Notify popup ([#1453](https://github.com/adaptlearning/adapt_framework/pull/1453)) as part of work to indicate which plugin invoked Tutor ([#1427](https://github.com/adaptlearning/adapt_framework/issues/1427))
+- various amends to add support for the new 'suppress marking/feedback' feature in a future release of [adapt-contrib-assessment](https://github.com/adaptlearning/adapt-contrib-assessment) ([#1291](https://github.com/adaptlearning/adapt_framework/issues/1291))
+- `_requireAssessmentPassed` setting to the `_assessment` configuration in articles.json ([#1446](https://github.com/adaptlearning/adapt_framework/issues/1446))
+- a `notify` class to the `<html>` element whenever a Notify popup is open ([#1489](https://github.com/adaptlearning/adapt_framework/issues/1489))
+- 17 new icons to the vanilla font ([#1498](https://github.com/adaptlearning/adapt_framework/issues/1498))
+- support for passing CSS classes into Notify 'Push' popups ([#1496](https://github.com/adaptlearning/adapt_framework/issues/1496))
+
+### Fixed
+- course.model.schema used old names for `accessibilityToggleTextOn` and `accessibilityToggleTextOff` ([#1450](https://github.com/adaptlearning/adapt_framework/issues/1450))
+- version classes being added to the `<html>` element didn't use valid CSS class names ([#1402](https://github.com/adaptlearning/adapt_framework/issues/1402))
+- accessibility library was preventing the use of the spacebar in `<div>`s with the `contenteditable` attribute ([#1470](https://github.com/adaptlearning/adapt_framework/issues/1470))
+- various issues in the router module ([#1458](https://github.com/adaptlearning/adapt_framework/issues/1458), [#1472](https://github.com/adaptlearning/adapt_framework/issues/1472))
+- Grunt tasks flattening structure of plugin assets folder ([#1463](https://github.com/adaptlearning/adapt_framework/issues/1463))
+- prevent start controller from adding the the browser history when redirecting to the start page ([#1484](https://github.com/adaptlearning/adapt_framework/issues/1484))
+
+### Changed
+- Converted instances of 'magic strings' over to the new `ENUM` type added in [2.0.17] ([#1440](https://github.com/adaptlearning/adapt_framework/issues/1440), [#1483](https://github.com/adaptlearning/adapt_framework/pull/1483))
+- Stopped the Grunt tasks from minifying config.json and course.json ([#1461](https://github.com/adaptlearning/adapt_framework/issues/1461))
+- Better segratation of the `copy` and `watch` Grunt tasks ([#1000](https://github.com/adaptlearning/adapt_framework/pull/1000))
+
 ## [2.0.17] - 2017-02-28
 
 ### Added
@@ -438,7 +463,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.17...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.18...HEAD
+[2.0.18]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.17...v2.0.18
 [2.0.17]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.16...v2.0.17
 [2.0.16]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.15...v2.0.16
 [2.0.15]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.14...v2.0.15
