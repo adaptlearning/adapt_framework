@@ -44,6 +44,12 @@ define(function(require) {
 
 			this.$el.addClass('show');
 
+			var classes = this.model.get('_classes');
+
+			if (classes) {
+				this.$el.addClass(classes);
+			}
+
 			_.delay(_.bind(function() {
 				this.closePush();
 			}, this), this.model.get('_timeout'));
