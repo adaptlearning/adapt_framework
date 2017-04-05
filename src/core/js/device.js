@@ -188,15 +188,10 @@ define(function(require) {
     }
 
     var browser = Adapt.device.browser.toLowerCase();
-    // Convert 'msie' to 'ie' for backwards compatibility.
-    var browserString = (browser === 'msie') ? 'ie' : browser;
+    // Convert 'msie' and 'internet explorer' to 'ie'.
+    var browserString = browser.replace(/^msie$|^internet explorer$/, 'ie');
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
     browserString += browserString.replace('.', '-').toLowerCase();
-
-    // Ensure IE 10 and IE 11 also have the 'ie' class.
-    if (browser === 'internet explorer') {
-        browserString += ' ie';
-    }
 
     $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 });
