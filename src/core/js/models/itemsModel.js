@@ -5,9 +5,9 @@ define([
 
     var ItemsModel = ComponentModel.extend({
 
-        reset: function(type) {
+        reset: function(type, force) {
             this.resetItems();
-            ComponentModel.prototype.reset.call(this, type);
+            ComponentModel.prototype.reset.call(this, type, force);
         },
 
         resetItems: function() {
