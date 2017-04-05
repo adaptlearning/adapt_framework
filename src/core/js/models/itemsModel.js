@@ -20,7 +20,7 @@ define([
             return this.get('_items').length;
         },
 
-        getCurrentItem: function(index) {
+        getItemAtIndex: function(index) {
             return this.get('_items')[index];
         },
 
