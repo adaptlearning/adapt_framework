@@ -28,6 +28,16 @@ define([
         setItemAsVisited: function(index) {
             var item = this.get('_items')[index];
             item._isVisited = true;
+        },
+
+        getCompletionStatus: function() {
+            return (this.getVisitedItems().length == this.get('_items').length);
+        },
+
+        checkCompletionStatus: function() {
+            if (this.getCompletionStatus()) {
+                this.setCompletionStatus();
+            }
         }
 
     });
