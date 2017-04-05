@@ -5,8 +5,13 @@ define([
 
     var ItemsModel = ComponentModel.extend({
 
+        reset: function(type) {
+            this.resetItems();
+            ComponentModel.prototype.reset.call(this, type);
+        },
+
         resetItems: function() {
-            _.each(this.model.get('_items'), function(item) {
+            _.each(this.get('_items'), function(item) {
                 item._isVisited = false;
             });
         },
