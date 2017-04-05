@@ -187,10 +187,16 @@ define(function(require) {
         }
     }
 
-    // Convert 'msie' to 'ie' for backwards compatibility
-    var browserString = (Adapt.device.browser.toLowerCase() === 'msie') ? 'ie' : Adapt.device.browser.toLowerCase();
+    var browser = Adapt.device.browser.toLowerCase();
+    // Convert 'msie' to 'ie' for backwards compatibility.
+    var browserString = (browser === 'msie') ? 'ie' : browser;
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
     browserString += browserString.replace('.', '-').toLowerCase();
+
+    // Ensure IE 10 and IE 11 also have the 'ie' class.
+    if (browser === 'internet explorer') {
+        browserString += ' ie';
+    }
 
     $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 });
