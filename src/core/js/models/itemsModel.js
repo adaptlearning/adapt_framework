@@ -47,14 +47,13 @@ define([
         },
 
         resetActiveItems: function(trigger) {
-            var _trigger = (trigger === undefined) ? true : trigger;
             var items = this.get('_items');
 
             _.each(items, function(item) {
                 item._isActive = false;
             });
 
-            if (_trigger) this.trigger('change:_items:_isActive', this, items);
+            if (trigger !== false) this.trigger('change:_items:_isActive', this, items);
         },
 
         getActiveItems: function() {
@@ -78,26 +77,24 @@ define([
         },
 
         setItemAtIndexAsActive: function(index, trigger) {
-            var _trigger = (trigger === undefined) ? true : trigger;
             var items = this.get('_items');
             var item = items[index];
             
             if (item === undefined) return false;
 
             item._isActive = true;
-            if (_trigger) this.trigger('change:_items:_isActive', this, items);
+            if (trigger !== false) this.trigger('change:_items:_isActive', this, items);
             return item;
         },
         
         setItemAtIndexAsInactive: function(index, trigger) {
-            var _trigger = (trigger === undefined) ? true : trigger;
             var items = this.get('_items');
             var item = items[index];
             
             if (item === undefined) return false;
 
             item._isActive = false;
-            if (_trigger) this.trigger('change:_items:_isActive', this, items);
+            if (trigger !== false) this.trigger('change:_items:_isActive', this, items);
             return item;
         }
 
