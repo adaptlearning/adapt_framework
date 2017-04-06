@@ -189,7 +189,7 @@ define(function(require) {
 
     var browser = Adapt.device.browser.toLowerCase();
     // Convert 'msie' and 'internet explorer' to 'ie'.
-    var browserString = browser.replace(/^msie$|^internet explorer$/, 'ie');
+    var browserString = browser.replace(/msie|internet explorer/, 'ie');
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
     browserString += browserString.replace('.', '-').toLowerCase();
 
