@@ -53,13 +53,19 @@ define([
                 item._isActive = false;
             });
 
-            if (trigger !== false) this.trigger('change:_items:_isActive', this, items);
+            if (trigger !== false) {
+                this.trigger('change:_items:_isActive', this, items);
+            }
         },
 
         getActiveItems: function() {
             return _.filter(this.get('_items'), function(item) {
                 return item._isActive;
             });
+        },
+        
+        getFirstActiveItem: function() {
+            return this.model.getActiveItems()[0];
         },
         
         getActiveItemsCount: function() {
@@ -70,10 +76,17 @@ define([
             var indexes = [];
             var items = this.get('_items');
             
-            for (var i = 0, l = items.length; i < l; i++)
-                if (items[i]._isActive) indexes.push(i); 
+            for (var i = 0, l = items.length; i < l; i++) {
+                if (items[i]._isActive) {
+                    indexes.push(i); 
+                }
+            }
 
             return indexes;
+        },
+
+        getFirstActiveItemIndex: function() {
+            return this.getActiveItemsIndexes()[0];
         },
 
         setItemAtIndexAsActive: function(index, trigger) {
@@ -83,7 +96,10 @@ define([
             if (item === undefined) return false;
 
             item._isActive = true;
-            if (trigger !== false) this.trigger('change:_items:_isActive', this, items);
+            if (trigger !== false) {
+                this.trigger('change:_items:_isActive', this, items);
+            }
+            
             return item;
         },
         
@@ -94,7 +110,10 @@ define([
             if (item === undefined) return false;
 
             item._isActive = false;
-            if (trigger !== false) this.trigger('change:_items:_isActive', this, items);
+            if (trigger !== false) {
+                this.trigger('change:_items:_isActive', this, items);
+            }
+
             return item;
         }
 
