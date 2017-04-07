@@ -65,7 +65,7 @@ define([
         },
         
         getFirstActiveItem: function() {
-            return this.model.getActiveItems()[0];
+            return this.getActiveItems()[0];
         },
         
         getActiveItemsCount: function() {
