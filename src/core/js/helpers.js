@@ -105,7 +105,7 @@ define([
                     Adapt.log.error('Missing helper: "'+name+'"', root);
                     return "";
                 default:
-                    return view[name] || ""; 
+                    return view[name]; 
             }
 
         }
