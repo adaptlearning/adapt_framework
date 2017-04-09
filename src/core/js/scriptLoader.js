@@ -17,7 +17,6 @@
                     coreViews: 'core/js/views',
                     coreModels: 'core/js/models',
                     coreCollections: 'core/js/collections',
-                    coreHelpers: 'core/js/helpers',
                     'coreJS/libraries/bowser': 'libraries/bowser',
                     'core/js/libraries/bowser': 'libraries/bowser'
                 }

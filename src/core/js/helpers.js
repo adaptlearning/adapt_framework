@@ -1,6 +1,7 @@
 define([
-    'handlebars'
-], function(Handlebars){
+    'handlebars',
+    'core/js/adapt',
+], function(Handlebars, Adapt){
 
     var helpers = {
 
@@ -82,6 +83,31 @@ define([
             // Allow JSON to be a template and normalized text
             if (!template) return "";
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
+        },
+
+        helperMissing: function() {
+
+            var args = Array.prototype.slice.call(arguments, 0);
+            var context = args[args.length-1];
+            var root = context.data.root;
+            var name = context.name;
+            var view = root.view;
+            
+            if (!view) {
+                Adapt.log.error('Missing helper: "'+name+'"', root);
+                return "";
+            }
+
+            switch (typeof view[name]) {
+                case "function":
+                    return view[name].apply(view, args);
+                case "undefined":
+                    Adapt.log.error('Missing helper: "'+name+'"', root);
+                    return "";
+                default:
+                    return view[name] || ""; 
+            }
+
         }
 
     };
