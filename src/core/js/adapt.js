@@ -1,7 +1,6 @@
 define([
-    'coreModels/lockingModel',
-    'coreHelpers'
-], function(lockingModel, Helpers) {
+    'core/js/models/lockingModel'
+], function(lockingModel) {
 
     var AdaptModel = Backbone.Model.extend({
 

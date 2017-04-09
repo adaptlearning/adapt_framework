@@ -1,9 +1,9 @@
-define(function(require) {
+define([
+	'core/js/adapt',
+	'core/js/views/drawerView'
+], function(Adapt, DrawerView) {
 
-	var DrawerView = require('coreViews/drawerView');
 	var DrawerCollection = new Backbone.Collection();
-	var Adapt = require('coreJS/adapt');
-
 	var Drawer = {};
 
 	Drawer.addItem = function(drawerObject, eventCallback) {

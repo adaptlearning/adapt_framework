@@ -1,6 +1,6 @@
 define([
     'handlebars'
-], function(Handlebars){
+], function(Handlebars) {
 
     var helpers = {
 
