@@ -2,7 +2,7 @@ define([
     'core/js/adapt',
     'core/js/models/adaptModel'
 ], function (Adapt, AdaptModel) {
-    
+
     var CourseModel = AdaptModel.extend({
 
         initialize: function(attrs, options) {
