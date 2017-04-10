@@ -1,8 +1,8 @@
 define([
-    'coreJS/adapt',
-    'coreModels/routerModel',
-    'coreViews/pageView',
-    'coreJS/startController'
+    'core/js/adapt',
+    'core/js/models/routerModel',
+    'core/js/views/pageView',
+    'core/js/startController'
 ], function(Adapt, RouterModel, PageView) {
 
     Adapt.router = new RouterModel(null, {reset: true});

@@ -1,7 +1,7 @@
-define(function(require) {
-
-    var AdaptModel = require('coreModels/adaptModel');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt',
+    'core/js/models/adaptModel'
+], function (Adapt, AdaptModel) {
 
     var CourseModel = AdaptModel.extend({
 

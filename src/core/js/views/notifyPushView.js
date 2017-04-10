@@ -1,7 +1,6 @@
-define(function (require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function (Adapt) {
 
     var NotifyPushView = Backbone.View.extend({
 
