@@ -1,6 +1,6 @@
-define(function(require) {
-
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var NotifyView = Backbone.View.extend({
 
@@ -159,7 +159,8 @@ define(function(require) {
                     /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
                     Adapt.trigger('popup:opened', this.$('.notify-popup'));
                     $('body').scrollDisable();
-                    
+                    $('html').addClass('notify');
+
                     //set focus to first accessible element
                     this.$('.notify-popup').a11y_focus();
                 }
@@ -189,6 +190,8 @@ define(function(require) {
             }
 
             $('body').scrollEnable();
+            $('html').removeClass('notify');
+
             Adapt.trigger('popup:closed');
             Adapt.trigger('notify:closed');
         }

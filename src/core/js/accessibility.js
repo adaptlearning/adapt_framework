@@ -1,8 +1,8 @@
-define(function(require) {
-
-    var Adapt = require('coreJS/adapt');
-    var a11y = require('a11y');
-    var AccessibilityView = require('coreViews/accessibilityView');
+define([
+    'core/js/adapt',
+    'core/js/views/accessibilityView',
+    'a11y'
+], function(Adapt, AccessibilityView) {
 
     var Accessibility = Backbone.Controller.extend({
 

@@ -34,6 +34,6 @@ module.exports = function(grunt) {
             }
         });
 
-        grunt.file.write(grunt.config('outputdir') + 'course/config.json', JSON.stringify(configJson));
+        grunt.file.write(grunt.config('outputdir') + 'course/config.json', JSON.stringify(configJson, null, 4));
     });
 }

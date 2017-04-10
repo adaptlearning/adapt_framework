@@ -1,7 +1,8 @@
-define(function(require) {
+define([
+    'core/js/adapt',
+    'bowser'
+], function(Adapt, Bowser) {
 
-    var Adapt = require('coreJS/adapt');
-    var Bowser = require('coreJS/libraries/bowser');
     var $window = $(window);
 
     Adapt.device = {
@@ -187,9 +188,11 @@ define(function(require) {
         }
     }
 
-    // Convert 'msie' to 'ie' for backwards compatibility
-    var browserString = (Adapt.device.browser.toLowerCase() === 'msie') ? 'ie' : Adapt.device.browser.toLowerCase();
+    var browser = Adapt.device.browser.toLowerCase();
+    // Convert 'msie' and 'internet explorer' to 'ie'.
+    var browserString = browser.replace(/msie|internet explorer/, 'ie');
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
+    browserString += browserString.replace('.', '-').toLowerCase();
 
     $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
 });

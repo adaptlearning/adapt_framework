@@ -1,6 +1,4 @@
-define(function(require) {
-
-	var Backbone = require('backbone');
+define(function() {
 
     var NotifyModel = Backbone.Model.extend({
         defaults: {

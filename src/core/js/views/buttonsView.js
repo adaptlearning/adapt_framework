@@ -7,6 +7,7 @@ define([
     var textPropertyName = {
         "SUBMIT": "submit",
         "CORRECT": "correct",
+        "INCORRECT": "incorrect",
         "SHOW_CORRECT_ANSWER": "showCorrectAnswer",
         "HIDE_CORRECT_ANSWER": "hideCorrectAnswer",
         "SHOW_FEEDBACK": "showFeedback",
@@ -41,11 +42,7 @@ define([
         },
 
         postRender: function() {
-            this.updateAttemptsCount();
-            this.checkResetSubmittedState();
-            this.checkFeedbackState();
-            this.onButtonStateChanged(null, this.model.get('_buttonState'));
-            this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
+            this.refresh();
         },
 
         checkResetSubmittedState: function() {
@@ -89,12 +86,10 @@ define([
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
-            //use correct instead of complete to signify button state
+            // Use 'correct' instead of 'complete' to signify button state
             var buttonState = BUTTON_STATE(changedAttribute);
-            
-            if (buttonState == BUTTON_STATE.CORRECT) {
-
-				//disable submit button on correct (i.e. no model answer)
+            if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
+                // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
                 this.$('.buttons-action').a11y_cntrl_enabled(false);
 
                 if (!this.model.get("_canShowFeedback")) {
@@ -107,23 +102,18 @@ define([
                 }
 
             } else {
-
-                // Backwords compatibility with v1.x
+                // Backwards compatibility with v1.x
                 var propertyName = textPropertyName[buttonState.asString];
-
                 var ariaLabel = this.model.get('_buttons')["_" + propertyName].ariaLabel;
                 var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
-                switch (buttonState) {
-                    case BUTTON_STATE.SHOW_CORRECT_ANSWER:
-                    case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-                        //make model answer button inaccessible but enabled for visual users
-                        //	due to inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                        this.$('.buttons-action').a11y_cntrl(false).html(buttonText).attr('aria-label', ariaLabel);
-                        break;
-                    default:
-                        //enabled button, make accessible and update aria labels and text.
-                        this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                // Enable the button, make accessible and update aria labels and text
+                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+
+                // Make model answer button inaccessible (but still enabled) for visual users due to 
+                // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+                if (changedAttribute == BUTTON_STATE.SHOW_CORRECT_ANSWER || changedAttribute == BUTTON_STATE.HIDE_CORRECT_ANSWER) {
+                    this.$('.buttons-action').a11y_cntrl(false);
                 }
 
             }
@@ -132,13 +122,11 @@ define([
         },
 
         checkFeedbackState: function(){
-            if (!this.model.get('_canShowFeedback')) {
-                // If feedback should be hidden, the 'Submit' button should stretch
-                // to fill the space and the 'Feedback' button should be hidden.
-                // (These classes must be implemented in the theme.)
-                this.$('.buttons-action').addClass('buttons-action-fullwidth');
-                this.$('.buttons-feedback').addClass('no-feedback');
-            }
+            var canShowFeedback = this.model.get('_canShowFeedback');
+
+            this.$('.buttons-action').toggleClass('buttons-action-fullwidth buttons-action-enlarge', !canShowFeedback);
+            this.$('.buttons-feedback').toggleClass('no-feedback', !canShowFeedback);
+            this.$('.buttons-marking-icon').toggleClass('no-feedback', !canShowFeedback);
         },
 
         updateAttemptsCount: function(model, changedAttribute) {
@@ -175,6 +163,14 @@ define([
             this.$('.buttons-marking-icon')
                 .removeClass('display-none')
                 .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
+        },
+        
+        refresh: function() {
+            this.updateAttemptsCount();
+            this.checkResetSubmittedState();
+            this.checkFeedbackState();
+            this.onButtonStateChanged(null, this.model.get('_buttonState'));
+            this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
         }
 
     });

@@ -1,6 +1,6 @@
 {
   "name": "adapt_framework",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "Adapt Learning output framework",
   "repository": {
     "type": "git",
@@ -128,7 +128,7 @@
       "email": "tom.greenfield@kineo.com"
     }
   ],
-  "devDependencies": {
+  "dependencies": {
     "async": "^1.5.2",
     "chalk": "~1.1.3",
     "columnify": "~1.5.4",

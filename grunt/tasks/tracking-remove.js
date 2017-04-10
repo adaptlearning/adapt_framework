@@ -14,8 +14,8 @@ module.exports = function(grunt) {
             }
             delete course._latestTrackingId;
             grunt.log.writeln("Tracking IDs removed.");
-            grunt.file.write(coursePath, JSON.stringify(course, null, "    "));
-            grunt.file.write(blocksPath, JSON.stringify(blocks, null, "    "));
+            grunt.file.write(coursePath, JSON.stringify(course, null, 4));
+            grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
         }
         
         var blocksFiles = grunt.file.expand(options.blocksFile);
