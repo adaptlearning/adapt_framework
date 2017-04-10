@@ -1,5 +1,17 @@
 ## [Unreleased][unreleased]
 
+## [2.0.19] - 2017-04-10
+
+### Added
+- 'ie' class for Internet Explorer 10 and 11  ([#1504](https://github.com/adaptlearning/adapt_framework/issues/1504))
+
+### Fixed
+- Adapt.offlineStorage not setting ready without Spoor ([#1510](https://github.com/adaptlearning/adapt_framework/issues/1510))
+- Bad references corrected in JavaScript files ([#1517](https://github.com/adaptlearning/adapt_framework/issues/1517))
+
+### Changed
+- devDependencies to dependencies in package.json ([#1507](https://github.com/adaptlearning/adapt_framework/pull/1507))
+
 ## [2.0.18] - 2017-03-31
 
 ### Added
