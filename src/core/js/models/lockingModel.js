@@ -1,6 +1,4 @@
-define([
-	'backbone'
-], function() {
+define(function() {
 
 	var set = Backbone.Model.prototype.set;
 

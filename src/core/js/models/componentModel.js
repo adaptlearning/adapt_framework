@@ -1,7 +1,7 @@
 define([
-    'coreJS/adapt',
-    'coreModels/adaptModel'
-], function(Adapt, AdaptModel) {
+    'core/js/adapt',
+    'core/js/models/adaptModel'
+], function (Adapt, AdaptModel) {
 
     var ComponentModel = AdaptModel.extend({
         _parent:'blocks',

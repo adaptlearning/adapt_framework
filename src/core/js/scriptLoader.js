@@ -16,10 +16,7 @@
                     coreJS: 'core/js',
                     coreViews: 'core/js/views',
                     coreModels: 'core/js/models',
-                    coreCollections: 'core/js/collections',
-                    coreHelpers: 'core/js/helpers',
-                    'coreJS/libraries/bowser': 'libraries/bowser',
-                    'core/js/libraries/bowser': 'libraries/bowser'
+                    coreCollections: 'core/js/collections'
                 }
             },
             paths: {
@@ -98,6 +95,7 @@
             "inview",
             "a11y",
             "scrollTo",
+            "bowser",
             "enum",
             "templates"
         ], loadAdapt);

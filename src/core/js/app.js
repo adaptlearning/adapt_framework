@@ -19,6 +19,7 @@ require([
     'core/js/popupManager',
     'core/js/router',
     'core/js/models/lockingModel',
+    'core/js/helpers',
     'plugins'
 ], function (Adapt, AdaptCollection, StartController, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 

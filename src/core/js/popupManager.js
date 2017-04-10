@@ -1,6 +1,6 @@
-define(function(require) {
-
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     Adapt.on('popup:opened', function($element) {
 
