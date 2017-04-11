@@ -15,7 +15,7 @@ define([
 
         getState: function() {
 
-            var trackable = _.result(this, "trackableProperties", []).slice(0);
+            var trackable = this.resultCopy("trackableProperties", []);
             var json = this.toJSON();
 
             var args = trackable;
@@ -27,7 +27,7 @@ define([
 
         setState: function(state) {
 
-            var trackable = _.result(this, "trackableProperties", []).slice(0);
+            var trackable = this.resultCopy("trackableProperties", []);
 
             var args = trackable;
             args.unshift(state);
@@ -37,11 +37,11 @@ define([
             this.set(state);
 
             return this;
-            
+
         },
 
         triggerState: function() {
-            Adapt.tirgger("state:change", this.getState());
+            Adapt.trigger("state:change", this.getState());
         }
 
     });

@@ -13,24 +13,24 @@ define([
         // Used to set model defaults
         defaults: function() {
             // Extend from the ComponentModel defaults
-            return _.extend({
+            return ComponentModel.resultExtend("defaults", {
                 '_isQuestionType': true,
                 '_shouldDisplayAttempts': false,
                 '_canShowModelAnswer': true,
                 '_canShowFeedback': true,
                 '_canShowMarking': true,
                 '_questionWeight': Adapt.config.get("_questionWeight"),
-            }, ComponentModel.prototype.defaults);
+            });
         },
 
         trackableProperties: function() {
-            // fetch inherited properties, create a copy, add the new ones and return a list of the unique entries only
-            return _.uniq(_.result(ComponentModel.prototype, "trackableProperties", []).slice(1).concat([
+            // Extend from the ComponentModel trackableProperties
+            return ComponentModel.resultExtend("trackableProperties", [
                 "_isSubmitted",
                 "_score",
                 "_isCorrect",
                 "_attemptsLeft"
-            ]));
+            ]);
         },
 
         init: function() {

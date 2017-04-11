@@ -21,8 +21,10 @@
             },
             paths: {
                 underscore: 'libraries/underscore',
+                'underscore.results': 'libraries/underscore.results',
                 backbone: 'libraries/backbone',
                 'backbone.controller': 'libraries/backbone.controller',
+                'backbone.controller.results': 'libraries/backbone.controller.results',
                 handlebars: 'libraries/handlebars',
                 velocity: 'libraries/velocity',
                 imageReady: 'libraries/imageReady',
@@ -87,8 +89,10 @@
     function loadFoundationLibraries() {
         require([
             "underscore",
+            "underscore.results",
             "backbone",
             "backbone.controller",
+            "backbone.controller.results",
             "handlebars",
             "velocity",
             "imageReady",
