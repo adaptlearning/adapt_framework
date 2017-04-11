@@ -25,7 +25,7 @@ define([
 
         trackableProperties: function() {
             // fetch inherited properties, create a copy, add the new ones and return a list of the unique entries only
-            return _.uniq(_.result(ComponentModel.prototype, "trackableProperties", []).slice(0).concat([
+            return _.uniq(_.result(ComponentModel.prototype, "trackableProperties", []).slice(1).concat([
                 "_isSubmitted",
                 "_score",
                 "_isCorrect",
