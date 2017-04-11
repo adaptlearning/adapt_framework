@@ -274,7 +274,7 @@ define([
                 this.$accessibilityToggle.remove();
             }
 
-            if (!Modernizr.touch || this.isActive() || Adapt.config.get("_accessibility")._isDisabledOnTouchDevices) return;
+            if (!Modernizr.touch || this.isActive() || Adapt.config.get("_accessibility")._isDisabledOnTouchDevices !== false) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
