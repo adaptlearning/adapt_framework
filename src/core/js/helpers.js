@@ -1,6 +1,7 @@
 define([
-    'handlebars'
-], function(Handlebars) {
+    'handlebars',
+    'core/js/adapt'
+], function(Handlebars, Adapt){
 
     var helpers = {
 
@@ -66,22 +67,38 @@ define([
             }
         },
 
+        /**
+         * Allow JSON to be a template i.e. you can use handlebars {{expressions}} within your JSON
+         */
         compile: function(template, context) {
-            // Allow JSON to be a template
             if (!template) return "";
             return Handlebars.compile(template)(context || this);
         },
 
+        /**
+         * Allow JSON to be a template and accessible text
+         */
         compile_a11y_text: function(template, context) {
-            // Allow JSON to be a template and accessible text
             if (!template) return "";
             return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template, context));
         },
 
+        /**
+         * Allow JSON to be a template and normalized text
+         */
         compile_a11y_normalize: function(template, context) {
-            // Allow JSON to be a template and normalized text
             if (!template) return "";
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
+        },
+
+        /**
+         * makes the _globals object in course.json available to a template
+         */ 
+        import_globals: function(context) {
+            if(!context.data.root._globals) {
+                context.data.root._globals = Adapt.course.get('_globals');
+            }
+            return "";
         }
 
     };

@@ -80,6 +80,12 @@
                 "resourcesEnd": "You have reached the end of the list of resources."
             }
         },
+        "_learnerInfo": {
+            "id": "student.name@example.org",
+            "name": "Name, Student",
+            "firstname": "Student",
+            "lastname": "Name"
+        },
         "_menu": {
             "_boxmenu": {
                 "ariaRegion": "Menu",
