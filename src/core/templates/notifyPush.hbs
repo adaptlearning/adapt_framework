@@ -1,15 +1,20 @@
+{{! make the _globals object in course.json available to this template}}
+{{import_globals}}
 <div class="notify-push-inner" role="region" aria-label="{{_globals._accessibility._ariaLabels.feedbackPopUp}}">
+	
 	<div class="notify-push-title">
 		<div class="notify-push-title-inner h5" tabindex="0" role="heading" aria-level="1">
-			{{{title}}}
+			{{{compile title this}}}
 		</div>
 	</div>
+	
 	<div class="notify-push-body">
 		<div class="notify-push-body-inner">
-			{{{a11y_text body}}}
+			{{{compile_a11y_text body this}}}
 		</div>
 	</div>
 </div>
-<button class="base notify-push-close" role="button" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
+
+<button class="base notify-push-close" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
 	<span class="icon icon-cross"></span>
 </button>

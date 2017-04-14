@@ -1,28 +1,27 @@
-{{! .component-container: Adapt will place the blocks components inside this class}}
+{{! make the _globals object in course.json available to this template}}
+{{import_globals}}
 <div class="block-inner">
-    {{! Check if a page title exist and render it}}
+
     {{#if displayTitle}}
         <div class="block-title">
             <div role="heading" tabindex="0" class="block-title-inner h3"  aria-level="3">
-                {{{displayTitle}}}
+                {{{compile displayTitle this}}}
             </div>
         </div>
     {{/if}}
 
-    {{! Check if page body exists and render it}}
     {{#if body}}
         <div class="block-body">
             <div class="block-body-inner">
-                {{{a11y_text body}}}
+                {{{compile_a11y_text body this}}}
             </div>
         </div>
     {{/if}}
 
-    {{! Check if page body exists and render it}}
     {{#if instruction}}
         <div class="block-instruction">
             <div class="block-instruction-inner">
-                {{{a11y_text instruction}}}
+                {{{compile_a11y_text instruction this}}}
             </div>
         </div>
     {{/if}}
