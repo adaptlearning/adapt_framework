@@ -4,7 +4,7 @@
     an array/object or a function which returns an array/object, to create a copy of the
     returned value or to extend a copy of the returned value.
 */
-define('backbone.results', [
+define('backbone.controller.results', [
     'underscore.results',
     'backbone.controller'
 ], function(_, Backbone) {

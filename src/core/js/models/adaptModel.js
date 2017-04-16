@@ -20,6 +20,42 @@ define([
             _isLocked: false
         },
 
+        trackable: [
+            '_isComplete',
+            '_isInteractionComplete'
+        ],
+
+        getState: function() {
+
+            var trackable = this.resultCopy("trackable", []);
+            var json = this.toJSON();
+
+            var args = trackable;
+            args.unshift(json);
+
+            return _.pick.apply(_, args);
+
+        },
+
+        setState: function(state) {
+
+            var trackable = this.resultCopy("trackable", []);
+
+            var args = trackable;
+            args.unshift(state);
+
+            state = _.pick.apply(_, args);
+
+            this.set(state);
+
+            return this;
+
+        },
+
+        triggerState: function() {
+            Adapt.trigger("state:change", this.getState());
+        },
+
         initialize: function () {
             // Wait until data is loaded before setting up model
             this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
