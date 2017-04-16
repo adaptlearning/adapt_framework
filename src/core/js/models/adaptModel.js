@@ -4,6 +4,9 @@ define([
 
     var AdaptModel = Backbone.Model.extend({
 
+        _isTrackableStateTriggered: false,
+        _isInitialized: false,
+
         defaults: {
             _canShowFeedback: true,
             _classes: "",
@@ -25,44 +28,15 @@ define([
             '_isInteractionComplete'
         ],
 
-        getState: function() {
-
-            var trackable = this.resultCopy("trackable", []);
-            var json = this.toJSON();
-
-            var args = trackable;
-            args.unshift(json);
-
-            return _.pick.apply(_, args);
-
-        },
-
-        setState: function(state) {
-
-            var trackable = this.resultCopy("trackable", []);
-
-            var args = trackable;
-            args.unshift(state);
-
-            state = _.pick.apply(_, args);
-
-            this.set(state);
-
-            return this;
-
-        },
-
-        triggerState: function() {
-            Adapt.trigger("state:change", this.getState());
-        },
-
         initialize: function () {
+
             // Wait until data is loaded before setting up model
             this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
 
         },
 
         setupModel: function() {
+
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
             }
@@ -86,7 +60,54 @@ define([
                     
                     this.checkLocking();
                 }
+
+                this.setupTrackables();
+
             }, this));
+
+        },
+
+        setupTrackables: function() {
+
+            // Limit state trigger calls and make state change callbacks batched-asynchronous
+            var originalTrackableStateFunction = this.triggerTrackableState;
+            this.triggerTrackableState = _.compose(
+                _.bind(function() {
+
+                    // Flag that the function is awaiting trigger
+                    this.triggerTrackableState.isQueued = true;
+
+                }, this),
+                _.debounce(_.bind(function() {
+                    
+                    // Trigger original function
+                    originalTrackableStateFunction.apply(this);
+
+                    // Unset waiting flag
+                    this.triggerTrackableState.isQueued = false;
+
+                }, this), 17)
+            );
+
+            // Listen to model changes, trigger trackable state change when appropriate
+            this.listenTo(this, "change", function(model, value) {
+
+                // Skip if trigger queued or adapt hasn't started yet
+                if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
+                    return
+                }
+
+                // Check that property is trackable
+                var trackable = _.result(this, 'trackable', []);
+                if (!_.keys(model.changed).find(function(item, index) {
+                    return _.contains(trackable, item);
+                })) return;
+
+                // Trigger trackable state change
+                this.triggerTrackableState();
+
+            });
+
         },
 
         setupChildListeners: function() {
@@ -102,6 +123,39 @@ define([
         },
 
         init: function() {},
+
+        getTrackableState: function() {
+
+            var trackable = this.resultCopy("trackable", []);
+            var json = this.toJSON();
+
+            var args = trackable;
+            args.unshift(json);
+
+            return _.pick.apply(_, args);
+
+        },
+
+        setTrackableState: function(state) {
+
+            var trackable = this.resultCopy("trackable", []);
+
+            var args = trackable;
+            args.unshift(state);
+
+            state = _.pick.apply(_, args);
+
+            this.set(state);
+
+            return this;
+
+        },
+
+        triggerTrackableState: function() {
+            
+            Adapt.trigger("state:change", this, this.getTrackableState());
+            
+        },
 
         reset: function(type, force) {
             if (!this.get("_canReset") && !force) return;
@@ -123,6 +177,7 @@ define([
                 });
                 break;
             }
+
         },
 
         checkReadyStatus: function () {
