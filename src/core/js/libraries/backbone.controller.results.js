@@ -1,6 +1,6 @@
-// 2017-04-11 https://github.com/cgkineo/underscore.results
+// 2017-04-16 https://github.com/cgkineo/backbone.controller.results
 /*
-    These function are useful inside as methods to grab instance or class properties listed either as
+    These function are to grab instance or class properties listed either as
     an array/object or a function which returns an array/object, to create a copy of the
     returned value or to extend a copy of the returned value.
 */
