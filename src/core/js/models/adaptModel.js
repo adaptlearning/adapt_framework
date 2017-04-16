@@ -4,9 +4,6 @@ define([
 
     var AdaptModel = Backbone.Model.extend({
 
-        _isTrackableStateTriggered: false,
-        _isInitialized: false,
-
         defaults: {
             _canShowFeedback: true,
             _classes: "",
@@ -29,14 +26,12 @@ define([
         ],
 
         initialize: function () {
-
             // Wait until data is loaded before setting up model
             this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
 
         },
 
         setupModel: function() {
-
             if (this.get('_type') === 'page') {
                 this._children = 'articles';
             }
@@ -177,7 +172,6 @@ define([
                 });
                 break;
             }
-
         },
 
         checkReadyStatus: function () {
