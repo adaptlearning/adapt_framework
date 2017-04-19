@@ -475,7 +475,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.18...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.19...HEAD
+[2.0.19]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.18...v2.0.19
 [2.0.18]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.17...v2.0.18
 [2.0.17]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.16...v2.0.17
 [2.0.16]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.15...v2.0.16
