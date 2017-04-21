@@ -118,6 +118,13 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
+        if (!Adapt.isWaitingForPlugins()) triggerInitialisation();
+        else Adapt.once('plugins:ready', function() {
+            triggerInitialisation();
+        });
+    }
+
+    function triggerInitialisation() {
         Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
 
         Adapt.initialize();
