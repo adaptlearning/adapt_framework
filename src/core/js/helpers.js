@@ -92,7 +92,7 @@ define([
         },
 
         /**
-         * Allow templates to references view functions
+         * Allow templates to reference view functions
          */
         helperMissing: function() {
 
@@ -102,19 +102,24 @@ define([
             var name = context.name;
             var view = root.view;
             
-            if (!view) {
+            var hasViewNamePrefix = (name.substr(0,5) == "view.");
+            if (!view || !hasViewNamePrefix ) {
                 Adapt.log.error('Missing helper: "'+name+'"', root);
                 return "";
             }
 
-            switch (typeof view[name]) {
+            var viewNamePostfix = name.substr(5);
+            var viewProperty = view[viewNamePostfix];
+            var viewPropertyType = (typeof viewProperty);
+
+            switch (viewPropertyType) {
                 case "function":
-                    return view[name].apply(view, args);
+                    return viewProperty.apply(view, args);
                 case "undefined":
                     Adapt.log.error('Missing helper: "'+name+'"', root);
                     return "";
                 default:
-                    return view[name]; 
+                    return viewProperty; 
             }
 
         },
