@@ -118,9 +118,9 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
-        if (!Adapt.isWaitingForPlugins()) triggerInitialize(newLanguage);
+        if (!Adapt.isWaitingForPlugins()) triggerInitialize();
         else Adapt.once('plugins:ready', function() {
-            triggerInitialize(newLanguage);
+            triggerInitialize();
         });
     }
 
