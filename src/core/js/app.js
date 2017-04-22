@@ -118,6 +118,15 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
+        if (!Adapt.isWaitingForPlugins()) triggerInitialize(newLanguage);
+        else Adapt.once('plugins:ready', function() {
+            triggerInitialize(newLanguage);
+        });
+    }
+
+    function triggerInitialize() {
+        Adapt.log.debug('Calling Adapt.initialize');
+
         Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
 
         Adapt.initialize();
