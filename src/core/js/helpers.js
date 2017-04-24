@@ -90,39 +90,6 @@ define([
             if (!template) return "";
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
         },
-
-        /**
-         * Allow templates to reference view functions
-         */
-        helperMissing: function() {
-
-            var args = Array.prototype.slice.call(arguments, 0);
-            var context = args[args.length-1];
-            var root = context.data.root;
-            var name = context.name;
-            var view = root.view;
-            
-            var hasViewNamePrefix = (name.substr(0,5) == "view.");
-            if (!view || !hasViewNamePrefix ) {
-                Adapt.log.error('Missing helper: "'+name+'"', root);
-                return "";
-            }
-
-            var viewNamePostfix = name.substr(5);
-            var viewProperty = view[viewNamePostfix];
-            var viewPropertyType = (typeof viewProperty);
-
-            switch (viewPropertyType) {
-                case "function":
-                    return viewProperty.apply(view, args);
-                case "undefined":
-                    Adapt.log.error('Missing helper: "'+name+'"', root);
-                    return "";
-                default:
-                    return viewProperty; 
-            }
-
-        },
       
         /**
          * makes the _globals object in course.json available to a template
