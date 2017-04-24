@@ -32,7 +32,6 @@ define([
 
             var data = this.model.toJSON();
             data.view = this;
-            data.model = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
