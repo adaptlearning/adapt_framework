@@ -90,7 +90,7 @@ define([
             if (!template) return "";
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
         },
-      
+
         /**
          * makes the _globals object in course.json available to a template
          */ 
