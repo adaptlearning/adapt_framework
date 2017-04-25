@@ -180,7 +180,7 @@ define([
                 
                 //focus on first tabbable element in drawer
                 this.$el.a11y_focus();
-			}
+	    }
 
         },
 
