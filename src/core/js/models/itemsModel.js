@@ -33,15 +33,17 @@ define([
 
         setItemAtIndexAsVisited: function(index) {
             var item = this.get('_items')[index];
-            item._isVisited = true;
+            if (item) {
+                item._isVisited = true;
+            }
         },
 
-        getCompletionStatus: function() {
-            return (this.getVisitedItems().length == this.get('_items').length);
+        areAllIItemsCompleted: function() {
+            return (this.getVisitedItems().length == this.getItemCount());
         },
 
         checkCompletionStatus: function() {
-            if (this.getCompletionStatus()) {
+            if (this.areAllIItemsCompleted()) {
                 this.setCompletionStatus();
             }
         },
