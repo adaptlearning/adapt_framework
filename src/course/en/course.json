@@ -130,7 +130,8 @@
                 "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
                 "feedbackPopUp": "Popup opened.",
                 "menuBack": "Back to menu",
-                "visited": "Visited"
+                "visited": "Visited",
+                "languagePicker": "Select course language"
             }
         }
     },
