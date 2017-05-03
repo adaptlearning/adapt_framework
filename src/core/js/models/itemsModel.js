@@ -21,7 +21,7 @@ define([
             return this.get('_items').length;
         },
 
-        getItemAtIndex: function(index) {
+        getItem: function(index) {
             return this.get('_items')[index];
         },
 
@@ -31,7 +31,7 @@ define([
             });
         },
 
-        setItemAtIndexAsVisited: function(index) {
+        setItemVisited: function(index) {
             var item = this.get('_items')[index];
             if (item) {
                 item._isVisited = true;
@@ -91,7 +91,7 @@ define([
             return this.getActiveItemsIndexes()[0];
         },
 
-        setItemAtIndexAsActive: function(index, trigger) {
+        setItemActive: function(index, trigger) {
             var items = this.get('_items');
             var item = items[index];
             
@@ -105,7 +105,7 @@ define([
             return item;
         },
         
-        setItemAtIndexAsInactive: function(index, trigger) {
+        setItemInactive: function(index, trigger) {
             var items = this.get('_items');
             var item = items[index];
             
