@@ -39,7 +39,7 @@ define([
         },
 
         areAllIItemsCompleted: function() {
-            return (this.getVisitedItems().length == this.getItemCount());
+            return (this.getVisitedItems().length === this.getItemCount());
         },
 
         checkCompletionStatus: function() {
