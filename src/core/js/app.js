@@ -119,9 +119,7 @@ require([
         }
 
         if (!Adapt.isWaitingForPlugins()) triggerInitialize();
-        else Adapt.once('plugins:ready', function() {
-            triggerInitialize();
-        });
+        else Adapt.once('plugins:ready', triggerInitialize);
     }
 
     function triggerInitialize() {
