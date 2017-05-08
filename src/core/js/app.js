@@ -121,8 +121,11 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
-        if (!Adapt.isWaitingForPlugins()) triggerInitialize();
-        else Adapt.once('plugins:ready', triggerInitialize);
+        if (!Adapt.isWaitingForPlugins()) {
+            triggerInitialize();
+        } else {
+            Adapt.once('plugins:ready', triggerInitialize);
+        }
     }
 
     function triggerInitialize() {
