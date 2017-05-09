@@ -1,4 +1,4 @@
-//https://github.com/adaptlearning/jquery.imageready 2017-04-21
+//https://github.com/adaptlearning/jquery.imageready 2017-05-09
 
 ;(function( $ ) {
 
@@ -80,7 +80,6 @@
 
         //get all child images
         var $images = $set.find("img").add( $set.filter("img") );
-        $images.loaded = 0;
 
         //get all background images
         $set.each(function() {
@@ -103,6 +102,8 @@
             });
 
         });
+        
+        $images.loaded = 0;
 
         //return undefined if no images found
         if ($images.length === 0) return;
