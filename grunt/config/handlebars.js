@@ -21,6 +21,7 @@ module.exports = function(grunt) {
                         '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
                         '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
                     ],
+                    follow: true,
                     dest: '<%= outputdir %>templates.js',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
