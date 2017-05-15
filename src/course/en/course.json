@@ -4,7 +4,7 @@
     "title": "Adapt Version 2.0 demonstration",
     "displayTitle": "Adapt Version 2.0 demonstration",
     "description": "A sample course demonstrating the capabilities of the Adapt Framework v2.0",
-    "body": "Hello {{_globals._learnerInfo.firstname}} - welcome to the demonstration build for Version 2.0 of the Adapt framework.<br><br>We’ve added some major new items of functionality to Adapt for this release, most notably accessibility to WAI level AA, right to left language support and greatly improved assessments. To find out more, visit <a href='https://www.adaptlearning.org/index.php/adapt-framework/' target='_blank'>https://www.adaptlearning.org/index.php/adapt-framework</a>.",
+    "body": "Hello {{_globals._learnerInfo.firstname}} - welcome to the demonstration build for Version 2.0 of the Adapt framework.<br><br>We’ve added some major new items of functionality to Adapt for this release, most notably accessibility to WAI level AA, right to left language support and greatly improved assessments. Find out more <a href='https://www.adaptlearning.org/index.php/adapt-framework/' target='_blank'>here</a>.",
     "_buttons": {
         "_submit": {
             "buttonText": "Submit",
