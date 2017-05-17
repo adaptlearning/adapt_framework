@@ -9,9 +9,9 @@ define([
         touch: Modernizr.touch,
         screenWidth: getScreenWidth(),
         screenHeight: getScreenHeight(),
-        browser: Bowser.name,
-        version: Bowser.version,
-        OS: getOperatingSystem(),
+        browser: (Bowser.name || '').toLowerCase(),
+        version: (Bowser.version || '').toLowerCase(),
+        OS: getOperatingSystem().toLowerCase(),
         osVersion: Bowser.osversion || '',
         renderingEngine: getRenderingEngine()
     };
