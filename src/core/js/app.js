@@ -80,12 +80,6 @@ require([
 
             Adapt.setupMapping();
 
-            try {
-                Adapt.trigger('app:dataLoaded');
-            } catch(e) {
-                Adapt.log.error('Error during app:dataLoaded trigger', e);
-            }
-
             if (!Adapt.isWaitingForPlugins()) {
                 triggerDataReady(newLanguage);
             } else {
