@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                     dest: '<%= outputdir %>templates.js',
                     filter: function(filepath) {
                         if (filepath.indexOf(grunt.config('sourcedir') + 'core/') > -1) {
-                            // Always include core teomplates.
+                            // Always include core templates.
                             return true;
                         }
 
