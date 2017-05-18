@@ -519,9 +519,6 @@
         function onFocusCapture(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
-
-            //preventDefault(event);
-            event.stopPropagation();
             var $element = $(event.target);
             
             //search out intended click element

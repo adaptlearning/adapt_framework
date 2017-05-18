@@ -9,7 +9,7 @@
     },
     "_accessibility": {
         "_isEnabled": true,
-        "_isDisabledOnTouchDevices": false,
+        "_isEnabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true

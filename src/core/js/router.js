@@ -15,6 +15,8 @@ define([
             this.showLoading();
             // Store #wrapper element to cache for later
             this.$wrapper = $('#wrapper');
+            this.$html = $('html');
+
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
@@ -309,6 +311,17 @@ define([
                     + ' location-id-'
                     + Adapt.location._currentId :
                     'location-' + Adapt.location._currentLocation;
+
+            var previousClasses = Adapt.location._previousClasses;
+            if (previousClasses) {
+                this.$html.removeClass(previousClasses);
+            }
+            Adapt.location._previousClasses = classes;
+
+            this.$html
+                .addClass(classes)
+                .attr('data-location', Adapt.location._currentLocation);
+                
             this.$wrapper
                 .removeClass()
                 .addClass(classes)

@@ -131,11 +131,24 @@ require([
     function triggerInitialize() {
         Adapt.log.debug('Calling Adapt.initialize');
 
-        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+        addNavigationBa
 
         Adapt.initialize();
 
         Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+    }
+
+    function addNavigationBar() {
+
+        var adaptConfig = Adapt.course.get("_navigation");
+
+        if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
+            Adapt.trigger("navigation:initialize");
+            return;
+        }
+
+        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+
     }
 
     function configureInview() {

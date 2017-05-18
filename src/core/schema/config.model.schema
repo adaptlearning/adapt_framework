@@ -54,14 +54,14 @@
           "title": "Enable accessibility?",
           "help": "If set to 'true', accessibility features will be enabled in this course"
         },
-        "_isDisabledOnTouchDevices": {
+        "_isEnabledOnTouchDevices": {
           "type": "bool",
           "default": "false",
           "isSetting": false,
           "inputType": {"type": "Boolean", "options": [true, false]},
           "validators": [],
-          "title": "Disable accessibility on touch devices?",
-          "help": "If set to 'true', accessibility features will be disabled on touch devices - useful if you only need accessibility on desktop browsers."
+          "title": "Enable accessibility on touch devices?",
+          "help": "If set to 'true', accessibility features will be enabled on touch devices - useful if you need accessibility on mobile browsers."
         },
         "_shouldSupportLegacyBrowsers": {
           "type": "bool",

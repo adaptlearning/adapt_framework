@@ -3,15 +3,16 @@ define([
     'bowser'
 ], function(Adapt, Bowser) {
 
+    var $html = $('html');
     var $window = $(window);
 
     Adapt.device = {
         touch: Modernizr.touch,
         screenWidth: getScreenWidth(),
         screenHeight: getScreenHeight(),
-        browser: Bowser.name,
-        version: Bowser.version,
-        OS: getOperatingSystem(),
+        browser: (Bowser.name || '').toLowerCase(),
+        version: (Bowser.version || '').toLowerCase(),
+        OS: getOperatingSystem().toLowerCase(),
         osVersion: Bowser.osversion || '',
         renderingEngine: getRenderingEngine()
     };
@@ -34,10 +35,10 @@ define([
     Adapt.once('app:dataReady', function() {
         Adapt.device.screenSize = checkScreenSize();
 
-        $('html').addClass('size-' + Adapt.device.screenSize);
+        $html.addClass('size-' + Adapt.device.screenSize);
         
         if (Adapt.device.orientation) {
-            $('html').addClass('orientation-' + Adapt.device.orientation);
+            $html.addClass('orientation-' + Adapt.device.orientation);
         }
 
         // As Adapt.config is available it's ok to bind the 'resize'.
@@ -134,10 +135,10 @@ define([
         if (newScreenSize !== Adapt.device.screenSize) {
             Adapt.device.screenSize = newScreenSize;
 
-            $('html').removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
+            $html.removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
 
             if (Adapt.device.orientation) {
-                $('html').removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
+                $html.removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
             }
 
             Adapt.trigger('device:changed', Adapt.device.screenSize);
@@ -194,5 +195,5 @@ define([
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
     browserString += browserString.replace('.', '-').toLowerCase();
 
-    $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
+    $html.addClass(browserString + ' pixel-density-' + pixelDensity());
 });

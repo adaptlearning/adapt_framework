@@ -72,6 +72,7 @@ define([
          */
         compile: function(template, context) {
             if (!template) return "";
+            if (template instanceof Object) template = template.toString();
             return Handlebars.compile(template)(context || this);
         },
 
@@ -80,6 +81,7 @@ define([
          */
         compile_a11y_text: function(template, context) {
             if (!template) return "";
+            if (template instanceof Object) template = template.toString();
             return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template, context));
         },
 
@@ -88,6 +90,7 @@ define([
          */
         compile_a11y_normalize: function(template, context) {
             if (!template) return "";
+            if (template instanceof Object) template = template.toString();
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
         },
 
