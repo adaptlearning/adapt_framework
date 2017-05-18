@@ -31,6 +31,7 @@ define([
             Adapt.trigger(this.constructor.type + 'View:preRender', this);
 
             var data = this.model.toJSON();
+            data.view = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
