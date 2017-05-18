@@ -131,7 +131,7 @@ require([
     function triggerInitialize() {
         Adapt.log.debug('Calling Adapt.initialize');
 
-        addNavigationBa
+        addNavigationBar();
 
         Adapt.initialize();
 
