@@ -55,9 +55,7 @@ module.exports = function (grunt, options) {
                     expand: true,
                     src: ['<%= sourcedir %>core/assets/**'],
                     dest: '<%= outputdir %>adapt/css/assets/',
-                    filter: function(filepath) {
-                        return grunt.config('helpers').includedFilter(filepath);
-                    },
+                    filter: 'isFile',
                     flatten: true
                 }
             ]
@@ -136,9 +134,7 @@ module.exports = function (grunt, options) {
                     expand: true,
                     src: ['<%= sourcedir %>core/fonts/**'],
                     dest: '<%= outputdir %>adapt/css/fonts/',
-                    filter: function(filepath) {
-                        return grunt.config('helpers').includedFilter(filepath);
-                    },
+                    filter: 'isFile',
                     flatten: true
                 }
             ]
