@@ -54,15 +54,17 @@ define([
         },
 
         setupChildListeners: function() {
+            var children = this.getChildren();
 
-            if (!this.getChildren()) return;
+            if (!children) return;
 
-            this.listenTo(Adapt[this._children], {
-                "change:_isReady": this.checkReadyStatus,
-                "change:_isComplete": this.onIsComplete,
-                "change:_isInteractionComplete": this.checkInteractionCompletionStatus
-            });
-
+            children.each(function(child) {
+                this.listenTo(child, {
+                    "change:_isReady": this.checkReadyStatus,
+                    "change:_isComplete": this.onIsComplete,
+                    "change:_isInteractionComplete": this.checkInteractionCompletionStatus
+                });
+            }, this);
         },
 
         init: function() {},
