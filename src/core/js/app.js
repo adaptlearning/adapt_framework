@@ -86,10 +86,13 @@ require([
                 Adapt.log.error('Error during app:dataLoaded trigger', e);
             }
 
-            if (!Adapt.isWaitingForPlugins()) triggerDataReady(newLanguage);
-            else Adapt.once('plugins:ready', function() {
+            if (!Adapt.isWaitingForPlugins()) {
                 triggerDataReady(newLanguage);
-            });
+            } else {
+                Adapt.once('plugins:ready', function() {
+                    triggerDataReady(newLanguage);
+                });
+            }
         }
     };
 
@@ -117,6 +120,16 @@ require([
         } catch(e) {
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
+
+        if (!Adapt.isWaitingForPlugins()) {
+            triggerInitialize();
+        } else {
+            Adapt.once('plugins:ready', triggerInitialize);
+        }
+    }
+
+    function triggerInitialize() {
+        Adapt.log.debug('Calling Adapt.initialize');
 
         addNavigationBar();
 
