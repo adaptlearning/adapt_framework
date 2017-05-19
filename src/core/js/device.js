@@ -127,8 +127,16 @@ define([
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
         // Calculate the screen properties.
+        var previousWidth = Adapt.device.screenWidth;
+        var previousHeight = Adapt.device.screenHeight;
+
         Adapt.device.screenWidth = getScreenWidth();
         Adapt.device.screenHeight = getScreenHeight();
+
+        if (previousWidth === Adapt.device.screenWidth && previousHeight === Adapt.device.screenHeight) {
+            // Do not trigger a change if the viewport hasn't actually changed.  Scrolling on iOS will trigger a resize.
+            return;
+        }
 
         var newScreenSize = checkScreenSize();
 
