@@ -1,6 +1,6 @@
 ## [Unreleased][unreleased]
 
-## [2.1.0] - 2017-05-23
+## [2.1.0] - 2017-05-24
 
 ### Added
 - allow json to include handlebars style expressions; amend course description as a demonstration of how this works ([#1040](https://github.com/adaptlearning/adapt_framework/issues/1040))
