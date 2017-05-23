@@ -1,5 +1,36 @@
 ## [Unreleased][unreleased]
 
+## [2.1.0] - 2017-05-23
+
+### Added
+- allow json to include handlebars style expressions; amend course description as a demonstration of how this works ([#1040](https://github.com/adaptlearning/adapt_framework/issues/1040))
+- added new `itemsModel` to core code as part of the work to separate model code from the view code ([#1179](https://github.com/adaptlearning/adapt_framework/issues/1179))
+- allow handlebars to reference view functions directly ([#1514](https://github.com/adaptlearning/adapt_framework/issues/1514))
+- latest version of the imageReady library ([#1534](https://github.com/adaptlearning/adapt_framework/pull/1534))
+  - refactored code to make it easier to read
+  - adds speed improvements
+  - fixes cache issues in Firefox and Chrome
+  - stops it from waiting for missing images
+  - now correctly reports timed-out images
+  - fetches background images when no `<img>` tags are present 
+
+### Fixed
+- `adapt:initialize` being called before plugins have chance to complete aysnc ops during `app:dataReady` ([#1536](https://github.com/adaptlearning/adapt_framework/issues/1536))
+- Accessibility JQuery plugin was stopping the [Select2 library](http://select2.github.io/) used in the [adapt-contrib-matching component](https://github.com/adaptlearning/adapt-contrib-matching) from making sure only one `<select>` control could be open at once ([#1541](https://github.com/adaptlearning/adapt_framework/issues/1541))
+- Handlerbars `compile` helper wasn't able to handle String objects ([#1545](https://github.com/adaptlearning/adapt_framework/issues/1545))
+- The Grunt handlebars compile task wasn't configured to follow 'symlinked' directories when expanding `**` patterns ([#1556](https://github.com/adaptlearning/adapt_framework/pull/1556))
+- The properties of the `Adapt.device` object should be lowercase ([#1560](https://github.com/adaptlearning/adapt_framework/issues/1560))
+- Problem with Grunt copy task for core fonts and assets ([#1564](https://github.com/adaptlearning/adapt_framework/issues/1564))
+- Removed duplicate call to `app:dataLoaded` ([#1532](https://github.com/adaptlearning/adapt_framework/issues/1532))
+- Scrolling on mobile iOS triggering `device:resize` events ([#1561](https://github.com/adaptlearning/adapt_framework/issues/1561))
+
+
+### Changed
+- Moved navigation bar outside of the `.wrapper` div in preparation for improvements to behaviour of Adapt inside iframes/framesets on iOS ([#1521](https://github.com/adaptlearning/adapt_framework/issues/1521))
+- Link in course body so that it reads 'Find out more here' instead of showing the underlying URL ([#1477](https://github.com/adaptlearning/adapt_framework/issues/1477)) 
+- Made `adaptModel.setupChildListeners` listen to ALL child types ([#695](https://github.com/adaptlearning/adapt_framework/issues/695))
+- Set accessibility to be disabled on 'touch' devices by default; added a new config setting - `_accessibility._isEnabledOnTouchDevices` - to allow it to be enabled when required ([#1519](https://github.com/adaptlearning/adapt_framework/issues/1519)) 
+
 ## [2.0.19] - 2017-04-10
 
 ### Added
@@ -475,7 +506,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.19...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.19...v2.1.0
 [2.0.19]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.18...v2.0.19
 [2.0.18]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.17...v2.0.18
 [2.0.17]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.16...v2.0.17
