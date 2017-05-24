@@ -3,7 +3,7 @@
 ## [2.1.0] - 2017-05-24
 
 ### Added
-- allow json to include handlebars style expressions; amend course description as a demonstration of how this works ([#1040](https://github.com/adaptlearning/adapt_framework/issues/1040))
+- allow json to include handlebars-style expressions; amend course description as a demonstration of how this works ([#1040](https://github.com/adaptlearning/adapt_framework/issues/1040))
 - added new `itemsModel` to core code as part of the work to separate model code from the view code ([#1179](https://github.com/adaptlearning/adapt_framework/issues/1179))
 - allow handlebars to reference view functions directly ([#1514](https://github.com/adaptlearning/adapt_framework/issues/1514))
 - latest version of the imageReady library ([#1534](https://github.com/adaptlearning/adapt_framework/pull/1534))
