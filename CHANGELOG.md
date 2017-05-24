@@ -28,7 +28,7 @@
 ### Changed
 - Moved navigation bar outside of the `.wrapper` div in preparation for improvements to behaviour of Adapt inside iframes/framesets on iOS ([#1521](https://github.com/adaptlearning/adapt_framework/issues/1521))
 - Link in course body so that it reads 'Find out more here' instead of showing the underlying URL ([#1477](https://github.com/adaptlearning/adapt_framework/issues/1477)) 
-- Made `adaptModel.setupChildListeners` listen to ALL child types ([#695](https://github.com/adaptlearning/adapt_framework/issues/695))
+- Amended `adaptModel.setupChildListeners` to listen only to immediate children ([#695](https://github.com/adaptlearning/adapt_framework/issues/695))
 - Set accessibility to be disabled on 'touch' devices by default; added a new config setting - `_accessibility._isEnabledOnTouchDevices` - to allow it to be enabled when required ([#1519](https://github.com/adaptlearning/adapt_framework/issues/1519)) 
 
 ## [2.0.19] - 2017-04-10
