@@ -73,7 +73,12 @@ define([
         compile: function(template, context) {
             if (!template) return "";
             if (template instanceof Object) template = template.toString();
-            return Handlebars.compile(template)(context || this);
+            var data = this;
+            if (context) {
+                // choose between a passed argument context or the default handlebars helper context
+                data = (!context.data || !context.data.root ? context : context.data.root);
+            }
+            return Handlebars.compile(template)(data);
         },
 
         /**
