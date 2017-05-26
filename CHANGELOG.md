@@ -1,5 +1,10 @@
 ## [Unreleased][unreleased]
 
+## [2.1.1] - 2017-05-26
+
+### Fixed
+- `helpers.compile` wasn't passing through the correct context ([#1572](https://github.com/adaptlearning/adapt_framework/issues/1572))
+
 ## [2.1.0] - 2017-05-24
 
 ### Added
@@ -506,7 +511,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.1...HEAD
+[2.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.19...v2.1.0
 [2.0.19]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.18...v2.0.19
 [2.0.18]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.17...v2.0.18
