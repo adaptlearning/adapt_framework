@@ -411,6 +411,28 @@ define([
             this.checkCompletionStatus();
             
             this.checkLocking();
+        }, 
+
+        filterAvailableChildren: function(children) {
+            var availableChildren = [];
+
+            function unavailableInHierarchy(parents) {
+                if (parents.length > 0) {
+                    var parentsAvailable = parents.map(function(parent) {
+                        return parent.get('_isAvailable');
+                    });
+                    return parentsAvailable.indexOf(false) > -1;
+                }
+            }
+
+            _.each(children, function(child) {
+                var parents = child.getParents().models;
+                if (!unavailableInHierarchy(parents)) {
+                    availableChildren.push(child);
+                }
+            });
+
+            return availableChildren;
         }
 
     });
