@@ -1,6 +1,4 @@
-function posix(location) {
-    return location.replace(/\\/g, "/");
-}
+var path = require("path");
 
 module.exports = function(grunt) {
     return {
@@ -28,7 +26,7 @@ module.exports = function(grunt) {
                     follow: true,
                     dest: '<%= outputdir %>templates.js',
                     filter: function(filepath) {
-                        if (posix(filepath).indexOf(posix(grunt.config('sourcedir') + 'core/')) > -1) {
+                        if (filepath.indexOf(path.join(grunt.config('sourcedir'), 'core')) > -1) {
                             // Always include core templates.
                             return true;
                         }
