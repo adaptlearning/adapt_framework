@@ -1,5 +1,10 @@
 ## [Unreleased][unreleased]
 
+## [2.1.2] - 2017-05-31
+
+### Fixed
+- grunt handlebars wasn't filtering correctly on Windows
+
 ## [2.1.1] - 2017-05-26
 
 ### Fixed
