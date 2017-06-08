@@ -32,7 +32,7 @@ define('underscore.results', [
                         result = [];
                         break;
                     case "object":
-                        retuls = {};
+                        result = {};
                         break;
                     default:
                         throw "Incorrect types in resultExtend";
@@ -82,7 +82,7 @@ define('underscore.results', [
                         result = [];
                         break;
                     case "object":
-                        retuls = {};
+                        result = {};
                         break;
                     default:
                         /*
