@@ -1,9 +1,14 @@
 ## [Unreleased][unreleased]
 
+## [2.1.3] - 2017-06-16
+
+### Fixed
+- circular routing control reset ([#1582](https://github.com/adaptlearning/adapt_framework/issues/1582))
+
 ## [2.1.2] - 2017-05-31
 
 ### Fixed
-- grunt handlebars wasn't filtering correctly on Windows
+- grunt handlebars wasn't filtering correctly on Windows ([#1577](https://github.com/adaptlearning/adapt_framework/issues/1577))
 
 ## [2.1.1] - 2017-05-26
 
@@ -516,7 +521,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.1...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.3...HEAD
+[2.1.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.2...v2.1.3
+[2.1.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.19...v2.1.0
 [2.0.19]: https://github.com/adaptlearning/adapt_framework/compare/v2.0.18...v2.0.19
