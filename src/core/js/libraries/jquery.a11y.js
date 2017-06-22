@@ -18,7 +18,7 @@
             "focusguard": "#a11y-focusguard",
             "selected": "#a11y-selected",
             "ignoreFocusElements": ".a11y-ignore-focus",
-            "nativeSpaceElements": "textarea, input[type='text']",
+            "nativeSpaceElements": "textarea, input[type='text'], div[contenteditable=true]",
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
             "nativeTabElements": "textarea, input, select",
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
@@ -519,9 +519,6 @@
         function onFocusCapture(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
-
-            //preventDefault(event);
-            event.stopPropagation();
             var $element = $(event.target);
             
             //search out intended click element

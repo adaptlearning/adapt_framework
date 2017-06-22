@@ -21,6 +21,12 @@ module.exports = function (grunt, options) {
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
                 optimize: 'none'
+            },
+            //newer configuration
+            files: {
+              '<%= outputdir %>adapt/js/adapt.min.js': [
+                '<%= sourcedir %>/**/*.js'
+              ]
             }
         },
         compile: {

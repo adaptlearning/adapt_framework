@@ -1,7 +1,6 @@
-define(function (require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function (Adapt) {
 
     var AdaptModel = Backbone.Model.extend({
 
@@ -65,7 +64,6 @@ define(function (require) {
                 "change:_isComplete": this.onIsComplete,
                 "change:_isInteractionComplete": this.checkInteractionCompletionStatus
             });
-
         },
 
         init: function() {},
@@ -80,7 +78,7 @@ define(function (require) {
                 this.set({
                     _isEnabled: true,
                     _isComplete: false,
-                    _isInteractionComplete: false,
+                    _isInteractionComplete: false
                 });
                 break;
             case "soft":

@@ -23,7 +23,14 @@ module.exports = {
             '!<%= sourcedir %>extensions/extensions.js',
             '!<%= sourcedir %>menu/menu.js',
             '!<%= sourcedir %>theme/theme.js',
-            '!<%= sourcedir %>templates/templates.js'
+            '!<%= sourcedir %>templates/templates.js',
+            '!<%= sourcedir %>core/js/scriptLoader.js',
+            '!<%= sourcedir %>core/js/libraries/require.js',
+            '!<%= sourcedir %>core/js/libraries/modernizr.js',
+            '!<%= sourcedir %>core/js/libraries/json2.js',
+            '!<%= sourcedir %>core/js/libraries/consoles.js',
+            '!<%= sourcedir %>core/js/libraries/jquery.js',
+            '!<%= sourcedir %>core/js/libraries/jquery.v2.js'
         ],
         tasks: ['javascript:dev']
     },
@@ -62,5 +69,24 @@ module.exports = {
     themeFonts: {
         files: ['<%= sourcedir %>theme/<%= theme %>/**/fonts/**'],
         tasks: ['copy:themeFonts']
+    },
+    scriptLoader: {
+        files: ['<%= sourcedir %>core/js/scriptLoader.js'],
+        tasks: ['copy:scriptLoader']
+    },
+    libraries: {
+        files: [
+            '<%= sourcedir %>core/js/libraries/require.js',
+            '<%= sourcedir %>core/js/libraries/modernizr.js',
+            '<%= sourcedir %>core/js/libraries/json2.js',
+            '<%= sourcedir %>core/js/libraries/consoles.js',
+            '<%= sourcedir %>core/js/libraries/jquery.js',
+            '<%= sourcedir %>core/js/libraries/jquery.v2.js'
+        ],
+        tasks: ['copy:libraries']
+    },
+    required: {
+        files: ['<%= sourcedir %>extensions/*/required/**/*'],
+        tasks: 'copy:required'
     }
 }
