@@ -1,3 +1,5 @@
+var path = require("path");
+
 module.exports = function(grunt) {
     return {
         compile: {
@@ -21,8 +23,14 @@ module.exports = function(grunt) {
                         '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
                         '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
                     ],
+                    follow: true,
                     dest: '<%= outputdir %>templates.js',
                     filter: function(filepath) {
+                        if (filepath.indexOf(path.join(grunt.config('sourcedir'), 'core')) > -1) {
+                            // Always include core templates.
+                            return true;
+                        }
+
                         return grunt.config('helpers').includedFilter(filepath);
                     }
                 }

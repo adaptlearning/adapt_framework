@@ -1,7 +1,6 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var AccessibilityView = Backbone.View.extend({
 
@@ -46,7 +45,7 @@ define(function(require) {
             Adapt.trigger('accessibility:toggle');
 
             this.render();
-            
+
             Backbone.history.navigate(window.location.hash || "#/", {trigger: true});
         }
 

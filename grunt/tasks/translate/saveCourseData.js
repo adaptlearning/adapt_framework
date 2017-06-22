@@ -16,7 +16,7 @@ module.exports = function (grunt) {
       "components"
     ].forEach(function (filename) {
       var src = path.join(srcPath, "course", targetLang, filename+".json");
-      grunt.file.write(src, JSON.stringify(global.translate.courseData[filename],"",4));
+      grunt.file.write(src, JSON.stringify(global.translate.courseData[filename], null, 4));
     });
     
   });

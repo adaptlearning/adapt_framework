@@ -1,16 +1,18 @@
-define(function(require) {
+define([
+    'core/js/adapt',
+    'bowser'
+], function(Adapt, Bowser) {
 
-    var Adapt = require('coreJS/adapt');
-    var Bowser = require('coreJS/libraries/bowser');
+    var $html = $('html');
     var $window = $(window);
 
     Adapt.device = {
         touch: Modernizr.touch,
         screenWidth: getScreenWidth(),
         screenHeight: getScreenHeight(),
-        browser: Bowser.name,
-        version: Bowser.version,
-        OS: getOperatingSystem(),
+        browser: (Bowser.name || '').toLowerCase(),
+        version: (Bowser.version || '').toLowerCase(),
+        OS: getOperatingSystem().toLowerCase(),
         osVersion: Bowser.osversion || '',
         renderingEngine: getRenderingEngine()
     };
@@ -33,10 +35,10 @@ define(function(require) {
     Adapt.once('app:dataReady', function() {
         Adapt.device.screenSize = checkScreenSize();
 
-        $('html').addClass('size-' + Adapt.device.screenSize);
+        $html.addClass('size-' + Adapt.device.screenSize);
         
         if (Adapt.device.orientation) {
-            $('html').addClass('orientation-' + Adapt.device.orientation);
+            $html.addClass('orientation-' + Adapt.device.orientation);
         }
 
         // As Adapt.config is available it's ok to bind the 'resize'.
@@ -125,18 +127,26 @@ define(function(require) {
 
     var onWindowResize = _.debounce(function onScreenSizeChanged() {
         // Calculate the screen properties.
+        var previousWidth = Adapt.device.screenWidth;
+        var previousHeight = Adapt.device.screenHeight;
+
         Adapt.device.screenWidth = getScreenWidth();
         Adapt.device.screenHeight = getScreenHeight();
+
+        if (previousWidth === Adapt.device.screenWidth && previousHeight === Adapt.device.screenHeight) {
+            // Do not trigger a change if the viewport hasn't actually changed.  Scrolling on iOS will trigger a resize.
+            return;
+        }
 
         var newScreenSize = checkScreenSize();
 
         if (newScreenSize !== Adapt.device.screenSize) {
             Adapt.device.screenSize = newScreenSize;
 
-            $('html').removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
+            $html.removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
 
             if (Adapt.device.orientation) {
-                $('html').removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
+                $html.removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
             }
 
             Adapt.trigger('device:changed', Adapt.device.screenSize);
@@ -187,9 +197,11 @@ define(function(require) {
         }
     }
 
-    // Convert 'msie' to 'ie' for backwards compatibility
-    var browserString = (Adapt.device.browser.toLowerCase() === 'msie') ? 'ie' : Adapt.device.browser.toLowerCase();
+    var browser = Adapt.device.browser.toLowerCase();
+    // Convert 'msie' and 'internet explorer' to 'ie'.
+    var browserString = browser.replace(/msie|internet explorer/, 'ie');
     browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
+    browserString += browserString.replace('.', '-').toLowerCase();
 
-    $("html").addClass(browserString + ' pixel-density-' + pixelDensity());
+    $html.addClass(browserString + ' pixel-density-' + pixelDensity());
 });

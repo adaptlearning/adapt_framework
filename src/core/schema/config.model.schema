@@ -54,14 +54,14 @@
           "title": "Enable accessibility?",
           "help": "If set to 'true', accessibility features will be enabled in this course"
         },
-        "_isDisabledOnTouchDevices": {
+        "_isEnabledOnTouchDevices": {
           "type": "bool",
           "default": "false",
           "isSetting": false,
           "inputType": {"type": "Boolean", "options": [true, false]},
           "validators": [],
-          "title": "Disable accessibility on touch devices?",
-          "help": "If set to 'true', accessibility features will be disabled on touch devices - useful if you only need accessibility on desktop browsers."
+          "title": "Enable accessibility on touch devices?",
+          "help": "If set to 'true', accessibility features will be enabled on touch devices - useful if you need accessibility on mobile browsers."
         },
         "_shouldSupportLegacyBrowsers": {
           "type": "bool",
@@ -80,6 +80,15 @@
           "validators": [],
           "title": "Enable text reader support?",
           "help": "If set to 'true' the course will add focusing to assist text reader software"
+        },
+        "_isSkipNavigationEnabled": {
+          "type": "bool",
+          "default": "true",
+          "isSetting": false,
+          "inputType": {"type": "Boolean", "options": [true, false]},
+          "validators": [],
+          "title": "Enable Skip Navigation link?",
+          "help": "If set to 'true' a 'Skip Navigation' link will appear allowing users to jump to content"
         }
       }
     },
@@ -241,6 +250,50 @@
       "validators": [],
       "title": "Enforce route locking",
       "help": "If menu locking is enabled, this setting prevents navigating to locked routes"
+    },
+    "_logging": {
+      "type": "object",
+      "title": "Logging",
+      "properties": {
+        "_isEnabled": {
+          "type": "bool",
+          "default": "true",
+          "required": true,
+          "inputType": {
+            "type": "Boolean",
+            "options": [true, false]
+          },
+          "validators": [],
+          "title": "Enable logging"
+        },
+        "_level": {
+          "type": "string",
+          "required": true,
+          "default" : "info",
+          "title" : "Log Level",
+          "validators": [],
+          "inputType": {
+            "type": "Select",
+            "options": [
+              "debug",
+              "info",
+              "warn",
+              "error",
+              "fatal"
+            ]
+          }
+        },
+        "_console": {
+          "type": "bool",
+          "default": "true",
+          "inputType": {
+            "type": "Boolean",
+            "options": [true, false]
+          },
+          "validators": [],
+          "title": "Write to console"
+        }
+      }
     }
   }
 }

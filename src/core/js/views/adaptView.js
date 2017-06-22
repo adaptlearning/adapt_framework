@@ -32,6 +32,7 @@ define([
             Adapt.trigger(this.constructor.type + 'View:preRender', this);
 
             var data = this.model.toJSON();
+            data.view = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
@@ -118,16 +119,18 @@ define([
             }
         },
 
+        preRemove: function() {},
+
         remove: function() {
             Adapt.trigger('plugin:beginWait');
+            this.preRemove();
+            this._isRemoved = true;
 
             _.defer(_.bind(function() {
                 this.$el.off('onscreen.adaptView');
-                this._isRemoved = true;
                 this.model.setOnChildren('_isReady', false);
                 this.model.set('_isReady', false);
-                this.$el.remove();
-                this.stopListening();
+                Backbone.View.prototype.remove.call(this);
                 Adapt.trigger('plugin:endWait');
             }, this));
 

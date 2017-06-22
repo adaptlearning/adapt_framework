@@ -2,11 +2,17 @@
     "_defaultLanguage": "en",
     "_defaultDirection": "ltr",
     "_questionWeight": 1,
+    "_logging": {
+        "_isEnabled": true,
+        "_level": "debug",
+        "_console": true
+    },
     "_accessibility": {
         "_isEnabled": true,
-        "_isDisabledOnTouchDevices": false,
+        "_isEnabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
-        "_isTextProcessorEnabled": true
+        "_isTextProcessorEnabled": true,
+        "_isSkipNavigationEnabled": true
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",

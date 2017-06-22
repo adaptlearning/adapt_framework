@@ -1,7 +1,6 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var DrawerView = Backbone.View.extend({
 
@@ -181,7 +180,7 @@ define(function(require) {
                 
                 //focus on first tabbable element in drawer
                 this.$el.a11y_focus();
-			}
+	    }
 
         },
 

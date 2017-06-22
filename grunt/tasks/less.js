@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 
 			function complete(error, output) {
 				if (error) {
-					grunt.fail.fatal(JSON.stringify(error, false, " "));
+					grunt.fail.fatal(JSON.stringify(error, null, 1));
 					return;
 				}
 

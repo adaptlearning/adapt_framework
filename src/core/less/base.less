@@ -4,6 +4,8 @@
 @ie8-max-width: 1024px;
 @device-width-medium: 520px;
 @body-text-font-size: 14px;
+@button-color: #000;
+@button-text-color: #fff;
 
 .responsive-layout {
     width:100%;
@@ -61,6 +63,28 @@
         background: @primary-color;
         border: 1px solid #fff;
         color: #fff;
+    }
+}
+
+.skip-nav-link {
+    background-color: @button-color;
+    border-radius: 0;
+    color: @button-text-color;
+    display: none;
+    left: 0;
+    margin-top: 0;
+    padding: 10px 20px;
+    position: absolute;
+    top: -46px;
+    -webkit-transition: top .2s ease-out;
+    transition: top .2s ease-out;
+    width: auto;
+    z-index: 100;
+    .accessibility & {
+        display: inline-block;
+    }
+    &:focus {
+        top: 0;
     }
 }
 
@@ -218,8 +242,8 @@
     }
 }
 
-.component-container:before, .component-container:after { content: "\0020"; display: block; height: 0; overflow: hidden; }  
-.component-container:after { clear: both; }  
+.component-container:before, .component-container:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.component-container:after { clear: both; }
 .component-container { zoom: 1; }
 
 .component-left {
@@ -293,7 +317,7 @@
     z-index:1;
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
-    .touch & { 
+    .touch & {
         position: relative !important;
     }
 

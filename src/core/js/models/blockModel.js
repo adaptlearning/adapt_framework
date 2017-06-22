@@ -1,7 +1,8 @@
-define(function(require) {
-
-	var AdaptModel = require('coreModels/adaptModel');
-
+define([
+    'core/js/adapt',
+    'core/js/models/adaptModel'
+], function (Adapt, AdaptModel) {
+	
     var BlockModel = AdaptModel.extend({
         _parent:'articles',
     	_siblings:'blocks',

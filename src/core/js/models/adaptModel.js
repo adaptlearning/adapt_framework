@@ -1,7 +1,6 @@
-define(function (require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function (Adapt) {
 
     var AdaptModel = Backbone.Model.extend({
 
@@ -56,15 +55,17 @@ define(function (require) {
         },
 
         setupChildListeners: function() {
+            var children = this.getChildren();
 
-            if (!this.getChildren()) return;
+            if (!children) return;
 
-            this.listenTo(Adapt[this._children], {
-                "change:_isReady": this.checkReadyStatus,
-                "change:_isComplete": this.onIsComplete,
-                "change:_isInteractionComplete": this.checkInteractionCompletionStatus
-            });
-
+            children.each(function(child) {
+                this.listenTo(child, {
+                    "change:_isReady": this.checkReadyStatus,
+                    "change:_isComplete": this.onIsComplete,
+                    "change:_isInteractionComplete": this.checkInteractionCompletionStatus
+                });
+            }, this);
         },
 
         init: function() {},
@@ -79,7 +80,7 @@ define(function (require) {
                 this.set({
                     _isEnabled: true,
                     _isComplete: false,
-                    _isInteractionComplete: false,
+                    _isInteractionComplete: false
                 });
                 break;
             case "soft":
@@ -136,7 +137,7 @@ define(function (require) {
                 var isInteractionComplete = false;
                 
                 //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf")
+                var requireCompletionOf = this.get("_requireCompletionOf");
                 
                 if (requireCompletionOf === -1) {
                     // Check if any return _isInteractionComplete:false

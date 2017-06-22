@@ -149,7 +149,7 @@
           "title": "Accessibility",
           "required": true,
           "properties": {
-            "_accessibilityToggleTextOn": {
+            "accessibilityToggleTextOn": {
               "type": "string",
               "title": "Toggle on label",
               "default": "Turn accessibility on?",
@@ -160,10 +160,21 @@
               ],
               "translatable": true
             },
-            "_accessibilityToggleTextOff": {
+            "accessibilityToggleTextOff": {
               "type": "string",
               "title": "Toggle off label",
               "default": "Turn accessibility off?",
+              "inputType": "Text",
+              "required": true,
+              "validators": [
+                "required"
+              ],
+              "translatable": true
+            },
+            "skipNavigationText": {
+              "type": "string",
+              "title": "Skip navigation label",
+              "default": "Skip navigation",
               "inputType": "Text",
               "required": true,
               "validators": [
@@ -218,6 +229,14 @@
                   "type": "string",
                   "title": "",
                   "default": "Course navigation bar",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "skipNavigation": {
+                  "type": "string",
+                  "title": "Skip Navigation",
+                  "default": "Skip Navigation",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
