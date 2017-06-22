@@ -46,49 +46,49 @@
       "title": "Accessibility",
       "properties" : {
         "_isEnabled": {
-          "type": "bool",
+          "type": "boolean",
           "default": "false",
           "isSetting": false,
-          "inputType": {"type": "Boolean", "options": [true, false]},
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Enable accessibility?",
-          "help": "If set to 'true', accessibility features will be enabled in this course"
+          "help": "If enabled, accessibility features will be enabled in this course"
         },
         "_isEnabledOnTouchDevices": {
-          "type": "bool",
+          "type": "boolean",
           "default": "false",
           "isSetting": false,
-          "inputType": {"type": "Boolean", "options": [true, false]},
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Enable accessibility on touch devices?",
-          "help": "If set to 'true', accessibility features will be enabled on touch devices - useful if you need accessibility on mobile browsers."
+          "help": "If enabled, accessibility features will be enabled on touch devices - useful if you need accessibility on mobile browsers."
         },
         "_shouldSupportLegacyBrowsers": {
-          "type": "bool",
+          "type": "boolean",
           "default": "false",
           "isSetting": false,
-          "inputType": {"type": "Boolean", "options": [true, false]},
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Support legacy browsers?",
-          "help": "If set to 'true' the course will make special allowances for Internet Explorer 8"
+          "help": "Is accessibility support for IE8 required?"
         },
         "_isTextProcessorEnabled": {
-           "type": "bool",
+           "type": "boolean",
           "default": "false",
           "isSetting": false,
-          "inputType": {"type": "Boolean", "options": [true, false]},
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Enable text reader support?",
-          "help": "If set to 'true' the course will add focusing to assist text reader software"
+          "help": "If enabled, the course will add focusing to assist text reader software"
         },
         "_isSkipNavigationEnabled": {
-          "type": "bool",
+          "type": "boolean",
           "default": "true",
           "isSetting": false,
-          "inputType": {"type": "Boolean", "options": [true, false]},
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Enable Skip Navigation link?",
-          "help": "If set to 'true' a 'Skip Navigation' link will appear allowing users to jump to content"
+          "help": "If enabled, a link will be added to the start of the page that allows assistive technology users to skip straight to the page content."
         }
       }
     },
@@ -234,19 +234,19 @@
       }
     },
     "_generateSourcemap": {
-      "type": "bool",
+      "type": "boolean",
       "default": "false",
       "isSetting": true,
-      "inputType": {"type": "Boolean", "options": [true, false]},
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Generate sourcemap",
       "help": "Creates a JavaScript sourcemap for the output code - useful for debugging (in browsers that support it)."
     },
     "_forceRouteLocking": {
-      "type": "bool",
+      "type": "boolean",
       "default": "true",
       "isSetting": true,
-      "inputType": {"type": "Boolean", "options": [true, false]},
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Enforce route locking",
       "help": "If menu locking is enabled, this setting prevents navigating to locked routes"
@@ -256,13 +256,10 @@
       "title": "Logging",
       "properties": {
         "_isEnabled": {
-          "type": "bool",
+          "type": "boolean",
           "default": "true",
           "required": true,
-          "inputType": {
-            "type": "Boolean",
-            "options": [true, false]
-          },
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Enable logging"
         },
@@ -284,12 +281,9 @@
           }
         },
         "_console": {
-          "type": "bool",
+          "type": "boolean",
           "default": "true",
-          "inputType": {
-            "type": "Boolean",
-            "options": [true, false]
-          },
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Write to console"
         }

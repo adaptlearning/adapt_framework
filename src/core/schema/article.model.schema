@@ -38,25 +38,22 @@
       "help": "Used to style or manipulate the look and feel of this Article. These are predefined in the theme."
     },
     "_isOptional": {
-      "type": "bool",
+      "type": "boolean",
       "default": "false",
       "isSetting": true,
-      "inputType": {
-        "type": "Boolean",
-        "options": [true, false]
-      },
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Is this optional?",
-      "help": "If set to 'true' this article, any block, and components within it, do not have to be completed"
+      "help": "An optional article does not have to be completed, nor do any of the blocks and components contained within it."
     },
     "_isAvailable": {
-      "type": "bool",
+      "type": "boolean",
       "default": "true",
       "isSetting": true,
-      "inputType": {"type": "Boolean", "options": [true, false]},
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Is this available?",
-      "help": "If set to 'false' this will not be displayed"
+      "help": "Controls whether this article and its contents are available in the course or not."
     },
     "_extensions": {
       "type": "object"

@@ -1,5 +1,5 @@
 {
-  "type":"object",
+  "type": "object",
   "$schema": "http://json-schema.org/draft-04/schema",
   "id": "http://jsonschema.net",
   "$ref": "http://localhost/system/trackedObject.schema",
@@ -11,7 +11,7 @@
       "editorOnly": true
     },
     "_type": {
-      "type":"string",
+      "type": "string",
       "id": "http://jsonschema.net/_type"
     },
     "_component": {
@@ -23,66 +23,66 @@
       "type": "string"
     },
     "_classes": {
-      "type":"string",
-      "default":"",
+      "type": "string",
+      "default": "",
       "isSetting": true,
-      "inputType":"Text",
+      "inputType": "Text",
       "validators": [],
       "title": "Classes"
     },
     "_isOptional": {
-      "type": "bool",
+      "type": "boolean",
       "default": "false",
       "isSetting": true,
-      "inputType": {"type": "Boolean", "options": [true, false]},
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Is this optional?",
-      "help": "If set to 'true' this component does not have to be completed"
+      "help": "An optional component does not have to be completed"
     },
     "_isAvailable": {
-      "type": "bool",
+      "type": "boolean",
       "default": "true",
       "isSetting": true,
-      "inputType": {"type": "Boolean", "options": [true, false]},
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Is this available?",
-      "help": "If set to 'false' this will not be displayed"
+      "help": "Controls whether this component is available in the course or not."
     },
     "_parentId": {
-      "type":"objectid",
-      "required":true
+      "type": "objectid",
+      "required": true
     },
     "_courseId": {
-      "type":"objectid",
-      "required":true,
+      "type": "objectid",
+      "required": true,
       "editorOnly": true
     },
     "title": {
-      "type":"string",
-      "required":true,
+      "type": "string",
+      "required": true,
       "default": "New Component Title",
-      "inputType":"Text",
+      "inputType": "Text",
       "validators": ["required"],
       "translatable": true
     },
     "displayTitle": {
-      "type":"string",
-      "required":false,
+      "type": "string",
+      "required": false,
       "default": "New Component Title",
-      "inputType":"DisplayTitle",
+      "inputType": "DisplayTitle",
       "validators": [],
       "help": "When viewing a component - this is the title that will be displayed",
       "translatable": true
     },
     "body":{
-      "type":"string",
+      "type": "string",
       "default" : "",
-      "inputType":"TextArea",
+      "inputType": "TextArea",
       "validators": [],
       "translatable": true
     },
     "_extensions": {
-      "type":"object"
+      "type": "object"
     },
     "properties" : {
       "type": "object"
