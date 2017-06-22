@@ -111,7 +111,7 @@ define([
             if (descendantComponents.length === 0) {
                 this.model.reset(type);
             } else {
-                descendantComponents.each(function(model) {
+                _.each(descendantComponents, function(model) {
                     model.reset(type);
                 });
             }
