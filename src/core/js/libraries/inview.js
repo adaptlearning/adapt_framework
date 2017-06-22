@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2017-06-19 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2017-06-22 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 
@@ -404,8 +404,8 @@
         widthRatio: null,
 
         resize: function() {
-            wndw.height = wndw.$el.height();
-            wndw.width = wndw.$el.width();
+            wndw.height = window.innerHeight || wndw.$el.height();
+            wndw.width = window.innerWidth || wndw.$el.width();
             wndw.heightRatio = (100 / wndw.height);
             wndw.widthRatio = (100 / wndw.width);
             loop.start();
