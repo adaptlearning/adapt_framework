@@ -166,9 +166,7 @@
             item._inviewPreviousState = inviewState;
             item._measurePreviousState = measure;
 
-            setTimeout(function() {
-                item.$element.trigger('inview', inviewState );
-            }, 0);
+            item.$element.trigger('inview', inviewState );
 
         }
     };
