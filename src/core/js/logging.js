@@ -97,8 +97,12 @@ define([
             var log = [level.asUpperCase + ':'];
             data && log.push.apply(log, data);
 
-            console.log.apply(console, log);
-
+            // is there a matching console method we can use e.g. console.error()?
+            if(console[level.asLowerCase]) {
+                console[level.asLowerCase].apply(console, log);
+            } else {
+                console.log.apply(console, log);
+            }
         }
 
     });
