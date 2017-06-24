@@ -8,7 +8,7 @@ define([
         _config: {
             _isEnabled: true,
             _level: LOG_LEVEL.INFO.asLowerCase, // Default log level
-            _console: true, // Log to console
+            _console: true // Log to console
         },      
         
         initialize: function() {
