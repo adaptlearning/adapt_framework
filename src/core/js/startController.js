@@ -14,11 +14,7 @@ define([
             if (!this.isEnabled()) return;
 
             var hash = this.getStartHash();
-
-            if ('replaceState' in window.history) {
-                window.history.replaceState('', '', hash);
-            } 
-            
+            window.history.replaceState('', '', hash);
         },
 
         getStartHash: function(alwaysForce) {
