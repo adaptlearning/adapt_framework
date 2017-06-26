@@ -12,9 +12,7 @@ define([
 
         setStartLocation: function() {
             if (!this.isEnabled()) return;
-
-            var hash = this.getStartHash();
-            window.history.replaceState('', '', hash);
+            window.history.replaceState('', '', this.getStartHash());
         },
 
         getStartHash: function(alwaysForce) {
