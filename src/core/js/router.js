@@ -46,9 +46,9 @@ define([
 
         handleRoute: function() {
             var args = this.pruneArguments(arguments);
-            
+
             var canNavigate = Adapt.router.get('_canNavigate');
-            
+
             if (canNavigate) {
                 // Reset _isCircularNavigationInProgress protection as code is allowed to navigate away
                 this._isCircularNavigationInProgress = false;
@@ -168,11 +168,16 @@ define([
                                 var location = 'page-' + id;
                                 this.updateLocation(location, 'page', id, _.bind(function() {
                                     Adapt.once('pageView:ready', function() {
+                                        // Add pageView element to document
+                                        this.$wrapper.append(page.$el);
+
                                         // Allow navigation
                                         Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                                    });
+                                    }, this);
+
                                     Adapt.trigger('router:page', currentModel);
-                                    this.$wrapper.append(new PageView({model: currentModel}).$el);
+
+                                    var page = new PageView({model: currentModel});
                                 }, this));
                             } else {
                                 var location = 'menu-' + id;
@@ -328,7 +333,7 @@ define([
             this.$html
                 .addClass(classes)
                 .attr('data-location', Adapt.location._currentLocation);
-                
+
             this.$wrapper
                 .removeClass()
                 .addClass(classes)
