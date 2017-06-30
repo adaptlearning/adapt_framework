@@ -86,6 +86,19 @@ define([
             this._isCustomViewVisible = true;
             Adapt.trigger('drawer:empty');
             this.showDrawer();
+
+            // Get the class name of the drawer item.
+            var className = view.context.className;
+
+            // Use the class name of the drawer item to retrieve its model from the collection of drawer items.
+            var model = this.collection.find(function(model) {
+                return model.get('className') === className + '-drawer';
+            });
+
+            if (this._hasBackButton) {
+                // Display the title of the drawer item after (next to) the back button.
+                this.$('.drawer-back-button').after('<div class="drawer-custom-view-title">' + model.get('title') + '</div>');
+            }
             this.$('.drawer-holder').html(view);
         },
 
@@ -101,6 +114,8 @@ define([
         onBackButtonClicked: function(event) {
             event.preventDefault();
             this.showDrawer(true);
+            // We don't need a title on the initial drawer view so remove the node that was added in this.openCustomView().
+            this.$('.drawer-custom-view-title').remove();
         },
 
         onCloseDrawer: function(event) {
