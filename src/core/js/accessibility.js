@@ -16,7 +16,6 @@ define([
         _hasUsageInstructionRead: false,
         _isLoaded: false,
         _hasCourseLoaded: false,
-        _legacyFocusElements: undefined,
 
         reset: function() {
             _.extend(this, {
@@ -329,28 +328,7 @@ define([
             $.a11y(true)
             $.a11y_on(true, "body > *");
         },
-
-        setupLegacy: function() {
-            //IE8 .focused CLASS AS :focus ISN'T AVAILABLE
-
-            if(!this.$html.hasClass('ie8') || !Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) return;
-
-            // If legacy enabled run setupLegacyListeners()
-            this.listenTo(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocusClasser);
-            this.listenTo(Adapt, 'remove', this.removeLegacyFocusClasser);
-
-        },
-
-        setupLegacyFocusClasser: function() {
-            this.removeLegacyFocusClasser();
-
-            // On focus add class of focused, on blur remove class
-            this._legacyFocusElements = $(this._tabIndexElements);
-            this._legacyFocusElements
-                .on('focus', this.onElementFocused)
-                .on('blur', this.onElementBlurred);
-        },
-
+   
         setupPopupListeners: function() {
             this.listenTo(Adapt, 'popup:opened popup:closed', this.onPop);
         },
@@ -391,27 +369,7 @@ define([
             $.a11y_on(false, "body > *");
             $.a11y_on(true, "#accessibility-toggle");
         },
-
-        revertLegacy: function() {
-
-            if(!this.$html.hasClass('ie8') || !Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) return;
-
-            this.stopListening(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocusClasser);
-            this.stopListening(Adapt, 'remove', this.removeLegacyFocusClasser);
-
-        },
-
-        removeLegacyFocusClasser: function() {
-            if (this._legacyFocusElements === undefined) return;
-
-            //Remove focus and blur events
-            this._legacyFocusElements
-                .off('focus', this.onElementFocused)
-                .off('blur', this.onElementBlurred);
-            this._legacyFocusElements = undefined;
-        },
-
-
+     
         revertPopupListeners: function() {
             this.stopListening(Adapt, 'popup:opened popup:closed', this.onPop);
         },
