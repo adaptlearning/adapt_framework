@@ -83,7 +83,7 @@
         },
         "_isSkipNavigationEnabled": {
           "type": "boolean",
-          "default": "true",
+          "default": true,
           "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
@@ -244,7 +244,7 @@
     },
     "_forceRouteLocking": {
       "type": "boolean",
-      "default": "true",
+      "default": true,
       "isSetting": true,
       "inputType": "Checkbox",
       "validators": [],
@@ -257,7 +257,7 @@
       "properties": {
         "_isEnabled": {
           "type": "boolean",
-          "default": "true",
+          "default": true,
           "required": true,
           "inputType": "Checkbox",
           "validators": [],
@@ -282,7 +282,7 @@
         },
         "_console": {
           "type": "boolean",
-          "default": "true",
+          "default": true,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Write to console"

@@ -39,7 +39,7 @@
     },
     "_isOptional": {
       "type": "boolean",
-      "default": "false",
+      "default": false,
       "isSetting": true,
       "inputType": "Checkbox",
       "validators": [],
@@ -48,7 +48,7 @@
     },
     "_isAvailable": {
       "type": "boolean",
-      "default": "true",
+      "default": true,
       "isSetting": true,
       "inputType": "Checkbox",
       "validators": [],
