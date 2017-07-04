@@ -61,16 +61,10 @@
           "type": "boolean",
           "default": false,
           "editorOnly": true,
-          "inputType": {
-            "type": "Boolean",
-            "options": [
-              true,
-              false
-            ]
-          },
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Enable start controller",
-          "help": "When this is set to 'true', you can control which page is rendered when a course loads, potentially bypassing the menu"
+          "help": "The start controller allows you to control which page is rendered when a course loads, potentially bypassing the menu"
         },
         "_startIds": {
           "type": "array",
@@ -88,13 +82,7 @@
                 "type": "boolean",
                 "default": false,
                 "editorOnly": true,
-                "inputType": {
-                  "type": "Boolean",
-                  "options": [
-                    true,
-                    false
-                  ]
-                },
+                "inputType": "Checkbox",
                 "validators": [],
                 "title": "Skip if complete",
                 "help": "When this is set to 'true', the page will not be selected as the first page if it has been already viewed/completed"
@@ -113,31 +101,19 @@
           "type": "boolean",
           "default": false,
           "editorOnly": true,
-          "inputType": {
-            "type": "Boolean",
-            "options": [
-              true,
-              false
-            ]
-          },
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Force routing",
-          "help": "When this is set to 'true', the routing will be forced to the appropriate start page, regardless of the URL"
+          "help": "If enabled, the routing will be forced to the appropriate start page, regardless of the URL"
         },
         "_isMenuDisabled": {
           "type": "boolean",
           "default": false,
           "editorOnly": true,
-          "inputType": {
-            "type": "Boolean",
-            "options": [
-              true,
-              false
-            ]
-          },
+          "inputType": "Checkbox",
           "validators": [],
           "title": "Disable menu",
-          "help": "When this is set to 'true', the user will be prevented from seeing or navigating to the main menu"
+          "help": "Allows you to prevent the user from seeing - or navigating to - the main menu"
         }
       }
     },
@@ -651,16 +627,10 @@
       "type": "boolean",
       "default": false,
       "editorOnly": true,
-      "inputType": {
-        "type": "Boolean",
-        "options": [
-          true,
-          false
-        ]
-      },
+      "inputType": "Checkbox",
       "validators": [],
       "title": "Share with other users",
-      "help": "When this is set to 'true', your colleagues will be able to see this course from the 'Shared courses' option"
+      "help": "Controls whether or not your colleagues will be able to see this course from the 'Shared courses' option"
     },
     "themeSettings": {
       "type": "object"
