@@ -31,6 +31,7 @@ define([
             Adapt.trigger(this.constructor.type + 'View:preRender', this);
 
             var data = this.model.toJSON();
+            data.view = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
@@ -107,26 +108,28 @@ define([
         resetCompletionStatus: function(type) {
             if (!this.model.get("_canReset")) return;
 
-            var descendantComponents = this.model.findDescendants('components');
+            var descendantComponents = this.model.findDescendantModels('components');
             if (descendantComponents.length === 0) {
                 this.model.reset(type);
             } else {
-                descendantComponents.each(function(model) {
+                _.each(descendantComponents, function(model) {
                     model.reset(type);
                 });
             }
         },
 
+        preRemove: function() {},
+
         remove: function() {
             Adapt.trigger('plugin:beginWait');
+            this.preRemove();
+            this._isRemoved = true;
 
             _.defer(_.bind(function() {
                 this.$el.off('onscreen.adaptView');
-                this._isRemoved = true;
                 this.model.setOnChildren('_isReady', false);
                 this.model.set('_isReady', false);
-                this.$el.remove();
-                this.stopListening();
+                Backbone.View.prototype.remove.call(this);
                 Adapt.trigger('plugin:endWait');
             }, this));
 

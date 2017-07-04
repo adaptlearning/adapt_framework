@@ -1,8 +1,6 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Handlebars = require('handlebars');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var NavigationView = Backbone.View.extend({
 
@@ -25,13 +23,13 @@ define(function(require) {
         },
 
         render: function() {
-            var template = Handlebars.templates[this.template]
+            var template = Handlebars.templates[this.template];
             this.$el.html(template(
                 {
                     _globals: Adapt.course.get("_globals"),
                     _accessibility: Adapt.config.get("_accessibility")
                 }
-            )).appendTo('#wrapper');
+            )).insertBefore('#wrapper');
 
             _.defer(_.bind(function() {
                 Adapt.trigger('navigationView:postRender', this);

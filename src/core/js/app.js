@@ -12,19 +12,21 @@ require([
     'core/js/views/navigationView',
     'core/js/accessibility',
     'core/js/offlineStorage',
+    'core/js/logging',
     'core/js/device',
     'core/js/drawer',
     'core/js/notify',
     'core/js/popupManager',
     'core/js/router',
     'core/js/models/lockingModel',
+    'core/js/helpers',
     'plugins'
 ], function (Adapt, AdaptCollection, StartController, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
 
-    var template = Handlebars.templates['loading'];     
+    var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
 
     Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
@@ -67,25 +69,24 @@ require([
                 // Replace the existing property
                 Adapt.course.set('_buttons', buttons);
             }
-            
+
+            Adapt.log.debug('Firing app:dataLoaded');
+
             try {
                 Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
             } catch(e) {
-                outputError(e);
+                Adapt.log.error('Error during app:dataLoading trigger', e);
             }
-            
+
             Adapt.setupMapping();
 
-            try {
-                Adapt.trigger('app:dataLoaded');
-            } catch(e) {
-                outputError(e);
-            }
-
-            if (!Adapt.isWaitingForPlugins()) triggerDataReady(newLanguage);
-            else Adapt.once('plugins:ready', function() {
+            if (!Adapt.isWaitingForPlugins()) {
                 triggerDataReady(newLanguage);
-            });
+            } else {
+                Adapt.once('plugins:ready', function() {
+                    triggerDataReady(newLanguage);
+                });
+            }
         }
     };
 
@@ -101,31 +102,51 @@ require([
                 if (startController.isEnabled()) {
                     hash = startController.getStartHash(true);
                 }
-                
+
                 Backbone.history.navigate(hash, { trigger: true, replace: true });
             });
         }
-        
+
+        Adapt.log.debug('Firing app:dataReady');
+
         try {
             Adapt.trigger('app:dataReady');
         } catch(e) {
-            outputError(e);
+            Adapt.log.error('Error during app:dataReady trigger', e);
+        }
+
+        if (!Adapt.isWaitingForPlugins()) {
+            triggerInitialize();
+        } else {
+            Adapt.once('plugins:ready', triggerInitialize);
+        }
+    }
+
+    function triggerInitialize() {
+        Adapt.log.debug('Calling Adapt.initialize');
+
+        addNavigationBar();
+
+        Adapt.initialize();
+
+        Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+    }
+
+    function addNavigationBar() {
+
+        var adaptConfig = Adapt.course.get("_navigation");
+
+        if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
+            Adapt.trigger("navigation:initialize");
+            return;
         }
 
         Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-        
-        Adapt.initialize();
-        
-        Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
-    }
-    
-    function outputError(e) {
-        //Allow plugin loading errors to output without stopping Adapt from loading
-        console.error(e);
+
     }
 
     function configureInview() {
-        
+
         var adaptConfig = Adapt.config.get("_inview");
 
         var allowScrollOver = (adaptConfig && adaptConfig._allowScrollOver === false ? false : true);
@@ -230,5 +251,4 @@ require([
 
     // Events that are triggered by the main Adapt content collections and models
     Adapt.once('configModel:loadCourseData', onLoadCourseData);
-
 });

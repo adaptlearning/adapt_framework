@@ -29,13 +29,13 @@
 			"_isEnabled": true,
 			"_id": "a-15",
 			"_isPercentageBased": true,
-			"_scoreToPass": 70,
+			"_scoreToPass": 75,
 			"_includeInTotalScore": true,
 			"_assessmentWeight": 1,
 			"_banks": {
-				"_isEnabled": false,
-				"_split": "2,1",
-				"_randomisation": false
+				"_isEnabled": true,
+				"_split": "2,2",
+				"_randomisation": true
 			},
 			"_questions": {
 				"_resetType": "hard",
@@ -47,7 +47,13 @@
 			"_attempts": "infinite"
 		},
 		"_trickle": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_button": {
+				"_isEnabled": true,
+				"text": "Continue",
+				"startText": "Continue",
+				"finalText": "Continue"
+			}
 		}
 	},
 	{

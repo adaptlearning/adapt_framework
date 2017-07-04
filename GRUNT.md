@@ -21,6 +21,10 @@ The same as `build`, with a few notable *developer-friendly* differences:
 -Includes [source maps](http://blog.teamtreehouse.com/introduction-source-maps) for both JavaScript and Less.  
 -Runs the `watch` task, which monitors the source code for any file changes and updates the build when changes occur.  
 
+**diff**  
+`grunt diff [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx]`   
+Similar to `dev`, except that the `watch` task is not run and handlebars, JavaScript and Less files will only be recompiled if they have been changed - making this task very quick to run.
+
 **check-json**    
 `grunt check-json`  
 Validates the course JSON, checks for duplicate IDs, and checks that each element has a parent.  

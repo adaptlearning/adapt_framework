@@ -25,7 +25,7 @@
 		"_classes": "",
 		"title": "Question Components",
 		"displayTitle": "Question Components",
-		"pageBody": "We can’t easily measure whether learners are meeting the intended course objectives, provide guidance and feedback if they’re not or give them opportunities to practice and rehearse in a ‘safe environment’ without a range of question components.<br><br>Discover what question components are available within the framework, along with some tips on how to use them.<br><br><strong>Scroll down to see what question components are available as part of the Version 2.0 core bundle.</strong>",
+		"pageBody": "Without a range of question components, we can’t easily measure if learners are meeting the intended course objectives, provide guidance and feedback if they’re not, or give them opportunities to practise in a ‘safe environment’.<br><br>Discover what question components are available within the framework, along with some tips on how to use them.<br><br><strong>Scroll down to see what question components are available as part of the Version 2.0 core bundle.</strong>",
 		"body": "Discover what question components are available within the framework, along with some tips on how to use them.",
 		"_graphic": {
 			"src": "course/en/images/menu_thumb.jpg",
@@ -44,7 +44,7 @@
 		"_classes": "assessment",
 		"title": "Adapt Assessment",
 		"displayTitle": "Adapt Assessment",
-		"pageBody": "We’ve put together a very short quiz to demonstrate the new assessment functionality. In this simple example there are two banks that each contain three questions with two being taken from each bank at random. The order in which the questions are presented is then also randomised, as is the order of each questions options.<br><br><strong>Think you can get a perfect score? Scroll down to attempt the first question.</strong>",
+		"pageBody": "We’ve put together a very short quiz to demonstrate the new assessment functionality. In this simple example there are two banks that each contain three questions with two being taken from each bank at random. The order in which the questions are presented is then also randomised, as is the order of each question’s options.<br><br><strong>Think you can get a perfect score? Scroll down to attempt the first question.</strong>",
 		"body": "Find out more about the new assessment functionality in V2.0, including randomised banks and an improved results feature.",
 		"_graphic": {
 			"src": "course/en/images/menu_thumb.jpg",

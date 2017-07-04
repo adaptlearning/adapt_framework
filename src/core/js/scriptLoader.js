@@ -16,22 +16,21 @@
                     coreJS: 'core/js',
                     coreViews: 'core/js/views',
                     coreModels: 'core/js/models',
-                    coreCollections: 'core/js/collections',
-                    coreHelpers: 'core/js/helpers',
-                    'coreJS/libraries/bowser': 'libraries/bowser',
-                    'core/js/libraries/bowser': 'libraries/bowser'
+                    coreCollections: 'core/js/collections'
                 }
             },
             paths: {
                 underscore: 'libraries/underscore',
                 backbone: 'libraries/backbone',
+                'backbone.controller': 'libraries/backbone.controller',
                 handlebars: 'libraries/handlebars',
                 velocity: 'libraries/velocity',
                 imageReady: 'libraries/imageReady',
                 inview: 'libraries/inview',
                 a11y: 'libraries/jquery.a11y',
                 scrollTo: 'libraries/scrollTo',
-                bowser: 'libraries/bowser'
+                bowser: 'libraries/bowser',
+                'enum': 'libraries/enum'
             }
         });
         loadJQuery();
@@ -60,14 +59,28 @@
 
     //5. Load IE 8 shim
     function loadShim() {
+
+        var isIE8 = (IE == 8);
+
         Modernizr.load([
             {
-                test: IE == 8,
+                test: isIE8,
                 yep: 'libraries/es5-shim.min.js',
                 nope: '',
                 complete: loadFoundationLibraries()
             }
         ]);
+
+        if (isIE8) {
+            fixIE8ConsoleLog();
+        }
+        
+    }
+
+    function fixIE8ConsoleLog() {
+
+        console.log = Function.prototype.call.bind(console.log, console);
+
     }
 
     //6. Load foundation libraries and templates
@@ -75,12 +88,15 @@
         require([
             "underscore",
             "backbone",
+            "backbone.controller",
             "handlebars",
             "velocity",
             "imageReady",
             "inview",
             "a11y",
             "scrollTo",
+            "bowser",
+            "enum",
             "templates"
         ], loadAdapt);
     }
