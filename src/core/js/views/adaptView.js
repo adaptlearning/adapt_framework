@@ -108,11 +108,11 @@ define([
         resetCompletionStatus: function(type) {
             if (!this.model.get("_canReset")) return;
 
-            var descendantComponents = this.model.findDescendants('components');
+            var descendantComponents = this.model.findDescendantModels('components');
             if (descendantComponents.length === 0) {
                 this.model.reset(type);
             } else {
-                descendantComponents.each(function(model) {
+                _.each(descendantComponents, function(model) {
                     model.reset(type);
                 });
             }
