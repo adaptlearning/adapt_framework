@@ -1,3 +1,10 @@
+// This is a custom build which contains touch/swipe events support only.
+//
+// To create this build do the following:
+// 1. Go to http://jquerymobile.com/download-builder/
+// 2. Select "Touch" under "Events"
+// 3. click "Build My Download"
+
 /*
 * jQuery Mobile v1.4.5
 * http://jquerymobile.com
