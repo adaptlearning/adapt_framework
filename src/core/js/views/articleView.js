@@ -10,6 +10,7 @@ define([
             this.model.get('_id') +
             " " + this.model.get('_classes') +
             " " + this.setVisibility() +
+            " " + this.setHidden() +
             " nth-child-" +
             this.model.get("_nthChild");
         }
