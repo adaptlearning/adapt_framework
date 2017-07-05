@@ -50,7 +50,6 @@
 
     //4. Load adapt
     function loadAdapt() {
-        //cross domain support for all other browers
         $.ajaxPrefilter(function( options ) {
             options.crossDomain = true;
         });
