@@ -1,13 +1,5 @@
 (function() {
 
-    //Test for ie8
-    var IE = (function() {
-        if (document.documentMode) {
-            return document.documentMode;
-        }
-        return false;
-    })();
-
     //2. Setup require for old style module declarations
     function setupRequireJS() {
         requirejs.config({
@@ -20,6 +12,7 @@
                 }
             },
             paths: {
+                jquery: 'libraries/jquery.v2',
                 underscore: 'libraries/underscore',
                 backbone: 'libraries/backbone',
                 'backbone.controller': 'libraries/backbone.controller',
@@ -33,33 +26,13 @@
                 'enum': 'libraries/enum'
             }
         });
-        loadJQuery();
+        loadFoundationLibraries();
     }
 
-    //3. Load jquery
-    function loadJQuery() {
-        Modernizr.load([
-            {
-                test: IE == 8,
-                yep: 'libraries/jquery.js',
-                nope: 'libraries/jquery.v2.js',
-                complete: checkJQueryStatus
-            }
-        ]);
-    }
-
-    //4. Wait until JQuery gets loaded completly
-    function checkJQueryStatus() {
-        if(window.jQuery === undefined) {
-            setTimeout(checkJQueryStatus, 100);
-        } else {
-            loadFoundationLibraries();
-        }
-    }
-
-    //5. Load foundation libraries and templates
+    //3. Load foundation libraries and templates
     function loadFoundationLibraries() {
         require([
+            "jquery",
             "underscore",
             "backbone",
             "backbone.controller",
@@ -75,18 +48,12 @@
         ], loadAdapt);
     }
 
-    //6. Load adapt
+    //4. Load adapt
     function loadAdapt() {
-        switch (IE) {
-        case 8: case 9:
-            //ie8 and ie9 don't do crossdomain with jquery normally
-            break;
-        default:
-            //cross domain support for all other browers
-            $.ajaxPrefilter(function( options ) {
-                options.crossDomain = true;
-            });
-        }
+        //cross domain support for all other browers
+        $.ajaxPrefilter(function( options ) {
+            options.crossDomain = true;
+        });
         Modernizr.load("adapt/js/adapt.min.js");
     }
 
