@@ -30,7 +30,8 @@
                 a11y: 'libraries/jquery.a11y',
                 scrollTo: 'libraries/scrollTo',
                 bowser: 'libraries/bowser',
-                'enum': 'libraries/enum'
+                'enum': 'libraries/enum',
+                jqueryMobile: 'libraries/jquery.mobile.custom'
             }
         });
         loadJQuery();
@@ -74,7 +75,7 @@
         if (isIE8) {
             fixIE8ConsoleLog();
         }
-        
+
     }
 
     function fixIE8ConsoleLog() {
@@ -86,34 +87,35 @@
     //6. Load foundation libraries and templates
     function loadFoundationLibraries() {
         require([
-            "underscore",
-            "backbone",
-            "backbone.controller",
-            "handlebars",
-            "velocity",
-            "imageReady",
-            "inview",
-            "a11y",
-            "scrollTo",
-            "bowser",
-            "enum",
-            "templates"
+            'underscore',
+            'backbone',
+            'backbone.controller',
+            'handlebars',
+            'velocity',
+            'imageReady',
+            'inview',
+            'jqueryMobile',
+            'a11y',
+            'scrollTo',
+            'bowser',
+            'enum',
+            'templates'
         ], loadAdapt);
     }
 
     //7. Load adapt
     function loadAdapt() {
         switch (IE) {
-        case 8: case 9:
+            case 8: case 9:
             //ie8 and ie9 don't do crossdomain with jquery normally
             break;
-        default:
-            //cross domain support for all other browers
-            $.ajaxPrefilter(function( options ) {
-                options.crossDomain = true;
-            });
+            default:
+                //cross domain support for all other browers
+                $.ajaxPrefilter(function( options ) {
+                    options.crossDomain = true;
+                });
         }
-        Modernizr.load("adapt/js/adapt.min.js");
+        Modernizr.load('adapt/js/adapt.min.js');
     }
 
     //1. Load foundation libraries, json2, consoles, requirejs
@@ -127,7 +129,7 @@
             yep: 'libraries/consoles.js'
         },
         {
-            load: "libraries/require.js",
+            load: 'libraries/require.js',
             complete: setupRequireJS
         }
     ]);
