@@ -30,7 +30,7 @@
                 a11y: 'libraries/jquery.a11y',
                 scrollTo: 'libraries/scrollTo',
                 bowser: 'libraries/bowser',
-                enum: 'libraries/enum',
+                'enum': 'libraries/enum',
                 jqueryMobile: 'libraries/jquery.mobile.custom'
             }
         });
