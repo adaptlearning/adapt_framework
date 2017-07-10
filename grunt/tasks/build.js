@@ -15,6 +15,6 @@ module.exports = function(grunt) {
         'clean:dist',
         'less:compile',
         'replace',
-        'uglify:libraries'
+        'minify'
     ]);
 }
