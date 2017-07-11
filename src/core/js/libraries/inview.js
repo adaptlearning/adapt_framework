@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2017-06-22 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2017-07-11 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 
@@ -485,6 +485,10 @@
             } else { //fully inscreen
                 inviewVertical = height;
             }
+            
+            // cap floor at 0 - cannot have negative inviews.
+            if (inviewVertical < 0) inviewVertical = 0;
+            if (inviewHorizontal < 0) inviewHorizontal = 0;
 
             var percentInviewVertical = Math.round((100 / height) * inviewVertical);
             var percentInviewHorizontal = Math.round((100 / width) * inviewHorizontal);
