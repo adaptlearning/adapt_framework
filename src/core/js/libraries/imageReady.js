@@ -1,4 +1,4 @@
-//https://github.com/adaptlearning/jquery.imageready 2017-05-09
+//https://github.com/adaptlearning/jquery.imageready 2017-07-11
 
 ;(function( $ ) {
 
@@ -173,11 +173,8 @@
             $this.one("load", complete);
             $this.one("error", complete);
             
-            // hack for onload event not firing for cached images in IE9 http://garage.socialisten.at/2013/06/how-to-fix-the-ie9-image-onload-bug/
-            var isIE9 = (document.documentMode && document.documentMode === 9);
-            if (!isIE9) return;
-            
-            //in IE9 reset the src attribute
+            // hack for onload event not firing for cached images in IE9-11 http://garage.socialisten.at/2013/06/how-to-fix-the-ie9-image-onload-bug/
+            // reset the src attribute
             $this.attr("src", $this.attr("src"));
 
         });
