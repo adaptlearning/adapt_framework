@@ -13,6 +13,7 @@ define([
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
+            this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
             this._isRemoved = false;
@@ -149,8 +150,22 @@ define([
                 return this.$el.removeClass('visibility-hidden');
             }
             this.$el.addClass('visibility-hidden');
-        }
+        },
 
+        setHidden: function() {
+            var hidden = "";
+            if (this.model.get('_isHidden')) {
+                hidden = "display-none";
+            }
+            return hidden;
+        },
+
+        toggleHidden: function() {
+            if (!this.model.get('_isHidden')) {
+                return this.$el.removeClass('display-none');
+            }
+            this.$el.addClass('display-none');
+        }
     });
 
     return AdaptView;
