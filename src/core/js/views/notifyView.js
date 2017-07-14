@@ -29,7 +29,7 @@ define([
         setupEscapeKey: function() {
             var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
 
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
+            if (hasAccessibility && !this.escapeKeyAttached) {
                 $(window).on("keyup", this._onKeyUp);
                 this.escapeKeyAttached = true;
             } else {
