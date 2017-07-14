@@ -25,7 +25,6 @@ define([
         initialize: function () {
             // Wait until data is loaded before setting up model
             this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
-
         },
 
         setupModel: function() {
@@ -114,6 +113,7 @@ define([
         checkCompletionStatus: function () {
             //defer to allow other change:_isComplete handlers to fire before cascasing to parent
             Adapt.checkingCompletion();
+
             _.defer(_.bind(function() {
                 var isComplete = false;
                 var children = this.getAvailableChildModels();
@@ -121,18 +121,26 @@ define([
                 var requireCompletionOf = this.get("_requireCompletionOf");
 
                 if (requireCompletionOf === -1) {
-                    // Check if any return _isComplete:false
-                    // If not - set this model to _isComplete: true
-                    isComplete = !(_.find(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }));
+                    var allChildrenOptional = _.every(children, function(child) {
+                        return child.get('_isOptional');
+                    });
+
+                    if (allChildrenOptional) {
+                        isComplete = _.every(children, function(child) {
+                            return child.get('_isComplete');
+                        });
+                    } else {
+                        isComplete = !(_.some(children, function(child) {
+                            return !child.get('_isComplete') && !child.get('_isOptional');
+                        }));
+                    }
                 } else {
                     isComplete = (_.filter(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }).length >= requireCompletionOf);
+                        return child.get('_isComplete') && !child.get('_isOptional');
+                    })).length >= requireCompletionOf;
                 }
 
-                this.set({_isComplete: isComplete});
+                this.set({'_isComplete': isComplete});
 
                 Adapt.checkedCompletion();
             }, this));
@@ -141,6 +149,7 @@ define([
         checkInteractionCompletionStatus: function () {
             //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
             Adapt.checkingCompletion();
+
             _.defer(_.bind(function() {
                 var isInteractionComplete = false;
                 var children = this.getAvailableChildModels();
@@ -148,25 +157,33 @@ define([
                 var requireCompletionOf = this.get("_requireCompletionOf");
 
                 if (requireCompletionOf === -1) {
-                    // Check if any return _isInteractionComplete:false
-                    // If not - set this model to _isInteractionComplete: true
-                    isInteractionComplete = (_.find(children, function(child) {
-                        return child.get('_isInteractionComplete') === false && child.get('_isOptional') === false;
-                    }) === undefined);
+                    var allChildrenOptional = _.every(children, function(child) {
+                        return child.get('_isOptional');
+                    });
+
+                    if (allChildrenOptional) {
+                        isInteractionComplete = _.every(children, function(child) {
+                            return child.get('_isInteractionComplete');
+                        });
+                    } else {
+                        isInteractionComplete = !(_.some(children, function(child) {
+                            return !child.get('_isInteractionComplete') && !child.get('_isOptional');
+                        }));
+                    }
                 } else {
                     isInteractionComplete = (_.filter(children, function(child) {
-                        return child.get('_isInteractionComplete') === true && child.get('_isOptional') === false;
-                    }).length >= requireCompletionOf);
+                        return child.get('_isInteractionComplete') && !child.get('_isOptional');
+                    })).length >= requireCompletionOf;
                 }
 
-                this.set({_isInteractionComplete:isInteractionComplete});
+                this.set({'_isInteractionComplete': isInteractionComplete});
+
                 Adapt.checkedCompletion();
 
             }, this));
         },
 
         findAncestor: function (ancestors) {
-
             var parent = this.getParent();
 
             if (this._parent === ancestors) {
@@ -181,7 +198,6 @@ define([
 
             // Returns a single model
             return returnedAncestor;
-
         },
 
         findDescendantModels: function(descendants) {
@@ -341,6 +357,7 @@ define([
 
         getSiblings: function (passSiblingsAndIncludeSelf) {
             var siblings;
+
             if (!passSiblingsAndIncludeSelf) {
                 // returns a collection of siblings excluding self
                 if (this._hasSiblingsAndSelf === false) {
@@ -353,7 +370,6 @@ define([
                 }, this));
 
                 this._hasSiblingsAndSelf = false;
-
             } else {
                 // returns a collection of siblings including self
                 if (this._hasSiblingsAndSelf) {
@@ -368,11 +384,11 @@ define([
 
             var siblingsCollection = new Backbone.Collection(siblings);
             this.set("_siblings", siblingsCollection);
+
             return siblingsCollection;
         },
 
         setOnChildren: function (key, value, options) {
-
             var args = arguments;
 
             this.set.apply(this, args);
@@ -381,11 +397,11 @@ define([
 
             var children = this.getChildren();
             var models = children.models;
+
             for (var i = 0, len = models.length; i < len; i++) {
                 var child = models[i];
                 child.setOnChildren.apply(child, args);
             }
-
         },
 
         setOptional: function(value) {
