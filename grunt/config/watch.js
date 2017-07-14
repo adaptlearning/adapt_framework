@@ -1,92 +1,92 @@
 // TODO excludes
 module.exports = {
     less: {
-        files: ['<%= sourcedir %>**/*.less'],
+        files: ['src/**/*.less'],
         tasks: ['less:dev']
     },
     handlebars: {
-        files: ['<%= sourcedir %>**/*.hbs'],
+        files: ['src/**/*.hbs'],
         tasks: ['handlebars', 'javascript:dev']
     },
     courseJson: {
-        files: ['<%= sourcedir %>course/**/*.json'],
+        files: ['src/course/**/*.json'],
         tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
-        files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.json'],
+        files: ['src/course/<%=languages%>/*', '!src/course/<%=languages%>/*.json'],
         tasks : ['copy:courseAssets']
     },
     js: {
         files: [
-            '<%= sourcedir %>**/*.js',
-            '!<%= sourcedir %>components/components.js',
-            '!<%= sourcedir %>extensions/extensions.js',
-            '!<%= sourcedir %>menu/menu.js',
-            '!<%= sourcedir %>theme/theme.js',
-            '!<%= sourcedir %>templates/templates.js',
-            '!<%= sourcedir %>core/js/scriptLoader.js',
-            '!<%= sourcedir %>core/js/libraries/require.js',
-            '!<%= sourcedir %>core/js/libraries/modernizr.js',
-            '!<%= sourcedir %>core/js/libraries/json2.js',
-            '!<%= sourcedir %>core/js/libraries/consoles.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.v2.js'
+            'src/**/*.js',
+            '!src/components/components.js',
+            '!src/extensions/extensions.js',
+            '!src/menu/menu.js',
+            '!src/theme/theme.js',
+            '!src/templates/templates.js',
+            '!src/core/js/scriptLoader.js',
+            '!src/core/js/libraries/require.js',
+            '!src/core/js/libraries/modernizr.js',
+            '!src/core/js/libraries/json2.js',
+            '!src/core/js/libraries/consoles.js',
+            '!src/core/js/libraries/jquery.js',
+            '!src/core/js/libraries/jquery.v2.js'
         ],
         tasks: ['javascript:dev']
     },
     index: {
-        files: ['<%= sourcedir %>index.html'],
+        files: ['src/index.html'],
         tasks: ['copy:index']
     },
     componentsAssets: {
-        files: ['<%= sourcedir %>components/**/assets/**'],
+        files: ['src/components/**/assets/**'],
         tasks: ['copy:componentAssets']
     },
     componentsFonts: {
-        files: ['<%= sourcedir %>components/**/fonts/**'],
+        files: ['src/components/**/fonts/**'],
         tasks: ['copy:componentFonts']
     },
     extensionsAssets: {
-        files: ['<%= sourcedir %>extensions/**/assets/**'],
+        files: ['src/extensions/**/assets/**'],
         tasks: ['copy:extensionAssets']
     },
     extensionsFonts: {
-        files: ['<%= sourcedir %>extensions/**/fonts/**'],
+        files: ['src/extensions/**/fonts/**'],
         tasks: ['copy:extensionFonts']
     },
     menuAssets: {
-        files: ['<%= sourcedir %>menu/<%= menu %>/**/assets/**'],
+        files: ['src/menu/<%= menu %>/**/assets/**'],
         tasks: ['copy:menuAssets']
     },
     menuFonts: {
-        files: ['<%= sourcedir %>menu/<%= menu %>/**/fonts/**'],
+        files: ['src/menu/<%= menu %>/**/fonts/**'],
         tasks: ['copy:menuFonts']
     },
     themeAssets: {
-        files: ['<%= sourcedir %>theme/<%= theme %>/**/assets/**'],
+        files: ['src/theme/<%= theme %>/**/assets/**'],
         tasks: ['copy:themeAssets']
     },
     themeFonts: {
-        files: ['<%= sourcedir %>theme/<%= theme %>/**/fonts/**'],
+        files: ['src/theme/<%= theme %>/**/fonts/**'],
         tasks: ['copy:themeFonts']
     },
     scriptLoader: {
-        files: ['<%= sourcedir %>core/js/scriptLoader.js'],
+        files: ['src/core/js/scriptLoader.js'],
         tasks: ['copy:scriptLoader']
     },
     libraries: {
         files: [
-            '<%= sourcedir %>core/js/libraries/require.js',
-            '<%= sourcedir %>core/js/libraries/modernizr.js',
-            '<%= sourcedir %>core/js/libraries/json2.js',
-            '<%= sourcedir %>core/js/libraries/consoles.js',
-            '<%= sourcedir %>core/js/libraries/jquery.js',
-            '<%= sourcedir %>core/js/libraries/jquery.v2.js'
+            'src/core/js/libraries/require.js',
+            'src/core/js/libraries/modernizr.js',
+            'src/core/js/libraries/json2.js',
+            'src/core/js/libraries/consoles.js',
+            'src/core/js/libraries/jquery.js',
+            'src/core/js/libraries/jquery.v2.js'
         ],
         tasks: ['copy:libraries']
     },
     required: {
-        files: ['<%= sourcedir %>extensions/*/required/**/*'],
+        files: ['src/extensions/*/required/**/*'],
         tasks: 'copy:required'
     }
 }
