@@ -89,23 +89,11 @@ define([
 
             this.$('.drawer-holder').html(view);
 
-            if (this._hasBackButton) {
-                // Get the class name of the drawer item.
-                var className = view.context.className;
+            var model = this.collection.findWhere({
+                className: view.attr('class') + '-drawer'
+            });
 
-                // Use the class name of the drawer item to retrieve its model from the collection of drawer items.
-                var model = this.collection.find(function (model) {
-                    return model.get('className') === className + '-drawer';
-                });
-
-                if (model instanceof Backbone.Model) {
-                    var itemTitle = model.get('title');
-                    // Display the title of the drawer item after (next to) the back button.
-                    if (itemTitle && this.$('.drawer-custom-view-title').length == 0) {
-                        this.$('.drawer-back-button').after('<div class="drawer-custom-view-title">' + itemTitle + '</div>');
-                    }
-                }
-            }
+            this.setTitle(model ? model.get('title') : '');
         },
 
         checkIfDrawerIsAvailable: function() {
@@ -120,6 +108,10 @@ define([
         onBackButtonClicked: function(event) {
             event.preventDefault();
             this.showDrawer(true);
+        },
+
+        setTitle: function(title) {
+            $('.drawer-custom-view-title-inner').html(title);
         },
 
         onCloseDrawer: function(event) {
@@ -200,12 +192,11 @@ define([
                 //focus on first tabbable element in drawer
                 this.$el.a11y_focus();
             }
-
-            this.removeItemTitle();
         },
 
         emptyDrawer: function() {
             this.$('.drawer-holder').empty();
+            this.setTitle('');
         },
 
         renderItems: function() {
@@ -258,7 +249,6 @@ define([
 
             this._isCustomViewVisible = false;
             this.removeShadowEvent();
-            this.removeItemTitle();
         },
 
         addShadowEvent: function() {
@@ -278,13 +268,7 @@ define([
             Adapt.trigger('drawer:empty');
             this.collection.reset();
             $('#shadow').remove();
-            this.removeItemTitle();
-        },
-
-        removeItemTitle: function() {
-            this.$('.drawer-custom-view-title').remove();
         }
-
     });
 
     var DrawerItemView = Backbone.View.extend({
