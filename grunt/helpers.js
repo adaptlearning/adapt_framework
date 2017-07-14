@@ -74,8 +74,8 @@ module.exports = function(grunt) {
     var exports = {};
 
     exports.defaults = {
-        sourcedir: process.cwd() + path.sep + 'src' + path.sep,
-        outputdir: process.cwd() + path.sep + 'build' + path.sep,
+        sourcedir: 'src' + path.sep,
+        outputdir: 'build' + path.sep,
         theme: '**',
         menu: '**',
         languages: '**',
