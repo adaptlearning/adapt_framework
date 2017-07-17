@@ -85,7 +85,11 @@ define([
                     if (ChildView) {
                         var $parentContainer = this.$(this.constructor.childContainer);
                         model.set("_nthChild", nthChild);
-                        $parentContainer.append(new ChildView({model:model}).$el);
+                        if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
+                            $parentContainer.prepend(new ChildView({model:model}).$el);
+                        } else {
+                            $parentContainer.append(new ChildView({model:model}).$el);
+                        }
                     } else {
                         throw 'The component \'' + models[i].attributes._id + '\'' +
                               ' (\'' + models[i].attributes._component + '\')' +
