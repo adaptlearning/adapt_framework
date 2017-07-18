@@ -18,7 +18,8 @@ define([
             _isOptional: false,
             _isReady: false,
             _isVisible: true,
-            _isLocked: false
+            _isLocked: false,
+            _isHidden: false
         },
 
         initialize: function () {
