@@ -53,7 +53,8 @@ define([
             'click .notify-popup-alert-button':'onAlertButtonClicked',
             'click .notify-popup-prompt-button': 'onPromptButtonClicked',
             'click .notify-popup-done': 'onCloseButtonClicked',
-            'click .notify-shadow': 'onCloseButtonClicked'
+            'click .notify-shadow': 'onCloseButtonClicked',
+            'click a': 'onLinkClicked'
         },
 
         render: function() {
@@ -92,6 +93,10 @@ define([
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
             Adapt.trigger("notify:cancelled");
+        },
+
+        onLinkClicked: function() {
+            this.closeNotify();
         },
 
         resetNotifySize: function() {
