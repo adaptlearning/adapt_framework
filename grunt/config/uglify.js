@@ -1,6 +1,6 @@
 module.exports = function (grunt, options) {
     return {
-        libraries: {
+        minify: {
             files: [
                 {
                     expand: true,
@@ -20,7 +20,10 @@ module.exports = function (grunt, options) {
                     src: ['*.js', '!*.min.js'],
                     dest: '<%= outputdir %>'
                 }
-            ]
+            ],
+            options: {
+                ie8: true
+            }
         }
     }
 }
