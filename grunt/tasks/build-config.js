@@ -6,27 +6,26 @@ module.exports = function(grunt) {
     var path = require('path');
 
     grunt.registerTask('build-config', 'Create build config file', function() {
-        var done = this.async();
         var options = this.options({});
 
-        // TODO: save buildConfig with relevant bits
-        var data = Helpers.generateConfigData();
-        var buildConfigPath = path.join(data.outputdir, "adapt/js/build.js");
+        var buildConfig = Helpers.generateConfigData();
+        var buildConfigPath = path.join(buildConfig.outputdir, "adapt/js/build.js");
 
-        data.plugins = [];
+        // add package json
+        buildConfig.package = grunt.file.readJSON(path.join(buildConfig.root, 'package.json'));
+
+        // add bower json
+        buildConfig.plugins = [];
         grunt.file.expand({follow: true}, options.src).forEach(function(bowerJSONPath) {
             var plugin = grunt.file.readJSON(bowerJSONPath);
-            data.plugins.push(plugin);
+            buildConfig.plugins.push(plugin);
         });
 
-        data.package = grunt.file.readJSON(path.join(data.root, 'package.json'));
-
+        // remove path specific variables
         var hideAttributes = [ 'outputdir', 'sourcedir', 'root' ];
-        hideAttributes.forEach(function(attrName) { delete data[attrName]; });
+        hideAttributes.forEach(function(attrName) { delete buildConfig[attrName]; });
 
-        grunt.file.write(buildConfigPath, JSON.stringify(data, null, "  "));
-
-        done();
+        grunt.file.write(buildConfigPath, JSON.stringify(buildConfig, null, "  "));
 
     });
 
