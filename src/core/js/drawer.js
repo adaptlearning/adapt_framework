@@ -6,6 +6,10 @@ define([
     var DrawerCollection = new Backbone.Collection();
     var Drawer = {};
 
+    DrawerCollection.comparator = function (item) {
+        return item.get('drawerOrder');
+    };
+
     Drawer.addItem = function(drawerObject, eventCallback) {
         drawerObject.eventCallback = eventCallback;
         DrawerCollection.add(drawerObject);
