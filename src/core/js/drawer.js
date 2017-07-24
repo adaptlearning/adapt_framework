@@ -3,12 +3,8 @@ define([
     'core/js/views/drawerView'
 ], function(Adapt, DrawerView) {
 
-    var DrawerCollection = new Backbone.Collection();
+    var DrawerCollection = new Backbone.Collection(null, { comparator: 'drawerOrder' });
     var Drawer = {};
-
-    DrawerCollection.comparator = function (item) {
-        return item.get('drawerOrder');
-    };
 
     Drawer.addItem = function(drawerObject, eventCallback) {
         drawerObject.eventCallback = eventCallback;
