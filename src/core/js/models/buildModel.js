@@ -24,10 +24,10 @@ define([
                     Adapt.trigger('buildModel:dataLoaded');
                 }
             });
-        },
+        }
 
     });
 
-    return BuildModel
+    return BuildModel;
 
 });

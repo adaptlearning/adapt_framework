@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         var hideAttributes = [ 'outputdir', 'sourcedir', 'root' ];
         hideAttributes.forEach(function(attrName) { delete buildConfig[attrName]; });
 
-        grunt.file.write(buildConfigPath, JSON.stringify(buildConfig, null, "  "));
+        grunt.file.write(buildConfigPath, JSON.stringify(buildConfig, null, 2));
 
     });
 
