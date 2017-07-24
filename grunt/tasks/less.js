@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 					"large": 900
 				};
 				try {
-					var configjson = JSON.parse(grunt.file.read(options.config).toString());
+					var configjson = grunt.file.readJSON(options.config);
 					screenSize = configjson.screenSize || screenSize;
 				} catch (e) {}
 

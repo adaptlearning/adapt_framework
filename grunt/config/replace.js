@@ -10,7 +10,8 @@ module.exports = function (grunt, options) {
     courseDir = path.join(options.outputdir, 'course');
   }
 
-  var pathToConfig = path.join(courseDir, 'config.json');
+  var jsonext = grunt.config('jsonext');
+  var pathToConfig = path.join(courseDir, 'config.'+jsonext);
 
   var generatePatterns = function() {
     try {
@@ -19,7 +20,7 @@ module.exports = function (grunt, options) {
       
       var configJson = grunt.file.readJSON(pathToConfig);
       var defaultLanguage = configJson._defaultLanguage || 'en';
-      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.json'));
+      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.'+jsonext));
       
       // Backwards compatibility for courses missing 'description'
       if (!courseJson.hasOwnProperty('description')) {
