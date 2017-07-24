@@ -20,15 +20,15 @@
                 }
             },
             paths: {
-                underscore: 'libraries/underscore',
-                backbone: 'libraries/backbone',
+                underscore: 'libraries/underscore.min',
+                backbone: 'libraries/backbone.min',
                 'backbone.controller': 'libraries/backbone.controller',
-                handlebars: 'libraries/handlebars',
-                velocity: 'libraries/velocity',
+                handlebars: 'libraries/handlebars.min',
+                velocity: 'libraries/velocity.min',
                 imageReady: 'libraries/imageReady',
                 inview: 'libraries/inview',
                 a11y: 'libraries/jquery.a11y',
-                scrollTo: 'libraries/scrollTo',
+                scrollTo: 'libraries/scrollTo.min',
                 bowser: 'libraries/bowser',
                 'enum': 'libraries/enum',
                 jqueryMobile: 'libraries/jquery.mobile.custom'
@@ -42,8 +42,8 @@
         Modernizr.load([
             {
                 test: IE == 8,
-                yep: 'libraries/jquery.js',
-                nope: 'libraries/jquery.v2.js',
+                yep: 'libraries/jquery.min.js',
+                nope: 'libraries/jquery.v2.min.js',
                 complete: checkJQueryStatus
             }
         ]);
@@ -122,14 +122,14 @@
     Modernizr.load([
         {
             test: window.JSON,
-            nope: 'libraries/json2.js'
+            nope: 'libraries/json2.min.js'
         },
         {
             test: window.console == undefined,
-            yep: 'libraries/consoles.js'
+            yep: 'libraries/consoles.min.js'
         },
         {
-            load: 'libraries/require.js',
+            load: 'libraries/require.min.js',
             complete: setupRequireJS
         }
     ]);

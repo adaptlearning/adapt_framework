@@ -25,12 +25,12 @@ module.exports = {
             '!<%= sourcedir %>theme/theme.js',
             '!<%= sourcedir %>templates/templates.js',
             '!<%= sourcedir %>core/js/scriptLoader.js',
-            '!<%= sourcedir %>core/js/libraries/require.js',
+            '!<%= sourcedir %>core/js/libraries/require.min.js',
             '!<%= sourcedir %>core/js/libraries/modernizr.js',
-            '!<%= sourcedir %>core/js/libraries/json2.js',
-            '!<%= sourcedir %>core/js/libraries/consoles.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.v2.js'
+            '!<%= sourcedir %>core/js/libraries/json2.min.js',
+            '!<%= sourcedir %>core/js/libraries/consoles.min.js',
+            '!<%= sourcedir %>core/js/libraries/jquery.min.js',
+            '!<%= sourcedir %>core/js/libraries/jquery.v2.min.js'
         ],
         tasks: ['javascript:dev']
     },
@@ -76,12 +76,12 @@ module.exports = {
     },
     libraries: {
         files: [
-            '<%= sourcedir %>core/js/libraries/require.js',
+            '<%= sourcedir %>core/js/libraries/require.min.js',
             '<%= sourcedir %>core/js/libraries/modernizr.js',
-            '<%= sourcedir %>core/js/libraries/json2.js',
-            '<%= sourcedir %>core/js/libraries/consoles.js',
-            '<%= sourcedir %>core/js/libraries/jquery.js',
-            '<%= sourcedir %>core/js/libraries/jquery.v2.js'
+            '<%= sourcedir %>core/js/libraries/json2.min.js',
+            '<%= sourcedir %>core/js/libraries/consoles.min.js',
+            '<%= sourcedir %>core/js/libraries/jquery.min.js',
+            '<%= sourcedir %>core/js/libraries/jquery.v2.min.js'
         ],
         tasks: ['copy:libraries']
     },
