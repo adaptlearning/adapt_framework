@@ -19,7 +19,8 @@ define([
         },
 
         setupEventListeners: function() {
-            this.listenTo(Adapt, 'remove', this.remove);
+            this.listenTo(Adapt, 'remove', this.closeNotify);
+            this.listenTo(Adapt, 'page:scrollTo', this.closeNotify);
             this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
             this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
             this._onKeyUp = _.bind(this.onKeyUp, this);
@@ -53,8 +54,7 @@ define([
             'click .notify-popup-alert-button':'onAlertButtonClicked',
             'click .notify-popup-prompt-button': 'onPromptButtonClicked',
             'click .notify-popup-done': 'onCloseButtonClicked',
-            'click .notify-shadow': 'onCloseButtonClicked',
-            'click a': 'onLinkClicked'
+            'click .notify-shadow': 'onCloseButtonClicked'
         },
 
         render: function() {
@@ -93,12 +93,6 @@ define([
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
             Adapt.trigger('notify:cancelled');
-        },
-
-        onLinkClicked: function(e) {
-            if (e.currentTarget.target !== '_blank') {
-                this.closeNotify();
-            }
         },
 
         resetNotifySize: function() {
@@ -152,7 +146,7 @@ define([
 
                     this.$('.notify-popup').css('visibility', 'visible');
                     complete.call(this);
-                    
+
                 } else {
 
                     this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
@@ -161,7 +155,7 @@ define([
                     }, this) });
 
                 }
-                
+
                 function complete() {
                     /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
                     Adapt.trigger('popup:opened', this.$('.notify-popup'));
