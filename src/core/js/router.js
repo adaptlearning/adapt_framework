@@ -58,7 +58,7 @@ define([
                 //trigger an event pre 'router:location' to allow extensions to stop routing
                 Adapt.trigger("router:navigate", args);
             }
-            
+
             // recheck as _canNavigate can be set to false on router:navigate event
             if (Adapt.router.get('_canNavigate')) {
 
