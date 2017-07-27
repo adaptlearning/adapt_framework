@@ -19,10 +19,11 @@ define([
         },
 
         setupEventListeners: function() {
-            this.listenTo(Adapt, 'remove', this.closeNotify);
-            this.listenTo(Adapt, 'page:scrollTo', this.closeNotify);
-            this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
-            this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
+            this.listenTo(Adapt, {
+                'remove page:scrollTo': this.closeNotify,
+                'device:resize': this.resetNotifySize,
+                'accessibility:toggle': this.onAccessibilityToggle
+            });
             this._onKeyUp = _.bind(this.onKeyUp, this);
             this.setupEscapeKey();
         },
@@ -170,6 +171,8 @@ define([
         },
 
         closeNotify: function (event) {
+
+            console.log("Close notify");
 
             if (this.disableAnimation) {
 
