@@ -24,6 +24,7 @@ define([
                 'device:resize': this.resetNotifySize,
                 'accessibility:toggle': this.onAccessibilityToggle
             });
+
             this._onKeyUp = _.bind(this.onKeyUp, this);
             this.setupEscapeKey();
         },
@@ -171,8 +172,6 @@ define([
         },
 
         closeNotify: function (event) {
-
-            console.log("Close notify");
 
             if (this.disableAnimation) {
 
