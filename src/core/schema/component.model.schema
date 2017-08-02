@@ -50,7 +50,7 @@
     },
     "_isHidden": {
       "type": "boolean",
-      "default": true,
+      "default": false,
       "isSetting": true,
       "inputType": "Checkbox",
       "validators": [],
