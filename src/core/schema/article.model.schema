@@ -55,6 +55,15 @@
       "title": "Is this available?",
       "help": "Controls whether this article and its contents are available in the course or not."
     },
+    "_isHidden": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this hidden?",
+      "help": "Controls whether this article and its contents are shown to the learner or not."
+    },
     "_extensions": {
       "type": "object"
     }
