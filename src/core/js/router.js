@@ -47,9 +47,7 @@ define([
         handleRoute: function() {
             var args = this.pruneArguments(arguments);
             
-            var canNavigate = Adapt.router.get('_canNavigate');
-            
-            if (canNavigate) {
+            if (Adapt.router.get('_canNavigate')) {
                 // Reset _isCircularNavigationInProgress protection as code is allowed to navigate away
                 this._isCircularNavigationInProgress = false;
             }
@@ -61,7 +59,8 @@ define([
                 Adapt.trigger("router:navigate", args);
             }
 
-            if (canNavigate) {
+            // recheck as _canNavigate can be set to false on router:navigate event
+            if (Adapt.router.get('_canNavigate')) {
 
                 //disable navigation whilst rendering
                 Adapt.router.set('_canNavigate', false, {pluginName: "adapt"});
