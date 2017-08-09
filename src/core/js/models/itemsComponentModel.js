@@ -5,8 +5,17 @@ define([
 
     var ItemsComponentModel = ComponentModel.extend({
 
+        toJSON: function() {
+            var json = _.clone(this.attributes);
+
+            json._items = this.get('_items').toJSON();
+
+            return json;
+        },
+
         init: function() {
             this.setUpItems();
+
             this.listenTo(this.get('_items'), {
                 'change:_isVisited': this.checkCompletionStatus
             });
