@@ -110,7 +110,7 @@ define([
                 // Enable the button, make accessible and update aria labels and text
                 this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
 
-                // Make model answer button inaccessible (but still enabled) for visual users due to 
+                // Make model answer button inaccessible (but still enabled) for visual users due to
                 // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
                 if (changedAttribute == BUTTON_STATE.SHOW_CORRECT_ANSWER || changedAttribute == BUTTON_STATE.HIDE_CORRECT_ANSWER) {
                     this.$('.buttons-action').a11y_cntrl(false);
@@ -152,7 +152,7 @@ define([
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').html(attemptsString);
+                this.$('.buttons-display-inner').html(attemptsString).a11y_text();
             }
 
         },
@@ -164,7 +164,7 @@ define([
                 .removeClass('display-none')
                 .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
         },
-        
+
         refresh: function() {
             this.updateAttemptsCount();
             this.checkResetSubmittedState();
