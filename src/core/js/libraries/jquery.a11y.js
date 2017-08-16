@@ -22,12 +22,12 @@
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
             "nativeTabElements": "textarea, input, select",
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
-            "wrapStyleElements": "b,i,abbr,strong",
+            "wrapStyleElements": "b,i,abbr,strong,em,small,sub,sup,ins,del,mark",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]",
+            "ariaLabelElements": "div[aria-label], span[aria-label]"
         };
 
     // JQUERY INJECTED ELEMENTS
