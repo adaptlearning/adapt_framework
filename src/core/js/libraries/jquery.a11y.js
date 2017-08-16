@@ -953,13 +953,16 @@
         };
 
         //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
-        $.fn.a11y_text = function() {
+        $.fn.a11y_text = function(text) {
             var options = $.a11y.options;
 
             if (!options.isTabbableTextEnabled) return this;
 
-             for (var i = 0; i < this.length; i++) {
-                this[i].innerHTML = makeHTMLOrTextAccessible(this[i].innerHTML);
+            for (var i = 0; i < this.length; i++) {
+                // If an argument is given then convert that to accessible text
+                // Otherwise convert existing content
+                text = text || this[i].innerHTML;
+                this[i].innerHTML = makeHTMLOrTextAccessible(text);
             }
             return this;
         };
