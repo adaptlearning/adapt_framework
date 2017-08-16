@@ -152,7 +152,7 @@ define([
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').html(attemptsString).a11y_text();
+                this.$('.buttons-display-inner').a11y_text(attemptsString);
             }
 
         },
