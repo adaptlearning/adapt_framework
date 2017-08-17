@@ -199,7 +199,6 @@
                 //CAPTURE DOMNODE CHILDREN
                 var children = $element.children();
 
-                
                 if (children.length === 0) {
                     //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
                     var textContent = $element.text();
@@ -221,36 +220,49 @@
 
                 //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
                 var newChildren = [];
-                var added = false;
+                var currentText = "";
                 for (var i = 0; i < $element[0].childNodes.length; i++) {
                     var child = $element[0].childNodes[i];
                     var cloneChild = $(child.outerHTML)[0];
-                    switch(child.nodeType) {
-                    case 3: //TEXT NODE
-                        // preserve whitespace in ie8 by adding initial zero-width space
-                        var childContent = child.textContent || "&#8203;" + child.nodeValue;
-                        //IF TEXT NODE WRAP IN A TABBABLE SPAn
-                        newChildren.push( makeElementTabbable($("<span>"+childContent+"</span>")) );
-                        added = true;
-                        break;
-                    case 1: //DOM NODE
-                        var $child = $(cloneChild);
-                        if (($child.is(domSelectors.wrapStyleElements) && !added) || $child.is(domSelectors.wrapIgnoreElements)) {
-                            //IGNORE NATIVELY TABBABLE ELEMENTS AND STYLING ELEMENTS
-                            newChildren.push( $child );
-                        } else {
-                            var childChildren = $child.children();
-                            if (childChildren.length === 0) {
-                                //DO NOT DESCEND INTO TEXT ONLY NODES
-                                var textContent = $child.text();
-                                if (stringTrim(textContent) !== "") makeElementTabbable($child);
+                    switch (child.nodeType) {
+                        case 3: //TEXT NODE
+                            //IF TEXT NODE APPEND TO CURRENT TEXT VALUE
+                            currentText += child.textContent;
+                            break;
+                        case 1: //DOM NODE
+                            var $child = $(cloneChild);
+                            //IGNORE STYLING ELEMENTS
+                            if ($child.is(domSelectors.wrapStyleElements)) {
+                                currentText += child.outerHTML;
                             } else {
-                                //DESCEND INTO NODES WITH CHILDREN
-                                makeChildNodesAccessible($child);
+                                //APPEND CURRENT TEXT VALUE BEFORE CONTINUING
+                                if (currentText.length > 0) {
+                                    //MAKE TABBABLE IF THE TEXT CONTAINS CHARACTERS OTHER THAN FULL STOPS, COMMAS & SPACES
+                                    var newChild = (/[^.,\s]/.test(currentText)) ? makeElementTabbable($("<span>" + currentText + "</span>")) : currentText;
+                                    newChildren.push(newChild);
+                                    currentText = "";
+                                }
+
+                                //IGNORE NATIVELY TABBABLE ELEMENTS
+                                if ($child.is(domSelectors.wrapIgnoreElements)) {
+                                    newChildren.push($child);
+                                    continue;
+                                }
+
+                                var childChildren = $child.children();
+                                if (childChildren.length === 0) {
+                                    //DO NOT DESCEND INTO TEXT ONLY NODES
+                                    var textContent = $child.text();
+                                    if (stringTrim(textContent) !== "") {
+                                        makeElementTabbable($child);
+                                    }
+                                } else {
+                                    //DESCEND INTO NODES WITH CHILDREN
+                                    makeChildNodesAccessible($child);
+                                }
+                                newChildren.push($child);
                             }
-                            newChildren.push( $child );
-                        }
-                        break;
+                            break;
                     }
                 }
 
@@ -261,7 +273,7 @@
 
                 function removeChildNodes($element) {
                     var childNodes = $element[0].childNodes.length;
-                    for (var i = childNodes - 1; i > -1 ; i--) {
+                    for (var i = childNodes - 1; i > -1; i--) {
                         if ($element[0].childNodes[i].remove) $element[0].childNodes[i].remove();
                         else if ($element[0].removeChild) $element[0].removeChild($element[0].childNodes[i]); //safari fix
                         else if ($element[0].childNodes[i].removeNode) $element[0].childNodes[i].removeNode(true); //ie 11 fix
