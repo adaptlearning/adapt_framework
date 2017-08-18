@@ -61,7 +61,7 @@ module.exports = function(grunt) {
         return new RegExp(re, "i");
     };
 
-    var generateScriptSageRegExp = function() {
+    var generateScriptSafeRegExp = function() {
         var includes = grunt.config('scriptSafe') || [];
         var re = '';
         for(var i = 0, count = includes.length; i < count; i++) {
@@ -255,7 +255,7 @@ module.exports = function(grunt) {
 
     exports.getScriptSafeRegExp = function() {
         var configValue = grunt.config('scriptSafeRegExp');
-        return configValue || grunt.config('scriptSafeRegExp', generateScriptSageRegExp());
+        return configValue || grunt.config('scriptSafeRegExp', generateScriptSafeRegExp());
     };
 
     exports.scriptSafeFilter = function(filepath) {
