@@ -1,5 +1,9 @@
 // TODO excludes
 module.exports = {
+    bowerJson: {
+        files: ['<%= sourcedir %>**/bower.json'],
+        tasks: ['dev']
+    },
     less: {
         files: ['<%= sourcedir %>**/*.less'],
         tasks: ['less:dev']
@@ -86,7 +90,7 @@ module.exports = {
         tasks: ['copy:libraries']
     },
     required: {
-        files: ['<%= sourcedir %>extensions/*/required/**/*'],
+        files: ['<%= sourcedir %>extensions/*/required/**/*', '<%= sourcedir %>extensions/*/libraries/**/*'],
         tasks: 'copy:required'
     }
 }
