@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                     var plugindir = path.dirname(bowerJSONPath)
                     var script = bowerJSON.scripts[mode];
                     var buildModule = require(path.join(plugindir, script));
-                    buildModule(fs, path, grunt.log.writeLn, {
+                    buildModule(fs, path, grunt.log.writeln, {
                        sourcedir: options.sourcedir,
                        outputdir: options.outputdir,
                        plugindir: plugindir

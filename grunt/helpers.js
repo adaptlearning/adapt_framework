@@ -139,11 +139,11 @@ module.exports = function(grunt) {
         } else {
           languageFolders = grunt.option('languages');
         }
-
+        
         // Selectively load the course.json ('outputdir' passed by server-build)
-        var outputdir = grunt.option('outputdir') ? outputdir : sourcedir;
+        var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
-        var configPath = path.join(path.resolve(root, outputdir), 'course', 'config.json');
+        var configPath = path.join(path.resolve(root, configDir), 'course', 'config.json');
         try {
             var buildConfig = require(configPath).build;
         } catch(error) {
