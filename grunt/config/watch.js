@@ -1,7 +1,11 @@
 // TODO excludes
 module.exports = {
     bowerJson: {
-        files: ['<%= sourcedir %>**/bower.json'],
+        files: ['<%= sourcedir %>*/*/bower.json'],
+        tasks: ['dev']
+    },
+    scripts: {
+        files: ['<%= sourcedir %>*/*/scripts/*'],
         tasks: ['dev']
     },
     less: {
