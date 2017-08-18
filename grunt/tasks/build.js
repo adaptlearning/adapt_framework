@@ -18,4 +18,4 @@ module.exports = function(grunt) {
         'scripts:adaptpostbuild',
         'minify'
     ]);
-}
+};

@@ -15,4 +15,4 @@ module.exports = function(grunt) {
         'replace'
         'scripts:adaptpostbuild'
     ]);
-}
+};
