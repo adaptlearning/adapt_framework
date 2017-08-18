@@ -13,5 +13,6 @@ module.exports = function(grunt) {
         'newer:javascript:dev',
         'newer:less:dev',
         'replace'
+        'scripts:adaptpostbuild'
     ]);
 }

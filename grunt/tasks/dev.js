@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         'javascript:dev',
         'less:dev',
         'replace',
+        'scripts:adaptpostbuild',
         'watch'
     ]);
 }
