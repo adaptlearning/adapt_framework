@@ -8,7 +8,7 @@ module.exports = function (grunt, options) {
                 '<%= sourcedir %>theme/<%= theme %>/bower.json'
             ],
             pluginsFilter: function(filepath) {
-                return grunt.config('helpers').includedFilter(filepath);
+                return grunt.config('helpers').includedFilter(filepath) && grunt.config('helpers').scriptSafeFilter(filepath);
             }
         }
     }

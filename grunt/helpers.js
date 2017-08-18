@@ -41,7 +41,6 @@ module.exports = function(grunt) {
     });
 
     // privates
-
     var generateIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
         var re = '';
@@ -58,6 +57,16 @@ module.exports = function(grunt) {
         for(var i = 0, count = excludes.length; i < count; i++) {
             re += '\/' + excludes[i].toLowerCase() + '\/';
             if(i < excludes.length-1) re += '|';
+        }
+        return new RegExp(re, "i");
+    };
+
+    var generateScriptSageRegExp = function() {
+        var includes = grunt.config('scriptSafe') || [];
+        var re = '';
+        for(var i = 0, count = includes.length; i < count; i++) {
+            re += '\/' + includes[i].toLowerCase() + '\/';
+            if(i < includes.length-1) re += '|';
         }
         return new RegExp(re, "i");
     };
@@ -87,6 +96,10 @@ module.exports = function(grunt) {
             'extensions',
             'menu',
             'theme'
+        ],
+        scriptSafe: [
+            'adapt-contrib-xapi',
+            'adapt-contrib-spoor'
         ]
     };
 
@@ -116,6 +129,8 @@ module.exports = function(grunt) {
 
     exports.generateConfigData = function() {
 
+        var root = __dirname.split(path.sep).slice(0,-1).join(path.sep);
+
         var languageFolders = "";
         if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
           languageFolders = "{" + grunt.option('languages') + "}";
@@ -123,13 +138,20 @@ module.exports = function(grunt) {
           languageFolders = grunt.option('languages');
         }
 
+        var pluginsConfig = {};
+        var pluginsPath = path.join(path.resolve(root), 'plugins.json');
+        try {
+            pluginsConfig = require(pluginsPath);
+        } catch(error) {}
+
         var data = {
-            root: __dirname.split(path.sep).slice(0,-1).join(path.sep),
+            root: root,
             sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
             outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
-            languages: languageFolders || exports.defaults.languages
+            languages: languageFolders || exports.defaults.languages,
+            scriptSafe: pluginsConfig.scriptSafe || exports.defaults.scriptSafe
         };
 
         // Selectively load the course.json ('outputdir' passed by server-build)
@@ -195,6 +217,23 @@ module.exports = function(grunt) {
         }
     };
 
+    exports.isPluginScriptSafe = function(pluginPath) {
+
+        pluginPath = pluginPath.replace(convertSlashes, "/");
+        var includes = grunt.config('scriptSafe');
+        var isExplicitlyDefined = (includes && pluginPath.search(exports.getScriptSafeRegExp()) !== -1);
+        var isIncluded = grunt.option('allowscripts') || isExplicitlyDefined;
+
+        if (!isIncluded) {
+            grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+        } else {
+            grunt.log.writeln('Included ' + chalk.green(pluginPath));
+        }
+
+        return isIncluded;
+     
+    };
+
     exports.includedFilter = function(filepath) {
         return exports.isPluginIncluded(filepath);
     };
@@ -212,6 +251,15 @@ module.exports = function(grunt) {
     exports.getExcludedRegExp = function() {
         var configValue = grunt.config('excludedRegExp');
         return configValue || grunt.config('excludedRegExp', generateExcludedRegExp());
+    };
+
+    exports.getScriptSafeRegExp = function() {
+        var configValue = grunt.config('scriptSafeRegExp');
+        return configValue || grunt.config('scriptSafeRegExp', generateScriptSageRegExp());
+    };
+
+    exports.scriptSafeFilter = function(filepath) {
+        return exports.isPluginScriptSafe(filepath);
     };
 
     return exports;
