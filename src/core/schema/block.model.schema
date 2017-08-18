@@ -36,6 +36,15 @@
       "validators": [],
       "translatable": true
     },
+    "instruction": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "This is the instruction text",
+      "translatable": true
+    },
     "_classes": {
       "type": "string",
       "default": "",
