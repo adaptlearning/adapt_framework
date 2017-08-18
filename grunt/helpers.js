@@ -139,7 +139,7 @@ module.exports = function(grunt) {
         } else {
           languageFolders = grunt.option('languages');
         }
-        
+
         // Selectively load the course.json ('outputdir' passed by server-build)
         var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
@@ -220,9 +220,9 @@ module.exports = function(grunt) {
         var isIncluded = grunt.option('allowscripts') || includes[0] === "*" || isExplicitlyDefined;
 
         if (!isIncluded) {
-            grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+            //grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
         } else {
-            grunt.log.writeln('Included ' + chalk.green(pluginPath));
+            //grunt.log.writeln('Included ' + chalk.green(pluginPath));
         }
 
         return isIncluded;
