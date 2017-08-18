@@ -956,7 +956,13 @@
         $.fn.a11y_text = function(text) {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return this;
+            if (!options.isTabbableTextEnabled) {
+                if (text) {
+                    this.html(text);
+                }
+
+                return this;
+            }
 
             for (var i = 0; i < this.length; i++) {
                 // If an argument is given then convert that to accessible text
