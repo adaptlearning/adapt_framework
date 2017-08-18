@@ -39,10 +39,10 @@
     "instruction": {
       "type": "string",
       "required": false,
+      "title": "Instruction text",
       "default": "",
       "inputType": "Text",
       "validators": [],
-      "help": "This is the instruction text",
       "translatable": true
     },
     "_classes": {
