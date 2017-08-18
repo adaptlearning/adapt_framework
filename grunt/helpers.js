@@ -130,6 +130,8 @@ module.exports = function(grunt) {
     exports.generateConfigData = function() {
 
         var root = __dirname.split(path.sep).slice(0,-1).join(path.sep);
+        var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
+        var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
 
         var languageFolders = "";
         if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
@@ -138,37 +140,30 @@ module.exports = function(grunt) {
           languageFolders = grunt.option('languages');
         }
 
-        var pluginsConfig = {};
-        var pluginsPath = path.join(path.resolve(root), 'plugins.json');
-        try {
-            pluginsConfig = require(pluginsPath);
-        } catch(error) {}
-
-        var data = {
-            root: root,
-            sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
-            outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
-            theme: grunt.option('theme') || exports.defaults.theme,
-            menu: grunt.option('menu') || exports.defaults.menu,
-            languages: languageFolders || exports.defaults.languages,
-            scriptSafe: pluginsConfig.scriptSafe || exports.defaults.scriptSafe
-        };
-
         // Selectively load the course.json ('outputdir' passed by server-build)
-        var outputdir = grunt.option('outputdir') ? data.outputdir : data.sourcedir;
+        var outputdir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
-        var configPath = path.join(path.resolve(data.root, outputdir), 'course', 'config.json');
-
+        var configPath = path.join(path.resolve(root, outputdir), 'course', 'config.json');
         try {
             var buildConfig = require(configPath).build;
-        }
-        catch(error) {
+        } catch(error) {
             return grunt.log.error(error);
         }
 
+        var data = {
+            root: root,
+            sourcedir: sourcedir,
+            outputdir: outputdir,
+            theme: grunt.option('theme') || exports.defaults.theme,
+            menu: grunt.option('menu') || exports.defaults.menu,
+            languages: languageFolders || exports.defaults.languages,
+            scriptSafe: exports.defaults.scriptSafe
+        };
+
         if(buildConfig) {
-            if(buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
-            if(buildConfig.excludes) data.excludes = buildConfig.excludes;
+            if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
+            if (buildConfig.excludes) data.excludes = buildConfig.excludes;
+            if (buildConfig.scriptSafe) data.scriptSafe = buildConfig.scriptSafe.split(",").map(function(item) { return item.trim() });
         }
 
         return data;
@@ -222,7 +217,7 @@ module.exports = function(grunt) {
         pluginPath = pluginPath.replace(convertSlashes, "/");
         var includes = grunt.config('scriptSafe');
         var isExplicitlyDefined = (includes && pluginPath.search(exports.getScriptSafeRegExp()) !== -1);
-        var isIncluded = grunt.option('allowscripts') || isExplicitlyDefined;
+        var isIncluded = grunt.option('allowscripts') || includes[0] === "*" || isExplicitlyDefined;
 
         if (!isIncluded) {
             grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
