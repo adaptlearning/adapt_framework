@@ -31,6 +31,7 @@
                 scrollTo: 'libraries/scrollTo.min',
                 bowser: 'libraries/bowser',
                 'enum': 'libraries/enum',
+                jqueryResize: 'libraries/jquery.resize',
                 jqueryMobile: 'libraries/jquery.mobile.custom'
             }
         });
@@ -95,6 +96,7 @@
             'imageReady',
             'inview',
             'jqueryMobile',
+            'jqueryResize',
             'a11y',
             'scrollTo',
             'bowser',

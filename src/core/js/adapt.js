@@ -227,6 +227,25 @@ define([
 
     };
 
+    Adapt.parseRelativeString = function(relativeString) {
+        var type = relativeString.substr(0, _.indexOf(relativeString, " "));
+        var offset = parseInt(relativeString.substr(type.length));
+        type = type.substr(1);
+
+        /*RETURN THE TYPE AND OFFSET
+        * "@component +1"  : 
+        * {
+        *       type: "component",
+        *       offset: 1
+        * }
+        */
+        return { 
+            type: type,
+            offset: offset
+        };
+
+    };
+
     Adapt.remove = function() {
         Adapt.trigger('preRemove');
         Adapt.trigger('remove');
