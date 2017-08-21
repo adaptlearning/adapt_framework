@@ -228,8 +228,10 @@ define([
     };
 
     Adapt.parseRelativeString = function(relativeString) {
-        var type = relativeString.substr(0, _.indexOf(relativeString, " "));
-        var offset = parseInt(relativeString.substr(type.length));
+        var separatorPosition = _.indexOf(relativeString, " ");
+        if (separatorPosition < 0) separatorPosition = relativeString.length;
+        var type = relativeString.substr(0, separatorPosition);
+        var offset = parseInt(relativeString.substr(type.length).trim()||0);
         type = type.substr(1);
 
         /*RETURN THE TYPE AND OFFSET

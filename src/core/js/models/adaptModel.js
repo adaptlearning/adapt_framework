@@ -312,7 +312,7 @@ define([
 
         findRelativeModel: function(relativeString, options) {
             /*
-            * Returns a relative structural item from the Adapt hierarchy
+            * Returns a relative model from the Adapt hierarchy
             *   
             *   Such that in the tree:
             *       { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
@@ -328,7 +328,7 @@ define([
             var modelId = this.get("_id");
             var modelType = this.get("_type");
 
-            //return a model relative to the specified one if opinionated
+            // return a model relative to the specified one if opinionated
             var rootModel = Adapt.course;
             if (options.limitParentId) {
                 rootModel = Adapt.findById(options.limitParentId);
@@ -337,34 +337,37 @@ define([
             var relativeDescriptor = Adapt.parseRelativeString(relativeString);
 
             var findAncestorType = (_.indexOf(types, modelType) > _.indexOf(types, relativeDescriptor.type));
-            var findSameType = (modelType === relativeDescriptor.type);
+            var findSiblingType = (modelType === relativeDescriptor.type);
 
-            var searchBackwards = false;
+            var searchBackwards = (relativeDescriptor.offset < 0);;
+            var moveBy = Math.abs(relativeDescriptor.offset);
             var movementCount = 0;
 
-            // children first [c,c,b,a,c,c,b,a,p,c,c,b,a,c,c,b,a,p]
-            var pageDescendants = rootModel.getAllDescendantModels();
+            var findDescendantType = (!findSiblingType && !findAncestorType);
 
-            //choose search style
-            if (findSameType || findAncestorType) {
-                //examples a<>a or c<>b,a,p
-                //assume next is 0 index
-                //assume last is -1 index
-                searchBackwards = (relativeDescriptor.offset <= 0);
-            } else {
-                //finding descendant
-                //examples a<>c or a<>b
-                if (relativeDescriptor.offset < 1) {
-                    //assume last descendant is 0 index
-                    searchBackwards = true;
-                } else {
-                    //assume next descendant is +1 index
-                    movementCount = 1;
-                    searchBackwards = false;
+            var pageDescendants;
+            if (searchBackwards) {
+                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
+                pageDescendants = rootModel.getAllDescendantModels(true);
+
+                // reverse so that we don't need a forward and a backward iterating loop
+                // reversed [c9,c8,b4,a4,c7,c6,b3,a3,p2,c4,c3,b2,a2,c2,c1,b1,a1,p1]
+                pageDescendants.reverse();
+
+                if (findDescendantType) {
+                    // move by one less as ordering allows
+                    moveBy-=1;
                 }
+
+            } else if (findDescendantType) {
+                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
+                pageDescendants = rootModel.getAllDescendantModels(true);
+            } else if (findSiblingType || findAncestorType) {
+                // children first [c1,c2,b1,a1,c3,c4,b2,a2,p1,c6,c7,b3,a3,c8,c9,b4,a4,p2]
+                pageDescendants = rootModel.getAllDescendantModels(false);
             }
 
-            //exclude not available and not visible if opinionated
+            // exclude not available and not visible if opinionated
             if (options.filterNotVisible) {
                 pageDescendants = _.filter(pageDescendants, function(descendant) {
                     return descendant.get("_isVisible");
@@ -376,7 +379,7 @@ define([
                 });
             } 
 
-            //find current index in array
+            // find current index in array
             var modelIndex = _.findIndex(pageDescendants, function(pageDescendant) {
                 if (pageDescendant.get("_id") === modelId) {
                     return true;
@@ -384,26 +387,29 @@ define([
                 return false;
             });
 
-            //search in appropriate order
-            if (searchBackwards) {
-                for (var i = modelIndex, l = -1; i > l; i--) {
-                    var descendant = pageDescendants[i];
-                    if (descendant.get("_type") === relativeDescriptor.type) {
-                        if (-movementCount === relativeDescriptor.offset) {
-                            return Adapt.findById(descendant.get("_id"));
-                        }
-                        movementCount++;
+            if (options.loop) {
+
+                // normalize offset position to allow for overflow looping
+                var typeCounts = {};
+                pageDescendants.forEach(function(model) {
+                    var type = model.get("_type");
+                    typeCounts[type] = typeCounts[type] || 0;
+                    typeCounts[type]++;
+                });
+                moveBy = moveBy % typeCounts[relativeDescriptor.type];
+                
+                // double up entries to allow for overflow looping
+                pageDescendants = pageDescendants.concat(pageDescendants.slice(0));
+
+            }
+
+            for (var i = modelIndex, l = pageDescendants.length; i < l; i++) {
+                var descendant = pageDescendants[i];
+                if (descendant.get("_type") === relativeDescriptor.type) {
+                    if (movementCount === moveBy) {
+                        return Adapt.findById(descendant.get("_id"));
                     }
-                }
-            } else {
-                for (var i = modelIndex, l = pageDescendants.length; i < l; i++) {
-                    var descendant = pageDescendants[i];
-                    if (descendant.get("_type") === relativeDescriptor.type) {
-                        if (movementCount === relativeDescriptor.offset) {
-                            return Adapt.findById(descendant.get("_id"));
-                        }
-                        movementCount++;
-                    }
+                    movementCount++;
                 }
             }
 
