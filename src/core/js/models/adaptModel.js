@@ -367,17 +367,10 @@ define([
                 pageDescendants = rootModel.getAllDescendantModels(false);
             }
 
-            // exclude not available and not visible if opinionated
-            if (options.filterNotVisible) {
-                pageDescendants = _.filter(pageDescendants, function(descendant) {
-                    return descendant.get("_isVisible");
-                });
-            } 
-            if (options.filterNotAvailable) {
-                pageDescendants = _.filter(pageDescendants, function(descendant) {
-                    return descendant.get("_isAvailable");
-                });
-            } 
+            // filter if opinionated
+            if (typeof options.filter === "function") {
+                pageDescendants = _.filter(pageDescendants, options.filter);
+            }
 
             // find current index in array
             var modelIndex = _.findIndex(pageDescendants, function(pageDescendant) {
