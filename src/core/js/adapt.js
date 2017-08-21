@@ -228,19 +228,26 @@ define([
     };
 
     Adapt.parseRelativeString = function(relativeString) {
-        var separatorPosition = _.indexOf(relativeString, " ");
-        if (separatorPosition < 0) separatorPosition = relativeString.length;
-        var type = relativeString.substr(0, separatorPosition);
-        var offset = parseInt(relativeString.substr(type.length).trim()||0);
-        type = type.substr(1);
 
-        /*RETURN THE TYPE AND OFFSET
-        * "@component +1"  : 
-        * {
-        *       type: "component",
-        *       offset: 1
-        * }
-        */
+        // RETURN THE TYPE AND OFFSET
+        // "@component +1"  : 
+        // {
+        //       type: "component",
+        //       offset: 1
+        // }
+
+        if (relativeString[0] === "@") {
+            relativeString = relativeString.substr(1);
+        }
+
+        var type = relativeString.match(/(component|block|article|page|menu)/);
+        if (!type) {
+            Adapt.log.error("Could not match relative type", relativeString);
+        }
+        type = type[0];
+
+        var offset = parseInt(relativeString.substr(type.length).trim()||0);
+
         return { 
             type: type,
             offset: offset
