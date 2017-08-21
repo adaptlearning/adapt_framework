@@ -242,11 +242,16 @@ define([
 
         var type = relativeString.match(/(component|block|article|page|menu)/);
         if (!type) {
-            Adapt.log.error("Could not match relative type", relativeString);
+            Adapt.log.error("Adapt.parseRelativeString() could not match relative type", relativeString);
+            return;
         }
         type = type[0];
 
         var offset = parseInt(relativeString.substr(type.length).trim()||0);
+        if (isNaN(offset)) {
+            Adapt.log.error("Adapt.parseRelativeString() could not parse relative offset", relativeString);
+            return;
+        }
 
         return { 
             type: type,
