@@ -232,7 +232,8 @@ define([
 
             this.set({
                 feedbackTitle: this.get('title'),
-                feedbackMessage: this.get("_feedback") ? this.get("_feedback").correct : ""
+                feedbackMessage: this.get("_feedback") ? this.get("_feedback").correct : "",
+                feedbackImage: this.get("_feedback") ? this.get("_feedback")._correctImage : ""
             });
 
         },
@@ -244,7 +245,8 @@ define([
                     if (this.get('_feedback')._partlyCorrect.final) {
                         this.set({
                             feedbackTitle: this.get('title'),
-                            feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.final : ""
+                            feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.final : "",
+                            feedbackImage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect._finalImage : ""
                         });
                     } else {
                         this.setupIncorrectFeedback();
@@ -252,7 +254,8 @@ define([
                 } else {
                     this.set({
                         feedbackTitle: this.get('title'),
-                        feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.notFinal : ""
+                        feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.notFinal : "",
+                        feedbackImage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect._notFinalImage : ""
                     });
                 }
             } else {
@@ -266,12 +269,14 @@ define([
             if (this.get('_attemptsLeft') === 0 || this.get('_feedback') && !this.get('_feedback')._incorrect.notFinal) {
                 this.set({
                     feedbackTitle: this.get('title'),
-                    feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.final : ""
+                    feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.final : "",
+                    feedbackImage: this.get("_feedback") ? this.get('_feedback')._incorrect._finalImage : ""
                 });
             } else {
                 this.set({
                     feedbackTitle: this.get('title'),
-                    feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.notFinal : ""
+                    feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.notFinal : "",
+                    feedbackImage: this.get("_feedback") ? this.get('_feedback')._incorrect._notFinalImage : ""
                 });
             }
 
