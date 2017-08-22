@@ -118,7 +118,7 @@
         Modernizr.load('adapt/js/adapt.min.js');
     }
 
-    //1. Load foundation libraries, consoles, requirejs
+    //1. Load foundation libraries, requirejs
     Modernizr.load([
         {
             load: 'libraries/require.min.js',
