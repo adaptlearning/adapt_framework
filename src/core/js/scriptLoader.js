@@ -121,10 +121,6 @@
     //1. Load foundation libraries, consoles, requirejs
     Modernizr.load([
         {
-            test: window.console == undefined,
-            yep: 'libraries/consoles.min.js'
-        },
-        {
             load: 'libraries/require.min.js',
             complete: setupRequireJS
         }
