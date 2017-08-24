@@ -2,7 +2,10 @@ define(function() {
 
     var ItemModel = Backbone.Model.extend({
 
-        defaults: { _isActive: false, _isVisited: false },
+        defaults: {
+            _isActive: false,
+            _isVisited: false
+        },
 
         reset: function() {
             this.set({ _isActive: false, _isVisited: false });
