@@ -78,6 +78,9 @@
             },
             "_resources": {
                 "resourcesEnd": "You have reached the end of the list of resources."
+            },
+            "_trickle": {
+                "incompleteContant": "There is incomplete content above. You must complete this before you can proceed in the course."
             }
         },
         "_learnerInfo": {
