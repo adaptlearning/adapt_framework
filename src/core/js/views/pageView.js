@@ -21,12 +21,12 @@ define([
             var accessibility = Adapt.config.get('_accessibility');
             if (accessibility._isEnabled || accessibility._isEnabledOnTouchDevices) {
                 // create aria-label outside of #wrapper
-                this.pageLabel = document.createElement('div');
-                this.pageLabel.setAttribute('class', 'aria-label relative a11y-ignore-focus prevent-default')  ;
-                this.pageLabel.setAttribute('tabindex', 0);
-                this.pageLabel.setAttribute('role', 'region');
-                this.pageLabel.textContent = Adapt.course.get('_globals')._accessibility._ariaLabels.pageEnd;
-                document.body.appendChild(this.pageLabel);
+                this.$pageLabel = $('<div/>', {
+                    'class': 'aria-label relative a11y-ignore-focus prevent-default',
+                    tabindex: 0,
+                    role: 'region',
+                    text: Adapt.course.get('_globals')._accessibility._ariaLabels.pageEnd
+                }).appendTo('body');
             }
         },
 
@@ -55,7 +55,7 @@ define([
 
         remove: function() {
             if (this.pageLabel) {
-                this.pageLabel.remove();
+                this.$pageLabel.remove();
             }
             AdaptView.prototype.remove.call(this);
         }
