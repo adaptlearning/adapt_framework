@@ -133,6 +133,7 @@ module.exports = function(grunt) {
         var root = __dirname.split(path.sep).slice(0,-1).join(path.sep);
         var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
         var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+        var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
         var languageFolders = "";
         if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
@@ -144,7 +145,7 @@ module.exports = function(grunt) {
         // Selectively load the course.json ('outputdir' passed by server-build)
         var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
-        var configPath = path.join(path.resolve(root, configDir), 'course', 'config.'+data.jsonext);
+        var configPath = path.join(path.resolve(root, configDir), 'course', 'config.'+jsonext);
         try {
             var buildConfig = grunt.file.readJSON(configPath).build;
         } catch(error) {
@@ -155,7 +156,7 @@ module.exports = function(grunt) {
             root: root,
             sourcedir: sourcedir,
             outputdir: outputdir,
-            jsonext: grunt.option('jsonext') || exports.defaults.jsonext,
+            jsonext: jsonext,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
             languages: languageFolders || exports.defaults.languages,
