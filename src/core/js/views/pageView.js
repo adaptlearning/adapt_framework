@@ -54,7 +54,7 @@ define([
         },
 
         remove: function() {
-            if (this.pageLabel) {
+            if (this.$pageLabel) {
                 this.$pageLabel.remove();
             }
             AdaptView.prototype.remove.call(this);
