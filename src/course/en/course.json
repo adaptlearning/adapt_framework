@@ -80,7 +80,7 @@
                 "resourcesEnd": "You have reached the end of the list of resources."
             },
             "_trickle": {
-                "incompleteContent": "There is incomplete content above. You must complete this before you can proceed in the course."
+                "incompleteContent": "There is incomplete content above. You must complete this before you can proceed through the course."
             }
         },
         "_learnerInfo": {
