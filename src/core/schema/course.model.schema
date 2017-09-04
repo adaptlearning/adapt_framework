@@ -361,6 +361,14 @@
                   "required": true,
                   "translatable": true
                 },
+                "incorrect": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Incorrect",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
                 "locked": {
                   "type": "string",
                   "title": "",
