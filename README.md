@@ -1,6 +1,18 @@
-# Adapt Framework
+# Adapt Framework (legacy version)
 [![Build Status](https://secure.travis-ci.org/adaptlearning/adapt_framework.png)](http://travis-ci.org/adaptlearning/adapt_framework)  [![Join the chat at https://gitter.im/adaptlearning/adapt_framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/adaptlearning/adapt_framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Adapt is a free and easy to use framework and authoring tool that creates fully responsive, multi-device, HTML5 e-learning content.
+
+The legacy version of Adapt should be used if you need to create courses that support 'legacy' web browsers, specifically Internet Explorer v8, 9 & 10. 
+
+Please note that this version will not receive any new feature development, only bug fixes (for a limited time).
+
+If your course content doesn't need to support legacy browsers you should use the 'master' branch of Adapt instead.
+
+To download the legacy version of the framework using the Adapt CLI, run the following command:
+```bash
+$ adapt create course my-adapt-course legacy
+```
+This will automatically install the legacy version of the core plugins.
 
 ## What Does It Do?
 The Adapt framework is a toolkit for creating responsive, single-version HTML5 e-learning courses for delivery on a web server or SCORM-compliant learning management system.
