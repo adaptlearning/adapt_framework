@@ -26,7 +26,8 @@
       "default" : "",
       "inputType": "TextArea",
       "validators": [],
-      "translatable": true
+      "translatable": true,
+      "help": "If set, this text will be shown instead of the body text when this page is viewed."
     },
     "body":{
       "type": "string",
@@ -119,7 +120,16 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Is this hidden?",
-      "help": "Controls whether this page and its contents are shown to the learner or not."
+      "help": "Equivalent to applying the CSS 'display:none'. Unless you have custom code that uses this, it is highly unlikely you would want to change this setting at a page level."
+    },
+    "_isVisible": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this visible?",
+      "help": "Equivalent to the CSS visibility property. Unless you have custom code that uses this, it is highly unlikely you would want to change this setting at a page level."
     },
     "_extensions": {
       "type": "object"
