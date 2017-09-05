@@ -59,6 +59,7 @@
     "_start": {
       "type": "object",
       "title": "Start settings",
+      "help": "The start settings allow you to control which page is rendered when a course loads, potentially bypassing the menu.",
       "properties": {
         "_isEnabled": {
           "type": "boolean",
@@ -66,8 +67,7 @@
           "editorOnly": true,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Enabled?",
-          "help": "The start settings allow you to control which page is rendered when a course loads, potentially bypassing the menu"
+          "title": "Enabled?"
         },
         "_startIds": {
           "type": "array",
