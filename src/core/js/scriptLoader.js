@@ -89,20 +89,20 @@
     //6. Load foundation libraries and templates
     function loadFoundationLibraries() {
         require([
-            "underscore",
-            "underscore.results",
-            "backbone",
-            "backbone.controller",
-            "backbone.controller.results",
-            "handlebars",
-            "velocity",
-            "imageReady",
-            "inview",
-            "a11y",
-            "scrollTo",
-            "bowser",
-            "enum",
-            "templates"
+            'underscore',
+            'underscore.results',
+            'backbone',
+            'backbone.controller',
+            'backbone.controller.results',
+            'handlebars',
+            'velocity',
+            'imageReady',
+            'inview',
+            'a11y',
+            'scrollTo',
+            'bowser',
+            'enum',
+            'templates'
         ], loadAdapt);
     }
 
