@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 			if (options.mandatory) {
 				for (var i = 0, l = options.mandatory.length; i < l; i++) {
 					var src = options.mandatory[i];
-					grunt.file.expand({}, src).forEach(function(lessPath) {
+					grunt.file.expand({follow: true}, src).forEach(function(lessPath) {
 						lessPath = path.normalize(lessPath);
 						var trimmed = lessPath.substr(rootPath.length);
 						imports+= "@import '" + trimmed + "';\n";
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 			if (options.src) {
 				for (var i = 0, l = options.src.length; i < l; i++) {
 					var src = options.src[i];
-					grunt.file.expand({filter: options.filter}, src).forEach(function(lessPath) {
+					grunt.file.expand({follow: true, filter: options.filter}, src).forEach(function(lessPath) {
 						lessPath = path.normalize(lessPath);
 						var trimmed = lessPath.substr(rootPath.length);
 						imports+= "@import '" + trimmed + "';\n";

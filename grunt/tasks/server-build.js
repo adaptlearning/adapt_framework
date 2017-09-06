@@ -11,7 +11,8 @@ module.exports = function(grunt) {
             'less:' + requireMode,
             'handlebars',
             'javascript:' + requireMode,
-            'replace'
+            'replace',
+            'scripts:adaptpostbuild'
         ]);
     });
-}
+};

@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2017-01-05 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2017-07-11 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 
@@ -166,9 +166,7 @@
             item._inviewPreviousState = inviewState;
             item._measurePreviousState = measure;
 
-            setTimeout(function() {
-                item.$element.trigger('inview', inviewState );
-            }, 0);
+            item.$element.trigger('inview', inviewState );
 
         }
     };
@@ -179,6 +177,7 @@
         lastStartEvent: 0,
         timeoutHandle: null,
         intervalDuration: 100,
+        hasRaf: false,
 
         start: function() {
 
@@ -190,7 +189,12 @@
         repeat: function() {
             
             loop.stop();
-            loop.timeoutHandle = setTimeout(loop.main, loop.intervalDuration);
+
+            if (loop.hasRaf) {
+                loop.timeoutHandle = requestAnimationFrame(loop.main);
+            } else {
+                loop.timeoutHandle = setTimeout(loop.main, loop.intervalDuration);
+            }
 
         },
 
@@ -203,7 +207,22 @@
             return true;
         },
 
+        isThrottled: function() {
+            var passedTime = (new Date()).getTime() - loop.lastMain;
+            if (passedTime > loop.intervalDuration) return false;
+            return true;
+        },
+
+        lastMain: (new Date()).getTime(),
+
         main: function() {
+
+            if (loop.isThrottled()) {
+                loop.repeat();
+                return;
+            }
+
+            loop.lastMain = (new Date()).getTime();
 
             if (loop.hasExpired()) return;
 
@@ -232,8 +251,13 @@
             var intervalAttached = (loop.timeoutHandle !== null);
             if (!intervalAttached) return;
 
-            clearTimeout(loop.timeoutHandle);
-            loop.timeoutHandle = null;
+            if (loop.hasRaf) {
+                cancelAnimationFrame(loop.timeoutHandle);
+                loop.timeoutHandle = null;
+            } else {
+                clearTimeout(loop.timeoutHandle);
+                loop.timeoutHandle = null;
+            }
 
         }
 
@@ -243,6 +267,8 @@
     $.extend($.event.special, {
 
         onscreen: {
+            
+            noBubble: true,
 
             add: function(data) {
                 handlers.register(this, data, handlers.TYPE.onscreen);
@@ -255,6 +281,8 @@
         },
 
         inview: {
+            
+            noBubble: true,
 
             add: function(data) {
                 handlers.register(this, data, handlers.TYPE.inview);
@@ -374,8 +402,8 @@
         widthRatio: null,
 
         resize: function() {
-            wndw.height = wndw.$el.height();
-            wndw.width = wndw.$el.width();
+            wndw.height = window.innerHeight || wndw.$el.height();
+            wndw.width = window.innerWidth || wndw.$el.width();
             wndw.heightRatio = (100 / wndw.height);
             wndw.widthRatio = (100 / wndw.width);
             loop.start();
@@ -392,6 +420,7 @@
             var body = $("body")[0].getBoundingClientRect();
             //make sure to get height and width independently if getBoundingClientRect doesn't return height and width;
             measurements.supplimentDimensions = (body.width === undefined);
+            loop.hasRaf = (window.requestAnimationFrame && window.cancelAnimationFrame);
             
         },
 
@@ -456,6 +485,10 @@
             } else { //fully inscreen
                 inviewVertical = height;
             }
+            
+            // cap floor at 0 - cannot have negative inviews.
+            if (inviewVertical < 0) inviewVertical = 0;
+            if (inviewHorizontal < 0) inviewHorizontal = 0;
 
             var percentInviewVertical = Math.round((100 / height) * inviewVertical);
             var percentInviewHorizontal = Math.round((100 / width) * inviewHorizontal);
@@ -473,7 +506,32 @@
 
             var cssHidden = (el.style.display == "none" || el.style.visibility == "hidden");
             if (cssHidden) onscreen = false;
-            //do we need to look at parent's display: none and visibility:hidden ^?
+            
+            if (onscreen) {
+                
+                // perform some extra checks to make sure item is onscreen
+                var parents = measurements.getParents(el);
+                // go through all the parents except the html tag
+                for (var i = 0, l = parents.length-1; i < l; i++) {
+                    var parent = parents[i];
+                
+                    cssHidden = (parent.style.display == "none" || parent.style.visibility == "hidden");
+                    // check if parents are visibility hidden or display none
+                    if (cssHidden) {
+                        onscreen = false;
+                        break;
+                    }
+
+                    // check if child is out of bounds inside its parent
+                    var isOutOfBounds = measurements.isOutOfBounds(el, parent)
+                    if (isOutOfBounds) {
+                        onscreen = false;
+                        break;
+                    }
+
+                }
+
+            }
 
             var uniqueMeasurementId = ""+top+left+bottom+right+height+width+wndw.height+wndw.width+onscreen;
             
@@ -494,17 +552,58 @@
                 timestamp: (new Date()).getTime()
             };
 
+        },
+
+        getParents: function(element) {
+            var parents = [];
+            var parent;
+            while (parent = element.parentElement) {
+                parents.push(parent);
+                element = parent;
+            }
+            return parents;
+        },
+
+        isOutOfBounds: function(element, parent) {
+
+            var isScrollWidthOverflowing = (parent.clientWidth < parent.scrollWidth);
+            var isScrollHeightOverflowing = (parent.clientHeight < parent.scrollHeight);
+            var isOverflowing = (isScrollWidthOverflowing || isScrollHeightOverflowing);
+            
+            var $parent = $(parent);
+
+            if (!isOverflowing || ($parent.css("overflow") === "visible")) {
+                return false;
+            }
+
+            var $element = $(element);
+
+            var childPos = $element.offset();
+            var parentPos = $parent.offset();
+
+            var childOffsetTop = (childPos.top - parentPos.top);
+            var childOffsetLeft = (childPos.left - parentPos.left);
+            var childOffsetBottom = (childOffsetTop + element.clientHeight);
+            var childOffsetRight = (childOffsetLeft + element.clientWidth);
+
+            var isOutOfBounds = (childOffsetTop > parent.clientHeight
+                || childOffsetLeft > parent.clientWidth 
+                || childOffsetBottom < 0
+                || childOffsetRight < 0);
+
+            return isOutOfBounds;
+
         }
 
     };
 
     //attach event handlers
     $(window).on({
-        "scroll mousedown touchstart keydown": loop.start,
+        "touchmove scroll mousedown keydown": loop.start,
         "resize": wndw.resize
     });
 
-    measurements.featureDetect();
+    $(measurements.featureDetect);
     wndw.resize();
 
 })();

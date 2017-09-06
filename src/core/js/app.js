@@ -80,16 +80,13 @@ require([
 
             Adapt.setupMapping();
 
-            try {
-                Adapt.trigger('app:dataLoaded');
-            } catch(e) {
-                Adapt.log.error('Error during app:dataLoaded trigger', e);
-            }
-
-            if (!Adapt.isWaitingForPlugins()) triggerDataReady(newLanguage);
-            else Adapt.once('plugins:ready', function() {
+            if (!Adapt.isWaitingForPlugins()) {
                 triggerDataReady(newLanguage);
-            });
+            } else {
+                Adapt.once('plugins:ready', function() {
+                    triggerDataReady(newLanguage);
+                });
+            }
         }
     };
 
@@ -118,11 +115,34 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
-        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+        if (!Adapt.isWaitingForPlugins()) {
+            triggerInitialize();
+        } else {
+            Adapt.once('plugins:ready', triggerInitialize);
+        }
+    }
+
+    function triggerInitialize() {
+        Adapt.log.debug('Calling Adapt.initialize');
+
+        addNavigationBar();
 
         Adapt.initialize();
 
         Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+    }
+
+    function addNavigationBar() {
+
+        var adaptConfig = Adapt.course.get("_navigation");
+
+        if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
+            Adapt.trigger("navigation:initialize");
+            return;
+        }
+
+        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+
     }
 
     function configureInview() {

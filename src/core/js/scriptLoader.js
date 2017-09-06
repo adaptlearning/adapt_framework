@@ -30,9 +30,10 @@
                 imageReady: 'libraries/imageReady',
                 inview: 'libraries/inview',
                 a11y: 'libraries/jquery.a11y',
-                scrollTo: 'libraries/scrollTo',
+                scrollTo: 'libraries/scrollTo.min',
                 bowser: 'libraries/bowser',
-                'enum': 'libraries/enum'
+                'enum': 'libraries/enum',
+                jqueryMobile: 'libraries/jquery.mobile.custom'
             }
         });
         loadJQuery();
@@ -43,8 +44,8 @@
         Modernizr.load([
             {
                 test: IE == 8,
-                yep: 'libraries/jquery.js',
-                nope: 'libraries/jquery.v2.js',
+                yep: 'libraries/jquery.min.js',
+                nope: 'libraries/jquery.v2.min.js',
                 complete: checkJQueryStatus
             }
         ]);
@@ -76,7 +77,7 @@
         if (isIE8) {
             fixIE8ConsoleLog();
         }
-        
+
     }
 
     function fixIE8ConsoleLog() {
@@ -108,30 +109,30 @@
     //7. Load adapt
     function loadAdapt() {
         switch (IE) {
-        case 8: case 9:
+            case 8: case 9:
             //ie8 and ie9 don't do crossdomain with jquery normally
             break;
-        default:
-            //cross domain support for all other browers
-            $.ajaxPrefilter(function( options ) {
-                options.crossDomain = true;
-            });
+            default:
+                //cross domain support for all other browers
+                $.ajaxPrefilter(function( options ) {
+                    options.crossDomain = true;
+                });
         }
-        Modernizr.load("adapt/js/adapt.min.js");
+        Modernizr.load('adapt/js/adapt.min.js');
     }
 
     //1. Load foundation libraries, json2, consoles, requirejs
     Modernizr.load([
         {
             test: window.JSON,
-            nope: 'libraries/json2.js'
+            nope: 'libraries/json2.min.js'
         },
         {
             test: window.console == undefined,
-            yep: 'libraries/consoles.js'
+            yep: 'libraries/consoles.min.js'
         },
         {
-            load: "libraries/require.js",
+            load: 'libraries/require.min.js',
             complete: setupRequireJS
         }
     ]);

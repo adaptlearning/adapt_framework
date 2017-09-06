@@ -15,6 +15,8 @@ define([
             this.showLoading();
             // Store #wrapper element to cache for later
             this.$wrapper = $('#wrapper');
+            this.$html = $('html');
+
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
@@ -44,6 +46,11 @@ define([
 
         handleRoute: function() {
             var args = this.pruneArguments(arguments);
+            
+            if (Adapt.router.get('_canNavigate')) {
+                // Reset _isCircularNavigationInProgress protection as code is allowed to navigate away
+                this._isCircularNavigationInProgress = false;
+            }
 
             //check if the current page is in the progress of navigating to itself
             //it will redirect to itself if the url was changed and _canNavigate is false
@@ -52,6 +59,7 @@ define([
                 Adapt.trigger("router:navigate", args);
             }
 
+            // recheck as _canNavigate can be set to false on router:navigate event
             if (Adapt.router.get('_canNavigate')) {
 
                 //disable navigation whilst rendering
@@ -309,6 +317,17 @@ define([
                     + ' location-id-'
                     + Adapt.location._currentId :
                     'location-' + Adapt.location._currentLocation;
+
+            var previousClasses = Adapt.location._previousClasses;
+            if (previousClasses) {
+                this.$html.removeClass(previousClasses);
+            }
+            Adapt.location._previousClasses = classes;
+
+            this.$html
+                .addClass(classes)
+                .attr('data-location', Adapt.location._currentLocation);
+                
             this.$wrapper
                 .removeClass()
                 .addClass(classes)

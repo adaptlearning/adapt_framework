@@ -22,12 +22,12 @@
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
             "nativeTabElements": "textarea, input, select",
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
-            "wrapStyleElements": "b,i,abbr,strong",
+            "wrapStyleElements": "b,i,abbr,strong,em,small,sub,sup,ins,del,mark",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]",
+            "ariaLabelElements": "div[aria-label], span[aria-label]"
         };
 
     // JQUERY INJECTED ELEMENTS
@@ -519,9 +519,6 @@
         function onFocusCapture(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
-
-            //preventDefault(event);
-            event.stopPropagation();
             var $element = $(event.target);
             
             //search out intended click element
@@ -956,13 +953,22 @@
         };
 
         //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
-        $.fn.a11y_text = function() {
+        $.fn.a11y_text = function(text) {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return this;
+            if (!options.isTabbableTextEnabled) {
+                if (text) {
+                    this.html(text);
+                }
 
-             for (var i = 0; i < this.length; i++) {
-                this[i].innerHTML = makeHTMLOrTextAccessible(this[i].innerHTML);
+                return this;
+            }
+
+            for (var i = 0; i < this.length; i++) {
+                // If an argument is given then convert that to accessible text
+                // Otherwise convert existing content
+                text = text || this[i].innerHTML;
+                this[i].innerHTML = makeHTMLOrTextAccessible(text);
             }
             return this;
         };

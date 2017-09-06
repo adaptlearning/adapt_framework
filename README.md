@@ -14,12 +14,12 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + HTML5 and CSS3
 + Responsive across multiple devices and platforms
 + Deliver courses through SCORM compliant LMS or stand-alone
-+ 22 bundled plug-ins, more available through the community 
-+ Meets WAI AA accessibility standards
++ 22 bundled plug-ins, [more available](https://www.adaptlearning.org/index.php/plugin-browser/) through the community 
++ [Meets WAI AA accessibility standards](https://github.com/adaptlearning/adapt_framework/wiki/Accessibility)
 + Right-To-Left compatibility
 + Assessments with support for question banks, randomisation, and customisable feedback
-+ Step locking and bookmarking
-+ Multi language and localisation support
++ [Step locking](https://github.com/adaptlearning/adapt_framework/wiki/Locking-objects-with-'_isLocked'-and-'_lockType') and bookmarking
++ [Multi language and localisation support](https://github.com/adaptlearning/adapt_framework/wiki/Course-Localisation)
 + Customisable theme
 
 Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/adaptlearning/adapt_framework/wiki/Framework-in-five-minutes) of the framework to find out more.

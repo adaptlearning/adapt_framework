@@ -14,6 +14,8 @@ module.exports = function(grunt) {
         'javascript:compile',
         'clean:dist',
         'less:compile',
-        'replace'
+        'replace',
+        'scripts:adaptpostbuild',
+        'minify'
     ]);
-}
+};

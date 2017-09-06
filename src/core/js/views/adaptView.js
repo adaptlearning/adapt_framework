@@ -13,6 +13,7 @@ define([
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
+            this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
             this._isRemoved = false;
@@ -31,6 +32,7 @@ define([
             Adapt.trigger(this.constructor.type + 'View:preRender', this);
 
             var data = this.model.toJSON();
+            data.view = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
@@ -83,7 +85,11 @@ define([
                     if (ChildView) {
                         var $parentContainer = this.$(this.constructor.childContainer);
                         model.set("_nthChild", nthChild);
-                        $parentContainer.append(new ChildView({model:model}).$el);
+                        if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
+                            $parentContainer.prepend(new ChildView({model:model}).$el);
+                        } else {
+                            $parentContainer.append(new ChildView({model:model}).$el);
+                        }
                     } else {
                         throw 'The component \'' + models[i].attributes._id + '\'' +
                               ' (\'' + models[i].attributes._component + '\')' +
@@ -107,26 +113,28 @@ define([
         resetCompletionStatus: function(type) {
             if (!this.model.get("_canReset")) return;
 
-            var descendantComponents = this.model.findDescendants('components');
+            var descendantComponents = this.model.findDescendantModels('components');
             if (descendantComponents.length === 0) {
                 this.model.reset(type);
             } else {
-                descendantComponents.each(function(model) {
+                _.each(descendantComponents, function(model) {
                     model.reset(type);
                 });
             }
         },
 
+        preRemove: function() {},
+
         remove: function() {
             Adapt.trigger('plugin:beginWait');
+            this.preRemove();
+            this._isRemoved = true;
 
             _.defer(_.bind(function() {
                 this.$el.off('onscreen.adaptView');
-                this._isRemoved = true;
                 this.model.setOnChildren('_isReady', false);
                 this.model.set('_isReady', false);
-                this.$el.remove();
-                this.stopListening();
+                Backbone.View.prototype.remove.call(this);
                 Adapt.trigger('plugin:endWait');
             }, this));
 
@@ -146,8 +154,22 @@ define([
                 return this.$el.removeClass('visibility-hidden');
             }
             this.$el.addClass('visibility-hidden');
-        }
+        },
 
+        setHidden: function() {
+            var hidden = "";
+            if (this.model.get('_isHidden')) {
+                hidden = "display-none";
+            }
+            return hidden;
+        },
+
+        toggleHidden: function() {
+            if (!this.model.get('_isHidden')) {
+                return this.$el.removeClass('display-none');
+            }
+            this.$el.addClass('display-none');
+        }
     });
 
     return AdaptView;
