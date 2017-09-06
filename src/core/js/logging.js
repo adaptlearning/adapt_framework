@@ -97,8 +97,12 @@ define([
             var log = [level.asUpperCase + ':'];
             data && log.push.apply(log, data);
 
-            console.log.apply(console, log);
-
+            if (console[level]) {
+                console.log.apply(console, log);
+            } else {
+                // Resolves #1609, error when F12 debug tools are open on IE 9. 
+                console.log(log.join(' '));
+            }
         }
 
     });
