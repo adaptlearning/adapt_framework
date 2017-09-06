@@ -98,6 +98,7 @@
             'velocity',
             'imageReady',
             'inview',
+            'jqueryMobile',
             'a11y',
             'scrollTo',
             'bowser',
