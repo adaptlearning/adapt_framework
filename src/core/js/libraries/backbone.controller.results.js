@@ -1,8 +1,7 @@
-// 2017-04-16 https://github.com/cgkineo/backbone.controller.results
+// 2017-09-06 https://github.com/cgkineo/backbone.controller.results
 /*
-    These function are to grab instance or class properties listed either as
-    an array/object or a function which returns an array/object, to create a copy of the
-    returned value or to extend a copy of the returned value.
+  These functions are useful to resolve instance properties which are an array or object 
+  or instance functions which return an array/object, to copy and extend the returned value.
 */
 define('backbone.controller.results', [
     'underscore.results',
@@ -28,32 +27,11 @@ define('backbone.controller.results', [
         return _.resultExtend.apply(this, args);
 
     };
-
-    function resultCopyClass() {
-
-        var args = Array.prototype.slice.call(arguments, 0);
-        args.unshift(this.prototype);
-
-        return _.resultCopy.apply(_, args);
-
-    }
-
-    function resultCopyInstance() {
-
-        var args = Array.prototype.slice.call(arguments, 0);
-        args.unshift(this);
-
-        return _.resultCopy.apply(_, args);
-
-    }
     
     _.each(extend, function(item) {
 
         item.resultExtend = resultExtendClass;
         item.prototype.resultExtend = resultExtendInstance;
-
-        item.resultCopy = resultCopyClass;
-        item.prototype.resultCopy = resultCopyInstance;
 
     });
 

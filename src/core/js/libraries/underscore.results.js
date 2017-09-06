@@ -1,123 +1,79 @@
-// 2017-04-11 https://github.com/cgkineo/underscore.results
-/*
-    These function are useful inside Backbone as methods to grab instance properties listed either as
-    an array/object or a function which returns an array/object, to create a copy of the
-    returned value or to extend a copy of the returned value.
-*/
+// 2017-09-06 https://github.com/cgkineo/underscore.results
 define('underscore.results', [
-    'underscore'
+  'underscore'
 ], function(_) {
-    
-    _.mixin({
+  
+  _.mixin({
 
-        resultExtend: function(instance, propertyName, withData) {
+    /*
+      This function is useful to resolve instance properties which are an array or object 
+      or instance functions which return an array/object, to copy and extend the returned value.
+    */
+    resultExtend: function(instance, propertyName, withData) {
 
-            /* 
-                resolve the property on the instance, it should be an object or array or 
-                a function returning an object or an array
-            */
-            var result = _.result(instance, propertyName);
+      /* 
+        Resolve the propertyName on the instance, it should be an object or array or 
+        a function returning an object or an array
+      */
+      var result = _.result(instance, propertyName);
+      var resultType = (result instanceof Array ? "array" : typeof result);
 
-            /*
-                check the type of the data we're trying to extend
-            */
-            var withType = (withData instanceof Array ? "array" : typeof withData);
+      if (!withData) {
 
-            /*
-                if the resolved result is empty, replace with the same type as the withData
-            */
-            if (!result) {
-                switch (withType) {
-                    case "array":
-                        result = [];
-                        break;
-                    case "object":
-                        result = {};
-                        break;
-                    default:
-                        throw "Incorrect types in resultExtend";
-                }
-            }
-
-            /*
-                if the resolved result and the withData type don't match throw an error
-            */
-            var resultType = (result instanceof Array ? "array" : typeof result);
-            if (resultType != withType) {
-                throw "Incorrect types in resultExtend";
-            }
-
-            switch (resultType) {
-            case "array":
-                //create copy of result, concat new data and return uniq values
-                return _.uniq(result.slice(0).concat(withData));
-            case "object":
-                //create copy of result and overwrite with new data
-                return _.extend({}, result, withData);
-            }
-
-            /*
-                if the resolved result isn't an array or object throw an error
-            */
+        // If no withData assume we're just copying the result
+        switch (resultType) {
+          case "array":
+            // Create a copy of result and return
+            return result.slice(0);
+          case "object":
+            // Create a copy of result and return
+            return _.extend({}, result);
+          default:
             throw "Incorrect types in resultExtend";
-
-        },
-
-        resultCopy: function(instance, propertyName, defaultResult) {
-
-            /* 
-                resolve the property on the instance, it should be an object or array or 
-                a function returning an object or an array
-            */
-            var result = _.result(instance, propertyName, defaultResult);
-
-            /*
-                check the type of the data we're trying to copy from the defaultType
-            */
-            var defaultType = (defaultResult instanceof Array ? "array" : typeof defaultResult);
-
-            if (!result) {
-                switch (defaultType) {
-                    case "array":
-                        result = [];
-                        break;
-                    case "object":
-                        result = {};
-                        break;
-                    default:
-                        /*
-                            if no default type is supplied or is invalid throw an error
-                        */
-                        throw "Incorrect types in resultCopy";
-                }
-            }
-
-            /*
-                if the resolved result and the default type don't match throw an error
-            */
-            var resultType = (result instanceof Array ? "array" : typeof result);
-            if (resultType != defaultType) {
-                throw "Incorrect types in resultCopy";
-            }
-
-            switch (resultType) {
-            case "array":
-                //create copy of result
-                return result.slice(0);
-            case "object":
-                //create copy of result
-                return _.extend({}, result);
-            }
-
-            /*
-                if the resolved result isn't an array or object throw an error
-            */
-            throw "Incorrect types in resultCopy";
-
         }
 
-    });
+      }
 
-    return _;
+      var withType = (withData instanceof Array ? "array" : typeof withData);
+
+      // If no result, make a dummy one from the withData type
+      if (!result) {
+
+        switch (withType) {
+          case "array":
+            result = [];
+            resultType = "array";
+            break;
+          case "object":
+            result = {};
+            resultType = "object";
+            break;
+          default:
+            throw "Incorrect types in resultExtend";
+        }
+
+      }
+
+      if (resultType !== withType) {
+        throw "Incorrect types in resultExtend";
+      }
+
+      switch (resultType) {
+        case "array":
+          // Create a copy of result, concat new data and return
+          return result.slice(0).concat(withData);
+        case "object":
+          // Create a copy of result, overwrite with new data and return
+          return _.extend({}, result, withData);
+      }
+
+      // If the resolved result isn't an array or object throw an error
+      throw "Incorrect types in resultExtend";
+
+    }
+
+  });
+
+  return _;
 
 });

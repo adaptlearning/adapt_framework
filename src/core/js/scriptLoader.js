@@ -20,13 +20,13 @@
                 }
             },
             paths: {
-                underscore: 'libraries/underscore',
+                underscore: 'libraries/underscore.min',
                 'underscore.results': 'libraries/underscore.results',
-                backbone: 'libraries/backbone',
+                backbone: 'libraries/backbone.min',
                 'backbone.controller': 'libraries/backbone.controller',
                 'backbone.controller.results': 'libraries/backbone.controller.results',
-                handlebars: 'libraries/handlebars',
-                velocity: 'libraries/velocity',
+                handlebars: 'libraries/handlebars.min',
+                velocity: 'libraries/velocity.min',
                 imageReady: 'libraries/imageReady',
                 inview: 'libraries/inview',
                 a11y: 'libraries/jquery.a11y',

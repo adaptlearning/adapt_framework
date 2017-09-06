@@ -23,6 +23,7 @@ define([
         },
 
         trackable: [
+            '_id',
             '_isComplete',
             '_isInteractionComplete'
         ],
@@ -124,7 +125,7 @@ define([
 
         getTrackableState: function() {
 
-            var trackable = this.resultCopy("trackable", []);
+            var trackable = this.resultExtend("trackable", []);
             var json = this.toJSON();
 
             var args = trackable;
@@ -136,7 +137,7 @@ define([
 
         setTrackableState: function(state) {
 
-            var trackable = this.resultCopy("trackable", []);
+            var trackable = this.resultExtend("trackable", []);
 
             var args = trackable;
             args.unshift(state);
