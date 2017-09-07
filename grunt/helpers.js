@@ -179,11 +179,30 @@ module.exports = function(grunt) {
         var includes = grunt.config('includes');
         var excludes = grunt.config('excludes');
 
+        var isIncluded;
+        var isExcluded;
+
         // carry on as normal if no includes/excludes
         if (!includes && !excludes) return true;
 
-        var isIncluded = includes && pluginPath.search(exports.getIncludedRegExp()) !== -1;
-        var isExcluded = excludes && pluginPath.search(exports.getExcludedRegExp()) !== -1;
+        // get plugins directory within theme/less
+        var compareVar = grunt.file.doesPathContain((grunt.config('sourcedir') + 'theme' + path.sep + grunt.config('theme') + path.sep + 'less' + path.sep + 'src' + path.sep + 'plugins'), pluginPath);
+
+        // if plugin directory within theme is in the filepath
+        if (compareVar) {
+
+            // plugins dir is in the file path so check against the list of includes
+            var bits = [];
+            bits = pluginPath.split("/"); // split the file path
+            var match = bits[bits.length - 2]; // get plugin directory name
+
+            // check the plugin directory name against the list of included plugin names
+            (includes.indexOf(match) !== - 1) ? isIncluded = true : isExcluded = true;
+
+        } else {
+            isIncluded = includes && pluginPath.search(exports.getIncludedRegExp()) !== -1;
+            isExcluded = excludes && pluginPath.search(exports.getExcludedRegExp()) !== -1;
+        }
 
         if (isExcluded || isIncluded === false) {
             // grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
