@@ -54,8 +54,11 @@ module.exports = function(grunt) {
             });
         });
 
+        var sourcedir = grunt.config("sourcedir");
+        if (grunt.option("outputdir")) sourcedir = grunt.option('outputdir');
+
         //iterate through lanugage folders
-        grunt.file.expand({filter: 'isDirectory'}, grunt.config('outputdir') + 'course/*').forEach(function(path) {
+        grunt.file.expand({filter: 'isDirectory'}, sourcedir + 'course/*').forEach(function(path) {
             var currentCourseFolder = path;
             var currentCourseJsonFile = currentCourseFolder + '/' + 'course.json';
 
