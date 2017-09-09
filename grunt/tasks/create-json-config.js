@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         var sourcedir = grunt.config('sourcedir');
         if (grunt.option("outputdir")) sourcedir = grunt.option("outputdir");
 
-        var configJson = grunt.file.readJSON(sourcedir + 'course/config.json');
+        var configJson = grunt.file.readJSON(path.join(sourcedir, 'course/config.json'));
 
         var pluginTypes = [ "components", "extensions", "menu", "theme" ];
 
