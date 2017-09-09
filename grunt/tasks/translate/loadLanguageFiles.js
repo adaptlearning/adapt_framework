@@ -24,11 +24,15 @@ module.exports = function (grunt) {
 
       if (grunt.config("translate.targetLang") === null) {
         throw grunt.util.error('Target language option is missing, please add --targetLang=<languageCode>');
-      } else if (!grunt.file.isDir("languagefiles", grunt.config("translate.targetLang"))) {
+      } 
+
+      inputFolder = path.join(process.cwd(), "languagefiles", grunt.config("translate.targetLang"));
+      if (grunt.option("languagedir")) inputFolder = path.join(grunt.option("languagedir"), grunt.config("translate.targetLang"));
+
+      if (!grunt.file.isDir(inputFolder)) {
         throw grunt.util.error(grunt.config("translate.targetLang") + " Folder does not exist. Please create this Folder in the languagefiles directory.");
       }
-      
-      inputFolder = path.join("languagefiles", grunt.config("translate.targetLang"));
+
     }
     
     function autoDetectFormat () {

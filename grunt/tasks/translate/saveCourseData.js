@@ -6,6 +6,8 @@ module.exports = function (grunt) {
   grunt.registerTask("_saveCourseData", function () {
     
     var srcPath = grunt.config("sourcedir");
+    if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
+    
     var targetLang = grunt.config("translate.targetLang");
     
     [

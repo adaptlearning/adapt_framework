@@ -10,6 +10,7 @@ module.exports = function (grunt) {
     var targetLang = grunt.config("translate.targetLang");
     var masterLang = grunt.config("translate.masterLang");
     var srcPath = grunt.config("sourcedir");
+    if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
     
     checkCourseExists();
     copyCourse();
