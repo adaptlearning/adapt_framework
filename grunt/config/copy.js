@@ -1,6 +1,7 @@
 module.exports = function (grunt, options) {
     
-    
+    var _ = require("underscore");
+
     var renameAssets = function (destFolder, srcFileName) {
         var collateAtName = "assets";
         var collateAtFolder = collateAtName + "/";
@@ -15,20 +16,8 @@ module.exports = function (grunt, options) {
         return collatedFilePath;
     }
     
-    
-    
-    return {
-        index: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%= sourcedir %>index.html'],
-                    dest: '<%= outputdir %>',
-                    filter: 'isFile',
-                    flatten: true
-                }
-            ]
-        },
+
+    var nonServerTasks = {
         courseAssets: {
             files: [
                 {
@@ -46,6 +35,20 @@ module.exports = function (grunt, options) {
                     src: ['<%=languages%>/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
+                }
+            ]
+        }
+    };    
+    
+    var mandatoryTasks = {
+        index: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>index.html'],
+                    dest: '<%= outputdir %>',
+                    filter: 'isFile',
+                    flatten: true
                 }
             ]
         },
@@ -69,7 +72,6 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
                     rename: renameAssets
                 }
             ]
@@ -96,7 +98,6 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
                     rename: renameAssets
                 }
             ]
@@ -123,7 +124,6 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
                     rename: renameAssets
                 }
             ]
@@ -232,5 +232,10 @@ module.exports = function (grunt, options) {
                 }
             ]
         }
-    }
+    };
+
+    if (grunt.option("outputdir")) return mandatoryTasks;
+
+    return _.extend({}, nonServerTasks, mandatoryTasks);
+
 };
