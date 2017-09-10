@@ -11,7 +11,7 @@ module.exports = function (grunt, options) {
         destFolder = getUnixPath(destFolder);
         srcFileName = getUnixPath(srcFileName);
 
-        //ignore if the srcFileName ends with the callateAtName
+        // ignore if the srcFileName ends with the collateAtFolderName
         var nameParts = srcFileName.split("/");
         if (nameParts[nameParts.length-1] === collateAtFolderName) {
             return destFolder;
