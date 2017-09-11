@@ -222,7 +222,7 @@ module.exports = function(grunt) {
 
         // Exclude any plugins that don't match any part of the full file path string.
         if (isExcluded || isIncluded === false) {
-            grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+            // grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
             return false;
         }
 
@@ -231,7 +231,7 @@ module.exports = function(grunt) {
         // as the plugin has already been found in the previous check.
         var nestedPluginsPath = !!pluginPath.match(/(?:.)+(?:\/less\/src\/plugins)/g);
         if (!nestedPluginsPath) {
-            grunt.log.writeln('Included ' + chalk.green(pluginPath));
+            // grunt.log.writeln('Included ' + chalk.green(pluginPath));
             return true;
         }
         
@@ -239,13 +239,13 @@ module.exports = function(grunt) {
         var folderRegEx = /(\/less\/src\/plugins)/;
         var hasPluginSubDirectory = !!pluginPath.match(new RegExp(folderRegEx.source + '(' + exports.getIncludedRegExp(true).source + ')', 'g'));
         if (hasPluginSubDirectory) {
-            grunt.log.writeln('Included ' + chalk.green(pluginPath));
+            // grunt.log.writeln('Included ' + chalk.green(pluginPath));
             return true;
         }
 
         // File might be in the included plugin/less/src/plugins directory,
         // but the naming convention or directory structure is not correct.
-        grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+        // grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
         return false;
     };
 
