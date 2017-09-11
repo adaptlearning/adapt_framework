@@ -41,13 +41,29 @@ module.exports = function(grunt) {
     });
 
     // privates
-    var generateIncludedRegExp = function() {
+    var generateIncludedRegExp = function(removeSrc = false) {
         var includes = grunt.config('includes') || [];
         var re = '';
-        for(var i = 0, count = includes.length; i < count; i++) {
-            re += '\/' + includes[i].toLowerCase() + '\/';
-            if(i < includes.length-1) re += '|';
+
+        // If param string is passed, return generic plugin regExp.
+        // e.g \/adapt-contrib-accordion\|/adapt-contrib-boxMenu\/
+        if (removeSrc) {
+            for(var i = 0, count = includes.length; i < count; i++) {
+                re += '\/' + includes[i] + '\/';
+                if(i < includes.length-1) re += '|';
+            }
+            return new RegExp(re, "i");
         }
+
+        // If !param then return more specific plugin regExp including src path.
+        // e.g \/Users/.../adapt_framework/src/menu/adapt-contrib-boxMenu\|/Users/.../adapt_framework/src/theme/adapt-contrib-vanilla
+        var pluginTypes = exports.defaults.pluginTypes;
+        for(var i = 0, includesCount = includes.length; i < includesCount; i++) {
+            for(var j = 0, pluginsCount = pluginTypes.length; j < pluginsCount; j++) {
+                re += exports.defaults.sourcedir + pluginTypes[j] + '\/' + includes[i] + '\/|';
+            }
+        }
+        re = re.slice(0, -1); // Remove the last / in the RegExp.
         return new RegExp(re, "i");
     };
 
@@ -196,39 +212,41 @@ module.exports = function(grunt) {
         var includes = grunt.config('includes');
         var excludes = grunt.config('excludes');
 
-        var isIncluded;
-        var isExcluded;
-
         // carry on as normal if no includes/excludes
         if (!includes && !excludes) return true;
 
-        // get plugins directory within theme/less
-        var compareVar = grunt.file.doesPathContain((grunt.config('sourcedir') + 'theme' + path.sep + grunt.config('theme') + path.sep + 'less' + path.sep + 'src' + path.sep + 'plugins'), pluginPath);
+        // Very basic check to see if the file path string contains any
+        // of the included list of plugin string names.
+        var isIncluded = includes && pluginPath.search(exports.getIncludedRegExp()) !== -1;
+        var isExcluded = excludes && pluginPath.search(exports.getExcludedRegExp()) !== -1;
 
-        // if plugin directory within theme is in the filepath
-        if (compareVar) {
-
-            // plugins dir is in the file path so check against the list of includes
-            var bits = [];
-            bits = pluginPath.split("/"); // split the file path
-            var match = bits[bits.length - 2]; // get plugin directory name
-
-            // check the plugin directory name against the list of included plugin names
-            (includes.indexOf(match) !== - 1) ? isIncluded = true : isExcluded = true;
-
-        } else {
-            isIncluded = includes && pluginPath.search(exports.getIncludedRegExp()) !== -1;
-            isExcluded = excludes && pluginPath.search(exports.getExcludedRegExp()) !== -1;
-        }
-
+        // Exclude any plugins that don't match any part of the full file path string.
         if (isExcluded || isIncluded === false) {
-            // grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+            grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
             return false;
         }
-        else {
-            // grunt.log.writeln('Included ' + chalk.green(pluginPath));
+
+        // Check the LESS plugins folder exists.
+        // The LESS 'plugins' folder doesn't exist, so add the file,
+        // as the plugin has already been found in the previous check.
+        var nestedPluginsPath = !!pluginPath.match(/(?:.)+(?:\/less\/src\/plugins)/g);
+        if (!nestedPluginsPath) {
+            grunt.log.writeln('Included ' + chalk.green(pluginPath));
             return true;
         }
+        
+        // The LESS 'plugins' folder exists, so check that any plugins in this folder are allowed.
+        var folderRegEx = /(\/less\/src\/plugins)/;
+        var hasPluginSubDirectory = !!pluginPath.match(new RegExp(folderRegEx.source + '(' + exports.getIncludedRegExp(true).source + ')', 'g'));
+        if (hasPluginSubDirectory) {
+            grunt.log.writeln('Included ' + chalk.green(pluginPath));
+            return true;
+        }
+
+        // File might be in the included plugin/less/src/plugins directory,
+        // but the naming convention or directory structure is not correct.
+        grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+        return false;
     };
 
     exports.isPluginScriptSafe = function(pluginPath) {
@@ -257,9 +275,9 @@ module.exports = function(grunt) {
         else return content;
     };
 
-    exports.getIncludedRegExp = function() {
-        var configValue = grunt.config('includedRegExp');
-        return configValue || grunt.config('includedRegExp', generateIncludedRegExp());
+    exports.getIncludedRegExp = function(removeSrc) {
+        if (removeSrc) return grunt.config('includedRegExp', generateIncludedRegExp(removeSrc));
+        else return grunt.config('includedRegExp', generateIncludedRegExp());
     };
 
     exports.getExcludedRegExp = function() {
