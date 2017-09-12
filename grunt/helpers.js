@@ -41,23 +41,13 @@ module.exports = function(grunt) {
     });
 
     // privates
-    var generateIncludedRegExp = function(removeSrc = false) {
+    var generateIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
         var re = '';
-
-        // If param string is passed, return generic plugin regExp.
-        // e.g \/adapt-contrib-accordion\|/adapt-contrib-boxMenu\/
-        if (removeSrc) {
-            for(var i = 0, count = includes.length; i < count; i++) {
-                re += '\/' + includes[i] + '\/';
-                if(i < includes.length-1) re += '|';
-            }
-            return new RegExp(re, "i");
-        }
-
-        // If !param then return more specific plugin regExp including src path.
-        // e.g \/Users/.../adapt_framework/src/menu/adapt-contrib-boxMenu\|/Users/.../adapt_framework/src/theme/adapt-contrib-vanilla
         var pluginTypes = exports.defaults.pluginTypes;
+
+        // Return a more specific plugin regExp including src path.
+        // e.g \/Users/.../adapt_framework/src/menu/adapt-contrib-boxMenu\|/Users/.../adapt_framework/src/theme/adapt-contrib-vanilla
         for(var i = 0, includesCount = includes.length; i < includesCount; i++) {
             for(var j = 0, pluginsCount = pluginTypes.length; j < pluginsCount; j++) {
                 re += exports.defaults.sourcedir + pluginTypes[j] + '\/' + includes[i] + '\/|';
@@ -65,6 +55,20 @@ module.exports = function(grunt) {
         }
         re = re.slice(0, -1); // Remove the last / in the RegExp.
         return new RegExp(re, "i");
+    };
+
+    var generateNestedIncludedRegExp = function() {
+        var includes = grunt.config('includes') || [];
+        var re = '';
+        var folderRegEx = /(\/less\/src\/plugins)/;
+
+        // Return a generic plugin regExp.
+        // e.g \/adapt-contrib-accordion\|/adapt-contrib-boxMenu\/
+        for(var i = 0, count = includes.length; i < count; i++) {
+            re += '\/' + includes[i] + '\/';
+            if(i < includes.length-1) re += '|';
+        }
+        return new RegExp(folderRegEx.source + '(' + re + ')', "i");
     };
 
     var generateExcludedRegExp = function() {
@@ -236,8 +240,7 @@ module.exports = function(grunt) {
         }
         
         // The LESS 'plugins' folder exists, so check that any plugins in this folder are allowed.
-        var folderRegEx = /(\/less\/src\/plugins)/;
-        var hasPluginSubDirectory = !!pluginPath.match(new RegExp(folderRegEx.source + '(' + exports.getIncludedRegExp(true).source + ')', 'g'));
+        var hasPluginSubDirectory = !!pluginPath.match(exports.getNestedIncludedRegExp());
         if (hasPluginSubDirectory) {
             // grunt.log.writeln('Included ' + chalk.green(pluginPath));
             return true;
@@ -275,9 +278,12 @@ module.exports = function(grunt) {
         else return content;
     };
 
-    exports.getIncludedRegExp = function(removeSrc) {
-        if (removeSrc) return grunt.config('includedRegExp', generateIncludedRegExp(removeSrc));
-        else return grunt.config('includedRegExp', generateIncludedRegExp());
+    exports.getIncludedRegExp = function() {
+        return grunt.config('includedRegExp', generateIncludedRegExp());
+    };
+
+    exports.getNestedIncludedRegExp = function() {
+        return grunt.config('nestedIncludedRegExp', generateNestedIncludedRegExp());
     };
 
     exports.getExcludedRegExp = function() {
