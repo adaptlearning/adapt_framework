@@ -43,31 +43,25 @@ module.exports = function(grunt) {
     // privates
     var generateIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
-        var re = '';
         var pluginTypes = exports.defaults.pluginTypes;
 
         // Return a more specific plugin regExp including src path.
-        // e.g \/Users/.../adapt_framework/src/menu/adapt-contrib-boxMenu\|/Users/.../adapt_framework/src/theme/adapt-contrib-vanilla
-        for(var i = 0, includesCount = includes.length; i < includesCount; i++) {
-            for(var j = 0, pluginsCount = pluginTypes.length; j < pluginsCount; j++) {
-                re += exports.defaults.sourcedir + pluginTypes[j] + '\/' + includes[i] + '\/|';
-            }
-        }
-        re = re.slice(0, -1); // Remove the last / in the RegExp.
+        var re = _.map(includes, function(plugin) {
+            return _.map(pluginTypes, function(type) {
+                return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
+            }).join('|');
+        }).join('|');
         return new RegExp(re, "i");
     };
 
     var generateNestedIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
-        var re = '';
         var folderRegEx = /(\/less\/src\/plugins)/;
 
-        // Return a generic plugin regExp.
-        // e.g \/adapt-contrib-accordion\|/adapt-contrib-boxMenu\/
-        for(var i = 0, count = includes.length; i < count; i++) {
-            re += '\/' + includes[i] + '\/';
-            if(i < includes.length-1) re += '|';
-        }
+        // Return less/src/plugins/{PLUGIN} list regExp.
+        var re = _.map(includes, function(plugin) {
+            return '\/' + plugin + '\/';
+        }).join('|');
         return new RegExp(folderRegEx.source + '(' + re + ')', "i");
     };
 
@@ -279,11 +273,13 @@ module.exports = function(grunt) {
     };
 
     exports.getIncludedRegExp = function() {
-        return grunt.config('includedRegExp', generateIncludedRegExp());
+        var configValue = grunt.config('includedRegExp');
+        return configValue || grunt.config('includedRegExp', generateIncludedRegExp());
     };
 
     exports.getNestedIncludedRegExp = function() {
-        return grunt.config('nestedIncludedRegExp', generateNestedIncludedRegExp());
+        var configValue = grunt.config('nestedIncludedRegExp');
+        return configValue || grunt.config('nestedIncludedRegExp', generateNestedIncludedRegExp());
     };
 
     exports.getExcludedRegExp = function() {
