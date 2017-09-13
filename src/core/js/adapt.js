@@ -227,14 +227,14 @@ define([
 
     };
 
+    // Relative strings describe the number and type of hops in the model hierarchy
+    // "@component +1" means to move one component forward.
+    // This function would return the following:
+    // {
+    //       type: "component",
+    //       offset: 1
+    // }
     Adapt.parseRelativeString = function(relativeString) {
-
-        // RETURN THE TYPE AND OFFSET
-        // "@component +1"  : 
-        // {
-        //       type: "component",
-        //       offset: 1
-        // }
 
         if (relativeString[0] === "@") {
             relativeString = relativeString.substr(1);
