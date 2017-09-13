@@ -13,6 +13,7 @@ require([
     'core/js/accessibility',
     'core/js/offlineStorage',
     'core/js/logging',
+    'core/js/tracking',
     'core/js/device',
     'core/js/drawer',
     'core/js/notify',

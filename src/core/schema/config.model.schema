@@ -19,6 +19,30 @@
       "type": "objectid",
       "required": true
     },
+    "_completionCriteria": {
+      "type": "object",
+      "title": "Completion criteria",
+      "properties": {
+        "_requireContentCompleted": {
+          "type": "boolean",
+          "default": true,
+          "isSetting": false,
+          "inputType": "Checkbox",
+          "validators": [],
+          "title": "Require content completion",
+          "help": "Specifies that all content on the course must be completed"
+        },
+        "_requireAssessmentPassed": {
+          "type": "boolean",
+          "default": false,
+          "isSetting": false,
+          "inputType": "Checkbox",
+          "validators": [],
+          "title": "Require assessment pass",
+          "help": "Specifies that the user must achieve a pass in any assessment"
+        }
+      }
+    },
     "_defaultLanguage": {
       "type": "string",
       "required": true,
