@@ -228,12 +228,14 @@ define([
     };
 
     // Relative strings describe the number and type of hops in the model hierarchy
-    // "@component +1" means to move one component forward.
+    //
+    // "@component +1" means to move one component forward from the current model
     // This function would return the following:
     // {
     //       type: "component",
     //       offset: 1
     // }
+    // Trickle uses this function to determine where it should scrollTo after it unlocks
     Adapt.parseRelativeString = function(relativeString) {
 
         if (relativeString[0] === "@") {
