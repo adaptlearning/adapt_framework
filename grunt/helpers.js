@@ -145,11 +145,14 @@ module.exports = function(grunt) {
         // Selectively load the course.json ('outputdir' passed by server-build)
         var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
+
         var configPath = path.join(path.resolve(root, configDir), 'course', 'config.'+jsonext);
+
         try {
             var buildConfig = grunt.file.readJSON(configPath).build;
         } catch(error) {
-            return grunt.log.error(error);
+            grunt.log.error(error);
+            process.exit();
         }
 
         var data = {

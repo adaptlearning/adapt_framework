@@ -48,6 +48,15 @@
       "title": "Is this available?",
       "help": "Controls whether this component is available in the course or not."
     },
+    "_isHidden": {
+      "type": "boolean",
+      "default": false,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this hidden?",
+      "help": "Controls whether this component and its contents are shown to the learner or not."
+    },
     "_parentId": {
       "type": "objectid",
       "required": true
