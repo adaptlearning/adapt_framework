@@ -1,10 +1,10 @@
 {
-  "type":"object",
+  "type": "object",
   "$schema": "http://json-schema.org/draft-04/schema",
   "id": "http://jsonschema.net",
   "properties": {
     "_extensions": {
-      "type":"object"
+      "type": "object"
     },
     "_enabledExtensions": {
       "type":"object"
@@ -30,8 +30,8 @@
     "_defaultDirection": {
       "type": "string",
       "required": true,
-      "default" : "ltr",
-      "title" : "Text Direction",
+      "default": "ltr",
+      "title": "Text Direction",
       "validators": ["required"],
       "inputType": {
         "type": "Select",
@@ -51,8 +51,7 @@
           "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Enable accessibility?",
-          "help": "If enabled, accessibility features will be enabled in this course"
+          "title": "Enabled?"
         },
         "_isEnabledOnTouchDevices": {
           "type": "boolean",
@@ -60,8 +59,7 @@
           "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Enable accessibility on touch devices?",
-          "help": "If enabled, accessibility features will be enabled on touch devices - useful if you need accessibility on mobile browsers."
+          "title": "Enabled on touch devices?"
         },
         "_shouldSupportLegacyBrowsers": {
           "type": "boolean",
@@ -70,16 +68,16 @@
           "inputType": "Checkbox",
           "validators": [],
           "title": "Support legacy browsers?",
-          "help": "Is accessibility support for IE8 required?"
+          "help": "Need accessibility support for Internet Explorer v8?"
         },
         "_isTextProcessorEnabled": {
-           "type": "boolean",
+          "type": "boolean",
           "default": false,
           "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Enable text reader support?",
-          "help": "If enabled, the course will add focusing to assist text reader software"
+          "help": "Adds focusing to assist text reader software"
         },
         "_isSkipNavigationEnabled": {
           "type": "boolean",
@@ -88,7 +86,7 @@
           "inputType": "Checkbox",
           "validators": [],
           "title": "Enable Skip Navigation link?",
-          "help": "If enabled, a link will be added to the start of the page that allows assistive technology users to skip straight to the page content."
+          "help": "Adds a link to the start of the page to allow assistive technology users to skip over the navigation and straight into to the page content."
         }
       }
     },
@@ -143,7 +141,7 @@
           "type": "string",
           "required": true,
           "default": "easeOutQuart",
-          "title": "Hide Easing",
+          "title": "Show Easing",
           "inputType": {
             "type": "Select",
             "options": [
@@ -249,7 +247,7 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Enforce route locking",
-      "help": "If menu locking is enabled, this setting prevents navigating to locked routes"
+      "help": "If locking is enabled, this setting prevents navigating to locked routes"
     },
     "_logging": {
       "type": "object",
@@ -261,7 +259,7 @@
           "required": true,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Enable logging"
+          "title": "Enabled?"
         },
         "_level": {
           "type": "string",
@@ -285,7 +283,7 @@
           "default": true,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Write to console"
+          "title": "Log to browser console?"
         }
       }
     }

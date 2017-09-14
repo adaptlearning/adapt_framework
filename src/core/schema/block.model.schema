@@ -26,7 +26,7 @@
       "default": "New Block Title",
       "inputType": "DisplayTitle",
       "validators": [],
-      "help": "When viewing an block - this is the title that will be displayed on the page",
+      "help": "When viewing a block - this is the title that will be displayed on the page",
       "translatable": true
     },
     "body":{
@@ -78,7 +78,16 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Is this hidden?",
-      "help": "Controls whether this block and its contents are shown to the learner or not."
+      "help": "Enabling this is equivalent to applying the CSS 'display:none' to the block."
+    },
+    "_isVisible": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this visible?",
+      "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
     "_extensions": {
       "type": "object"

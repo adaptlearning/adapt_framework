@@ -37,7 +37,7 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Is this optional?",
-      "help": "An optional component does not have to be completed"
+      "help": "An optional component does not have to be completed by the user."
     },
     "_isAvailable": {
       "type": "boolean",
@@ -55,7 +55,16 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Is this hidden?",
-      "help": "Controls whether this component and its contents are shown to the learner or not."
+      "help": "Enabling this is equivalent to applying the CSS 'display:none' to the component."
+    },
+    "_isVisible": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this visible?",
+      "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the component."
     },
     "_parentId": {
       "type": "objectid",
