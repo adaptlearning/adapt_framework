@@ -43,7 +43,7 @@ define([
          * Evaluate the course and assessment completion.
          */
         checkCompletion: function() {
-            if (this._config._requireAssessmentPassed && !this._assessmentState.isComplete) {
+            if (this._config._requireAssessmentPassed && (!this._assessmentState || !this._assessmentState.isComplete)) {
                 return;
             }
 
@@ -51,20 +51,30 @@ define([
                 return;
             }
 
+            var completionData = this.getCompletionData();
+
+            Adapt.trigger('tracking:complete', completionData);
+            Adapt.log.debug('tracking:complete', completionData);
+        },
+
+        /**
+         * The return value of this function should be passed to the trigger of 'tracking:complete'.
+         * @returns An object representing the user's coursecompletion.
+         * }
+         */
+        getCompletionData: function() {
             var completionData = {
-                status: null,
+                status: COMPLETION_STATE.COMPLETE,
                 assessment: null
             };
 
             if (this._config._requireAssessmentPassed) {
+                // Pass assessment specific values, i.e. PASS or FAIL, together with the assessment state.
                 completionData.status = this._assessmentState.isPass ? COMPLETION_STATE.PASS : COMPLETION_STATE.FAIL;
                 completionData.assessment = this._assessmentState
-            } else {
-                completionData.status = COMPLETION_STATE.COMPLETE;
             }
 
-            Adapt.trigger('tracking:complete', completionData);
-            Adapt.log.debug('tracking:complete', completionData);
+            return completionData;
         },
 
         /**
