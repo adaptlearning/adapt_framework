@@ -1,10 +1,10 @@
 define(function() {
   
       var COMPLETION_STATE = ENUM([
-          'COMPLETE',
           'INCOMPLETE',
-          'PASS',
-          'FAIL'
+          'COMPLETED',
+          'PASSED',
+          'FAILED'
       ]);
   
       return COMPLETION_STATE;

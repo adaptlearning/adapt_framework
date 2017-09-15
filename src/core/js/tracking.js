@@ -7,7 +7,7 @@ define([
 
         _config: {
             _requireContentCompleted: true,
-            _requireAssessmentPassed: false
+            _requireAssessmentCompleted: false
         },
 
         _assessmentState: null,
@@ -19,7 +19,7 @@ define([
 
         setupEventListeners: function() {
             // Check if completion requires passing an assessment. 
-            if (this._config._requireAssessmentPassed) {
+            if (this._config._requireAssessmentCompleted) {
                 this.listenTo(Adapt, 'assessment:complete', this.onAssessmentComplete);
             }
 
@@ -43,15 +43,11 @@ define([
          * Evaluate the course and assessment completion.
          */
         checkCompletion: function() {
-            if (this._config._requireAssessmentPassed && (!this._assessmentState || !this._assessmentState.isComplete)) {
-                return;
-            }
-
-            if (this._config._requireContentCompleted && !Adapt.course.get('_isComplete')) {
-                return;
-            }
-
             var completionData = this.getCompletionData();
+
+            if (completionData.status === COMPLETION_STATE.INCOMPLETE) {
+                return;
+            }
 
             Adapt.trigger('tracking:complete', completionData);
             Adapt.log.debug('tracking:complete', completionData);
@@ -59,20 +55,41 @@ define([
 
         /**
          * The return value of this function should be passed to the trigger of 'tracking:complete'.
-         * @returns An object representing the user's coursecompletion.
-         * }
+         * @returns An object representing the user's course completion.
          */
         getCompletionData: function() {
             var completionData = {
-                status: COMPLETION_STATE.COMPLETE,
+                status: COMPLETION_STATE.INCOMPLETE,
                 assessment: null
             };
 
-            if (this._config._requireAssessmentPassed) {
-                // Pass assessment specific values, i.e. PASS or FAIL, together with the assessment state.
-                completionData.status = this._assessmentState.isPass ? COMPLETION_STATE.PASS : COMPLETION_STATE.FAIL;
-                completionData.assessment = this._assessmentState
+            // Course complete is required.
+            if (this._config._requireCourseComplete && !Adapt.course.get('_isComplete')) {
+                // INCOMPLETE: course not complete.
+                return completionData;
             }
+
+            // Assessment completed required.
+            if (this._config._requireAssessmentCompleted) {
+                if (!this._assessmentState) {
+                    // INCOMPLETE: assessment is not complete.
+                    return completionData;
+                }
+
+                if (!this._assessmentState.isPass && this._assessmentState.attempts) {
+                    // INCOMPLETE: assessment has not been passed and has more attempts.
+                    return completionData;
+                }
+
+                // PASSED/FAILED: assessment completed.
+                completionData.status = this._assessmentState.isPass ? COMPLETION_STATE.PASSED : COMPLETION_STATE.FAILED;
+                completionData.assessment = this._assessmentState;
+
+                return completionData;
+            }
+
+            // COMPLETED: criteria met, no assessment requirements.
+            completionData.status = COMPLETION_STATE.COMPLETED;
 
             return completionData;
         },

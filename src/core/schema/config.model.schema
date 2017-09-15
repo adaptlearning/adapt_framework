@@ -32,14 +32,14 @@
           "title": "Require content completion",
           "help": "Specifies that all content on the course must be completed"
         },
-        "_requireAssessmentPassed": {
+        "_requireAssessmentCompleted": {
           "type": "boolean",
           "default": false,
           "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Require assessment pass",
-          "help": "Specifies that the user must achieve a pass in any assessment"
+          "title": "Require assessment completion",
+          "help": "Specifies that all assessments on the course must be completed"
         }
       }
     },
