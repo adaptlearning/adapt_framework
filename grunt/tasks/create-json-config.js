@@ -1,6 +1,6 @@
 /**
 * This is a simple function to take the course's config.json
-* and append the theme and menu or custom .json
+* and append the config.json (or legacy theme.json and menu.json) from plugins folders
 */
 var path = require("path");
 
