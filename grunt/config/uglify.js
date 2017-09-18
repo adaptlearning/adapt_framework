@@ -20,10 +20,7 @@ module.exports = function (grunt, options) {
                     src: ['*.js', '!*.min.js'],
                     dest: '<%= outputdir %>'
                 }
-            ],
-            options: {
-                ie8: true
-            }
+            ]
         }
     }
 }
