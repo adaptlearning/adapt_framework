@@ -1,6 +1,6 @@
 {
   "name": "adapt_framework",
-  "version": "3.0.0-alpha",
+  "version": "3.0.0",
   "description": "Adapt Learning output framework",
   "repository": {
     "type": "git",
