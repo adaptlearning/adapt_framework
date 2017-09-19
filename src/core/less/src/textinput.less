@@ -1,0 +1,43 @@
+.textinput-widget {
+    &.disabled {
+        .textinput-item {
+            border-color: @item-border-color-disabled;
+            background-color: @item-color-disabled;
+        }
+    }
+}
+
+.textinput-item {
+    background-color: @item-color;
+    position: relative;
+    border: @item-border;
+    margin-bottom: @item-margin-bottom;
+
+    .component-full & {
+        padding: 1%;
+    }
+
+    .component-left &,
+    .component-right & {
+        padding: 2%;
+    }
+}
+
+.textinput-item-textbox {
+    height: 28px;
+    line-height: 28px;
+
+    &.textinput-validation-error {
+        border: 2px solid @validation-error;
+    }
+}
+
+.textinput-widget {
+    .textinput-correct-icon {
+        color: @validation-success;
+    }
+
+    .textinput-incorrect-icon {
+        color: @validation-error;
+    }
+}

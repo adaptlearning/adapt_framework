@@ -1,0 +1,77 @@
+.slider-component {
+
+    .slider-scaler-wrapper {
+
+        .slider-scaler {
+          background-color: @item-body-text-color;
+        }
+    }
+
+    .slider-model-answer,
+    .slider-scale-marker {
+        color: @item-text-color;
+        background-color: @item-color;
+    }
+
+    .slider-line {
+        background-color: @item-body-text-color;
+    }
+}
+
+.slider-widget {
+    .slider-holder {
+        .rangeslider__handle {
+          background-color: @item-color;
+          &:hover {
+            .no-touch & {
+              background-color: @item-color-hover;
+            }
+          }
+        }
+        .rangeslider__fill {
+          background-color: @item-color;
+        }
+        .rangeslider {
+          background-color: @background-color;
+        }
+
+        input[type="range"]:focus + .rangeslider .rangeslider__handle {
+            .accessibility & {
+                outline: @focus-outline;
+            }
+        }
+        .slider-scale-marker {
+          font-size: @button-text-font-size;
+        }
+    }
+}
+
+.slider-widget.show-user-answer.correct {
+  .slider-scale-marker,
+  .rangeslider__fill {
+    background-color: @validation-success;
+  }
+}
+.slider-widget.show-user-answer.incorrect {
+  .slider-scale-marker,
+  .rangeslider__fill {
+    background-color: @validation-error;
+  }
+}
+
+.slider-widget.show-correct-answer {
+  .slider-scale-marker,
+  .slider-model-answer,
+  .rangeslider__fill {
+    background-color: @validation-success;
+  }
+}
+
+// assessment adds no-marking class to article to hide marking icons
+.no-marking {
+    .component-inner .component-widget.disabled.submitted.complete .rangeslider__fill,
+    .component-inner .component-widget.disabled.submitted.complete .slider-scale-marker {
+      color: @item-text-disabled-color;
+      background-color: @item-disabled-color;
+    }
+}

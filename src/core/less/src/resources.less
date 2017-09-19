@@ -1,0 +1,27 @@
+.resources {
+    .resources-filter button {
+        color: @drawer-item-text-color;
+        border-bottom: 1px solid @drawer-border-color;
+        .transition-all-colors;
+        padding: 0px; 
+        font-size: @body-text-font-size;
+        text-align: center;
+
+        span {
+            border: none;
+            padding: 15px 0px;
+        }
+
+        &.selected {
+            color: @drawer-item-text-color-selected;
+            background-color: @drawer-item-color-selected;
+            border-bottom: 1px solid @drawer-item-color-selected;
+        }
+
+        .no-touch &:hover {
+            color:  @drawer-item-text-color-hover;
+            background-color: @drawer-item-color-hover;
+            border-bottom: 1px solid @drawer-item-color-hover;
+        }
+    }
+}

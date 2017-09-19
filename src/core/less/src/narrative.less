@@ -1,0 +1,115 @@
+// Narrative styling
+// ==================
+.narrative-component {   
+
+    .narrative-content-title {
+        margin-bottom: @title-text-margin;
+        .item-title;
+    }
+    .narrative-content {
+        background: @item-color;
+        color: @item-text-color;
+    }
+
+    .narrative-controls {
+        width: (@icon-size * 2.5);
+        height: (@icon-size * 2.5);
+        margin-top: -(@icon-size * 2);
+        background-color:@item-color;
+
+        &:hover {
+            background-color:@item-color-hover;
+            
+            .icon {
+                color:@item-text-color-hover;
+            }
+        }
+
+        .icon {
+            font-size: (@icon-size * 1.25);
+            font-weight: bold;
+            margin: (@icon-size / 1.5);
+            color:@item-text-color;
+        }
+    }
+
+    .narrative-text-controls .narrative-content .narrative-content-inner {
+        
+        .narrative-controls-container {
+            top: 0;
+
+            .narrative-controls {
+                width: auto;
+                height: auto;
+                margin-top: (@icon-size * 1.5);
+                
+                .icon {
+                    font-size: @icon-size;
+                }
+            }
+
+            .narrative-indicators {
+
+                margin-top: (@icon-size/2);
+                text-align: center;
+                width: 100%;
+                left: 0;
+
+                .narrative-progress {
+                    display: inline-block;
+                    background-color: darken(@item-color, 10%);
+
+                    &.selected {
+                        background-color: @component-background-color;
+                    }
+                }
+
+            }
+        }
+        
+        .narrative-content-item {
+            padding-top: (@icon-size * 2 + 16); // indicator height + controlls 
+        }
+    }
+
+
+    .narrative-progress {
+        background-color: darken(@component-background-color, 10%);
+        border:inherit;
+
+        &.selected {
+            background-color: @item-color;
+        }
+    }
+
+    .narrative-strapline-title {
+        background-color: @item-color;
+        color: @item-text-color;
+        .item-title;
+
+        .icon {
+            padding: @item-padding-top @item-padding-right @item-padding-bottom;
+            color: @item-text-color;
+        }
+
+        &:hover {
+            background-color: @item-color-hover;
+            color: @item-text-color-hover;
+
+            .icon {
+                color: @item-text-color-hover;
+            }
+
+        }
+    }
+    
+    .narrative-strapline-title-inner {
+        padding-left: (@item-padding-left);
+        padding-right: (@item-padding-left + @item-padding-right + @icon-size);
+        
+        .dir-rtl & {
+          padding-right: (@item-padding-left);
+          padding-left: (@item-padding-left + @item-padding-right + @icon-size);
+        }
+    }
+}

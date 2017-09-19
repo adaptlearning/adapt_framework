@@ -1,0 +1,48 @@
+// Navigation styling
+// ==================
+
+.navigation {
+    width: 100%;
+    overflow: hidden;
+    background-color: @navigation-color;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+    height: (@navigation-padding * 2) + @icon-size;
+
+    .ie8 & {
+        max-width: @ie8-max-width;
+        left: 0;
+        right: 0;
+    }
+
+    .icon {
+        padding: @navigation-padding;
+        color: @navigation-icon-color;
+        .transition-color;
+
+        .no-touch &:hover {
+            color: @navigation-icon-color-hover;
+        }
+    }
+
+    .skip-nav-link {
+        background-color: @button-color;
+        border-radius: 0;
+        color: @button-text-color;
+        display: none;
+        left: 0;
+        margin-top: 0;
+        padding: 10px 20px;
+        position: absolute;
+        top: -46px;
+        -webkit-transition: top .2s ease-out;
+        transition: top .2s ease-out;
+        width: auto;
+        z-index: 100;
+        .accessibility & {
+            display: inline-block;
+        }
+        &:focus {
+            top: 0;
+        }
+    }
+}

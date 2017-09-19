@@ -1,0 +1,74 @@
+.hotgraphic-component {
+
+	.hotgraphic-graphic-pin {
+		background-color: @item-text-color;
+
+		&.visited {
+			.hotgraphic-graphic-pin-icon {
+				color: @item-color-visited;
+			}
+		}
+		.no-touch &:hover {
+			background-color: @item-text-color;
+			
+			.hotgraphic-graphic-pin-icon {
+				color: @item-color-hover;
+			}
+		}
+	}
+
+	.hotgraphic-graphic-pin-icon {
+		color: @item-color;
+	}
+
+	.hotgraphic-popup {
+		background-color: @background-color;
+		border: @item-border;
+	}
+
+	.hotgraphic-popup-toolbar {
+		background-color: @item-color;
+	}
+
+	.hotgraphic-popup-nav {
+		background-color: @item-color;
+	}
+
+	.hotgraphic-popup-done {
+		.no-touch &:hover {
+			.hotgraphic-popup-close {
+				color: @button-text-color-hover;
+			}
+		}
+	}
+
+	.hotgraphic-popup-arrow-l, 
+	.hotgraphic-popup-arrow-r,
+	.hotgraphic-popup-close {
+		padding: @item-padding;
+		color: @button-text-color;
+	}
+
+	.hotgraphic-popup-count {
+		padding: @item-padding;
+		color: @item-text-color;
+	}
+
+	.hotgraphic-popup-controls {
+		.no-touch &:hover {
+			.hotgraphic-popup-arrow-l,
+			.hotgraphic-popup-arrow-r {
+				color: @button-text-color-hover;
+			}
+		}
+	}
+
+	.hotgraphic-popup-inner {
+		padding: @item-padding;
+	}
+
+	.hotgraphic-content-title {
+		.item-title;
+		margin-bottom: @title-text-margin;
+	}
+}
