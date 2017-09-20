@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "id": "http://jsonschema.net",
+  "$ref": "http://localhost/system/content.schema",
+  "properties": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "New Article Title",
+      "inputType": "Text",
+      "validators": ["required"],
+      "translatable": true
+    },
+    "displayTitle": {
+      "type": "string",
+      "required": false,
+      "default": "New Article Title",
+      "inputType": "DisplayTitle",
+      "validators": [],
+      "help": "When viewing an article - this is the title that will be displayed on the page",
+      "translatable": true
+    },
+    "body": {
+      "type": "string",
+      "default": "",
+      "inputType": "TextArea",
+      "validators": [],
+      "translatable": true
+    },
+    "instruction": {
+      "type": "string",
+      "required": false,
+      "title": "Instruction text",
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "translatable": true
+    },
+    "_classes": {
+      "type": "string",
+      "default": "",
+      "isSetting": true,
+      "inputType": "Text",
+      "validators": [],
+      "title": "Classes",
+      "help": "Used to style or manipulate the look and feel of this Article. These are predefined in the theme."
+    },
+    "_isOptional": {
+      "type": "boolean",
+      "default": false,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this optional?",
+      "help": "An optional article does not have to be completed, nor do any of the blocks and components contained within it."
+    },
+    "_isAvailable": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this available?",
+      "help": "Controls whether this article and its contents are available in the course or not."
+    },
+    "_isHidden": {
+      "type": "boolean",
+      "default": false,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this hidden?",
+      "help": "Enabling this is equivalent to applying the CSS 'display:none' to the article."
+    },
+    "_isVisible": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this visible?",
+      "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the article."
+    },
+    "_extensions": {
+      "type": "object"
+    }
+  }
+}

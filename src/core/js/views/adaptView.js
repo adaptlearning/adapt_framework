@@ -1,19 +1,25 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Handlebars = require('handlebars');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var AdaptView = Backbone.View.extend({
+
+        attributes: function() {
+            return {
+                "data-adapt-id": this.model.get('_id')
+            };
+        },
 
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
+            this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
             this._isRemoved = false;
             this.preRender();
             this.render();
+            this.setupOnScreenHandler();
         },
 
         preRender: function() {},
@@ -26,6 +32,7 @@ define(function(require) {
             Adapt.trigger(this.constructor.type + 'View:preRender', this);
 
             var data = this.model.toJSON();
+            data.view = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
@@ -40,6 +47,24 @@ define(function(require) {
             return this;
         },
 
+        setupOnScreenHandler: function() {
+            var onscreen = this.model.get('_onScreen');
+
+            if (!onscreen || !onscreen._isEnabled) return;
+
+            this.$el.on('onscreen.adaptView', _.bind(function (e, m) {
+
+                if (!m.onscreen) return;
+
+                var minVerticalInview = onscreen._percentInviewVertical || 33;
+
+                if (m.percentInviewVertical < minVerticalInview) return;
+
+                this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen.adaptView');
+
+            }, this));
+        },
+
         addChildren: function() {
             var nthChild = 0;
             var children = this.model.getChildren();
@@ -49,11 +74,22 @@ define(function(require) {
                 if (model.get('_isAvailable')) {
                     nthChild ++;
 
-                    var ChildView = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+                    var ChildView;
+                    var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+
+                    //use view+model object
+                    if (ViewModelObject.view) ChildView = ViewModelObject.view;
+                    //use view only object
+                    else ChildView = ViewModelObject;
+
                     if (ChildView) {
                         var $parentContainer = this.$(this.constructor.childContainer);
                         model.set("_nthChild", nthChild);
-                        $parentContainer.append(new ChildView({model:model}).$el);
+                        if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
+                            $parentContainer.prepend(new ChildView({model:model}).$el);
+                        } else {
+                            $parentContainer.append(new ChildView({model:model}).$el);
+                        }
                     } else {
                         throw 'The component \'' + models[i].attributes._id + '\'' +
                               ' (\'' + models[i].attributes._component + '\')' +
@@ -77,22 +113,31 @@ define(function(require) {
         resetCompletionStatus: function(type) {
             if (!this.model.get("_canReset")) return;
 
-            var descendantComponents = this.model.findDescendants('components');
+            var descendantComponents = this.model.findDescendantModels('components');
             if (descendantComponents.length === 0) {
                 this.model.reset(type);
             } else {
-                descendantComponents.each(function(model) {
+                _.each(descendantComponents, function(model) {
                     model.reset(type);
                 });
             }
         },
 
+        preRemove: function() {},
+
         remove: function() {
+            Adapt.trigger('plugin:beginWait');
+            this.preRemove();
             this._isRemoved = true;
-            this.model.setOnChildren('_isReady', false);
-            this.model.set('_isReady', false);
-            this.$el.remove();
-            this.stopListening();
+
+            _.defer(_.bind(function() {
+                this.$el.off('onscreen.adaptView');
+                this.model.setOnChildren('_isReady', false);
+                this.model.set('_isReady', false);
+                Backbone.View.prototype.remove.call(this);
+                Adapt.trigger('plugin:endWait');
+            }, this));
+
             return this;
         },
 
@@ -109,8 +154,22 @@ define(function(require) {
                 return this.$el.removeClass('visibility-hidden');
             }
             this.$el.addClass('visibility-hidden');
-        }
+        },
 
+        setHidden: function() {
+            var hidden = "";
+            if (this.model.get('_isHidden')) {
+                hidden = "display-none";
+            }
+            return hidden;
+        },
+
+        toggleHidden: function() {
+            if (!this.model.get('_isHidden')) {
+                return this.$el.removeClass('display-none');
+            }
+            this.$el.addClass('display-none');
+        }
     });
 
     return AdaptView;

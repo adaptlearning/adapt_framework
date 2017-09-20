@@ -145,3 +145,25 @@
         color: #fff;
     }
 }
+
+.skip-nav-link {
+    background-color: @button-color;
+    border-radius: 0;
+    color: @button-text-color;
+    display: none;
+    left: 0;
+    margin-top: 0;
+    padding: 10px 20px;
+    position: absolute;
+    top: -46px;
+    -webkit-transition: top .2s ease-out;
+    transition: top .2s ease-out;
+    width: auto;
+    z-index: 100;
+    .accessibility & {
+        display: inline-block;
+    }
+    &:focus {
+        top: 0;
+    }
+}

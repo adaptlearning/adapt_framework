@@ -1,18 +1,18 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function (Adapt) {
 
     var ConfigModel = Backbone.Model.extend({
 
         defaults: {
             screenSize : {
-                small:520,
-                medium:760,
-                large:1024
+                small: 520,
+                medium: 760,
+                large: 1024
             },
-            _canLoadData:true,
-            _disableAnimation:false
+            _forceRouteLocking: false,
+            _canLoadData: true,
+            _disableAnimation: false
         },
 
         initialize: function(attrs, options) {

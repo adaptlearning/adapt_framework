@@ -7,11 +7,12 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>core/less/**/*.less'
                 ],
                 src: [
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>components/**/*.less',
                     '<%= sourcedir %>extensions/**/*.less',
+                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',                    
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
+                config: '<%= outputdir %>course/config.json',
                 sourcemaps:true,
                 compress:false,
                 dest: '<%= outputdir %>adapt/css/',
@@ -20,6 +21,12 @@ module.exports = function (grunt, options) {
                 filter: function(filepath) {
                     return grunt.config('helpers').includedFilter(filepath);
                 }
+            },
+            //newer configuration
+            files: {
+              '<%= outputdir %>adapt/css/adapt.css': [
+                '<%= sourcedir %>/**/*.less'
+              ]
             }
         },
         compile: {
@@ -29,11 +36,12 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>core/less/**/*.less'
                 ],
                 src: [
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>components/**/*.less',
                     '<%= sourcedir %>extensions/**/*.less',
+                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
+                config: '<%= outputdir %>course/config.json',
                 sourcemaps: false,
                 compress:true,
                 dest: '<%= outputdir %>adapt/css/',

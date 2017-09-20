@@ -1,5 +1,13 @@
 // TODO excludes
 module.exports = {
+    bowerJson: {
+        files: ['<%= sourcedir %>*/*/bower.json'],
+        tasks: ['dev']
+    },
+    scripts: {
+        files: ['<%= sourcedir %>*/*/scripts/*'],
+        tasks: ['dev']
+    },
     less: {
         files: ['<%= sourcedir %>**/*.less'],
         tasks: ['less:dev']
@@ -10,10 +18,10 @@ module.exports = {
     },
     courseJson: {
         files: ['<%= sourcedir %>course/**/*.json'],
-        tasks : ['jsonlint', 'check-json', 'copy:courseJson']
+        tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
-        files: ['<%= sourcedir %>course/**/*', '!<%= sourcedir %>course/**/*.json'],
+        files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.json'],
         tasks : ['copy:courseAssets']
     },
     js: {
@@ -23,7 +31,14 @@ module.exports = {
             '!<%= sourcedir %>extensions/extensions.js',
             '!<%= sourcedir %>menu/menu.js',
             '!<%= sourcedir %>theme/theme.js',
-            '!<%= sourcedir %>templates/templates.js'
+            '!<%= sourcedir %>templates/templates.js',
+            '!<%= sourcedir %>core/js/scriptLoader.js',
+            '!<%= sourcedir %>core/js/libraries/require.min.js',
+            '!<%= sourcedir %>core/js/libraries/modernizr.js',
+            '!<%= sourcedir %>core/js/libraries/json2.min.js',
+            '!<%= sourcedir %>core/js/libraries/consoles.min.js',
+            '!<%= sourcedir %>core/js/libraries/jquery.min.js',
+            '!<%= sourcedir %>core/js/libraries/jquery.v2.min.js'
         ],
         tasks: ['javascript:dev']
     },
@@ -62,5 +77,24 @@ module.exports = {
     themeFonts: {
         files: ['<%= sourcedir %>theme/<%= theme %>/**/fonts/**'],
         tasks: ['copy:themeFonts']
+    },
+    scriptLoader: {
+        files: ['<%= sourcedir %>core/js/scriptLoader.js'],
+        tasks: ['copy:scriptLoader']
+    },
+    libraries: {
+        files: [
+            '<%= sourcedir %>core/js/libraries/require.min.js',
+            '<%= sourcedir %>core/js/libraries/modernizr.js',
+            '<%= sourcedir %>core/js/libraries/json2.min.js',
+            '<%= sourcedir %>core/js/libraries/consoles.min.js',
+            '<%= sourcedir %>core/js/libraries/jquery.min.js',
+            '<%= sourcedir %>core/js/libraries/jquery.v2.min.js'
+        ],
+        tasks: ['copy:libraries']
+    },
+    required: {
+        files: ['<%= sourcedir %>extensions/*/required/**/*', '<%= sourcedir %>extensions/*/libraries/**/*'],
+        tasks: 'copy:required'
     }
 }

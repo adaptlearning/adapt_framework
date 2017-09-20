@@ -25,7 +25,7 @@ module.exports = function(grunt) {
                 var currentPluginPath = path;
 
                 // if specific plugin has been specified with grunt.option, don't carry on
-                if(Helpers.isPluginIncluded(path, path)) return;
+                if (!Helpers.isPluginIncluded(path + "/")) return;
 
                 var currentSchemaPath = currentPluginPath + "/" + "properties.schema";
                 var currentBowerPath = currentPluginPath + "/" + "bower.json";
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
             var currentCourseJson = _.deepExtend(defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
 
             //write modified course json to build
-            grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson));
+            grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson, null, 4));
         });
     });
 }

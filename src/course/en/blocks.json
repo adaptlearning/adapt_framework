@@ -120,34 +120,15 @@
         "_trackingId": 11
     },
     {
-        "_id": "b-70",
+        "_id": "b-65",
         "_parentId": "a-15",
         "_type": "block",
         "_classes": "",
-        "title": "b-70",
+        "title": "b-65",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+        "_assessment": {
+            "_quizBankID": 1
         },
         "_trackingId": 12
     },
@@ -159,27 +140,8 @@
         "title": "b-75",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+        "_assessment": {
+            "_quizBankID": 1
         },
         "_trackingId": 13
     },
@@ -191,27 +153,8 @@
         "title": "b-80",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+        "_assessment": {
+            "_quizBankID": 1
         },
         "_trackingId": 14
     },
@@ -223,27 +166,8 @@
         "title": "b-85",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+        "_assessment": {
+            "_quizBankID": 2
         },
         "_trackingId": 15
     },
@@ -255,27 +179,8 @@
         "title": "b-90",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+        "_assessment": {
+            "_quizBankID": 2
         },
         "_trackingId": 16
     },
@@ -287,59 +192,27 @@
         "title": "b-95",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+        "_assessment": {
+            "_quizBankID": 2
         },
         "_trackingId": 17
     },
     {
         "_id": "b-100",
-        "_parentId": "a-15",
+        "_parentId": "a-20",
         "_type": "block",
-        "_classes": "",
+        "_classes": "background-color-inverted",
         "title": "b-100",
         "displayTitle": "",
         "body": "",
         "_trickle": {
             "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
             "_button": {
                 "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
                 "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
+                "startText": "Continue",
+                "finalText": "Continue"
+            }
         },
         "_trackingId": 18
     },
@@ -347,42 +220,10 @@
         "_id": "b-105",
         "_parentId": "a-20",
         "_type": "block",
-        "_classes": "background-color-inverted",
+        "_classes": "",
         "title": "b-105",
         "displayTitle": "",
         "body": "",
-        "_trickle": {
-            "_isEnabled": true,
-            "_duration": 500,
-            "_autoScroll": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "hidden",
-                "_styleAfterClick": "hidden",
-                "_isFullWidth": true,
-                "_autoHide": true,
-                "_className": "",
-                "text": "Continue",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            },
-            "_scrollTo": "@block +1"
-        },
         "_trackingId": 19
-    },
-    {
-        "_id": "b-110",
-        "_parentId": "a-20",
-        "_type": "block",
-        "_classes": "",
-        "title": "b-110",
-        "displayTitle": "",
-        "body": "",
-        "_trackingId": 20
     }
 ]

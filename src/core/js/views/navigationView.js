@@ -1,14 +1,13 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Handlebars = require('handlebars');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var NavigationView = Backbone.View.extend({
 
         className: "navigation",
 
         initialize: function() {
+            this.listenToOnce(Adapt, 'courseModel:dataLoading', this.remove);
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
             this.preRender();
@@ -24,8 +23,14 @@ define(function(require) {
         },
 
         render: function() {
-            var template = Handlebars.templates[this.template]
-            this.$el.html(template({_globals: Adapt.course.get("_globals")})).appendTo('#wrapper');
+            var template = Handlebars.templates[this.template];
+            this.$el.html(template(
+                {
+                    _globals: Adapt.course.get("_globals"),
+                    _accessibility: Adapt.config.get("_accessibility")
+                }
+            )).insertBefore('#wrapper');
+
             _.defer(_.bind(function() {
                 Adapt.trigger('navigationView:postRender', this);
             }, this));
@@ -40,14 +45,14 @@ define(function(require) {
 
         hideNavigationButton: function(model) {
             if (model.get('_type') === "course") {
-                $('.navigation-back-button').addClass('display-none');
+                $('.navigation-back-button, .navigation-home-button').addClass('display-none');
             } else {
                 this.showNavigationButton();
             }
         },
 
         showNavigationButton: function() {
-            $('.navigation-back-button').removeClass('display-none');
+            $('.navigation-back-button, .navigation-home-button').removeClass('display-none');
         }
 
     });

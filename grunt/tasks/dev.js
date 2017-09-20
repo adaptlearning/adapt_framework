@@ -6,12 +6,14 @@ module.exports = function(grunt) {
         '_log-vars',
         'check-json',
         'copy',
-        'less:dev',
         'handlebars',
         'create-json-config',
         'schema-defaults',
         'tracking-insert',
         'javascript:dev',
+        'less:dev',
+        'replace',
+        'scripts:adaptpostbuild',
         'watch'
     ]);
-}
+};

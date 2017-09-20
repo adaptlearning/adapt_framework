@@ -2,10 +2,17 @@
     "_defaultLanguage": "en",
     "_defaultDirection": "ltr",
     "_questionWeight": 1,
+    "_logging": {
+        "_isEnabled": true,
+        "_level": "debug",
+        "_console": true
+    },
     "_accessibility": {
         "_isEnabled": true,
+        "_isEnabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
-        "_isTextProcessorEnabled": true
+        "_isTextProcessorEnabled": true,
+        "_isSkipNavigationEnabled": true
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",
@@ -18,12 +25,14 @@
             "_requireCourseCompleted": true,
             "_requireAssessmentPassed": true,
             "_shouldSubmitScore": false,
-            "_shouldStoreResponses": false
+            "_shouldStoreResponses": false,
+            "_shouldRecordInteractions": true
         },
         "_reporting": {
             "_comment": "Your options here are 'completed', 'passed', 'failed', and 'incomplete'",
             "_onTrackingCriteriaMet": "completed",
-            "_onAssessmentFailure": "incomplete"
+            "_onAssessmentFailure": "incomplete",
+            "_resetStatusOnLanguageChange": false
         }
     },
     "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"],

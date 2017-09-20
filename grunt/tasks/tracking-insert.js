@@ -9,7 +9,19 @@ module.exports = function(grunt) {
             _trackingIdsSeen: []
         });
         
-        function insertTrackingIds(blocks, course){
+        var blocksFiles = grunt.file.expand(options.blocksFile);
+        var courseFiles = grunt.file.expand(options.courseFile);
+
+        for (var i = 0; i < blocksFiles.length; i++) {
+            insertTrackingIds(blocksFiles[i], courseFiles[i]);
+            options._latestTrackingId = -1;
+            options._trackingIdsSeen = [];
+        }
+        
+        function insertTrackingIds(blocksPath, coursePath){
+            var blocks = grunt.file.readJSON(blocksPath);
+            var course = grunt.file.readJSON(coursePath);
+            
             options._latestTrackingId = course._latestTrackingId || -1;
             
             for(var i = 0; i < blocks.length; i++) {
@@ -29,14 +41,13 @@ module.exports = function(grunt) {
                 if(options._latestTrackingId < block._trackingId) {
                     options._latestTrackingId = block._trackingId;
                 }
-                    
+
             }
             course._latestTrackingId = options._latestTrackingId;
             grunt.log.writeln("Task complete. The latest tracking ID is " + course._latestTrackingId);
-            grunt.file.write(options.courseFile, JSON.stringify(course, null, "    "));
-            grunt.file.write(options.blocksFile, JSON.stringify(blocks, null, "    "));
+            grunt.file.write(coursePath, JSON.stringify(course, null, 4));
+            grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
         }
         
-        insertTrackingIds(grunt.file.readJSON(options.blocksFile), grunt.file.readJSON(options.courseFile));
     });
-}
+};

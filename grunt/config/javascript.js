@@ -15,52 +15,18 @@ module.exports = function (grunt, options) {
                 ],
                 pluginsPath: '<%= sourcedir %>plugins.js',
                 pluginsModule: 'plugins',
-                //translate old style bundle references into something that does exist
-                map: {
-                    "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins",
-                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
-                        "templates": "plugins",
-                        "templates/templates": "plugins"
-                    }
-                },
-
-                paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
+                pluginsFilter: function(filepath) {
+                    return grunt.config('helpers').includedFilter(filepath);
                 },
                 generateSourceMaps: true,
                 preserveLicenseComments:false,
-                optimize: 'none',
-                onBuildRead: function(moduleName, path, contents) {
-                    var isIncludedInBuild = grunt.config('helpers').includedFilter( path );
-
-                    var includes = [
-                        "src/core",
-                        "plugins"
-                    ];
-
-                    var re = '';
-                    for(var i = 0, count = includes.length; i < count; i++) {
-                        re += includes[i];
-                        if(i < includes.length-1) re += '|';
-                    }
-                    var isIncludedByTask = (new RegExp(re, "i")).test( path );
-
-                    if (!isIncludedByTask && !isIncludedInBuild) {
-                        //console.log(path, "excluded");
-                        return "";
-                    }
-
-                    //console.log(path, "included");
-
-                    return contents;
-                }
+                optimize: 'none'
+            },
+            //newer configuration
+            files: {
+              '<%= outputdir %>adapt/js/adapt.min.js': [
+                '<%= sourcedir %>/**/*.js'
+              ]
             }
         },
         compile: {
@@ -78,48 +44,13 @@ module.exports = function (grunt, options) {
                 ],
                 pluginsPath: '<%= sourcedir %>/plugins.js',
                 pluginsModule: 'plugins',
-                //translate old style bundle references into something that does exist
-                map: {
-                    "*": {
-                        "components/components": "plugins",
-                        "extensions/extensions": "plugins",
-                        "menu/menu": "plugins",
-                        "theme/theme": "plugins",
-                        //this is a really hacky way to make the templates AT multi-user writable !rethink at a later date!
-                        "templates": "plugins",
-                        "templates/templates": "plugins"
-                    }
+                pluginsFilter: function(filepath) {
+                    return grunt.config('helpers').includedFilter(filepath);
                 },
-                paths: {
-                    "components/components": "plugins",
-                    "extensions/extensions": "plugins",
-                    "menu/menu": "plugins",
-                    "theme/theme": "plugins"
-                },
+                preserveLicenseComments:false,
                 optimize: 'uglify2',
-                onBuildRead: function(moduleName, path, contents) {
-                    var isIncludedInBuild = grunt.config('helpers').includedFilter( path );
-
-                    var includes = [
-                        "src/core",
-                        "plugins"
-                    ];
-
-                    var re = '';
-                    for(var i = 0, count = includes.length; i < count; i++) {
-                        re += includes[i];
-                        if(i < includes.length-1) re += '|';
-                    }
-                    var isIncludedByTask = (new RegExp(re, "i")).test( path );
-
-                    if (!isIncludedByTask && !isIncludedInBuild) {
-                        //console.log(path, "excluded");
-                        return "";
-                    }
-
-                    //console.log(path, "included");
-
-                    return contents;
+                uglify2: {
+                    compress: false
                 }
             }
         }

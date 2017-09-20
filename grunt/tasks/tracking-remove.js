@@ -5,17 +5,25 @@ module.exports = function(grunt) {
         if(!Helpers.isPluginInstalled('adapt-contrib-spoor')) return;
 
         var options = this.options();
-        function removeTrackingIds(blocks, course){
+        function removeTrackingIds(blocksPath, coursePath){
+            var blocks = grunt.file.readJSON(blocksPath);
+            var course = grunt.file.readJSON(coursePath);
             
             for(var i = 0; i < blocks.length; i++) {
                 delete blocks[i]._trackingId;
             }
             delete course._latestTrackingId;
             grunt.log.writeln("Tracking IDs removed.");
-            grunt.file.write(options.courseFile, JSON.stringify(course, null, "    "));
-            grunt.file.write(options.blocksFile, JSON.stringify(blocks, null, "    "));
+            grunt.file.write(coursePath, JSON.stringify(course, null, 4));
+            grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
         }
         
-        removeTrackingIds(grunt.file.readJSON(options.blocksFile), grunt.file.readJSON(options.courseFile));
+        var blocksFiles = grunt.file.expand(options.blocksFile);
+        var courseFiles = grunt.file.expand(options.courseFile);
+        
+        for (var i = 0; i < blocksFiles.length; i++) {
+            removeTrackingIds(blocksFiles[i], courseFiles[i]);
+        }
+        
     });
-}
+};

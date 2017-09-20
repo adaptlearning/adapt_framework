@@ -1,7 +1,6 @@
-define(function(require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt'
+], function(Adapt) {
 
     var DrawerView = Backbone.View.extend({
 
@@ -27,7 +26,6 @@ define(function(require) {
         setupEventListeners: function() {
             this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
             this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
-            this.listenToOnce(Adapt, 'adapt:initialize', this.checkIfDrawerIsAvailable);
             this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
             this.listenTo(Adapt, 'remove', this.onCloseDrawer);
             this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
@@ -36,7 +34,7 @@ define(function(require) {
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isEnabled;
+            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
 
             if (!hasAccessibility && ! this.escapeKeyAttached) {
                 $(window).on("keyup", this._onKeyUp);
@@ -78,6 +76,8 @@ define(function(require) {
         // Set tabindex for select elements
         postRender: function() {
             this.$('a, button, input, select, textarea').attr('tabindex', -1);
+
+            this.checkIfDrawerIsAvailable();
         },
 
         openCustomView: function(view, hasBackButton) {
@@ -90,9 +90,11 @@ define(function(require) {
         },
 
         checkIfDrawerIsAvailable: function() {
-            if(this.collection.length == 0) {
+            if (this.collection.length == 0) {
                 $('.navigation-drawer-toggle-button').addClass('display-none');
                 Adapt.trigger('drawer:noItems');
+            } else {
+                $('.navigation-drawer-toggle-button').removeClass('display-none');
             }
         },
 
@@ -178,7 +180,7 @@ define(function(require) {
                 
                 //focus on first tabbable element in drawer
                 this.$el.a11y_focus();
-			}
+	    }
 
         },
 
@@ -248,6 +250,15 @@ define(function(require) {
 
         removeShadowEvent: function() {
             $('#shadow').off('click touchstart');
+        },
+
+        remove: function() {
+            Backbone.View.prototype.remove.apply(this, arguments);
+            $(window).off("keyup", this._onKeyUp);
+
+            Adapt.trigger('drawer:empty');
+            this.collection.reset();
+            $('#shadow').remove();
         }
 
     });

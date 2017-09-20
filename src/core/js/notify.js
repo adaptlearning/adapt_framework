@@ -1,9 +1,9 @@
-define(function(require) {
-
-	var Adapt = require('coreJS/adapt');
-	var NotifyView = require('coreViews/notifyView');
-	var NotifyPushView = require('coreViews/notifyPushView');
-	var NotifyModel = require('coreModels/notifyModel');
+define([
+	'core/js/adapt',
+	'core/js/views/notifyView',
+	'core/js/views/notifyPushView',
+	'core/js/models/notifyModel'
+], function(Adapt, NotifyView, NotifyPushView, NotifyModel) {
 
 	// Build a collection to store push notifications
 	var NotifyPushCollection = Backbone.Collection.extend({
@@ -82,6 +82,6 @@ define(function(require) {
 			model: new NotifyModel(notifyObject)
 		});
 
-	};
+	}
 
 });

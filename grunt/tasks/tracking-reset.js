@@ -7,8 +7,18 @@ module.exports = function(grunt) {
         var options = this.options({
             _latestTrackingId: -1,
         });
+
+        var blocksFiles = grunt.file.expand(options.blocksFile);
+        var courseFiles = grunt.file.expand(options.courseFile);
         
-        function resetTrackingIds(blocks, course){
+        for (var i = 0; i < blocksFiles.length; i++) {
+            resetTrackingIds(blocksFiles[i], courseFiles[i]);
+            options._latestTrackingId = -1;
+        }
+        
+        function resetTrackingIds(blocksPath, coursePath){
+            var blocks = grunt.file.readJSON(blocksPath);
+            var course = grunt.file.readJSON(coursePath);
             
             for(var i = 0; i < blocks.length; i++) {
                 var block = blocks[i];
@@ -18,10 +28,9 @@ module.exports = function(grunt) {
             }
             course._latestTrackingId = options._latestTrackingId;
             grunt.log.writeln("The latest tracking ID is " + course._latestTrackingId);
-            grunt.file.write(options.courseFile, JSON.stringify(course, null, "    "));
-            grunt.file.write(options.blocksFile, JSON.stringify(blocks, null, "    "));
+            grunt.file.write(coursePath, JSON.stringify(course, null, 4));
+            grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
         }
-        
-        resetTrackingIds(grunt.file.readJSON(options.blocksFile), grunt.file.readJSON(options.courseFile));
+
     });
-}
+};

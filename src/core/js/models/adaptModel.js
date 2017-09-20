@@ -1,26 +1,30 @@
-define(function (require) {
-
-    var Backbone = require('backbone');
-    var Adapt = require('coreJS/adapt');
+define([
+    'core/js/adapt',
+    'core/js/logging'
+], function (Adapt) {
 
     var AdaptModel = Backbone.Model.extend({
 
         defaults: {
             _canShowFeedback: true,
+            _classes: "",
             _canReset: false,
             _isComplete: false,
             _isInteractionComplete: false,
+            _requireCompletionOf: -1,
             _isEnabled: true,
             _isResetOnRevisit: false,
             _isAvailable: true,
             _isOptional: false,
             _isReady: false,
-            _isVisible: true
+            _isVisible: true,
+            _isLocked: false,
+            _isHidden: false
         },
 
         initialize: function () {
             // Wait until data is loaded before setting up model
-            Adapt.once('app:dataLoaded', this.setupModel, this);
+            this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
 
         },
 
@@ -37,25 +41,31 @@ define(function (require) {
 
                 this.setupChildListeners();
             }
+
             this.init();
+
             _.defer(_.bind(function() {
                 if (this._children) {
                     this.checkCompletionStatus();
+
                     this.checkInteractionCompletionStatus();
+
+                    this.checkLocking();
                 }
             }, this));
         },
 
         setupChildListeners: function() {
+            var children = this.getChildren();
+            if (!children.length) {
+                return;
+            }
 
-            if (!this.getChildren()) return;
-
-            Adapt[this._children].on({
+            this.listenTo(children, {
                 "change:_isReady": this.checkReadyStatus,
-                "change:_isComplete": this.checkCompletionStatus,
+                "change:_isComplete": this.onIsComplete,
                 "change:_isInteractionComplete": this.checkInteractionCompletionStatus
-            }, this);
-
+            });
         },
 
         init: function() {},
@@ -70,7 +80,7 @@ define(function (require) {
                 this.set({
                     _isEnabled: true,
                     _isComplete: false,
-                    _isInteractionComplete: false,
+                    _isInteractionComplete: false
                 });
                 break;
             case "soft":
@@ -84,37 +94,75 @@ define(function (require) {
 
         checkReadyStatus: function () {
             // Filter children based upon whether they are available
-            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
             // Check if any return _isReady:false
             // If not - set this model to _isReady: true
-            if (availableChildren.findWhere({_isReady: false})) return;
+            var children = this.getAvailableChildModels();
+            if (_.find(children, function(child) { return child.get('_isReady') === false; })) {
+                return;
+            }
+
             this.set({_isReady: true});
         },
 
-        checkCompletionStatus: function () {
-            // Filter children based upon whether they are available
-            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
-            // Check if any return _isComplete:false
-            // If not - set this model to _isComplete: true
-            if (availableChildren.findWhere({_isComplete: false, _isOptional: false})) {
-                //cascade reset to menu
-                this.set({_isComplete:false});
-                return;
+        setCompletionStatus: function() {
+            if (this.get('_isVisible')) {
+                this.set('_isComplete', true);
+                this.set('_isInteractionComplete', true);
             }
-            this.set({_isComplete: true});
+        },
+
+        checkCompletionStatus: function () {
+            //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            Adapt.checkingCompletion();
+            _.defer(_.bind(function() {
+                var isComplete = false;
+                var children = this.getAvailableChildModels();
+                //number of mandatory children that must be complete or -1 for all
+                var requireCompletionOf = this.get("_requireCompletionOf");
+
+                if (requireCompletionOf === -1) {
+                    // Check if any return _isComplete:false
+                    // If not - set this model to _isComplete: true
+                    isComplete = !(_.find(children, function(child) {
+                        return !child.get('_isComplete') && !child.get('_isOptional');
+                    }));
+                } else {
+                    isComplete = (_.filter(children, function(child) {
+                        return !child.get('_isComplete') && !child.get('_isOptional');
+                    }).length >= requireCompletionOf);
+                }
+
+                this.set({_isComplete: isComplete});
+
+                Adapt.checkedCompletion();
+            }, this));
         },
 
         checkInteractionCompletionStatus: function () {
-            // Filter children based upon whether they are available
-            var availableChildren = new Backbone.Collection(this.getChildren().where({_isAvailable: true}));
-            // Check if any return _isInteractionComplete:false
-            // If not - set this model to _isInteractionComplete: true
-            if (availableChildren.findWhere({_isInteractionComplete: false, _isOptional: false})) {
-                //cascade reset to menu
-                this.set({_isInteractionComplete:false});
-                return;
-            }
-            this.set({_isInteractionComplete: true});
+            //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            Adapt.checkingCompletion();
+            _.defer(_.bind(function() {
+                var isInteractionComplete = false;
+                var children = this.getAvailableChildModels();
+                //number of mandatory children that must be complete or -1 for all
+                var requireCompletionOf = this.get("_requireCompletionOf");
+
+                if (requireCompletionOf === -1) {
+                    // Check if any return _isInteractionComplete:false
+                    // If not - set this model to _isInteractionComplete: true
+                    isInteractionComplete = (_.find(children, function(child) {
+                        return child.get('_isInteractionComplete') === false && child.get('_isOptional') === false;
+                    }) === undefined);
+                } else {
+                    isInteractionComplete = (_.filter(children, function(child) {
+                        return child.get('_isInteractionComplete') === true && child.get('_isOptional') === false;
+                    }).length >= requireCompletionOf);
+                }
+
+                this.set({_isInteractionComplete:isInteractionComplete});
+                Adapt.checkedCompletion();
+
+            }, this));
         },
 
         findAncestor: function (ancestors) {
@@ -136,7 +184,42 @@ define(function (require) {
 
         },
 
+        findDescendantModels: function(descendants) {
+            var children = this.getChildren().models;
+
+            // first check if descendant is child and return child
+            if (this._children === descendants) {
+                return children;
+            }
+
+            var allDescendants = [];
+            var flattenedDescendants;
+            var returnedDescendants;
+
+            function searchChildren(models) {
+                for (var i = 0, len = models.length; i < len; i++) {
+                    var model = models[i];
+                    allDescendants.push(model.getChildren().models);
+                    flattenedDescendants = _.flatten(allDescendants);
+                }
+
+                returnedDescendants = flattenedDescendants;
+
+                if (models.length === 0 || models[0]._children === descendants) {
+                    return;
+                } else {
+                    allDescendants = [];
+                    searchChildren(returnedDescendants);
+                }
+            }
+
+            searchChildren(children);
+
+            return returnedDescendants;
+        },
+
         findDescendants: function (descendants) {
+            Adapt.log.warn("DEPRECATED - Use findDescendantModels() as findDescendants() may be removed in the future");
 
             // first check if descendant is child and return child
             if (this._children === descendants) {
@@ -146,7 +229,7 @@ define(function (require) {
             var allDescendants = [];
             var flattenedDescendants;
             var children = this.getChildren();
-            var returnedDescedants;
+            var returnedDescendants;
 
             function searchChildren(children) {
                 var models = children.models;
@@ -157,20 +240,20 @@ define(function (require) {
                     flattenedDescendants = _.flatten(allDescendants);
                 }
 
-                returnedDescedants = new Backbone.Collection(flattenedDescendants);
+                returnedDescendants = new Backbone.Collection(flattenedDescendants);
 
                 if (children.models.length === 0 || children.models[0]._children === descendants) {
                     return;
                 } else {
                     allDescendants = [];
-                    searchChildren(returnedDescedants);
+                    searchChildren(returnedDescendants);
                 }
             }
 
             searchChildren(children);
 
             // returns a collection of children
-            return returnedDescedants;
+            return returnedDescendants;
         },
 
         getChildren: function () {
@@ -186,7 +269,7 @@ define(function (require) {
             }
 
             if (this.get('_type') == 'block' && childrenCollection.length == 2
-                && childrenCollection.models[0].get('_layout') !== 'left') {
+                && childrenCollection.models[0].get('_layout') !== 'left' && this.get('_sortComponents') !== false) {
                 // Components may have a 'left' or 'right' _layout,
                 // so ensure they appear in the correct order
                 // Re-order component models to correct it
@@ -198,6 +281,20 @@ define(function (require) {
 
             // returns a collection of children
             return childrenCollection;
+        },
+
+        getAvailableChildModels: function() {
+            return this.getChildren().where({
+                _isAvailable: true
+            });
+        },
+
+        getAvailableChildren: function() {
+            Adapt.log.warn("DEPRECATED - Use getAvailableChildModels() as getAvailableChildren() may be removed in the future");
+
+            return new Backbone.Collection(this.getChildren().where({
+                _isAvailable: true
+            }));
         },
 
         getParent: function () {
@@ -212,17 +309,33 @@ define(function (require) {
             return parent;
         },
 
-        getParents: function(shouldIncludeChild) {
+        getAncestorModels: function(shouldIncludeChild) {
             var parents = [];
             var context = this;
-            
+
             if (shouldIncludeChild) parents.push(context);
-            
+
             while (context.has("_parentId")) {
                 context = context.getParent();
                 parents.push(context);
             }
-            
+
+            return parents.length ? parents : null;
+        },
+
+        getParents: function(shouldIncludeChild) {
+            Adapt.log.warn("DEPRECATED - Use getAncestorModels() as getParents() may be removed in the future");
+
+            var parents = [];
+            var context = this;
+
+            if (shouldIncludeChild) parents.push(context);
+
+            while (context.has("_parentId")) {
+                context = context.getParent();
+                parents.push(context);
+            }
+
             return parents.length ? new Backbone.Collection(parents) : null;
         },
 
@@ -277,8 +390,100 @@ define(function (require) {
 
         setOptional: function(value) {
             this.set({_isOptional: value});
-        }
+        },
 
+        checkLocking: function() {
+            var lockType = this.get("_lockType");
+
+            if (!lockType) return;
+
+            switch (lockType) {
+                case "sequential":
+                    this.setSequentialLocking();
+                    break;
+                case "unlockFirst":
+                    this.setUnlockFirstLocking();
+                    break;
+                case "lockLast":
+                    this.setLockLastLocking();
+                    break;
+                case "custom":
+                    this.setCustomLocking();
+                    break;
+                default:
+                    console.warn("AdaptModel.checkLocking: unknown _lockType \"" +
+                        lockType + "\" found on " + this.get("_id"));
+            }
+        },
+
+        setSequentialLocking: function() {
+            var children = this.getAvailableChildModels();
+
+            for (var i = 1, j = children.length; i < j; i++) {
+                children[i].set("_isLocked", !children[i - 1].get("_isComplete"));
+            }
+        },
+
+        setUnlockFirstLocking: function() {
+            var children = this.getAvailableChildModels();
+            var isFirstChildComplete = children[0].get("_isComplete");
+
+            for (var i = 1, j = children.length; i < j; i++) {
+                children[i].set("_isLocked", !isFirstChildComplete);
+            }
+        },
+
+        setLockLastLocking: function() {
+            var children = this.getAvailableChildModels();
+            var lastIndex = children.length - 1;
+
+            for (var i = lastIndex - 1; i >= 0; i--) {
+                if (!children[i].get("_isComplete")) {
+                    return children[lastIndex].set("_isLocked", true);
+                }
+            }
+
+            children[lastIndex].set("_isLocked", false);
+        },
+
+        setCustomLocking: function() {
+            var children = this.getAvailableChildModels();
+
+            for (var i = 0, j = children.length; i < j; i++) {
+                var child = children[i];
+
+                child.set("_isLocked", this.shouldLock(child));
+            }
+        },
+
+        shouldLock: function(child) {
+            var lockedBy = child.get("_lockedBy");
+
+            if (!lockedBy) return false;
+
+            for (var i = lockedBy.length - 1; i >= 0; i--) {
+                var id = lockedBy[i];
+
+                try {
+                    var model = Adapt.findById(id);
+
+                    if (!model.get("_isAvailable")) continue;
+                    if (!model.get("_isComplete")) return true;
+                }
+                catch (e) {
+                    console.warn("AdaptModel.shouldLock: unknown _lockedBy ID \"" + id +
+                        "\" found on " + child.get("_id"));
+                }
+            }
+
+            return false;
+        },
+
+        onIsComplete: function() {
+            this.checkCompletionStatus();
+
+            this.checkLocking();
+        }
 
     });
 

@@ -1,3 +1,3 @@
 module.exports = {
-  src: [ '<%= sourcedir %>course/**/*.json' ]
+  src: [ '<%= sourcedir %>course/<%=languages%>/*.json' ]
 }

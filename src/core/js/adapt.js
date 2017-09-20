@@ -1,29 +1,91 @@
 define([
-    'coreModels/lockingModel',
-    'coreHelpers'
-], function(lockingModel, Helpers) {
+    'core/js/models/lockingModel'
+], function(lockingModel) {
 
     var AdaptModel = Backbone.Model.extend({
 
         defaults: {
-            _canScroll: true //to stop scrollTo behaviour
+            _canScroll: true, //to stop scrollTo behaviour,
+            _outstandingCompletionChecks: 0,
+            _pluginWaitCount:0
         },
 
         lockedAttributes: {
             _canScroll: false
-        }
+        },
 
+        initialize: function () {
+            this.listenTo(this, 'plugin:beginWait', this.onPluginBeginWait);
+            this.listenTo(this, 'plugin:endWait', this.onPluginEndWait);
+        },
+
+        //call when entering an asynchronous completion check
+        checkingCompletion: function() {
+            var outstandingChecks = this.get("_outstandingCompletionChecks");
+            this.set("_outstandingCompletionChecks", ++outstandingChecks);
+        },
+
+        //call when exiting an asynchronous completion check
+        checkedCompletion: function() {
+            var outstandingChecks = this.get("_outstandingCompletionChecks");
+            this.set("_outstandingCompletionChecks", --outstandingChecks);
+        },
+
+        //wait until there are no outstanding completion checks
+        deferUntilCompletionChecked: function(callback) {
+
+            if (this.get("_outstandingCompletionChecks") === 0) return callback();
+
+            var checkIfAnyChecksOutstanding = function(model, outstandingChecks) {
+                if (outstandingChecks !== 0) return;
+
+                Adapt.off("change:_outstandingCompletionChecks", checkIfAnyChecksOutstanding);
+
+                callback();
+            };
+
+            Adapt.on("change:_outstandingCompletionChecks", checkIfAnyChecksOutstanding);
+
+        },
+
+        isWaitingForPlugins:function() {
+            return this.get('_pluginWaitCount') > 0;
+        },
+
+        checkPluginsReady:function() {
+            if (this.isWaitingForPlugins()) return;
+            this.trigger('plugins:ready');
+        },
+
+        onPluginBeginWait:function() {
+            this.set('_pluginWaitCount', this.get('_pluginWaitCount') + 1);
+            this.checkPluginsReady();
+        },
+
+        onPluginEndWait:function() {
+            this.set('_pluginWaitCount', this.get('_pluginWaitCount') - 1);
+            this.checkPluginsReady();
+        }
     });
 
     var Adapt = new AdaptModel();
 
     Adapt.location = {};
     Adapt.componentStore = {};
-    var mappedIds = {};
+    Adapt.mappedIds = {};
 
     Adapt.initialize = _.once(function() {
-        Backbone.history.start();
-        Adapt.trigger('adapt:initialize');
+
+        //wait until no more completion checking 
+        Adapt.deferUntilCompletionChecked(function() {
+
+            //start adapt in a full restored state
+            Adapt.trigger('adapt:start');
+            Backbone.history.start();
+            Adapt.trigger('adapt:initialize');
+
+        });
+
     });
 
     Adapt.scrollTo = function(selector, settings) {
@@ -42,17 +104,22 @@ define([
             settings.duration = $.scrollTo.defaults.duration;
         }
 
-        var navigationHeight = $(".navigation").outerHeight();
+        var offsetTop = -$(".navigation").outerHeight();
+        // prevent scroll issue when component description aria-label coincident with top of component
+        if (Adapt.config.get('_accessibility')._isActive &&
+            $(selector).hasClass('component')) {
+            offsetTop -= $(selector).find('.aria-label').height() || 0;
+        }
 
-        if (!settings.offset) settings.offset = { top: -navigationHeight, left: 0 };
-        if (settings.offset.top === undefined) settings.offset.top = -navigationHeight;
+        if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
+        if (settings.offset.top === undefined) settings.offset.top = offsetTop;
         if (settings.offset.left === undefined) settings.offset.left = 0;
 
         if (settings.offset.left === 0) settings.axis = "y";
 
         if (Adapt.get("_canScroll") !== false) {
-        // Trigger scrollTo plugin
-        $.scrollTo(selector, settings);
+            // Trigger scrollTo plugin
+            $.scrollTo(selector, settings);
         }
 
         // Trigger an event after animation
@@ -62,7 +129,7 @@ define([
             Adapt.trigger(location+':scrolledTo', selector);
         }, settings.duration+300);
 
-    }
+    };
 
     Adapt.navigateToElement = function(selector, settings) {
         // Allows a selector to be passed in and Adapt will navigate to this element
@@ -85,30 +152,41 @@ define([
         // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
-                Adapt.scrollTo(selector, settings)
-            })
+                Adapt.scrollTo(selector, settings);
+            });
         });
 
         var shouldReplaceRoute = settings.replace || false;
 
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true, replace: shouldReplaceRoute});
-    }
+    };
 
     Adapt.register = function(name, object) {
         // Used to register components
         // Store the component view
         if (Adapt.componentStore[name])
             throw Error('This component already exists in your project');
-        if(!object.template) object.template = name;
+
+        if (object.view) {
+            //use view+model object
+            if(!object.view.template) object.view.template = name;
+        } else {
+            //use view object
+            if(!object.template) object.template = name;
+        }
+        
         Adapt.componentStore[name] = object;
 
-    }
+        return object;
+    };
 
     // Used to map ids to collections
     Adapt.setupMapping = function() {
+        // Clear any existing mappings.
+        Adapt.mappedIds = {};
 
         // Setup course Id
-        mappedIds[Adapt.course.get('_id')] = "course";
+        Adapt.mappedIds[Adapt.course.get('_id')] = "course";
 
         // Setup each collection
         var collections = ["contentObjects", "articles", "blocks", "components"];
@@ -118,18 +196,17 @@ define([
             var models = Adapt[collection].models;
             for (var j = 0, lenj = models.length; j < lenj; j++) {
                 var model = models[j];
-                mappedIds[model.get('_id')] = collection;
+                Adapt.mappedIds[model.get('_id')] = collection;
 
             }
         }
 
-    }
+    };
 
     Adapt.mapById = function(id) {
         // Returns collection name that contains this models Id
-        return mappedIds[id];
-
-    }
+        return Adapt.mappedIds[id];
+    };
 
     Adapt.findById = function(id) {
 
@@ -139,9 +216,24 @@ define([
             return Adapt.course;
         }
 
-        return Adapt[Adapt.mapById(id)]._byAdaptID[id][0];
+        var collectionType = Adapt.mapById(id);
 
-    }
+        if (!collectionType) {
+            console.warn('Adapt.findById() unable to find collection type for id: ' + id);
+            return;
+        }
+
+        return Adapt[collectionType]._byAdaptID[id][0];
+
+    };
+
+    Adapt.remove = function() {
+        Adapt.trigger('preRemove');
+        Adapt.trigger('remove');
+        _.defer(function() {
+            Adapt.trigger('postRemove');
+        });
+    };
 
     return Adapt;
 

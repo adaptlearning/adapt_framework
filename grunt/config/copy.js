@@ -1,4 +1,22 @@
 module.exports = function (grunt, options) {
+    
+    
+    var renameAssets = function (destFolder, srcFileName) {
+        var collateAtName = "assets";
+        var collateAtFolder = collateAtName + "/";
+        var startOfCollatePath = srcFileName.indexOf(collateAtFolder) + collateAtFolder.length;
+        var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
+        //ignore the folder alone
+        var testEndsWithCollateName = new RegExp("((?:\\\\|\/)" + collateAtName + ")(?:$|\\\\$|\\\/$)");
+        if (testEndsWithCollateName.test(srcFileName)) {
+            //we have path ending with .../[name] or .../[name]/ discard it
+            return destFolder;
+        }
+        return collatedFilePath;
+    }
+    
+    
+    
     return {
         index: {
             files: [
@@ -15,7 +33,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['**/*', '!**/*.json'],
+                    src: ['<%=languages%>/**/*', '!**/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }
@@ -25,9 +43,20 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['**/*.json'],
+                    src: ['<%=languages%>/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
+                }
+            ]
+        },
+        coreAssets: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>core/assets/**'],
+                    dest: '<%= outputdir %>adapt/css/assets/',
+                    filter: 'isFile',
+                    flatten: true
                 }
             ]
         },
@@ -40,7 +69,8 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    
+                    rename: renameAssets
                 }
             ]
         },
@@ -66,7 +96,8 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    
+                    rename: renameAssets
                 }
             ]
         },
@@ -92,6 +123,18 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
+                    
+                    rename: renameAssets
+                }
+            ]
+        },
+        coreFonts: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>core/fonts/**'],
+                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    filter: 'isFile',
                     flatten: true
                 }
             ]
@@ -135,7 +178,7 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
-        main: {
+        scriptLoader: {
             files: [
                 {
                     expand: true,
@@ -143,25 +186,41 @@ module.exports = function (grunt, options) {
                     dest: '<%= outputdir %>adapt/js/',
                     filter: 'isFile',
                     flatten: true
-                },
+                }
+            ]
+        },
+        libraries: {
+            files: [
                 {
                     expand: true,
                     src: [
-                        '<%= sourcedir %>core/js/libraries/require.js',
-                        '<%= sourcedir %>core/js/libraries/modernizr.js',
-                        '<%= sourcedir %>core/js/libraries/json2.js',
-                        '<%= sourcedir %>core/js/libraries/consoles.js',
-                        '<%= sourcedir %>core/js/libraries/jquery.js',
-                        '<%= sourcedir %>core/js/libraries/jquery.v2.js'
+                        '<%= sourcedir %>core/js/libraries/*.js'
                     ],
                     dest: '<%= outputdir %>libraries/',
                     filter: 'isFile',
                     flatten: true
+                }
+            ]
+        },
+        required: {
+            files: [
+                {
+                    expand: true,
+                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
+                    cwd: '<%= sourcedir %>',
+                    dest: '<%= outputdir %>/libraries/',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    },
+                    rename: function(destFolder, srcFileName) {
+                        var endOfRequired = srcFileName.indexOf("libraries/") + 9;
+                        return destFolder + srcFileName.substr(endOfRequired);
+                    }
                 },
                 {
                     expand: true,
-                    src: ['*/required/**/*'],
-                    cwd: '<%= sourcedir %>extensions/',
+                    src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
+                    cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);

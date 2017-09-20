@@ -18,21 +18,21 @@
             "focusguard": "#a11y-focusguard",
             "selected": "#a11y-selected",
             "ignoreFocusElements": ".a11y-ignore-focus",
-            "nativeSpaceElements": "textarea, input[type='text']",
+            "nativeSpaceElements": "textarea, input[type='text'], div[contenteditable=true]",
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
             "nativeTabElements": "textarea, input, select",
             "wrapIgnoreElements": "a,button,input,select,textarea,br",
-            "wrapStyleElements": "b,i,abbr,strong",
+            "wrapStyleElements": "b,i,abbr,strong,em,small,sub,sup,ins,del,mark",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]",
+            "ariaLabelElements": "div[aria-label], span[aria-label]"
         };
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="region">&nbsp;</a>',
+            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
             "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
             "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
@@ -425,11 +425,14 @@
                     var $nextAllElements = $nextSiblings.find(domSelectors.focusableElements);
                     //filter enabled+visible focusable items
                     var $nextAllElementsFiltered = $nextAllElements.filter(domFilters.focusableElementsFilter);
-                    //if none found throw error
-                    if ($nextAllElementsFiltered.length === 0) throw "jquery.a11y: Could not find the next focusable element";
                     
-                    //return first found element
-                    $element = $($nextAllElementsFiltered[0]);
+                    //if none found go to focuser
+                    if ($nextAllElementsFiltered.length === 0) {
+                        $element = $(domSelectors.focuser);
+                    } else {
+                        //return first found element
+                        $element = $($nextAllElementsFiltered[0]);
+                    }
 
                 } else {
 
@@ -516,9 +519,6 @@
         function onFocusCapture(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
-
-            //preventDefault(event);
-            event.stopPropagation();
             var $element = $(event.target);
             
             //search out intended click element
@@ -953,13 +953,22 @@
         };
 
         //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
-        $.fn.a11y_text = function() {
+        $.fn.a11y_text = function(text) {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return this;
+            if (!options.isTabbableTextEnabled) {
+                if (text) {
+                    this.html(text);
+                }
 
-             for (var i = 0; i < this.length; i++) {
-                this[i].innerHTML = makeHTMLOrTextAccessible(this[i].innerHTML);
+                return this;
+            }
+
+            for (var i = 0; i < this.length; i++) {
+                // If an argument is given then convert that to accessible text
+                // Otherwise convert existing content
+                text = text || this[i].innerHTML;
+                this[i].innerHTML = makeHTMLOrTextAccessible(text);
             }
             return this;
         };
@@ -1147,10 +1156,14 @@
 
                 if (previousTabIndex === -1) {
                     //hide element from screen reader
-                    $item.attr('aria-hidden', true).addClass("aria-hidden");
-                } else {
-                    //show element to screen reader
-                    $item.removeAttr('aria-hidden').removeClass("aria-hidden");
+                    return $item.attr('aria-hidden', true).addClass("aria-hidden");
+                }
+
+                //show element to screen reader
+                $item.removeAttr('aria-hidden').removeClass("aria-hidden");
+                
+                if ($item.is(domSelectors.hideableElements)) {
+                    $item.removeAttr("tabindex");
                 }
             });
 

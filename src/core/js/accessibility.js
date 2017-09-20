@@ -1,10 +1,11 @@
-define(function(require) {
+define([
+    'core/js/adapt',
+    'core/js/views/accessibilityView',
+    'a11y'
+], function(Adapt, AccessibilityView) {
 
-    var Adapt = require('coreJS/adapt');
-    var a11y = require('a11y');
-    var AccessibilityView = require('coreViews/accessibilityView');
+    var Accessibility = Backbone.Controller.extend({
 
-    var Accessibility = _.extend({
         $html: $('html'),
         $accessibilityInstructions: $("#accessibility-instructions"),
         $accessibilityToggle: $("#accessibility-toggle"),
@@ -35,14 +36,14 @@ define(function(require) {
                 this._hasCourseLoaded = true;
                 Adapt.config.get("_accessibility")._isActive = Adapt.offlineStorage.get("a11y") || false;
                 this.setupAccessibility();
-                
-            }, Accessibility);
 
-            Adapt.on('accessibility:toggle', this.setupAccessibility, Accessibility);
+            }, this);
+
+            Adapt.on('accessibility:toggle', this.setupAccessibility, this);
 
             //SETUP RENDERING HELPERS
-            Adapt.once('app:dataLoaded', this.setupHelpers, Accessibility);
-            Adapt.once('app:dataLoaded', this.touchDeviceCheck, Accessibility);
+            Adapt.once('app:dataLoaded', this.setupHelpers, this);
+            Adapt.once('app:dataLoaded', this.touchDeviceCheck, this);
 
             //SETUP NEW VIEW FOR TOGGLE BUTTON
             Adapt.once('app:dataReady', this.setupToggleButton, this);
@@ -51,7 +52,7 @@ define(function(require) {
             Adapt.on("device:changed", this.setupNoSelect);
 
             //Configure the accessibility library
-            this.listenToOnce(Adapt, "app:dataReady", this.configureA11yLibrary)
+            this.listenToOnce(Adapt, "app:dataReady", this.configureA11yLibrary);
 
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
             this.listenTo(Adapt, 'router:location', this.onNavigationStart);
@@ -72,15 +73,14 @@ define(function(require) {
             this.checkTabCapture();
 
             this.configureA11yLibrary();
-			
+
             this.touchDeviceCheck();
-			
+
             // Check if accessibility is active
             if (this.isActive()) {
-
                 this.setupDocument();
                 this.setupLegacy();
-                this.setupPopupListeners()
+                this.setupPopupListeners();
                 this.setupUsageInstructions();
                 this.setupLogging();
 
@@ -116,6 +116,26 @@ define(function(require) {
                 return $.a11y_normalize(text);
             });
 
+            Handlebars.registerHelper('a11y_aria_label', function(text) {
+                return '<div class="aria-label prevent-default" tabindex="0" role="region">'+text+'</div>';
+            });
+
+            Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
+                return '<div class="aria-label relative prevent-default" tabindex="0" role="region">'+text+'</div>';
+            });
+
+            Handlebars.registerHelper('a11y_wrap_focus', function(text) {
+                return '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>';
+            });
+
+            Handlebars.registerHelper('a11y_attrs_heading', function(level) {
+                return ' role="heading" aria-level="'+level+'" tabindex="0" ';
+            });
+
+            Handlebars.registerHelper('a11y_attrs_tabbable', function() {
+                return ' role="region" tabindex="0" ';
+            });
+
         },
 
         setupToggleButton: function() {
@@ -149,7 +169,7 @@ define(function(require) {
 
         configureA11yLibrary: function() {
 
-            var topOffset = $('.navigation').height()+10;
+            var topOffset = $('.navigation').height();
             var bottomoffset = 0;
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;
@@ -253,8 +273,12 @@ define(function(require) {
                  //Remove button
                 this.$accessibilityToggle.remove();
             }
-
-            if (!Modernizr.touch || this.isActive()) return;
+            
+            var config = Adapt.config.get("_accessibility");
+            // Backwards compatibility for _isDisabledOnTouchDevices
+            var isEnabledOnTouchDevices = config._isEnabledOnTouchDevices || (config._isDisabledOnTouchDevices === false);
+            
+            if (!Modernizr.touch || this.isActive() || !isEnabledOnTouchDevices) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
@@ -290,11 +314,18 @@ define(function(require) {
 
         isEnabled: function() {
             return Adapt.config.has('_accessibility')
-                && Adapt.config.get('_accessibility')._isEnabled
+                && Adapt.config.get('_accessibility')._isEnabled;
         },
 
         setupDocument: function() {
             this.$html.addClass('accessibility');
+
+            if (Adapt.config.get('_accessibility')._isTextProcessorEnabled) {
+                this.$html.addClass('text-to-speech');
+            }
+
+            $('.skip-nav-link').removeClass('a11y-ignore a11y-ignore-focus');
+
             $.a11y(true)
             $.a11y_on(true, "body > *");
         },
@@ -354,8 +385,9 @@ define(function(require) {
 
 
         revertDocument: function() {
-            this.$html.removeClass('accessibility');
-            $.a11y(false)
+            this.$html.removeClass('accessibility text-to-speech');
+            $('.skip-nav-link').addClass('a11y-ignore a11y-ignore-focus');
+            $.a11y(false);
             $.a11y_on(false, "body > *");
             $.a11y_on(true, "#accessibility-toggle");
         },
@@ -387,8 +419,7 @@ define(function(require) {
         revertUsageInstructions: function() {
             if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions)) return;
 
-            this.$accessibilityInstructions
-                .off("blur", this.onFocusInstructions)
+            this.$accessibilityInstructions.off("blur", this.onFocusInstructions);
         },
 
         revertLogging: function() {
@@ -414,11 +445,11 @@ define(function(require) {
                     $.a11y_on(true, '.menu');
 
                     if (this._hasUserTabbed) return;
-	
-                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions)
-	
+
+                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions);
+
                     _.delay(function(){
-                        Accessibility.$accessibilityInstructions.focusNoScroll();
+                        Adapt.accessibility.$accessibilityInstructions.focusNoScroll();
                     }, 250);
 
                 } else {
@@ -496,30 +527,29 @@ define(function(require) {
 
             //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
             if ($.a11y.userInteracted) return;
-            Accessibility._hasUserTabbed = true;
+            Adapt.accessibility._hasUserTabbed = true;
 
             //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
-            if (Accessibility.isActive() && !Accessibility._isButtonRedirectionOn) return;
+            if (Adapt.accessibility.isActive() && !Adapt.accessibility._isButtonRedirectionOn) return;
 
             //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
-            Accessibility.$accessibilityToggle.focus();
+            Adapt.accessibility.$accessibilityToggle.focus();
 
         },
 
         onFocusInstructions: function(event) {
             //HIDE INSTRUCTIONS FROM TAB WRAP AROUND AFTER LEAVING INSTRUCTIONS
-            if (Accessibility._isButtonRedirectionOn) return;
-            if (!Accessibility._isLoaded) return;
-            Accessibility.$accessibilityInstructions
+            if (Adapt.accessibility._isButtonRedirectionOn) return;
+            if (!Adapt.accessibility._isLoaded) return;
+            Adapt.accessibility.$accessibilityInstructions
                 .addClass("a11y-ignore-focus")
-                .off("blur", Accessibility.onFocusInstructions);
+                .off("blur", Adapt.accessibility.onFocusInstructions);
         }
 
-    }, Backbone.Events);
+    });
 
+    Adapt.accessibility = new Accessibility();
 
-    Accessibility.initialize();
-
-    return Accessibility;
+    return Adapt.accessibility;
 
 });

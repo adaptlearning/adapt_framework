@@ -37,10 +37,10 @@ module.exports = function(grunt) {
         grunt.log.ok('Building to "' + grunt.config('outputdir') + '"');
         if (grunt.config('theme') !== '**') grunt.log.ok('Using theme "' + grunt.config('theme') + '"');
         if (grunt.config('menu') !== '**') grunt.log.ok('Using menu "' + grunt.config('menu') + '"');
+        if (grunt.config('languages') !== '**') grunt.log.ok('The following languages will be included in the build "' + grunt.config('languages') + '"');
     });
 
     // privates
-
     var generateIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
         var re = '';
@@ -61,6 +61,16 @@ module.exports = function(grunt) {
         return new RegExp(re, "i");
     };
 
+    var generateScriptSafeRegExp = function() {
+        var includes = grunt.config('scriptSafe') || [];
+        var re = '';
+        for(var i = 0, count = includes.length; i < count; i++) {
+            re += '\/' + includes[i].toLowerCase() + '\/';
+            if(i < includes.length-1) re += '|';
+        }
+        return new RegExp(re, "i");
+    };
+
     var appendSlash = function(dir) {
         if (dir) {
             var lastChar = dir.substring(dir.length - 1, dir.length);
@@ -77,6 +87,7 @@ module.exports = function(grunt) {
         outputdir: process.cwd() + path.sep + 'build' + path.sep,
         theme: '**',
         menu: '**',
+        languages: '**',
         includes: [
 
         ],
@@ -85,58 +96,76 @@ module.exports = function(grunt) {
             'extensions',
             'menu',
             'theme'
+        ],
+        scriptSafe: [
+            'adapt-contrib-xapi',
+            'adapt-contrib-spoor'
         ]
     };
 
     exports.getIncludes = function(buildIncludes, configData) {
         var dependencies = [];
 
-        for(var i = 0, count = exports.defaults.pluginTypes.length; i < count; i++) {
-            var dir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
-            var children = fs.readdirSync(dir);
-            for(var j = 0, count = children.length; j < count; j++) {
+        // Iterate over the plugin types.
+        for (var i = 0; i < exports.defaults.pluginTypes.length; i++) {
+            var pluginTypeDir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
+            // grab a list of the installed (and included) plugins for this type
+            var plugins = _.intersection(fs.readdirSync(pluginTypeDir),buildIncludes);
+            for (var j = 0; j < plugins.length; j++) {
                 try {
-                    var folderPath = path.join(dir, children[j]);
+                    var bowerJson = require(path.join(pluginTypeDir, plugins[j], 'bower.json'));
 
-                    // not a directory, escape!
-                    if(!fs.statSync(folderPath).isDirectory()) continue;
-
-                    var bowerJson = require(path.join(folderPath, 'bower.json'));
                     for (var key in bowerJson.dependencies) {
-                        if(!_.contains(buildIncludes, key)) dependencies.push(key)
+                        if (!_.contains(buildIncludes, key)) dependencies.push(key);
                     }
                 } catch(error) {
                     grunt.log.error(error);
                 }
             }
         }
+
         return [].concat(exports.defaults.includes, buildIncludes, dependencies);
     };
 
     exports.generateConfigData = function() {
-        var data = {
-            root: __dirname.split(path.sep).slice(0,-1).join(path.sep),
-            sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
-            outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
-            theme: grunt.option('theme') || exports.defaults.theme,
-            menu: grunt.option('menu') || exports.defaults.menu,
-        };
+
+        var root = __dirname.split(path.sep).slice(0,-1).join(path.sep);
+        var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
+        var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+
+        var languageFolders = "";
+        if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
+          languageFolders = "{" + grunt.option('languages') + "}";
+        } else {
+          languageFolders = grunt.option('languages');
+        }
 
         // Selectively load the course.json ('outputdir' passed by server-build)
-        var outputdir = grunt.option('outputdir') ? data.outputdir : data.sourcedir;
+        var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
-        var configPath = path.join(path.resolve(data.root, outputdir), 'course', 'config.json');
-
+        var configPath = path.join(path.resolve(root, configDir), 'course', 'config.json');
+        
         try {
-            var buildConfig = require(configPath).build;
+            var buildConfig = grunt.file.readJSON(configPath).build;
+        } catch(error) {
+            grunt.log.error(error);
+            process.exit();
         }
-        catch(error) {
-            return grunt.log.error(error);
-        }
+
+        var data = {
+            root: root,
+            sourcedir: sourcedir,
+            outputdir: outputdir,
+            theme: grunt.option('theme') || exports.defaults.theme,
+            menu: grunt.option('menu') || exports.defaults.menu,
+            languages: languageFolders || exports.defaults.languages,
+            scriptSafe: exports.defaults.scriptSafe
+        };
 
         if(buildConfig) {
-            if(buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
-            if(buildConfig.excludes) data.excludes = buildConfig.excludes;
+            if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
+            if (buildConfig.excludes) data.excludes = buildConfig.excludes;
+            if (buildConfig.scriptSafe) data.scriptSafe = buildConfig.scriptSafe.split(",").map(function(item) { return item.trim() });
         }
 
         return data;
@@ -185,6 +214,23 @@ module.exports = function(grunt) {
         }
     };
 
+    exports.isPluginScriptSafe = function(pluginPath) {
+
+        pluginPath = pluginPath.replace(convertSlashes, "/");
+        var includes = grunt.config('scriptSafe');
+        var isExplicitlyDefined = (includes && pluginPath.search(exports.getScriptSafeRegExp()) !== -1);
+        var isIncluded = grunt.option('allowscripts') || includes[0] === "*" || isExplicitlyDefined;
+
+        if (!isIncluded) {
+            //grunt.log.writeln('Excluded ' + chalk.red(pluginPath));
+        } else {
+            //grunt.log.writeln('Included ' + chalk.green(pluginPath));
+        }
+
+        return isIncluded;
+     
+    };
+
     exports.includedFilter = function(filepath) {
         return exports.isPluginIncluded(filepath);
     };
@@ -202,6 +248,15 @@ module.exports = function(grunt) {
     exports.getExcludedRegExp = function() {
         var configValue = grunt.config('excludedRegExp');
         return configValue || grunt.config('excludedRegExp', generateExcludedRegExp());
+    };
+
+    exports.getScriptSafeRegExp = function() {
+        var configValue = grunt.config('scriptSafeRegExp');
+        return configValue || grunt.config('scriptSafeRegExp', generateScriptSafeRegExp());
+    };
+
+    exports.scriptSafeFilter = function(filepath) {
+        return exports.isPluginScriptSafe(filepath);
     };
 
     return exports;

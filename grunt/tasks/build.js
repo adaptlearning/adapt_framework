@@ -7,12 +7,15 @@ module.exports = function(grunt) {
         'check-json',
         'clean:output',
         'copy',
-        'less:compile',
         'handlebars',
         'create-json-config',
         'schema-defaults',
         'tracking-insert',
         'javascript:compile',
-        'clean:dist'
+        'clean:dist',
+        'less:compile',
+        'replace',
+        'scripts:adaptpostbuild',
+        'minify'
     ]);
-}
+};
