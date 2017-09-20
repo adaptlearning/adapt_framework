@@ -2,6 +2,31 @@
 // =======================
 
 .loading {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    .dir-rtl & {
+        left:auto;
+        right:0;
+    }
+
+    z-index: 5000;
+
+    .loading-image {
+        width: 100%;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+    }
+}
+
+
+
+.loading {
     position: fixed!important; // Needs to be fixed otherwise loading layout can be incorrect
     background-color: @transparency;
     text-align: center;

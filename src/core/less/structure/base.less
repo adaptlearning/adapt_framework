@@ -1,169 +1,9 @@
 // IMPORTANT - THESE ARE THE DEFAULT VARIABLES / LESS FOR COMPATIBILITY WITH ADAPT OPEN SOURCE WHILST THEME IS IN WORKING PROCESS
 
 
-
-
-// =================
-// Responsive Widths
-// =================
-
-.responsive-large {
-    @media all and (min-width:@device-width-large) {
-        width:@device-width-large;
-        margin:0 auto;
-    }
-}
-
-.responsive-medium {
-    @media all and (max-width:@device-width-medium) and (min-width:(@device-width-small)) {
-        width:@device-width-small;
-        margin:0 auto;
-    }
-}
-
-.responsive-small {
-    @media all and (max-width:(@device-width-small - 1px)) {
-        width:100%;
-        margin:0 auto;
-    }
-}
-
-.responsive-layout {
-    .responsive-large;
-    .responsive-medium;
-    .responsive-small;
-}
-
 // =========
 // Variables
 // =========
-
-// Main colors
-// ===========
-
-@primary-color: #00aeef;
-@secondary-color: darken(@primary-color, 20%);
-@tertiary-color: darken(@secondary-color, 20%);
-
-@foreground-color: #333;
-@background-color: #fff;
-
-@inverted-foreground-color: #fff;
-@inverted-background-color: #00aeef;
-
-@transparency: rgba(255,255,255,0.8);
-@transparency-fallback-png: url('assets/transparency-light.png');
-
-// ================
-// Validation Error
-// ================
-
-// Validation Error color
-// ======================
-
-@validation-error-text-color: @validation-error;
-@validation-error-icon-color: @validation-error;
-@validation-error-border-color: @validation-error;
-
-// ==========
-// Item setup
-// ==========
-
-// Item color
-// ==========
-
-@item-color: @primary-color;
-@item-hover-color: @secondary-color;
-@item-disabled-color: #727272;
-@item-visited-color: @secondary-color;
-@item-selected-color: @secondary-color;
-@item-text-color: #fff;
-@item-text-hover-color: #fff;
-@item-text-disabled-color: #ccc;
-@item-text-visited-color: #fff;
-@item-text-selected-color: #fff;
-
-
-// Item padding
-// ============
-
-@item-padding-top: 10px;
-@item-padding-right: 10px;
-@item-padding-bottom: 10px;
-@item-padding-left: 10px;
-
-@item-padding: @item-padding-top @item-padding-right @item-padding-bottom @item-padding-left;
-
-
-// Item border
-// ===========
-
-@item-border-width: 1px;
-@item-border-style: solid;
-@item-border-color: @primary-color;
-@item-border-hover-color: @primary-color;
-@item-border-disabled-color: @primary-color;
-@item-border-visited-color: @primary-color;
-@item-border-selected-color: @primary-color;
-@item-border: @item-border-width @item-border-style @item-border-color;
-
-
-// // focus
-// // =====
-
-@focus-outline: 1px dashed #454545;
-
-
-// Item spacing
-// ============
-
-@item-spacing: 2px;
-
-
-// Button
-// ======
-
-// @button-color: @primary-color;
-@button-hover-color: @secondary-color;
-@button-disabled-color: #727272;
-
-// @button-text-color: #fff;
-@button-text-hover-color: #fff;
-@button-text-disabled-color: #ccc;
-
-@button-padding-top: 8px;
-@button-padding-right: 10px;
-@button-padding-bottom: 8px;
-@button-padding-left: 10px;
-
-@button-padding: @button-padding-top @button-padding-right @button-padding-bottom @button-padding-left;
-
-@button-margin-top: 10px;
-@button-margin-right: 0px;
-@button-margin-bottom: 10px;
-@button-margin-left: 0px;
-
-@button-margin: @button-margin-top @button-margin-right @button-margin-bottom @button-margin-left;
-
-
-// Border
-// ======
-
-@button-border-width: 1px;
-@button-border-style: solid;
-@button-border-color: #c5c5c5;
-@button-border-hover-color: #c5c5c5;
-@button-border-disabled-color: #c5c5c5;
-@button-border: @button-border-width @button-border-style @button-border-color;
-
-
-// Device widths
-// =============
-
-@device-width-small: 520px;
-@device-width-medium: 760px;
-@device-width-large: 1024px;
-@ie8-max-width: 1024px;
 
 // ==============
 // Global spacing
@@ -390,7 +230,7 @@
 // Fonts
 // =====
 
-@import url(//fonts.googleapis.com/css?family=Roboto:300,400,700);
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
 
 @font-family: 'Roboto', sans-serif;
 @font-size: 14px;
@@ -408,3 +248,12 @@
 @icon-correct-color: @validation-success;
 @icon-incorrect-color: @validation-error;
 
+
+//Default margin for HTML paragraph
+
+body {
+    p {
+        margin-top: @body-text-font-size;
+        margin-bottom: @body-text-font-size;
+    }
+}

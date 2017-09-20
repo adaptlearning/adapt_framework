@@ -2,6 +2,49 @@
 // ==============
 
 .drawer {
+    position:fixed;
+    width:320px;
+    height: 100%;
+    top:0px;
+    right:-320px;
+    .dir-rtl & {
+        right:inherit;
+        left:-320px;
+    }
+    overflow-y: auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling: touch;
+    z-index:501;
+    .drawer-back {
+        float: left;
+        .dir-rtl & {
+            float:right;
+        }
+        &.show {
+            display:inline-block;
+        }
+    }
+    .drawer-close {
+        float: right;
+        .dir-rtl & {
+            float: left;
+        }
+    }
+    .drawer-inner {
+        height:100%;
+    }
+    .drawer-item {
+        display: block;
+        width: 100%;
+    }
+    .drawer-item-open {
+        display:block;
+    }
+}
+
+
+
+.drawer {
     background-color: @drawer-color;
     color: @drawer-item-text-color;
 

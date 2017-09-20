@@ -2,6 +2,35 @@
 // ==================
 
 .navigation {
+    .responsive-layout;
+    position:fixed;
+    top:0;
+    height:40px;
+    z-index:500;
+    width:100%;
+
+    .ie8 & {
+        max-width:@ie8-max-width;
+    }
+
+    .navigation-back-button {
+        float:left;
+        .dir-rtl & {
+            float:right;
+        }
+    }
+
+    .navigation-drawer-toggle-button {
+        float:right;
+        .dir-rtl & {
+            float:left;
+        }
+    }
+}
+
+
+
+.navigation {
     width: 100%;
     overflow: hidden;
     background-color: @navigation-color;
