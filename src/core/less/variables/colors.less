@@ -31,6 +31,15 @@
 @background-color: @white;
 @foreground-color-inverted: @white;
 @background-color-inverted: @mid-grey;
+
+// Inverted colors Legacy
+// ======================
+
+@inverted-foreground-color: #fff;
+@inverted-background-color: #00aeef;
+
+// ======================
+
 // Validation States
 @validation-error: @red;
 @validation-success: @green;
@@ -60,6 +69,11 @@
 @title-color: @primary-color;
 @title-color-inverted: @primary-color-inverted;
 
+// Icons
+
+@icon-correct-color: @validation-success;
+@icon-incorrect-color: @validation-error;
+
 // Buttons
 @button-color: @secondary-color;
 @button-color-hover: darken(@button-color, 40%);
@@ -87,6 +101,15 @@
 
 @navigation-progress-border-color: @navigation-icon-color;
 
+
+
+// Navigation Legacy
+// =================
+
+@navigation-icon-hover-color: darken(@navigation-icon-color, 15%);
+
+// ==================
+
 // Drawer
 @drawer-color: @quaternary-color;
 @drawer-border-color: darken(@drawer-color, 20%);
@@ -108,6 +131,21 @@
 @drawer-progress-color-hover: darken(@drawer-progress-color, 40%);
 
 @drawer-progress-border-color: darken(@drawer-item-color, 20%);
+
+
+
+// Drawer
+// ======
+
+@drawer-text-color: #fff;
+
+@drawer-icon-hover-color: darken(@drawer-icon-color, 10%);
+
+@drawer-item-hover-color: darken(@drawer-item-color, 10%);
+
+@drawer-item-text-hover-color: #fff;
+
+// ================
 
 // Components
 @component-background-color: darken(@background-color, 10%);
@@ -149,8 +187,8 @@
 @item-border-color-selected: @item-color-selected;
 @item-border-color-inverted: @item-text-color;
 
-// Item color
-// ==========
+// Item color Legacy?
+// ==================
 
 @item-hover-color: @secondary-color;
 @item-disabled-color: #727272;
@@ -182,3 +220,14 @@
 
 @notify-button-text-color: @notify-color;
 @notify-button-text-color-hover: @notify-text-color;
+
+
+
+// Notify Legacy?
+// ==============
+
+@notify-icon-hover-color: darken(@notify-color, 30%);
+@notify-button-hover-color: darken(@notify-color, 30%);
+@notify-button-text-hover-color: #fff;
+
+// ======================
