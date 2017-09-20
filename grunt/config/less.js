@@ -4,7 +4,7 @@ module.exports = function (grunt, options) {
             options:{
                 baseUrl: '<%= sourcedir %>',
                 mandatory: [
-                    '<%= sourcedir %>core/less/*.less'
+                    '<%= sourcedir %>core/less/**/*.less'
                 ],
                 src: [
                     '<%= sourcedir %>menu/<%= menu %>/**/*.less',
@@ -26,7 +26,7 @@ module.exports = function (grunt, options) {
             options: {
                 baseUrl: '<%= sourcedir %>',
                 mandatory: [
-                    '<%= sourcedir %>core/less/*.less'
+                    '<%= sourcedir %>core/less/**/*.less'
                 ],
                 src: [
                     '<%= sourcedir %>menu/<%= menu %>/**/*.less',
