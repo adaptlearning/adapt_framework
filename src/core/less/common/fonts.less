@@ -1,5 +1,7 @@
 @font-family: Arial, Helvetica, sans-serif;
 
+@font-size: 14px;
+
 @font-weight-light: 300;
 @font-weight-regular: 400;
 @font-weight-bold: 700;
@@ -17,17 +19,8 @@
 @title-line-height: 120%;
 @body-line-height: 140%;
 
-@icon-size: 24px;
-
-
-// Fonts Legacy
-// ============
-
-@font-size: 14px;
 @font-extra-line-height: 10px;
-@font-weight-normal: 400;
 
-// ==================
 
 // Detailed Font setup
 // ===================
@@ -71,12 +64,6 @@ body {
     font-weight: @body-text-font-weight;
     line-height: @body-text-line-height;
     -webkit-font-smoothing: antialiased;
-}
-
-.ie8 & {
-    body {
-        font-family: Arial, sans-serif;
-    }
 }
 
 // Variable set font styling
@@ -176,22 +163,4 @@ body {
     @media all and (max-width: @device-width-small) {
         font-size: 14px;
     }
-}
-
-// Tag styling
-// ===========
-
-ul {
-    list-style: disc inside none;
-}
-
-strong,
-b {
-    font-weight: @font-weight-bold;
-}
-
-select {
-    font-size: 14px;
-    line-height: 140%;
-    font-weight: 300;
 }
