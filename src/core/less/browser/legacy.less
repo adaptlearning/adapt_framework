@@ -1,6 +1,13 @@
 // Legacy
 // ======
 
+.ie8-max-width() {
+    .ie8 & {
+        max-width: @ie8-max-width;
+        margin: 0 auto;
+    }
+}
+
 .ie8.size-medium, .ie8.size-large {
     .component-left {
         width:50%;
