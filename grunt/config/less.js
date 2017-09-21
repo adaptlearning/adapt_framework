@@ -4,12 +4,17 @@ module.exports = function (grunt, options) {
             options:{
                 baseUrl: '<%= sourcedir %>',
                 mandatory: [
-                    '<%= sourcedir %>core/less/**/*.less'
+                    '<%= sourcedir %>core/less/*.less',
+                    '<%= sourcedir %>core/less/browser/*.less',
+                    '<%= sourcedir %>core/less/variables/*.less',
+                    '<%= sourcedir %>core/less/common/*.less',
+                    '<%= sourcedir %>core/less/modules/*.less',
+                    '<%= sourcedir %>core/less/structure/*.less'
                 ],
                 src: [
                     '<%= sourcedir %>components/**/*.less',
                     '<%= sourcedir %>extensions/**/*.less',
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',                    
+                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
                 config: '<%= outputdir %>course/config.json',
@@ -33,7 +38,12 @@ module.exports = function (grunt, options) {
             options: {
                 baseUrl: '<%= sourcedir %>',
                 mandatory: [
-                    '<%= sourcedir %>core/less/**/*.less'
+                    '<%= sourcedir %>core/less/*.less',
+                    '<%= sourcedir %>core/less/browser/*.less',
+                    '<%= sourcedir %>core/less/variables/*.less',
+                    '<%= sourcedir %>core/less/common/*.less',
+                    '<%= sourcedir %>core/less/modules/*.less',
+                    '<%= sourcedir %>core/less/structure/*.less'
                 ],
                 src: [
                     '<%= sourcedir %>components/**/*.less',
