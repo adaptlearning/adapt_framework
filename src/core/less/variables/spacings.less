@@ -1,338 +1,259 @@
 // Spacings setup
 // ==============
 
+// Basic padding setup
 @item-padding: 20px;
-@item-margin: 5px;
-
-// Item spacing Legacy
-// ===================
-
-@item-spacing: 2px;
-
-// ==================
-
 @component-padding: 20px;
-
 @block-padding: 60px;
-
 @article-padding: 60px;
-
 @page-header-padding: 100px;
-
 @menu-header-padding: 100px;
-
-@title-text-margin: 20px;
-
-@body-text-margin: 30px;
-
-@instruction-text-margin: 14px;
-
+@menu-body-padding: 20px;
 @button-padding: 14px;
+@notify-padding: 60px;
+@navigation-padding: 20px;
+@navigation-padding-mobile: @navigation-padding;
+
+// Basic margin setup
+@item-margin: 5px;
+@title-text-margin: 20px;
+@body-text-margin: 30px;
+@instruction-text-margin: 14px;
 @button-margin: 30px;
 
-@notify-padding: 60px;
 
-@navigation-padding: 20px;
+// Paddings - Detailed Spacings setup
+// ==================================
 
-// Detailed Spacings setup
-// =======================
-
-// Item
+// Item padding
 @item-padding-top: @item-padding;
 @item-padding-bottom: @item-padding;
 @item-padding-left: @item-padding;
 @item-padding-right: @item-padding;
+@item-padding-all: @item-padding-top @item-padding-right @item-padding-bottom @item-padding-left;
 
-@item-margin-top: @item-margin;
-@item-margin-bottom: @item-margin;
-
-// Component
-@component-title-margin-bottom: @title-text-margin;
-
-@component-body-margin-top: @body-text-margin;
-@component-body-margin-bottom: @body-text-margin;
-
-@component-instruction-margin-bottom: @instruction-text-margin;
-
-// Block	
-@block-padding-top: @block-padding;
-@block-padding-bottom: @block-padding;
-
-@block-title-margin-bottom: @title-text-margin;
-
-@block-body-margin-bottom: @body-text-margin;
-
-@block-instruction-margin-bottom: @instruction-text-margin;
-
-// Article	
-@article-padding-top: @article-padding;
-@article-padding-bottom: @article-padding;
-@article-title-margin-bottom: @title-text-margin;
-@article-body-margin-bottom: @body-text-margin;
-@article-instruction-margin-bottom: @instruction-text-margin;
-
-// Page Header
-@page-padding-top: @page-header-padding;
-@page-padding-bottom: @page-header-padding;
-
-@page-title-margin-bottom: @title-text-margin;
-@page-body-margin-bottom: @body-text-margin;
-@page-instruction-margin-bottom: @instruction-text-margin;
-
-// Buttons	
-@button-padding-top: @button-padding;
-@button-padding-bottom: @button-padding;
-@button-padding-left: @button-padding;
-@button-padding-right: @button-padding;
-
-
-
-// Button padding
-// ==============
-
-// @button-padding: @button-padding-top @button-padding-right @button-padding-bottom @button-padding-left;
-
-// =======================
-
-@button-margin-top: @button-margin;
-@button-margin-bottom: @button-margin;
-
-
-
-// Button margin
-// =============
-
-@button-margin-top: 10px;
-@button-margin-right: 0px;
-@button-margin-bottom: 10px;
-@button-margin-left: 0px;
-
-@button-margin: @button-margin-top @button-margin-right @button-margin-bottom @button-margin-left;
-
-// =======================
-
-// Drawer
+// Drawer padding
 @drawer-item-padding-top: @item-padding;
 @drawer-item-padding-bottom: @item-padding;
 @drawer-item-padding-left: @item-padding;
 @drawer-item-padding-right: @item-padding;
+@drawer-item-padding-all: @drawer-item-padding-top @drawer-item-padding-right @drawer-item-padding-bottom @drawer-item-padding-left;
 
+// Navigation padding
+@navigation-padding-top: @navigation-padding;
+@navigation-padding-bottom: @navigation-padding;
+@navigation-padding-left: @navigation-padding;
+@navigation-padding-right: @navigation-padding;
+@navigation-padding-all: @navigation-padding-top @navigation-padding-right @navigation-padding-bottom @navigation-padding-left;
 
-
-// Drawer
-// ======
-
-@drawer-item-padding-top: 10px;
-@drawer-item-padding-right: 10px;
-@drawer-item-padding-bottom: 10px;
-@drawer-item-padding-left: 10px;
-
-@drawer-item-padding: @drawer-item-padding-top @drawer-item-padding-right @drawer-item-padding-bottom @drawer-item-padding-left;
-
-// ==================
-
-// Navigation
-// ==========
-
-@navigation-height: 60px;
-@navigation-height-mobile: 50px;
-@navigation-padding: ((@navigation-height - @icon-size)/2);
-@navigation-padding-mobile: ((@navigation-height-mobile - @icon-size)/2);
-
-// ==================
-
-	
-// Menu
-@menu-header-padding-top: @menu-header-padding;
-@menu-header-padding-bottom: @menu-header-padding;
-
+// Menu block padding
 @menu-block-padding-top: @item-padding;
 @menu-block-padding-bottom: @item-padding;
 @menu-block-padding-left: @item-padding;
 @menu-block-padding-right: @item-padding;
+@menu-block-padding-all: @menu-block-padding-top @menu-block-padding-right @menu-block-padding-bottom @menu-block-padding-left;
 
-@menu-block-title-margin-top: @title-text-margin;
-@menu-block-title-margin-bottom: @title-text-margin;
+// Component padding
+@component-padding-top: @component-padding;
+@component-padding-bottom: @component-padding;
+@component-padding-left: @component-padding;
+@component-padding-right: @component-padding;
+@component-padding-all: @component-padding-top @component-padding-right @component-padding-bottom @component-padding-left;
 
-@menu-block-body-margin-bottom: @body-text-margin;
+// Block padding
+@block-padding-top: @block-padding;
+@block-padding-bottom: @block-padding;
+@block-padding-left: @block-padding;
+@block-padding-right: @block-padding;
+@block-padding-all: @block-padding-top @block-padding-right @block-padding-bottom @block-padding-left;
 
-@menu-block-instruction-margin-bottom: @instruction-text-margin;
+// Article padding
+@article-padding-top: @article-padding;
+@article-padding-bottom: @article-padding;
+@article-padding-left: @article-padding;
+@article-padding-right: @article-padding;
+@article-padding-all: @article-padding-top @article-padding-right @article-padding-bottom @article-padding-left;
 
-// Feedback	
+// Page header padding
+@page-padding-top: @page-header-padding;
+@page-padding-bottom: @page-header-padding;
+@page-padding-left: @page-header-padding;
+@page-padding-right: @page-header-padding;
+@page-padding-all: @page-padding-top @page-padding-right @page-padding-bottom @page-padding-left;
+
+// Buttons padding
+@button-padding-top: @button-padding;
+@button-padding-bottom: @button-padding;
+@button-padding-left: @button-padding;
+@button-padding-right: @button-padding;
+@button-padding-all: @button-padding-top @button-padding-right @button-padding-bottom @button-padding-left;
+
+// Menu header padding
+@menu-header-padding-top: @menu-header-padding;
+@menu-header-padding-bottom: @menu-header-padding;
+@menu-header-padding-left: @menu-header-padding;
+@menu-header-padding-right: @menu-header-padding;
+@menu-header-padding-all: @menu-header-padding-top @menu-header-padding-right @menu-header-padding-bottom @menu-header-padding-left;
+
+// Notify (feedback) padding
 @notify-padding-top: @notify-padding;
 @notify-padding-bottom: @notify-padding;
-
-@notify-title-padding-bottom: @title-text-margin;
-
-
-
-// Notify
-// ======
-
-@notify-popup-padding-top: 30px;
-@notify-popup-padding-right: 30px;
-@notify-popup-padding-bottom: 30px;
-@notify-popup-padding-left: 30px;
-
-@notify-popup-padding: @notify-popup-padding-top @notify-popup-padding-right @notify-popup-padding-bottom @notify-popup-padding-left;
-
-// ==================
-
-
-
-
-
-// Title paddings
-// ==============
-
-@menu-title-padding-top: 30px;
-@menu-title-padding-sides: 30px;
-@menu-title-padding-bottom: 30px;
-
-@menu-title-padding: @menu-title-padding-top @menu-title-padding-sides @menu-title-padding-bottom;
-
-@page-title-padding-top: 50px;
-@page-title-padding-sides: 10px;
-@page-title-padding-bottom: 50px;
-
-@page-title-padding: @page-title-padding-top @page-title-padding-sides @page-title-padding-bottom;
-
-@article-title-padding-top: 30px;
-@article-title-padding-sides: 20px;
-@article-title-padding-bottom: 20px;
-
-@article-title-padding: @article-title-padding-top @article-title-padding-sides @article-title-padding-bottom;
-
-@block-title-padding-top: 0px;
-@block-title-padding-sides: 0px;
-@block-title-padding-bottom: 0px;
-
-@block-title-padding: @block-title-padding-top @block-title-padding-sides @block-title-padding-bottom;
-
-@component-title-padding-top: 0px;
-@component-title-padding-sides: 0px;
-@component-title-padding-bottom: 0px;
-
-@component-title-padding: @component-title-padding-top @component-title-padding-sides @component-title-padding-bottom;
-
-
-// Title margins
-// =============
-
-@menu-title-margin-top: 30px;
-@menu-title-margin-sides: 30px;
-@menu-title-margin-bottom: 30px;
-
-@menu-title-margin: @menu-title-margin-top @menu-title-margin-sides @menu-title-margin-bottom;
-
-@page-title-margin-top: 10px;
-@page-title-margin-sides: 10px;
-@page-title-margin-bottom: 10px;
-
-@page-title-margin: @page-title-margin-top @page-title-margin-sides @page-title-margin-bottom;
-
-@article-title-margin-top: 10px;
-@article-title-margin-sides: 10px;
-@article-title-margin-bottom: 10px;
-
-@article-title-margin: @article-title-margin-top @article-title-margin-sides @article-title-margin-bottom;
-
-@block-title-margin-top: 0px;
-@block-title-margin-sides: 0px;
-@block-title-margin-bottom: 0px;
-
-@block-title-margin: @block-title-margin-top @block-title-margin-sides @block-title-margin-bottom;
-
-@component-title-margin-top: 30px;
-@component-title-margin-sides: 0px;
-@component-title-margin-bottom: 0px;
-
-@component-title-margin: @component-title-margin-top @component-title-margin-sides @component-title-margin-bottom;
-
-
-// Body paddings
-// =============
-
-@menu-body-padding-top: 30px;
-@menu-body-padding-sides: 30px;
-@menu-body-padding-bottom: 0px;
-
-@menu-body-padding: @menu-body-padding-top @menu-body-padding-sides @menu-body-padding-bottom;
-
-@page-body-padding-top: 10px;
-@page-body-padding-sides: 10px;
-@page-body-padding-bottom: 10px;
-
-@page-body-padding: @page-body-padding-top @page-body-padding-sides @page-body-padding-bottom;
-
-@article-body-padding-top: 10px;
-@article-body-padding-sides: 20px;
-@article-body-padding-bottom: 40px;
-
-@article-body-padding: @article-body-padding-top @article-body-padding-sides @article-body-padding-bottom;
-
-@block-body-padding-top: 0px;
-@block-body-padding-sides: 0px;
-@block-body-padding-bottom: 0px;
-
-@block-body-padding: @block-body-padding-top @block-body-padding-sides @block-body-padding-bottom;
-
-@component-body-padding-top: 0px;
-@component-body-padding-sides: 0px;
-@component-body-padding-bottom: 0px;
-
-@component-body-padding: @component-body-padding-top @component-body-padding-sides @component-body-padding-bottom;
-
-
-// Body margins
-// ============
-
-@menu-body-margin-top: 10px;
-@menu-body-margin-sides: 10px;
-@menu-body-margin-bottom: 10px;
-
-@menu-body-margin: @menu-body-margin-top @menu-body-margin-sides @menu-body-margin-bottom;
-
-@page-body-margin-top: 10px;
-@page-body-margin-sides: 10px;
-@page-body-margin-bottom: 10px;
-
-@page-body-margin: @page-body-margin-top @page-body-margin-sides @page-body-margin-bottom;
-
-@article-body-margin-top: 10px;
-@article-body-margin-sides: 10px;
-@article-body-margin-bottom: 10px;
-
-@article-body-margin: @article-body-margin-top @article-body-margin-sides @article-body-margin-bottom;
-
-@block-body-margin-top: 10px;
-@block-body-margin-sides: 10px;
-@block-body-margin-bottom: 10px;
-
-@block-body-margin: @block-body-margin-top @block-body-margin-sides @block-body-margin-bottom;
-
-@component-body-margin-top: 20px;
-@component-body-margin-sides: 0px;
-@component-body-margin-bottom: 20px;
-
-@component-body-margin: @component-body-margin-top @component-body-margin-sides @component-body-margin-bottom;
-
-
-// Instruction padding
-// ===================
-
-@component-instruction-padding-top: 0px;
-@component-instruction-padding-sides: 0px;
-@component-instruction-padding-bottom: 0px;
-
-@component-instruction-padding: @component-instruction-padding-top @component-instruction-padding-sides @component-instruction-padding-bottom;
-
-
-// Instruction margin
-// ==================
-
-@component-instruction-margin-top: 0px;
-@component-instruction-margin-sides: 0px;
-@component-instruction-padding-bottom: 20px;
-
-@component-instruction-margin: @component-instruction-margin-top @component-instruction-margin-sides @component-instruction-padding-bottom;
+@notify-padding-left: @notify-padding;
+@notify-padding-right: @notify-padding;
+@notify-padding-all: @notify-padding-top @notify-padding-right @notify-padding-bottom @notify-padding-left;
+
+// Titles
+// Menu title padding
+@menu-title-padding-top: @menu-header-padding;
+@menu-title-padding-bottom: @menu-header-padding;
+@menu-title-padding-left: @menu-header-padding;
+@menu-title-padding-right: @menu-header-padding;
+@menu-title-padding-all: @menu-title-padding-top @menu-title-padding-right @menu-title-padding-bottom @menu-title-padding-left;
+
+// Notify (feedback) title padding
+@notify-title-padding-top: @notify-padding;
+@notify-title-padding-bottom: @notify-padding;
+@notify-title-padding-left: @notify-padding;
+@notify-title-padding-right: @notify-padding;
+@notify-title-padding-all: @notify-title-padding-top @notify-title-padding-right @notify-title-padding-bottom @notify-title-padding-left;
+
+// Bodies
+// Menu body padding
+@menu-body-padding-top: @menu-header-padding;
+@menu-body-padding-bottom: @menu-header-padding;
+@menu-body-padding-left: @menu-header-padding;
+@menu-body-padding-right: @menu-header-padding;
+@menu-body-padding-all: @menu-body-padding-top @menu-body-padding-right @menu-body-padding-bottom @menu-body-padding-left;
+
+
+// Margins - Detailed Spacings setup
+// =================================
+
+// Item margin
+@item-margin-top: @item-margin;
+@item-margin-bottom: @item-margin;
+@item-margin-left: @item-margin;
+@item-margin-right: @item-margin;
+@item-margin-all: @item-margin-top @item-margin-right @item-margin-bottom @item-margin-left;
+
+// Button margin
+@button-margin-top: @button-margin;
+@button-margin-bottom: @button-margin;
+@button-margin-left: @button-margin;
+@button-margin-right: @button-margin;
+@button-margin-all: @button-margin-top @button-margin-right @button-margin-bottom @button-margin-left;
+
+// Titles
+// Component title margin
+@component-title-margin-top: @title-text-margin;
+@component-title-margin-bottom: @title-text-margin;
+@component-title-margin-left: @title-text-margin;
+@component-title-margin-right: @title-text-margin;
+@component-title-margin-all: @component-title-margin-top @component-title-margin-right @component-title-margin-bottom @component-title-margin-left;
+
+// Block title margin
+@block-title-margin-top: @title-text-margin;
+@block-title-margin-bottom: @title-text-margin;
+@block-title-margin-left: @title-text-margin;
+@block-title-margin-right: @title-text-margin;
+@block-title-margin-all: @block-title-margin-top @block-title-margin-right @block-title-margin-bottom @block-title-margin-left;
+
+// Article title margin
+@article-title-margin-top: @title-text-margin;
+@article-title-margin-bottom: @title-text-margin;
+@article-title-margin-left: @title-text-margin;
+@article-title-margin-right: @title-text-margin;
+@article-title-margin-all: @article-title-margin-top @article-title-margin-right @article-title-margin-bottom @article-title-margin-left;
+
+// Page title margin
+@page-title-margin-top: @title-text-margin;
+@page-title-margin-bottom: @title-text-margin;
+@page-title-margin-left: @title-text-margin;
+@page-title-margin-right: @title-text-margin;
+@page-title-margin-all: @page-title-margin-top @page-title-margin-right @page-title-margin-bottom @page-title-margin-left;
+
+// Menu title margin
+@menu-block-title-margin-top: @title-text-margin;
+@menu-block-title-margin-bottom: @title-text-margin;
+@menu-block-title-margin-left: @title-text-margin;
+@menu-block-title-margin-right: @title-text-margin;
+@menu-block-title-margin-all: @menu-block-title-margin-top @menu-block-title-margin-right @menu-block-title-margin-bottom @menu-block-title-margin-left;
+
+// Notify (feedback) title margin
+@notify-title-margin-top: @title-text-margin;
+@notify-title-margin-bottom: @title-text-margin;
+@notify-title-margin-left: @title-text-margin;
+@notify-title-margin-right: @title-text-margin;
+@notify-title-margin-all: @notify-title-margin-top @notify-title-margin-right @notify-title-margin-bottom @notify-title-margin-left;
+
+// Bodies
+// Component body margin
+@component-body-margin-top: @body-text-margin;
+@component-body-margin-bottom: @body-text-margin;
+@component-body-margin-left: @body-text-margin;
+@component-body-margin-right: @body-text-margin;
+@component-body-margin-all: @component-body-margin-top @component-body-margin-right @component-body-margin-bottom @component-body-margin-left;
+
+// Block body margin
+@block-body-margin-top: @body-text-margin;
+@block-body-margin-bottom: @body-text-margin;
+@block-body-margin-left: @body-text-margin;
+@block-body-margin-right: @body-text-margin;
+@block-body-margin-all: @block-body-margin-top @block-body-margin-right @block-body-margin-bottom @block-body-margin-left;
+
+// Article body margin
+@article-body-margin-top: @body-text-margin;
+@article-body-margin-bottom: @body-text-margin;
+@article-body-margin-left: @body-text-margin;
+@article-body-margin-right: @body-text-margin;
+@article-body-margin-all: @article-body-margin-top @article-body-margin-right @article-body-margin-bottom @article-body-margin-left;
+
+// Page body margin
+@page-body-margin-top: @body-text-margin;
+@page-body-margin-bottom: @body-text-margin;
+@page-body-margin-left: @body-text-margin;
+@page-body-margin-right: @body-text-margin;
+@page-body-margin-all: @page-body-margin-top @page-body-margin-right @page-body-margin-bottom @page-body-margin-left;
+
+// Menu body margin
+@menu-block-body-margin-top: @body-text-margin;
+@menu-block-body-margin-bottom: @body-text-margin;
+@menu-block-body-margin-left: @body-text-margin;
+@menu-block-body-margin-right: @body-text-margin;
+@menu-block-body-margin-all: @menu-block-body-margin-top @menu-block-body-margin-right @menu-block-body-margin-bottom @menu-block-body-margin-left;
+
+// Instructions
+// Component instruction margin
+@component-instruction-margin-top: @instruction-text-margin;
+@component-instruction-margin-bottom: @instruction-text-margin;
+@component-instruction-margin-left: @instruction-text-margin;
+@component-instruction-margin-right: @instruction-text-margin;
+@component-instruction-margin-all: @component-instruction-margin-top @component-instruction-margin-right @component-instruction-margin-bottom @component-instruction-margin-left;
+
+// Block instruction margin
+@block-instruction-margin-top: @instruction-text-margin;
+@block-instruction-margin-bottom: @instruction-text-margin;
+@block-instruction-margin-left: @instruction-text-margin;
+@block-instruction-margin-right: @instruction-text-margin;
+@block-instruction-margin-all: @block-instruction-margin-top @block-instruction-margin-right @block-instruction-margin-bottom @block-instruction-margin-left;
+
+// Article instruction margin
+@article-instruction-margin-top: @instruction-text-margin;
+@article-instruction-margin-bottom: @instruction-text-margin;
+@article-instruction-margin-left: @instruction-text-margin;
+@article-instruction-margin-right: @instruction-text-margin;
+@article-instruction-margin-all: @article-instruction-margin-top @article-instruction-margin-right @article-instruction-margin-bottom @article-instruction-margin-left;
+
+// Page instruction margin
+@page-instruction-margin-top: @instruction-text-margin;
+@page-instruction-margin-bottom: @instruction-text-margin;
+@page-instruction-margin-left: @instruction-text-margin;
+@page-instruction-margin-right: @instruction-text-margin;
+@page-instruction-margin-all: @page-instruction-margin-top @page-instruction-margin-right @page-instruction-margin-bottom @page-instruction-margin-left;
+
+// Menu instruction margin
+@menu-block-instruction-margin-top: @instruction-text-margin;
+@menu-block-instruction-margin-bottom: @instruction-text-margin;
+@menu-block-instruction-margin-left: @instruction-text-margin;
+@menu-block-instruction-margin-right: @instruction-text-margin;
+@menu-block-instruction-margin-all: @menu-block-instruction-margin-top @menu-block-instruction-margin-right @menu-block-instruction-margin-bottom @menu-block-instruction-margin-left;
