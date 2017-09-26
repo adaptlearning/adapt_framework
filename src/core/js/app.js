@@ -73,20 +73,14 @@ require([
             Adapt.log.debug('Firing app:dataLoaded');
 
             try {
-                Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
+                Adapt.trigger('app:dataLoaded plugin:beginWait');// Triggered to setup model connections in AdaptModel.js
             } catch(e) {
                 Adapt.log.error('Error during app:dataLoading trigger', e);
             }
 
             Adapt.setupMapping();
 
-            if (!Adapt.isWaitingForPlugins()) {
-                triggerDataReady(newLanguage);
-            } else {
-                Adapt.once('plugins:ready', function() {
-                    triggerDataReady(newLanguage);
-                });
-            }
+            triggerDataReady(newLanguage);
         }
     };
 
@@ -110,15 +104,14 @@ require([
         Adapt.log.debug('Firing app:dataReady');
 
         try {
-            Adapt.trigger('app:dataReady');
+            Adapt.trigger('app:dataReady')
+                .once('plugins:ready', triggerInitialize);
+
+            _.defer(function() {
+                Adapt.trigger("plugin:endWait");
+            });
         } catch(e) {
             Adapt.log.error('Error during app:dataReady trigger', e);
-        }
-
-        if (!Adapt.isWaitingForPlugins()) {
-            triggerInitialize();
-        } else {
-            Adapt.once('plugins:ready', triggerInitialize);
         }
     }
 
