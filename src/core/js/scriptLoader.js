@@ -58,16 +58,8 @@
         Modernizr.load('adapt/js/adapt.min.js');
     }
 
-    //1. Load foundation libraries, json2, consoles, requirejs
+    //1. Load foundation libraries, requirejs
     Modernizr.load([
-        {
-            test: window.JSON,
-            nope: 'libraries/json2.min.js'
-        },
-        {
-            test: window.console == undefined,
-            yep: 'libraries/consoles.min.js'
-        },
         {
             load: 'libraries/require.min.js',
             complete: setupRequireJS
