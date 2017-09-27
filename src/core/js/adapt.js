@@ -70,7 +70,7 @@ define([
                 }
 
                 var isEventListening = (this._events['plugins:ready']);
-                if (isEventListening) {
+                if (!isEventListening) {
                     return;
                 }
 
