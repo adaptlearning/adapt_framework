@@ -64,11 +64,19 @@ define([
             }.bind(this);
 
             var ready = function() {
-                if (this.wait.isWaiting()) return;
-                if (this._events['plugins:ready']) {
-                    Adapt.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
-                    this.trigger('plugins:ready');    
+
+                if (this.wait.isWaiting()) {
+                    return;
                 }
+
+                var isEventListening = !!(this._events['plugins:ready']);
+                if (isEventListening) {
+                    return;
+                }
+
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
+                this.trigger('plugins:ready');
+
             }.bind(this)
 
             this.listenTo(this.wait, "ready", ready);
@@ -86,9 +94,12 @@ define([
 
         checkPluginsReady:function() {
             Adapt.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future");
-            if (this.isWaitingForPlugins()) return;
+            if (this.isWaitingForPlugins()) {
+                return;
+            }
             this.trigger('plugins:ready');
         }
+
     });
 
     var Adapt = new AdaptModel();
