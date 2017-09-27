@@ -69,7 +69,7 @@ define([
                     return;
                 }
 
-                var isEventListening = !!(this._events['plugins:ready']);
+                var isEventListening = (this._events['plugins:ready']);
                 if (isEventListening) {
                     return;
                 }
@@ -77,7 +77,7 @@ define([
                 Adapt.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
                 this.trigger('plugins:ready');
 
-            }.bind(this)
+            }.bind(this);
 
             this.listenTo(this.wait, "ready", ready);
             this.listenTo(this, {
