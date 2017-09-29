@@ -11,7 +11,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     cwd: '<%= outputdir %>/adapt/js',
-                    src: ['*.js', '!*.min.js'],
+                    src: ['*.js'],
                     dest: '<%= outputdir %>/adapt/js'
                 },
                 {
@@ -20,10 +20,7 @@ module.exports = function (grunt, options) {
                     src: ['*.js', '!*.min.js'],
                     dest: '<%= outputdir %>'
                 }
-            ],
-            options: {
-                ie8: true
-            }
+            ]
         }
     }
 }
