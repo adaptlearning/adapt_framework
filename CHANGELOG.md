@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [2.2.2] - 2017-10-02
+
+- Fixed race condition in Drawer which caused drawer icon to remain visible (#1819)
+
 ## [2.2.1] - 2017-08-21
 
 - Fixed `schema-defaults` task for authoring tool exports (#1719)
