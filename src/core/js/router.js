@@ -234,6 +234,8 @@ define([
                     this.navigate('#/' + args.join('/'), options);
                     break;
                 default:
+                    Adapt.log.warn('DEPRECATED - use Backbone.history.navigate or ' +
+                        'window.location.href instead of Adapt.trigger("router:navigateTo")');
                     this.handleRoute.apply(this, args);
             }
         },
