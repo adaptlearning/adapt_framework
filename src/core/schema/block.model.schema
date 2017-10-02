@@ -26,13 +26,22 @@
       "default": "New Block Title",
       "inputType": "DisplayTitle",
       "validators": [],
-      "help": "When viewing an block - this is the title that will be displayed on the page",
+      "help": "When viewing a block - this is the title that will be displayed on the page",
       "translatable": true
     },
     "body":{
       "type": "string",
       "default" : "",
       "inputType": "TextArea",
+      "validators": [],
+      "translatable": true
+    },
+    "instruction": {
+      "type": "string",
+      "required": false,
+      "title": "Instruction text",
+      "default": "",
+      "inputType": "Text",
       "validators": [],
       "translatable": true
     },
@@ -61,6 +70,24 @@
       "validators": [],
       "title": "Is this available?",
       "help": "Controls whether this block and its contents are available in the course or not."
+    },
+    "_isHidden": {
+      "type": "boolean",
+      "default": false,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this hidden?",
+      "help": "Enabling this is equivalent to applying the CSS 'display:none' to the block."
+    },
+    "_isVisible": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is this visible?",
+      "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
     "_extensions": {
       "type": "object"

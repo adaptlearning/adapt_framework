@@ -80,13 +80,10 @@ require([
 
             Adapt.setupMapping();
 
-            if (!Adapt.isWaitingForPlugins()) {
+            Adapt.wait.queue(function() {
                 triggerDataReady(newLanguage);
-            } else {
-                Adapt.once('plugins:ready', function() {
-                    triggerDataReady(newLanguage);
-                });
-            }
+            });
+
         }
     };
 
@@ -115,11 +112,8 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
-        if (!Adapt.isWaitingForPlugins()) {
-            triggerInitialize();
-        } else {
-            Adapt.once('plugins:ready', triggerInitialize);
-        }
+        Adapt.wait.queue(triggerInitialize);
+
     }
 
     function triggerInitialize() {
