@@ -196,8 +196,8 @@ define([
         removeViews: function(onComplete) {
             Adapt.remove();
 
-            if (!Adapt.isWaitingForPlugins()) onComplete();
-            else Adapt.once('plugins:ready', onComplete);
+            Adapt.wait.queue(onComplete);
+
         },
 
         showLoading: function() {
@@ -338,8 +338,8 @@ define([
             // Trigger event when location changes
             Adapt.trigger('router:location', Adapt.location);
 
-            if (!Adapt.isWaitingForPlugins()) onComplete();
-            else Adapt.once('plugins:ready', onComplete);
+            Adapt.wait.queue(onComplete);
+
         },
 
         setDocumentTitle: function() {
