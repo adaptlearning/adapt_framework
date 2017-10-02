@@ -1,6 +1,6 @@
 (function() {
 
-    //2. Setup require for old style module declarations
+    //2. Setup require for old-style module declarations (some code still uses these), configure paths then load JQuery
     function setupRequireJS() {
         requirejs.config({
             map: {
@@ -27,13 +27,31 @@
                 jqueryMobile: 'libraries/jquery.mobile.custom'
             }
         });
-        loadFoundationLibraries();
+        loadJQuery();
+    }
+
+    // 3. start loading JQuery, wait for it to be loaded
+    function loadJQuery() {
+        Modernizr.load([
+            {
+                load: 'libraries/jquery.v2.min.js',
+                complete: checkJQueryStatus
+            }
+        ]);
+    }
+
+    //4. Wait until JQuery gets loaded completely then load foundation libraries
+    function checkJQueryStatus() {
+        if(window.jQuery === undefined) {
+            setTimeout(checkJQueryStatus, 100);
+        } else {
+            loadFoundationLibraries();
+        }
     }
     
-    //3. Load foundation libraries and templates
+    //5. Load foundation libraries and templates then load Adapt itself
     function loadFoundationLibraries() {
         require([
-            'jquery',
             'underscore',
             'backbone',
             'backbone.controller',
@@ -50,7 +68,7 @@
         ], loadAdapt);
     }
 
-    //4. Load adapt
+    //6. Allow cross-domain AJAX then load Adapt
     function loadAdapt() {
         $.ajaxPrefilter(function( options ) {
             options.crossDomain = true;
@@ -58,7 +76,7 @@
         Modernizr.load('adapt/js/adapt.min.js');
     }
 
-    //1. Load foundation libraries, requirejs
+    //1. Load requirejs then set it up
     Modernizr.load([
         {
             load: 'libraries/require.min.js',
