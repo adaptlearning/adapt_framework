@@ -5,32 +5,37 @@ define([
     'core/js/startController'
 ], function(Adapt, RouterModel, PageView) {
 
-    Adapt.router = new RouterModel(null, {reset: true});
+    Adapt.router = new RouterModel(null, { reset: true });
 
     var Router = Backbone.Router.extend({
 
+        // Flag to indicate if the router has tried to redirect to the current location.
         _isCircularNavigationInProgress: false,
 
         initialize: function() {
             this.showLoading();
-            // Store #wrapper element to cache for later
+
+            // Store #wrapper element and html to cache for later use.
             this.$wrapper = $('#wrapper');
             this.$html = $('html');
 
             Adapt.once('app:dataReady', function() {
                 document.title = Adapt.course.get('title');
             });
-            this.listenTo(Adapt, 'navigation:backButton', this.navigateToPreviousRoute);
-            this.listenTo(Adapt, 'navigation:homeButton', this.navigateToHomeRoute);
-            this.listenTo(Adapt, 'navigation:skipNavigation', this.skipNavigation);
-            this.listenTo(Adapt, 'navigation:parentButton', this.navigateToParent);
-            this.listenTo(Adapt, "router:navigateTo", this.navigateToArguments);
+
+            this.listenTo(Adapt, {
+                'navigation:backButton': this.navigateToPreviousRoute,
+                'navigation:homeButton': this.navigateToHomeRoute,
+                'navigation:skipNavigation': this.skipNavigation,
+                'navigation:parentButton': this.navigateToParent,
+                'router:navigateTo': this.navigateToArguments
+            });
         },
 
         routes: {
-            "": "handleRoute",
-            "id/:id": "handleRoute",
-            ":pluginName(/*location)(/*action)": "handleRoute"
+            '': 'handleRoute',
+            'id/:id': 'handleRoute',
+            ':pluginName(/*location)(/*action)': 'handleRoute'
         },
 
         pruneArguments: function(args) {
@@ -48,65 +53,67 @@ define([
             var args = this.pruneArguments(arguments);
             
             if (Adapt.router.get('_canNavigate')) {
-                // Reset _isCircularNavigationInProgress protection as code is allowed to navigate away
+                // Reset _isCircularNavigationInProgress protection as code is allowed to navigate away.
                 this._isCircularNavigationInProgress = false;
             }
 
-            //check if the current page is in the progress of navigating to itself
-            //it will redirect to itself if the url was changed and _canNavigate is false
+            // Check if the current page is in the process of navigating to itself.
+            // It will redirect to itself if the URL was changed and _canNavigate is false.
             if (this._isCircularNavigationInProgress === false) {
-                //trigger an event pre 'router:location' to allow extensions to stop routing
-                Adapt.trigger("router:navigate", args);
+                // Trigger an event pre 'router:location' to allow extensions to stop routing.
+                Adapt.trigger('router:navigate', args);
             }
 
-            // recheck as _canNavigate can be set to false on router:navigate event
+            // Re-check as _canNavigate can be set to false on 'router:navigate' event.
             if (Adapt.router.get('_canNavigate')) {
+                // Disable navigation whilst rendering.
+                Adapt.router.set('_canNavigate', false, { pluginName: 'adapt' });
 
-                //disable navigation whilst rendering
-                Adapt.router.set('_canNavigate', false, {pluginName: "adapt"});
-
-                //only navigate if this switch is set
                 switch (args.length) {
                     case 1:
-                        //if only one parameter assume id
+                        // If only one parameter assume it's the ID.
                         return this.handleId.apply(this, args);
                     case 2:
-                        //if two parameters assume plugin
+                        // If there are two parameters assume it's a plugin.
                         return this.handlePluginRouter.apply(this, args);
+                    default:
+                        // Route to course home page.
+                        return this.handleCourse();
                 }
-                //if < 1 || > 2 parameters, route to course
-                return this.handleCourse();
             }
 
             if (this._isCircularNavigationInProgress) {
-                //navigation correction finished
-                //router has successfully renavigated to the current id as the url was changed whilst _canNavigate: false
+                // Navigation correction finished.
+                // Router has successfully re-navigated to the current _id as the URL was changed 
+                // while _canNavigate: false
                 this._isCircularNavigationInProgress = false;
                 return;
             }
 
-            //cancel navigation to stay at current location
+            // Cancel navigation to stay at the current location.
             this._isCircularNavigationInProgress = true;
-            Adapt.trigger("router:navigationCancelled", args);
+            Adapt.trigger('router:navigationCancelled', args);
 
-            //reset url to current one
+            // Reset URL to the current one.
             this.navigateToCurrentRoute(true);
-
         },
 
         handlePluginRouter: function(pluginName, location, action) {
             var pluginLocation = pluginName;
+
             if (location) {
                 pluginLocation = pluginLocation + '-' +location;
+
                 if (action) {
                     pluginLocation = pluginLocation + '-' + action;
                 }
             }
+
             this.updateLocation(pluginLocation, null, null, function() {
                 Adapt.trigger('router:plugin:' + pluginName, pluginName, location, action);
                 Adapt.trigger('router:plugin', pluginName, location, action);
 
-                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
             });
         },
 
@@ -121,26 +128,29 @@ define([
             }
 
             this.showLoading();
+
             this.removeViews(_.bind(function() {
                 Adapt.course.set('_isReady', false);
+
                 this.setContentObjectToVisited(Adapt.course);
+                
                 this.updateLocation('course', null, null, _.bind(function() {
                     Adapt.once('menuView:ready', function() {
-                        // Allow navigation
-                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                        // Allow navigation.
+                        Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
                     });
+
                     Adapt.trigger('router:menu', Adapt.course);
                 }, this));
             }, this));
         },
 
         handleId: function(id) {
-
             var currentModel = Adapt.findById(id);
             var type = '';
 
             if (!currentModel) {
-                Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
                 return;
             }
 
@@ -150,10 +160,10 @@ define([
                 case 'page':
                 case 'menu':
                     if (currentModel.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
-                        console.log('Unable to navigate to locked id: ' + id);
-                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                        Adapt.log.warn('Unable to navigate to locked id: ' + id);
+                        Adapt.router.set('_canNavigate', true, {pluginName: 'adapt'});
                         if (Adapt.location._previousId === undefined) {
-                            return this.navigate("#/", {trigger:true, replace:true});
+                            return this.navigate('#/', { trigger: true, replace: true });
                         } else {
                             return Backbone.history.history.back();
                         }
@@ -167,29 +177,29 @@ define([
                                 var location = 'page-' + id;
                                 this.updateLocation(location, 'page', id, _.bind(function() {
                                     Adapt.once('pageView:ready', function() {
-                                        // Allow navigation
-                                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                                        // Allow navigation.
+                                        Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
                                     });
                                     Adapt.trigger('router:page', currentModel);
-                                    this.$wrapper.append(new PageView({model: currentModel}).$el);
+                                    this.$wrapper.append(new PageView({ model: currentModel }).$el);
                                 }, this));
                             } else {
                                 var location = 'menu-' + id;
                                 this.updateLocation(location, 'menu', id, _.bind(function() {
                                     Adapt.once('menuView:ready', function() {
-                                        // Allow navigation
-                                        Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
+                                        // Allow navigation.
+                                        Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
                                     });
                                     Adapt.trigger('router:menu', currentModel);
                                 }, this));
                             }
                         }, this));
                     }
-                break;
+                    break;
                 default:
-                    //allow navigation
-                    Adapt.router.set('_canNavigate', true, {pluginName: "adapt"});
-                    Adapt.navigateToElement('.' + id, {replace: true});
+                    // Allow navigation.
+                    Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
+                    Adapt.navigateToElement('.' + id, { replace: true });
             }
         },
 
@@ -197,7 +207,6 @@ define([
             Adapt.remove();
 
             Adapt.wait.queue(onComplete);
-
         },
 
         showLoading: function() {
@@ -207,45 +216,45 @@ define([
         navigateToArguments: function(args) {
             args = this.pruneArguments(args);
 
+            var options = { trigger: false, replace: false };
+
             switch (args.length) {
                 case 0:
-                    this.navigate("#/", {trigger:false, replace:false});
+                    this.navigate('#/', options);
                     break;
                 case 1:
                     if (Adapt.findById(args[0])) {
-                        this.navigate("#/id/"+args[0], {trigger:false, replace:false});
+                        this.navigate('#/id/' + args[0], options);
                     } else {
-                        this.navigate("#/"+args[0], {trigger:false, replace:false});
+                        this.navigate('#/' + args[0], options);
                     }
                     break;
                 case 2:
-                    this.navigate("#/"+args[0]+"/"+args[1], {trigger:false, replace:false});
-                    break;
                 case 3:
-                    this.navigate("#/"+args[0]+"/"+args[1]+"/"+args[2], {trigger:false, replace:false});
+                    this.navigate('#/' + args.join('/'), options);
                     break;
+                default:
+                    Adapt.log.warn('DEPRECATED - use Backbone.history.navigate or ' +
+                        'window.location.href instead of Adapt.trigger("router:navigateTo")');
+                    this.handleRoute.apply(this, args);
             }
-
-            this.handleRoute.apply(this, args);
         },
 
         skipNavigation: function() {
-
-             $("."+Adapt.location._contentType).a11y_focus();
-
+             $('.' + Adapt.location._contentType).a11y_focus();
         },
 
         navigateToPreviousRoute: function(force) {
-            // Sometimes a plugin might want to stop the default navigation
-            // Check whether default navigation has changed
+            // Sometimes a plugin might want to stop the default navigation.
+            // Check whether default navigation has changed.
             if (Adapt.router.get('_canNavigate') || force) {
                 if (!Adapt.location._currentId) {
                     return Backbone.history.history.back();
                 }
-                if (Adapt.location._previousContentType === "page" && Adapt.location._contentType === "menu") {
+                if (Adapt.location._previousContentType === 'page' && Adapt.location._contentType === 'menu') {
                     return this.navigateToParent();
                 }
-                if (Adapt.location._previousContentType === "page") {
+                if (Adapt.location._previousContentType === 'page') {
                     return Backbone.history.history.back();
                 }
                 if (Adapt.location._currentLocation === 'course') {
@@ -257,26 +266,25 @@ define([
 
         navigateToHomeRoute: function(force) {
             if (Adapt.router.get('_canNavigate') || force ) {
-                this.navigate('#/', {trigger: true});
+                this.navigate('#/', { trigger: true });
             }
         },
 
         navigateToCurrentRoute: function(force) {
-
             if (Adapt.router.get('_canNavigate') || force) {
                 if (!Adapt.location._currentId) {
                     return;
                 }
                 var currentId = Adapt.location._currentId;
-                var route = (currentId === Adapt.course.get("_id")) ? "#/" : "#/id/" + currentId;
+                var route = (currentId === Adapt.course.get('_id')) ? '#/' : '#/id/' + currentId;
                 this.navigate(route, { trigger: true, replace: true });
             }
         },
 
         navigateToParent: function(force) {
             if (Adapt.router.get('_canNavigate') || force) {
-                var parentId = Adapt.contentObjects.findWhere({_id:Adapt.location._currentId}).get("_parentId");
-                var route = (parentId === Adapt.course.get("_id")) ? "#/" : "#/id/" + parentId;
+                var parentId = Adapt.contentObjects.findWhere({ _id: Adapt.location._currentId }).get('_parentId');
+                var route = (parentId === Adapt.course.get('_id')) ? '#/' : '#/id/' + parentId;
                 this.navigate(route, { trigger: true });
             }
         },
@@ -286,7 +294,7 @@ define([
         },
 
         updateLocation: function(currentLocation, type, id, onComplete) {
-            // Handles updating the location
+            // Handles updating the location.
             Adapt.location._previousId = Adapt.location._currentId;
             Adapt.location._previousContentType = Adapt.location._contentType;
 
@@ -297,10 +305,10 @@ define([
             } else if (!type) {
                 Adapt.location._currentId = null;
                 Adapt.location._contentType = null;
-
             } else if (_.isString(id)) {
                 Adapt.location._currentId = id;
                 Adapt.location._contentType = type;
+
                 if (type === 'menu') {
                     Adapt.location._lastVisitedType = 'menu';
                     Adapt.location._lastVisitedMenu = id;
@@ -335,36 +343,35 @@ define([
 
             this.setDocumentTitle();
 
-            // Trigger event when location changes
+            // Trigger event when location changes.
             Adapt.trigger('router:location', Adapt.location);
 
             Adapt.wait.queue(onComplete);
-
         },
 
         setDocumentTitle: function() {
             if (!Adapt.location._currentId) return;
 
             var currentModel = Adapt.findById(Adapt.location._currentId);
+            var pageTitle = '';
 
-            var pageTitle = "";
-            if (currentModel && currentModel.get("_type") !== "course") {
-                var currentTitle = currentModel.get("title");
-                if (currentTitle) pageTitle = " | " + currentTitle;
+            if (currentModel && currentModel.get('_type') !== 'course') {
+                var currentTitle = currentModel.get('title');
+                
+                if (currentTitle) {
+                    pageTitle = ' | ' + currentTitle;
+                }
             }
 
-            var courseTitle = Adapt.course.get("title");
-            var documentTitle = $("<div>" + courseTitle + pageTitle + "</div>").text();
+            var courseTitle = Adapt.course.get('title');
+            var documentTitle = $('<div>' + courseTitle + pageTitle + '</div>').text();
 
-            Adapt.once("pageView:ready menuView:ready", function() {
+            Adapt.once('pageView:ready menuView:ready', function() {
                 document.title = documentTitle;
             });
-
         }
-
-
     });
 
-    return new Router({model: new Backbone.Model()});
+    return new Router({ model: new Backbone.Model() });
 
 });
