@@ -92,17 +92,18 @@ define([
 
                 // Skip if trigger queued or adapt hasn't started yet
                 if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
-                    return
+                    return;
                 }
 
                 // Check that property is trackable
-                var trackable = _.result(this, 'trackable', []);
-                if (!_.keys(model.changed).find(function(item, index) {
-                    return _.contains(trackable, item);
-                })) return;
+                var isTrackable = _.keys(model.changed).find(function(item, index) {
+                     return _.contains(_.result(this, 'trackable', []), item);
+                }.bind(this));
 
-                // Trigger trackable state change
-                this.triggerTrackableState();
+                if (isTrackable) {
+                    // Trigger trackable state change
+                    this.triggerTrackableState();
+                }
 
             });
 
