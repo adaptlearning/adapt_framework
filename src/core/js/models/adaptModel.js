@@ -336,7 +336,7 @@ define([
             var findAncestorType = (_.indexOf(types, modelType) > _.indexOf(types, relativeDescriptor.type));
             var findSiblingType = (modelType === relativeDescriptor.type);
 
-            var searchBackwards = (relativeDescriptor.offset < 0);;
+            var searchBackwards = (relativeDescriptor.offset < 0);
             var moveBy = Math.abs(relativeDescriptor.offset);
             var movementCount = 0;
 
