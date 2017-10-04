@@ -237,8 +237,8 @@
       "isSetting": true,
       "inputType": "Checkbox",
       "validators": [],
-      "title": "Generate sourcemap",
-      "help": "Creates a JavaScript sourcemap for the output code - useful for debugging (in browsers that support it)."
+      "title": "Generate sourcemaps?",
+      "help": "Allows the course JavaScript & CSS to be debugged via the browser's developer tools."
     },
     "_forceRouteLocking": {
       "type": "boolean",
@@ -246,7 +246,7 @@
       "isSetting": true,
       "inputType": "Checkbox",
       "validators": [],
-      "title": "Enforce route locking",
+      "title": "Enforce route locking?",
       "help": "If locking is enabled, this setting prevents navigating to locked routes"
     },
     "_logging": {
