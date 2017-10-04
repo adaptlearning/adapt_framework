@@ -10,8 +10,7 @@ module.exports = function(grunt) {
           var listOfCourseFiles = ['course', 'contentObjects', 'articles', 'blocks', 'components'];
           var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component' ];
 
-          var sourcedir = grunt.config('sourcedir');
-          if (grunt.option("outputdir")) sourcedir = grunt.option("outputdir");
+          var sourcedir = grunt.option("outputdir") || grunt.config('sourcedir');
 
           // Go through each course folder inside the <%= sourcedir %>course directory
           grunt.file.expand({filter: 'isDirectory'}, path.join(sourcedir, 'course/*')).forEach(function(path) {
