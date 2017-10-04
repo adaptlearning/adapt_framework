@@ -8,8 +8,7 @@ module.exports = function(grunt) {
     
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
 
-        var sourcedir = grunt.config('sourcedir');
-        if (grunt.option("outputdir")) sourcedir = grunt.option("outputdir");
+        var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
 
         var configJson = grunt.file.readJSON(path.join(sourcedir, 'course/config.json'));
 
