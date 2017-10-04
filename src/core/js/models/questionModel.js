@@ -319,7 +319,21 @@ define([
             }
 
             return this.get('_isSubmitted') ? BUTTON_STATE.RESET : BUTTON_STATE.SUBMIT;
-        }
+        },
+
+        // Returns an object specific to the question type, e.g. if the question
+        // is a 'choice' this should contain an object with:
+        // - correctResponsesPattern[]
+        // - choices[]
+        getInteractionObject: function() {
+            return {};
+        },
+
+        // Returns a string detailing how the user answered the question.
+        getResponse: function() {},
+
+        // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
+        getResponseType: function() {}
 
     });
 
