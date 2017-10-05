@@ -33,7 +33,6 @@
 
     .notify-popup-content {
         .responsive-layout;
-        .ie8-max-width;
     }
 
     .notify-popup-content-inner {
@@ -77,14 +76,6 @@
         max-width: @device-width-large;
         margin: auto;
         padding: @notify-padding-top 0 @notify-padding-bottom;
-
-        @media all and (max-width: (@device-width-large + 20px)) {
-            padding: (@notify-padding-top / 2) 20px (@notify-padding-bottom / 2);
-        }
-
-        @media all and (max-width: (@device-width-small + 20px)) {
-            padding: (@notify-padding-top / 3) 10px (@notify-padding-bottom / 3);
-        }
     }
 
     .notify-popup-content-inner {
@@ -165,7 +156,6 @@
         display:inline-block;
         border: none;
         min-width: 100px;
-        .transition-all-colors;
         .button-text;
         
         .no-touch &:hover {
@@ -182,7 +172,6 @@
         position:absolute;
         top: 0px;
         right:0px;
-        .transition-border-color;
 
         .no-touch &:hover {
             border-color: @notify-icon-color-hover;
@@ -200,7 +189,6 @@
 
     .notify-popup-icon-close {
         color: @notify-icon-color;
-        .transition-color;
 
         .no-touch &:hover {
             color: @notify-icon-color-hover;
@@ -209,10 +197,6 @@
 
     .notify-shadow {
         background-color: @transparency;
-
-        .no-opacity & {
-            background-image: @transparency-fallback-png;
-        }
     }
 }
 

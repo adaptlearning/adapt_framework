@@ -8,7 +8,6 @@
     height:40px;
     z-index:500;
     width:100%;
-    .ie8-max-width;
 
     .navigation-back-button {
         float:left;
@@ -34,16 +33,9 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.26);
     height: (@navigation-padding * 2) + @icon-size;
 
-    .ie8 & {
-        max-width: @ie8-max-width;
-        left: 0;
-        right: 0;
-    }
-
     .icon {
         padding: @navigation-padding;
         color: @navigation-icon-color;
-        .transition-color;
 
         .no-touch &:hover {
             color: @navigation-icon-color-hover;
