@@ -167,7 +167,7 @@
 
             loop.lastMain = (new Date()).getTime();
             
-            if (this.hasExpired()) {
+            if (loop.hasExpired()) {
                 loop.stop();
                 return;
             }
