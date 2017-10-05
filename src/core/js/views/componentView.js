@@ -25,24 +25,20 @@ define([
         renderState: function() {
             if (!Handlebars.partials['state']) return;
 
-			// do not perform if component has .not-accessible class
+            // the preferred way to indicate that a state is not required
+            if (this.model.get('_disableAccessibilityState')) return;
+            // do not perform if component has .not-accessible class
             if (this.$el.is(".not-accessible")) return;
 			// do not perform if component has .no-state class
             if (this.$el.is(".no-state")) return;
 
 			//remove pre-exisiting states
-            var $previousState = this.$(".accessibility-state").remove();
+            var $previousState = this.$(".accessibility-state");
 
             //render and append state partial
-            var $rendered = $(Handlebars.partials['state']( this.model.toJSON() ));
+            var $rendered = $(Handlebars.partials['state']( _.extend(this.model.toJSON(), {accConfig:Adapt.config.get('_accessibility')}) ));
 
-            //restore previous tab index if not on
-            var previousTabIndex = $previousState.find(".aria-label").attr("tabindex");
-            if (previousTabIndex == "-1") {
-                $rendered.find(".aria-label").attr("tabindex", previousTabIndex);
-            }
-
-            this.$el.append( $rendered );
+            $previousState.length ? $previousState.html( $rendered.html() ) : this.$el.append($rendered);
 
             this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
