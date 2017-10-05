@@ -11,7 +11,6 @@ define([
         _hasUsageInstructionRead: false,
         _isLoaded: false,
         _hasCourseLoaded: false,
-        _legacyFocusElements: undefined,
 
         reset: function() {
             _.extend(this, {
@@ -22,6 +21,8 @@ define([
         initialize: function() {
             //RUN ONCE
             if (this._isLoaded) return;
+
+            this.removeLegacyElements();
 
             //TRIGGER SETUP ON DATA LOADED AND TOGGLE BUTTON
             Adapt.once('app:dataLoaded', function() {
@@ -48,6 +49,14 @@ define([
             this.listenTo(Adapt, 'pageView:ready menuView:ready router:plugin', this.onNavigationEnd);
         },
 
+        removeLegacyElements: function() {
+            var $legacyElements = $("body > #accessibility-toggle, body > #accessibility-instructions");
+            if ($legacyElements.length) {
+                Adapt.log.warn("DEPRECATED - #accessibility-toggle and #accessibility-instructions have been moved to the navigation bar. Please remove them from all of your .html files.");
+                $legacyElements.remove();
+            }
+        },
+
         setupAccessibility: function() {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
             if (!this.isEnabled()) return;
@@ -62,14 +71,12 @@ define([
             // Check if accessibility is active
             if (this.isActive()) {
                 this.setupDocument();
-                this.setupLegacy();
                 this.setupPopupListeners();
                 this.setupLogging();
 
             } else {
 
                 this.revertDocument();
-                this.revertLegacy();
                 this.revertPopupListeners();
                 this.removeUsageInstructionListener();
                 this.revertLogging();
@@ -256,27 +263,6 @@ define([
             $.a11y_on(true, "#accessibility-instructions");
         },
 
-        setupLegacy: function() {
-            //IE8 .focused CLASS AS :focus ISN'T AVAILABLE
-
-            if(!this.$html.hasClass('ie8') || !Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) return;
-
-            // If legacy enabled run setupLegacyListeners()
-            this.listenTo(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocusClasser);
-            this.listenTo(Adapt, 'remove', this.removeLegacyFocusClasser);
-
-        },
-
-        setupLegacyFocusClasser: function() {
-            this.removeLegacyFocusClasser();
-
-            // On focus add class of focused, on blur remove class
-            this._legacyFocusElements = $(this._tabIndexElements);
-            this._legacyFocusElements
-                .on('focus', this.onElementFocused)
-                .on('blur', this.onElementBlurred);
-        },
-
         setupPopupListeners: function() {
             this.listenTo(Adapt, 'popup:opened popup:closed', this.onPop);
         },
@@ -293,25 +279,6 @@ define([
             $.a11y(false);
             $.a11y_on(false, "#accessibility-instructions");
             $.a11y_on(true, "#accessibility-toggle");
-        },
-
-        revertLegacy: function() {
-
-            if(!this.$html.hasClass('ie8') || !Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) return;
-
-            this.stopListening(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocusClasser);
-            this.stopListening(Adapt, 'remove', this.removeLegacyFocusClasser);
-
-        },
-
-        removeLegacyFocusClasser: function() {
-            if (this._legacyFocusElements === undefined) return;
-
-            //Remove focus and blur events
-            this._legacyFocusElements
-                .off('focus', this.onElementFocused)
-                .off('blur', this.onElementBlurred);
-            this._legacyFocusElements = undefined;
         },
 
         revertPopupListeners: function() {
