@@ -32,11 +32,9 @@ define([
 			// do not perform if component has .no-state class
             if (this.$el.is(".no-state")) return;
 
-			//remove pre-exisiting states
             var $previousState = this.$(".accessibility-state");
 
-            //render and append state partial
-            var $rendered = $(Handlebars.partials['state']( _.extend(this.model.toJSON(), {accConfig:Adapt.config.get('_accessibility')}) ));
+            var $rendered = $(Handlebars.partials['state']( _.extend(this.model.toJSON(), {a11yConfig:Adapt.config.get('_accessibility')}) ));
 
             $previousState.length ? $previousState.html( $rendered.html() ) : this.$el.append($rendered);
 
