@@ -5,12 +5,15 @@ module.exports = function(grunt) {
 
           var _ = require('underscore');
           var chalk = require('chalk'); // for some nice colouring
+          var path = require("path");
 
           var listOfCourseFiles = ['course', 'contentObjects', 'articles', 'blocks', 'components'];
           var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component' ];
 
+          var sourcedir = grunt.option("outputdir") || grunt.config('sourcedir');
+
           // Go through each course folder inside the <%= sourcedir %>course directory
-          grunt.file.expand({filter: 'isDirectory'}, grunt.config('sourcedir') + 'course/*').forEach(function(path) {
+          grunt.file.expand({filter: 'isDirectory'}, path.join(sourcedir, 'course/*')).forEach(function(path) {
 
               var courseItemObjects = [];
 
