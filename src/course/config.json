@@ -12,7 +12,13 @@
         "_isEnabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true,
-        "_isSkipNavigationEnabled": true
+        "_isSkipNavigationEnabled": true,
+        "_ariaLevels": {
+            "_contentObjects": 1,
+            "_articles": 2,
+            "_blocks": 3,
+            "_components": 4
+        }
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",

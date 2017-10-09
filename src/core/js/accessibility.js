@@ -129,7 +129,25 @@ define([
             });
 
             Handlebars.registerHelper('a11y_attrs_heading', function(level) {
-                return ' role="heading" aria-level="'+level+'" tabindex="0" ';
+                var cfg = Adapt.config.get('_accessibility');
+                var model;
+
+                // if a level has not been passed as a parameter
+                if (!_.isString(level)) {
+                    level = null;
+                    // look for _ariaLevel in the context
+                    if (this._ariaLevel) level = this._ariaLevel;
+                    // otherwise look in the global configuration
+                    else if (cfg._ariaLevels) {
+                        model = Adapt.findById(this._id);
+
+                        if (model instanceof require('core/js/models/contentObjectModel')) level = cfg._ariaLevels['_contentObjects'];
+                        else if (model instanceof require('core/js/models/articleModel')) level = cfg._ariaLevels['_articles'];
+                        else if (model instanceof require('core/js/models/blockModel')) level = cfg._ariaLevels['_blocks'];
+                        else if (model instanceof require('core/js/models/componentModel')) level = cfg._ariaLevels['_components'];
+                    }
+                }
+                return level ? ' role="heading" aria-level="'+level+'" '+getTabIndex()+' ' : getTabIndex()+' ';
             });
 
             Handlebars.registerHelper('a11y_attrs_tabbable', function() {
