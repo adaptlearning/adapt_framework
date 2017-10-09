@@ -117,11 +117,11 @@ define([
             });
 
             Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return '<div class="aria-label prevent-default" '+getTabIndex()+' role="region">'+text+'</div>';
+                return '<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
             });
 
             Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return '<div class="aria-label relative prevent-default" '+getTabIndex()+' role="region">'+text+'</div>';
+                return '<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
             });
 
             Handlebars.registerHelper('a11y_wrap_focus', function(text) {
@@ -138,6 +138,10 @@ define([
 
             var getTabIndex = function() {
                 return this.isActive() ? 'tabindex="0"' : 'tabindex="-1"';
+            }.bind(this);
+
+            var getIgnoreClass = function() {
+                return $.a11y.options.isTabbableTextEnabled ? '' : ' a11y-ignore';
             }.bind(this);
         },
 
