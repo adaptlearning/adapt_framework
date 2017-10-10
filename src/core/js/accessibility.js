@@ -139,7 +139,7 @@ define([
                     levelOrType = this._ariaLevel;
                 }
 
-                if (_.isNumber(levelOrType)) {
+                if (isNaN(levelOrType) === false) {
                     // if a number is passed just use this
                     level = levelOrType;
                 }
