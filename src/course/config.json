@@ -14,10 +14,10 @@
         "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
-            "_contentObjects": 1,
-            "_articles": 2,
-            "_blocks": 3,
-            "_components": 4
+            "contentObject": 1,
+            "article": 2,
+            "block": 3,
+            "component": 4
         }
     },
     "_drawer": {
