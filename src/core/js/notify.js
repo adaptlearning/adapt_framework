@@ -68,6 +68,11 @@ define([
 	});
 
 	function addNotifyView(type, notifyObject) {
+		var opts = null;
+
+		if (notifyObject.template) opts = {template:notifyObject.template};
+		if (notifyObject.data) notifyObject = notifyObject.data;
+
 		notifyObject._type = type;
 
 		if (type === 'push') {
@@ -80,7 +85,7 @@ define([
 
 		var notify = new NotifyView({
 			model: new NotifyModel(notifyObject)
-		});
+		}, opts);
 
 	}
 

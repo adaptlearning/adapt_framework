@@ -7,10 +7,12 @@ define([
         className: 'notify',
         disableAnimation: false,
         escapeKeyAttached: false,
+        template:null,
 
-        initialize: function() {
+        initialize: function(attrs, options) {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
 
+            this.template = options && options.template || Handlebars.templates['notify'];
             this.setupEventListeners();
 
             //include accessibility globals in notify model
@@ -61,12 +63,11 @@ define([
 
         render: function() {
             var data = this.model.toJSON();
-            var template = Handlebars.templates['notify'];
 
             //hide notify container
             this.$el.css('visibility', 'hidden');
             //attach popup + shadow
-            this.$el.html(template(data)).prependTo('body');
+            this.$el.html(this.template(data)).prependTo('body');
             //hide popup
             this.$('.notify-popup').css('visibility', 'hidden');
             //show notify container
