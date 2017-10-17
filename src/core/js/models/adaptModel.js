@@ -124,11 +124,11 @@ define([
         },
 
         /**
-         * Function for checking whether the supplied completion attribute should be set to true or false
+         * Function for checking whether the supplied completion attribute should be set to true or false. 
          * It iterates over our immediate children, checking the same completion attribute on any mandatory child
          * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true; 
-         * if not, we set it to false
-         * @param {String} completionAttribute Either "_isComplete" or "_isInteractionComplete"
+         * if not, we set it to false.
+         * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
          */        
         checkCompletionStatusFor: function(completionAttribute) {
             // in the absence of support for default function parameters in IE & Safari v9...
