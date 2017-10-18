@@ -131,7 +131,6 @@ define([
          * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
          */        
         checkCompletionStatusFor: function(completionAttribute) {
-            // in the absence of support for default function parameters in IE & Safari v9...
             if (!completionAttribute) completionAttribute = "_isComplete";
 
             var completed = false;
