@@ -132,23 +132,23 @@ define([
          */        
         checkCompletionStatusFor: function(completionAttribute) {
             // in the absence of support for default function parameters in IE & Safari v9...
-            if (completionAttribute === void 0) completionAttribute = "_isComplete";
+            if (!completionAttribute) completionAttribute = "_isComplete";
 
-            var complete = false;
+            var completed = false;
             var children = this.getAvailableChildModels();
             var requireCompletionOf = this.get("_requireCompletionOf");
 
             if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
-                complete = !(_.find(children, function(child) {
+                completed = !(_.find(children, function(child) {
                     return !child.get(completionAttribute) && !child.get('_isOptional');
                 }));
             } else {
-                complete = (_.filter(children, function(child) {
+                completed = (_.filter(children, function(child) {
                     return child.get(completionAttribute) && !child.get('_isOptional');
                 }).length >= requireCompletionOf);
             }
 
-            this.set(completionAttribute, complete);
+            this.set(completionAttribute, completed);
 
             Adapt.checkedCompletion();
         },
