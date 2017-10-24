@@ -138,9 +138,9 @@ define([
             var requireCompletionOf = this.get("_requireCompletionOf");
 
             if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
-                completed = !(_.find(children, function(child) {
+                completed = (_.find(children, function(child) {
                     return !child.get(completionAttribute) && !child.get('_isOptional');
-                }));
+                }) === undefined);
             } else {
                 completed = (_.filter(children, function(child) {
                     return child.get(completionAttribute) && !child.get('_isOptional');
