@@ -17,6 +17,18 @@ define([
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this.$el.css('opacity', 0);
             this.listenTo(this.model, 'change:_isReady', this.isReady);
+
+            var accessibility = Adapt.config.get('_accessibility');
+            if (!accessibility._isEnabled && !accessibility._isEnabledOnTouchDevices) {
+                return;
+            }
+            // create aria-label outside of #wrapper
+            this.$pageLabel = $('<div/>', {
+                'class': 'aria-label relative a11y-ignore-focus prevent-default',
+                tabindex: 0,
+                role: 'region',
+                text: Adapt.course.get('_globals')._accessibility._ariaLabels.pageEnd
+            }).appendTo('body');
         },
 
         isReady: function() {
@@ -40,6 +52,13 @@ define([
                     $(window).scroll();
                 }, this));
             }
+        },
+
+        remove: function() {
+            if (this.$pageLabel) {
+                this.$pageLabel.remove();
+            }
+            AdaptView.prototype.remove.call(this);
         }
 
     }, {

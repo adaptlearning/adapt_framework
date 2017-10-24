@@ -1,6 +1,7 @@
 define([
-    'core/js/models/lockingModel'
-], function(lockingModel) {
+    'core/js/models/lockingModel',
+    'core/js/wait'
+], function(lockingModel, Wait) {
 
     var AdaptModel = Backbone.Model.extend({
 
@@ -15,8 +16,7 @@ define([
         },
 
         initialize: function () {
-            this.listenTo(this, 'plugin:beginWait', this.onPluginBeginWait);
-            this.listenTo(this, 'plugin:endWait', this.onPluginEndWait);
+            this.setupWait();
         },
 
         //call when entering an asynchronous completion check
@@ -48,24 +48,58 @@ define([
 
         },
 
+        setupWait: function() {
+            
+            this.wait = new Wait();
+
+            // Setup legcay events and handlers
+            var beginWait = function () {
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future");
+                this.wait.begin();
+            }.bind(this);
+
+            var endWait = function() {
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future");
+                this.wait.end();
+            }.bind(this);
+
+            var ready = function() {
+
+                if (this.wait.isWaiting()) {
+                    return;
+                }
+
+                var isEventListening = (this._events['plugins:ready']);
+                if (!isEventListening) {
+                    return;
+                }
+
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
+                this.trigger('plugins:ready');
+
+            }.bind(this);
+
+            this.listenTo(this.wait, "ready", ready);
+            this.listenTo(this, {
+                'plugin:beginWait': beginWait,
+                'plugin:endWait': endWait
+            });
+
+        },
+
         isWaitingForPlugins:function() {
-            return this.get('_pluginWaitCount') > 0;
+            Adapt.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future");
+            return this.wait.isWaiting();
         },
 
         checkPluginsReady:function() {
-            if (this.isWaitingForPlugins()) return;
+            Adapt.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future");
+            if (this.isWaitingForPlugins()) {
+                return;
+            }
             this.trigger('plugins:ready');
-        },
-
-        onPluginBeginWait:function() {
-            this.set('_pluginWaitCount', this.get('_pluginWaitCount') + 1);
-            this.checkPluginsReady();
-        },
-
-        onPluginEndWait:function() {
-            this.set('_pluginWaitCount', this.get('_pluginWaitCount') - 1);
-            this.checkPluginsReady();
         }
+
     });
 
     var Adapt = new AdaptModel();

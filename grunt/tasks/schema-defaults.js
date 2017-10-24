@@ -56,8 +56,10 @@ module.exports = function(grunt) {
 
         var jsonext = grunt.config('jsonext');
 
-        //iterate through lanugage folders
-        grunt.file.expand({filter: 'isDirectory'}, grunt.config('outputdir') + 'course/*').forEach(function(path) {
+        var sourcedir = grunt.option('outputdir') || grunt.config("sourcedir");
+
+        //iterate through language folders
+        grunt.file.expand({filter: 'isDirectory'}, sourcedir + 'course/*').forEach(function(path) {
             var currentCourseFolder = path;
             var currentCourseJsonFile = currentCourseFolder + '/' + 'course.' + jsonext;
 
