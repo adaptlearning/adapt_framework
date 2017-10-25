@@ -34,8 +34,6 @@ define([
 
     Adapt.once('app:dataReady', function() {
         Adapt.device.screenSize = checkScreenSize();
-
-        $html.addClass('size-' + Adapt.device.screenSize);
         
         if (Adapt.device.orientation) {
             $html.addClass('orientation-' + Adapt.device.orientation);
@@ -142,8 +140,6 @@ define([
 
         if (newScreenSize !== Adapt.device.screenSize) {
             Adapt.device.screenSize = newScreenSize;
-
-            $html.removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
 
             if (Adapt.device.orientation) {
                 $html.removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
