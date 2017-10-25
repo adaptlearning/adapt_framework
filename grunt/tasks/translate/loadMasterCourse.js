@@ -28,7 +28,7 @@ module.exports = function (grunt) {
     
     function copyCourse () {
       grunt.file.copy(path.join(srcPath,"course",masterLang,"course."+jsonext), path.join(srcPath,"course",targetLang,"course."+jsonext));
-      grunt.file.copy(path.join(srcPath,"course",masterLang,"contentObjects."+jsonext), path.join(srcPath,"course",targetLang,"contentObjects."+jsonext);
+      grunt.file.copy(path.join(srcPath,"course",masterLang,"contentObjects."+jsonext), path.join(srcPath,"course",targetLang,"contentObjects."+jsonext));
       grunt.file.copy(path.join(srcPath,"course",masterLang,"articles."+jsonext), path.join(srcPath,"course",targetLang,"articles."+jsonext));
       grunt.file.copy(path.join(srcPath,"course",masterLang,"blocks."+jsonext), path.join(srcPath,"course",targetLang,"blocks."+jsonext));
       grunt.file.copy(path.join(srcPath,"course",masterLang,"components."+jsonext), path.join(srcPath,"course",targetLang,"components."+jsonext));
