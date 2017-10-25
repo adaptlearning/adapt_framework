@@ -21,20 +21,10 @@ module.exports = function (grunt, options) {
         var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
 
         return collatedFilePath;
-    };
+    }
     
-    return {
-        index: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%= sourcedir %>index.html'],
-                    dest: '<%= outputdir %>',
-                    filter: 'isFile',
-                    flatten: true
-                }
-            ]
-        },
+
+    var nonServerTasks = {
         courseAssets: {
             files: [
                 {
@@ -52,6 +42,20 @@ module.exports = function (grunt, options) {
                     src: ['<%=languages%>/*.json'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
+                }
+            ]
+        }
+    };    
+    
+    var mandatoryTasks = {
+        index: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%= sourcedir %>index.html'],
+                    dest: '<%= outputdir %>',
+                    filter: 'isFile',
+                    flatten: true
                 }
             ]
         },
@@ -215,5 +219,10 @@ module.exports = function (grunt, options) {
                 }
             ]
         }
-    }
+    };
+
+    if (grunt.option("outputdir")) return mandatoryTasks;
+
+    return _.extend({}, nonServerTasks, mandatoryTasks);
+
 };

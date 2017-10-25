@@ -27,7 +27,7 @@ define([
         });
     };
 
-    Adapt.once('app:dataReady', function() {
+    Adapt.once('adapt:start', function() {
         init();
     });
 
