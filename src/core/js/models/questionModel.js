@@ -13,16 +13,24 @@ define([
         // Used to set model defaults
         defaults: function() {
             // Extend from the ComponentModel defaults
-            return _.extend({
-                '_isQuestionType': true,
-                '_shouldDisplayAttempts': false,
-                '_canShowModelAnswer': true,
-                '_canShowFeedback': true,
-                '_canShowMarking': true,
-                '_isSubmitted': false,
-                '_questionWeight': Adapt.config.get("_questionWeight"),
-            }, ComponentModel.prototype.defaults);
+            return ComponentModel.resultExtend("defaults", {
+                _isQuestionType: true,
+                _shouldDisplayAttempts: false,
+                _canShowModelAnswer: true,
+                _canShowFeedback: true,
+                _canShowMarking: true,
+                _isSubmitted: false,
+                _questionWeight: Adapt.config.get("_questionWeight"),
+            });
         },
+
+        // Extend from the ComponentModel trackable
+        trackable: ComponentModel.resultExtend("trackable", [
+            '_isSubmitted',
+            '_score',
+            '_isCorrect',
+            '_attemptsLeft'
+        ]),
 
         init: function() {
             this.setupDefaultSettings();

@@ -14,8 +14,10 @@
             paths: {
                 jquery: 'libraries/jquery.v2.min',
                 underscore: 'libraries/underscore.min',
+                'underscore.results': 'libraries/underscore.results',
                 backbone: 'libraries/backbone.min',
                 'backbone.controller': 'libraries/backbone.controller',
+                'backbone.controller.results': 'libraries/backbone.controller.results',
                 handlebars: 'libraries/handlebars.min',
                 velocity: 'libraries/velocity.min',
                 imageReady: 'libraries/imageReady',
@@ -53,8 +55,10 @@
     function loadFoundationLibraries() {
         require([
             'underscore',
+            'underscore.results',
             'backbone',
             'backbone.controller',
+            'backbone.controller.results',
             'handlebars',
             'velocity',
             'imageReady',

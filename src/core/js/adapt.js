@@ -8,7 +8,8 @@ define([
         defaults: {
             _canScroll: true, //to stop scrollTo behaviour,
             _outstandingCompletionChecks: 0,
-            _pluginWaitCount:0
+            _pluginWaitCount:0,
+            _isStarted: false
         },
 
         lockedAttributes: {
@@ -116,6 +117,8 @@ define([
             //start adapt in a full restored state
             Adapt.trigger('adapt:start');
             Backbone.history.start();
+            Adapt.set("_isStarted", true);
+
             Adapt.trigger('adapt:initialize');
 
         });
