@@ -199,57 +199,44 @@ define([
         },
 
         checkCompletionStatus: function () {
-            //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            //defer to allow other change:_isComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(function() {
-                var isComplete = false;
-                var children = this.getAvailableChildModels();
-                //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf");
-
-                if (requireCompletionOf === -1) {
-                    // Check if any return _isComplete:false
-                    // If not - set this model to _isComplete: true
-                    isComplete = !(_.find(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }));
-                } else {
-                    isComplete = (_.filter(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }).length >= requireCompletionOf);
-                }
-
-                this.set({_isComplete: isComplete});
-
-                Adapt.checkedCompletion();
-            }, this));
+            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isComplete"));
         },
 
         checkInteractionCompletionStatus: function () {
-            //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(function() {
-                var isInteractionComplete = false;
-                var children = this.getAvailableChildModels();
-                //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf");
+            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isInteractionComplete"));
+        },
 
-                if (requireCompletionOf === -1) {
-                    // Check if any return _isInteractionComplete:false
-                    // If not - set this model to _isInteractionComplete: true
-                    isInteractionComplete = (_.find(children, function(child) {
-                        return child.get('_isInteractionComplete') === false && child.get('_isOptional') === false;
-                    }) === undefined);
-                } else {
-                    isInteractionComplete = (_.filter(children, function(child) {
-                        return child.get('_isInteractionComplete') === true && child.get('_isOptional') === false;
-                    }).length >= requireCompletionOf);
-                }
+        /**
+         * Function for checking whether the supplied completion attribute should be set to true or false. 
+         * It iterates over our immediate children, checking the same completion attribute on any mandatory child
+         * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true; 
+         * if not, we set it to false.
+         * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
+         */        
+        checkCompletionStatusFor: function(completionAttribute) {
+            if (!completionAttribute) completionAttribute = "_isComplete";
 
-                this.set({_isInteractionComplete:isInteractionComplete});
-                Adapt.checkedCompletion();
+            var completed = false;
+            var children = this.getAvailableChildModels();
+            var requireCompletionOf = this.get("_requireCompletionOf");
 
-            }, this));
+            if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
+                completed = (_.find(children, function(child) {
+                    return !child.get(completionAttribute) && !child.get('_isOptional');
+                }) === undefined);
+            } else {
+                completed = (_.filter(children, function(child) {
+                    return child.get(completionAttribute) && !child.get('_isOptional');
+                }).length >= requireCompletionOf);
+            }
+
+            this.set(completionAttribute, completed);
+
+            Adapt.checkedCompletion();
         },
 
         findAncestor: function (ancestors) {
