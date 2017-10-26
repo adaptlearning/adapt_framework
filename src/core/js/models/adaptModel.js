@@ -96,8 +96,10 @@ define([
                 }
 
                 // Check that property is trackable
-                var isTrackable = _.find(_.keys(model.changed), function(item, index) {
-                     return _.contains(_.result(this, 'trackable', []), item);
+                var trackablePropertyeNames = _.result(this, 'trackable', []);
+                var changedPropertyNames = _.keys(model.changed);
+                var isTrackable = _.find(changedPropertyNames, function(item, index) {
+                     return _.contains(trackablePropertyeNames, item);
                 }.bind(this));
 
                 if (isTrackable) {
