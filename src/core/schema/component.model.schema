@@ -66,6 +66,15 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the component."
     },
+    "_disableAccessibilityState": {
+      "type": "boolean",
+      "default": false,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Is the accessibility state disabled?",
+      "help": "Controls whether the user can tab to a hidden label that describes the completion state of the component"
+    },
     "_parentId": {
       "type": "objectid",
       "required": true
