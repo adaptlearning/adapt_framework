@@ -33,10 +33,16 @@ define([
             if (this.$el.is(".no-state")) return;
 
             var $previousState = this.$(".accessibility-state");
+            var isStateRendered = $previousState.length;
 
-            var $rendered = $(Handlebars.partials['state']( _.extend(this.model.toJSON(), {a11yConfig:Adapt.config.get('_accessibility')}) ));
+            var data = _.extend(this.model.toJSON(), {a11yConfig: Adapt.config.get('_accessibility')});
+            var element = Handlebars.partials['state'](data);
 
-            $previousState.length ? $previousState.html( $rendered.html() ) : this.$el.append($rendered);
+            if (isStateRendered) {
+                $previousState.html(element);
+            } else {
+                this.$el.append(element);
+            }
 
             this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
