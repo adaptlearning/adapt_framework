@@ -125,7 +125,7 @@ define([
             });
 
             Handlebars.registerHelper('a11y_wrap_focus', function(text) {
-                return '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
+                return '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
             });
 
             Handlebars.registerHelper('a11y_attrs_heading', function(level) {
