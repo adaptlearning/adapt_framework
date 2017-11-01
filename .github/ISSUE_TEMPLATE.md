@@ -1,28 +1,6 @@
-# BUG Template
-
-## Expected Behaviour
-
-## Actual Behaviour
-
-## Steps to Reproduce
-1.
-1.
-1.
-
-## Versions
-  - Framework Version:
-  - Operating System:
-  - Browser:
-
-
-# Feature Request Template
-
-## Affected Area
-
-## Requested Feature
-
-## Use Case
-
-## Current Workaround
-
-## Additional Information
+### Please provide
+* A full description of the problem
+* Some steps on how to replicate
+* State whether you're using the authoring tool or the framework
+* What browser(s)/device(s) the problem occurs on and, where helpful, attach screenshots
+* Include version numbers where appropriate, especially for the framework, authoring tool and core plugins
