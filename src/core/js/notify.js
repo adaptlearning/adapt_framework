@@ -67,12 +67,13 @@ define([
 		addNotifyView('push', notifyObject);
 	});
 
+	Adapt.on('notify:triggerCustomView', function(view) {
+		var notify = new NotifyView({
+			view: view
+		});
+	});
+
 	function addNotifyView(type, notifyObject) {
-		var opts = null;
-
-		if (notifyObject.template) opts = {template:notifyObject.template};
-		if (notifyObject.data) notifyObject = notifyObject.data;
-
 		notifyObject._type = type;
 
 		if (type === 'push') {
@@ -85,7 +86,7 @@ define([
 
 		var notify = new NotifyView({
 			model: new NotifyModel(notifyObject)
-		}, opts);
+		});
 
 	}
 
