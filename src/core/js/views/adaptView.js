@@ -126,17 +126,19 @@ define([
         preRemove: function() {},
 
         remove: function() {
-            Adapt.trigger('plugin:beginWait');
+
             this.preRemove();
             this._isRemoved = true;
 
-            _.defer(_.bind(function() {
+            Adapt.wait.for(function(end) {
+
                 this.$el.off('onscreen.adaptView');
                 this.model.setOnChildren('_isReady', false);
                 this.model.set('_isReady', false);
                 Backbone.View.prototype.remove.call(this);
-                Adapt.trigger('plugin:endWait');
-            }, this));
+
+                end();
+            }.bind(this));
 
             return this;
         },

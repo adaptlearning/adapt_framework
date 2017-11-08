@@ -12,18 +12,7 @@ define([
 
         setStartLocation: function() {
             if (!this.isEnabled()) return;
-
-            var hash = this.getStartHash();
-
-            if ('replaceState' in window.history) {
-                window.history.replaceState('', '', hash);
-            } else {
-                // IE8 does not support window.history.replaceState
-                // This is the best approximation taken from Backbone.Router
-                var href = window.location.href.replace(/(javascript:|#).*$/, '');
-                window.location.replace(href + hash);
-            }
-            
+            window.history.replaceState('', '', this.getStartHash());
         },
 
         getStartHash: function(alwaysForce) {
