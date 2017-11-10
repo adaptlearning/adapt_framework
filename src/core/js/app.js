@@ -30,7 +30,7 @@ require([
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
 
-    Adapt.build = new BuildModel(null, {url: "adapt/js/build.js", reset:true});
+    Adapt.build = new BuildModel(null, {url: "adapt/js/build.min.js", reset:true});
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
