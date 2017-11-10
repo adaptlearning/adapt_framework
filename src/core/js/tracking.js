@@ -64,7 +64,7 @@ define([
             };
 
             // Course complete is required.
-            if (this._config._requireCourseComplete && !Adapt.course.get('_isComplete')) {
+            if (this._config._requireContentCompleted && !Adapt.course.get('_isComplete')) {
                 // INCOMPLETE: course not complete.
                 return completionData;
             }
