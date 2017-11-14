@@ -203,7 +203,7 @@ module.exports = function (grunt, options) {
                         '<%= sourcedir %>core/js/libraries/**/*'
                     ],
                     dest: '<%= outputdir %>libraries/',
-                    flatten: false
+                    rename: _.partial(collate, "libraries")
                 }
             ]
         },
