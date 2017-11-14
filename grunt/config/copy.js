@@ -195,11 +195,23 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
+        libraries: {
+            files: [
+                {
+                    expand: true,
+                    src: [
+                        '<%= sourcedir %>core/js/libraries/**/*'
+                    ],
+                    dest: '<%= outputdir %>libraries/',
+                    flatten: false
+                }
+            ]
+        },
         required: {
             files: [
                 {
                     expand: true,
-                    src: ['core/**/libraries/**/*', 'components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
+                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>/libraries/',
                     filter: function(filepath) {
