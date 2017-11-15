@@ -34,8 +34,11 @@ module.exports = function (grunt) {
     
     function _setValueByPath (obj, value, path) {
       path = path.split("/").slice(1,-1);
-      for (i = 0; i < path.length - 1; i++)
-          obj = obj[path[i]];
+      for (i = 0; i < path.length - 1; i++) {
+        // if path doesn't exist, add it, assume object
+        obj[path[i]] = obj[path[i]] || {}; 
+        obj = obj[path[i]];
+      }
 
       obj[path[i]] = value;
     }
