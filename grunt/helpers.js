@@ -56,14 +56,11 @@ module.exports = function(grunt) {
 
     var generateNestedIncludedRegExp = function() {
         var includes = grunt.config('includes') || [];
-        var pluginTypes = exports.defaults.pluginTypes;
-        var folderRegEx = /(\/less\/plugins)/;
+        var folderRegEx = "less/plugins";
 
         // Return a more specific plugin regExp including src path.
         var re = _.map(includes, function(plugin) {
-            return _.map(pluginTypes, function(type) {
-                return exports.defaults.sourcedir + type + '\/' + plugin + '\/' + folderRegEx;
-            }).join('|');
+            return exports.defaults.sourcedir + '([^\/]*)\/([^\/]*)\/' + folderRegEx + '\/' + plugin + '\/';
         }).join('|');
         return new RegExp(re, "i");
     };
