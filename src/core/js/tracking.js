@@ -76,11 +76,6 @@ define([
                     return completionData;
                 }
 
-                if (!this._assessmentState.isPass && this._assessmentState.attempts) {
-                    // INCOMPLETE: assessment has not been passed and has more attempts.
-                    return completionData;
-                }
-
                 // PASSED/FAILED: assessment completed.
                 completionData.status = this._assessmentState.isPass ? COMPLETION_STATE.PASSED : COMPLETION_STATE.FAILED;
                 completionData.assessment = this._assessmentState;
