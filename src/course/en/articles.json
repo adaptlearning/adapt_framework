@@ -32,6 +32,7 @@
 			"_scoreToPass": 75,
 			"_includeInTotalScore": true,
 			"_assessmentWeight": 1,
+			"_suppressMarking": false,
 			"_banks": {
 				"_isEnabled": true,
 				"_split": "2,2",
