@@ -7,6 +7,7 @@ module.exports = function(grunt) {
         'check-json',
         'schema-defaults',
         'clean:output',
+        'build-config',
         'copy',
         'handlebars',
         'create-json-config',

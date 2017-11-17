@@ -7,6 +7,7 @@ module.exports = function (grunt) {
     
     var srcPath = grunt.config("sourcedir");
     var targetLang = grunt.config("translate.targetLang");
+    var jsonext = grunt.config("jsonext");
     
     [
       "course",
@@ -15,7 +16,7 @@ module.exports = function (grunt) {
       "blocks",
       "components"
     ].forEach(function (filename) {
-      var src = path.join(srcPath, "course", targetLang, filename+".json");
+      var src = path.join(srcPath, "course", targetLang, filename+"."+jsonext);
       grunt.file.write(src, JSON.stringify(global.translate.courseData[filename], null, 4));
     });
     

@@ -70,7 +70,7 @@ module.exports = function (grunt) {
     }
     
     function _exportRaw (filename) {
-      grunt.file.write(path.join("languagefiles", grunt.config("translate.masterLang"), filename+".json"), JSON.stringify(global.translate.exportTextData, null, 4));
+      grunt.file.write(path.join("languagefiles", grunt.config("translate.masterLang"), filename+"." + grunt.config('jsonext')), JSON.stringify(global.translate.exportTextData, null, 4));
       next();
     }
     

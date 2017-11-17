@@ -2,6 +2,7 @@ require([
     'core/js/adapt',
     'core/js/adaptCollection',
     'core/js/startController',
+    'core/js/models/buildModel',
     'core/js/models/articleModel',
     'core/js/models/blockModel',
     'core/js/models/configModel',
@@ -22,7 +23,7 @@ require([
     'core/js/models/lockingModel',
     'core/js/helpers',
     'plugins'
-], function (Adapt, AdaptCollection, StartController, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
+], function (Adapt, AdaptCollection, StartController, BuildModel, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
     // Append loading template and show
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
@@ -30,11 +31,7 @@ require([
     var template = Handlebars.templates['loading'];
     $('#wrapper').append(template());
 
-    Adapt.config = new ConfigModel(null, {url: "course/config.json", reset:true});
-    Adapt.config.on({
-        'change:_activeLanguage': onLanguageChange,
-        'change:_defaultDirection': onDirectionChange
-    });
+    Adapt.build = new BuildModel(null, {url: "adapt/js/build.min.js", reset:true});
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
@@ -169,26 +166,26 @@ require([
 
         // All code that needs to run before adapt starts should go here
         var language = Adapt.config.get('_activeLanguage');
-
+        var jsonext = Adapt.build.get("jsonext");
         var courseFolder = "course/" + language +"/";
 
         $('html').attr("lang", language);
 
-        Adapt.course = new CourseModel(null, {url:courseFolder + "course.json", reset:true});
+        Adapt.course = new CourseModel(null, {url:courseFolder + "course."+jsonext, reset:true});
 
         Adapt.contentObjects = new AdaptCollection(null, {
             model: ContentObjectModel,
-            url: courseFolder +"contentObjects.json"
+            url: courseFolder +"contentObjects."+jsonext
         });
 
         Adapt.articles = new AdaptCollection(null, {
             model: ArticleModel,
-            url: courseFolder + "articles.json"
+            url: courseFolder + "articles."+jsonext
         });
 
         Adapt.blocks = new AdaptCollection(null, {
             model: BlockModel,
-            url: courseFolder + "blocks.json"
+            url: courseFolder + "blocks."+jsonext
         });
 
         Adapt.components = new AdaptCollection(null, {
@@ -215,7 +212,7 @@ require([
                 //otherwise use component model
                 return new ComponentModel(json);
             },
-            url: courseFolder + "components.json"
+            url: courseFolder + "components."+jsonext
         });
     };
 
@@ -244,6 +241,19 @@ require([
         }
     }
 
-    // Events that are triggered by the main Adapt content collections and models
-    Adapt.once('configModel:loadCourseData', onLoadCourseData);
+    function onBuildDataLoaded() {
+
+        Adapt.config = new ConfigModel(null, {url: "course/config."+Adapt.build.get("jsonext"), reset:true});
+        Adapt.config.on({
+            'change:_activeLanguage': onLanguageChange,
+            'change:_defaultDirection': onDirectionChange
+        });
+
+        // Events that are triggered by the main Adapt content collections and models
+        Adapt.once('configModel:loadCourseData', onLoadCourseData);
+
+    }
+
+    Adapt.once('buildModel:dataLoaded', onBuildDataLoaded);
+
 });

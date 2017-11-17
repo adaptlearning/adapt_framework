@@ -85,6 +85,7 @@ module.exports = function(grunt) {
     exports.defaults = {
         sourcedir: process.cwd() + path.sep + 'src' + path.sep,
         outputdir: process.cwd() + path.sep + 'build' + path.sep,
+        jsonext: 'json',
         theme: '**',
         menu: '**',
         languages: '**',
@@ -132,6 +133,7 @@ module.exports = function(grunt) {
         var root = __dirname.split(path.sep).slice(0,-1).join(path.sep);
         var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
         var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+        var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
         var languageFolders = "";
         if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
@@ -143,8 +145,9 @@ module.exports = function(grunt) {
         // Selectively load the course.json ('outputdir' passed by server-build)
         var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
         // add root path if necessary, and point to course/config.json
-        var configPath = path.join(path.resolve(root, configDir), 'course', 'config.json');
-        
+
+        var configPath = path.join(path.resolve(root, configDir), 'course', 'config.'+jsonext);
+
         try {
             var buildConfig = grunt.file.readJSON(configPath).build;
         } catch(error) {
@@ -156,6 +159,7 @@ module.exports = function(grunt) {
             root: root,
             sourcedir: sourcedir,
             outputdir: outputdir,
+            jsonext: jsonext,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
             languages: languageFolders || exports.defaults.languages,
@@ -163,6 +167,7 @@ module.exports = function(grunt) {
         };
 
         if(buildConfig) {
+            if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
             if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
             if (buildConfig.excludes) data.excludes = buildConfig.excludes;
             if (buildConfig.scriptSafe) data.scriptSafe = buildConfig.scriptSafe.split(",").map(function(item) { return item.trim() });

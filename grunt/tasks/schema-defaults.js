@@ -54,12 +54,14 @@ module.exports = function(grunt) {
             });
         });
 
+        var jsonext = grunt.config('jsonext');
+
         var sourcedir = grunt.option('outputdir') || grunt.config("sourcedir");
 
         //iterate through language folders
         grunt.file.expand({filter: 'isDirectory'}, sourcedir + 'course/*').forEach(function(path) {
             var currentCourseFolder = path;
-            var currentCourseJsonFile = currentCourseFolder + '/' + 'course.json';
+            var currentCourseJsonFile = currentCourseFolder + '/' + 'course.' + jsonext;
 
             //read course json and overlay onto defaults object
             var currentCourseJson = _.deepExtend(defaultsObject, grunt.file.readJSON(currentCourseJsonFile));

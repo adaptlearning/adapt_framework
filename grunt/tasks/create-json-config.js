@@ -8,17 +8,18 @@ module.exports = function(grunt) {
     
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
 
+        var jsonext = grunt.config('jsonext');
+
         var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
 
-        var configJson = grunt.file.readJSON(path.join(sourcedir, 'course/config.json'));
+        var configJson = grunt.file.readJSON(path.join(sourcedir, 'course/config.' + jsonext));
 
         var pluginTypes = [ "components", "extensions", "menu", "theme" ];
 
         //iterate through plugin types
         pluginTypes.forEach(function(pluginType) {
             //iterate through plugins in plugin type folder
-            grunt.file.expand({filter: 'isDirectory'}, grunt.config('sourcedir') + pluginType + '/*').forEach(function(pluginPath) {
-
+            grunt.file.expand({filter: 'isDirectory'}, path.join(sourcedir, pluginType, '/*') ).forEach(function(pluginPath) {
                 var filePath;
                 var pluginTypeFilePath = path.join(pluginPath, pluginType+".json");
                 var customConfigFilePath = path.join(pluginPath, "config.json");
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
 
         });
 
-        grunt.file.write(grunt.config('outputdir') + 'course/config.json', JSON.stringify(configJson, null, 4));
+        grunt.file.write(grunt.config('outputdir') + 'course/config.' + jsonext, JSON.stringify(configJson, null, 4));
 
     });
 
