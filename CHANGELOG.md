@@ -3,38 +3,38 @@
 
 ## [2.2.3] - 2017-11-17
 
-- Fixes a bug with the `requireCompletionOf` functionality that was introduced in v[2.2.0] (#1845)
+- Fixes a bug with the `requireCompletionOf` functionality that was introduced in v[2.2.0] ([#1845](https://github.com/adaptlearning/adapt_framework/issues/1845))
 
 ## [2.2.2] - 2017-10-02
 
-- Fixed race condition in Drawer which caused drawer icon to remain visible (#1819)
+- Fixed race condition in Drawer which caused drawer icon to remain visible ([#1819](https://github.com/adaptlearning/adapt_framework/issues/1819))
 
 ## [2.2.1] - 2017-08-21
 
-- Fixed `schema-defaults` task for authoring tool exports (#1719)
-- Included HTML argument in `$.a11y_text()` (#1723)
-- Made additional style elements tabbable (#1722)
+- Fixed `schema-defaults` task for authoring tool exports ([#1719](https://github.com/adaptlearning/adapt_framework/issues/1719))
+- Included HTML argument in `$.a11y_text()` ([#1723](https://github.com/adaptlearning/adapt_framework/issues/1723))
+- Made additional style elements tabbable ([#1722](https://github.com/adaptlearning/adapt_framework/issues/1722))
 
 ## [2.2.0] - 2017-08-02
 
 Last version to include new features for legacy browsers, i.e. Internet Explorer 8, 9 and 10.   See [here](https://community.adaptlearning.org/mod/forum/discuss.php?d=1946) for more information.
 
 ### Added
-- Added support for swipe events via JQuery Mobile (#1633)
-- Added `_isHidden` property as a way of hiding views (#1605)
+- Added support for swipe events via JQuery Mobile ([#1633](https://github.com/adaptlearning/adapt_framework/issues/1633))
+- Added `_isHidden` property as a way of hiding views ([#1605](https://github.com/adaptlearning/adapt_framework/issues/1605))
 
 ### Changed
-- Updated to latest `jquery.onscreen` library (#1594)
-- Updated to latest `jquery.imageready` library (#1641)
+- Updated to latest `jquery.onscreen` library ([#1594]](https://github.com/adaptlearning/adapt_framework/issues/1594))
+- Updated to latest `jquery.imageready` library ([#1641](https://github.com/adaptlearning/adapt_framework/issues/1641))
 - Changed Boolean inputs to Checkbox for authoring too ([#1380](https://github.com/adaptlearning/adapt_authoring/issues/1380))
-- JSON and JavaScript files now minified via Grunt build process (#1634)
+- JSON and JavaScript files now minified via Grunt build process ([#1634](https://github.com/adaptlearning/adapt_framework/issues/1634))
 
 ### Fixed
 - `_isSubmitted` property added to QuestionModel defaults ([#1661](https://github.com/adaptlearning/adapt_framework/pull/1661))
 - Issue introduced with circular routing fix (#1582) for circular routing control reset ([#1688](https://github.com/adaptlearning/adapt_framework/pull/1688))
-- Grunt build process now follows symlinks (#1610)
-- RTL courses now respect the vertical alignment of components (#1670)
-- Tidy-up of Backbone.Collection to avoid stale binding and potential memory leaks (#1607)
+- Grunt build process now follows symlinks ([#1610](https://github.com/adaptlearning/adapt_framework/issues/1610))
+- RTL courses now respect the vertical alignment of components ([#1670](https://github.com/adaptlearning/adapt_framework/issues/1670))
+- Tidy-up of Backbone.Collection to avoid stale binding and potential memory leaks ([#1607](https://github.com/adaptlearning/adapt_framework/issues/1607))
 
 ## [2.1.3] - 2017-06-16
 
