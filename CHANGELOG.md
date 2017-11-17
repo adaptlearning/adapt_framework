@@ -24,14 +24,14 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
 - Added `_isHidden` property as a way of hiding views ([#1605](https://github.com/adaptlearning/adapt_framework/issues/1605))
 
 ### Changed
-- Updated to latest `jquery.onscreen` library ([#1594]](https://github.com/adaptlearning/adapt_framework/issues/1594))
+- Updated to latest `jquery.onscreen` library ([#1594](https://github.com/adaptlearning/adapt_framework/issues/1594))
 - Updated to latest `jquery.imageready` library ([#1641](https://github.com/adaptlearning/adapt_framework/issues/1641))
 - Changed Boolean inputs to Checkbox for authoring too ([#1380](https://github.com/adaptlearning/adapt_authoring/issues/1380))
 - JSON and JavaScript files now minified via Grunt build process ([#1634](https://github.com/adaptlearning/adapt_framework/issues/1634))
 
 ### Fixed
 - `_isSubmitted` property added to QuestionModel defaults ([#1661](https://github.com/adaptlearning/adapt_framework/pull/1661))
-- Issue introduced with circular routing fix (#1582) for circular routing control reset ([#1688](https://github.com/adaptlearning/adapt_framework/pull/1688))
+- Issue introduced with circular routing fix ([#1582](https://github.com/adaptlearning/adapt_framework/issues/1582)) for circular routing control reset ([#1688](https://github.com/adaptlearning/adapt_framework/pull/1688))
 - Grunt build process now follows symlinks ([#1610](https://github.com/adaptlearning/adapt_framework/issues/1610))
 - RTL courses now respect the vertical alignment of components ([#1670](https://github.com/adaptlearning/adapt_framework/issues/1670))
 - Tidy-up of Backbone.Collection to avoid stale binding and potential memory leaks ([#1607](https://github.com/adaptlearning/adapt_framework/issues/1607))
