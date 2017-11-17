@@ -1,5 +1,10 @@
 ## [Unreleased][unreleased]
 
+
+## [2.2.3] - 2017-11-17
+
+- Fixes a bug with the `requireCompletionOf` functionality that was introduced in v[2.2.0] (#1845)
+
 ## [2.2.2] - 2017-10-02
 
 - Fixed race condition in Drawer which caused drawer icon to remain visible (#1819)
@@ -552,7 +557,11 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.3...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.3...HEAD
+[2.2.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.2...v2.2.3
+[2.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.1...v2.2.2
+[2.2.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.0...v2.2.1
+[2.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.3...v2.2.0
 [2.1.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.1...v2.1.2
 [2.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.0...v2.1.1
