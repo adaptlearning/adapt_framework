@@ -106,9 +106,7 @@ define([
                     // Trigger trackable state change
                     this.triggerTrackableState();
                 }
-
             });
-
         },
 
         setupChildListeners: function() {
