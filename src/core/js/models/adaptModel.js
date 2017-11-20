@@ -22,6 +22,12 @@ define([
             _isHidden: false
         },
 
+        trackable: [
+            '_id',
+            '_isComplete',
+            '_isInteractionComplete'
+        ],
+
         initialize: function () {
             // Wait until data is loaded before setting up model
             this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
@@ -52,7 +58,55 @@ define([
 
                     this.checkLocking();
                 }
+
+                this.setupTrackables();
+
             }, this));
+
+        },
+
+        setupTrackables: function() {
+
+            // Limit state trigger calls and make state change callbacks batched-asynchronous
+            var originalTrackableStateFunction = this.triggerTrackableState;
+            this.triggerTrackableState = _.compose(
+                _.bind(function() {
+
+                    // Flag that the function is awaiting trigger
+                    this.triggerTrackableState.isQueued = true;
+
+                }, this),
+                _.debounce(_.bind(function() {
+                    
+                    // Trigger original function
+                    originalTrackableStateFunction.apply(this);
+
+                    // Unset waiting flag
+                    this.triggerTrackableState.isQueued = false;
+
+                }, this), 17)
+            );
+
+            // Listen to model changes, trigger trackable state change when appropriate
+            this.listenTo(this, "change", function(model, value) {
+
+                // Skip if trigger queued or adapt hasn't started yet
+                if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
+                    return;
+                }
+
+                // Check that property is trackable
+                var trackablePropertyNames = _.result(this, 'trackable', []);
+                var changedPropertyNames = _.keys(model.changed);
+                var isTrackable = _.find(changedPropertyNames, function(item, index) {
+                     return _.contains(trackablePropertyNames, item);
+                }.bind(this));
+
+                if (isTrackable) {
+                    // Trigger trackable state change
+                    this.triggerTrackableState();
+                }
+            });
         },
 
         setupChildListeners: function() {
@@ -69,6 +123,39 @@ define([
         },
 
         init: function() {},
+
+        getTrackableState: function() {
+
+            var trackable = this.resultExtend("trackable", []);
+            var json = this.toJSON();
+
+            var args = trackable;
+            args.unshift(json);
+
+            return _.pick.apply(_, args);
+
+        },
+
+        setTrackableState: function(state) {
+
+            var trackable = this.resultExtend("trackable", []);
+
+            var args = trackable;
+            args.unshift(state);
+
+            state = _.pick.apply(_, args);
+
+            this.set(state);
+
+            return this;
+
+        },
+
+        triggerTrackableState: function() {
+            
+            Adapt.trigger("state:change", this, this.getTrackableState());
+            
+        },
 
         reset: function(type, force) {
             if (!this.get("_canReset") && !force) return;
@@ -112,57 +199,44 @@ define([
         },
 
         checkCompletionStatus: function () {
-            //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            //defer to allow other change:_isComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(function() {
-                var isComplete = false;
-                var children = this.getAvailableChildModels();
-                //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf");
-
-                if (requireCompletionOf === -1) {
-                    // Check if any return _isComplete:false
-                    // If not - set this model to _isComplete: true
-                    isComplete = !(_.find(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }));
-                } else {
-                    isComplete = (_.filter(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }).length >= requireCompletionOf);
-                }
-
-                this.set({_isComplete: isComplete});
-
-                Adapt.checkedCompletion();
-            }, this));
+            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isComplete"));
         },
 
         checkInteractionCompletionStatus: function () {
-            //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(function() {
-                var isInteractionComplete = false;
-                var children = this.getAvailableChildModels();
-                //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf");
+            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isInteractionComplete"));
+        },
 
-                if (requireCompletionOf === -1) {
-                    // Check if any return _isInteractionComplete:false
-                    // If not - set this model to _isInteractionComplete: true
-                    isInteractionComplete = (_.find(children, function(child) {
-                        return child.get('_isInteractionComplete') === false && child.get('_isOptional') === false;
-                    }) === undefined);
-                } else {
-                    isInteractionComplete = (_.filter(children, function(child) {
-                        return child.get('_isInteractionComplete') === true && child.get('_isOptional') === false;
-                    }).length >= requireCompletionOf);
-                }
+        /**
+         * Function for checking whether the supplied completion attribute should be set to true or false. 
+         * It iterates over our immediate children, checking the same completion attribute on any mandatory child
+         * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true; 
+         * if not, we set it to false.
+         * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
+         */        
+        checkCompletionStatusFor: function(completionAttribute) {
+            if (!completionAttribute) completionAttribute = "_isComplete";
 
-                this.set({_isInteractionComplete:isInteractionComplete});
-                Adapt.checkedCompletion();
+            var completed = false;
+            var children = this.getAvailableChildModels();
+            var requireCompletionOf = this.get("_requireCompletionOf");
 
-            }, this));
+            if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
+                completed = (_.find(children, function(child) {
+                    return !child.get(completionAttribute) && !child.get('_isOptional');
+                }) === undefined);
+            } else {
+                completed = (_.filter(children, function(child) {
+                    return child.get(completionAttribute) && !child.get('_isOptional');
+                }).length >= requireCompletionOf);
+            }
+
+            this.set(completionAttribute, completed);
+
+            Adapt.checkedCompletion();
         },
 
         findAncestor: function (ancestors) {

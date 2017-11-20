@@ -3,7 +3,7 @@ define([
     'core/js/views/drawerView'
 ], function(Adapt, DrawerView) {
 
-    var DrawerCollection = new Backbone.Collection();
+    var DrawerCollection = new Backbone.Collection(null, { comparator: 'drawerOrder' });
     var Drawer = {};
 
     Drawer.addItem = function(drawerObject, eventCallback) {
@@ -27,7 +27,7 @@ define([
         });
     };
 
-    Adapt.once('app:dataReady', function() {
+    Adapt.once('adapt:start', function() {
         init();
     });
 

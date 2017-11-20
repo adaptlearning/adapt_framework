@@ -85,7 +85,11 @@ define([
                     if (ChildView) {
                         var $parentContainer = this.$(this.constructor.childContainer);
                         model.set("_nthChild", nthChild);
-                        $parentContainer.append(new ChildView({model:model}).$el);
+                        if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
+                            $parentContainer.prepend(new ChildView({model:model}).$el);
+                        } else {
+                            $parentContainer.append(new ChildView({model:model}).$el);
+                        }
                     } else {
                         throw 'The component \'' + models[i].attributes._id + '\'' +
                               ' (\'' + models[i].attributes._component + '\')' +
@@ -122,17 +126,19 @@ define([
         preRemove: function() {},
 
         remove: function() {
-            Adapt.trigger('plugin:beginWait');
+
             this.preRemove();
             this._isRemoved = true;
 
-            _.defer(_.bind(function() {
+            Adapt.wait.for(function(end) {
+
                 this.$el.off('onscreen.adaptView');
                 this.model.setOnChildren('_isReady', false);
                 this.model.set('_isReady', false);
                 Backbone.View.prototype.remove.call(this);
-                Adapt.trigger('plugin:endWait');
-            }, this));
+
+                end();
+            }.bind(this));
 
             return this;
         },
