@@ -33,6 +33,7 @@
 			"_includeInTotalScore": true,
 			"_assessmentWeight": 1,
 			"_suppressMarking": false,
+			"_allowResetIfPassed": false,
 			"_banks": {
 				"_isEnabled": true,
 				"_split": "2,2",
