@@ -2,6 +2,8 @@
 [![Build Status](https://secure.travis-ci.org/adaptlearning/adapt_framework.png)](http://travis-ci.org/adaptlearning/adapt_framework)  [![Join the chat at https://gitter.im/adaptlearning/adapt_framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/adaptlearning/adapt_framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Adapt is a free and easy to use framework and authoring tool that creates fully responsive, multi-device, HTML5 e-learning content.
 
+**Important Note:** going forward we will no longer be developing for IE8, 9 & 10. If you need support for those browsers, please use [the legacy branch of Adapt](https://github.com/adaptlearning/adapt_framework/tree/legacy) instead.
+
 ## What Does It Do?
 The Adapt framework is a toolkit for creating responsive, single-version HTML5 e-learning courses for delivery on a web server or SCORM-compliant learning management system.
 

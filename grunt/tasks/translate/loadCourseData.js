@@ -8,6 +8,7 @@ module.exports = function (grunt) {
     if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
     
     var lang = grunt.config("translate.masterLang");
+    var jsonext = grunt.config('jsonext');
     
     // check if master language course exists
     if (!grunt.file.isDir(srcPath, "course", lang)) {
@@ -15,12 +16,12 @@ module.exports = function (grunt) {
     }
 
     var fileMap = {
-        "config": [srcPath,"course","config.json"],
-        "course": [srcPath,"course",lang,"course.json"],
-        "contentObjects": [srcPath,"course",lang,"contentObjects.json"],
-        "articles": [srcPath,"course",lang,"articles.json"],
-        "blocks": [srcPath,"course",lang,"blocks.json"],
-        "components": [srcPath,"course",lang,"components.json"]
+        "config": [srcPath,"course","config."+jsonext],
+        "course": [srcPath,"course",lang,"course."+jsonext],
+        "contentObjects": [srcPath,"course",lang,"contentObjects."+jsonext],
+        "articles": [srcPath,"course",lang,"articles."+jsonext],
+        "blocks": [srcPath,"course",lang,"blocks."+jsonext],
+        "components": [srcPath,"course",lang,"components."+jsonext]
     };
 
     global.translate.courseData = {};

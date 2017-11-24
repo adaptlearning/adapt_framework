@@ -73,7 +73,7 @@ module.exports = function (grunt) {
     }
     
     function _exportRaw (filename) {
-      grunt.file.write(path.join(outputFolder, filename+".json"), JSON.stringify(global.translate.exportTextData, null, 4));
+      grunt.file.write(path.join(outputFolder, filename + "." + grunt.config('jsonext')), JSON.stringify(global.translate.exportTextData, null, 4));
       next();
     }
     

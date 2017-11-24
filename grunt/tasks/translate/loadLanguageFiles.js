@@ -54,13 +54,15 @@ module.exports = function (grunt) {
         return;
       }
 
+      var jsonext = "." + grunt.config('jsonext');
+
       switch (uniqueExtensions[0]) {
         case ".csv":
           grunt.config('translate.format', 'csv');
           grunt.log.debug('format autodetected as csv');
           break;
 
-        case ".json":
+        case jsonext:
           grunt.config('translate.format', 'json');
           grunt.log.debug('format autodetected as json');
           break;

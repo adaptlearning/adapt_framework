@@ -9,8 +9,8 @@ module.exports = function (grunt) {
     
     var targetLang = grunt.config("translate.targetLang");
     var masterLang = grunt.config("translate.masterLang");
-    var srcPath = grunt.config("sourcedir");
-    if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
+    var srcPath = grunt.option("outputdir") || grunt.config("sourcedir");
+    var jsonext = grunt.config('jsonext');
     
     checkCourseExists();
     copyCourse();
@@ -27,16 +27,16 @@ module.exports = function (grunt) {
     }
     
     function copyCourse () {
-      grunt.file.copy(path.join(srcPath,"course",masterLang,"course.json"), path.join(srcPath,"course",targetLang,"course.json"));
-      grunt.file.copy(path.join(srcPath,"course",masterLang,"contentObjects.json"), path.join(srcPath,"course",targetLang,"contentObjects.json"));
-      grunt.file.copy(path.join(srcPath,"course",masterLang,"articles.json"), path.join(srcPath,"course",targetLang,"articles.json"));
-      grunt.file.copy(path.join(srcPath,"course",masterLang,"blocks.json"), path.join(srcPath,"course",targetLang,"blocks.json"));
-      grunt.file.copy(path.join(srcPath,"course",masterLang,"components.json"), path.join(srcPath,"course",targetLang,"components.json"));
+      grunt.file.copy(path.join(srcPath,"course",masterLang,"course."+jsonext), path.join(srcPath,"course",targetLang,"course."+jsonext));
+      grunt.file.copy(path.join(srcPath,"course",masterLang,"contentObjects."+jsonext), path.join(srcPath,"course",targetLang,"contentObjects."+jsonext));
+      grunt.file.copy(path.join(srcPath,"course",masterLang,"articles."+jsonext), path.join(srcPath,"course",targetLang,"articles."+jsonext));
+      grunt.file.copy(path.join(srcPath,"course",masterLang,"blocks."+jsonext), path.join(srcPath,"course",targetLang,"blocks."+jsonext));
+      grunt.file.copy(path.join(srcPath,"course",masterLang,"components."+jsonext), path.join(srcPath,"course",targetLang,"components."+jsonext));
     }
     
     function getCourseDate () {
       ["course", "contentObjects", "articles", "blocks", "components"].forEach(function (filename) {
-        var src = path.join(srcPath,"course",targetLang,filename+".json");
+        var src = path.join(srcPath,"course",targetLang,filename+"."+jsonext);
         
         global.translate.courseData[filename] = {};
         global.translate.courseData[filename] = grunt.file.readJSON(src);
