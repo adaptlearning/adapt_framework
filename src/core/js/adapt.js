@@ -264,6 +264,41 @@ define([
 
     };
 
+    // Relative strings describe the number and type of hops in the model hierarchy
+    //
+    // "@component +1" means to move one component forward from the current model
+    // This function would return the following:
+    // {
+    //       type: "component",
+    //       offset: 1
+    // }
+    // Trickle uses this function to determine where it should scrollTo after it unlocks
+    Adapt.parseRelativeString = function(relativeString) {
+
+        if (relativeString[0] === "@") {
+            relativeString = relativeString.substr(1);
+        }
+
+        var type = relativeString.match(/(component|block|article|page|menu)/);
+        if (!type) {
+            Adapt.log.error("Adapt.parseRelativeString() could not match relative type", relativeString);
+            return;
+        }
+        type = type[0];
+
+        var offset = parseInt(relativeString.substr(type.length).trim()||0);
+        if (isNaN(offset)) {
+            Adapt.log.error("Adapt.parseRelativeString() could not parse relative offset", relativeString);
+            return;
+        }
+
+        return { 
+            type: type,
+            offset: offset
+        };
+
+    };
+
     Adapt.remove = function() {
         Adapt.trigger('preRemove');
         Adapt.trigger('remove');

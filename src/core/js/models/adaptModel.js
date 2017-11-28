@@ -292,6 +292,57 @@ define([
             return returnedDescendants;
         },
 
+        
+        // Fetchs the sub structure of a model as a flattened array
+        // 
+        // Such that the tree:
+        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+        // 
+        // will become the array (parent first = false):
+        //  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
+        // 
+        // or (parent first = true):
+        //  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
+        // 
+        // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.        
+        getAllDescendantModels: function(isParentFirst) {
+
+            var descendants = [];
+
+            if (this.get("_type") === "component") {
+                descendants.push(this);
+                return descendants;
+            }
+
+            var children = this.getChildren();
+
+            for (var i = 0, l = children.models.length; i < l; i++) {
+
+                var child = children.models[i];
+                if (child.get("_type") === "component") {
+
+                    descendants.push(child);
+                    continue;
+
+                }
+
+                var subDescendants = child.getAllDescendantModels(isParentFirst);
+                if (isParentFirst === true) {
+                    descendants.push(child);
+                }
+
+                descendants = descendants.concat(subDescendants);
+                
+                if (isParentFirst !== true) {
+                    descendants.push(child);
+                }
+
+            }
+
+            return descendants;
+
+        },
+
         findDescendants: function (descendants) {
             Adapt.log.warn("DEPRECATED - Use findDescendantModels() as findDescendants() may be removed in the future");
 
@@ -328,6 +379,105 @@ define([
 
             // returns a collection of children
             return returnedDescendants;
+        },
+
+        // Returns a relative model from the Adapt hierarchy
+        //    
+        // Such that in the tree:
+        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+        // 
+        //  findRelative(modelC1, "@block +1") = modelB2;
+        //  findRelative(modelC1, "@component +4") = modelC5;
+        //
+        // See Adapt.parseRelativeString() for a description of relativeStrings
+        findRelativeModel: function(relativeString, options) {
+            
+            var types = [ "menu", "page", "article", "block", "component" ];
+
+            options = options || {};
+
+            var modelId = this.get("_id");
+            var modelType = this.get("_type");
+
+            // return a model relative to the specified one if opinionated
+            var rootModel = Adapt.course;
+            if (options.limitParentId) {
+                rootModel = Adapt.findById(options.limitParentId);
+            }
+
+            var relativeDescriptor = Adapt.parseRelativeString(relativeString);
+
+            var findAncestorType = (_.indexOf(types, modelType) > _.indexOf(types, relativeDescriptor.type));
+            var findSiblingType = (modelType === relativeDescriptor.type);
+
+            var searchBackwards = (relativeDescriptor.offset < 0);
+            var moveBy = Math.abs(relativeDescriptor.offset);
+            var movementCount = 0;
+
+            var findDescendantType = (!findSiblingType && !findAncestorType);
+
+            var pageDescendants;
+            if (searchBackwards) {
+                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
+                pageDescendants = rootModel.getAllDescendantModels(true);
+
+                // reverse so that we don't need a forward and a backward iterating loop
+                // reversed [c9,c8,b4,a4,c7,c6,b3,a3,p2,c4,c3,b2,a2,c2,c1,b1,a1,p1]
+                pageDescendants.reverse();
+
+                if (findDescendantType) {
+                    // move by one less as ordering allows
+                    moveBy-=1;
+                }
+
+            } else if (findDescendantType) {
+                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
+                pageDescendants = rootModel.getAllDescendantModels(true);
+            } else if (findSiblingType || findAncestorType) {
+                // children first [c1,c2,b1,a1,c3,c4,b2,a2,p1,c6,c7,b3,a3,c8,c9,b4,a4,p2]
+                pageDescendants = rootModel.getAllDescendantModels(false);
+            }
+
+            // filter if opinionated
+            if (typeof options.filter === "function") {
+                pageDescendants = _.filter(pageDescendants, options.filter);
+            }
+
+            // find current index in array
+            var modelIndex = _.findIndex(pageDescendants, function(pageDescendant) {
+                if (pageDescendant.get("_id") === modelId) {
+                    return true;
+                }
+                return false;
+            });
+
+            if (options.loop) {
+
+                // normalize offset position to allow for overflow looping
+                var typeCounts = {};
+                pageDescendants.forEach(function(model) {
+                    var type = model.get("_type");
+                    typeCounts[type] = typeCounts[type] || 0;
+                    typeCounts[type]++;
+                });
+                moveBy = moveBy % typeCounts[relativeDescriptor.type];
+                
+                // double up entries to allow for overflow looping
+                pageDescendants = pageDescendants.concat(pageDescendants.slice(0));
+
+            }
+
+            for (var i = modelIndex, l = pageDescendants.length; i < l; i++) {
+                var descendant = pageDescendants[i];
+                if (descendant.get("_type") === relativeDescriptor.type) {
+                    if (movementCount === moveBy) {
+                        return Adapt.findById(descendant.get("_id"));
+                    }
+                    movementCount++;
+                }
+            }
+
+            return undefined;
         },
 
         getChildren: function () {

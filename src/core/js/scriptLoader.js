@@ -64,6 +64,7 @@
             'imageReady',
             'inview',
             'jqueryMobile',
+            'libraries/jquery.resize',
             'a11y',
             'scrollTo',
             'bowser',
