@@ -3,7 +3,7 @@
 
 ## [2.2.3] - 2017-11-17
 
-- Fixes a bug with the `requireCompletionOf` functionality that was introduced in v[2.2.0] ([#1845](https://github.com/adaptlearning/adapt_framework/issues/1845))
+- Fixes a bug with the `_requireCompletionOf` functionality that was introduced in v[2.2.0] ([#1845](https://github.com/adaptlearning/adapt_framework/issues/1845))
 
 ## [2.2.2] - 2017-10-02
 
