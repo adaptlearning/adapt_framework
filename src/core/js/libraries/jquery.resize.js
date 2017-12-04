@@ -1,5 +1,5 @@
 'use strict';
-// jquery.resize 2017-10-05 https://github.com/adaptlearning/jquery.resize
+// jquery.resize 2017-11-28 https://github.com/adaptlearning/jquery.resize
 
 (function() {
 
@@ -225,24 +225,6 @@
                 if (this === window) return;
                 handlers.unregister(this, data);
             }
-
-        }
-
-    });
-
-    // jQuery interfaces
-    // element functions
-    $.extend($.fn, {
-
-        resize: function resize(callback) {
-
-            if (callback) {
-                // standard event attachment jquery api behaviour
-                this.on("resize", callback);
-                return this;
-            }
-
-            return this;
 
         }
 
