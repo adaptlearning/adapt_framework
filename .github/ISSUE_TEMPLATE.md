@@ -1,6 +1,18 @@
-### Please provide
-* A full description of the problem
-* Some steps on how to replicate
-* State whether you're using the authoring tool or the framework
-* What browser(s)/device(s) the problem occurs on and, where helpful, attach screenshots
-* Include version numbers where appropriate, especially for the framework, authoring tool and core plugins
+### Subject of the issue/enhancement/features
+Describe your issue here.
+
+### Your environment
+* version (AT/Framework)
+* which browser and its version
+* Device(s)
+
+### Steps to reproduce
+Tell us how to reproduce this issue.
+
+### Expected behaviour
+Tell us what should happen
+
+### Actual behaviour
+Tell us what happens instead
+
+### Screenshots (if you can)
