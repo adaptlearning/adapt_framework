@@ -22,6 +22,7 @@ define([
             this.listenTo(Adapt, {
                 'remove page:scrollTo': this.closeNotify,
                 'notify:resize': this.resetNotifySize,
+                'notify:cancel': this.cancelNotify,
                 'notify:close': this.closeNotify,
                 'device:resize': this.resetNotifySize,
                 'accessibility:toggle': this.onAccessibilityToggle
@@ -51,14 +52,14 @@ define([
             if (event.which != 27) return;
             event.preventDefault();
 
-            this.closeNotify();
+            this.cancelNotify();
         },
 
         events: {
             'click .notify-popup-alert-button':'onAlertButtonClicked',
             'click .notify-popup-prompt-button': 'onPromptButtonClicked',
             'click .notify-popup-done': 'onCloseButtonClicked',
-            'click .notify-shadow': 'onCloseButtonClicked'
+            'click .notify-shadow': 'onShadowClicked'
         },
 
         render: function() {
@@ -94,6 +95,19 @@ define([
 
         onCloseButtonClicked: function(event) {
             event.preventDefault();
+            //tab index preservation, notify must close before subsequent callback is triggered
+            this.cancelNotify();
+        },
+
+        onShadowClicked: function(event) {
+            event.preventDefault();
+            this.cancelNotify();
+        },
+
+        cancelNotify: function() {
+            if (this.model.get("_isCancellable") === false) {
+                return;
+            }
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
             Adapt.trigger('notify:cancelled');
@@ -177,7 +191,7 @@ define([
 
         addSubView: function() {
 
-            this.subView = this.model.get("view");
+            this.subView = this.model.get("_view");
             if (!this.subView) return;
             
             this.$(".notify-popup-content-inner").append(this.subView.$el);
