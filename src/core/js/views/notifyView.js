@@ -21,6 +21,8 @@ define([
         setupEventListeners: function() {
             this.listenTo(Adapt, {
                 'remove page:scrollTo': this.closeNotify,
+                'notify:resize': this.resetNotifySize,
+                'notify:close': this.closeNotify,
                 'device:resize': this.resetNotifySize,
                 'accessibility:toggle': this.onAccessibilityToggle
             });
@@ -123,6 +125,8 @@ define([
 
         showNotify: function() {
 
+            this.addSubView();
+
             Adapt.trigger('notify:opened', this);
 
             if (this.$('img').length > 0) {
@@ -171,6 +175,15 @@ define([
 
         },
 
+        addSubView: function() {
+
+            this.subView = this.model.get("view");
+            if (!this.subView) return;
+            
+            this.$(".notify-popup-content-inner").append(this.subView.$el);
+
+        },
+
         closeNotify: function (event) {
 
             if (this.disableAnimation) {
@@ -197,6 +210,19 @@ define([
 
             Adapt.trigger('popup:closed');
             Adapt.trigger('notify:closed');
+        },
+
+        remove: function() {
+            this.removeSubView();
+            Backbone.View.prototype.remove.apply(this, arguments);
+        },
+
+        removeSubView: function() {
+
+            if (!this.subView) return;
+            this.subView.remove();
+            this.subView = null;
+
         }
 
     });
