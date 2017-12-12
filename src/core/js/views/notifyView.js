@@ -143,11 +143,7 @@ define([
 
             Adapt.trigger('notify:opened', this);
 
-            if (this.$('img').length > 0) {
-                this.$el.imageready( _.bind(loaded, this));
-            } else {
-                loaded.call(this);
-            }
+            this.$el.imageready( _.bind(loaded, this));
 
             function loaded() {
                 if (this.disableAnimation) {
