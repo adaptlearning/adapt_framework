@@ -114,7 +114,7 @@ define([
          */
         import_data: function(context) {
             
-            var directImport = ['config', 'course'];
+            var directImport = ['config','course'];
             directImport.forEach(function(name) {
                 context.data.root['_'+name] = Adapt[name].toJSON();
             });
@@ -127,12 +127,8 @@ define([
             });
 
             return "";
-        },
-
-        helperMissing: function() {
-            debugger;
         }
-
+        
     };
 
     // Compatibility references
