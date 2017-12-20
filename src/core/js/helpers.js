@@ -103,9 +103,8 @@ define([
          * makes the _globals object in course.json available to a template
          */
         import_globals: function(context) {
-            if (!context.data.root._globals) {
-                context.data.root._globals = Adapt.course.get('_globals');
-            }
+            if (context.data.root._globals) return "";
+            context.data.root._globals = Adapt.course.get('_globals');
             return "";
         },
 
@@ -117,12 +116,14 @@ define([
             var directImport = ['config','course'];
             for (var i = 0, l = directImport.length; i < l; i++) {
                 var name = directImport[i];
+                if (context.data.root['_'+name]) continue;
                 context.data.root['_'+name] = Adapt[name].toJSON();
             }
 
             var indexedImport = ['contentObjects','articles','blocks','components'];
             for (var i = 0, l = indexedImport.length; i < l; i++) {
                 var name = indexedImport[i];
+                if (context.data.root['_'+name]) continue;
                 var importArray = Adapt[name].toJSON();
                 var importIndex = {};
                 for (var i1 = 0, l1 = importArray.length; i1 < l1; i1++) {
