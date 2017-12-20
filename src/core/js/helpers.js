@@ -113,33 +113,19 @@ define([
          * makes the course data available to a template
          */
         import_data: function(context) {
-            if (!context.data.root._config) {
-                context.data.root._config = Adapt.config.toJSON();
-            }
-            if (!context.data.root._course) {
-                context.data.root._course = Adapt.course.toJSON();
-            }
-            if (!context.data.root._contentObjects) {
-                context.data.root._contentObjects = _.indexBy(Adapt.contentObjects.toJSON(), function(item) {
-                    return item._id;
-                });
-            }
-            if (!context.data.root._articles) {
-                context.data.root._articles = _.indexBy(Adapt.articles.toJSON(), function(item) {
-                    return item._id;
-                });
-            }
-            if (!context.data.root._blocks) {
-                context.data.root._blocks = _.indexBy(Adapt.blocks.toJSON(), function(item) {
-                    return item._id;
-                });
-            }
+            
+            var directImport = ['config', 'course'];
+            directImport.forEach(function(name) {
+                context.data.root['_'+name] = Adapt[name].toJSON();
+            });
 
-            if (!context.data.root._components) {
-                context.data.root._components = _.indexBy(Adapt.components.toJSON(), function(item) {
+            var indexedImport = ['contentObjects','articles','blocks','components'];
+            indexedImport.forEach(function(name) {
+                context.data.root['_'+name] = _.indexBy(Adapt[name].toJSON(), function(item) {
                     return item._id;
                 });
-            }
+            });
+
             return "";
         },
 
