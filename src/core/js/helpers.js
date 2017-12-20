@@ -115,20 +115,26 @@ define([
         import_data: function(context) {
             
             var directImport = ['config','course'];
-            directImport.forEach(function(name) {
+            for (var i = 0, l = directImport.length; i < l; i++) {
+                var name = directImport[i];
                 context.data.root['_'+name] = Adapt[name].toJSON();
-            });
+            }
 
             var indexedImport = ['contentObjects','articles','blocks','components'];
-            indexedImport.forEach(function(name) {
-                context.data.root['_'+name] = _.indexBy(Adapt[name].toJSON(), function(item) {
-                    return item._id;
-                });
-            });
+            for (var i = 0, l = indexedImport.length; i < l; i++) {
+                var name = indexedImport[i];
+                var importArray = Adapt[name].toJSON();
+                var importIndex = {};
+                for (var i1 = 0, l1 = importArray.length; i1 < l1; i1++) {
+                    var item = importArray[i1];
+                    importIndex[item._id] = item;
+                }
+                context.data.root['_'+name] = importIndex;
+            }
 
             return "";
         }
-        
+
     };
 
     // Compatibility references
