@@ -109,23 +109,25 @@ define([
         },
 
         /**
-         * makes the course data available to a template
+         * makes the Adapt module data available to a template
          */
-        import_data: function(context) {
+        import_adapt: function(context) {
+
+            if (context.data.root.Adapt) return;
+            var adapt = context.data.root.Adapt = {};
+
             var i, l, name;
-            
+
             var directImport = ['config','course'];
             for (i = 0, l = directImport.length; i < l; i++) {
                 name = directImport[i];
-                if (context.data.root['_'+name]) continue;
                 // convert the model to a json object and add to the current context
-                context.data.root['_'+name] = Adapt[name].toJSON();
+                adapt[name] = Adapt[name].toJSON();
             }
 
             var indexedImport = ['contentObjects','articles','blocks','components'];
             for (i = 0, l = indexedImport.length; i < l; i++) {
                 name = indexedImport[i];
-                if (context.data.root['_'+name]) continue;
                 // convert the collection of models to an array of json objects
                 var importArray = Adapt[name].toJSON();
                 // convert the array of json models to an object indexed by id
@@ -135,10 +137,11 @@ define([
                     importIndex[item._id] = item;
                 }
                 // add the indexed object to the current context
-                context.data.root['_'+name] = importIndex;
+                adapt[name] = importIndex;
             }
 
             return "";
+
         }
 
     };
