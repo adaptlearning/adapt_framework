@@ -112,24 +112,29 @@ define([
          * makes the course data available to a template
          */
         import_data: function(context) {
+            var i, l, name;
             
             var directImport = ['config','course'];
-            for (var i = 0, l = directImport.length; i < l; i++) {
-                var name = directImport[i];
+            for (i = 0, l = directImport.length; i < l; i++) {
+                name = directImport[i];
                 if (context.data.root['_'+name]) continue;
+                // convert the modes to a json object and add to the current context
                 context.data.root['_'+name] = Adapt[name].toJSON();
             }
 
             var indexedImport = ['contentObjects','articles','blocks','components'];
-            for (var i = 0, l = indexedImport.length; i < l; i++) {
-                var name = indexedImport[i];
+            for (i = 0, l = indexedImport.length; i < l; i++) {
+                name = indexedImport[i];
                 if (context.data.root['_'+name]) continue;
+                // convert the collection of models to an array of json objects
                 var importArray = Adapt[name].toJSON();
+                // convert the array of json models to an object indexed by id
                 var importIndex = {};
                 for (var i1 = 0, l1 = importArray.length; i1 < l1; i1++) {
                     var item = importArray[i1];
                     importIndex[item._id] = item;
                 }
+                // add the index object to the current context
                 context.data.root['_'+name] = importIndex;
             }
 
