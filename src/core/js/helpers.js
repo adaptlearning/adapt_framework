@@ -118,7 +118,7 @@ define([
             for (i = 0, l = directImport.length; i < l; i++) {
                 name = directImport[i];
                 if (context.data.root['_'+name]) continue;
-                // convert the modes to a json object and add to the current context
+                // convert the model to a json object and add to the current context
                 context.data.root['_'+name] = Adapt[name].toJSON();
             }
 
@@ -134,7 +134,7 @@ define([
                     var item = importArray[i1];
                     importIndex[item._id] = item;
                 }
-                // add the index object to the current context
+                // add the indexed object to the current context
                 context.data.root['_'+name] = importIndex;
             }
 
