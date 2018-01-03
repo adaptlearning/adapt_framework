@@ -8,8 +8,10 @@ define([
         className: "navigation",
 
         initialize: function() {
-            this.listenToOnce(Adapt, 'courseModel:dataLoading', this.remove);
-            this.listenToOnce(Adapt, 'accessibility:toggle', this.onA11yToggle);
+            this.listenToOnce(Adapt, {
+                'courseModel:dataLoading': this.remove,
+                'accessibility:toggle': this.onA11yToggle
+            });
             this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
             this.template = "navigation";
             this.preRender();

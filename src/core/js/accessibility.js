@@ -49,11 +49,12 @@ define([
         },
 
         removeLegacyElements: function() {
-            var $legacyElements = $("body > #accessibility-toggle, body > #accessibility-instructions");
-            if ($legacyElements.length) {
-                Adapt.log.warn("DEPRECATED - #accessibility-toggle and #accessibility-instructions have been moved to the navigation bar. Please remove them from all of your .html files.");
-                $legacyElements.remove();
-            }
+            var $legacyElements = $("body").children("#accessibility-toggle, #accessibility-instructions");
+
+            if (!$legacyElements.length) return;
+
+            Adapt.log.warn("DEPRECATED - #accessibility-toggle and #accessibility-instructions have been moved to the navigation bar. Please remove them from all of your .html files.");
+            $legacyElements.remove();
         },
 
         setupAccessibility: function() {
@@ -229,12 +230,12 @@ define([
         },
 
         setNavigationBar: function() {
-            var navArias = $(".navigation .aria-label").not('#accessibility-instructions');
+            var $navArias = $(".navigation").find(".aria-label").not('#accessibility-instructions');
 
             if (this.isActive()) {
-                navArias.attr("tabindex", 0).removeAttr("aria-hidden").removeClass("a11y-ignore");
+                $navArias.attr("tabindex", 0).removeAttr("aria-hidden").removeClass("a11y-ignore");
             } else {
-                navArias.attr("tabindex", -1).attr("aria-hidden", "true");
+                $navArias.attr("tabindex", -1).attr("aria-hidden", "true");
             }
         },
 
