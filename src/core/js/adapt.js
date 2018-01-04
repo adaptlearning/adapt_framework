@@ -109,21 +109,25 @@ define([
     Adapt.componentStore = {};
     Adapt.mappedIds = {};
 
-    Adapt.initialize = _.once(function() {
+    Adapt.initialize = function() {
 
         //wait until no more completion checking 
         Adapt.deferUntilCompletionChecked(function() {
 
             //start adapt in a full restored state
             Adapt.trigger('adapt:start');
-            Backbone.history.start();
+
+            if (!Backbone.History.started) {
+                Backbone.history.start();
+            }
+
             Adapt.set("_isStarted", true);
 
             Adapt.trigger('adapt:initialize');
 
         });
 
-    });
+    };
 
     Adapt.scrollTo = function(selector, settings) {
         // Get the current location - this is set in the router
