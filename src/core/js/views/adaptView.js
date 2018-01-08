@@ -14,7 +14,7 @@ define([
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
-            this.listenTo(this.model, 'change:_isInteractionComplete', this.addCompletionClass);
+            this.listenTo(this.model, 'change:_isComplete', this.onIsCompleteChange);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
             this._isRemoved = false;
@@ -174,8 +174,9 @@ define([
             this.$el.addClass('display-none');
         },
         
-        addCompletionClass:function(){
-            this.$el.addClass('completed');
+        onIsCompleteChange:function(model){
+            var isComplete=model.get('_isComplete');
+            this.$el.toggleClass('completed', isComplete);
         }
     });
 
