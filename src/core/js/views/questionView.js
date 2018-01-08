@@ -19,7 +19,7 @@ define([
             + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
             + " nth-child-" + this.model.get("_nthChild")
-            + (this.model.get('_isInteractionComplete') ? ' completed' : '');
+            + (this.model.get('_isComplete') ? ' completed' : '');
         },
 
         //////
