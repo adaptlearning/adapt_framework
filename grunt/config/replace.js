@@ -5,6 +5,33 @@ var _ = require('underscore');
 module.exports = function (grunt, options) {
 
   var courseDir = path.join(options.outputdir, 'course');
+  
+  var filterNullValues = function(obj) {
+    // hack to fix bug https://github.com/adaptlearning/adapt_framework/issues/1867
+    
+    if (obj instanceof Array) {
+      for (var i = obj.length - 1; i >= 0; i--) {
+        var value = obj[i];
+        if (value === null) {
+          obj.splice(i, 1);
+        } else if (typeof value === "object") {
+          obj[i] = filterNullValues(value);
+        }
+      }
+    } else if (typeof obj === "object") {
+      for (var k in obj) {
+        var value = obj[k];
+        if (value === null) {
+          delete obj[k];
+        } else if (typeof value === "object") {
+          obj[k] = filterNullValues(value);
+        }
+      }
+    }
+
+    return obj;
+
+  };
 
   var generatePatterns = function() {
     var jsonext = grunt.config('jsonext');
@@ -38,8 +65,8 @@ module.exports = function (grunt, options) {
       
       // Combine the course and config JSON so both can be passed to replace.  
       return {
-        'course': courseJson,
-        'config': configJson
+        'course': filterNullValues(courseJson),
+        'config': filterNullValues(configJson)
       };
     } catch (ex) {
       return {};
