@@ -11,7 +11,7 @@ define([
             this.model.get('_id') + 
             " " + this.model.get('_classes') + 
             " " + this.setVisibility() +
-            " " + (this.model.get('_isInteractionComplete') ? 'completed' : '');
+            " " + (this.model.get('_isComplete') ? 'completed' : '');
         },
 
         preRender: function() {
