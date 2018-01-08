@@ -174,8 +174,7 @@ define([
             this.$el.addClass('display-none');
         },
         
-        onIsCompleteChange:function(model){
-            var isComplete=model.get('_isComplete');
+        onIsCompleteChange:function(model, isComplete){
             this.$el.toggleClass('completed', isComplete);
         }
     });
