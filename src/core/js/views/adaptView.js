@@ -14,6 +14,7 @@ define([
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
+            this.listenTo(this.model, 'change:_isComplete', this.onIsCompleteChange);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
             this._isRemoved = false;
@@ -171,6 +172,10 @@ define([
                 return this.$el.removeClass('display-none');
             }
             this.$el.addClass('display-none');
+        },
+        
+        onIsCompleteChange:function(model, isComplete){
+            this.$el.toggleClass('completed', isComplete);
         }
     });
 
