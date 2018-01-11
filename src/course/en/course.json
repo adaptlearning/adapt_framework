@@ -183,7 +183,6 @@
     },
     "_assessment": {
         "_postTotalScoreToLms": true,
-        "_requireAssessmentPassed": true,
         "_isPercentageBased": true,
         "_scoreToPass": 75
     },
