@@ -101,12 +101,47 @@ define([
 
         /**
          * makes the _globals object in course.json available to a template
-         */ 
+         */
         import_globals: function(context) {
-            if(!context.data.root._globals) {
-                context.data.root._globals = Adapt.course.get('_globals');
-            }
+            if (context.data.root._globals) return "";
+            context.data.root._globals = Adapt.course.get('_globals');
             return "";
+        },
+
+        /**
+         * makes the Adapt module data available to a template
+         */
+        import_adapt: function(context) {
+
+            if (context.data.root.Adapt) return;
+            var adapt = context.data.root.Adapt = {};
+
+            var i, l, name;
+
+            var directImport = ['config','course'];
+            for (i = 0, l = directImport.length; i < l; i++) {
+                name = directImport[i];
+                // convert the model to a json object and add to the current context
+                adapt[name] = Adapt[name].toJSON();
+            }
+
+            var indexedImport = ['contentObjects','articles','blocks','components'];
+            for (i = 0, l = indexedImport.length; i < l; i++) {
+                name = indexedImport[i];
+                // convert the collection of models to an array of json objects
+                var importArray = Adapt[name].toJSON();
+                // convert the array of json models to an object indexed by id
+                var importIndex = {};
+                for (var i1 = 0, l1 = importArray.length; i1 < l1; i1++) {
+                    var item = importArray[i1];
+                    importIndex[item._id] = item;
+                }
+                // add the indexed object to the current context
+                adapt[name] = importIndex;
+            }
+
+            return "";
+
         }
 
     };
