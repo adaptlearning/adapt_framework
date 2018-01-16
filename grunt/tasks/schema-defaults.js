@@ -64,7 +64,7 @@ module.exports = function(grunt) {
             var currentCourseJsonFile = currentCourseFolder + '/' + 'course.' + jsonext;
 
             //read course json and overlay onto defaults object
-            var currentCourseJson = _.deepExtend(defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
+            var currentCourseJson = _.deepExtend({},defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
 
             //write modified course json to build
             grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson, null, 4));
