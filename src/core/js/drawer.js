@@ -18,12 +18,13 @@ define([
         Adapt.trigger('drawer:triggerCustomView', view, hasBackButton);
     };
 
-    Adapt.on('adapt:start', function() {
-        new DrawerView({collection: DrawerCollection});
-    });
-
-    Adapt.on('app:languageChanged', function() {
-        Adapt.trigger('drawer:remove');
+    Adapt.on({
+        'adapt:start': function() {
+             new DrawerView({ collection: DrawerCollection });
+        },
+        'app:languageChanged': function() {
+            Adapt.trigger('drawer:remove');
+        }
     });
 
     Adapt.drawer = Drawer;
