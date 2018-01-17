@@ -238,29 +238,33 @@ define([
 
         setupCorrectFeedback: function() {
 
+            var feedback = this.get("_feedback");
+
             this.set({
-                feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
-                feedbackMessage: this.get("_feedback") ? this.get("_feedback").correct : ""
+                feedbackTitle: feedback ? feedback.title : "",
+                feedbackMessage: feedback ? feedback.correct : ""
             });
 
         },
 
         setupPartlyCorrectFeedback: function() {
 
-            if (this.get("_feedback") && this.get('_feedback')._partlyCorrect) {
-                if (this.get('_attemptsLeft') === 0 || !this.get('_feedback')._partlyCorrect.notFinal) {
-                    if (this.get('_feedback')._partlyCorrect.final) {
+            var feedback = this.get("_feedback");
+
+            if (feedback && feedback._partlyCorrect) {
+                if (this.get('_attemptsLeft') === 0 || !feedback._partlyCorrect.notFinal) {
+                    if (feedback._partlyCorrect.final) {
                         this.set({
-                            feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
-                            feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.final : ""
+                            feedbackTitle: feedback.title ? feedback.title : "",
+                            feedbackMessage: feedback._partlyCorrect.final
                         });
                     } else {
                         this.setupIncorrectFeedback();
                     }
                 } else {
                     this.set({
-                        feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
-                        feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.notFinal : ""
+                        feedbackTitle: feedback.title ? feedback.title : "",
+                        feedbackMessage: feedback._partlyCorrect.notFinal ? feedback._partlyCorrect.notFinal : ""
                     });
                 }
             } else {
@@ -271,15 +275,17 @@ define([
 
         setupIncorrectFeedback: function() {
 
-            if (this.get('_attemptsLeft') === 0 || this.get('_feedback') && !this.get('_feedback')._incorrect.notFinal) {
+            var feedback = this.get("_feedback");
+
+            if (this.get('_attemptsLeft') === 0 || feedback && !feedback._incorrect.notFinal) {
                 this.set({
-                    feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
-                    feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.final : ""
+                    feedbackTitle: feedback ? feedback.title : "",
+                    feedbackMessage: feedback ? feedback._incorrect.final : ""
                 });
             } else {
                 this.set({
-                    feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
-                    feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.notFinal : ""
+                    feedbackTitle: feedback ? feedback.title : "",
+                    feedbackMessage: feedback ? feedback._incorrect.notFinal : ""
                 });
             }
 
