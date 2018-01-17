@@ -66,10 +66,11 @@ define([
         },
 
         render: function() {
-            var data, html;
+            var data;
+            var html;
 
             if (this.customView) {
-                html = this.customView.$el;
+                html = this.customView.el;
             } else {
                 data = this.model.toJSON();
                 html = Handlebars.templates['notify'](data);
