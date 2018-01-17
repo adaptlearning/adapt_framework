@@ -239,7 +239,7 @@ define([
         setupCorrectFeedback: function() {
 
             this.set({
-                feedbackTitle: this.get('title'),
+                feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
                 feedbackMessage: this.get("_feedback") ? this.get("_feedback").correct : ""
             });
 
@@ -251,7 +251,7 @@ define([
                 if (this.get('_attemptsLeft') === 0 || !this.get('_feedback')._partlyCorrect.notFinal) {
                     if (this.get('_feedback')._partlyCorrect.final) {
                         this.set({
-                            feedbackTitle: this.get('title'),
+                            feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
                             feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.final : ""
                         });
                     } else {
@@ -259,7 +259,7 @@ define([
                     }
                 } else {
                     this.set({
-                        feedbackTitle: this.get('title'),
+                        feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
                         feedbackMessage: this.get("_feedback") ? this.get('_feedback')._partlyCorrect.notFinal : ""
                     });
                 }
@@ -273,12 +273,12 @@ define([
 
             if (this.get('_attemptsLeft') === 0 || this.get('_feedback') && !this.get('_feedback')._incorrect.notFinal) {
                 this.set({
-                    feedbackTitle: this.get('title'),
+                    feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
                     feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.final : ""
                 });
             } else {
                 this.set({
-                    feedbackTitle: this.get('title'),
+                    feedbackTitle: this.get("_feedback") ? this.get('_feedback').title : "",
                     feedbackMessage: this.get("_feedback") ? this.get('_feedback')._incorrect.notFinal : ""
                 });
             }
