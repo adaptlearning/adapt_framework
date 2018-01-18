@@ -86,8 +86,6 @@ define([
                 Backbone.history.start();
             }
 
-            Adapt.set("_isStarted", true);
-
             Adapt.trigger('adapt:initialize');
 
         });
