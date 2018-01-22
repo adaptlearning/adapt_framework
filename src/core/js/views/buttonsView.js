@@ -100,23 +100,8 @@ define([
                         }, this));
                     }
                 }
-
-            } else {
-                // Backwards compatibility with v1.x
-                var propertyName = textPropertyName[buttonState.asString];
-                var ariaLabel = this.model.get('_buttons')["_" + propertyName].ariaLabel;
-                var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
-
-                // Enable the button, make accessible and update aria labels and text
-                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
-
-                // Make model answer button inaccessible (but still enabled) for visual users due to
-                // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-                if (changedAttribute == BUTTON_STATE.SHOW_CORRECT_ANSWER || changedAttribute == BUTTON_STATE.HIDE_CORRECT_ANSWER) {
-                    this.$('.buttons-action').a11y_cntrl(false);
-                }
-
-            }
+              
+            } 
 
             this.updateAttemptsCount();
         },

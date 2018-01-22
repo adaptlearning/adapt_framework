@@ -48,55 +48,30 @@ define([
         setupButtonSettings: function() {
             var globalButtons = Adapt.course.get("_buttons");
 
-            // Checks if local _buttons exists and if not use global
+            // Check if  '_buttons' attribute exists and if not use the globally defined buttons.
             if (!this.has("_buttons")) {
                 this.set("_buttons", globalButtons);
             } else {
-                // check all the components buttons
-                // if they are empty use the global default
+                // Check all the components buttons.
+                // If they are empty use the global defaults.
                 var componentButtons = this.get("_buttons");
 
-                if (typeof componentButtons.submit == 'undefined') {
-                    for (var key in componentButtons) {
-                        if (typeof componentButtons[key] == 'object') {
-                          // ARIA labels
-                          if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
+                for (var key in componentButtons) {
+                    if (typeof componentButtons[key] === 'object') {
+                        // Button text.
+                        if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
                             componentButtons[key].buttonText = globalButtons[key].buttonText;
-                          }
+                        }
 
-                          if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
+                        // ARIA labels.
+                        if (!componentButtons[key].ariaLabel && globalButtons[key].ariaLabel) {
                             componentButtons[key].ariaLabel = globalButtons[key].ariaLabel;
-                          }
-                        }
-
-                        if (!componentButtons[key] && globalButtons[key]) {
-                            componentButtons[key] = globalButtons[key];
-                        }
-                    }
-                } else {
-                    // Backwards compatibility with v1.x
-                    var buttons = [];
-
-                    for (var key in componentButtons) {
-                        var index = '_' + key;
-
-                        if (!componentButtons[key]) {
-                            buttons[index] = globalButtons[index];
-                        } else {
-                            buttons[index] = {
-                                buttonText: componentButtons[key],
-                                ariaLabel: componentButtons[key]
-                            };
                         }
                     }
 
-                    // HACK - Append other missing values
-                    buttons['_showFeedback'] = {
-                        buttonText: 'Show feedback',
-                        ariaLabel: 'Show feedback'
-                    };
-
-                    this.set('_buttons', buttons);
+                    if (!componentButtons[key] && globalButtons[key]) {
+                        componentButtons[key] = globalButtons[key];
+                    }
                 }
             }
         },
