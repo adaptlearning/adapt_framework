@@ -1,12 +1,12 @@
 module.exports = function (grunt, options) {
-    
+
     var _ = require("underscore");
 
     var getUnixPath = function(filepath) {
         // convert to unix style slashes
         return filepath.replace(/\\/g,"/");
     };
-    
+
     var collate = function(collateAtFolderName, destFolder, srcFileName) {
         destFolder = getUnixPath(destFolder);
         srcFileName = getUnixPath(srcFileName);
@@ -22,7 +22,7 @@ module.exports = function (grunt, options) {
 
         return collatedFilePath;
     }
-    
+
 
     var nonServerTasks = {
         courseAssets: {
@@ -45,8 +45,8 @@ module.exports = function (grunt, options) {
                 }
             ]
         }
-    };    
-    
+    };
+
     var mandatoryTasks = {
         index: {
             files: [
@@ -64,7 +64,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>core/assets/**'],
-                    dest: '<%= outputdir %>adapt/css/assets/',
+                    dest: '<%= outputdir %>assets/',
                     rename: _.partial(collate, "assets")
                 }
             ]
@@ -87,7 +87,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>components/**/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
@@ -113,7 +113,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>extensions/**/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>onts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
@@ -139,7 +139,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>core/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: 'isFile',
                     rename: _.partial(collate, "fonts")
                 }
@@ -150,7 +150,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>menu/<%= menu %>/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
@@ -163,7 +163,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>theme/<%= theme %>/assets/**'],
-                    dest: '<%= outputdir %>adapt/css/assets/',
+                    dest: '<%= outputdir %>assets/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
@@ -176,7 +176,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>theme/<%= theme %>/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
