@@ -1,0 +1,195 @@
+// Main Colors
+// ===========
+
+// Components
+@primary-color: #078292;
+@primary-color-inverted: #ffffff;
+// Buttons
+@secondary-color: #4b4e4f;
+@secondary-color-inverted: #ffffff;
+// Navigation Bar
+@tertiary-color: #ffffff;
+@tertiary-color-inverted: #4b4e4f;
+// Drawer
+@quaternary-color: #37474f;
+@quaternary-color-inverted: #ffffff;
+// Body
+@foreground-color: #4b4e4f;
+@background-color: #ffffff;
+@foreground-color-inverted: #ffffff;
+@background-color-inverted: #546e7a;
+
+// Inverted colors Legacy
+// ======================
+
+@inverted-foreground-color: #fff;
+@inverted-background-color: #00aeef;
+
+// ======================
+
+// Validation States
+@validation-error: #f26c4f;
+@validation-success: #82ca9c;
+
+// Validation Error color
+// ======================
+
+@validation-error-text-color: @validation-error;
+@validation-error-icon-color: @validation-error;
+@validation-error-border-color: @validation-error;
+
+// ======================
+
+// Disabled States
+@disabled-color: #727272;
+@disabled-color-inverted: #ccc;
+
+@transparency: rgba(255,255,255,0.8);
+
+// Detailed Color setup
+// ====================
+
+// Body
+@font-color: @foreground-color;
+@font-color-inverted: @foreground-color-inverted;
+@title-color: @primary-color;
+@title-color-inverted: @primary-color-inverted;
+
+// Icons
+
+@icon-correct-color: @validation-success;
+@icon-incorrect-color: @validation-error;
+
+// Buttons
+@button-color: @secondary-color;
+@button-color-hover: darken(@button-color, 40%);
+@button-color-disabled: @disabled-color;
+
+@button-text-color: @secondary-color-inverted;
+@button-text-color-hover: @secondary-color-inverted;
+@button-text-color-disabled: @disabled-color-inverted;
+
+@button-border-color: @button-color;
+@button-border-color-hover: @button-color-hover;
+@button-border-color-disabled: @button-color-disabled;
+
+// Navigation 
+@navigation-color: @tertiary-color;
+
+@navigation-icon-color: @tertiary-color-inverted;
+@navigation-icon-color-hover: darken(@navigation-icon-color, 40%);
+
+@navigation-progress-color: @navigation-icon-color;
+@navigation-progress-color-hover: darken(@navigation-progress-color, 40%);
+
+@navigation-progress-background-color: @navigation-color;
+@navigation-progress-background-color-hover: darken(@navigation-color, 40%);
+
+@navigation-progress-border-color: @navigation-icon-color;
+
+
+
+// Navigation Legacy
+// =================
+
+@navigation-icon-hover-color: darken(@navigation-icon-color, 15%);
+
+// ==================
+
+// Drawer
+@drawer-color: @quaternary-color;
+@drawer-border-color: darken(@drawer-color, 20%);
+
+@drawer-icon-color: @quaternary-color-inverted;
+@drawer-icon-color-hover: darken(@drawer-icon-color, 40%);
+
+@drawer-item-color: @drawer-color;
+@drawer-item-color-hover: darken(@drawer-item-color, 40%);
+@drawer-item-color-selected: @drawer-item-color-hover;
+@drawer-item-color-disabled: @item-color-disabled;
+
+@drawer-item-text-color: @quaternary-color-inverted;
+@drawer-item-text-color-hover: @drawer-item-text-color;
+@drawer-item-text-color-selected: @drawer-item-text-color;
+@drawer-item-text-color-disabled: @item-text-color-disabled;
+
+@drawer-progress-color: @drawer-item-text-color;
+@drawer-progress-color-hover: darken(@drawer-progress-color, 40%);
+
+@drawer-progress-border-color: darken(@drawer-item-color, 20%);
+
+
+
+// Drawer
+// ======
+
+@drawer-text-color: #fff;
+
+@drawer-icon-hover-color: darken(@drawer-icon-color, 10%);
+
+@drawer-item-hover-color: darken(@drawer-item-color, 10%);
+
+@drawer-item-text-hover-color: #fff;
+
+// ================
+
+// Components
+@component-background-color: darken(@background-color, 10%);
+
+@item-color: @primary-color;
+@item-color-hover: darken(@item-color, 20%);
+@item-color-disabled: @disabled-color;
+@item-color-visited: desaturate(@item-color, 90%);
+@item-color-selected: @item-color-hover;
+
+@item-text-color: @primary-color-inverted;
+@item-text-color-hover: @item-text-color;
+@item-text-color-disabled: @item-text-color;
+@item-text-color-visited: @item-text-color;
+@item-text-color-selected: @item-text-color;
+
+
+
+// Button
+// ======
+
+// @button-color: @primary-color;
+@button-hover-color: @secondary-color;
+@button-disabled-color: #727272;
+
+// @button-text-color: #fff;
+@button-text-hover-color: #fff;
+@button-text-disabled-color: #ccc;
+
+// ================
+
+@item-body-color: @background-color;
+@item-body-text-color: @foreground-color;
+
+@item-border-color: @item-color;
+@item-border-color-hover: @item-color-hover;
+@item-border-color-disabled: @item-color-disabled;
+@item-border-color-visited: @item-color-visited;
+@item-border-color-selected: @item-color-selected;
+@item-border-color-inverted: @item-text-color;
+
+// Item color Legacy?
+// ==================
+
+@item-hover-color: @secondary-color;
+@item-disabled-color: #727272;
+@item-visited-color: @secondary-color;
+@item-selected-color: @secondary-color;
+@item-text-hover-color: #fff;
+@item-text-disabled-color: #ccc;
+@item-text-visited-color: #fff;
+@item-text-selected-color: #fff;
+
+// ======================
+
+// Menu
+@menu-item-color: @primary-color;
+@menu-item-text-color: @primary-color-inverted;
+@menu-item-progress-color: darken(@menu-item-color, 20%);
+@menu-item-progress-fill-color: @menu-item-text-color;
+@menu-item-progress-border-color: transparent;

@@ -1,0 +1,166 @@
+@font-family: Arial, Helvetica, sans-serif;
+
+@font-size: 14px;
+
+@font-weight-light: 300;
+@font-weight-regular: 400;
+@font-weight-bold: 700;
+
+@menu-title-font-size: 48px;
+@page-title-font-size: 48px;
+@component-title-font-size: 36px;
+@item-title-font-size: 24px;
+@sub-title-font-size: 18px;
+
+@body-text-font-size: 14px;
+@instruction-text-font-size: 14px;
+@button-text-font-size: 18px;
+
+@title-line-height: 120%;
+@body-line-height: 140%;
+
+@font-extra-line-height: 10px;
+
+
+// Detailed Font setup
+// ===================
+
+@menu-title-font-weight: @font-weight-light;
+@menu-title-line-height: @title-line-height;
+
+@page-title-font-weight: @font-weight-light;
+@page-title-line-height: @title-line-height;
+
+@component-title-font-weight: @font-weight-light;
+@component-title-line-height: @title-line-height;
+
+@item-title-font-weight: @font-weight-light;
+@item-title-line-height: @title-line-height;
+
+@sub-title-font-weight: @font-weight-light;
+@sub-title-line-height: @title-line-height;
+
+@body-text-font-weight: @font-weight-regular;
+@body-text-line-height: @body-line-height;
+
+@instruction-text-font-weight: @font-weight-bold;
+@instruction-text-line-height: @body-line-height;
+
+@button-text-font-weight: @font-weight-light;
+@button-text-line-height: @body-line-height;
+
+// Font setup
+// ==========
+
+html {
+  -ms-text-size-adjust: 100%; // preserve HTML font-size (iPhone orientation change)
+  -webkit-text-size-adjust: 100%;
+} 
+
+body {
+    color: @font-color;
+    font-family: @font-family;
+    font-size: @body-text-font-size;
+    font-weight: @body-text-font-weight;
+    line-height: @body-text-line-height;
+    -webkit-font-smoothing: antialiased;
+}
+
+// Variable set font styling
+// =========================
+
+.menu-title {
+    font-size: @menu-title-font-size;
+    font-weight: @menu-title-font-weight;
+    line-height: @menu-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@menu-title-font-size - 10px);
+    }
+}
+
+.page-title {
+    font-size: @page-title-font-size;
+    font-weight: @page-title-font-weight;
+    line-height: @page-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@page-title-font-size - 10px);
+    }
+}
+
+.article-title {
+    font-size: @component-title-font-size;
+    font-weight: @component-title-font-weight;
+    line-height: @component-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@component-title-font-size - 10px);
+    }
+}
+
+.block-title {
+    font-size: @component-title-font-size;
+    font-weight: @component-title-font-weight;
+    line-height: @component-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@component-title-font-size - 10px);
+    }
+}
+
+.component-title {
+    font-size: @component-title-font-size;
+    font-weight: @component-title-font-weight;
+    line-height: @component-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@component-title-font-size - 10px);
+    }
+}
+
+.item-title {
+    font-size: @item-title-font-size;
+    font-weight: @item-title-font-weight;
+    line-height: @item-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@component-title-font-size - 15px);
+    }
+}
+
+.sub-title {
+    font-size: @sub-title-font-size;
+    font-weight: @sub-title-font-weight;
+    line-height: @sub-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@component-title-font-size - 10px);
+    }
+}
+
+.instruction-text {
+    font-size: @instruction-text-font-size;
+    font-weight: @instruction-text-font-weight;
+    line-height: @instruction-text-line-height;
+}
+
+.notify-popup-title {
+    font-size: @component-title-font-size;
+    font-weight: @component-title-font-weight;
+    line-height: @component-title-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: (@component-title-font-size - 10px);
+    }
+}
+
+.button-text {
+    font-size: @button-text-font-size;
+    font-weight: @button-text-font-weight;
+    line-height: @button-text-line-height;
+
+    @media all and (max-width: @device-width-small) {
+        font-size: 14px;
+    }
+}

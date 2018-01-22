@@ -1,0 +1,39 @@
+// Article styling
+// ===============
+
+.article {
+    background-color: @background-color;
+
+    .article-inner {
+        padding: @article-padding-top 0 @article-padding-bottom;
+    }
+
+    .article-header {
+        max-width: @device-width-large;
+        margin: auto;
+        padding: 0;
+    }
+
+    .article-title {
+        margin-bottom: @article-title-margin-bottom;
+        color: @title-color;
+        text-align: left;
+
+        .dir-rtl & {
+            text-align: right;
+        }
+    }
+
+    .article-title-inner {
+        margin-bottom: @article-title-margin-bottom;
+    }
+
+    .article-body {
+        margin-bottom: @article-body-margin-bottom;
+    }
+
+    .article-instruction {
+        margin-bottom: @article-instruction-margin-bottom;
+        .instruction-text;
+    }
+}

@@ -9,7 +9,7 @@ module.exports = function (grunt, options) {
                 src: [
                     '<%= sourcedir %>components/**/*.less',
                     '<%= sourcedir %>extensions/**/*.less',
-                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',                    
+                    '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
                 config: '<%= outputdir %>course/config.<%= jsonext %>',

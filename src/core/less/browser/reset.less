@@ -48,9 +48,24 @@ button {width: auto; overflow: visible;}
 body {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 	.dir-rtl & { direction:rtl; }
+	p {
+        margin-top: @body-text-font-size;
+        margin-bottom: @body-text-font-size;
+    }
 }
 a, button {-webkit-tap-highlight-color: rgba(0,0,0,0.2);}
 .icon {
 	// Fix for iOS devices not displaying icons if hidden then shown
 	-webkit-transform: translateZ(0);
+}
+ul {
+	list-style: disc inside none;
+}
+strong, b {
+	font-weight: @font-weight-bold;
+}
+select {
+	font-size: 14px;
+	line-height: 140%;
+	font-weight: 300;
 }

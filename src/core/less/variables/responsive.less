@@ -1,0 +1,30 @@
+// =================
+// Responsive Widths
+// =================
+
+.responsive-large {
+    @media all and (min-width:@device-width-large) {
+        width:@device-width-large;
+        margin:0 auto;
+    }
+}
+
+.responsive-medium {
+    @media all and (max-width:@device-width-medium) and (min-width:(@device-width-small)) {
+        width:@device-width-small;
+        margin:0 auto;
+    }
+}
+
+.responsive-small {
+    @media all and (max-width:(@device-width-small - 1px)) {
+        width:100%;
+        margin:0 auto;
+    }
+}
+
+.responsive-layout {
+    .responsive-large;
+    .responsive-medium;
+    .responsive-small;
+}
