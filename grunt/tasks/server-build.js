@@ -7,11 +7,13 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             '_log-vars',
+            'build-config',
             'copy',
             'less:' + requireMode,
             'handlebars',
             'javascript:' + requireMode,
-            'replace'
+            'replace',
+            'scripts:adaptpostbuild'
         ]);
     });
-}
+};

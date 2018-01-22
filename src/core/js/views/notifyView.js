@@ -19,9 +19,12 @@ define([
         },
 
         setupEventListeners: function() {
-            this.listenTo(Adapt, 'remove', this.remove);
-            this.listenTo(Adapt, 'device:resize', this.resetNotifySize);
-            this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
+            this.listenTo(Adapt, {
+                'remove page:scrollTo': this.closeNotify,
+                'device:resize': this.resetNotifySize,
+                'accessibility:toggle': this.onAccessibilityToggle
+            });
+
             this._onKeyUp = _.bind(this.onKeyUp, this);
             this.setupEscapeKey();
         },
@@ -30,10 +33,10 @@ define([
             var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
 
             if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on("keyup", this._onKeyUp);
+                $(window).on('keyup', this._onKeyUp);
                 this.escapeKeyAttached = true;
             } else {
-                $(window).off("keyup", this._onKeyUp);
+                $(window).off('keyup', this._onKeyUp);
                 this.escapeKeyAttached = false;
             }
         },
@@ -61,13 +64,13 @@ define([
             var template = Handlebars.templates['notify'];
 
             //hide notify container
-            this.$el.css("visibility", "hidden");
+            this.$el.css('visibility', 'hidden');
             //attach popup + shadow
             this.$el.html(template(data)).prependTo('body');
             //hide popup
-            this.$('.notify-popup').css("visibility", "hidden");
+            this.$('.notify-popup').css('visibility', 'hidden');
             //show notify container
-            this.$el.css("visibility", "visible");
+            this.$el.css('visibility', 'visible');
 
             this.showNotify();
             return this;
@@ -91,7 +94,7 @@ define([
             event.preventDefault();
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
-            Adapt.trigger("notify:cancelled");
+            Adapt.trigger('notify:cancelled');
         },
 
         resetNotifySize: function() {
@@ -122,7 +125,7 @@ define([
 
             Adapt.trigger('notify:opened', this);
 
-            if (this.$("img").length > 0) {
+            if (this.$('img').length > 0) {
                 this.$el.imageready( _.bind(loaded, this));
             } else {
                 loaded.call(this);
@@ -130,11 +133,11 @@ define([
 
             function loaded() {
                 if (this.disableAnimation) {
-                    this.$('.notify-shadow').css("display", "block");
+                    this.$('.notify-shadow').css('display', 'block');
                 } else {
 
                     this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
-                        this.$('.notify-shadow').css("display", "block");
+                        this.$('.notify-shadow').css('display', 'block');
                     }, this)});
 
                 }
@@ -143,18 +146,18 @@ define([
 
                 if (this.disableAnimation) {
 
-                    this.$('.notify-popup').css("visibility", "visible");
+                    this.$('.notify-popup').css('visibility', 'visible');
                     complete.call(this);
-                    
+
                 } else {
 
                     this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
-                        this.$('.notify-popup').css("visibility", "visible");
+                        this.$('.notify-popup').css('visibility', 'visible');
                         complete.call(this);
                     }, this) });
 
                 }
-                
+
                 function complete() {
                     /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
                     Adapt.trigger('popup:opened', this.$('.notify-popup'));
@@ -172,19 +175,19 @@ define([
 
             if (this.disableAnimation) {
 
-                this.$('.notify-popup').css("visibility", "hidden");
-                this.$el.css("visibility", "hidden");
+                this.$('.notify-popup').css('visibility', 'hidden');
+                this.$el.css('visibility', 'hidden');
 
                 this.remove();
 
             } else {
 
                 this.$('.notify-popup').velocity({ opacity: 0 }, {duration:400, complete: _.bind(function() {
-                    this.$('.notify-popup').css("visibility", "hidden");
+                    this.$('.notify-popup').css('visibility', 'hidden');
                 }, this)});
 
                 this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:400, complete:_.bind(function() {
-                    this.$el.css("visibility", "hidden");
+                    this.$el.css('visibility', 'hidden');
                     this.remove();
                 }, this)});
             }

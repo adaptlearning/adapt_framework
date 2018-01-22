@@ -12,7 +12,7 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/**/*.less',                    
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
-                config: '<%= outputdir %>course/config.json',
+                config: '<%= outputdir %>course/config.<%= jsonext %>',
                 sourcemaps:true,
                 compress:false,
                 dest: '<%= outputdir %>adapt/css/',
@@ -41,7 +41,7 @@ module.exports = function (grunt, options) {
                     '<%= sourcedir %>menu/<%= menu %>/**/*.less',
                     '<%= sourcedir %>theme/<%= theme %>/**/*.less'
                 ],
-                config: '<%= outputdir %>course/config.json',
+                config: '<%= outputdir %>course/config.<%= jsonext %>',
                 sourcemaps: false,
                 compress:true,
                 dest: '<%= outputdir %>adapt/css/',

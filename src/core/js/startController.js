@@ -12,18 +12,7 @@ define([
 
         setStartLocation: function() {
             if (!this.isEnabled()) return;
-
-            var hash = this.getStartHash();
-
-            if ('replaceState' in window.history) {
-                window.history.replaceState('', '', hash);
-            } else {
-                // IE8 does not support window.history.replaceState
-                // This is the best approximation taken from Backbone.Router
-                var href = window.location.href.replace(/(javascript:|#).*$/, '');
-                window.location.replace(href + hash);
-            }
-            
+            window.history.replaceState('', '', this.getStartHash());
         },
 
         getStartHash: function(alwaysForce) {
@@ -62,7 +51,8 @@ define([
         getStartId: function() {
             var startId = this.model.get("_id");
             var startIds = this.model.get("_startIds");
-
+            var $html = $("html");
+            
             var hasStartIdsConfiguration = (startIds && startIds.length > 0);
             if (hasStartIdsConfiguration) {
                 for (var i = 0, l =  startIds.length; i < l; i++) {
@@ -81,7 +71,7 @@ define([
                         if (model.get("_isComplete")) continue;
                     }
 
-                    if (!className || $("html").is(className)) {
+                    if (!className || $html.is(className) || $html.hasClass(className)) {
                         startId = item._id;
                         break;
                     }

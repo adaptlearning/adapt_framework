@@ -100,6 +100,7 @@ define([
                         }, this));
                     }
                 }
+              
             } 
 
             this.updateAttemptsCount();
@@ -136,7 +137,7 @@ define([
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').html(attemptsString);
+                this.$('.buttons-display-inner').a11y_text(attemptsString);
             }
 
         },
@@ -148,7 +149,7 @@ define([
                 .removeClass('display-none')
                 .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
         },
-        
+
         refresh: function() {
             this.updateAttemptsCount();
             this.checkResetSubmittedState();
