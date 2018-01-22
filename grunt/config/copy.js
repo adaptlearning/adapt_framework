@@ -113,7 +113,7 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>extensions/**/fonts/**'],
-                    dest: '<%= outputdir %>onts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
