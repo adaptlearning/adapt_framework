@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2017-11-27 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2018-01-22 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 
@@ -413,13 +413,8 @@
 
     var measurements = {
 
-        supplimentDimensions: false,
-
         featureDetect: function() {
             
-            var body = $("body")[0].getBoundingClientRect();
-            //make sure to get height and width independently if getBoundingClientRect doesn't return height and width;
-            measurements.supplimentDimensions = (body.width === undefined);
             loop.hasRaf = (window.requestAnimationFrame && window.cancelAnimationFrame);
             
         },
@@ -438,16 +433,8 @@
                 offset = { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
             }
             
-            var height;
-            var width;
-            if (measurements.supplimentDimensions) {
-                //ie8 requires this as getBoundingClientRect doesn't return height and width
-                height = el.offsetHeight;
-                width = el.offsetWidth;
-            } else {
-                height = offset.height;
-                width = offset.width;
-            }
+            var height = offset.height;
+            var width = offset.width;
             
             //topleft from topleft of window
             var top = offset["top"];
