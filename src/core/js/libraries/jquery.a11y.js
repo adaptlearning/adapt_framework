@@ -227,7 +227,7 @@
                     var cloneChild = $(child.outerHTML)[0];
                     switch(child.nodeType) {
                     case 3: //TEXT NODE
-                        //IF TEXT NODE WRAP IN A TABBABLE SPAn
+                        //IF TEXT NODE WRAP IN A TABBABLE SPAN
                         newChildren.push( makeElementTabbable($("<span>"+child.textContent+"</span>")) );
                         added = true;
                         break;
