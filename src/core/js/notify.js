@@ -67,6 +67,12 @@ define([
 		addNotifyView('push', notifyObject);
 	});
 
+	Adapt.on('notify:triggerCustomView', function(view) {
+		var notify = new NotifyView({
+			view: view
+		});
+	});
+
 	function addNotifyView(type, notifyObject) {
 		notifyObject._type = type;
 

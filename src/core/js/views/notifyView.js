@@ -7,14 +7,20 @@ define([
         className: 'notify',
         disableAnimation: false,
         escapeKeyAttached: false,
+        customView:null,
 
-        initialize: function() {
+        initialize: function(options) {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
+            this.customView = options && options.view;
+
+            if (this.customView) {
+                this.model = this.customView.model;
+            } else {
+                //include accessibility globals in notify model
+                this.model.set('_globals', Adapt.course.get('_globals'));
+            }
 
             this.setupEventListeners();
-
-            //include accessibility globals in notify model
-            this.model.set('_globals', Adapt.course.get('_globals'));
             this.render();
         },
 
@@ -60,13 +66,20 @@ define([
         },
 
         render: function() {
-            var data = this.model.toJSON();
-            var template = Handlebars.templates['notify'];
+            var data;
+            var html;
+
+            if (this.customView) {
+                html = this.customView.el;
+            } else {
+                data = this.model.toJSON();
+                html = Handlebars.templates['notify'](data);
+            }
 
             //hide notify container
             this.$el.css('visibility', 'hidden');
             //attach popup + shadow
-            this.$el.html(template(data)).prependTo('body');
+            this.$el.html(html).prependTo('body');
             //hide popup
             this.$('.notify-popup').css('visibility', 'hidden');
             //show notify container
