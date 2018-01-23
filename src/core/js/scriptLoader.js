@@ -12,7 +12,7 @@
                 }
             },
             paths: {
-                jquery: 'libraries/jquery.v2.min',
+                jquery: 'libraries/jquery.v3.min',
                 underscore: 'libraries/underscore.min',
                 'underscore.results': 'libraries/underscore.results',
                 backbone: 'libraries/backbone.min',
@@ -36,7 +36,7 @@
     function loadJQuery() {
         Modernizr.load([
             {
-                load: 'libraries/jquery.v2.min.js',
+                load: 'libraries/jquery.v3.min.js',
                 complete: checkJQueryStatus
             }
         ]);
