@@ -50,7 +50,7 @@ define([
         },
 
         setupWait: function() {
-            
+
             this.wait = new Wait();
 
             // Setup legcay events and handlers
@@ -109,9 +109,11 @@ define([
     Adapt.componentStore = {};
     Adapt.mappedIds = {};
 
+    Adapt.loadScript = window.__loadScript;
+
     Adapt.initialize = function() {
 
-        //wait until no more completion checking 
+        //wait until no more completion checking
         Adapt.deferUntilCompletionChecked(function() {
 
             //start adapt in a full restored state
@@ -215,7 +217,7 @@ define([
             //use view object
             if(!object.template) object.template = name;
         }
-        
+
         Adapt.componentStore[name] = object;
 
         return object;
@@ -296,7 +298,7 @@ define([
             return;
         }
 
-        return { 
+        return {
             type: type,
             offset: offset
         };

@@ -63,7 +63,7 @@ define([
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
             if (!this.isEnabled()) return;
 
-            if (this._hasCourseLoaded && !Modernizr.touch) {
+            if (this._hasCourseLoaded && !Adapt.device.touch) {
                 //save accessibility state
                 Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
             }
@@ -174,7 +174,7 @@ define([
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;
             $.a11y.options.OS = Adapt.device.OS.toLowerCase();
-            $.a11y.options.isTouchDevice = Modernizr.touch;
+            $.a11y.options.isTouchDevice = Adapt.device.touch;
 
             if (this.isActive()) {
                 _.extend($.a11y.options, {
@@ -269,16 +269,16 @@ define([
             //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
             if (!this.isEnabled()) return;
 
-            if (Modernizr.touch) {
+            if (Adapt.device.touch) {
                  //Remove button
                 this.$accessibilityToggle.remove();
             }
-            
+
             var config = Adapt.config.get("_accessibility");
             // Backwards compatibility for _isDisabledOnTouchDevices
             var isEnabledOnTouchDevices = config._isEnabledOnTouchDevices || (config._isDisabledOnTouchDevices === false);
-            
-            if (!Modernizr.touch || this.isActive() || !isEnabledOnTouchDevices) return;
+
+            if (!Adapt.device.touch || this.isActive() || !isEnabledOnTouchDevices) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
@@ -367,7 +367,7 @@ define([
             var usageInstructions;
             if (instructionsList[Adapt.device.browser]) {
                 usageInstructions = instructionsList[Adapt.device.browser];
-            } else if (Modernizr.touch) {
+            } else if (Adapt.device.touch) {
                 usageInstructions = instructionsList.touch || "";
             } else {
                 usageInstructions = instructionsList.notouch || "";
