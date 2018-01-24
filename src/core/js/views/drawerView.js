@@ -24,11 +24,15 @@ define([
         },
 
         setupEventListeners: function() {
-            this.listenTo(Adapt, 'navigation:toggleDrawer', this.toggleDrawer);
-            this.listenTo(Adapt, 'drawer:triggerCustomView', this.openCustomView);
-            this.listenTo(Adapt, 'drawer:closeDrawer', this.onCloseDrawer);
-            this.listenTo(Adapt, 'remove', this.onCloseDrawer);
-            this.listenTo(Adapt, 'accessibility:toggle', this.onAccessibilityToggle);
+            this.listenTo(Adapt, {
+                'navigation:toggleDrawer': this.toggleDrawer,
+                'drawer:triggerCustomView': this.openCustomView,
+                'drawer:closeDrawer': this.onCloseDrawer,
+                'remove': this.onCloseDrawer,
+                'drawer:remove': this.remove,
+                'accessibility:toggle': this.onAccessibilityToggle
+            });
+
             this._onKeyUp = _.bind(this.onKeyUp, this);
             this.setupEscapeKey();
         },
