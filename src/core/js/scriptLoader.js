@@ -1,5 +1,18 @@
 (function() {
 
+    // Change location of Adapt CSS if incorrect
+    (function fixCSSlocation() {
+        var oldLoc = "adapt/css/adapt.css";
+        var newLoc = "adapt.css";
+        var nodeList = document.querySelectorAll("link");
+        for (var i = 0, l = nodeList.length; i < l; i++) {
+            var el = nodeList[i];
+            if (el.href.substr(-oldLoc.length) !== oldLoc) return;
+            console.warn("WARN: DEPRECATED - CSS location needs updating from", oldLoc, "to", newLoc);
+            el.href = newLoc;
+        }
+    })();
+
     //2. Setup require for old-style module declarations (some code still uses these), configure paths then load JQuery
     function setupRequireJS() {
         requirejs.config({
@@ -50,7 +63,7 @@
             loadFoundationLibraries();
         }
     }
-    
+
     //5. Load foundation libraries and templates then load Adapt itself
     function loadFoundationLibraries() {
         require([
