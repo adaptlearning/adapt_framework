@@ -6,8 +6,9 @@
 		"_classes": "",
 		"title": "Presentation Components",
 		"displayTitle": "Presentation Components",
-		"pageBody": "<strong>Scroll down to see what presentation components are available as part of the Version 2.0 core bundle.</strong>",
 		"body": "Find out what presentation components are available within the core bundle and how you might consider using them within your courses. ",
+		"pageBody": "",
+		"instruction": "Scroll down to see what presentation components are available as part of the Version 2.0 core bundle.",
 		"_graphic": {
 			"src": "course/en/images/menu_thumb.jpg",
 			"alt": "Placeholder graphic."
@@ -25,8 +26,9 @@
 		"_classes": "",
 		"title": "Question Components",
 		"displayTitle": "Question Components",
-		"pageBody": "Without a range of question components, we can’t easily measure if learners are meeting the intended course objectives, provide guidance and feedback if they’re not, or give them opportunities to practise in a ‘safe environment’.<br><br>Discover what question components are available within the framework, along with some tips on how to use them.<br><br><strong>Scroll down to see what question components are available as part of the Version 2.0 core bundle.</strong>",
 		"body": "Discover what question components are available within the framework, along with some tips on how to use them.",
+		"pageBody": "Without a range of question components, we can’t easily measure if learners are meeting the intended course objectives, provide guidance and feedback if they’re not, or give them opportunities to practise in a ‘safe environment’.<br><br>Discover what question components are available within the framework, along with some tips on how to use them.",
+		"instruction": "Scroll down to see what question components are available as part of the Version 2.0 core bundle.",
 		"_graphic": {
 			"src": "course/en/images/menu_thumb.jpg",
 			"alt": "Placeholder graphic."
@@ -44,8 +46,9 @@
 		"_classes": "assessment",
 		"title": "Adapt Assessment",
 		"displayTitle": "Adapt Assessment",
-		"pageBody": "We’ve put together a very short quiz to demonstrate the new assessment functionality. In this simple example there are two banks that each contain three questions with two being taken from each bank at random. The order in which the questions are presented is then also randomised, as is the order of each question’s options.<br><br><strong>Think you can get a perfect score? Scroll down to attempt the first question.</strong>",
 		"body": "Find out more about the new assessment functionality in V2.0, including randomised banks and an improved results feature.",
+		"pageBody": "We’ve put together a very short quiz to demonstrate the new assessment functionality. In this simple example there are two banks that each contain three questions with two being taken from each bank at random. The order in which the questions are presented is then also randomised, as is the order of each question’s options.",
+		"instruction": "Think you can get a perfect score? Scroll down to attempt the first question.",
 		"_graphic": {
 			"src": "course/en/images/menu_thumb.jpg",
 			"alt": "Placeholder graphic."

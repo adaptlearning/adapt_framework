@@ -51,7 +51,8 @@ define([
         getStartId: function() {
             var startId = this.model.get("_id");
             var startIds = this.model.get("_startIds");
-
+            var $html = $("html");
+            
             var hasStartIdsConfiguration = (startIds && startIds.length > 0);
             if (hasStartIdsConfiguration) {
                 for (var i = 0, l =  startIds.length; i < l; i++) {
@@ -70,7 +71,7 @@ define([
                         if (model.get("_isComplete")) continue;
                     }
 
-                    if (!className || $("html").is(className)) {
+                    if (!className || $html.is(className) || $html.hasClass(className)) {
                         startId = item._id;
                         break;
                     }

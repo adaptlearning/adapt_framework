@@ -89,6 +89,41 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
+    "_onScreen": {
+      "type": "object",
+      "title": "On-screen classes",
+      "help": "These settings allow you to attach classes to the block when it is within the browser's viewport; helpful for running CSS-based animations on blocks as they scroll into view.",
+      "properties": {
+        "_isEnabled": {
+          "type": "boolean",
+          "default": false,
+          "isSetting": true,
+          "inputType": "Checkbox",
+          "validators": [],
+          "title": "Enabled?"
+        },
+        "_classes": {
+          "type": "string",
+          "default": "",
+          "isSetting": true,
+          "required": false,
+          "inputType": "Text",
+          "validators": [],
+          "title": "Classes",
+          "help": "The CSS class(es) to add to the block element."
+        },
+        "_percentInviewVertical": {
+          "type": "number",
+          "required": false,
+          "default": 50,
+          "isSetting": true,
+          "title": "Percent in view",
+          "inputType": "Number",
+          "validators": ["number"],
+          "help": "Controls what percentage of the block's height needs to be in the viewport in order for the CSS class(es) to be added."
+        }
+      }
+    },
     "_extensions": {
       "type": "object"
     }

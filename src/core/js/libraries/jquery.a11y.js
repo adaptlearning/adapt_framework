@@ -1,9 +1,9 @@
 //https://github.com/adaptlearning/jquery.a11y 2015-08-13
 
 (function($, window) {
-    
+
     var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
-    
+
     // JQUERY FILTERS FOR ELEMENTS
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
@@ -15,7 +15,7 @@
     // JQUERY SELECTORS
         var domSelectors = {
             "focuser": "#a11y-focuser",
-            "focusguard": "#a11y-focusguard",
+            "focusguard": ".a11y-focusguard",
             "selected": "#a11y-selected",
             "ignoreFocusElements": ".a11y-ignore-focus",
             "nativeSpaceElements": "textarea, input[type='text'], div[contenteditable=true]",
@@ -33,7 +33,7 @@
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "focusguard": '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
+            "focusguard": '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
             "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
         };
@@ -67,15 +67,15 @@
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
                 var scrollingParent = getScrollingParent(event);
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) {
-                    $(window).scroll(); 
-                    return; 
+                    $(window).scroll();
+                    return;
                 }
             }
 
             if (options.isDebug) console.log("preventScroll2")
 
             event.preventDefault();
-            return false; 
+            return false;
         }
 
         var scrollKeys = {37: 1, 38: 1, 39: 1, 40: 1};
@@ -89,7 +89,7 @@
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
                 var scrollingParent = getScrollingParent(event);
-                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
+                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;
             }
 
             if (options.isDebug) console.log("preventScroll2")
@@ -105,7 +105,7 @@
 
             var isTouchEvent = event.type == "touchmove";
 
-            var deltaY; 
+            var deltaY;
             var directionY;
 
             if (isTouchEvent) {
@@ -123,7 +123,7 @@
                     currentY = event.originalEvent.touches[0].pageY;
                     previousY = state.scrollStartEvent.originalEvent.touches[0].pageY;
                 }
-                
+
                 //touch: delta calculated from touchstart pos vs touchmove pos
                 deltaY = currentY - previousY;
                 if (deltaY === 0) return $('body');
@@ -137,10 +137,10 @@
                 //desktop: chrome & safari delta || firefox & ie delta inverted
                 deltaY = event.originalEvent.wheelDeltaY || event.originalEvent.deltaY !== undefined ? -event.originalEvent.deltaY : event.originalEvent.wheelDelta || undefined;
                 if (deltaY === 0) return $('body');
-                
+
                 directionY = deltaY > 0 ? "up" : "down";
 
-            }           
+            }
 
             var itemParents = $element.parents();
             var lastScrolling = null;
@@ -149,7 +149,7 @@
                 if ($parent.is("body")) return $parent;
                 var scrollType = $parent.css("overflow-y");
                 switch (scrollType){
-                case "auto": case "scroll": 
+                case "auto": case "scroll":
                     var parentScrollTop = Math.ceil($parent.scrollTop());
                     var parentInnerHeight = $parent.outerHeight();
                     var parentScrollHeight = $parent[0].scrollHeight;
@@ -163,7 +163,7 @@
                     }
 
                     lastScrolling = $parent;
-                    
+
                     break;
                 default:
                 }
@@ -199,7 +199,7 @@
                 //CAPTURE DOMNODE CHILDREN
                 var children = $element.children();
 
-                
+
                 if (children.length === 0) {
                     //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
                     var textContent = $element.text();
@@ -227,10 +227,8 @@
                     var cloneChild = $(child.outerHTML)[0];
                     switch(child.nodeType) {
                     case 3: //TEXT NODE
-                        // preserve whitespace in ie8 by adding initial zero-width space
-                        var childContent = child.textContent || "&#8203;" + child.nodeValue;
-                        //IF TEXT NODE WRAP IN A TABBABLE SPAn
-                        newChildren.push( makeElementTabbable($("<span>"+childContent+"</span>")) );
+                        //IF TEXT NODE WRAP IN A TABBABLE SPAN
+                        newChildren.push( makeElementTabbable($("<span>"+child.textContent+"</span>")) );
                         added = true;
                         break;
                     case 1: //DOM NODE
@@ -274,7 +272,7 @@
                     $element.attr({
                         "role": "region",
                         "tabindex": 0,
-                    }).addClass("prevent-default").addClass("accessible-text-block");
+                    }).addClass("prevent-default");
                     return $element;
                 }
             }
@@ -306,7 +304,7 @@
 
              if (!options.isScrollDisableEnabled) return this;
 
-            if (!state.scrollDisabledElements) return;            
+            if (!state.scrollDisabledElements) return;
 
             state.scrollDisabledElements = state.scrollDisabledElements.not(this);
 
@@ -343,13 +341,13 @@
             if ($element.isFixedPostion()) return this;
 
             options = options || {};
-            
+
             var topOffset = options.focusOffsetTop || 0;
             var bottomOffset = options.focusOffsetTop || 0;
 
             var elementTop = $element.offset()["top"];
             var scrollTopWithTopOffset = $(window).scrollTop() + topOffset;
-            
+
             var windowAvailableHeight = $(window).innerHeight() - bottomOffset - topOffset;
 
             var scrollBottomWithTopOffset = scrollTopWithTopOffset + windowAvailableHeight
@@ -406,7 +404,7 @@
 
             var $element = $(this[0]);
 
-            var isSpecialElement = $element.is(domSelectors.focuser) || $element.is(domSelectors.focusguard) || $element.is(domSelectors.selected); 
+            var isSpecialElement = $element.is(domSelectors.focuser) || $element.is(domSelectors.focusguard) || $element.is(domSelectors.selected);
             var isTabbable = $element.is(domSelectors.focusableElements) && $element.is(domFilters.focusableElementsFilter);
 
             if (!isSpecialElement && !isTabbable) {
@@ -425,7 +423,7 @@
                     var $nextAllElements = $nextSiblings.find(domSelectors.focusableElements);
                     //filter enabled+visible focusable items
                     var $nextAllElementsFiltered = $nextAllElements.filter(domFilters.focusableElementsFilter);
-                    
+
                     //if none found go to focuser
                     if ($nextAllElementsFiltered.length === 0) {
                         $element = $(domSelectors.focuser);
@@ -443,7 +441,7 @@
 
             var options = $.a11y.options;
             if (options.isDebug) console.log("focusOrNext", $element[0]);
-            
+
             if (returnOnly !== true) {
                 if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
                 $element.focusNoScroll();
@@ -520,7 +518,7 @@
             var options = $.a11y.options;
             var state = $.a11y.state;
             var $element = $(event.target);
-            
+
             //search out intended click element
             if (!$element.is(domSelectors.globalTabIndexElements)) {
                 //if element receiving click is not tabbable, search parents
@@ -546,7 +544,7 @@
                         }
                     }
                 } else {
-                    
+
                     //use tabbable parent
                     $element = $($tabbableParents[0]);
                 }
@@ -566,7 +564,7 @@
             a11y_triggerReadEvent($element);
 
             if (options.isDebug) console.log("focus", $element[0]);
-            
+
             state.$activeElement = $(event.currentTarget);
 
             if (state.$activeElement.is(domSelectors.nativeTabElements)) {
@@ -610,7 +608,7 @@
             $(window).off("touchstart", onScrollStartCapture); // mobile
             $(window).off("touchmove", preventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
-            $(document).off("keydown", preventScrollKeys);  
+            $(document).off("keydown", preventScrollKeys);
         }
 
         function a11y_triggerReadEvent($element) {
@@ -624,38 +622,26 @@
         }
 
         function a11y_reattachFocusGuard() {
-            var options = $.a11y.options;
-            var $focusguard = $(domSelectors.focusguard);
-
-            if ($focusguard.length === 0) {
-                $focusguard = $(domInjectElements.focusguard);
-            }
-
+            var $focusguard;
             var $currentFloor = $.a11y.state.floorStack[$.a11y.state.floorStack.length-1];
 
-            $focusguard.remove().appendTo($currentFloor).attr("tabindex", 0);
-
-            $focusguard.off("click").off("focus");
-
-            $focusguard.on("click", function(event) {
-
-                if (options.isDebug) console.log ("focusguard");
-
-                preventDefault(event)
-                $.a11y_focus(true);
-
-            });
-
-            $focusguard.on("focus", function(event) {
-
-                if (options.isDebug) console.log ("focusguard");
-
-                preventDefault(event);
-                $.a11y_focus(true);
-
-                return false;
-
-            });
+            if ($.a11y.state.floorStack.length == 1) {
+                // only a page/menu is present
+                if ($currentFloor.find(domSelectors.focusguard).length === 0) {
+                    // create and attach the focusguard
+                    $focusguard = $(domInjectElements.focusguard);
+                    $focusguard.appendTo($currentFloor).attr("tabindex", 0);
+                }
+            } else {
+                // we have a popup
+                if ($currentFloor.find(domSelectors.focusguard).length === 0) {
+                    // the popup is not using the helper
+                    console.warn("DEPRECATED (a11y_reattachFocusGuard) - Use the Handlebars helper a11y_wrap_focus after the last tabbable element in the popup");
+                    // create and attach the focusguard
+                    $focusguard = $(domInjectElements.focusguard);
+                    $focusguard.appendTo($currentFloor).attr("tabindex", 0);
+                }
+            }
         }
 
         function a11y_setupUserInputControlListeners() {
@@ -679,6 +665,25 @@
             $("body")
                 .on("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .on("focus", domSelectors.globalTabIndexElements, onFocus);
+        }
+
+        function a11y_setupFocusGuard() {
+            var options = $.a11y.options;
+
+            if ($.a11y.state.isFocusGuardSetup) return;
+
+            $.a11y.state.isFocusGuardSetup = true;
+
+            $('body').on("click focus", domSelectors.focusguard, function(event) {
+
+                if (options.isDebug) console.log ("focusguard");
+
+                preventDefault(event)
+                $.a11y_focus(true);
+
+                return false;
+
+            });
         }
 
         function a11y_injectControlElements() {
@@ -789,6 +794,7 @@
             if (iOS) options.OS = "mac";
 
             a11y_injectControlElements();
+            a11y_setupFocusGuard();
 
             if (options.isUserInputControlEnabled) {
                 a11y_setupUserInputControlListeners();
@@ -876,7 +882,7 @@
 
     //MAKE ACCESSIBLE CONTROLS
 
-        
+
         //MAKES NAVIGATION CONTROLS ACCESSIBLE OR NOT WITH OPTIONAL DISABLE CLASS AND ATTRIBUTE
         $.fn.a11y_cntrl = function(enabled, withDisabled) {
             if (this.length === 0) return this;
@@ -902,7 +908,7 @@
                             tabindex: "0",
                         }).removeAttr("aria-hidden").removeClass("aria-hidden");
                         $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                    }                    
+                    }
                     if (withDisabled) {
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
@@ -928,7 +934,7 @@
             return this.a11y_cntrl(enabled, true);
         };
 
-      
+
     //MAKE ACCESSIBLE TEXT
 
         var htmlCharRegex = /&.*;/g
@@ -1036,7 +1042,7 @@
                 $("#a11y-selected").append($alert);
             $alert.css("visibility","visible");
             }
-            
+
             setTimeout(function() {
                 $alert.remove();
             }, 20000);
@@ -1068,7 +1074,7 @@
 
             $elements.each(function(index, item) {
                 var $item = $(item);
-                
+
                 var elementUID;
                 if (item.a11y_uid == undefined) {
                     item.a11y_uid = "UID" + ++state.elementUIDIndex;
@@ -1091,7 +1097,7 @@
             this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).attr({
                 'tabindex': 0
             }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
-            this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden"); 
+            this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
 
             $.a11y_update();
 
@@ -1111,8 +1117,10 @@
             if (this.length > 0) $(this[0]).limitedScrollTo();
 
             if (options.isScrollDisabledOnPopupEnabled) {
-                $('body').scrollDisable();
-                $(domSelectors.focusguard).css({
+                $('html').css('overflow-y', 'hidden');
+
+                $.a11y.state.floorStack[$.a11y.state.floorStack.length-2].scrollDisable();
+                $(domSelectors.focusguard, this).css({
                     "position":"fixed",
                     "bottom": "0px"
                 });
@@ -1127,7 +1135,10 @@
             var options = $.a11y.options;
             var state = $.a11y.state;
 
-            $.a11y.state.floorStack.pop();
+            // the body layer is the first element and must always exist
+            if ($.a11y.state.floorStack.length <= 1) return;
+
+            var $currentFloor = $.a11y.state.floorStack.pop();
 
             $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).each(function(index, item) {
                 var $item = $(item);
@@ -1149,7 +1160,7 @@
                     //delete element tabindex store if empty
                     delete state.tabIndexes[elementUID];
                 }
-                
+
                 $item.attr({
                     'tabindex': previousTabIndex
                 });
@@ -1161,7 +1172,7 @@
 
                 //show element to screen reader
                 $item.removeAttr('aria-hidden').removeClass("aria-hidden");
-                
+
                 if ($item.is(domSelectors.hideableElements)) {
                     $item.removeAttr("tabindex");
                 }
@@ -1172,15 +1183,19 @@
             $.a11y_update();
 
             if (options.isScrollDisabledOnPopupEnabled) {
-                $('body').scrollEnable();
-                $(domSelectors.focusguard).css({
+                if (state.floorStack.length == 1) $('html').css('overflow-y', '');
+
+                $.a11y.state.floorStack[$.a11y.state.floorStack.length-1].scrollEnable();
+                $(domSelectors.focusguard, $currentFloor).css({
                     "position":"",
                     "bottom": ""
                 });
             }
 
             defer(function() {
-
+                // Listeners for popup close may shift focus so respect this
+                if ($activeElement != $.a11y.state.$activeElement) return;
+                
                 if ($activeElement) {
                     state.$activeElement = $activeElement;
                     //scroll to focused element
@@ -1215,7 +1230,7 @@
                     $(tags[0]).focusOrNext();
                 }
             });
-            //SCROLL TO TOP IF NOT POPUPS ARE OPEN        
+            //SCROLL TO TOP IF NOT POPUPS ARE OPEN
             return this;
         };
 
@@ -1241,7 +1256,7 @@
                     } else {
                         $(tags[0]).focusOrNext();
                     }
-                    
+
                 }
             }, this);
             return this;
@@ -1294,7 +1309,7 @@
                         }).addClass("a11y-ignore");
                     }
                     injectElement.html( ariaLabel );
-                    $item.prepend(injectElement);    
+                    $item.prepend(injectElement);
                 }
 
                 $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");

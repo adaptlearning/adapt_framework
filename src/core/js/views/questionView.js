@@ -18,7 +18,8 @@ define([
             + " " + this.model.get('_classes')
             + " " + this.setVisibility()
             + " component-" + this.model.get('_layout')
-            + " nth-child-" + this.model.get("_nthChild");
+            + " nth-child-" + this.model.get("_nthChild")
+            + (this.model.get('_isComplete') ? ' completed' : '');
         },
 
         //////
@@ -358,12 +359,6 @@ define([
             return null;
         },
 
-        // a string detailing how the user answered the question
-        getResponse:function() {},
-
-        // a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
-        getResponseType:function() {},
-
         // This function is overridden if useQuestionModeOnly: false. see below.
         _runModelCompatibleFunction: function(name, lookForViewOnlyFunction) {
             return this.model[name](); //questionModel Only
@@ -393,6 +388,21 @@ define([
          * Please remove them from your question component's view.
         */
 
+            // Returns an object specific to the question type.
+            getInteractionObject: function() {
+                return this.model.getInteractionObject();
+            },
+
+            // Retturns a string detailing how the user answered the question.
+            getResponse: function() {
+                return this.model.getResponse();
+            },
+
+            // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
+            getResponseType: function() {
+                return this.model.getResponseType();
+            },
+            
             // Calls default methods to setup on questions
             setupDefaultSettings: function() {
                 return this.model.setupDefaultSettings();

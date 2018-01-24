@@ -1,4 +1,4 @@
-// 2017-02-28 https://github.com/cgkineo/backbone.controller
+// 2017-04-11 https://github.com/cgkineo/backbone.controller
 /*
 	Adds an extensible class to backbone, which doesn't have a Model or DOM element (.$el) and isn't a Collection,.
 	It still works exactly like Model, View and Collection, in that it has the Events API, .extend and an initialize function
@@ -23,5 +23,7 @@ define("backbone.controller", [
 	});
 
 	Controller.extend = Backbone.View.extend;
+
+	return Backbone;
 
 });

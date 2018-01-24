@@ -22,6 +22,12 @@ define([
             _isHidden: false
         },
 
+        trackable: [
+            '_id',
+            '_isComplete',
+            '_isInteractionComplete'
+        ],
+
         initialize: function () {
             // Wait until data is loaded before setting up model
             this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
@@ -52,7 +58,55 @@ define([
 
                     this.checkLocking();
                 }
+
+                this.setupTrackables();
+
             }, this));
+
+        },
+
+        setupTrackables: function() {
+
+            // Limit state trigger calls and make state change callbacks batched-asynchronous
+            var originalTrackableStateFunction = this.triggerTrackableState;
+            this.triggerTrackableState = _.compose(
+                _.bind(function() {
+
+                    // Flag that the function is awaiting trigger
+                    this.triggerTrackableState.isQueued = true;
+
+                }, this),
+                _.debounce(_.bind(function() {
+                    
+                    // Trigger original function
+                    originalTrackableStateFunction.apply(this);
+
+                    // Unset waiting flag
+                    this.triggerTrackableState.isQueued = false;
+
+                }, this), 17)
+            );
+
+            // Listen to model changes, trigger trackable state change when appropriate
+            this.listenTo(this, "change", function(model, value) {
+
+                // Skip if trigger queued or adapt hasn't started yet
+                if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
+                    return;
+                }
+
+                // Check that property is trackable
+                var trackablePropertyNames = _.result(this, 'trackable', []);
+                var changedPropertyNames = _.keys(model.changed);
+                var isTrackable = _.find(changedPropertyNames, function(item, index) {
+                     return _.contains(trackablePropertyNames, item);
+                }.bind(this));
+
+                if (isTrackable) {
+                    // Trigger trackable state change
+                    this.triggerTrackableState();
+                }
+            });
         },
 
         setupChildListeners: function() {
@@ -69,6 +123,39 @@ define([
         },
 
         init: function() {},
+
+        getTrackableState: function() {
+
+            var trackable = this.resultExtend("trackable", []);
+            var json = this.toJSON();
+
+            var args = trackable;
+            args.unshift(json);
+
+            return _.pick.apply(_, args);
+
+        },
+
+        setTrackableState: function(state) {
+
+            var trackable = this.resultExtend("trackable", []);
+
+            var args = trackable;
+            args.unshift(state);
+
+            state = _.pick.apply(_, args);
+
+            this.set(state);
+
+            return this;
+
+        },
+
+        triggerTrackableState: function() {
+            
+            Adapt.trigger("state:change", this, this.getTrackableState());
+            
+        },
 
         reset: function(type, force) {
             if (!this.get("_canReset") && !force) return;
@@ -112,57 +199,44 @@ define([
         },
 
         checkCompletionStatus: function () {
-            //defer to allow other change:_isComplete handlers to fire before cascasing to parent
+            //defer to allow other change:_isComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(function() {
-                var isComplete = false;
-                var children = this.getAvailableChildModels();
-                //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf");
-
-                if (requireCompletionOf === -1) {
-                    // Check if any return _isComplete:false
-                    // If not - set this model to _isComplete: true
-                    isComplete = !(_.find(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }));
-                } else {
-                    isComplete = (_.filter(children, function(child) {
-                        return !child.get('_isComplete') && !child.get('_isOptional');
-                    }).length >= requireCompletionOf);
-                }
-
-                this.set({_isComplete: isComplete});
-
-                Adapt.checkedCompletion();
-            }, this));
+            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isComplete"));
         },
 
         checkInteractionCompletionStatus: function () {
-            //defer to allow other change:_isInteractionComplete handlers to fire before cascasing to parent
+            //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(function() {
-                var isInteractionComplete = false;
-                var children = this.getAvailableChildModels();
-                //number of mandatory children that must be complete or -1 for all
-                var requireCompletionOf = this.get("_requireCompletionOf");
+            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isInteractionComplete"));
+        },
 
-                if (requireCompletionOf === -1) {
-                    // Check if any return _isInteractionComplete:false
-                    // If not - set this model to _isInteractionComplete: true
-                    isInteractionComplete = (_.find(children, function(child) {
-                        return child.get('_isInteractionComplete') === false && child.get('_isOptional') === false;
-                    }) === undefined);
-                } else {
-                    isInteractionComplete = (_.filter(children, function(child) {
-                        return child.get('_isInteractionComplete') === true && child.get('_isOptional') === false;
-                    }).length >= requireCompletionOf);
-                }
+        /**
+         * Function for checking whether the supplied completion attribute should be set to true or false. 
+         * It iterates over our immediate children, checking the same completion attribute on any mandatory child
+         * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true; 
+         * if not, we set it to false.
+         * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
+         */        
+        checkCompletionStatusFor: function(completionAttribute) {
+            if (!completionAttribute) completionAttribute = "_isComplete";
 
-                this.set({_isInteractionComplete:isInteractionComplete});
-                Adapt.checkedCompletion();
+            var completed = false;
+            var children = this.getAvailableChildModels();
+            var requireCompletionOf = this.get("_requireCompletionOf");
 
-            }, this));
+            if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
+                completed = (_.find(children, function(child) {
+                    return !child.get(completionAttribute) && !child.get('_isOptional');
+                }) === undefined);
+            } else {
+                completed = (_.filter(children, function(child) {
+                    return child.get(completionAttribute) && !child.get('_isOptional');
+                }).length >= requireCompletionOf);
+            }
+
+            this.set(completionAttribute, completed);
+
+            Adapt.checkedCompletion();
         },
 
         findAncestor: function (ancestors) {
@@ -218,6 +292,57 @@ define([
             return returnedDescendants;
         },
 
+        
+        // Fetchs the sub structure of a model as a flattened array
+        // 
+        // Such that the tree:
+        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+        // 
+        // will become the array (parent first = false):
+        //  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
+        // 
+        // or (parent first = true):
+        //  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
+        // 
+        // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.        
+        getAllDescendantModels: function(isParentFirst) {
+
+            var descendants = [];
+
+            if (this.get("_type") === "component") {
+                descendants.push(this);
+                return descendants;
+            }
+
+            var children = this.getChildren();
+
+            for (var i = 0, l = children.models.length; i < l; i++) {
+
+                var child = children.models[i];
+                if (child.get("_type") === "component") {
+
+                    descendants.push(child);
+                    continue;
+
+                }
+
+                var subDescendants = child.getAllDescendantModels(isParentFirst);
+                if (isParentFirst === true) {
+                    descendants.push(child);
+                }
+
+                descendants = descendants.concat(subDescendants);
+                
+                if (isParentFirst !== true) {
+                    descendants.push(child);
+                }
+
+            }
+
+            return descendants;
+
+        },
+
         findDescendants: function (descendants) {
             Adapt.log.warn("DEPRECATED - Use findDescendantModels() as findDescendants() may be removed in the future");
 
@@ -254,6 +379,105 @@ define([
 
             // returns a collection of children
             return returnedDescendants;
+        },
+
+        // Returns a relative model from the Adapt hierarchy
+        //    
+        // Such that in the tree:
+        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+        // 
+        //  findRelative(modelC1, "@block +1") = modelB2;
+        //  findRelative(modelC1, "@component +4") = modelC5;
+        //
+        // See Adapt.parseRelativeString() for a description of relativeStrings
+        findRelativeModel: function(relativeString, options) {
+            
+            var types = [ "menu", "page", "article", "block", "component" ];
+
+            options = options || {};
+
+            var modelId = this.get("_id");
+            var modelType = this.get("_type");
+
+            // return a model relative to the specified one if opinionated
+            var rootModel = Adapt.course;
+            if (options.limitParentId) {
+                rootModel = Adapt.findById(options.limitParentId);
+            }
+
+            var relativeDescriptor = Adapt.parseRelativeString(relativeString);
+
+            var findAncestorType = (_.indexOf(types, modelType) > _.indexOf(types, relativeDescriptor.type));
+            var findSiblingType = (modelType === relativeDescriptor.type);
+
+            var searchBackwards = (relativeDescriptor.offset < 0);
+            var moveBy = Math.abs(relativeDescriptor.offset);
+            var movementCount = 0;
+
+            var findDescendantType = (!findSiblingType && !findAncestorType);
+
+            var pageDescendants;
+            if (searchBackwards) {
+                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
+                pageDescendants = rootModel.getAllDescendantModels(true);
+
+                // reverse so that we don't need a forward and a backward iterating loop
+                // reversed [c9,c8,b4,a4,c7,c6,b3,a3,p2,c4,c3,b2,a2,c2,c1,b1,a1,p1]
+                pageDescendants.reverse();
+
+                if (findDescendantType) {
+                    // move by one less as ordering allows
+                    moveBy-=1;
+                }
+
+            } else if (findDescendantType) {
+                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
+                pageDescendants = rootModel.getAllDescendantModels(true);
+            } else if (findSiblingType || findAncestorType) {
+                // children first [c1,c2,b1,a1,c3,c4,b2,a2,p1,c6,c7,b3,a3,c8,c9,b4,a4,p2]
+                pageDescendants = rootModel.getAllDescendantModels(false);
+            }
+
+            // filter if opinionated
+            if (typeof options.filter === "function") {
+                pageDescendants = _.filter(pageDescendants, options.filter);
+            }
+
+            // find current index in array
+            var modelIndex = _.findIndex(pageDescendants, function(pageDescendant) {
+                if (pageDescendant.get("_id") === modelId) {
+                    return true;
+                }
+                return false;
+            });
+
+            if (options.loop) {
+
+                // normalize offset position to allow for overflow looping
+                var typeCounts = {};
+                pageDescendants.forEach(function(model) {
+                    var type = model.get("_type");
+                    typeCounts[type] = typeCounts[type] || 0;
+                    typeCounts[type]++;
+                });
+                moveBy = moveBy % typeCounts[relativeDescriptor.type];
+                
+                // double up entries to allow for overflow looping
+                pageDescendants = pageDescendants.concat(pageDescendants.slice(0));
+
+            }
+
+            for (var i = modelIndex, l = pageDescendants.length; i < l; i++) {
+                var descendant = pageDescendants[i];
+                if (descendant.get("_type") === relativeDescriptor.type) {
+                    if (movementCount === moveBy) {
+                        return Adapt.findById(descendant.get("_id"));
+                    }
+                    movementCount++;
+                }
+            }
+
+            return undefined;
         },
 
         getChildren: function () {
