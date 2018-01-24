@@ -4,6 +4,15 @@ define([
     'a11y'
 ], function(Adapt, AccessibilityView) {
 
+    var defaultAriaLevels = {
+        "menu": 1,
+        "menuItem": 2,
+        "page": 1,
+        "article": 2,
+        "block": 3,
+        "component": 4
+    };
+
     var Accessibility = Backbone.Controller.extend({
 
         $html: $('html'),
@@ -117,15 +126,15 @@ define([
             });
 
             Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return '<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
+                return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
             });
 
             Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return '<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
+                return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
             });
 
             Handlebars.registerHelper('a11y_wrap_focus', function(text) {
-                return '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
+                return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>');
             });
 
             Handlebars.registerHelper('a11y_attrs_heading', function(levelOrType) {
@@ -145,16 +154,17 @@ define([
                 }
                 else if (_.isString(levelOrType)) {
                     // if a string is passed check if it is defined in global configuration
+                    cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
                     if (cfg._ariaLevels && cfg._ariaLevels[levelOrType] !== undefined) {
                         level = cfg._ariaLevels[levelOrType];
                     }
                 }
 
-                return ' role="heading" aria-level="'+level+'" '+getTabIndex()+' ';
+                return new Handlebars.SafeString(' role="heading" aria-level="'+level+'" '+getTabIndex()+' ');
             });
 
             Handlebars.registerHelper('a11y_attrs_tabbable', function() {
-                return ' role="region" '+getTabIndex()+' ';
+                return new Handlebars.SafeString(' role="region" '+getTabIndex()+' ');
             });
 
             var getTabIndex = function() {
@@ -301,11 +311,11 @@ define([
                  //Remove button
                 this.$accessibilityToggle.remove();
             }
-            
+
             var config = Adapt.config.get("_accessibility");
             // Backwards compatibility for _isDisabledOnTouchDevices
             var isEnabledOnTouchDevices = config._isEnabledOnTouchDevices || (config._isDisabledOnTouchDevices === false);
-            
+
             if (!Modernizr.touch || this.isActive() || !isEnabledOnTouchDevices) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility

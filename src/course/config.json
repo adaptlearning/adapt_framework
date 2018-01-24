@@ -14,7 +14,9 @@
         "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
-            "contentObject": 1,
+            "menu": 1,
+            "menuItem": 2,
+            "page": 1,
             "article": 2,
             "block": 3,
             "component": 4
