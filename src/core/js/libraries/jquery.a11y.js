@@ -674,20 +674,11 @@
 
             $.a11y.state.isFocusGuardSetup = true;
 
-            $('body').on("click", domSelectors.focusguard, function(event) {
+            $('body').on("click focus", domSelectors.focusguard, function(event) {
 
                 if (options.isDebug) console.log ("focusguard");
 
                 preventDefault(event)
-                $.a11y_focus(true);
-
-            });
-
-            $('body').on("focus", domSelectors.focusguard, function(event) {
-
-                if (options.isDebug) console.log ("focusguard");
-
-                preventDefault(event);
                 $.a11y_focus(true);
 
                 return false;
