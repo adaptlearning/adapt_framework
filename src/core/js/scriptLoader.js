@@ -1,7 +1,7 @@
 (function() {
 
     function loadScript(url, callback){
-        if (!url || !(typeof url === 'string')) return;
+        if (!url || typeof url !== 'string') return;
         var script = document.createElement('script');
         script.onload = callback;
         script.src = url;
