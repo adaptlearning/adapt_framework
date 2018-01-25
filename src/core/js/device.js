@@ -7,7 +7,7 @@ define([
     var $window = $(window);
 
     Adapt.device = {
-        touch: Modernizr.touch,
+        touch: Modernizr.touchevents,
         screenWidth: getScreenWidth(),
         screenHeight: getScreenHeight(),
         browser: (Bowser.name || '').toLowerCase(),
