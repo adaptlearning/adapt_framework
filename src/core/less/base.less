@@ -1,7 +1,6 @@
 // default variables, remove when core theme is implemented
 @focus-outline: 3px solid orange;
 @primary-color: #078292;
-@ie8-max-width: 1024px;
 @device-width-medium: 520px;
 @body-text-font-size: 14px;
 @button-color: #000;
@@ -161,9 +160,7 @@
     height:40px;
     z-index:500;
     width:100%;
-    .ie8 & {
-        max-width:@ie8-max-width;
-    }
+
     .navigation-back-button {
         float:left;
         .dir-rtl & {
@@ -213,10 +210,6 @@
 
     .notify-popup-content {
         .responsive-layout
-        .ie8 & {
-            max-width: @ie8-max-width;
-            margin:0 auto;
-        }
     }
 
     .notify-popup-content-inner {
@@ -285,7 +278,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
@@ -307,7 +299,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
@@ -335,7 +326,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
@@ -353,7 +343,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
