@@ -11,7 +11,12 @@ class LessPluginPreprocess {
 
     install (less, pluginManager) {
         var ReplaceUrls = getReplaceUrls(less);
-        pluginManager.addVisitor(new ReplaceUrls(this._options));
+        this._replaceUrlsHandler = new ReplaceUrls(this._options);
+        pluginManager.addVisitor(this._replaceUrlsHandler);
+    }
+
+    flushLog () {
+        this._replaceUrlsHandler.flushLog();
     }
 
 };

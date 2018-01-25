@@ -70,16 +70,21 @@ module.exports = function(grunt) {
 				if (grunt.file.exists(sourceMapPath+".imports")) grunt.file.delete(sourceMapPath+".imports", {force:true});
 			}
 
+			var visitors = new Visitors(options);
+
 			var lessOptions = _.extend({
 				"compress": options.compress,
 				"plugins": [
-					new Visitors(options)
+					visitors
 				]
 			}, sourcemaps);
 
 			less.render(imports, lessOptions, complete);
 
 			function complete(error, output) {
+
+				visitors.flushLog();
+
 				if (error) {
 					grunt.fail.fatal(JSON.stringify(error, null, 1));
 					return;

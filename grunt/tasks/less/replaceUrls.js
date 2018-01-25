@@ -12,6 +12,8 @@ module.exports = function(less) {
             this._options = options;
             this._visitor = new less.visitors.Visitor(this);
 
+            this._actions = {}
+
         }
 
         run(root) {
@@ -44,18 +46,28 @@ module.exports = function(less) {
 
                 // If action required by user, warn them
                 if (replaceObject.action) {
-                    // Output blank line to separate outputs
-                    console.log("");
-                    console.log("Take action:", replaceObject.action);
-                    console.log("In file:", URLNode.currentFileInfo.filename);
+                    this._actions[URLNode.currentFileInfo.filename] = {
+                        replaceObject,
+                        URLNode
+                    };
                 }
 
                 URLNode.value.value = URLNode.value.value.replace(replaceObject.find, replaceObject.replaceWith);
 
-            });
+            }.bind(this));
 
             return URLNode;
 
+        }
+
+        flushLog() {
+            for (var filename in this._actions) {
+                var action = this._actions[filename];
+                // Output blank line to separate outputs
+                console.log("");
+                console.log("Take action:", action.replaceObject.action);
+                console.log("In file:", action.URLNode.currentFileInfo.filename);
+            }
         }
 
     }
