@@ -35,7 +35,7 @@ module.exports = function(less) {
                 return URLNode;
             }
             
-            if (!URLNode.value) {
+            if (!URLNode.value || !URLNode.value.value) {
                 return URLNode;
             }
             
