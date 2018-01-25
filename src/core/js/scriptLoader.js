@@ -13,6 +13,17 @@
         }
     })();
 
+    function loadScript(url, callback){
+        if (!url || typeof url !== 'string') return;
+        var script = document.createElement('script');
+        script.onload = callback;
+        script.src = url;
+        document.getElementsByTagName('head')[0].appendChild(script);
+    };
+
+    //0. Keep loadScript code to add into Adapt API later
+    window.__loadScript = loadScript;
+
     //2. Setup require for old-style module declarations (some code still uses these), configure paths then load JQuery
     function setupRequireJS() {
         requirejs.config({
@@ -25,7 +36,7 @@
                 }
             },
             paths: {
-                jquery: 'libraries/jquery.v2.min',
+                jquery: 'libraries/jquery.min',
                 underscore: 'libraries/underscore.min',
                 'underscore.results': 'libraries/underscore.results',
                 backbone: 'libraries/backbone.min',
@@ -47,12 +58,7 @@
 
     // 3. start loading JQuery, wait for it to be loaded
     function loadJQuery() {
-        Modernizr.load([
-            {
-                load: 'libraries/jquery.v2.min.js',
-                complete: checkJQueryStatus
-            }
-        ]);
+        loadScript('libraries/jquery.min.js', checkJQueryStatus);
     }
 
     //4. Wait until JQuery gets loaded completely then load foundation libraries
@@ -60,11 +66,19 @@
         if(window.jQuery === undefined) {
             setTimeout(checkJQueryStatus, 100);
         } else {
-            loadFoundationLibraries();
+            setupModernizr();
         }
     }
 
-    //5. Load foundation libraries and templates then load Adapt itself
+    //5. Backward compatibility for Modernizr
+    function setupModernizr() {
+        Modernizr.touch = Modernizr.touchevents;
+        var touchClass = Modernizr.touch ? 'touch' : 'no-touch';
+        $("html").addClass(touchClass);
+        loadFoundationLibraries();
+    }
+
+    //6. Load foundation libraries and templates then load Adapt itself
     function loadFoundationLibraries() {
         require([
             'underscore',
@@ -86,20 +100,15 @@
         ], loadAdapt);
     }
 
-    //6. Allow cross-domain AJAX then load Adapt
+    //7. Allow cross-domain AJAX then load Adapt
     function loadAdapt() {
         $.ajaxPrefilter(function( options ) {
             options.crossDomain = true;
         });
-        Modernizr.load('adapt/js/adapt.min.js');
+        loadScript('adapt/js/adapt.min.js');
     }
 
     //1. Load requirejs then set it up
-    Modernizr.load([
-        {
-            load: 'libraries/require.min.js',
-            complete: setupRequireJS
-        }
-    ]);
+    loadScript('libraries/require.min.js', setupRequireJS);
 
 })();

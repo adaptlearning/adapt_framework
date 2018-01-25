@@ -29,7 +29,7 @@
     display:none!important;
 }
 
-.accessibility.no-touch {
+.accessibility.no-touchevents {
     .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
         outline: @focus-outline;
     }
@@ -301,7 +301,7 @@
     }
 
 /*HIDDEN FOCUS GUARD*/
-#a11y-focusguard {
+.a11y-focusguard {
     left:0px !important;
     bottom:0px !important;
     width:auto !important;
@@ -317,12 +317,12 @@
     z-index:1;
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
-    .touch & {
+    .touchevents & {
         position: relative !important;
     }
 
     /*DESTKOP: stop focus making window jump to bottom of page;*/
-    .no-touch & {
+    .no-touchevents & {
         position: fixed !important;
     }
 }

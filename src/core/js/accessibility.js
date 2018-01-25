@@ -63,7 +63,7 @@ define([
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
             if (!this.isEnabled()) return;
 
-            if (this._hasCourseLoaded && !Modernizr.touch) {
+            if (this._hasCourseLoaded && !Adapt.device.touch) {
                 //save accessibility state
                 Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
             }
@@ -117,25 +117,32 @@ define([
             });
 
             Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return '<div class="aria-label prevent-default" tabindex="0" role="region">'+text+'</div>';
+                return '<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
             });
 
             Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return '<div class="aria-label relative prevent-default" tabindex="0" role="region">'+text+'</div>';
+                return '<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
             });
 
             Handlebars.registerHelper('a11y_wrap_focus', function(text) {
-                return '<a id="a11y-focusguard" class="a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>';
+                return '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
             });
 
             Handlebars.registerHelper('a11y_attrs_heading', function(level) {
-                return ' role="heading" aria-level="'+level+'" tabindex="0" ';
+                return ' role="heading" aria-level="'+level+'" '+getTabIndex()+' ';
             });
 
             Handlebars.registerHelper('a11y_attrs_tabbable', function() {
-                return ' role="region" tabindex="0" ';
+                return ' role="region" '+getTabIndex()+' ';
             });
 
+            var getTabIndex = function() {
+                return this.isActive() ? 'tabindex="0"' : 'tabindex="-1"';
+            }.bind(this);
+
+            var getIgnoreClass = function() {
+                return $.a11y.options.isTabbableTextEnabled ? '' : ' a11y-ignore';
+            }.bind(this);
         },
 
         setupToggleButton: function() {
@@ -174,7 +181,7 @@ define([
             $.a11y.options.focusOffsetTop = topOffset;
             $.a11y.options.focusOffsetBottom = bottomoffset;
             $.a11y.options.OS = Adapt.device.OS.toLowerCase();
-            $.a11y.options.isTouchDevice = Modernizr.touch;
+            $.a11y.options.isTouchDevice = Adapt.device.touch;
 
             if (this.isActive()) {
                 _.extend($.a11y.options, {
@@ -269,16 +276,16 @@ define([
             //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
             if (!this.isEnabled()) return;
 
-            if (Modernizr.touch) {
+            if (Adapt.device.touch) {
                  //Remove button
                 this.$accessibilityToggle.remove();
             }
-            
+
             var config = Adapt.config.get("_accessibility");
             // Backwards compatibility for _isDisabledOnTouchDevices
             var isEnabledOnTouchDevices = config._isEnabledOnTouchDevices || (config._isDisabledOnTouchDevices === false);
-            
-            if (!Modernizr.touch || this.isActive() || !isEnabledOnTouchDevices) return;
+
+            if (!Adapt.device.touch || this.isActive() || !isEnabledOnTouchDevices) return;
 
             //If a touch device and not enabled, remove accessibility button and turn on accessibility
 
@@ -367,7 +374,7 @@ define([
             var usageInstructions;
             if (instructionsList[Adapt.device.browser]) {
                 usageInstructions = instructionsList[Adapt.device.browser];
-            } else if (Modernizr.touch) {
+            } else if (Adapt.device.touch) {
                 usageInstructions = instructionsList.touch || "";
             } else {
                 usageInstructions = instructionsList.notouch || "";
