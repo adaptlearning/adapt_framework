@@ -34,12 +34,17 @@ module.exports = function(less) {
             if (!this._inRule) {
                 return URLNode;
             }
+            
+            if (!URLNode.value) {
+                return URLNode;
+            }
+            
             if (URLNode.value && URLNode.value.value && URLNode.value.value.indexOf('#') === 0) {
               // Might be part of a VML url-node value like:
               // ``behavior:url(#default#VML);``
               return URLNode;
             }
-
+            
             this._options.replaceUrls.forEach(function(replaceObject) {
                 var matches = URLNode.value.value.match(replaceObject.find);
                 if (!matches) return;
