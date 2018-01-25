@@ -23,7 +23,7 @@
                 }
             },
             paths: {
-                jquery: 'libraries/jquery.v2.min',
+                jquery: 'libraries/jquery.min',
                 underscore: 'libraries/underscore.min',
                 'underscore.results': 'libraries/underscore.results',
                 backbone: 'libraries/backbone.min',
@@ -45,7 +45,7 @@
 
     // 3. start loading JQuery, wait for it to be loaded
     function loadJQuery() {
-        loadScript('libraries/jquery.v2.min.js', checkJQueryStatus);
+        loadScript('libraries/jquery.min.js', checkJQueryStatus);
     }
 
     //4. Wait until JQuery gets loaded completely then load foundation libraries
