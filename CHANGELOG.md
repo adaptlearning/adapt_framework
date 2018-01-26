@@ -1,5 +1,12 @@
 ## [Unreleased][unreleased]
 
+## [2.2.5] - 2018-01-26
+
+A maintenance release to correct the 2.2.4 release which was based on 'master' and not the 'legacy' branch.
+
+## [2.2.4] - 2018-01-25
+- Standard events triggered on subsequent initialise calls (#1923)
+- Drawer icon is removed when changing language (#1917)
 
 ## [2.2.3] - 2017-11-17
 
