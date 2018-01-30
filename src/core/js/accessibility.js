@@ -10,7 +10,8 @@ define([
         "page": 1,
         "article": 2,
         "block": 3,
-        "component": 4
+        "component": 4,
+        "componentItem": 5
     };
 
     var Accessibility = Backbone.Controller.extend({
