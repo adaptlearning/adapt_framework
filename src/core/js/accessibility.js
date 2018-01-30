@@ -103,38 +103,52 @@ define([
                 ? Adapt.config.get("_accessibility")
                 : false;
 
-            Handlebars.registerHelper('a11y_text', function(text) {
-                //ALLOW ENABLE/DISABLE OF a11y_text HELPER
-                if (config && config._isTextProcessorEnabled === false) {
-                    return text;
-                } else {
-                    return $.a11y_text(text);
+            var helpers = {
+
+                a11y_text: function(text) {
+                    //ALLOW ENABLE/DISABLE OF a11y_text HELPER
+                    if (config && config._isTextProcessorEnabled === false) {
+                        return text;
+                    } else {
+                        return $.a11y_text(text);
+                    }
+                },
+
+                a11y_normalize: function(text) {
+                    return $.a11y_normalize(text);
+                },
+
+                a11y_remove_breaks: function(text) {
+                    return $.a11y_remove_breaks(text);
+                },
+
+                a11y_aria_label: function(text) {
+                    return '<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
+                },
+
+                a11y_aria_label_relative: function(text) {
+                    return '<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
+                },
+
+                a11y_wrap_focus: function(text) {
+                    return '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
+                },
+
+                a11y_attrs_heading: function(level) {
+                    return ' role="heading" aria-level="'+level+'" '+getTabIndex()+' ';
+                },
+
+                a11y_attrs_tabbable: function() {
+                    return ' role="region" '+getTabIndex()+' ';
                 }
-            });
 
-            Handlebars.registerHelper('a11y_normalize', function(text) {
-                return $.a11y_normalize(text);
-            });
+            };
 
-            Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return '<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
-            });
-
-            Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return '<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
-            });
-
-            Handlebars.registerHelper('a11y_wrap_focus', function(text) {
-                return '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
-            });
-
-            Handlebars.registerHelper('a11y_attrs_heading', function(level) {
-                return ' role="heading" aria-level="'+level+'" '+getTabIndex()+' ';
-            });
-
-            Handlebars.registerHelper('a11y_attrs_tabbable', function() {
-                return ' role="region" '+getTabIndex()+' ';
-            });
+            for (var name in helpers) {
+                if (helpers.hasOwnProperty(name)) {
+                     Handlebars.registerHelper(name, helpers[name]);
+                }
+            }
 
             var getTabIndex = function() {
                 return this.isActive() ? 'tabindex="0"' : 'tabindex="-1"';
@@ -143,6 +157,7 @@ define([
             var getIgnoreClass = function() {
                 return $.a11y.options.isTabbableTextEnabled ? '' : ' a11y-ignore';
             }.bind(this);
+
         },
 
         setupToggleButton: function() {

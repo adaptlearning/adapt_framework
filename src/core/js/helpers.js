@@ -8,7 +8,7 @@ define([
         lowercase: function(text) {
             return text.toLowerCase();
         },
-        
+
         capitalise:  function(text) {
             return text.charAt(0).toUpperCase() + text.slice(1);
         },
@@ -97,6 +97,14 @@ define([
             if (!template) return "";
             if (template instanceof Object) template = template.toString();
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
+        },
+
+        /**
+         * Remove all html tags except styling tags
+         */
+        compile_a11y_remove_breaks: function(template, context) {
+            if (!template) return "";
+            return Handlebars.helpers.a11y_remove_breaks.call(this, helpers.compile.call(this, template, context));
         },
 
         /**
