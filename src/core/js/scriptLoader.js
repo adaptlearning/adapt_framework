@@ -1,5 +1,18 @@
 (function() {
 
+    // Change location of Adapt CSS if incorrect
+    (function fixCSSlocation() {
+        var oldLoc = "adapt/css/adapt.css";
+        var newLoc = "adapt.css";
+        var nodeList = document.querySelectorAll("link");
+        for (var i = 0, l = nodeList.length; i < l; i++) {
+            var el = nodeList[i];
+            if (el.href.substr(-oldLoc.length) !== oldLoc) return;
+            console.warn("WARN: DEPRECATED - CSS location needs updating from", oldLoc, "to", newLoc);
+            el.href = newLoc;
+        }
+    })();
+
     function loadScript(url, callback){
         if (!url || typeof url !== 'string') return;
         var script = document.createElement('script');
