@@ -250,6 +250,8 @@ define([
         setupPartlyCorrectFeedback: function() {
 
             var feedback = this.get("_feedback");
+            
+            if(!feedback) return;
 
             if (feedback && feedback._partlyCorrect) {
                 if (this.get('_attemptsLeft') === 0 || !feedback._partlyCorrect.notFinal) {
