@@ -26,7 +26,6 @@
         "_requireContentCompleted": {
           "type": "boolean",
           "default": true,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Require content completion",
@@ -35,7 +34,6 @@
         "_requireAssessmentCompleted": {
           "type": "boolean",
           "default": false,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Require assessment completion",
@@ -72,7 +70,6 @@
         "_isEnabled": {
           "type": "boolean",
           "default": false,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Enabled?"
@@ -80,7 +77,6 @@
         "_isEnabledOnTouchDevices": {
           "type": "boolean",
           "default": false,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Enabled on touch devices?"
@@ -88,7 +84,6 @@
         "_shouldSupportLegacyBrowsers": {
           "type": "boolean",
           "default": false,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Support legacy browsers?",
@@ -97,7 +92,6 @@
         "_isTextProcessorEnabled": {
           "type": "boolean",
           "default": false,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Enable text reader support?",
@@ -106,7 +100,6 @@
         "_isSkipNavigationEnabled": {
           "type": "boolean",
           "default": true,
-          "isSetting": false,
           "inputType": "Checkbox",
           "validators": [],
           "title": "Enable Skip Navigation link?",
