@@ -111,6 +111,69 @@
           "validators": [],
           "title": "Enable Skip Navigation link?",
           "help": "Adds a link to the start of the page to allow assistive technology users to skip over the navigation and straight into to the page content."
+        },
+        "_ariaLevels": {
+          "type": "object",
+          "title": "ARIA Levels",
+          "help": "Defines what value to assign to the aria-level attribute for the various elements of Adapt",
+          "properties" : {
+            "menu": {
+              "type": "number",
+              "required": true,
+              "default": 1,
+              "title": "Menu element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
+            "menuItem": {
+              "type": "number",
+              "required": true,
+              "default": 2,
+              "title": "Menu Item element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
+            "page": {
+              "type": "number",
+              "required": true,
+              "default": 1,
+              "title": "Page element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
+            "article": {
+              "type": "number",
+              "required": true,
+              "default": 2,
+              "title": "Article element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
+            "block": {
+              "type": "number",
+              "required": true,
+              "default": 3,
+              "title": "Block element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
+            "component": {
+              "type": "number",
+              "required": true,
+              "default": 4,
+              "title": "Component element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
+            "componentItem": {
+              "type": "number",
+              "required": true,
+              "default": 5,
+              "title": "Component Item element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            }
+          }
         }
       }
     },
