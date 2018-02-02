@@ -29,6 +29,7 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
 ### Added
 - Added support for swipe events via JQuery Mobile ([#1633](https://github.com/adaptlearning/adapt_framework/issues/1633))
 - Added `_isHidden` property as a way of hiding views ([#1605](https://github.com/adaptlearning/adapt_framework/issues/1605))
+- Added support for ordering of Drawer items ([#1393](https://github.com/adaptlearning/adapt_framework/issues/1393))
 
 ### Changed
 - Updated to latest `jquery.onscreen` library ([#1594](https://github.com/adaptlearning/adapt_framework/issues/1594))
