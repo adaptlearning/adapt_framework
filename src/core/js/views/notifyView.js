@@ -6,9 +6,7 @@ define([
 
         className: function() {
             let classes = 'notify ';
-            if (this.model.has('_classes')) {
-                classes += this.model.get('_classes');
-            }
+            classes += (this.model.get('_classes') || '');
             return classes;
         },
 
@@ -109,7 +107,7 @@ define([
 
         onShadowClicked: function(event) {
             event.preventDefault();
-            if (this.model.get("_closeOnBackdrop") === true) {
+            if (this.model.get("_closeOnShadowClick") === true) {
                 this.cancelNotify();
             }
         },

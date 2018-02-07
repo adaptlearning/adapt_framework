@@ -75,8 +75,8 @@ define([
 		notifyObject._showCloseButton = (notifyObject._showCloseButton === undefined) 
 			? true : notifyObject._showCloseButton;
 
-		notifyObject._closeOnBackdrop = (notifyObject._closeOnBackdrop === undefined) 
-			? true : notifyObject._closeOnBackdrop;
+		notifyObject._closeOnShadowClick = (notifyObject._closeOnShadowClick === undefined) 
+			? true : notifyObject._closeOnShadowClick;
 
 		notifyObject._type = type;
 
