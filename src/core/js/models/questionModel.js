@@ -251,9 +251,9 @@ define([
 
             var feedback = this.get("_feedback");
             
-            if(!feedback) return;
+            if (!feedback) return;
 
-            if (feedback && feedback._partlyCorrect) {
+            if (feedback._partlyCorrect) {
                 if (this.get('_attemptsLeft') === 0 || !feedback._partlyCorrect.notFinal) {
                     if (feedback._partlyCorrect.final) {
                         this.set({
