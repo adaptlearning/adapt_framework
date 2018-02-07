@@ -68,6 +68,11 @@ define([
 	});
 
 	function addNotifyView(type, notifyObject) {
+
+		// default to _isCancellable = true
+		if (notifyObject._isCancellable === undefined) {
+			notifyObject._isCancellable = true;
+		}
 		notifyObject._type = type;
 
 		if (type === 'push') {

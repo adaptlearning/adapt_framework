@@ -21,6 +21,9 @@ define([
         setupEventListeners: function() {
             this.listenTo(Adapt, {
                 'remove page:scrollTo': this.closeNotify,
+                'notify:resize': this.resetNotifySize,
+                'notify:cancel': this.cancelNotify,
+                'notify:close': this.closeNotify,
                 'device:resize': this.resetNotifySize,
                 'accessibility:toggle': this.onAccessibilityToggle
             });
@@ -49,14 +52,14 @@ define([
             if (event.which != 27) return;
             event.preventDefault();
 
-            this.closeNotify();
+            this.cancelNotify();
         },
 
         events: {
             'click .notify-popup-alert-button':'onAlertButtonClicked',
             'click .notify-popup-prompt-button': 'onPromptButtonClicked',
             'click .notify-popup-done': 'onCloseButtonClicked',
-            'click .notify-shadow': 'onCloseButtonClicked'
+            'click .notify-shadow': 'onShadowClicked'
         },
 
         render: function() {
@@ -93,6 +96,19 @@ define([
         onCloseButtonClicked: function(event) {
             event.preventDefault();
             //tab index preservation, notify must close before subsequent callback is triggered
+            this.cancelNotify();
+        },
+
+        onShadowClicked: function(event) {
+            event.preventDefault();
+            this.cancelNotify();
+        },
+
+        cancelNotify: function() {
+            if (this.model.get("_isCancellable") === false) {
+                return;
+            }
+            //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
             Adapt.trigger('notify:cancelled');
         },
@@ -123,13 +139,11 @@ define([
 
         showNotify: function() {
 
+            this.addSubView();
+
             Adapt.trigger('notify:opened', this);
 
-            if (this.$('img').length > 0) {
-                this.$el.imageready( _.bind(loaded, this));
-            } else {
-                loaded.call(this);
-            }
+            this.$el.imageready( _.bind(loaded, this));
 
             function loaded() {
                 if (this.disableAnimation) {
@@ -171,6 +185,15 @@ define([
 
         },
 
+        addSubView: function() {
+
+            this.subView = this.model.get("_view");
+            if (!this.subView) return;
+            
+            this.$(".notify-popup-content-inner").append(this.subView.$el);
+
+        },
+
         closeNotify: function (event) {
 
             if (this.disableAnimation) {
@@ -197,6 +220,19 @@ define([
 
             Adapt.trigger('popup:closed');
             Adapt.trigger('notify:closed');
+        },
+
+        remove: function() {
+            this.removeSubView();
+            Backbone.View.prototype.remove.apply(this, arguments);
+        },
+
+        removeSubView: function() {
+
+            if (!this.subView) return;
+            this.subView.remove();
+            this.subView = null;
+
         }
 
     });

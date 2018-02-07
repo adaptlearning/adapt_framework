@@ -41,11 +41,13 @@
             </div>
         </div>
         {{! toolbar moved for AA purposes - last tabbable element}}
+        {{#if _isCancellable}}
         {{#if_value_equals _type "popup"}}
             <button class="base notify-popup-done" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
                 <div class="notify-popup-icon-close icon icon-cross"></div>
             </button>
         {{/if_value_equals}}
+        {{/if}}
     </div>
 
     {{{a11y_wrap_focus}}}
