@@ -4,8 +4,16 @@ define([
 
     var NotifyView = Backbone.View.extend({
 
-        className: 'notify',
+        className: function() {
+            let classes = 'notify ';
+            if (this.model.has('_classes')) {
+                classes += this.model.get('_classes');
+            }
+            return classes;
+        },
+
         disableAnimation: false,
+        
         escapeKeyAttached: false,
 
         initialize: function() {
