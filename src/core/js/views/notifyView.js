@@ -101,7 +101,9 @@ define([
 
         onShadowClicked: function(event) {
             event.preventDefault();
-            this.cancelNotify();
+            if (this.model.get("_closeOnBackdrop") === true) {
+                this.cancelNotify();
+            }
         },
 
         cancelNotify: function() {
