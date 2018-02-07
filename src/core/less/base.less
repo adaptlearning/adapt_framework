@@ -1,7 +1,6 @@
 // default variables, remove when core theme is implemented
 @focus-outline: 3px solid orange;
 @primary-color: #078292;
-@ie8-max-width: 1024px;
 @device-width-medium: 520px;
 @body-text-font-size: 14px;
 @button-color: #000;
@@ -29,7 +28,7 @@
     display:none!important;
 }
 
-.accessibility.no-touch {
+.accessibility.no-touchevents {
     .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
         outline: @focus-outline;
     }
@@ -161,9 +160,7 @@
     height:40px;
     z-index:500;
     width:100%;
-    .ie8 & {
-        max-width:@ie8-max-width;
-    }
+
     .navigation-back-button {
         float:left;
         .dir-rtl & {
@@ -213,10 +210,6 @@
 
     .notify-popup-content {
         .responsive-layout
-        .ie8 & {
-            max-width: @ie8-max-width;
-            margin:0 auto;
-        }
     }
 
     .notify-popup-content-inner {
@@ -285,7 +278,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
@@ -301,13 +293,12 @@
     }
 
 /*HIDDEN FOCUS GUARD*/
-#a11y-focusguard {
+.a11y-focusguard {
     left:0px !important;
     bottom:0px !important;
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
@@ -317,12 +308,12 @@
     z-index:1;
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
-    .touch & {
+    .touchevents & {
         position: relative !important;
     }
 
     /*DESTKOP: stop focus making window jump to bottom of page;*/
-    .no-touch & {
+    .no-touchevents & {
         position: fixed !important;
     }
 }
@@ -335,7 +326,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;
@@ -353,7 +343,6 @@
     width:auto !important;
     height:auto !important;
     overflow:auto !important;
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0); /*IE8*/
     color: rgba(0,0,0,0) !important;
     background: rgba(0,0,0,0) !important;
     font-size: 1px !important;

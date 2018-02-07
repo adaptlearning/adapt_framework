@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 			var less = require('less');
 			var _ = require('underscore');
 			var path = require("path");
+			var Visitors = require('./less/visitors');
 			var done = this.async();
 			var options = this.options({});
 
@@ -12,7 +13,7 @@ module.exports = function(grunt) {
 			var cwd = process.cwd();
 
 			var imports = "";
-			
+
 			if (options.src && options.config) {
 				var screenSize = {
 					"small": 520,
@@ -38,7 +39,7 @@ module.exports = function(grunt) {
 						lessPath = path.normalize(lessPath);
 						var trimmed = lessPath.substr(rootPath.length);
 						imports+= "@import '" + trimmed + "';\n";
-					});	
+					});
 				}
 			}
 
@@ -49,19 +50,19 @@ module.exports = function(grunt) {
 						lessPath = path.normalize(lessPath);
 						var trimmed = lessPath.substr(rootPath.length);
 						imports+= "@import '" + trimmed + "';\n";
-					});	
+					});
 				}
 			}
 
 			var sourcemaps;
-			if (options.sourcemaps) { 
+			if (options.sourcemaps) {
 				sourcemaps = {
 					"sourceMap": {
 						"sourceMapFileInline": false,
 						"outputSourceFiles": true,
 						"sourceMapBasepath": "src",
 						"sourceMapURL": options.mapFilename,
-					} 
+					}
 				};
 			} else {
 				var sourceMapPath = path.join(options.dest, options.mapFilename);
@@ -69,18 +70,28 @@ module.exports = function(grunt) {
 				if (grunt.file.exists(sourceMapPath+".imports")) grunt.file.delete(sourceMapPath+".imports", {force:true});
 			}
 
-			var lessOptions = _.extend({ "compress": options.compress }, sourcemaps);
-				
+			var visitors = new Visitors(options);
+
+			var lessOptions = _.extend({
+				"compress": options.compress,
+				"plugins": [
+					visitors
+				]
+			}, sourcemaps);
+
 			less.render(imports, lessOptions, complete);
 
 			function complete(error, output) {
+
+				visitors.flushLog();
+
 				if (error) {
 					grunt.fail.fatal(JSON.stringify(error, null, 1));
 					return;
 				}
 
 				grunt.file.write(path.join(options.dest, options.cssFilename), output.css);
-				
+
 				if (output.map) {
 					grunt.file.write(path.join(options.dest, options.mapFilename)+".imports", imports);
 					grunt.file.write(path.join(options.dest, options.mapFilename), output.map);

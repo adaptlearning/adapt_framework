@@ -50,7 +50,7 @@ define([
         },
 
         setupWait: function() {
-            
+
             this.wait = new Wait();
 
             // Setup legcay events and handlers
@@ -109,21 +109,27 @@ define([
     Adapt.componentStore = {};
     Adapt.mappedIds = {};
 
-    Adapt.initialize = _.once(function() {
+    Adapt.loadScript = window.__loadScript;
 
-        //wait until no more completion checking 
+    Adapt.initialize = function() {
+
+        //wait until no more completion checking
         Adapt.deferUntilCompletionChecked(function() {
 
             //start adapt in a full restored state
             Adapt.trigger('adapt:start');
-            Backbone.history.start();
+
+            if (!Backbone.History.started) {
+                Backbone.history.start();
+            }
+
             Adapt.set("_isStarted", true);
 
             Adapt.trigger('adapt:initialize');
 
         });
 
-    });
+    };
 
     Adapt.scrollTo = function(selector, settings) {
         // Get the current location - this is set in the router
@@ -211,7 +217,7 @@ define([
             //use view object
             if(!object.template) object.template = name;
         }
-        
+
         Adapt.componentStore[name] = object;
 
         return object;
@@ -292,7 +298,7 @@ define([
             return;
         }
 
-        return { 
+        return {
             type: type,
             offset: offset
         };

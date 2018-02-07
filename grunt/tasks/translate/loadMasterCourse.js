@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     
     var targetLang = grunt.config("translate.targetLang");
     var masterLang = grunt.config("translate.masterLang");
-    var srcPath = grunt.config("sourcedir");
+    var srcPath = grunt.option("outputdir") || grunt.config("sourcedir");
     var jsonext = grunt.config('jsonext');
     
     checkCourseExists();

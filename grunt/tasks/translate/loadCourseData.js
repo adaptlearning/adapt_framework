@@ -5,6 +5,8 @@ module.exports = function (grunt) {
   grunt.registerTask("_loadCourseData", function () {
     
     var srcPath = grunt.config("sourcedir");
+    if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
+    
     var lang = grunt.config("translate.masterLang");
     var jsonext = grunt.config('jsonext');
     
