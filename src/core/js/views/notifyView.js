@@ -107,15 +107,12 @@ define([
 
         onShadowClicked: function(event) {
             event.preventDefault();
-            if (this.model.get("_closeOnShadowClick") === true) {
-                this.cancelNotify();
-            }
+            if (this.model.get("_closeOnShadowClick") === false) return;
+            this.cancelNotify();
         },
 
         cancelNotify: function() {
-            if (this.model.get("_isCancellable") === false) {
-                return;
-            }
+            if (this.model.get("_isCancellable") === false) return;
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
             Adapt.trigger('notify:cancelled');
