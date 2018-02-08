@@ -160,7 +160,7 @@ module.exports = function(grunt) {
             var plugins = _.intersection(fs.readdirSync(pluginTypeDir), buildIncludes);
             for (var j = 0; j < plugins.length; j++) {
                 try {
-                    var bowerJson = JSON.parse(fs.readFileSync(path.join(pluginTypeDir, plugins[j], 'bower.json')));
+                    var bowerJson = grunt.file.readJSON(path.join(pluginTypeDir, plugins[j], 'bower.json'));
                     for (var key in bowerJson.dependencies) {
                         if (!_.contains(buildIncludes, key)) dependencies.push(key);
                     }
