@@ -68,11 +68,16 @@ define([
 	});
 
 	function addNotifyView(type, notifyObject) {
+		// set default values 
+		notifyObject._isCancellable = (notifyObject._isCancellable === undefined) 
+			? true : notifyObject._isCancellable;
+		
+		notifyObject._showCloseButton = (notifyObject._showCloseButton === undefined) 
+			? true : notifyObject._showCloseButton;
 
-		// default to _isCancellable = true
-		if (notifyObject._isCancellable === undefined) {
-			notifyObject._isCancellable = true;
-		}
+		notifyObject._closeOnShadowClick = (notifyObject._closeOnShadowClick === undefined) 
+			? true : notifyObject._closeOnShadowClick;
+
 		notifyObject._type = type;
 
 		if (type === 'push') {
