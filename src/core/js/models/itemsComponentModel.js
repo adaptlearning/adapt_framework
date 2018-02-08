@@ -66,7 +66,7 @@ define([
             this.get('_items').each(function(item) { item.toggleActive(false); });
         },
 
-        setItemActive: function(index) {
+        setActiveItem: function(index) {
             this.getActiveItem().toggleActive(false);
             this.getItem(index).toggleActive(true);
         }
