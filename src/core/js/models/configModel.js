@@ -26,6 +26,9 @@ define([
             // 'configModel:loadCourseData' event starts the core content collections and models being fetched
             this.fetch({
                 success: _.bind(function() {
+                  Adapt.trigger('offlineStorage:prepare');
+                  Adapt.wait.queue(_.bind(function() {
+
                     Adapt.trigger('configModel:dataLoaded');
                     if (this.get('_canLoadData')) {
                         Adapt.trigger('configModel:loadCourseData');
@@ -43,6 +46,7 @@ define([
                             }
                         }
                     }
+                  }, this));
                 }, this),
                 error: function() {
                     console.log('Unable to load course/config.json');
