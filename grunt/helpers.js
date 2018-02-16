@@ -157,11 +157,10 @@ module.exports = function(grunt) {
         for (var i = 0; i < exports.defaults.pluginTypes.length; i++) {
             var pluginTypeDir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
             // grab a list of the installed (and included) plugins for this type
-            var plugins = _.intersection(fs.readdirSync(pluginTypeDir),buildIncludes);
+            var plugins = _.intersection(fs.readdirSync(pluginTypeDir), buildIncludes);
             for (var j = 0; j < plugins.length; j++) {
                 try {
-                    var bowerJson = require(path.join(pluginTypeDir, plugins[j], 'bower.json'));
-
+                    var bowerJson = grunt.file.readJSON(path.join(pluginTypeDir, plugins[j], 'bower.json'));
                     for (var key in bowerJson.dependencies) {
                         if (!_.contains(buildIncludes, key)) dependencies.push(key);
                     }
@@ -271,7 +270,7 @@ module.exports = function(grunt) {
             // grunt.log.writeln('Included ' + chalk.green(pluginPath));
             return true;
         }
-        
+
         // The LESS 'plugins' folder exists, so check that any plugins in this folder are allowed.
         var hasPluginSubDirectory = !!pluginPath.match(getNestedIncludedRegExp());
         if (hasPluginSubDirectory) {
@@ -299,7 +298,7 @@ module.exports = function(grunt) {
         }
 
         return isIncluded;
-     
+
     };
 
     exports.includedFilter = function(filepath) {
