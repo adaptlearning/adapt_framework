@@ -1,4 +1,65 @@
 module.exports = function (grunt, options) {
+    var convertSlashes = /\\/g;
+    var path = require("path");
+
+    function alphanumericOrder(a, b) {
+        return a > b ? 1 : a < b ? -1 : 0;
+    }
+
+    function lengthOrder(a, b) {
+        return a.length > b.length ? 1 : a.length < b.length ? -1 : 0;
+    }
+
+    function compareFilePathsNesting(a, b) {
+        var aDirParts = a.split("/");
+        var bDirParts = b.split("/");
+        return lengthOrder(aDirParts, bDirParts);
+    }
+
+    function compareFilePaths(a, b) {
+        var nestingCompare = compareFilePathsNesting(a, b);
+
+        /**
+         * If at different level of nesting return comparison
+         */
+        if (nestingCompare !== 0) return nestingCompare;
+
+        /**
+         * If not in the same folder sort alphanumerically
+         */
+        var aParsed = path.parse(a);
+        var bParsed = path.parse(b);
+        if (aParsed.dir !== bParsed.dir) return alphanumericOrder(a, b);
+
+        /**
+         * If names don't start with the same phrase sort alphanumerically
+         */
+        var aStartsB = bParsed.name.startsWith(aParsed.name);
+        var bStartsA = aParsed.name.startsWith(bParsed.name);
+        if (!aStartsB && !bStartsA) return alphanumericOrder(a, b);
+
+        /**
+         * If at the same level of nesting
+         * In the same directory
+         * Where one name starts the other
+         * Sort by name length
+         */
+        return lengthOrder(aParsed.name, bParsed.name);
+    }
+
+    function sortLESSFilePaths(filepaths) {
+        // convert windows slashes to unix slashes
+        filepaths = filepaths.map(function(path) {
+            return path.replace(convertSlashes,"/");
+        });
+        return filepaths.sort(compareFilePaths);
+    }
+
+
+    function includedFilter(filepath) {
+        return grunt.config('helpers').includedFilter(filepath);
+    }
+
     return {
         dev: {
             options:{
@@ -18,9 +79,8 @@ module.exports = function (grunt, options) {
                 dest: '<%= outputdir %>',
                 cssFilename: "adapt.css",
                 mapFilename: "adapt.css.map",
-                filter: function(filepath) {
-                    return grunt.config('helpers').includedFilter(filepath);
-                },
+                filter: includedFilter,
+                order: sortLESSFilePaths,
                 replaceUrls: [
                     {
                         "action": "Replace url(../../assets/ with url(assets/",
@@ -54,9 +114,8 @@ module.exports = function (grunt, options) {
                 dest: '<%= outputdir %>',
                 cssFilename: "adapt.css",
                 mapFilename: "adapt.css.map",
-                filter: function(filepath) {
-                    return grunt.config('helpers').includedFilter(filepath);
-                },
+                filter: includedFilter,
+                order: sortLESSFilePaths,
                 replaceUrls: [
                     {
                         "action": "Replace url(../../assets/ with url(assets/",
