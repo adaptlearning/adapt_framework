@@ -12,7 +12,16 @@
         "_isEnabledOnTouchDevices": false,
         "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true,
-        "_isSkipNavigationEnabled": true
+        "_isSkipNavigationEnabled": true,
+        "_ariaLevels": {
+            "_menu": 1,
+            "_menuItem": 2,
+            "_page": 1,
+            "_article": 2,
+            "_block": 3,
+            "_component": 4,
+            "_componentItem": 5
+        }
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",

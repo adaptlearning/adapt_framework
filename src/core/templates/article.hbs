@@ -5,7 +5,7 @@
     <div class="article-header">
         {{#if displayTitle}}
         <div class="article-title">
-            <div role="heading" tabindex="0" class="article-title-inner h2"  aria-level="2">
+            <div class="article-title-inner" {{{a11y_attrs_heading "article"}}}>
                 {{{compile displayTitle this}}}
             </div>
         </div>

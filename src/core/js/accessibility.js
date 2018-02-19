@@ -4,6 +4,16 @@ define([
     'a11y'
 ], function(Adapt, AccessibilityView) {
 
+    var defaultAriaLevels = {
+        "_menu": 1,
+        "_menuItem": 2,
+        "_page": 1,
+        "_article": 2,
+        "_block": 3,
+        "_component": 4,
+        "_componentItem": 5
+    };
+
     var Accessibility = Backbone.Controller.extend({
 
         $html: $('html'),
@@ -117,23 +127,45 @@ define([
             });
 
             Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return '<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
+                return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
             });
 
             Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return '<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>';
+                return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
             });
 
             Handlebars.registerHelper('a11y_wrap_focus', function(text) {
-                return '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>';
+                return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>');
             });
 
-            Handlebars.registerHelper('a11y_attrs_heading', function(level) {
-                return ' role="heading" aria-level="'+level+'" '+getTabIndex()+' ';
+            Handlebars.registerHelper('a11y_attrs_heading', function(levelOrType) {
+                // get the global configuration from config.json
+                var cfg = Adapt.config.get('_accessibility');
+                // default level to use if nothing overrides it
+                var level = 1;
+
+                // first check to see if the Handlebars context has an override
+                if (this._ariaLevel) {
+                    levelOrType = this._ariaLevel;
+                }
+
+                if (isNaN(levelOrType) === false) {
+                    // if a number is passed just use this
+                    level = levelOrType;
+                }
+                else if (_.isString(levelOrType)) {
+                    // if a string is passed check if it is defined in global configuration
+                    cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
+                    if (cfg._ariaLevels && cfg._ariaLevels["_"+levelOrType] !== undefined) {
+                        level = cfg._ariaLevels["_"+levelOrType];
+                    }
+                }
+
+                return new Handlebars.SafeString(' role="heading" aria-level="'+level+'" '+getTabIndex()+' ');
             });
 
             Handlebars.registerHelper('a11y_attrs_tabbable', function() {
-                return ' role="region" '+getTabIndex()+' ';
+                return new Handlebars.SafeString(' role="region" '+getTabIndex()+' ');
             });
 
             var getTabIndex = function() {
