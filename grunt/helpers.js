@@ -2,6 +2,7 @@ var _ = require('underscore');
 var chalk = require('chalk');
 var fs = require('fs');
 var path = require('path');
+var fileorder = require('grunt-file-order');
 
 module.exports = function(grunt) {
 
