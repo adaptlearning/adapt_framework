@@ -5,7 +5,12 @@ define([
 
     var ComponentModel = AdaptModel.extend({
         _parent:'blocks',
-    	_siblings:'components'
+        _siblings:'components',
+
+        trackable: AdaptModel.resultExtend("trackable", [
+            '_userAnswer'
+        ])
+
     });
 
     return ComponentModel;

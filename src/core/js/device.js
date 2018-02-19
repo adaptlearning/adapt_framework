@@ -7,7 +7,7 @@ define([
     var $window = $(window);
 
     Adapt.device = {
-        touch: Modernizr.touch,
+        touch: Modernizr.touchevents,
         screenWidth: getScreenWidth(),
         screenHeight: getScreenHeight(),
         browser: (Bowser.name || '').toLowerCase(),
@@ -152,7 +152,7 @@ define([
             Adapt.trigger('device:changed', Adapt.device.screenSize);
         }
 
-        Adapt.trigger('device:resize', Adapt.device.screenWidth);
+        Adapt.trigger('device:preResize device:resize device:postResize', Adapt.device.screenWidth);
 
     }, 100);
 

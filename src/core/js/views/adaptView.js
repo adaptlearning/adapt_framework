@@ -14,6 +14,7 @@ define([
             this.listenTo(Adapt, 'remove', this.remove);
             this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
             this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
+            this.listenTo(this.model, 'change:_isComplete', this.onIsCompleteChange);
             this.model.set('_globals', Adapt.course.get('_globals'));
             this.model.set('_isReady', false);
             this._isRemoved = false;
@@ -126,17 +127,19 @@ define([
         preRemove: function() {},
 
         remove: function() {
-            Adapt.trigger('plugin:beginWait');
+
             this.preRemove();
             this._isRemoved = true;
 
-            _.defer(_.bind(function() {
+            Adapt.wait.for(function(end) {
+
                 this.$el.off('onscreen.adaptView');
                 this.model.setOnChildren('_isReady', false);
                 this.model.set('_isReady', false);
                 Backbone.View.prototype.remove.call(this);
-                Adapt.trigger('plugin:endWait');
-            }, this));
+
+                end();
+            }.bind(this));
 
             return this;
         },
@@ -169,6 +172,10 @@ define([
                 return this.$el.removeClass('display-none');
             }
             this.$el.addClass('display-none');
+        },
+        
+        onIsCompleteChange:function(model, isComplete){
+            this.$el.toggleClass('completed', isComplete);
         }
     });
 

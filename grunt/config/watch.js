@@ -17,11 +17,11 @@ module.exports = {
         tasks: ['handlebars', 'javascript:dev']
     },
     courseJson: {
-        files: ['<%= sourcedir %>course/**/*.json'],
+        files: ['<%= sourcedir %>course/**/*.<% jsonext %>'],
         tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
-        files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.json'],
+        files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.<% jsonext %>'],
         tasks : ['copy:courseAssets']
     },
     js: {
@@ -35,8 +35,7 @@ module.exports = {
             '!<%= sourcedir %>core/js/scriptLoader.js',
             '!<%= sourcedir %>core/js/libraries/require.min.js',
             '!<%= sourcedir %>core/js/libraries/modernizr.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.min.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.v2.min.js'
+            '!<%= sourcedir %>core/js/libraries/jquery.min.js'
         ],
         tasks: ['javascript:dev']
     },
@@ -84,8 +83,7 @@ module.exports = {
         files: [
             '<%= sourcedir %>core/js/libraries/require.min.js',
             '<%= sourcedir %>core/js/libraries/modernizr.js',
-            '<%= sourcedir %>core/js/libraries/jquery.min.js',
-            '<%= sourcedir %>core/js/libraries/jquery.v2.min.js'
+            '<%= sourcedir %>core/js/libraries/jquery.min.js'
         ],
         tasks: ['copy:libraries']
     },

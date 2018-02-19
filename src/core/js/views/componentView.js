@@ -13,7 +13,8 @@ define([
             " " + this.setVisibility() +
             " " + this.setHidden() +
             " component-" + this.model.get('_layout') + 
-            " nth-child-" + this.model.get("_nthChild");
+            " nth-child-" + this.model.get("_nthChild") +
+            " " + (this.model.get('_isComplete') ? 'completed' : '');
         },
 
         initialize: function(){

@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2017-07-11 https://github.com/adaptlearning/jquery.onscreen
+// jquery.onscreen 2018-01-22 https://github.com/adaptlearning/jquery.onscreen
 
 (function() {
 
@@ -413,13 +413,8 @@
 
     var measurements = {
 
-        supplimentDimensions: false,
-
         featureDetect: function() {
             
-            var body = $("body")[0].getBoundingClientRect();
-            //make sure to get height and width independently if getBoundingClientRect doesn't return height and width;
-            measurements.supplimentDimensions = (body.width === undefined);
             loop.hasRaf = (window.requestAnimationFrame && window.cancelAnimationFrame);
             
         },
@@ -438,16 +433,8 @@
                 offset = { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
             }
             
-            var height;
-            var width;
-            if (measurements.supplimentDimensions) {
-                //ie8 requires this as getBoundingClientRect doesn't return height and width
-                height = el.offsetHeight;
-                width = el.offsetWidth;
-            } else {
-                height = offset.height;
-                width = offset.width;
-            }
+            var height = offset.height;
+            var width = offset.width;
             
             //topleft from topleft of window
             var top = offset["top"];
@@ -504,18 +491,20 @@
             var hasNoSize = (height <= 0 && width <= 0);
             if (hasNoSize) onscreen = false;
 
-            var cssHidden = (el.style.display == "none" || el.style.visibility == "hidden");
+            var cssHidden = measurements.isElementHidden(el);
             if (cssHidden) onscreen = false;
-            
+
             if (onscreen) {
                 
                 // perform some extra checks to make sure item is onscreen
                 var parents = measurements.getParents(el);
+                
                 // go through all the parents except the html tag
                 for (var i = 0, l = parents.length-1; i < l; i++) {
                     var parent = parents[i];
                 
-                    cssHidden = (parent.style.display == "none" || parent.style.visibility == "hidden");
+                    cssHidden = measurements.isElementHidden(parent);
+                    
                     // check if parents are visibility hidden or display none
                     if (cssHidden) {
                         onscreen = false;
@@ -564,6 +553,15 @@
             return parents;
         },
 
+        isElementHidden: function(element) {
+            var cssHidden = (element.style.display == "none" || element.style.visibility == "hidden");
+            if (cssHidden) return true;
+
+            var style = window.getComputedStyle(element, null);
+            cssHidden = (style.display == "none" || style.visibility == "hidden");
+            return cssHidden;
+        },
+
         isOutOfBounds: function(element, parent) {
 
             var isScrollWidthOverflowing = (parent.clientWidth < parent.scrollWidth);
@@ -586,10 +584,11 @@
             var childOffsetBottom = (childOffsetTop + element.clientHeight);
             var childOffsetRight = (childOffsetLeft + element.clientWidth);
 
-            var isOutOfBounds = (childOffsetTop > parent.clientHeight
-                || childOffsetLeft > parent.clientWidth 
-                || childOffsetBottom < 0
-                || childOffsetRight < 0);
+            // check inclusive of bounding rectangle edges
+            var isOutOfBounds = (childOffsetTop >= parent.clientHeight
+                || childOffsetLeft >= parent.clientWidth 
+                || childOffsetBottom <= 0
+                || childOffsetRight <= 0);
 
             return isOutOfBounds;
 

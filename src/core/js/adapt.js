@@ -1,13 +1,15 @@
 define([
-    'core/js/models/lockingModel'
-], function(lockingModel) {
+    'core/js/models/lockingModel',
+    'core/js/wait'
+], function(lockingModel, Wait) {
 
     var AdaptModel = Backbone.Model.extend({
 
         defaults: {
             _canScroll: true, //to stop scrollTo behaviour,
             _outstandingCompletionChecks: 0,
-            _pluginWaitCount:0
+            _pluginWaitCount:0,
+            _isStarted: false
         },
 
         lockedAttributes: {
@@ -15,8 +17,7 @@ define([
         },
 
         initialize: function () {
-            this.listenTo(this, 'plugin:beginWait', this.onPluginBeginWait);
-            this.listenTo(this, 'plugin:endWait', this.onPluginEndWait);
+            this.setupWait();
         },
 
         //call when entering an asynchronous completion check
@@ -48,24 +49,58 @@ define([
 
         },
 
+        setupWait: function() {
+
+            this.wait = new Wait();
+
+            // Setup legcay events and handlers
+            var beginWait = function () {
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future");
+                this.wait.begin();
+            }.bind(this);
+
+            var endWait = function() {
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future");
+                this.wait.end();
+            }.bind(this);
+
+            var ready = function() {
+
+                if (this.wait.isWaiting()) {
+                    return;
+                }
+
+                var isEventListening = (this._events['plugins:ready']);
+                if (!isEventListening) {
+                    return;
+                }
+
+                Adapt.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
+                this.trigger('plugins:ready');
+
+            }.bind(this);
+
+            this.listenTo(this.wait, "ready", ready);
+            this.listenTo(this, {
+                'plugin:beginWait': beginWait,
+                'plugin:endWait': endWait
+            });
+
+        },
+
         isWaitingForPlugins:function() {
-            return this.get('_pluginWaitCount') > 0;
+            Adapt.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future");
+            return this.wait.isWaiting();
         },
 
         checkPluginsReady:function() {
-            if (this.isWaitingForPlugins()) return;
+            Adapt.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future");
+            if (this.isWaitingForPlugins()) {
+                return;
+            }
             this.trigger('plugins:ready');
-        },
-
-        onPluginBeginWait:function() {
-            this.set('_pluginWaitCount', this.get('_pluginWaitCount') + 1);
-            this.checkPluginsReady();
-        },
-
-        onPluginEndWait:function() {
-            this.set('_pluginWaitCount', this.get('_pluginWaitCount') - 1);
-            this.checkPluginsReady();
         }
+
     });
 
     var Adapt = new AdaptModel();
@@ -74,19 +109,27 @@ define([
     Adapt.componentStore = {};
     Adapt.mappedIds = {};
 
-    Adapt.initialize = _.once(function() {
+    Adapt.loadScript = window.__loadScript;
 
-        //wait until no more completion checking 
+    Adapt.initialize = function() {
+
+        //wait until no more completion checking
         Adapt.deferUntilCompletionChecked(function() {
 
             //start adapt in a full restored state
             Adapt.trigger('adapt:start');
-            Backbone.history.start();
+
+            if (!Backbone.History.started) {
+                Backbone.history.start();
+            }
+
+            Adapt.set("_isStarted", true);
+
             Adapt.trigger('adapt:initialize');
 
         });
 
-    });
+    };
 
     Adapt.scrollTo = function(selector, settings) {
         // Get the current location - this is set in the router
@@ -174,7 +217,7 @@ define([
             //use view object
             if(!object.template) object.template = name;
         }
-        
+
         Adapt.componentStore[name] = object;
 
         return object;
@@ -224,6 +267,41 @@ define([
         }
 
         return Adapt[collectionType]._byAdaptID[id][0];
+
+    };
+
+    // Relative strings describe the number and type of hops in the model hierarchy
+    //
+    // "@component +1" means to move one component forward from the current model
+    // This function would return the following:
+    // {
+    //       type: "component",
+    //       offset: 1
+    // }
+    // Trickle uses this function to determine where it should scrollTo after it unlocks
+    Adapt.parseRelativeString = function(relativeString) {
+
+        if (relativeString[0] === "@") {
+            relativeString = relativeString.substr(1);
+        }
+
+        var type = relativeString.match(/(component|block|article|page|menu)/);
+        if (!type) {
+            Adapt.log.error("Adapt.parseRelativeString() could not match relative type", relativeString);
+            return;
+        }
+        type = type[0];
+
+        var offset = parseInt(relativeString.substr(type.length).trim()||0);
+        if (isNaN(offset)) {
+            Adapt.log.error("Adapt.parseRelativeString() could not parse relative offset", relativeString);
+            return;
+        }
+
+        return {
+            type: type,
+            offset: offset
+        };
 
     };
 

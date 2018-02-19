@@ -1,7 +1,7 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 {{! All links in the nav bar should have an attribute of data-event, navigationView uses this to fire a global event}}
-<div class="navigation-inner clearfix" role="navigation">
+<div class="navigation-inner clearfix">
     {{#if _accessibility._isEnabled}}
         <button id="accessibility-toggle" class="base icon icon-accessibility a11y-ignore-focus"></button>
         <span id="accessibility-instructions" class="aria-label" role="region" tabindex="0"></span>

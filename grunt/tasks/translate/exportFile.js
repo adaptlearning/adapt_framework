@@ -9,7 +9,10 @@ module.exports = function (grunt) {
     
     var next = this.async();
     
-    grunt.file.mkdir("languagefiles/"+grunt.config("translate.masterLang"));
+    var outputFolder = path.join(process.cwd(), "languagefiles", grunt.config("translate.masterLang"));
+    if (grunt.option("languagedir")) outputFolder = path.join(grunt.option("languagedir"), grunt.config("translate.masterLang"));
+
+    grunt.file.mkdir(outputFolder);
     formatExport();
     
     
@@ -54,7 +57,7 @@ module.exports = function (grunt) {
           if (error) {
             _cb(error);
           } else {
-            var src = path.join("languagefiles", grunt.config("translate.masterLang"), name+".csv");
+            var src = path.join(outputFolder, name+".csv");
             grunt.file.write(src, "\ufeff" + output);
             _cb();
           }
@@ -70,7 +73,7 @@ module.exports = function (grunt) {
     }
     
     function _exportRaw (filename) {
-      grunt.file.write(path.join("languagefiles", grunt.config("translate.masterLang"), filename+".json"), JSON.stringify(global.translate.exportTextData, null, 4));
+      grunt.file.write(path.join(outputFolder, filename + "." + grunt.config('jsonext')), JSON.stringify(global.translate.exportTextData, null, 4));
       next();
     }
     

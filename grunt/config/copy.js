@@ -1,23 +1,53 @@
 module.exports = function (grunt, options) {
-    
-    
-    var renameAssets = function (destFolder, srcFileName) {
-        var collateAtName = "assets";
-        var collateAtFolder = collateAtName + "/";
-        var startOfCollatePath = srcFileName.indexOf(collateAtFolder) + collateAtFolder.length;
-        var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
-        //ignore the folder alone
-        var testEndsWithCollateName = new RegExp("((?:\\\\|\/)" + collateAtName + ")(?:$|\\\\$|\\\/$)");
-        if (testEndsWithCollateName.test(srcFileName)) {
-            //we have path ending with .../[name] or .../[name]/ discard it
+
+    var _ = require("underscore");
+
+    var getUnixPath = function(filepath) {
+        // convert to unix style slashes
+        return filepath.replace(/\\/g,"/");
+    };
+
+    var collate = function(collateAtFolderName, destFolder, srcFileName) {
+        destFolder = getUnixPath(destFolder);
+        srcFileName = getUnixPath(srcFileName);
+
+        // ignore if the srcFileName ends with the collateAtFolderName
+        var nameParts = srcFileName.split("/");
+        if (nameParts[nameParts.length-1] === collateAtFolderName) {
             return destFolder;
         }
+
+        var startOfCollatePath = srcFileName.indexOf(collateAtFolderName) + collateAtFolderName.length + 1;
+        var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
+
         return collatedFilePath;
     }
-    
-    
-    
-    return {
+
+
+    var nonServerTasks = {
+        courseAssets: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%=languages%>/**/*', '!**/*.<% jsonext %>'],
+                    cwd: '<%= sourcedir %>course/',
+                    dest: '<%= outputdir %>course/'
+                }
+            ]
+        },
+        courseJson: {
+            files: [
+                {
+                    expand: true,
+                    src: ['<%=languages%>/*.<% jsonext %>'],
+                    cwd: '<%= sourcedir %>course/',
+                    dest: '<%= outputdir %>course/'
+                }
+            ]
+        }
+    };
+
+    var mandatoryTasks = {
         index: {
             files: [
                 {
@@ -29,34 +59,13 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
-        courseAssets: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%=languages%>/**/*', '!**/*.json'],
-                    cwd: '<%= sourcedir %>course/',
-                    dest: '<%= outputdir %>course/'
-                }
-            ]
-        },
-        courseJson: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%=languages%>/*.json'],
-                    cwd: '<%= sourcedir %>course/',
-                    dest: '<%= outputdir %>course/'
-                }
-            ]
-        },
         coreAssets: {
             files: [
                 {
                     expand: true,
                     src: ['<%= sourcedir %>core/assets/**'],
-                    dest: '<%= outputdir %>adapt/css/assets/',
-                    filter: 'isFile',
-                    flatten: true
+                    dest: '<%= outputdir %>assets/',
+                    rename: _.partial(collate, "assets")
                 }
             ]
         },
@@ -69,8 +78,7 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
-                    rename: renameAssets
+                    rename: _.partial(collate, "assets")
                 }
             ]
         },
@@ -79,11 +87,11 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>components/**/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    rename: _.partial(collate, "fonts")
                 }
             ]
         },
@@ -96,8 +104,7 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
-                    rename: renameAssets
+                    rename: _.partial(collate, "assets")
                 }
             ]
         },
@@ -106,11 +113,11 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>extensions/**/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    rename: _.partial(collate, "fonts")
                 }
             ]
         },
@@ -123,8 +130,7 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
-                    rename: renameAssets
+                    rename: _.partial(collate, "assets")
                 }
             ]
         },
@@ -133,9 +139,9 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>core/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: 'isFile',
-                    flatten: true
+                    rename: _.partial(collate, "fonts")
                 }
             ]
         },
@@ -144,11 +150,11 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>menu/<%= menu %>/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    rename: _.partial(collate, "fonts")
                 }
             ]
         },
@@ -157,11 +163,11 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>theme/<%= theme %>/assets/**'],
-                    dest: '<%= outputdir %>adapt/css/assets/',
+                    dest: '<%= outputdir %>assets/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    rename: _.partial(collate, "assets")
                 }
             ]
         },
@@ -170,11 +176,11 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['<%= sourcedir %>theme/<%= theme %>/fonts/**'],
-                    dest: '<%= outputdir %>adapt/css/fonts/',
+                    dest: '<%= outputdir %>fonts/',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    flatten: true
+                    rename: _.partial(collate, "fonts")
                 }
             ]
         },
@@ -194,11 +200,10 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: [
-                        '<%= sourcedir %>core/js/libraries/*.js'
+                        '<%= sourcedir %>core/js/libraries/**/*'
                     ],
                     dest: '<%= outputdir %>libraries/',
-                    filter: 'isFile',
-                    flatten: true
+                    rename: _.partial(collate, "libraries")
                 }
             ]
         },
@@ -212,25 +217,24 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    rename: function(destFolder, srcFileName) {
-                        var endOfRequired = srcFileName.indexOf("libraries/") + 9;
-                        return destFolder + srcFileName.substr(endOfRequired);
-                    }
+                    rename: _.partial(collate, "libraries")
                 },
                 {
                     expand: true,
-                    src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
+                    src: ['core/**/required/**/*', 'components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    rename: function(destFolder, srcFileName) {
-                        var endOfRequired = srcFileName.indexOf("required/") + 9;
-                        return destFolder + srcFileName.substr(endOfRequired);
-                    }
+                    rename: _.partial(collate, "required")
                 }
             ]
         }
-    }
+    };
+
+    if (grunt.option("outputdir")) return mandatoryTasks;
+
+    return _.extend({}, nonServerTasks, mandatoryTasks);
+
 };
