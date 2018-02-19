@@ -5,13 +5,13 @@ define([
 ], function(Adapt, AccessibilityView) {
 
     var defaultAriaLevels = {
-        "menu": 1,
-        "menuItem": 2,
-        "page": 1,
-        "article": 2,
-        "block": 3,
-        "component": 4,
-        "componentItem": 5
+        "_menu": 1,
+        "_menuItem": 2,
+        "_page": 1,
+        "_article": 2,
+        "_block": 3,
+        "_component": 4,
+        "_componentItem": 5
     };
 
     var Accessibility = Backbone.Controller.extend({
@@ -156,8 +156,8 @@ define([
                 else if (_.isString(levelOrType)) {
                     // if a string is passed check if it is defined in global configuration
                     cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
-                    if (cfg._ariaLevels && cfg._ariaLevels[levelOrType] !== undefined) {
-                        level = cfg._ariaLevels[levelOrType];
+                    if (cfg._ariaLevels && cfg._ariaLevels["_"+levelOrType] !== undefined) {
+                        level = cfg._ariaLevels["_"+levelOrType];
                     }
                 }
 

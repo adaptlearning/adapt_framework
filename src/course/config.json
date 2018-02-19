@@ -14,13 +14,13 @@
         "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
-            "menu": 1,
-            "menuItem": 2,
-            "page": 1,
-            "article": 2,
-            "block": 3,
-            "component": 4,
-            "componentItem": 5
+            "_menu": 1,
+            "_menuItem": 2,
+            "_page": 1,
+            "_article": 2,
+            "_block": 3,
+            "_component": 4,
+            "_componentItem": 5
         }
     },
     "_drawer": {
