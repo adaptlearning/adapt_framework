@@ -44,8 +44,10 @@ define([
             this.listenToOnce(Adapt, "app:dataReady", this.configureA11yLibrary);
 
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
-            this.listenTo(Adapt, 'router:location', this.onNavigationStart);
-            this.listenTo(Adapt, 'pageView:ready menuView:ready router:plugin', this.onNavigationEnd);
+            this.listenTo(Adapt, {
+                'router:location': this.onNavigationStart,
+                'pageView:ready menuView:ready router:plugin': this.onNavigationEnd
+            });
         },
 
         removeLegacyElements: function() {
@@ -331,14 +333,15 @@ define([
 
                         switch (currentModel.get("_type")) {
                             case "page":
-                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                                if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
                                 }
                                 break;
 
                             case "menu":
+                            /* falls through */
                             default:
-                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                                if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
                                 }
                                 break;
@@ -358,7 +361,7 @@ define([
                         if (windowScrollTop > 0 || documentScrollTop > 0) return;
 
                         _.delay(function(){
-                        $.a11y_focus();
+                            $.a11y_focus();
                         }, 500);
 
                     }, this), 500);
