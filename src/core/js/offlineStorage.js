@@ -32,7 +32,7 @@ define([
          * @returns {boolean} true if an offlineStorage handler has been defined, false otherwise
          */
         hasHandler: function() {
-            return !_.isUndefined(this._handler);
+            return this._handler !== undefined;
         },
 
         set: function(name, value) {
