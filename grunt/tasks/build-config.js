@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
         // add bower json
         buildConfig.plugins = [];
-        grunt.file.expand({follow: true}, options.src).forEach(function(bowerJSONPath) {
+        grunt.file.expand({follow: true, filter: options.filter}, options.src).forEach(function(bowerJSONPath) {
             var plugin = grunt.file.readJSON(bowerJSONPath);
             if (allowedProperties.bower) {
                 plugin = _.pick(plugin, allowedProperties.bower);

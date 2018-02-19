@@ -7,7 +7,6 @@ define([
 
         toJSON: function() {
             var json = _.clone(this.attributes);
-
             json._items = this.get('_items').toJSON();
 
             return json;
@@ -65,6 +64,11 @@ define([
 
         resetActiveItems: function() {
             this.get('_items').each(function(item) { item.toggleActive(false); });
+        },
+
+        setActiveItem: function(index) {
+            this.getActiveItem().toggleActive(false);
+            this.getItem(index).toggleActive(true);
         }
 
     });

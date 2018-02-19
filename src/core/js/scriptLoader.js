@@ -1,15 +1,41 @@
 (function() {
 
     // Change location of Adapt CSS if incorrect
-    (function fixCSSlocation() {
-        var oldLoc = "adapt/css/adapt.css";
-        var newLoc = "adapt.css";
-        var nodeList = document.querySelectorAll("link");
-        for (var i = 0, l = nodeList.length; i < l; i++) {
-            var el = nodeList[i];
-            if (el.href.substr(-oldLoc.length) !== oldLoc) return;
-            console.warn("WARN: DEPRECATED - CSS location needs updating from", oldLoc, "to", newLoc);
-            el.href = newLoc;
+    (function () {
+        var oldHRef = "adapt/css/adapt.css";
+        var newHRef = "adapt.css";
+        function fixCSSLocation() {
+            var oldLinkElement = findOldLink();
+            if (!oldLinkElement) return;
+            replaceOldLink(oldLinkElement);
+        }
+        function findOldLink() {
+            var nodeList = document.querySelectorAll("link");
+            for (var i = 0, l = nodeList.length; i < l; i++) {
+                var linkElement = nodeList[i];
+                if (linkElement.href.substr(-oldHRef.length) !== oldHRef) continue;
+                return linkElement;
+            }
+        }
+        /**
+         * replace link tag, otherwise issues with Google Chrome sourcemaps
+         */
+        function replaceOldLink(oldLinkElement) {
+            console.warn("WARN: DEPRECATED - CSS location needs updating from", oldHRef, "to", newHRef);
+            var parent = oldLinkElement.parentNode;
+            parent.removeChild(oldLinkElement);
+            var newLinkElement = document.createElement("link");
+            newLinkElement.href = newHRef;
+            newLinkElement.rel ="stylesheet";
+            parent.appendChild(newLinkElement);
+        }
+        /**
+         * wait for document to load otherwise link tag isn't available
+         */
+        if (!document.body) {
+            document.addEventListener("DOMContentLoaded", fixCSSLocation);
+        } else {
+            fixCSSLocation();
         }
     })();
 
