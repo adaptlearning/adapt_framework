@@ -4,7 +4,7 @@
 
     {{#if displayTitle}}
         <div class="block-title">
-            <div role="heading" tabindex="0" class="block-title-inner h3"  aria-level="3">
+            <div class="block-title-inner" {{{a11y_attrs_heading "block"}}}>
                 {{{compile displayTitle this}}}
             </div>
         </div>
