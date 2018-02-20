@@ -144,7 +144,7 @@ define([
                     return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>');
                 },
 
-                a11y_attrs_heading: function(level) {
+                a11y_attrs_heading: function(levelOrType) {
                     // get the global configuration from config.json
                     var cfg = Adapt.config.get('_accessibility');
                     // default level to use if nothing overrides it
