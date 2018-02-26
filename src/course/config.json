@@ -9,8 +9,6 @@
     },
     "_accessibility": {
         "_isEnabled": true,
-        "_isEnabledOnTouchDevices": false,
-        "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
