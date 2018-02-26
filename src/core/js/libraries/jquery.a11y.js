@@ -233,6 +233,7 @@
                     switch(child.nodeType) {
                     case 3: //TEXT NODE
                         //IF TEXT NODE WRAP IN A TABBABLE SPAN
+                        if (!stringTrim(child.textContent)) break;
                         newCluster.push( child.textContent );
                         break;
                     case 1: //DOM NODE
