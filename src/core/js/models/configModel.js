@@ -25,25 +25,34 @@ define([
             // Then check if course files can load
             // 'configModel:loadCourseData' event starts the core content collections and models being fetched
             this.fetch({
-                success: _.bind(function() {
-                    Adapt.trigger('configModel:dataLoaded');
-                    if (this.get('_canLoadData')) {
-                        Adapt.trigger('configModel:loadCourseData');
-                    }
-                    if(this.get('_defaultDirection')=='rtl'){//We're going to use rtl style
-                    	$('html').addClass('dir-rtl');
-                    }
-                    // check if animations should be disabled
-                    var disableAnimationArray = this.get('_disableAnimationFor');
-                    if (disableAnimationArray && disableAnimationArray.length > 0) {
-                        for (var i=0; i < disableAnimationArray.length; i++) {
-                            if ($("html").is(disableAnimationArray[i])) {
-                                this.set('_disableAnimation', true);
-                                console.log('Animation disabled.');
+                success: function() {
+                    Adapt.trigger('offlineStorage:prepare');
+
+                    Adapt.wait.queue(function() {
+
+                        Adapt.trigger('configModel:dataLoaded');
+
+                        if (this.get('_canLoadData')) {
+                            Adapt.trigger('configModel:loadCourseData');
+                        }
+
+                        if (this.get('_defaultDirection') === 'rtl'){
+                            // We're going to use rtl style
+                            $('html').addClass('dir-rtl');
+                        }
+
+                        // Check if animations should be disabled
+                        var disableAnimationArray = this.get('_disableAnimationFor');
+                        if (disableAnimationArray && disableAnimationArray.length > 0) {
+                            for (var i = 0; i < disableAnimationArray.length; i++) {
+                                if ($("html").is(disableAnimationArray[i])) {
+                                    this.set('_disableAnimation', true);
+                                    console.log('Animation disabled.');
+                                }
                             }
                         }
-                    }
-                }, this),
+                    }.bind(this));
+                }.bind(this),
                 error: function() {
                     console.log('Unable to load course/config.json');
                 }
