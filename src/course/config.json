@@ -26,6 +26,10 @@
         "_hideEasing": "easeInQuart",
         "_duration": 400
     },
+    "_graphics": {
+        "_isEnabled": true,
+        "_className": ".os-ios, .os-android"
+    },
     "_spoor": {
         "_isEnabled": true,
         "_tracking": {

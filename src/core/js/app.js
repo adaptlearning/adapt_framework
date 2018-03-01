@@ -16,6 +16,7 @@ require([
     'core/js/logging',
     'core/js/tracking',
     'core/js/device',
+    'core/js/graphics',
     'core/js/drawer',
     'core/js/notify',
     'core/js/popupManager',
