@@ -34,7 +34,9 @@ define([
           // 'small' or 'large' or 'src' or '_src'
           var rtn = options[imageWidth] || options.src || options._src || "";
 
-          if (!Adapt.graphics.isActive()) return new Handlebars.SafeString('src="'+rtn+'"');
+          if (!Adapt.graphics.isActive() || options._canLazyLoad === false) {
+            return new Handlebars.SafeString('src="'+rtn+'"');
+          }
 
           // produce a dummy image of the right size or ratio to put in place
           var width = options._width || 16;
