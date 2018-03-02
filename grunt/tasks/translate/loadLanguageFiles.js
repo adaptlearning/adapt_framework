@@ -117,7 +117,7 @@ module.exports = function (grunt) {
       
       function _cb (err) {
         if (err) {
-          throw grunt.util.error("Error processing CSV files.");
+          throw grunt.util.error("Error processing CSV files:" + err);
         } else {
           for (var i = 0; i < lines.length; i++) {
             var line = lines[i];
