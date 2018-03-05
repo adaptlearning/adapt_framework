@@ -273,6 +273,13 @@
       "title": "Enforce route locking?",
       "help": "If locking is enabled, this setting prevents navigating to locked routes"
     },
+    "_disableAnimationFor": {
+      "type": "array",
+      "required": false,
+      "isSetting": true,
+      "inputType": "List",
+      "help": "Allows you to disable some animations (e.g. the drawer close animation) on platform(s) where they are not performing well, using CSS selectors to target the relevant platform(s) via the classes on the HTML element."
+    },
     "_logging": {
       "type": "object",
       "title": "Logging",
