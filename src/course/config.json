@@ -42,7 +42,7 @@
             "_resetStatusOnLanguageChange": false
         }
     },
-    "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"],
+    "_disableAnimationFor": [],
     "build": {
     }
 }
