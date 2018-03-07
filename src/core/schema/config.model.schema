@@ -77,23 +77,6 @@
           "validators": [],
           "title": "Enabled?"
         },
-        "_isEnabledOnTouchDevices": {
-          "type": "boolean",
-          "default": false,
-          "isSetting": false,
-          "inputType": "Checkbox",
-          "validators": [],
-          "title": "Enabled on touch devices?"
-        },
-        "_shouldSupportLegacyBrowsers": {
-          "type": "boolean",
-          "default": false,
-          "isSetting": false,
-          "inputType": "Checkbox",
-          "validators": [],
-          "title": "Support legacy browsers?",
-          "help": "Need accessibility support for Internet Explorer v8?"
-        },
         "_isTextProcessorEnabled": {
           "type": "boolean",
           "default": false,
