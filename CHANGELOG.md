@@ -1,10 +1,46 @@
 ## [Unreleased][unreleased]
 
-## [2.2.1] - 2017-08-21
+## [3.0.0] - 2018-03-06
 
-- Fixed `schema-defaults` task for authoring tool exports (#1719)
-- Included HTML argument in `$.a11y_text()` (#1723)
-- Made additional style elements tabbable (#1722)
+### Removed
+- Support for legacy versions (8, 9, & 10) of Internet Explorer and various settings, hacks, defensive code, libraries, font files & styling related to support for those browsers
+- Some hacks related to backwards-compatibility with Adapt v1 ([#1708](https://github.com/adaptlearning/adapt_framework/issues/1708))
+
+### Added
+- An 'items collection' to provide a shared data model for components like Accordion or Narrative ([#1637](https://github.com/adaptlearning/adapt_framework/issues/1637))
+- A 'build model' to show what was used to build the course when debugging ([#1683](https://github.com/adaptlearning/adapt_framework/issues/1683))
+- Added various functions to the core models in preparation for adding xAPI support ([#1523](https://github.com/adaptlearning/adapt_framework/issues/1523) & [#1710](https://github.com/adaptlearning/adapt_framework/issues/1710))
+- New `Adapt.wait` API ([#1814](https://github.com/adaptlearning/adapt_framework/issues/1814))
+- Support for 'subviews' of Notify ([#1840](https://github.com/adaptlearning/adapt_framework/issues/1840) & [#1892](https://github.com/adaptlearning/adapt_framework/issues/1892))
+- A `completed` class to completed page/article/block/component elements ([#1888](https://github.com/adaptlearning/adapt_framework/issues/1888))
+- Ability for question components to be able set a title for feedback (rather than displaying the question title) ([#1876](https://github.com/adaptlearning/adapt_framework/issues/1876))
+- `preResize` and `postResize` events ([#1890](https://github.com/adaptlearning/adapt_framework/issues/1890))
+- Access to all course data for handlebars templates ([#1906](https://github.com/adaptlearning/adapt_framework/issues/1906))
+- Error output for the `grunt translate` task ([#1989](https://github.com/adaptlearning/adapt_framework/pull/1989))
+
+### Changed
+- Updates to the Grunt tasks - for a complete list of changes see the [GruntFile v3 Milestone](https://github.com/adaptlearning/adapt_framework/milestone/14?closed=1)
+- Updates to Accessibility - for a complete list of changes see the [Accessibility v3 Milestone](https://github.com/adaptlearning/adapt_framework/milestone/15?closed=1)
+- Various amends to the authoring tool schema files ([#1435](https://github.com/adaptlearning/adapt_framework/issues/1435), [#1694](https://github.com/adaptlearning/adapt_framework/issues/1694), [#1732](https://github.com/adaptlearning/adapt_framework/issues/1732), [#1984](https://github.com/adaptlearning/adapt_framework/issues/1984), [#1991](https://github.com/adaptlearning/adapt_framework/issues/1991), [#1993](https://github.com/adaptlearning/adapt_framework/issues/1993), [#1995](https://github.com/adaptlearning/adapt_framework/issues/1995))
+- Updated JQuery from v2.2.3 to v3.3.1 ([#1303](https://github.com/adaptlearning/adapt_framework/issues/1303))
+- Amended `offlineStorage` in preparation for the addition of xAPI support ([#1699](https://github.com/adaptlearning/adapt_framework/issues/1699))
+- Moved course completion settings and logic out of the spoor plugin and into core in preparation for the addition of xAPI support ([#1700](https://github.com/adaptlearning/adapt_framework/issues/1700))
+- Tidy up of router.js ([#1757](https://github.com/adaptlearning/adapt_framework/issues/1757))
+- Amended `startController` to allow a class name as well as a selector ([#1843](https://github.com/adaptlearning/adapt_framework/issues/1843))
+- Updated modernizr to v3.5.0 ([#1934](https://github.com/adaptlearning/adapt_framework/issues/1934))
+- Moved trickle's resize JQuery plugin and model functions into core
+
+
+### Fixed
+- In-course links in Notify content disable scrolling ([#1675](https://github.com/adaptlearning/adapt_framework/issues/1675))
+- Issue with Drawer button sometimes being displayed when it shouldn't be ([#1817](https://github.com/adaptlearning/adapt_framework/issues/1817))
+- `requireCompletionOf` functionality broken ([#1845](https://github.com/adaptlearning/adapt_framework/issues/1845))
+- Issue with inview library not checking component visibility properly ([#1873](https://github.com/adaptlearning/adapt_framework/issues/1873))
+- Issue with inview library's 'out of bounds' check ([#1881](https://github.com/adaptlearning/adapt_framework/issues/1881))
+- `jquery.resize` overwriting `$(window).resize()` unnecessarily ([#1884](https://github.com/adaptlearning/adapt_framework/issues/1884))
+- Empty title tag in index.html ([#1886](https://github.com/adaptlearning/adapt_framework/issues/1886))
+- Standard Adapt event queue not firing on language change ([#1909](https://github.com/adaptlearning/adapt_framework/issues/1909))
+- Issue with Drawer button disappearing when changing language ([#1917](https://github.com/adaptlearning/adapt_framework/issues/1917))
 
 ## [2.2.0] - 2017-08-02
 
@@ -549,8 +585,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.1...HEAD
-[2.2.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.0...v2.2.1
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.3...v2.2.0
 [2.1.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.2...v2.1.3
 [2.1.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.1...v2.1.2
