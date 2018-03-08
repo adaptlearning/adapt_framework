@@ -3,13 +3,13 @@
 ## [3.0.0] - 2018-03-06
 
 ### Removed
-- Support for legacy versions (8, 9, & 10) of Internet Explorer and various settings, hacks, defensive code, libraries, font files & styling related to support for those browsers
+- Support for legacy versions (8, 9, & 10) of Internet Explorer - as well as various settings, hacks, defensive code, libraries, font files & styling related to support for those browsers
 - Some hacks related to backwards-compatibility with Adapt v1 ([#1708](https://github.com/adaptlearning/adapt_framework/issues/1708))
 
 ### Added
 - An 'items collection' to provide a shared data model for components like Accordion or Narrative ([#1637](https://github.com/adaptlearning/adapt_framework/issues/1637))
 - A 'build model' to show what was used to build the course when debugging ([#1683](https://github.com/adaptlearning/adapt_framework/issues/1683))
-- Added various functions to the core models in preparation for adding xAPI support ([#1523](https://github.com/adaptlearning/adapt_framework/issues/1523) & [#1710](https://github.com/adaptlearning/adapt_framework/issues/1710))
+- Various functions to the core models in preparation for adding xAPI support ([#1523](https://github.com/adaptlearning/adapt_framework/issues/1523) & [#1710](https://github.com/adaptlearning/adapt_framework/issues/1710))
 - New `Adapt.wait` API ([#1814](https://github.com/adaptlearning/adapt_framework/issues/1814))
 - Support for 'subviews' of Notify ([#1840](https://github.com/adaptlearning/adapt_framework/issues/1840) & [#1892](https://github.com/adaptlearning/adapt_framework/issues/1892))
 - A `completed` class to completed page/article/block/component elements ([#1888](https://github.com/adaptlearning/adapt_framework/issues/1888))
@@ -27,7 +27,7 @@
 - Moved course completion settings and logic out of the spoor plugin and into core in preparation for the addition of xAPI support ([#1700](https://github.com/adaptlearning/adapt_framework/issues/1700))
 - Tidy up of router.js ([#1757](https://github.com/adaptlearning/adapt_framework/issues/1757))
 - Amended `startController` to allow a class name as well as a selector ([#1843](https://github.com/adaptlearning/adapt_framework/issues/1843))
-- Updated modernizr to v3.5.0 ([#1934](https://github.com/adaptlearning/adapt_framework/issues/1934))
+- Updated Modernizr to v3.5.0 ([#1934](https://github.com/adaptlearning/adapt_framework/issues/1934))
 - Moved trickle's resize JQuery plugin and model functions into core
 
 
