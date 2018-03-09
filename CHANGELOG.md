@@ -23,12 +23,12 @@
 - Updates to Accessibility - for a complete list of changes see the [Accessibility v3 Milestone](https://github.com/adaptlearning/adapt_framework/milestone/15?closed=1)
 - Various amends to the authoring tool schema files ([#1435](https://github.com/adaptlearning/adapt_framework/issues/1435), [#1694](https://github.com/adaptlearning/adapt_framework/issues/1694), [#1732](https://github.com/adaptlearning/adapt_framework/issues/1732), [#1984](https://github.com/adaptlearning/adapt_framework/issues/1984), [#1991](https://github.com/adaptlearning/adapt_framework/issues/1991), [#1993](https://github.com/adaptlearning/adapt_framework/issues/1993), [#1995](https://github.com/adaptlearning/adapt_framework/issues/1995))
 - Updated JQuery from v2.2.3 to v3.3.1 ([#1303](https://github.com/adaptlearning/adapt_framework/issues/1303))
+- Moved trickle's `jquery.resize` plugin and model functions into core ([#1576](https://github.com/adaptlearning/adapt_framework/issues/1576))
 - Amended `offlineStorage` in preparation for the addition of xAPI support ([#1699](https://github.com/adaptlearning/adapt_framework/issues/1699))
 - Moved course completion settings and logic out of the spoor plugin and into core in preparation for the addition of xAPI support ([#1700](https://github.com/adaptlearning/adapt_framework/issues/1700))
 - Tidy up of router.js ([#1757](https://github.com/adaptlearning/adapt_framework/issues/1757))
 - Amended `startController` to allow a class name as well as a selector ([#1843](https://github.com/adaptlearning/adapt_framework/issues/1843))
 - Updated Modernizr to v3.5.0 ([#1934](https://github.com/adaptlearning/adapt_framework/issues/1934))
-- Moved trickle's resize JQuery plugin and model functions into core
 
 
 ### Fixed
