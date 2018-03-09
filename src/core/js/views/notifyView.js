@@ -5,13 +5,13 @@ define([
     var NotifyView = Backbone.View.extend({
 
         className: function() {
-            let classes = 'notify ';
+            var classes = 'notify ';
             classes += (this.model.get('_classes') || '');
             return classes;
         },
 
         disableAnimation: false,
-        
+
         escapeKeyAttached: false,
 
         initialize: function() {
@@ -194,7 +194,7 @@ define([
 
             this.subView = this.model.get("_view");
             if (!this.subView) return;
-            
+
             this.$(".notify-popup-content-inner").append(this.subView.$el);
 
         },

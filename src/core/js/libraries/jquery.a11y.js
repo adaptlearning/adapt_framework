@@ -21,8 +21,8 @@
             "nativeSpaceElements": "textarea, input[type='text'], div[contenteditable=true]",
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
             "nativeTabElements": "textarea, input, select",
-            "wrapIgnoreElements": "a,button,input,select,textarea,br",
-            "wrapStyleElements": "b,i,abbr,strong,em,small,sub,sup,ins,del,mark",
+            "wrapIgnoreElements": "a,button,input,select,textarea",
+            "wrapStyleElements": "b,i,abbr,strong,em,small,sub,sup,ins,del,mark,zw,nb",
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
@@ -172,6 +172,11 @@
         }
 
         //PERFORMS CALCULATIONS TO TURN HTML/TEXT STRINGS INTO TABBABLE CONTENT
+        /**
+         * Re written to group child nodes according to their readability
+         * @param  {string} text any html string
+         * @return {string}      returns html string with tabbable wrappers where appropriate
+         */
         function makeHTMLOrTextAccessible(text) {
 
             return getInnerHTML( makeChildNodesAccessible( wrapInDivAndMakeIntoDOMNode(text) ) );
@@ -221,21 +226,21 @@
 
                 //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
                 var newChildren = [];
-                var added = false;
+                var newCluster = [];
                 for (var i = 0; i < $element[0].childNodes.length; i++) {
                     var child = $element[0].childNodes[i];
                     var cloneChild = $(child.outerHTML)[0];
                     switch(child.nodeType) {
                     case 3: //TEXT NODE
                         //IF TEXT NODE WRAP IN A TABBABLE SPAN
-                        newChildren.push( makeElementTabbable($("<span>"+child.textContent+"</span>")) );
-                        added = true;
+                        if (!stringTrim(child.textContent)) break;
+                        newCluster.push( child.textContent );
                         break;
                     case 1: //DOM NODE
                         var $child = $(cloneChild);
-                        if (($child.is(domSelectors.wrapStyleElements) && !added) || $child.is(domSelectors.wrapIgnoreElements)) {
+                        if ($child.is(domSelectors.wrapStyleElements) || $child.is(domSelectors.wrapIgnoreElements)) {
                             //IGNORE NATIVELY TABBABLE ELEMENTS AND STYLING ELEMENTS
-                            newChildren.push( $child );
+                            newCluster.push( $child[0].outerHTML );
                         } else {
                             var childChildren = $child.children();
                             if (childChildren.length === 0) {
@@ -246,10 +251,18 @@
                                 //DESCEND INTO NODES WITH CHILDREN
                                 makeChildNodesAccessible($child);
                             }
+                            if (newCluster.length) {
+                                newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")))
+                                newCluster.length = 0;
+                            }
                             newChildren.push( $child );
                         }
                         break;
                     }
+                }
+                if (newCluster.length) {
+                    newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")))
+                    newCluster.length = 0;
                 }
 
                 removeChildNodes($element);
@@ -949,6 +962,46 @@
             return text;
         }
 
+        /**
+         * Remove all html which causes the screen reader to pause
+         * Good for converting title text to aria labels
+         * @param  {string} text any html string
+         * @return {string} returns html string without markup which would cause screen reader to pause
+         */
+        $.a11y_remove_breaks = function(text) {
+            var options = $.a11y.options;
+
+            if (!options.isTabbableTextEnabled) return text;
+
+            var $div = $("<div>" + text + "</div>");
+            var stack = [ $div[0] ];
+            var stackIndex = 0;
+
+            var outputs = [];
+            do {
+
+                if (stack[stackIndex].childNodes.length) {
+                    var nodes = stack[stackIndex].childNodes;
+                    var usable = _.filter(nodes, function(node) {
+                        if (node.nodeType === 3) return true;
+                        if ($(node).is(domSelectors.wrapStyleElements)) return true;
+                        return false;
+                    });
+                    outputs.push.apply(outputs, usable);
+                    stack.push.apply(stack, nodes);
+                }
+                stackIndex++;
+
+            } while (stackIndex < stack.length)
+
+            var rtnText = "";
+            outputs.forEach(function(item) {
+                rtnText+=item.outerHTML||item.textContent;
+            });
+
+            return rtnText;
+        };
+
         //CONVERTS HTML OR TEXT STRING TO ACCESSIBLE HTML STRING
         $.a11y_text = function (text) {
             var options = $.a11y.options;
@@ -1195,7 +1248,7 @@
             defer(function() {
                 // Listeners for popup close may shift focus so respect this
                 if ($activeElement != $.a11y.state.$activeElement) return;
-                
+
                 if ($activeElement) {
                     state.$activeElement = $activeElement;
                     //scroll to focused element

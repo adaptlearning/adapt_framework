@@ -35,33 +35,13 @@
 }
 
 #accessibility-toggle {
-    position: absolute;
-    top: -1px;
-    left: -25px;
+    float:left;
     .dir-rtl & {
-        left:inherit;
-        right: -25px;
+        float:right;
     }
-    height: 1px;
-    width: 1px;
-    z-index: 0;
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    padding: 8px 10px 8px 10px;
     &:focus {
-        height: auto;
-        width: auto;
-        top: 70px;
-        left: 10px;
-        .dir-rtl & {
-            left:inherit;
-            right: 10px;
-        }
-        z-index: 5000;
-        background: @primary-color;
-        border: 1px solid #fff;
-        color: #fff;
+        border: @focus-outline;
+        padding: 17px 20px;
     }
 }
 
@@ -369,4 +349,18 @@ body {
         margin-top: @body-text-font-size;
         margin-bottom: @body-text-font-size;
     }
+}
+
+// Used to wrap content which should have zero-width
+// I<zw>&nbsp;</zw>T   will look like IT but read 'EYE TEA' instead of 'it'
+zw {
+    display: inline-block;
+    width: 0;
+}
+
+// Used to wrap content which should not break across multiple lines
+// <nw>I<zw>&nbsp;</zw>T</nw>   will not split to I
+// T instead it will allways appear as IT
+nb {
+    white-space: nowrap;
 }

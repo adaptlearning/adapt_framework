@@ -27,6 +27,14 @@ define([
             this._handler = handler;
         },
 
+        /**
+         * Flag to indicate if an offlineStorage handler has been defined.
+         * @returns {boolean} true if an offlineStorage handler has been defined, false otherwise
+         */
+        hasHandler: function() {
+            return this._handler !== undefined;
+        },
+
         set: function(name, value) {
             if (!(this._handler && this._handler.set)) return;
             return this._handler.set.apply(this._handler, arguments);

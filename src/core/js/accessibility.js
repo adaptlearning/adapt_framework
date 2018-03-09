@@ -1,8 +1,7 @@
 define([
     'core/js/adapt',
-    'core/js/views/accessibilityView',
     'a11y'
-], function(Adapt, AccessibilityView) {
+], function(Adapt) {
 
     var defaultAriaLevels = {
         "_menu": 1,
@@ -17,21 +16,13 @@ define([
     var Accessibility = Backbone.Controller.extend({
 
         $html: $('html'),
-        $accessibilityInstructions: $("#accessibility-instructions"),
-        $accessibilityToggle: $("#accessibility-toggle"),
 
-        _tabIndexElements: 'a, button, input, select, textarea, [tabindex]',
-        _isButtonRedirectionOn: true,
-        _hasUserTabbed: false,
         _hasUsageInstructionRead: false,
         _isLoaded: false,
         _hasCourseLoaded: false,
-        _legacyFocusElements: undefined,
 
         reset: function() {
             _.extend(this, {
-                _isButtonRedirectionOn: true,
-                _hasUserTabbed: false,
                 _hasUsageInstructionRead: false
             });
         },
@@ -39,6 +30,8 @@ define([
         initialize: function() {
             //RUN ONCE
             if (this._isLoaded) return;
+
+            this.removeLegacyElements();
 
             //TRIGGER SETUP ON DATA LOADED AND TOGGLE BUTTON
             Adapt.once('app:dataLoaded', function() {
@@ -53,10 +46,6 @@ define([
 
             //SETUP RENDERING HELPERS
             Adapt.once('app:dataLoaded', this.setupHelpers, this);
-            Adapt.once('app:dataLoaded', this.touchDeviceCheck, this);
-
-            //SETUP NEW VIEW FOR TOGGLE BUTTON
-            Adapt.once('app:dataReady', this.setupToggleButton, this);
 
             //SETUP NO SELECT PARAMETERS ON DEVICE CHANGE
             Adapt.on("device:changed", this.setupNoSelect);
@@ -65,45 +54,45 @@ define([
             this.listenToOnce(Adapt, "app:dataReady", this.configureA11yLibrary);
 
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
-            this.listenTo(Adapt, 'router:location', this.onNavigationStart);
-            this.listenTo(Adapt, 'pageView:ready menuView:ready router:plugin', this.onNavigationEnd);
+            this.listenTo(Adapt, {
+                'router:location': this.onNavigationStart,
+                'pageView:ready menuView:ready router:plugin': this.onNavigationEnd
+            });
+        },
+
+        removeLegacyElements: function() {
+            var $legacyElements = $("body").children("#accessibility-toggle, #accessibility-instructions");
+
+            if (!$legacyElements.length) return;
+
+            Adapt.log.warn("DEPRECATED - #accessibility-toggle and #accessibility-instructions have been moved to the navigation bar. Please remove them from all of your .html files.");
+            $legacyElements.remove();
         },
 
         setupAccessibility: function() {
             //CALLED ON BUTTON CLICK AND ON DATA LOAD
             if (!this.isEnabled()) return;
 
-            if (this._hasCourseLoaded && !Adapt.device.touch) {
-                //save accessibility state
-                Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
-            }
+            //save accessibility state
+            Adapt.offlineStorage.set("a11y", Adapt.config.get("_accessibility")._isActive);
 
             this.reset();
 
-            this.checkTabCapture();
-
             this.configureA11yLibrary();
-
-            this.touchDeviceCheck();
 
             // Check if accessibility is active
             if (this.isActive()) {
                 this.setupDocument();
-                this.setupLegacy();
                 this.setupPopupListeners();
-                this.setupUsageInstructions();
                 this.setupLogging();
 
             } else {
 
                 this.revertDocument();
-                this.revertLegacy();
                 this.revertPopupListeners();
-                this.revertUsageInstructions();
+                this.removeUsageInstructionListener();
                 this.revertLogging();
-
             }
-
         },
 
         setupHelpers: function() {
@@ -113,60 +102,74 @@ define([
                 ? Adapt.config.get("_accessibility")
                 : false;
 
-            Handlebars.registerHelper('a11y_text', function(text) {
-                //ALLOW ENABLE/DISABLE OF a11y_text HELPER
-                if (config && config._isTextProcessorEnabled === false) {
-                    return text;
-                } else {
-                    return $.a11y_text(text);
-                }
-            });
+            var helpers = {
 
-            Handlebars.registerHelper('a11y_normalize', function(text) {
-                return $.a11y_normalize(text);
-            });
-
-            Handlebars.registerHelper('a11y_aria_label', function(text) {
-                return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
-            });
-
-            Handlebars.registerHelper('a11y_aria_label_relative', function(text) {
-                return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
-            });
-
-            Handlebars.registerHelper('a11y_wrap_focus', function(text) {
-                return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>');
-            });
-
-            Handlebars.registerHelper('a11y_attrs_heading', function(levelOrType) {
-                // get the global configuration from config.json
-                var cfg = Adapt.config.get('_accessibility');
-                // default level to use if nothing overrides it
-                var level = 1;
-
-                // first check to see if the Handlebars context has an override
-                if (this._ariaLevel) {
-                    levelOrType = this._ariaLevel;
-                }
-
-                if (isNaN(levelOrType) === false) {
-                    // if a number is passed just use this
-                    level = levelOrType;
-                }
-                else if (_.isString(levelOrType)) {
-                    // if a string is passed check if it is defined in global configuration
-                    cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
-                    if (cfg._ariaLevels && cfg._ariaLevels["_"+levelOrType] !== undefined) {
-                        level = cfg._ariaLevels["_"+levelOrType];
+                a11y_text: function(text) {
+                    //ALLOW ENABLE/DISABLE OF a11y_text HELPER
+                    if (config && config._isTextProcessorEnabled === false) {
+                        return text;
+                    } else {
+                        return $.a11y_text(text);
                     }
+                },
+
+                a11y_normalize: function(text) {
+                    return $.a11y_normalize(text);
+                },
+
+                a11y_remove_breaks: function(text) {
+                    return $.a11y_remove_breaks(text);
+                },
+
+                a11y_aria_label: function(text) {
+                    return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
+                },
+
+                a11y_aria_label_relative: function(text) {
+                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
+                },
+
+                a11y_wrap_focus: function(text) {
+                    return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>');
+                },
+
+                a11y_attrs_heading: function(levelOrType) {
+                    // get the global configuration from config.json
+                    var cfg = Adapt.config.get('_accessibility');
+                    // default level to use if nothing overrides it
+                    var level = 1;
+
+                    // first check to see if the Handlebars context has an override
+                    if (this._ariaLevel) {
+                        levelOrType = this._ariaLevel;
+                    }
+
+                    if (isNaN(levelOrType) === false) {
+                        // if a number is passed just use this
+                        level = levelOrType;
+                    }
+                    else if (_.isString(levelOrType)) {
+                        // if a string is passed check if it is defined in global configuration
+                        cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
+                        if (cfg._ariaLevels && cfg._ariaLevels["_"+levelOrType] !== undefined) {
+                            level = cfg._ariaLevels["_"+levelOrType];
+                        }
+                    }
+
+                    return new Handlebars.SafeString(' role="heading" aria-level="'+level+'" '+getTabIndex()+' ');
+                },
+
+                a11y_attrs_tabbable: function() {
+                    return new Handlebars.SafeString(' role="region" '+getTabIndex()+' ');
                 }
 
-                return new Handlebars.SafeString(' role="heading" aria-level="'+level+'" '+getTabIndex()+' ');
-            });
+            };
 
-            Handlebars.registerHelper('a11y_attrs_tabbable', function() {
-                return new Handlebars.SafeString(' role="region" '+getTabIndex()+' ');
-            });
+            for (var name in helpers) {
+                if (helpers.hasOwnProperty(name)) {
+                     Handlebars.registerHelper(name, helpers[name]);
+                }
+            }
 
             var getTabIndex = function() {
                 return this.isActive() ? 'tabindex="0"' : 'tabindex="-1"';
@@ -175,14 +178,7 @@ define([
             var getIgnoreClass = function() {
                 return $.a11y.options.isTabbableTextEnabled ? '' : ' a11y-ignore';
             }.bind(this);
-        },
 
-        setupToggleButton: function() {
-            if (this.isEnabled()) {
-                new AccessibilityView();
-            } else {
-                this.$accessibilityToggle.addClass("a11y-ignore").a11y_cntrl_enabled(false);
-            }
         },
 
         setupNoSelect: function() {
@@ -248,17 +244,10 @@ define([
             this.setupNoSelect();
 
             $.a11y.ready();
-
-            if (!this.isEnabled()) return;
-
-            //CAPTURE TAB PRESSES TO DIVERT
-            $('body').off('keyup', this.onKeyUp);
-            $('body').on('keyup', this.onKeyUp);
         },
 
         onNavigationStart: function() {
             this._isLoaded = false;
-            this._hasUserTabbed = false;
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
             $("#a11y-focuser").a11y_focus(true);
             _.defer(function() {
@@ -287,8 +276,9 @@ define([
             $.a11y_update();
             this.setNavigationBar();
 
+            $('#accessibility-toggle').focus();
+
             //MAKE FOCUS RIGHT
-            this._isButtonRedirectionOn = true;
             _.delay(_.bind(function() {
                 this.focusInitial();
             }, this), 500);
@@ -296,53 +286,13 @@ define([
         },
 
         setNavigationBar: function() {
+            var $navArias = $(".navigation").find(".aria-label").not('#accessibility-instructions');
+
             if (this.isActive()) {
-                $(".navigation .aria-label").attr("tabindex", 0).removeAttr("aria-hidden").removeClass("a11y-ignore");
+                $navArias.attr("tabindex", 0).removeAttr("aria-hidden").removeClass("a11y-ignore");
             } else {
-                $(".navigation .aria-label").attr("tabindex", -1).attr("aria-hidden", "true");
+                $navArias.attr("tabindex", -1).attr("aria-hidden", "true");
             }
-        },
-
-        touchDeviceCheck: function() {
-            //SCREEN READER DON@T USE TABBING
-            //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
-            if (!this.isEnabled()) return;
-
-            if (Adapt.device.touch) {
-                 //Remove button
-                this.$accessibilityToggle.remove();
-            }
-
-            var config = Adapt.config.get("_accessibility");
-            // Backwards compatibility for _isDisabledOnTouchDevices
-            var isEnabledOnTouchDevices = config._isEnabledOnTouchDevices || (config._isDisabledOnTouchDevices === false);
-
-            if (!Adapt.device.touch || this.isActive() || !isEnabledOnTouchDevices) return;
-
-            //If a touch device and not enabled, remove accessibility button and turn on accessibility
-
-            this._isLoaded = true;
-
-            //Force accessibility on
-            Adapt.config.get('_accessibility')._isEnabled = true;
-            Adapt.config.get('_accessibility')._isActive = true;
-
-            Adapt.trigger('accessibility:toggle', true);
-
-        },
-
-        checkTabCapture: function() {
-            if (!this._isLoaded) return;
-
-            var isActive = this.isActive();
-
-            $.a11y(isActive);
-
-            //IF ACCESSIBILTY TURNED ON QUIT
-            if (isActive) return;
-
-            //OTHERWISE ENABLE TAB REDIRECTION TO TOGGLE BUTTON
-            this._isButtonRedirectionOn = true;
         },
 
         isActive: function() {
@@ -366,53 +316,11 @@ define([
             $('.skip-nav-link').removeClass('a11y-ignore a11y-ignore-focus');
 
             $.a11y(true)
-            $.a11y_on(true, "body > *");
-        },
-
-        setupLegacy: function() {
-            //IE8 .focused CLASS AS :focus ISN'T AVAILABLE
-
-            if(!this.$html.hasClass('ie8') || !Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) return;
-
-            // If legacy enabled run setupLegacyListeners()
-            this.listenTo(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocusClasser);
-            this.listenTo(Adapt, 'remove', this.removeLegacyFocusClasser);
-
-        },
-
-        setupLegacyFocusClasser: function() {
-            this.removeLegacyFocusClasser();
-
-            // On focus add class of focused, on blur remove class
-            this._legacyFocusElements = $(this._tabIndexElements);
-            this._legacyFocusElements
-                .on('focus', this.onElementFocused)
-                .on('blur', this.onElementBlurred);
+            $.a11y_on(true, "#accessibility-instructions");
         },
 
         setupPopupListeners: function() {
             this.listenTo(Adapt, 'popup:opened popup:closed', this.onPop);
-        },
-
-
-        setupUsageInstructions: function() {
-            if (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions) {
-                this.$accessibilityInstructions.remove();
-                return;
-            }
-
-            var instructionsList = Adapt.course.get("_globals")._accessibility._accessibilityInstructions;
-
-            var usageInstructions;
-            if (instructionsList[Adapt.device.browser]) {
-                usageInstructions = instructionsList[Adapt.device.browser];
-            } else if (Adapt.device.touch) {
-                usageInstructions = instructionsList.touch || "";
-            } else {
-                usageInstructions = instructionsList.notouch || "";
-            }
-
-           this.$accessibilityInstructions.html( usageInstructions );
         },
 
         setupLogging: function() {
@@ -421,44 +329,20 @@ define([
             $(document).on("reading", this.onRead);
         },
 
-
-
         revertDocument: function() {
             this.$html.removeClass('accessibility text-to-speech');
             $('.skip-nav-link').addClass('a11y-ignore a11y-ignore-focus');
             $.a11y(false);
-            $.a11y_on(false, "body > *");
+            $.a11y_on(false, "#accessibility-instructions");
             $.a11y_on(true, "#accessibility-toggle");
         },
-
-        revertLegacy: function() {
-
-            if(!this.$html.hasClass('ie8') || !Adapt.config.get('_accessibility')._shouldSupportLegacyBrowsers) return;
-
-            this.stopListening(Adapt, 'pageView:ready menuView:ready', this.setupLegacyFocusClasser);
-            this.stopListening(Adapt, 'remove', this.removeLegacyFocusClasser);
-
-        },
-
-        removeLegacyFocusClasser: function() {
-            if (this._legacyFocusElements === undefined) return;
-
-            //Remove focus and blur events
-            this._legacyFocusElements
-                .off('focus', this.onElementFocused)
-                .off('blur', this.onElementBlurred);
-            this._legacyFocusElements = undefined;
-        },
-
 
         revertPopupListeners: function() {
             this.stopListening(Adapt, 'popup:opened popup:closed', this.onPop);
         },
 
-        revertUsageInstructions: function() {
-            if (Adapt.course.has("_globals") && (!Adapt.course.get("_globals")._accessibility || !Adapt.course.get("_globals")._accessibility._accessibilityInstructions)) return;
-
-            this.$accessibilityInstructions.off("blur", this.onFocusInstructions);
+        removeUsageInstructionListener:function() {
+            $('#accessibility-instructions').off("blur", this.onFocusInstructions);
         },
 
         revertLogging: function() {
@@ -471,8 +355,6 @@ define([
         focusInitial: function() {
             if (!this.isActive()) return;
 
-            this._isButtonRedirectionOn = false;
-
             var debouncedInitial = _.debounce(_.bind(function() {
                 //ENABLED DOCUMENT READING
 
@@ -483,12 +365,10 @@ define([
                     $.a11y_on(true, '.page');
                     $.a11y_on(true, '.menu');
 
-                    if (this._hasUserTabbed) return;
-
-                    this.$accessibilityInstructions.one("blur", this.onFocusInstructions);
+                    $('#accessibility-instructions').one("blur", this.onFocusInstructions);
 
                     _.delay(function(){
-                        Adapt.accessibility.$accessibilityInstructions.focusNoScroll();
+                        $('#accessibility-instructions').focusNoScroll();
                     }, 250);
 
                 } else {
@@ -500,14 +380,15 @@ define([
 
                         switch (currentModel.get("_type")) {
                             case "page":
-                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
+                                if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
                                 }
                                 break;
 
                             case "menu":
+                            /* falls through */
                             default:
-                            if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
+                                if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
                                     alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
                                 }
                                 break;
@@ -524,10 +405,10 @@ define([
                         $.a11y_on(true, '.menu');
 
                         //prevent auto scrolling to top when scroll has been initiated
-                        if (windowScrollTop > 0 || documentScrollTop > 0 || this._hasUserTabbed) return;
+                        if (windowScrollTop > 0 || documentScrollTop > 0) return;
 
                         _.delay(function(){
-                        $.a11y_focus();
+                            $.a11y_focus();
                         }, 500);
 
                     }, this), 500);
@@ -537,14 +418,6 @@ define([
             }, this), 100);
             debouncedInitial();
 
-        },
-
-        onElementFocused: function(event) {
-             $(this).addClass('focused');
-        },
-
-        onElementBlurred: function(event) {
-            $(this).removeClass('focused');
         },
 
         onRead: function(event, text) {
@@ -559,28 +432,10 @@ define([
             }
         },
 
-        onKeyUp: function(event) {
-
-            //IF NOT TAB KEY, RETURN
-            if (event.which !== 9) return;
-
-            //DO NOT REDIRECT IF USER HAS ALREADY INTERACTED
-            if ($.a11y.userInteracted) return;
-            Adapt.accessibility._hasUserTabbed = true;
-
-            //IF INITIAL TAB NOT CAPTURED AND ACCESSIBILITY NOT ON, RETURN
-            if (Adapt.accessibility.isActive() && !Adapt.accessibility._isButtonRedirectionOn) return;
-
-            //IF TAB PRESSED, AND TAB REDIRECTION ON, ALWAYS TAB TO ACCESSIBILITY BUTTON ONLY
-            Adapt.accessibility.$accessibilityToggle.focus();
-
-        },
-
         onFocusInstructions: function(event) {
             //HIDE INSTRUCTIONS FROM TAB WRAP AROUND AFTER LEAVING INSTRUCTIONS
-            if (Adapt.accessibility._isButtonRedirectionOn) return;
             if (!Adapt.accessibility._isLoaded) return;
-            Adapt.accessibility.$accessibilityInstructions
+            $('#accessibility-instructions')
                 .addClass("a11y-ignore-focus")
                 .off("blur", Adapt.accessibility.onFocusInstructions);
         }

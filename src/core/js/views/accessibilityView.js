@@ -27,7 +27,7 @@ define([
 
                 var toggleText = isActive ? offLabel : onLabel;
 
-                this.$el.html(toggleText).attr('aria-label', Adapt.course.get("title") + ". "
+                this.$el.attr('aria-label', Adapt.course.get("title") + ". "
                     + Adapt.course.get('_globals')._accessibility._ariaLabels.accessibilityToggleButton + ". "
                     + $.a11y_normalize(toggleText));
             }

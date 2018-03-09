@@ -9,8 +9,6 @@
     },
     "_accessibility": {
         "_isEnabled": true,
-        "_isEnabledOnTouchDevices": false,
-        "_shouldSupportLegacyBrowsers": true,
         "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
@@ -44,7 +42,7 @@
             "_resetStatusOnLanguageChange": false
         }
     },
-    "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"],
+    "_disableAnimationFor": [],
     "build": {
     }
 }
