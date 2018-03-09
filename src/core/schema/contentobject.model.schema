@@ -149,6 +149,14 @@
       "title": "Is this visible?",
       "help": "Equivalent to the CSS visibility property. Unless you have custom code that uses this, it is highly unlikely you would want to change this setting at a page level."
     },
+    "_ariaLevel": {
+      "type": "number",
+      "default": 0,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "help": "If you need to override the default page ARIA level (as defined in Configuration Settings), set this to any number greater than 0."
+    },
     "_onScreen": {
       "type": "object",
       "title": "On-screen classes",
