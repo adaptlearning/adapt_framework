@@ -10,10 +10,6 @@ define([
                 medium: 760,
                 large: 1024
             },
-            _completionCriteria: {
-                _requireContentCompleted: true,
-                _requireAssessmentPassed: false
-            },
             _forceRouteLocking: false,
             _canLoadData: true,
             _disableAnimation: false
