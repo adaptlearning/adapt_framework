@@ -4,14 +4,14 @@ module.exports = function(grunt) {
 
     grunt.registerTask('tracking-insert', 'Adds any missing tracking IDs (starting at the highest existing ID)', function() {
         if(!Helpers.isPluginInstalled('adapt-contrib-spoor')) return;
-        
+
         var options = this.options({
             _latestTrackingId: -1,
             _trackingIdsSeen: []
         });
 
-        var isSrcCourse = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
-        var sourcedir = isSrcCourse ? grunt.option('outputdir') : grunt.config('sourcedir');
+        var isOutputDir= (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
+        var sourcedir = isOutputDir ? grunt.option('outputdir') : grunt.config('sourcedir');
 
         var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
         var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));
@@ -21,13 +21,13 @@ module.exports = function(grunt) {
             options._latestTrackingId = -1;
             options._trackingIdsSeen = [];
         }
-        
+
         function insertTrackingIds(blocksPath, coursePath){
             var blocks = grunt.file.readJSON(blocksPath);
             var course = grunt.file.readJSON(coursePath);
-            
+
             options._latestTrackingId = course._latestTrackingId || -1;
-            
+
             for(var i = 0; i < blocks.length; i++) {
                 var block = blocks[i];
                 grunt.log.writeln("block: " + block._id + ": " + (block._trackingId !== undefined ? block._trackingId : "not set"));
@@ -52,6 +52,6 @@ module.exports = function(grunt) {
             grunt.file.write(coursePath, JSON.stringify(course, null, 4));
             grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
         }
-        
+
     });
 };
