@@ -1,15 +1,19 @@
 module.exports = function(grunt) {
     var Helpers = require('../helpers')(grunt);
+    var path = require('path');
 
     grunt.registerTask('tracking-reset', 'Resets and re-inserts all tracking IDs, starting with 0', function() {
-        if(!Helpers.isPluginInstalled('adapt-contrib-spoor')) return;
+        if (!Helpers.isPluginInstalled('adapt-contrib-spoor')) return;
 
         var options = this.options({
             _latestTrackingId: -1,
         });
 
-        var blocksFiles = grunt.file.expand(options.blocksFile);
-        var courseFiles = grunt.file.expand(options.courseFile);
+        var isSrcCourse = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
+        var sourcedir = isSrcCourse ? grunt.option('outputdir') : grunt.config('sourcedir');
+        
+        var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
+        var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));
         
         for (var i = 0; i < blocksFiles.length; i++) {
             resetTrackingIds(blocksFiles[i], courseFiles[i]);

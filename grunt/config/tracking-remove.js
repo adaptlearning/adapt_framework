@@ -1,6 +1,8 @@
-module.exports = {
-  options: {
-      courseFile: '<%= sourcedir %>course/*/course.<% jsonext %>',
-      blocksFile: '<%= sourcedir %>course/*/blocks.<% jsonext %>'
-  }
-}
+module.exports = function(grunt) {
+  return {
+    options: {
+        courseFile: 'course/*/course.<%= jsonext %>',
+        blocksFile: 'course/*/blocks.<%= jsonext %>'
+    }
+  };
+};

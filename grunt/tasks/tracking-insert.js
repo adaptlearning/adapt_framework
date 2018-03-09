@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
     var Helpers = require('../helpers')(grunt);
+    var path = require('path');
 
     grunt.registerTask('tracking-insert', 'Adds any missing tracking IDs (starting at the highest existing ID)', function() {
         if(!Helpers.isPluginInstalled('adapt-contrib-spoor')) return;
@@ -8,9 +9,12 @@ module.exports = function(grunt) {
             _latestTrackingId: -1,
             _trackingIdsSeen: []
         });
-        
-        var blocksFiles = grunt.file.expand(options.blocksFile);
-        var courseFiles = grunt.file.expand(options.courseFile);
+
+        var isSrcCourse = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
+        var sourcedir = isSrcCourse ? grunt.option('outputdir') : grunt.config('sourcedir');
+
+        var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
+        var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));
 
         for (var i = 0; i < blocksFiles.length; i++) {
             insertTrackingIds(blocksFiles[i], courseFiles[i]);
