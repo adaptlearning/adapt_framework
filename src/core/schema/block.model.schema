@@ -94,7 +94,7 @@
       "default": 0,
       "isSetting": true,
       "inputType": "Number",
-      "validators": ["required", "number"],
+      "validators": ["number"],
       "help": "If you need to override the default block ARIA level (as defined in Configuration Settings), set this to any number greater than 0."
     },
     "_onScreen": {
