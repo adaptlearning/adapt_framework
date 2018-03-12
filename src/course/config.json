@@ -26,11 +26,13 @@
         "_hideEasing": "easeInQuart",
         "_duration": 400
     },
+    "_completionCriteria": {
+        "_requireContentCompleted": false,
+        "_requireAssessmentCompleted": true
+    },
     "_spoor": {
         "_isEnabled": true,
         "_tracking": {
-            "_requireCourseCompleted": true,
-            "_requireAssessmentPassed": true,
             "_shouldSubmitScore": false,
             "_shouldStoreResponses": false,
             "_shouldRecordInteractions": true
