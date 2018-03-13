@@ -68,7 +68,7 @@ module.exports = function(grunt) {
 			var sourcemap = JSON.parse(data);
 			var baseUrl = options.sourceMaps.baseUrl;
 			sourcemap.sources = sourcemap.sources.map(function (path) {
-				return path = baseUrl+path;
+				return baseUrl+path;
 			});
 			fs.writeFile(mapPath, JSON.stringify(sourcemap), done);
 		};
