@@ -19,6 +19,9 @@ module.exports = function (grunt, options) {
                     return grunt.config('helpers').includedFilter(filepath);
                 },
                 generateSourceMaps: true,
+                sourceMaps: {
+                    baseUrl: "../../"
+                },
                 preserveLicenseComments:false,
                 optimize: 'none'
             },
