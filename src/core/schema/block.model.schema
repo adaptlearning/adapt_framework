@@ -89,6 +89,14 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
+    "_ariaLevel": {
+      "type": "number",
+      "default": 0,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "help": "If you need to override the default block ARIA level (as defined in Configuration Settings), set this to any number greater than 0."
+    },
     "_onScreen": {
       "type": "object",
       "title": "On-screen classes",

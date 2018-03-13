@@ -368,29 +368,11 @@
             var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
             if (scrollToPosition < 0) scrollToPosition = 0;
 
-            var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
 
-            if (!isElementTopOutOfView) {
-                if ($element.is("select, input[type='text'], textarea") && iOS) { //ios 9.0.4 bugfix for keyboard and picker input
-                    defer(function(){
-                        if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
-                        $.scrollTo(this.scrollToPosition, { duration: 0 });
-                    }, {scrollToPosition:scrollToPosition}, 1000);
-                }
-                return;
-            };
-
-            if ($element.is("select, input[type='text'], textarea") && iOS) {  //ios 9.0.4 bugfix for keyboard and picker input
-                defer(function(){
-                    if (options.isDebug) console.log("limitedScrollTo select fix", this.scrollToPosition);
-                    $.scrollTo(this.scrollToPosition, { duration: 0 });
-                }, {scrollToPosition:scrollToPosition}, 1000);
-            } else {
-                if (options.isDebug) console.log("limitedScrollTo", scrollToPosition);
+            if (options.isDebug) console.log("limitedScrollTo", scrollToPosition);
             defer(function() {
-                    $.scrollTo(this.scrollToPosition, { duration: 0 });
-                }, {scrollToPosition:scrollToPosition});
-            }
+                $.scrollTo(this.scrollToPosition, { duration: 0 });
+            }, {scrollToPosition:scrollToPosition});
 
             return this;
         };
@@ -720,41 +702,6 @@
             });
         }
 
-        function a11y_iosFalseClickFix() {  //ios 9.0.4 bugfix for invalid clicks on input overlays
-            //with voiceover on, ios will allow clicks on :before and :after content text. this causes the first tabbable element to recieve focus
-            //redirect focus back to last item in this instance
-            var isPerformingRedirect = false;
-            var options = $.a11y.options;
-
-            $("body").on("click", "*", function(event) {
-                if (isPerformingRedirect) return;
-
-                onFocusCapture(event);
-
-                var $active = $.a11y.state.$activeElement;
-                if (!$active.is(domSelectors.globalTabIndexElements)) return;
-
-                if (options.isDebug) console.log("a11y_iosFalseClickFix", $active[0]);
-
-                isPerformingRedirect = true;
-
-                defer(function() {
-                    $active.focus();
-                    isPerformingRedirect = false;
-                }, 500);
-
-            });
-        }
-
-        function a11y_iosFixes() {
-
-            if ($.a11y.state.isIOSFixesApplied) return;
-
-            $.a11y.state.isIOSFixesApplied = true;
-            a11y_iosFalseClickFix();
-
-        }
-
         function a11y_debug() {
 
             if ($.a11y.state.isDebugApplied) return;
@@ -788,7 +735,6 @@
             isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
             isAlertsEnabled: false,
-            isIOSFixesEnabled: true,
             isDebug: false
         };
         $.a11y.state = {
@@ -819,10 +765,6 @@
 
             if (options.isFocusWrapEnabled) {
                 a11y_reattachFocusGuard();
-            }
-
-            if (iOS && options.isIOSFixesEnabled) {
-                a11y_iosFixes();
             }
 
             if (options.isDebug) {

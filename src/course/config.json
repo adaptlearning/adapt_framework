@@ -30,11 +30,13 @@
         "_isEnabled": true,
         "_className": ".os-ios, .os-android"
     },
+    "_completionCriteria": {
+        "_requireContentCompleted": false,
+        "_requireAssessmentCompleted": true
+    },
     "_spoor": {
         "_isEnabled": true,
         "_tracking": {
-            "_requireCourseCompleted": true,
-            "_requireAssessmentPassed": true,
             "_shouldSubmitScore": false,
             "_shouldStoreResponses": false,
             "_shouldRecordInteractions": true
@@ -46,7 +48,7 @@
             "_resetStatusOnLanguageChange": false
         }
     },
-    "_disableAnimationFor": [".ie8", ".iPhone.version-7\\.0"],
+    "_disableAnimationFor": [],
     "build": {
     }
 }

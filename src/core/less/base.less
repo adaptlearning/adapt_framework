@@ -28,8 +28,8 @@
     display:none!important;
 }
 
-.accessibility.no-touchevents {
-    .focused, button:focus, select:focus, textarea:focus, a:focus, input:focus + label {
+.accessibility {
+    :focus {
         outline: @focus-outline;
     }
 }
