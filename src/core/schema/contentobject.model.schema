@@ -96,15 +96,6 @@
       "validators": [],
       "help": "If the course is using a 'custom' Menu Lock Type, this should contain the unique ID of the item(s) which must be completed before this is unlocked"
     },
-    "_isHiddenFromMenu": {
-      "type": "boolean",
-      "required": false,
-      "default": false,
-      "title": "Hide from menu?",
-      "inputType": "Checkbox",
-      "validators": [],
-      "help": "Useful if the page is a 'start page' you don't want to be listed on the menu. N.B. this functionality needs to be supported by the menu you are using."
-    },
     "_classes": {
       "type": "string",
       "default": "",
@@ -138,7 +129,7 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Is this hidden?",
-      "help": "Equivalent to applying the CSS 'display:none'. Unless you have custom code that uses this, it is highly unlikely you would want to change this setting at a page level."
+      "help": "Hides this page from the course menu. Needs to be supported by the menu you are using in your course."
     },
     "_isVisible": {
       "type": "boolean",
