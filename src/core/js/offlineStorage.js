@@ -36,12 +36,18 @@ define([
         },
 
         set: function(name, value) {
-            if (!(this._handler && this._handler.set)) return;
+            // if no handler has been defined, just store the data locally
+            if (!(this._handler && this._handler.set)) {
+                this[name] = value;
+                return;
+            }
             return this._handler.set.apply(this._handler, arguments);
         },
 
         get: function(name) {
-            if (!(this._handler && this._handler.get)) return;
+            if (!(this._handler && this._handler.get)) {
+                return this[name];
+            }
             return this._handler.get.apply(this._handler, arguments);
         },
 
