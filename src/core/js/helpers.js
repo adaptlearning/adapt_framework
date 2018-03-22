@@ -66,9 +66,13 @@ define([
             case "%": return lvalue % rvalue;
             }
         },
-
+        
         /**
-         * if (conditionA || conditionB)
+         * Equivalent to 
+         * @example
+         * {{#any displayTitle body instruction}}
+         * <div class="component__header {{_component}}__header"></div>
+         * {{/any}}
          */
         any: function() {
             var args = Array.prototype.slice.call(arguments, 0, -1);
@@ -78,7 +82,11 @@ define([
         },
 
         /**
-         * if (conditionA && conditionB)
+         * Equivalent to 
+         * @example
+         * {{#all displayTitle body instruction}}
+         * <div class="component__header {{_component}}__header"></div>
+         * {{/all}}
          */
         all: function() {
             var args = Array.prototype.slice.call(arguments, 0, -1);
