@@ -67,6 +67,28 @@ define([
             }
         },
 
+        ifor: function() {
+            var args = Array.prototype.slice.call(arguments, 0, -1);
+            var block = Array.prototype.slice.call(arguments, -1)[0];
+
+            for (var i = 0, l = args.length; i < l; i++) {
+                if (args[i]) return block.fn(this);
+            }
+
+            return block.inverse(this);
+        },
+
+        ifand: function() {
+            var args = Array.prototype.slice.call(arguments, 0, -1);
+            var block = Array.prototype.slice.call(arguments, -1)[0];
+
+            for (var i = 0, l = args.length; i < l; i++) {
+                if (!args[i]) return block.inverse(this);
+            }
+
+            return block.fn(this);
+        },
+
         /**
          * Allow JSON to be a template i.e. you can use handlebars {{expressions}} within your JSON
          */
