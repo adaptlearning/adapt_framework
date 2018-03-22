@@ -67,26 +67,24 @@ define([
             }
         },
 
-        ifor: function() {
+        /**
+         * if (conditionA || conditionB)
+         */
+        any: function() {
             var args = Array.prototype.slice.call(arguments, 0, -1);
             var block = Array.prototype.slice.call(arguments, -1)[0];
 
-            for (var i = 0, l = args.length; i < l; i++) {
-                if (args[i]) return block.fn(this);
-            }
-
-            return block.inverse(this);
+            return _.any(args) ? block.fn(this) : block.inverse(this);
         },
 
-        ifand: function() {
+        /**
+         * if (conditionA && conditionB)
+         */
+        all: function() {
             var args = Array.prototype.slice.call(arguments, 0, -1);
             var block = Array.prototype.slice.call(arguments, -1)[0];
 
-            for (var i = 0, l = args.length; i < l; i++) {
-                if (!args[i]) return block.inverse(this);
-            }
-
-            return block.fn(this);
+            return _.all(args) ? block.fn(this) : block.inverse(this);
         },
 
         /**
