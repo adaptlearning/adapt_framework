@@ -68,8 +68,9 @@ define([
         },
         
         /**
-         * Equivalent to 
-         * if (conditionA || conditionB)
+         * Equivalent to:
+         *  if (conditionA || conditionB)
+         * @example
          * {{#any displayTitle body instruction}}
          * <div class="component__header {{_component}}__header"></div>
          * {{/any}}
@@ -82,8 +83,9 @@ define([
         },
 
         /**
-         * Equivalent to 
-         * if (conditionA && conditionB)
+         * Equivalent to:
+         *  if (conditionA && conditionB)
+         * @example
          * {{#all displayTitle body instruction}}
          * <div class="component__header {{_component}}__header"></div>
          * {{/all}}
