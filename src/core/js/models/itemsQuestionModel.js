@@ -68,10 +68,10 @@ define([
 			this.get('_items').each(function(item) { item.toggleActive(false); });
 		},
 
-        setActiveItem: function(index) {
-            this.getActiveItem().toggleActive(false);
-            this.getItem(index).toggleActive(true);
-        }
+		setActiveItem: function(index) {
+			this.getActiveItem().toggleActive(false);
+			this.getItem(index).toggleActive(true);
+		}
 
 	});
 
