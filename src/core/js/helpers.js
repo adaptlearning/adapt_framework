@@ -66,6 +66,36 @@ define([
             case "%": return lvalue % rvalue;
             }
         },
+        
+        /**
+         * Equivalent to:
+         *  if (conditionA || conditionB)
+         * @example
+         * {{#any displayTitle body instruction}}
+         * <div class="component__header {{_component}}__header"></div>
+         * {{/any}}
+         */
+        any: function() {
+            var args = Array.prototype.slice.call(arguments, 0, -1);
+            var block = Array.prototype.slice.call(arguments, -1)[0];
+
+            return _.any(args) ? block.fn(this) : block.inverse(this);
+        },
+
+        /**
+         * Equivalent to:
+         *  if (conditionA && conditionB)
+         * @example
+         * {{#all displayTitle body instruction}}
+         * <div class="component__header {{_component}}__header"></div>
+         * {{/all}}
+         */
+        all: function() {
+            var args = Array.prototype.slice.call(arguments, 0, -1);
+            var block = Array.prototype.slice.call(arguments, -1)[0];
+
+            return _.all(args) ? block.fn(this) : block.inverse(this);
+        },
 
         /**
          * Allow JSON to be a template i.e. you can use handlebars {{expressions}} within your JSON
