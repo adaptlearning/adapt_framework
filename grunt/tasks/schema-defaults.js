@@ -22,15 +22,15 @@ module.exports = function(grunt) {
             var pluginCategory = pluginCategories[pluginTypeIndex];
 
             //iterate through plugins in plugin type folder
-            var pluginTypeGlob = path.join(grunt.config('sourcedir'), pluginType, '/*');
+            var pluginTypeGlob = path.join(grunt.config('sourcedir'), pluginType, '*');
             grunt.file.expand({filter: 'isDirectory'}, pluginTypeGlob ).forEach(function(pluginPath) {
                 var currentPluginPath = pluginPath;
 
                 // if specific plugin has been specified with grunt.option, don't carry on
-                if (!Helpers.isPathIncluded(path.join(pluginPath, '/'))) return;
+                if (!Helpers.isPathIncluded(pluginPath+'/')) return;
 
-                var currentSchemaPath = path.join(currentPluginPath, '/properties.schema');
-                var currentBowerPath = path.join(currentPluginPath, '/bower.json');
+                var currentSchemaPath = path.join(currentPluginPath, 'properties.schema');
+                var currentBowerPath = path.join(currentPluginPath, 'bower.json');
 
                 if (!fs.existsSync(currentSchemaPath) || !fs.existsSync(currentBowerPath)) return;
 
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
         var languageFolderGlob = path.join(sourcedir, 'course/*');
         grunt.file.expand({filter: 'isDirectory'}, languageFolderGlob ).forEach(function(languageFolderPath) {
             var currentCourseFolder = languageFolderPath;
-            var currentCourseJsonFile = path.join(currentCourseFolder, '/course.' + jsonext);
+            var currentCourseJsonFile = path.join(currentCourseFolder, 'course.' + jsonext);
 
             //read course json and overlay onto defaults object
             var currentCourseJson = _.deepExtend({}, defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
