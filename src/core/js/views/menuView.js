@@ -14,7 +14,8 @@ define([
             'menu-' +
             this.model.get('_id') +
             " " + this.model.get('_classes') +
-            " " + this.setVisibility();
+            " " + this.setVisibility() +
+            " " + (this.model.get('_isComplete') ? 'completed' : '');
     	},
 
         preRender: function() {
