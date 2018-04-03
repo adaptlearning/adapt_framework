@@ -12,11 +12,15 @@ define([
 
         initialize: function() {
             this.listenTo(Adapt, 'remove', this.remove);
-            this.listenTo(this.model, 'change:_isVisible', this.toggleVisibility);
-            this.listenTo(this.model, 'change:_isHidden', this.toggleHidden);
-            this.listenTo(this.model, 'change:_isComplete', this.onIsCompleteChange);
-            this.model.set('_globals', Adapt.course.get('_globals'));
-            this.model.set('_isReady', false);
+            this.listenTo(this.model, {
+                'change:_isVisible': this.toggleVisibility,
+                'change:_isHidden': this.toggleHidden,
+                'change:_isComplete': this.onIsCompleteChange
+            });
+            this.model.set( {
+                '_globals': Adapt.course.get('_globals'),
+                '_isReady': false
+            });
             this._isRemoved = false;
             this.preRender();
             this.render();
@@ -37,13 +41,13 @@ define([
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
-            _.defer(_.bind(function() {
+            _.defer(function() {
                 // don't call postRender after remove
                 if(this._isRemoved) return;
 
                 this.postRender();
                 Adapt.trigger(this.constructor.type + 'View:postRender', this);
-            }, this));
+            }.bind(this));
 
             return this;
         },
@@ -53,7 +57,7 @@ define([
 
             if (!onscreen || !onscreen._isEnabled) return;
 
-            this.$el.on('onscreen.adaptView', _.bind(function (e, m) {
+            this.$el.on('onscreen.adaptView', function (e, m) {
 
                 if (!m.onscreen) return;
 
@@ -63,7 +67,7 @@ define([
 
                 this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen.adaptView');
 
-            }, this));
+            }.bind(this));
         },
 
         addChildren: function() {
@@ -106,8 +110,10 @@ define([
 
         setCompletionStatus: function() {
             if (this.model.get('_isVisible')) {
-                this.model.set('_isComplete', true);
-                this.model.set('_isInteractionComplete', true);
+                this.model.set({
+                    '_isComplete': true,
+                    '_isInteractionComplete': true
+                });
             }
         },
 

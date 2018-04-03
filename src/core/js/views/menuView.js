@@ -29,7 +29,7 @@ define([
 
         isReady: function() {
             if (this.model.get('_isReady')) {
-                _.defer(_.bind(function() {
+                _.defer(function() {
                     $('.loading').hide();
                     $(window).scrollTop(0);
                     Adapt.trigger('menuView:ready', this);
@@ -46,7 +46,7 @@ define([
                         });
                     }
                     $(window).scroll();
-                }, this));
+                }.bind(this));
             }
         }
 
