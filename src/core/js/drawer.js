@@ -20,7 +20,7 @@ define([
 
     Adapt.on({
         'adapt:start': function() {
-             new DrawerView({ collection: DrawerCollection });
+            new DrawerView({ collection: DrawerCollection });
         },
         'app:languageChanged': function() {
             Adapt.trigger('drawer:remove');
