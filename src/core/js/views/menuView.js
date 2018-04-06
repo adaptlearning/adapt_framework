@@ -14,7 +14,8 @@ define([
             'menu-' +
             this.model.get('_id') +
             " " + this.model.get('_classes') +
-            " " + this.setVisibility();
+            " " + this.setVisibility() +
+            " " + (this.model.get('_isComplete') ? 'completed' : '');
     	},
 
         preRender: function() {
@@ -28,7 +29,7 @@ define([
 
         isReady: function() {
             if (this.model.get('_isReady')) {
-                _.defer(_.bind(function() {
+                _.defer(function() {
                     $('.loading').hide();
                     $(window).scrollTop(0);
                     Adapt.trigger('menuView:ready', this);
@@ -45,7 +46,7 @@ define([
                         });
                     }
                     $(window).scroll();
-                }, this));
+                }.bind(this));
             }
         }
 
