@@ -36,37 +36,15 @@ require([
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
     Adapt.checkDataIsLoaded = function(newLanguage) {
-        if (Adapt.contentObjects.models.length > 0
-            && Adapt.articles.models.length > 0
-            && Adapt.blocks.models.length > 0
-            && Adapt.components.models.length > 0
-            && Adapt.course.get('_id')) {
+        if (Adapt.contentObjects.models.length > 0 &&
+            Adapt.articles.models.length > 0 &&
+            Adapt.blocks.models.length > 0 &&
+            Adapt.components.models.length > 0 &&
+            Adapt.course.get('_id')) {
 
             configureInview();
 
             mapAdaptIdsToObjects();
-
-            if (typeof Adapt.course.get('_buttons').submit !== 'undefined') {
-                // Backwards compatibility with v1.x
-                var oldButtons = Adapt.course.get('_buttons');
-                var buttons = [];
-
-                for (var key in oldButtons) {
-                    buttons['_' + key] = {
-                        buttonText: oldButtons[key],
-                        ariaLabel: oldButtons[key]
-                    };
-                }
-
-                // HACK - Append other missing values
-                buttons['_showFeedback'] = {
-                    buttonText: 'Show feedback',
-                    ariaLabel: 'Show feedback'
-                };
-
-                // Replace the existing property
-                Adapt.course.set('_buttons', buttons);
-            }
 
             Adapt.log.debug('Firing app:dataLoaded');
 
@@ -223,9 +201,9 @@ require([
 
     function onDirectionChange(model, direction) {
         if (direction === 'rtl') {
-            $('html').removeClass('dir-ltr').addClass('dir-rtl');
+            $('html').removeClass('dir-ltr').addClass('dir-rtl').attr('dir', 'rtl');
         } else {
-            $('html').removeClass('dir-rtl').addClass('dir-ltr');
+            $('html').removeClass('dir-rtl').addClass('dir-ltr').attr('dir', 'ltr');
         }
     }
 
