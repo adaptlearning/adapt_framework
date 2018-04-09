@@ -84,18 +84,19 @@ define([
     },
 
     _setUpEventListeners() {
-      this.listenTo(Adapt, "pageView:postRender menuView:postRender", this._onPostRender);
-      this.listenTo(Adapt, "remove", this._onRemove);
+      this.listenTo(Adapt, {
+        "pageView:postRender menuView:postRender": this._onPostRender,
+        "remove": this._onRemove
+      });
     },
 
     _onPostRender: function(view) {
       // wait for page / menu to be ready
-      if (view.model.get("_isReady")) return this._start();
-      this.listenToOnce(view.model, "change:_isReady", this._start);
+      if (view.model.get("_isReady")) return this._startScrollListener ();
+      this.listenToOnce(view.model, "change:_isReady", this._startScrollListener );
     },
 
-    _start: function() {
-      // start listening for scrolls
+    _startScrollListener: function() {
       this._offscreenPixelThreshold = 0;
       $(window).on("scroll", this._onScroll);
       this._onScroll();
@@ -103,13 +104,12 @@ define([
 
     _onScroll: function() {
       var $progImages = $("img[data-adapt-graphics], video[data-adapt-graphics-poster]");
-      if (!$progImages.length) return this._stop();
+      if (!$progImages.length) return this._stopScrollListener();
       $progImages.each(this._checkImage);
       if (!this._offscreenPixelThreshold) this._delayedThreholdIncrease();
     },
 
-    _stop: function() {
-      // stop listening for scrolls
+    _stopScrollListener: function() {
       $(window).off("scroll", this._onScroll);
     },
 
@@ -171,7 +171,7 @@ define([
     },
 
     _onRemove: function() {
-      this._stop();
+      this._stopScrollListener();
     }
 
   });
