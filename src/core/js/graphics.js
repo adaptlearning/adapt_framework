@@ -35,7 +35,7 @@ define([
                     var rtn = options[imageWidth] || options.src || options._src || "";
 
                     if (!Adapt.graphics.isActive() || options._canLazyLoad === false) {
-                    return new Handlebars.SafeString('src="'+rtn+'"');
+                        return new Handlebars.SafeString('src="'+rtn+'"');
                     }
 
                     // produce a dummy image of the right size or ratio to put in place
@@ -93,7 +93,7 @@ define([
         _onPostRender: function(view) {
             // wait for page / menu to be ready
             if (view.model.get("_isReady")) return this._startScrollListener ();
-            this.listenToOnce(view.model, "change:_isReady", this._startScrollListener );
+            this.listenToOnce(view.model, "change:_isReady", this._startScrollListener);
         },
 
         _startScrollListener: function() {
