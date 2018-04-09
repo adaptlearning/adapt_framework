@@ -223,9 +223,9 @@ require([
 
     function onDirectionChange(model, direction) {
         if (direction === 'rtl') {
-            $('html').removeClass('dir-ltr').addClass('dir-rtl');
+            $('html').removeClass('dir-ltr').addClass('dir-rtl').attr('dir', 'rtl');
         } else {
-            $('html').removeClass('dir-rtl').addClass('dir-ltr');
+            $('html').removeClass('dir-rtl').addClass('dir-ltr').attr('dir', 'ltr');
         }
     }
 
