@@ -67,7 +67,8 @@ define([
         },
 
         setActiveItem: function(index) {
-            this.getActiveItem().toggleActive(false);
+            var activeItem = this.getActiveItem();
+            if (activeItem) activeItem.toggleActive(false);
             this.getItem(index).toggleActive(true);
         }
 
