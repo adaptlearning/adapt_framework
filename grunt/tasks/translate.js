@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       "_exportLangFiles"
     ]);
 
-    grunt.registerTask("translate:import", "Import Language files and create a translated duplicte of a master Course.", [
+    grunt.registerTask('translate:import', 'Import Language files and create a translated duplicte of a master Course.', [
       "_getTranslateConfig",
       "_loadLanguageFiles",
       "_loadMasterCourse",
