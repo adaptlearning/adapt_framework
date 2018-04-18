@@ -208,7 +208,7 @@ define([
         // Used to register components
         // Store the component view
         if (Adapt.componentStore[name])
-            throw Error('This component already exists in your project');
+            throw Error('The component "' + name + '" already exists in your project');
 
         if (object.view) {
             //use view+model object
