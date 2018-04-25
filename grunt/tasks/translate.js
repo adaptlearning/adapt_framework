@@ -12,7 +12,7 @@ module.exports = function(grunt) {
       "_exportLangFiles"
     ]);
 
-    grunt.registerTask('translate:import', 'Import Language files and create a translated duplicte of a master Course.', [
+    grunt.registerTask('translate:import', 'Import translated language files. For more details, please visit https://github.com/adaptlearning/adapt_framework/wiki/Course-Localisation', [
       "_getTranslateConfig",
       "_loadLanguageFiles",
       "_loadMasterCourse",
