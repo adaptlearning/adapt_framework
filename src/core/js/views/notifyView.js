@@ -10,6 +10,11 @@ define([
             return classes;
         },
 
+        attributes: {
+            'aria-roledescription': 'dialog',
+            'aria-modal': 'true'
+        },
+
         disableAnimation: false,
 
         escapeKeyAttached: false,
