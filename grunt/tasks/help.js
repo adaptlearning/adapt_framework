@@ -57,6 +57,7 @@ function getTaskData() {
         //skip directories
         if (fileStat.isDirectory()) continue;
 
+        var file = fs.readFileSync(filePath, 'utf8');
         var match = '';
         while(match = re.exec(file)) {
             taskData[match[2]] = match[3] || '';
