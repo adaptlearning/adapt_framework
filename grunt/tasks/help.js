@@ -45,19 +45,23 @@ module.exports = function(grunt) {
 function getTaskData() {
     var taskData = {};
     var files = fs.readdirSync(__dirname);
-    var re = new RegExp(/grunt.register(Multi)?Task\('(.+?)', '(.*?)',/);
+    var re = /grunt.register(Multi)?Task\('(.+?)', '(.*?)',/g;
 
     for(var i = 0, count = files.length; i < count; i++) {
+        // reset RegExp
+        re.lastIndex = 0;
         
         var filePath = path.join(__dirname, files[i]);
         var fileStat = fs.statSync(filePath);
         
         //skip directories
         if (fileStat.isDirectory()) continue;
-        
+
         var file = fs.readFileSync(filePath, 'utf8');
-        var match = file.match(re);
-        if(match) taskData[match[2]] = match[3] || '';
+        var match = '';
+        while(match = re.exec(file)) {
+            taskData[match[2]] = match[3] || '';
+        }
         
     }
     return taskData;
