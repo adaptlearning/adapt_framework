@@ -223,6 +223,13 @@ define([
         return object;
     };
 
+    Adapt.getViewClass = function(name) {
+        var object = Adapt.componentStore[name];
+        if (!object)
+            throw Error('The component "' + name + '" doesn\'t exist in your project');
+        return object.view || object;
+    };
+
     // Used to map ids to collections
     Adapt.setupMapping = function() {
         // Clear any existing mappings.
