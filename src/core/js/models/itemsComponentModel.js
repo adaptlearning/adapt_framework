@@ -5,17 +5,10 @@ define([
 
     var ItemsComponentModel = ComponentModel.extend({
 
-        toJSON: function() {
-            var json = _.clone(this.attributes);
-            json._items = this.get('_items').toJSON();
-
-            return json;
-        },
-
         init: function() {
             this.setUpItems();
 
-            this.listenTo(this.get('_items'), {
+            this.listenTo(this.get('_children'), {
                 'change:_isVisited': this.checkCompletionStatus
             });
         },
@@ -27,27 +20,27 @@ define([
                 return item;
             });
 
-            this.set('_items', new Backbone.Collection(items, { model: ItemModel }));
+            this.set('_children', new Backbone.Collection(items, { model: ItemModel }));
         },
 
         getItem: function(index) {
-            return this.get('_items').findWhere({ _index: index });
+            return this.get('_children').findWhere({ _index: index });
         },
 
         getVisitedItems: function() {
-            return this.get('_items').where({ _isVisited: true });
+            return this.get('_children').where({ _isVisited: true });
         },
 
         getActiveItems: function() {
-            return this.get('_items').where({ _isActive: true });
+            return this.get('_children').where({ _isActive: true });
         },
 
         getActiveItem: function() {
-            return this.get('_items').findWhere({ _isActive: true });
+            return this.get('_children').findWhere({ _isActive: true });
         },
 
         areAllItemsCompleted: function() {
-            return this.getVisitedItems().length === this.get('_items').length;
+            return this.getVisitedItems().length === this.get('_children').length;
         },
 
         checkCompletionStatus: function() {
@@ -57,13 +50,13 @@ define([
         },
 
         reset: function(type, force) {
-            this.get('_items').each(function(item) { item.reset(); });
+            this.get('_children').each(function(item) { item.reset(); });
 
             ComponentModel.prototype.reset.call(this, type, force);
         },
 
         resetActiveItems: function() {
-            this.get('_items').each(function(item) { item.toggleActive(false); });
+            this.get('_children').each(function(item) { item.toggleActive(false); });
         },
 
         setActiveItem: function(index) {
