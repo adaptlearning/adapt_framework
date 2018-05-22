@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
     grunt.registerTask('schema-defaults', 'Manufactures the course.json defaults', function() {
-        var fs = require("fs");
+        var fs = require('fs');
+        var path = require('path');
         var Helpers = require('../helpers')(grunt);
 
         //import underscore and underscore-deep-extend
@@ -8,9 +9,9 @@ module.exports = function(grunt) {
         _.mixin({deepExtend: require('underscore-deep-extend')(_) });
 
         //list all plugin types
-        var pluginTypes = [ "components", "extensions", "menu", "theme" ];
+        var pluginTypes = [ 'components', 'extensions', 'menu', 'theme' ];
         //list authoring tool plugin categories
-        var pluginCategories = [ "component", "extension", "menu", "theme" ];
+        var pluginCategories = [ 'component', 'extension', 'menu', 'theme' ];
 
         //setup defaults object
         var defaultsObject = { _globals: {} };
@@ -21,14 +22,15 @@ module.exports = function(grunt) {
             var pluginCategory = pluginCategories[pluginTypeIndex];
 
             //iterate through plugins in plugin type folder
-            grunt.file.expand({filter: 'isDirectory'}, grunt.config('sourcedir') + pluginType + '/*').forEach(function(path) {
-                var currentPluginPath = path;
+            var pluginTypeGlob = path.join(grunt.config('sourcedir'), pluginType, '*');
+            grunt.file.expand({filter: 'isDirectory'}, pluginTypeGlob ).forEach(function(pluginPath) {
+                var currentPluginPath = pluginPath;
 
                 // if specific plugin has been specified with grunt.option, don't carry on
-                if (!Helpers.isPathIncluded(path + "/")) return;
+                if (!Helpers.isPathIncluded(pluginPath+'/')) return;
 
-                var currentSchemaPath = currentPluginPath + "/" + "properties.schema";
-                var currentBowerPath = currentPluginPath + "/" + "bower.json";
+                var currentSchemaPath = path.join(currentPluginPath, 'properties.schema');
+                var currentBowerPath = path.join(currentPluginPath, 'bower.json');
 
                 if (!fs.existsSync(currentSchemaPath) || !fs.existsSync(currentBowerPath)) return;
 
@@ -47,7 +49,7 @@ module.exports = function(grunt) {
                 _.each(currentSchemaJson.globals, function(item, attributeName) {
                     //translate schema attribute into globals object
                     var pluginTypeDefaults = globalsObject['_'+ pluginType] = globalsObject['_'+ pluginType] || {};
-                    var pluginDefaults =  pluginTypeDefaults["_" + currentPluginName] = pluginTypeDefaults["_" + currentPluginName] || {};
+                    var pluginDefaults =  pluginTypeDefaults['_' + currentPluginName] = pluginTypeDefaults['_' + currentPluginName] || {};
 
                     pluginDefaults[attributeName] = item['default'];
                 });
@@ -56,15 +58,16 @@ module.exports = function(grunt) {
 
         var jsonext = grunt.config('jsonext');
 
-        var sourcedir = grunt.option('outputdir') || grunt.config("sourcedir");
+        var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
 
         //iterate through language folders
-        grunt.file.expand({filter: 'isDirectory'}, sourcedir + 'course/*').forEach(function(path) {
-            var currentCourseFolder = path;
-            var currentCourseJsonFile = currentCourseFolder + '/' + 'course.' + jsonext;
+        var languageFolderGlob = path.join(sourcedir, 'course/*');
+        grunt.file.expand({filter: 'isDirectory'}, languageFolderGlob ).forEach(function(languageFolderPath) {
+            var currentCourseFolder = languageFolderPath;
+            var currentCourseJsonFile = path.join(currentCourseFolder, 'course.' + jsonext);
 
             //read course json and overlay onto defaults object
-            var currentCourseJson = _.deepExtend({},defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
+            var currentCourseJson = _.deepExtend({}, defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
 
             //write modified course json to build
             grunt.file.write(currentCourseJsonFile, JSON.stringify(currentCourseJson, null, 4));
