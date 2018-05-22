@@ -5,6 +5,13 @@ define([
 
     var ItemsComponentModel = ComponentModel.extend({
 
+        toJSON: function() {
+            var json = _.clone(this.attributes);
+            json._items = this.get('_children').toJSON();
+
+            return json;
+        },
+
         init: function() {
             this.setUpItems();
 
@@ -14,13 +21,13 @@ define([
         },
 
         setUpItems: function() {
-            var items = this.get('_items').map(function(item, index) {
+            this.get('_items').forEach(function(item, index) {
                 item._index = index;
 
                 return item;
             });
 
-            this.set('_children', new Backbone.Collection(items, { model: ItemModel }));
+            this.set('_children', new Backbone.Collection(this.get('_items'), { model: ItemModel }));
         },
 
         getItem: function(index) {
