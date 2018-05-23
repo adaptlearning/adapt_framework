@@ -826,34 +826,12 @@
         $.a11y_text = function (text) {
             console.log("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
             return text;
-            // var options = $.a11y.options;
-
-            // if (!options.isTabbableTextEnabled) return text;
-
-            // return makeHTMLOrTextAccessible(text)
         };
 
         //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
         $.fn.a11y_text = function(text) {
             console.log("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
             return this;
-            // var options = $.a11y.options;
-
-            // if (!options.isTabbableTextEnabled) {
-            //     if (text) {
-            //         this.html(text);
-            //     }
-
-            //     return this;
-            // }
-
-            // for (var i = 0; i < this.length; i++) {
-            //     // If an argument is given then convert that to accessible text
-            //     // Otherwise convert existing content
-            //     text = text || this[i].innerHTML;
-            //     this[i].innerHTML = makeHTMLOrTextAccessible(text);
-            // }
-            // return this;
         };
 
 
