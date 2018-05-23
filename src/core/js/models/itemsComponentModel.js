@@ -21,13 +21,12 @@ define([
         },
 
         setUpItems: function() {
-            this.get('_items').forEach(function(item, index) {
+            var items = this.get('_items');
+            items.forEach(function(item, index) {
                 item._index = index;
-
-                return item;
             });
 
-            this.set('_children', new Backbone.Collection(this.get('_items'), { model: ItemModel }));
+            this.set('_children', new Backbone.Collection(items, { model: ItemModel }));
         },
 
         getItem: function(index) {
