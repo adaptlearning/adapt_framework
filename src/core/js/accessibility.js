@@ -118,11 +118,11 @@ define([
                 },
 
                 a11y_aria_label: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default role="region">'+text+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label prevent-default">'+text+'</div>');
                 },
 
                 a11y_aria_label_relative: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default role="region">'+text+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default">'+text+'</div>');
                 },
 
                 a11y_wrap_focus: function(text) {

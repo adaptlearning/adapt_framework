@@ -7,6 +7,10 @@ define([
         _parent:'blocks',
         _siblings:'components',
 
+        defaults: AdaptModel.resultExtend('defaults', {
+            _isA11yComponentDescriptionEnabled: false
+        }),
+
         trackable: AdaptModel.resultExtend("trackable", [
             '_userAnswer'
         ])

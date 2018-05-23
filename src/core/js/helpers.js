@@ -179,6 +179,23 @@ define([
 
             return "";
 
+        },
+
+        /**
+         * Allow components to fetch their component description.
+         */
+        component_description: function(override, context) {
+            if (!this._isA11yComponentDescriptionEnabled) return;
+            if (!this._globals._components['_'+this._component]) return;
+            var hasOverride = (arguments.length > 1);
+            var description;
+            if (hasOverride) {
+                description = override;
+            } else {
+                description = this._globals._components['_'+this._component].ariaRegion;
+            }
+            if (!description) return;
+            return new Handlebars.SafeString('<div class="aria-label prevent-default">'+description+'</div>');
         }
 
     };

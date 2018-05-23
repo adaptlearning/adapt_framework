@@ -35,7 +35,7 @@
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
             "focusguard": '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
             "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
-            "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
+            "arialabel": "<span class='aria-label prevent-default'></span>"
         };
 
 
@@ -573,14 +573,6 @@
             }).addClass("aria-hidden");
         }
 
-        function a11y_disabledAccessibleTabElements() {
-            var accessibleTabElements = $(domSelectors.focusableElementsAccessible);
-            accessibleTabElements.attr({
-                "aria-hidden": "true",
-                "tabindex": "-1"
-            });
-        }
-
         function a11y_debug() {
 
             if ($.a11y.state.isDebugApplied) return;
@@ -670,10 +662,6 @@
                 a11y_reattachFocusGuard();
             }
 
-            if (!options.isTabbableTextEnabled) {
-                a11y_disabledAccessibleTabElements();
-            }
-
             if (options.isDebug) console.log("a11y_update");
         };
 
@@ -728,7 +716,7 @@
                 var $item = $(this[i]);
 
                 if (enabled && $item.is(domSelectors.hideableElements)) {
-                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
+                    if (!$item.is(domSelectors.focusableElementsAccessible)) {
                         $item.removeAttr("aria-hidden").removeClass("aria-hidden");
                         $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                     }
@@ -736,7 +724,7 @@
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
                 } else if (enabled) {
-                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
+                    if (!$item.is(domSelectors.focusableElementsAccessible)) {
                         $item.attr({
                             tabindex: "0",
                         }).removeAttr("aria-hidden").removeClass("aria-hidden");
@@ -746,7 +734,7 @@
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
                 } else {
-                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
+                    if (!$item.is(domSelectors.focusableElementsAccessible)) {
                         $item.attr({
                             tabindex: "-1",
                             "aria-hidden": "true"
@@ -774,7 +762,6 @@
         $.a11y_normalize = function(text) {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return text;
             //USED SPECIFICALLY FOR CONVERTING TITLE TEXT TO ARIA-LABELS
             var text = $("<div>" + text + "</div>").text();
             //REMOVE HTML CHARACTERS SUCH AS &apos;
@@ -790,8 +777,6 @@
          */
         $.a11y_remove_breaks = function(text) {
             var options = $.a11y.options;
-
-            if (!options.isTabbableTextEnabled) return text;
 
             var $div = $("<div>" + text + "</div>");
             var stack = [ $div[0] ];
@@ -1158,16 +1143,11 @@
 
                 if (ariaLabel) {
                     var injectElement = $(domInjectElements.arialabel);
-                    if (!options.isTabbableTextEnabled) {
-                        injectElement.attr({
-                            "tabindex": "-1"
-                        }).addClass("a11y-ignore");
-                    }
                     injectElement.html( ariaLabel );
                     $item.prepend(injectElement);
                 }
 
-                $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
+                $item.removeAttr("role").removeAttr("aria-label").removeClass("aria-hidden");
             }
 
             return this;
