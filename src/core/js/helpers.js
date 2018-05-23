@@ -115,7 +115,7 @@ define([
          * Allow JSON to be a template and accessible text
          */
         compile_a11y_text: function(template, context) {
-            Adapt.log.warn("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            Adapt.log.warn("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
             return helpers.compile.call(this, template, context);
         },
 

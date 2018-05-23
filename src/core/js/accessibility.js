@@ -105,7 +105,7 @@ define([
             var helpers = {
 
                 a11y_text: function(text) {
-                    Adapt.log.warn("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+                    Adapt.log.warn("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
                     return text;
                 },
 

@@ -809,13 +809,13 @@
 
         //CONVERTS HTML OR TEXT STRING TO ACCESSIBLE HTML STRING
         $.a11y_text = function (text) {
-            console.log("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            console.log("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
             return text;
         };
 
         //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
         $.fn.a11y_text = function(text) {
-            console.log("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            console.log("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
             return this;
         };
 
