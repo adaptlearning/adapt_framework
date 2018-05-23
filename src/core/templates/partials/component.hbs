@@ -2,7 +2,7 @@
 {{import_globals}}
 <div class="{{_component}}-header component-header">
     <div class="{{_component}}-header-inner component-header-inner">
-        
+
         {{#if displayTitle}}
         <div class="{{_component}}-title component-title">
             <div class="{{_component}}-title-inner component-title-inner" {{{a11y_attrs_heading "component"}}}>
@@ -10,19 +10,19 @@
             </div>
         </div>
         {{/if}}
-        
+
         {{#if body}}
         <div class="{{_component}}-body component-body">
             <div class="{{_component}}-body-inner component-body-inner">
-                {{{compile_a11y_text body this}}}
+                {{{compile body this}}}
             </div>
         </div>
         {{/if}}
-        
+
         {{#if instruction}}
         <div class="{{_component}}-instruction component-instruction">
             <div class="{{_component}}-instruction-inner component-instruction-inner">
-                {{{compile_a11y_text instruction this}}}
+                {{{compile instruction this}}}
             </div>
         </div>
         {{/if}}

@@ -105,12 +105,8 @@ define([
             var helpers = {
 
                 a11y_text: function(text) {
-                    //ALLOW ENABLE/DISABLE OF a11y_text HELPER
-                    if (config && config._isTextProcessorEnabled === false) {
-                        return text;
-                    } else {
-                        return $.a11y_text(text);
-                    }
+                    Adapt.log.warn("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+                    return text;
                 },
 
                 a11y_normalize: function(text) {
@@ -122,11 +118,11 @@ define([
                 },
 
                 a11y_aria_label: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label prevent-default role="region">'+text+'</div>');
                 },
 
                 a11y_aria_label_relative: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default role="region">'+text+'</div>');
                 },
 
                 a11y_wrap_focus: function(text) {
@@ -156,7 +152,7 @@ define([
                         }
                     }
 
-                    return new Handlebars.SafeString(' role="heading" aria-level="'+level+'" '+getTabIndex()+' ');
+                    return new Handlebars.SafeString(' role="heading" aria-level="'+level+'"');
                 },
 
                 a11y_attrs_tabbable: function() {
@@ -173,10 +169,6 @@ define([
 
             var getTabIndex = function() {
                 return this.isActive() ? 'tabindex="0"' : 'tabindex="-1"';
-            }.bind(this);
-
-            var getIgnoreClass = function() {
-                return $.a11y.options.isTabbableTextEnabled ? '' : ' a11y-ignore';
             }.bind(this);
 
         },
@@ -213,7 +205,6 @@ define([
 
             if (this.isActive()) {
                 _.extend($.a11y.options, {
-                    isTabbableTextEnabled: true,
                     isUserInputControlEnabled: true,
                     isFocusControlEnabled: true,
                     isFocusLimited: true,
@@ -227,7 +218,6 @@ define([
                 });
             } else {
                 _.extend($.a11y.options, {
-                    isTabbableTextEnabled: false,
                     isUserInputControlEnabled: true,
                     isFocusControlEnabled: true,
                     isFocusLimited: false,

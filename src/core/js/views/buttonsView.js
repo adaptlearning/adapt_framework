@@ -100,7 +100,7 @@ define([
                         }, this));
                     }
                 }
-              
+
             } else {
 
                 var propertyName = textPropertyName[buttonState.asString];
@@ -154,7 +154,7 @@ define([
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').a11y_text(attemptsString);
+                this.$('.buttons-display-inner').html(attemptsString);
             }
 
         },

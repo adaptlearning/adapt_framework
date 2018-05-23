@@ -66,7 +66,7 @@ define([
             case "%": return lvalue % rvalue;
             }
         },
-        
+
         /**
          * Equivalent to:
          *  if (conditionA || conditionB)
@@ -115,9 +115,8 @@ define([
          * Allow JSON to be a template and accessible text
          */
         compile_a11y_text: function(template, context) {
-            if (!template) return "";
-            if (template instanceof Object) template = template.toString();
-            return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template, context));
+            Adapt.log.warn("DEPRECATED: a11y_text is no long required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            return helpers.compile.call(this, template, context);
         },
 
         /**

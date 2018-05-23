@@ -20,9 +20,9 @@
 					<div class="page-body">
 						<div class="page-body-inner">
 							{{#if pageBody}}
-								{{{compile_a11y_text pageBody this}}}
+								{{{compile pageBody this}}}
 							{{else}}
-								{{{compile_a11y_text body this}}}
+								{{{compile body this}}}
 							{{/if}}
 						</div>
 					</div>
@@ -31,7 +31,7 @@
 					{{#if instruction}}
 					<div class="page-instruction">
 						<div class="page-instruction-inner">
-							{{{compile_a11y_text instruction this}}}
+							{{{compile instruction this}}}
 						</div>
 					</div>
 					{{/if}}
