@@ -1067,6 +1067,10 @@
                 $hideable = $(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter);
             }
 
+            var $branch = this.add(this.parents());
+            var $siblings = $branch.siblings().filter(domFilters.globalTabIndexElementFilter);
+            $elements = $elements.add($siblings);
+
             $elements.each(function(index, item) {
                 var $item = $(item);
 
