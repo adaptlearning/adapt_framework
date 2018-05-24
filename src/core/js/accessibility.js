@@ -204,10 +204,6 @@ define([
 
         configureA11yLibrary: function() {
 
-            var topOffset = $('.navigation').height();
-            var bottomoffset = 0;
-            $.a11y.options.focusOffsetTop = topOffset;
-            $.a11y.options.focusOffsetBottom = bottomoffset;
             $.a11y.options.OS = Adapt.device.OS.toLowerCase();
             $.a11y.options.isTouchDevice = Adapt.device.touch;
 

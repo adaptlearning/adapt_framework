@@ -685,8 +685,6 @@
         };
 
         $.a11y.options = {
-            focusOffsetTop: 0,
-            focusOffsetBottom: 0,
             animateDuration: 250,
             OS: "",
             isTouchDevice: false,
