@@ -27,14 +27,15 @@
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]"
+            "ariaLabelElements": "div[aria-label], span[aria-label]",
+            "readableElements": "[aria-label],[aria-labelledby],[alt]"
         };
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
             "focusguard": '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
+            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation">&nbsp;</a>',
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
         };
 
@@ -54,6 +55,7 @@
         }
 
         function preventDefault(event) {
+            if ($.a11y.options.isDebug) console.log("preventDefault");
             event.preventDefault();
             event.stopPropagation();
         }
@@ -387,63 +389,63 @@
 
                 var y = $(window).scrollTop();
                 try {
-                this[0].focus();
+                if (this.attr('tabindex') === undefined) {
+                    this[0]._a11y_forced_focus = true;
+                    this.attr("tabindex", "-1");
+                }
+                this.focus();
                 } catch(e){}
                 window.scrollTo(null, y);
-            }, this);
+            }, $(this[0]));
             return this; //chainability
         };
 
+        /**
+         * Focus on the first readable element
+         */
         $.fn.focusOrNext = function(returnOnly) {
             if (this.length === 0) return this;
 
             var $element = $(this[0]);
+            var $allTags = $element.add($element.find('*'));
 
-            var isSpecialElement = $element.is(domSelectors.focuser) || $element.is(domSelectors.focusguard) || $element.is(domSelectors.selected);
-            var isTabbable = $element.is(domSelectors.focusableElements) && $element.is(domFilters.focusableElementsFilter);
-
-            if (!isSpecialElement && !isTabbable) {
-                //if the element is not focusable, find the next focusable element in section
-                //light processing
-                var $nextElement = $element.nextAll(domSelectors.focusableElements);
-                //filter enabled+visible
-                var $nextElementFiltered = $nextElement.filter(domFilters.focusableElementsFilter);
-                if ($nextElement.length === 0 || $nextElementFiltered.length === 0) {
-                    //if next element isn't focusable find next element in document
-                    //heavy processing
-                    //fetch all parents subsequent siblings
-                    var $parents = $element.parents();
-                    var $nextSiblings = $parents.nextAll();
-                    //filter siblings for focusable
-                    var $nextAllElements = $nextSiblings.find(domSelectors.focusableElements);
-                    //filter enabled+visible focusable items
-                    var $nextAllElementsFiltered = $nextAllElements.filter(domFilters.focusableElementsFilter);
-
-                    //if none found go to focuser
-                    if ($nextAllElementsFiltered.length === 0) {
-                        $element = $(domSelectors.focuser);
-                    } else {
-                        //return first found element
-                        $element = $($nextAllElementsFiltered[0]);
-                    }
-
-                } else {
-
-                    //return first found element
-                    $element = $($nextElementFiltered[0]);
+            var $found;
+            for (var i = 0, l = $allTags.length; i < l; i++) {
+                var tag = $allTags[i];
+                var $tag = $(tag);
+                var childNodes = tag.childNodes;
+                var isAriaHidden = ($tag.attr('aria-hidden') === "true");
+                if (isAriaHidden) continue;
+                var hasNativeFocus = $tag.is(domSelectors.focusableElements);
+                var isReadable = $tag.is(domSelectors.readableElements);
+                if (hasNativeFocus && isReadable) {
+                    $found = $tag;
+                    break;
+                }
+                for (var c = 0, cl = childNodes.length; c < cl; c++) {
+                    var childNode = childNodes[c];
+                    var isTextNode = (childNode.nodeType === 3);
+                    if (!isTextNode) continue;
+                    var isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
+                    if (isOnlyWhiteSpace) continue;
+                    $found = $tag;
+                }
+                if ($found) {
+                    break;
                 }
             }
 
-            var options = $.a11y.options;
-            if (options.isDebug) console.log("focusOrNext", $element[0]);
-
-            if (returnOnly !== true) {
-                if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
-                $element.focusNoScroll();
+            if (!$found) {
+                $found = $element.parent().focusOrNext(returnOnly);
             }
 
-            //return element focused
-            return $element;
+            $found = $found || $element;
+
+            if (!returnOnly) {
+                $found.focusNoScroll();
+            }
+
+            return $found;
 
         };
 
@@ -560,7 +562,7 @@
 
             if (options.isDebug) console.log("focus", $element[0]);
 
-            state.$activeElement = $(event.currentTarget);
+            state.$activeElement = $(event.target);
 
             if (state.$activeElement.is(domSelectors.nativeTabElements)) {
                 //Capture that the user has interacted with a native form element
@@ -570,6 +572,15 @@
             var options = $.a11y.options;
 
             $element.limitedScrollTo();
+        }
+
+        function onBlur(event) {
+            var element = event.target;
+            var $element = $(element);
+
+            if ($element[0]._a11y_forced_focus) {
+                $element.removeAttr('tabindex');
+            }
         }
 
         function onScrollStartCapture(event) {
@@ -654,12 +665,14 @@
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
             $("body")
-                .off("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-                .off("focus", domSelectors.globalTabIndexElements, onFocus);
+                .off("mousedown touchstart", '*', onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .off("focus", '*', onFocus)
+                .off("blur", '*', onBlur);
 
             $("body")
-                .on("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-                .on("focus", domSelectors.globalTabIndexElements, onFocus);
+                .on("mousedown touchstart", '*', onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .on("focus", '*', onFocus)
+                .on("blur", '*', onBlur);
         }
 
         function a11y_setupFocusGuard() {
@@ -825,7 +838,6 @@
 
             isOn = isOn === undefined ? true : isOn;
             if (isOn) {
-                $(domSelectors.focuser).focusNoScroll();
                 this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "true").attr("tabindex", "-1").addClass("aria-hidden");
             } else {
                 this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).attr("aria-hidden", "false").removeAttr("tabindex").removeClass("aria-hidden");
@@ -1208,51 +1220,25 @@
     //SET FOCUS
 
 
-        //FOCUSES ON FIRST TABBABLE ELEMENT
+        //FOCUSES ON FIRST READABLE ELEMENT
         $.a11y_focus = function(dontDefer) {
-            //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
             if (dontDefer) {
-                var tags = $(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                if (tags.length > 0) {
-                    $(tags[0]).focusOrNext();
-                }
+                $('body').focusOrNext();
                 return this;
             }
 
             defer(function(){
-                var tags = $(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                if (tags.length > 0) {
-                    $(tags[0]).focusOrNext();
-                }
+                $('body').focusOrNext();
             });
-            //SCROLL TO TOP IF NOT POPUPS ARE OPEN
             return this;
         };
 
         //FOCUSES ON FIRST TABBABLE ELEMENT IN SELECTION
         $.fn.a11y_focus = function() {
             if (this.length === 0) return this;
-            //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
+            // FOCUS ON FIRST READABLE ELEMENT
             defer(function(){
-                var $this = $(this[0]);
-                if ($this.is(domSelectors.focusableElements)) {
-                    $this.focusOrNext();
-                } else {
-                    var tags = $this.find(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                    if (tags.length === 0) {
-                        var $parents = $this.parents();
-                        for (var i = 0, l = $parents.length; i < l; i++) {
-                            var $parent = $($parents[i]);
-                            tags = $parent.find(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                            if (tags.length > 0) {
-                                return $(tags[0]).focusOrNext();
-                            }
-                        }
-                    } else {
-                        $(tags[0]).focusOrNext();
-                    }
-
-                }
+                this.focusOrNext();
             }, this);
             return this;
         };
