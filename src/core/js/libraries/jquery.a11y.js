@@ -343,7 +343,7 @@
         };
 
         $.fn.limitedScrollTo = function() {
-            console.warn("DEPRECATED $.limitedScrollTo had no impact on the screen reader cursor only the focus cursor.");
+            console.warn("REMOVED $.limitedScrollTo had no impact on the screen reader cursor.");
             return this;
         };
 
