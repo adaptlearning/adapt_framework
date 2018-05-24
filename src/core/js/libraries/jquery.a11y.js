@@ -1082,7 +1082,8 @@
 
                 if (storeLastTabIndex) {
                     if (state.tabIndexes[elementUID] === undefined) state.tabIndexes[elementUID] = [];
-                    state.tabIndexes[elementUID].push( $item.attr('tabindex') || 0 );
+                    var tabindex = $item.attr('tabindex');
+                    state.tabIndexes[elementUID].push( tabindex === undefined ? "" : tabindex );
                 }
 
                 $item.attr({
@@ -1095,8 +1096,10 @@
 
             this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).attr({
                 'tabindex': 0
-            }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
+            }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.ariaHiddenParentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
             this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
+
+
 
             $.a11y_update();
 
@@ -1153,16 +1156,20 @@
 
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length !== 0) {
                     //get previous tabindex if saved
-                    previousTabIndex = parseInt(state.tabIndexes[elementUID].pop());
+                    previousTabIndex = state.tabIndexes[elementUID].pop();
                 }
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length > 0) {
                     //delete element tabindex store if empty
                     delete state.tabIndexes[elementUID];
                 }
 
-                $item.attr({
-                    'tabindex': previousTabIndex
-                });
+                if (previousTabIndex === "") {
+                    $item.removeAttr("tabindex");
+                } else {
+                    $item.attr({
+                        'tabindex': previousTabIndex
+                    });
+                }
 
                 if (previousTabIndex === -1) {
                     //hide element from screen reader
