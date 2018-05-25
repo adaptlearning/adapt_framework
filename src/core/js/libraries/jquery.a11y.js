@@ -716,30 +716,24 @@
                 var $item = $(this[i]);
 
                 if (enabled && $item.is(domSelectors.hideableElements)) {
-                    if (!$item.is(domSelectors.focusableElementsAccessible)) {
-                        $item.removeAttr("aria-hidden").removeClass("aria-hidden");
-                        $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                    }
+                    $item.removeAttr("aria-hidden").removeClass("aria-hidden");
+                    $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                     if (withDisabled) {
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
                 } else if (enabled) {
-                    if (!$item.is(domSelectors.focusableElementsAccessible)) {
-                        $item.attr({
-                            tabindex: "0",
-                        }).removeAttr("aria-hidden").removeClass("aria-hidden");
-                        $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                    }
+                    $item.attr({
+                        tabindex: "0",
+                    }).removeAttr("aria-hidden").removeClass("aria-hidden");
+                    $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                     if (withDisabled) {
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
                 } else {
-                    if (!$item.is(domSelectors.focusableElementsAccessible)) {
-                        $item.attr({
-                            tabindex: "-1",
-                            "aria-hidden": "true"
-                        }).addClass("aria-hidden");
-                    }
+                    $item.attr({
+                        tabindex: "-1",
+                        "aria-hidden": "true"
+                    }).addClass("aria-hidden");
                     if (withDisabled) {
                         $item.attr("disabled","disabled").addClass("disabled");
                     }
