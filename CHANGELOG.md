@@ -1,5 +1,26 @@
 ## [Unreleased][unreleased]
 
+## [3.1.0] - 2018-05-14
+
+### Added
+- `any` and `all` Handlebars helper functions ([#2021](https://github.com/adaptlearning/adapt_framework/issues/2021))
+- `dir-rtl` and `dir-ltr` class gets added to index.html and updated when language changes ([#2033](https://github.com/adaptlearning/adapt_framework/issues/2033))
+- `completed` class  added to menuView ([#2031](https://github.com/adaptlearning/adapt_framework/issues/2031))
+- `Adapt.offlineStorage` can now store data when no handler has been defined ([#1981](https://github.com/adaptlearning/adapt_framework/issues/1981))
+
+### Fixed
+- Bad path separators in Grunt command ([#2025](https://github.com/adaptlearning/adapt_framework/issues/2025))
+- `grunt help` now lists all the translate tasks ([#2057](https://github.com/adaptlearning/adapt_framework/issues/2057))
+- Bug in `setActiveItem()` when no active item exists ([#2035](https://github.com/adaptlearning/adapt_framework/issues/2035))
+- Tracking tasks now respect `--outputdir` ([#2006](https://github.com/adaptlearning/adapt_framework/issues/2006))
+
+### Changed
+- Unified LESS and JavaScript source maps ([#2009](https://github.com/adaptlearning/adapt_framework/issues/2009))
+- Added `_completionCriteria` to sample course config.json (#2003)
+
+### Removed
+- `_isHiddenFromMenu` in favour of using pre-existing property `_isHidden` instead
+
 ## [3.0.0] - 2018-03-06
 
 ### Removed
@@ -585,7 +606,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.3...v2.2.0
 [2.1.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.2...v2.1.3
