@@ -1171,7 +1171,7 @@
                     });
                 }
 
-                if (previousTabIndex === -1) {
+                if (previousTabIndex === "-1") {
                     //hide element from screen reader
                     return $item.attr('aria-hidden', true).addClass("aria-hidden");
                 }
