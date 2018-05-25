@@ -51,13 +51,13 @@ define([
 
         removeLegacyElements: function() {
             var $legacyElements = $("body").children("#accessibility-toggle, #accessibility-instructions");
-            var $nagivationElements = $(".navigation").find("#accessibility-toggle, #accessibility-instructions");
+            var $navigationElements = $(".navigation").find("#accessibility-toggle, #accessibility-instructions");
 
-            if (!$legacyElements.length && !$nagivationElements.length) return
+            if (!$legacyElements.length && !$navigationElements.length) return
 
-            Adapt.log.warn("DEPRECATED - #accessibility-toggle and #accessibility-instructions have been removed. Please remove them from all of your .html files.");
+            Adapt.log.warn("REMOVED - #accessibility-toggle and #accessibility-instructions have been removed. Please remove them from all of your .html files.");
             $legacyElements.remove();
-            $nagivationElements.remove();
+            $navigationElements.remove();
         },
 
         setupAccessibility: function() {
@@ -230,7 +230,7 @@ define([
         },
 
         isActive: function() {
-            Adapt.log.warn("DEPRECATED - accessibility is now always active when enabled. Please unify your user experiences.")
+            Adapt.log.warn("REMOVED - accessibility is now always active when enabled. Please unify your user experiences.")
             return false;
         },
 
