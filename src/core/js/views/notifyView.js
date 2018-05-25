@@ -12,8 +12,6 @@ define([
 
         disableAnimation: false,
 
-        escapeKeyAttached: false,
-
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
 
@@ -39,15 +37,8 @@ define([
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
-
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on('keyup', this._onKeyUp);
-                this.escapeKeyAttached = true;
-            } else {
-                $(window).off('keyup', this._onKeyUp);
-                this.escapeKeyAttached = false;
-            }
+            $(window).on('keyup', this._onKeyUp);
+            this.escapeKeyAttached = true;
         },
 
         onAccessibilityToggle: function() {
