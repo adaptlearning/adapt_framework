@@ -113,23 +113,31 @@ define([
                     }
                 },
 
-                a11y_normalize: function(text) {
-                    return $.a11y_normalize(text);
+                a11y_normalize: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(function(v) { return v });
+                    return $.a11y_normalize(values.join(" "));
                 },
 
-                a11y_remove_breaks: function(text) {
-                    return $.a11y_remove_breaks(text);
+                a11y_remove_breaks: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(function(v) { return v });
+                    return $.a11y_remove_breaks(values.join(" "));
                 },
 
-                a11y_aria_label: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
+                a11y_aria_label: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(function(v) { return v });
+                    return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+values.join(" ")+'</div>');
                 },
 
-                a11y_aria_label_relative: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+text+'</div>');
+                a11y_aria_label_relative: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(function(v) { return v });
+                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+values.join(" ")+'</div>');
                 },
 
-                a11y_wrap_focus: function(text) {
+                a11y_wrap_focus: function() {
                     return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" '+getTabIndex()+' role="button">&nbsp;</a>');
                 },
 
