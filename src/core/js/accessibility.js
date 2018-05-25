@@ -220,9 +220,7 @@ define([
                     isRemoveNotAccessiblesEnabled: true,
                     isAriaLabelFixEnabled: true,
                     isScrollDisableEnabled: true,
-                    isScrollDisabledOnPopupEnabled: false,
-                    isSelectedAlertsEnabled: true,
-                    isAlertsEnabled: true
+                    isScrollDisabledOnPopupEnabled: false
                 });
             } else {
                 _.extend($.a11y.options, {
@@ -233,9 +231,7 @@ define([
                     isRemoveNotAccessiblesEnabled: true,
                     isAriaLabelFixEnabled: true,
                     isScrollDisableEnabled: true,
-                    isScrollDisabledOnPopupEnabled: false,
-                    isSelectedAlertsEnabled: false,
-                    isAlertsEnabled: false
+                    isScrollDisabledOnPopupEnabled: false
                 });
             }
 
