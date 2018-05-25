@@ -33,7 +33,6 @@
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "focusguard": '<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" tabindex="0" role="button">&nbsp;</a>',
             "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
         };
@@ -616,29 +615,6 @@
             $(document).trigger("reading", stringTrim(readText));
         }
 
-        function a11y_reattachFocusGuard() {
-            var $focusguard;
-            var $currentFloor = $.a11y.state.floorStack[$.a11y.state.floorStack.length-1];
-
-            if ($.a11y.state.floorStack.length == 1) {
-                // only a page/menu is present
-                if ($currentFloor.find(domSelectors.focusguard).length === 0) {
-                    // create and attach the focusguard
-                    $focusguard = $(domInjectElements.focusguard);
-                    $focusguard.appendTo($currentFloor).attr("tabindex", 0);
-                }
-            } else {
-                // we have a popup
-                if ($currentFloor.find(domSelectors.focusguard).length === 0) {
-                    // the popup is not using the helper
-                    console.warn("DEPRECATED (a11y_reattachFocusGuard) - Use the Handlebars helper a11y_wrap_focus after the last tabbable element in the popup");
-                    // create and attach the focusguard
-                    $focusguard = $(domInjectElements.focusguard);
-                    $focusguard.appendTo($currentFloor).attr("tabindex", 0);
-                }
-            }
-        }
-
         function a11y_setupUserInputControlListeners() {
              $('body')
                 .off("click", ".prevent-default", preventDefault)
@@ -730,7 +706,6 @@
             isFocusLimited: false,
             isRemoveNotAccessiblesEnabled: true,
             isAriaLabelFixEnabled: true,
-            isFocusWrapEnabled: true,
             isScrollDisableEnabled: true,
             isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
@@ -763,10 +738,6 @@
                 a11y_setupFocusControlListeners();
             }
 
-            if (options.isFocusWrapEnabled) {
-                a11y_reattachFocusGuard();
-            }
-
             if (options.isDebug) {
                 console.log("a11y_ready");
                 a11y_debug();
@@ -786,10 +757,6 @@
 
             if (options.isAriaLabelFixEnabled) {
                 $('body').a11y_aria_label(true);
-            }
-
-            if (options.isFocusWrapEnabled) {
-                a11y_reattachFocusGuard();
             }
 
             if (!options.isTabbableTextEnabled) {
@@ -1115,10 +1082,6 @@
                 $('html').css('overflow-y', 'hidden');
 
                 $.a11y.state.floorStack[$.a11y.state.floorStack.length-2].scrollDisable();
-                $(domSelectors.focusguard, this).css({
-                    "position":"fixed",
-                    "bottom": "0px"
-                });
             }
 
             return this;
@@ -1181,10 +1144,6 @@
                 if (state.floorStack.length == 1) $('html').css('overflow-y', '');
 
                 $.a11y.state.floorStack[$.a11y.state.floorStack.length-1].scrollEnable();
-                $(domSelectors.focusguard, $currentFloor).css({
-                    "position":"",
-                    "bottom": ""
-                });
             }
 
             defer(function() {
