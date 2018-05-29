@@ -143,7 +143,7 @@ define([
         },
 
         showNotify: function() {
-
+            this.model.set('_isActive', true);
             this.addSubView();
 
             Adapt.trigger('notify:opened', this);
@@ -200,6 +200,8 @@ define([
         },
 
         closeNotify: function (event) {
+            if (!this.model.get('_isActive')) return;
+            this.model.set('_isActive', false);
 
             if (this.disableAnimation) {
 
