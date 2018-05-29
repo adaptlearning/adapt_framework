@@ -112,8 +112,8 @@ define([
             this.hideDrawer();
         },
 
-        onCloseDrawer: function($activeElement) {
-            this.hideDrawer($activeElement);
+        onCloseDrawer: function($toElement) {
+            this.hideDrawer($toElement);
         },
 
         toggleDrawer: function() {
@@ -204,10 +204,10 @@ define([
             }
         },
 
-        hideDrawer: function($activeElement) {
+        hideDrawer: function($toElement) {
             //only trigger popup:closed if drawer is visible
             if (this._isVisible) {
-                Adapt.trigger('popup:closed', $activeElement);
+                Adapt.trigger('popup:closed', $toElement);
                 this._isVisible = false;
                 $('body').scrollEnable();
             } else {
