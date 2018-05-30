@@ -742,6 +742,7 @@
             floorStack: [$("body")],
             focusStack: [],
             tabIndexes: {},
+            ariaHiddens: {},
             elementUIDIndex: 0,
             scrollDisabledElements: null,
             scrollStartEvent: null
@@ -1082,24 +1083,25 @@
 
                 if (storeLastTabIndex) {
                     if (state.tabIndexes[elementUID] === undefined) state.tabIndexes[elementUID] = [];
+                    if (state.ariaHiddens[elementUID] === undefined) state.ariaHiddens[elementUID] = [];
                     var tabindex = $item.attr('tabindex');
+                    var ariaHidden = $item.attr('aria-hidden');
                     state.tabIndexes[elementUID].push( tabindex === undefined ? "" : tabindex );
+                    state.ariaHiddens[elementUID].push( ariaHidden === undefined ? "" : ariaHidden);
                 }
 
                 $item.attr({
                     'tabindex': -1,
                     'aria-hidden': true
-                }).addClass("aria-hidden");
+                });
             });
 
-            $hideable.attr("aria-hidden", true).attr("tabindex", "-1").addClass("aria-hidden");
+            $hideable.attr("aria-hidden", true).attr("tabindex", "-1");
 
             this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).attr({
                 'tabindex': 0
             }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.ariaHiddenParentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
             this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
-
-
 
             $.a11y_update();
 
@@ -1144,7 +1146,8 @@
 
             $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).each(function(index, item) {
                 var $item = $(item);
-                var previousTabIndex = 0;
+                var previousTabIndex = "";
+                var previousAriaHidden = "";
 
                 var elementUID;
                 if (item.a11y_uid == undefined) {
@@ -1157,10 +1160,12 @@
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length !== 0) {
                     //get previous tabindex if saved
                     previousTabIndex = state.tabIndexes[elementUID].pop();
+                    previousAriaHidden = state.ariaHiddens[elementUID].pop();
                 }
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length > 0) {
                     //delete element tabindex store if empty
                     delete state.tabIndexes[elementUID];
+                    delete state.ariaHiddens[elementUID];
                 }
 
                 if (previousTabIndex === "") {
@@ -1171,13 +1176,13 @@
                     });
                 }
 
-                if (previousTabIndex === "-1") {
-                    //hide element from screen reader
-                    return $item.attr('aria-hidden', true).addClass("aria-hidden");
+                if (previousAriaHidden === "") {
+                    $item.removeAttr("aria-hidden");
+                } else {
+                    $item.attr({
+                        'aria-hidden': previousAriaHidden
+                    });
                 }
-
-                //show element to screen reader
-                $item.removeAttr('aria-hidden').removeClass("aria-hidden");
 
                 if ($item.is(domSelectors.hideableElements)) {
                     $item.removeAttr("tabindex");
