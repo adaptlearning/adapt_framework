@@ -705,7 +705,6 @@
             isFocusControlEnabled: true,
             isFocusLimited: false,
             isRemoveNotAccessiblesEnabled: true,
-            isAriaLabelFixEnabled: true,
             isScrollDisableEnabled: true,
             isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
@@ -753,10 +752,6 @@
 
             if (options.isRemoveNotAccessiblesEnabled) {
                 a11y_removeNotAccessibles();
-            }
-
-            if (options.isAriaLabelFixEnabled) {
-                $('body').a11y_aria_label(true);
             }
 
             if (!options.isTabbableTextEnabled) {
@@ -1220,55 +1215,7 @@
     //CONVERT ARIA LABELS
         //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
         $.fn.a11y_aria_label = function(deep) {
-            var options = $.a11y.options;
-
-            if (!options.isAriaLabelFixEnabled) return this;
-
-            var ariaLabels = [];
-
-            for (var i = 0; i < this.length; i++) {
-                var $item = $(this[i]);
-
-                if ($item.not(domSelectors.ariaLabelElementsFilter).is(domSelectors.ariaLabelElements)) {
-                    ariaLabels.push(this[i]);
-                }
-
-                if (deep === true) {
-                    var children = $item.find(domSelectors.ariaLabelElements).filter(domFilters.ariaLabelElementsFilter);
-                    ariaLabels = ariaLabels.concat(children.toArray());
-                }
-
-            }
-
-            if (ariaLabels.length === 0) return this;
-
-            for (var i = 0; i < ariaLabels.length; i++) {
-                var $item = $(ariaLabels[i]);
-
-                var $itemChildren = $item.children();
-                if ($itemChildren.length === 0) continue;
-
-                var firstChild = $itemChildren[0];
-                var $firstChild = $(firstChild)
-
-                if ($firstChild.is(".aria-label")) continue;
-
-                var ariaLabel = $item.attr("aria-label");
-
-                if (ariaLabel) {
-                    var injectElement = $(domInjectElements.arialabel);
-                    if (!options.isTabbableTextEnabled) {
-                        injectElement.attr({
-                            "tabindex": "-1"
-                        }).addClass("a11y-ignore");
-                    }
-                    injectElement.html( ariaLabel );
-                    $item.prepend(injectElement);
-                }
-
-                $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
-            }
-
+            console.warn("REMOVED $.fn.a11y_aria_label incorrect behaviour.");
             return this;
         };
 
