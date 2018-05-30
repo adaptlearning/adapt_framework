@@ -419,7 +419,7 @@
                 if (isAriaHidden) continue;
                 var hasNativeFocus = $tag.is(domSelectors.focusableElements);
                 var isReadable = $tag.is(domSelectors.readableElements);
-                if (hasNativeFocus && isReadable) {
+                if (hasNativeFocus || isReadable) {
                     $found = $tag;
                     break;
                 }
