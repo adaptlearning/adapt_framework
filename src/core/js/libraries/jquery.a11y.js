@@ -552,6 +552,17 @@
             if (options.isDebug) console.log("focusCapture", $element[0]);
         }
 
+        function onClick(event) {
+            var $element = $(event.target);
+            if ($element.parents(domSelectors.globalTabIndexElements).length) return;
+            if ($element.is(domSelectors.globalTabIndexElements)) return;
+            $element.attr({
+                'tabindex': '-1',
+                'data-a11y-force-focus': true
+            });
+            $element.focus();
+        }
+
         function onFocus(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
@@ -644,11 +655,13 @@
             var options = $.a11y.options;
             $("body")
                 .off("mousedown touchstart", '*', onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .off("click", '*', onClick)
                 .off("focus", '*', onFocus)
                 .off("blur", '*', onBlur);
 
             $("body")
                 .on("mousedown touchstart", '*', onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
+                .on("click", '*', onClick)
                 .on("focus", '*', onFocus)
                 .on("blur", '*', onBlur);
         }
