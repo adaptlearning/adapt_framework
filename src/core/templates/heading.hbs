@@ -1,0 +1,10 @@
+{{import_globals}}
+<div id="{{_id}}-heading" class="js-heading-inner" {{{a11y_attrs_heading _type}}} >
+    <span class="aria-label">
+    {{#if _isComplete}}
+        {{_globals._accessibility._ariaLabels.complete}} {{compile displayTitle this}}
+    {{else}}
+        {{_globals._accessibility._ariaLabels.incomplete}} {{compile displayTitle this}}
+    {{/if}}
+    </span>
+</div>

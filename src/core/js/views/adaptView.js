@@ -6,7 +6,8 @@ define([
 
         attributes: function() {
             return {
-                "data-adapt-id": this.model.get('_id')
+                "data-adapt-id": this.model.get('_id'),
+                "aria-labelledby": this.model.get('_id')+"-heading"
             };
         },
 
@@ -40,6 +41,8 @@ define([
             data.view = this;
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
+
+            Adapt.trigger(this.constructor.type + 'View:render', this);
 
             _.defer(function() {
                 // don't call postRender after remove
@@ -179,7 +182,7 @@ define([
             }
             this.$el.addClass('display-none');
         },
-        
+
         onIsCompleteChange:function(model, isComplete){
             this.$el.toggleClass('completed', isComplete);
         }
