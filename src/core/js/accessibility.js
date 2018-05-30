@@ -203,7 +203,6 @@ define([
 
         onNavigationStart: function() {
             //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
-            //$("#a11y-focuser").a11y_focus(true);
             _.defer(function() {
                 $.a11y_on(false, '.page');
                 $.a11y_on(false, '.menu');

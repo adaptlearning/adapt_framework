@@ -6,7 +6,7 @@
 
     // JQUERY FILTERS FOR ELEMENTS
         var domFilters = {
-            "globalTabIndexElementFilter": ':not(.a11y-ignore)',
+            "globalTabIndexElementFilter": ':not(.a11y-ignore):not([data-a11y-force-focus])',
             "focusableElementsFilter": ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)",
             "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
             "ariaHiddenParentsFilter": ":not(#wrapper):not(body)",
@@ -23,7 +23,7 @@
             "nativeTabElements": "textarea, input, select",
             "wrapIgnoreElements": "a,button,input,select,textarea",
             "wrapStyleElements": "b,i,abbr,strong,em,small,sub,sup,ins,del,mark,zw,nb",
-            "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
+            "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]:not([data-a11y-force-focus])',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
@@ -389,8 +389,10 @@
                 var y = $(window).scrollTop();
                 try {
                 if (this.attr('tabindex') === undefined) {
-                    this[0]._a11y_forced_focus = true;
-                    this.attr("tabindex", "-1");
+                    this.attr({
+                        "tabindex": "-1",
+                        "data-a11y-force-focus": "true"
+                    });
                 }
                 this.focus();
                 } catch(e){}
@@ -577,7 +579,7 @@
             var element = event.target;
             var $element = $(element);
 
-            if ($element[0]._a11y_forced_focus) {
+            if ($element.is('[data-a11y-force-focus]')) {
                 $element.removeAttr('tabindex');
             }
         }
