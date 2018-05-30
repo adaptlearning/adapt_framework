@@ -8,7 +8,6 @@
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
             "focusableElementsFilter": ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)",
-            "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
             "ariaHiddenParentsFilter": ":not(#wrapper):not(body)",
         };
 
@@ -26,15 +25,13 @@
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
-            "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]"
+            "hideableElements": ".a11y-hideable"
         };
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
-            "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
+            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>'
         };
 
 
