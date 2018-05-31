@@ -143,7 +143,7 @@ define([
         },
 
         showNotify: function() {
-            this.model.set('_isActive', true);
+            this.model.set('_isOpen', true);
             this.addSubView();
 
             Adapt.trigger('notify:opened', this);
@@ -200,8 +200,9 @@ define([
         },
 
         closeNotify: function (event) {
-            if (!this.model.get('_isActive')) return;
-            this.model.set('_isActive', false);
+            //prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
+            if (!this.model.get('_isOpen')) return;
+            this.model.set('_isOpen', false);
 
             if (this.disableAnimation) {
 
