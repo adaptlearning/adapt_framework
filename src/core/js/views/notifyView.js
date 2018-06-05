@@ -11,7 +11,8 @@ define([
         },
 
         attributes: {
-            'aria-roledescription': 'dialog',
+            'role': 'dialog',
+            'aria-labelledby': 'notify-heading',
             'aria-modal': 'true'
         },
 
