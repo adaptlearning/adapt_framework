@@ -23,19 +23,19 @@
                     </div>
                 {{/if}}
 
-                    {{#if_value_equals _type "alert"}}
+                {{#if_value_equals _type "alert"}}
                     <div class="notify-popup-buttons">
                         <button class="notify-popup-button notify-popup-alert-button" aria-label="{{{confirmText}}}">{{{confirmText}}}</button>
                     </div>
-                    {{/if_value_equals}}
+                {{/if_value_equals}}
 
-                    {{#if_value_equals _type "prompt"}}
+                {{#if_value_equals _type "prompt"}}
                     <div class="notify-popup-buttons">
                         {{#each _prompts}}
                             <button class="notify-popup-button notify-popup-prompt-button" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">{{{promptText}}}</button>
                         {{/each}}
                     </div>
-                    {{/if_value_equals}}
+                {{/if_value_equals}}
 
             </div>
         </div>
