@@ -19,9 +19,6 @@ define([
                 'change:_index': this.updatePushPosition
             });
 
-            // Include accessibility globals in notify model.
-            this.model.set('_globals', Adapt.course.get('_globals'));
-
             this.preRender();
             this.render();
         },
