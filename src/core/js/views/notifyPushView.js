@@ -9,10 +9,15 @@ define([
         },
 
         initialize: function () {
-            this.listenTo(Adapt, 'notify:pushShown notify:pushRemoved', this.updateIndexPosition);
-            this.listenTo(this.model.collection, 'remove', this.updateIndexPosition);
-            this.listenTo(this.model.collection, 'change:_index', this.updatePushPosition);
-            this.listenTo(Adapt, 'remove', this.remove);
+            this.listenTo(Adapt, {
+                'notify:pushShown notify:pushRemoved': this.updateIndexPosition,
+                'remove': this.remove
+            });
+
+            this.listenTo(this.model.collection, {
+                'remove': this.updateIndexPosition,
+                'change:_index': this.updatePushPosition
+            });
 
             // Include accessibility globals in notify model.
             this.model.set('_globals', Adapt.course.get('_globals'));
@@ -35,9 +40,7 @@ define([
             var template = Handlebars.templates['notifyPush'];
             this.$el.html(template(data)).appendTo('#wrapper');
 
-            _.defer(_.bind(function () {
-                this.postRender();
-            }, this));
+            _.defer(this.postRender.bind(this));
 
             return this;
         },
@@ -45,9 +48,7 @@ define([
         postRender: function () {
             this.$el.addClass('show');
 
-            _.delay(_.bind(function () {
-                this.closePush();
-            }, this), this.model.get('_timeout'));
+            _.delay(this.closePush.bind(this), this.model.get('_timeout'));
 
             Adapt.trigger('notify:pushShown');
         },
@@ -64,11 +65,11 @@ define([
 
                 this.$el.removeClass('show');
 
-                _.delay(_.bind(function () {
+                _.delay(function () {
                     this.model.collection.remove(this.model);
                     Adapt.trigger('notify:pushRemoved', this);
                     this.remove();
-                }, this), 600);
+                }.bind(this), 600);
             }
         },
 
