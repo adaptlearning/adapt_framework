@@ -25,8 +25,6 @@ define([
 
             this.setupEventListeners();
 
-            //include accessibility globals in notify model
-            this.model.set('_globals', Adapt.course.get('_globals'));
             this.render();
         },
 
