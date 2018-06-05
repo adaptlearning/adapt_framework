@@ -8,6 +8,12 @@ define([
             return 'notify-push ' + this.model.get('_classes');
         },
 
+        attributes: {
+            'role': 'dialog',
+            'aria-labelledby': 'notify-push-heading',
+            'aria-modal': 'false'
+        },
+
         initialize: function () {
             this.listenTo(Adapt, {
                 'notify:pushShown notify:pushRemoved': this.updateIndexPosition,
