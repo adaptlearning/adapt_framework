@@ -7,6 +7,7 @@ define([
         className: 'notify',
         disableAnimation: false,
         escapeKeyAttached: false,
+        isOpen: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
@@ -119,7 +120,7 @@ define([
         },
 
         showNotify: function() {
-
+            this.isOpen = true;
             Adapt.trigger('notify:opened', this);
 
             if (this.$("img").length > 0) {
@@ -169,7 +170,9 @@ define([
         },
 
         closeNotify: function (event) {
-
+            if (this.isOpen) return;
+            this.isOpen = false;
+            
             if (this.disableAnimation) {
 
                 this.$('.notify-popup').css("visibility", "hidden");
