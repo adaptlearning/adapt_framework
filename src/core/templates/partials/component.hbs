@@ -21,13 +21,13 @@
         </div>
         {{/if}}
 
-        {{#if instruction}}
+        {{#any instruction mobileInstruction}}
         <div class="{{_component}}-instruction component-instruction">
             <div class="{{_component}}-instruction-inner component-instruction-inner">
                 {{{compile instruction this}}}
             </div>
         </div>
-        {{/if}}
+        {{/any}}
 
     </div>
 </div>
