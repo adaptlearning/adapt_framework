@@ -18,7 +18,7 @@ define([
                     el: el,
                     model: view.model
                 });
-            }.bind(this));
+            });
         }
 
     });

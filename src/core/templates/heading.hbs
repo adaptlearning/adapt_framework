@@ -2,9 +2,9 @@
 <div id="{{_id}}-heading" class="js-heading-inner" {{{a11y_attrs_heading _type}}} >
     <span class="aria-label">
     {{#if _isComplete}}
-        {{_globals._accessibility._ariaLabels.complete}} {{compile displayTitle this}}
+        {{_globals._accessibility._ariaLabels.complete}} {{compile displayTitle}}
     {{else}}
-        {{_globals._accessibility._ariaLabels.incomplete}} {{compile displayTitle this}}
+        {{_globals._accessibility._ariaLabels.incomplete}} {{compile displayTitle}}
     {{/if}}
     </span>
 </div>
