@@ -367,30 +367,6 @@ define([
 
                 } else {
 
-                    if (Adapt.location._currentId && $.a11y.options.OS!="mac") {
-                        //required to stop JAWS from auto reading content in IE
-                        var currentModel = Adapt.findById(Adapt.location._currentId);
-                        var alertText = " ";
-
-                        switch (currentModel.get("_type")) {
-                            case "page":
-                                if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded) {
-                                    alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.pageLoaded;
-                                }
-                                break;
-
-                            case "menu":
-                            /* falls through */
-                            default:
-                                if (Adapt.course.get("_globals") && Adapt.course.get("_globals")._accessibility && Adapt.course.get("_globals")._accessibility._ariaLabels && Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded) {
-                                    alertText = Adapt.course.get("_globals")._accessibility._ariaLabels.menuLoaded;
-                                }
-                                break;
-                        }
-
-                        $.a11y_alert(alertText);
-                    }
-
                      _.delay(_.bind(function() {
                         var windowScrollTop = $(window).scrollTop();
                         var documentScrollTop = $(document).scrollTop();
