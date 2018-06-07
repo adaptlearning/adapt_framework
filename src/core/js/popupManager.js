@@ -11,11 +11,11 @@ define([
         $activeElement.a11y_popup();
     });
 
-    Adapt.on('popup:closed', function($toElement) {
+    Adapt.on('popup:closed', function($target) {
 
         //restore tab indexes
         var $launchedElement = $.a11y_popdown();
-        var $activeElement = $toElement || $launchedElement;
+        var $activeElement = $target || $launchedElement;
 
         if ($activeElement) {
             return $activeElement.focusOrNext();
