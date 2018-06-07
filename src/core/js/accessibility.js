@@ -115,25 +115,25 @@ define([
 
                 a11y_normalize: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
-                    values = values.filter(function(v) { return v });
+                    values = values.filter(Boolean);
                     return $.a11y_normalize(values.join(" "));
                 },
 
                 a11y_remove_breaks: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
-                    values = values.filter(function(v) { return v });
+                    values = values.filter(Boolean);
                     return $.a11y_remove_breaks(values.join(" "));
                 },
 
                 a11y_aria_label: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
-                    values = values.filter(function(v) { return v });
+                    values = values.filter(Boolean);
                     return new Handlebars.SafeString('<div class="aria-label prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+values.join(" ")+'</div>');
                 },
 
                 a11y_aria_label_relative: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
-                    values = values.filter(function(v) { return v });
+                    values = values.filter(Boolean);
                     return new Handlebars.SafeString('<div class="aria-label relative prevent-default'+getIgnoreClass()+'" '+getTabIndex()+' role="region">'+values.join(" ")+'</div>');
                 },
 
