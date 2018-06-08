@@ -621,12 +621,6 @@
                 $element.trigger("click");
 
                 break;
-            case 27: //ESCAPE
-
-                if (options.isDebug) console.log("a11y: escape keyup > focus on first element");
-                //FOCUS ON FIRST ELEMENT
-                $.a11y_focus();
-                break;
             }
         }
 
