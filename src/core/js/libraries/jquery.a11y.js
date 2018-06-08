@@ -32,8 +32,8 @@
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
+            "focuser": '<div id="a11y-focuser" class="prevent-default a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>',
+            "selected": '<div id="a11y-selected" class="prevent-default a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>',
             "arialabel": "<span class='aria-label prevent-default'></span>"
         };
 
