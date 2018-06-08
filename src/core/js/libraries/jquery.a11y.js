@@ -7,7 +7,7 @@
     // JQUERY FILTERS FOR ELEMENTS
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore):not([data-a11y-force-focus])',
-            "focusableElementsFilter": ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)",
+            "focusableElementsFilter": ":visible:not(.disabled):not(:disabled):not([aria-hidden=true]):not(.a11y-ignore-focus)",
             "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
             "ariaHiddenParentsFilter": ":not(#wrapper):not(body)",
         };
@@ -402,54 +402,203 @@
         };
 
         /**
-         * Focus on the first readable element
+         * Focus on the first readable element excluding the subject
+         */
+        $.fn.focusNext = function(returnOnly) {
+            if (this.length === 0) return this;
+            var $element = $(this[0]);
+            var $found = $element.findForward(function($tag) {
+                return $tag.isReadable();
+            });
+            $found = $found || $element.not('*');
+            if (!returnOnly && $found)  $found.focusNoScroll();
+            return $found;
+        };
+
+        /**
+         * Focus on the first readable element including the subject
          */
         $.fn.focusOrNext = function(returnOnly) {
             if (this.length === 0) return this;
-
             var $element = $(this[0]);
-            var $allTags = $element.add($element.find('*'));
-
-            var $found;
-            for (var i = 0, l = $allTags.length; i < l; i++) {
-                var tag = $allTags[i];
-                var $tag = $(tag);
-                var childNodes = tag.childNodes;
-                var isAriaHidden = ($tag.attr('aria-hidden') === "true");
-                if (isAriaHidden) continue;
-                var hasNativeFocus = $tag.is(domSelectors.focusableElements);
-                var isReadable = $tag.is(domSelectors.readableElements);
-                if (hasNativeFocus || isReadable) {
-                    $found = $tag;
-                    break;
-                }
-                for (var c = 0, cl = childNodes.length; c < cl; c++) {
-                    var childNode = childNodes[c];
-                    var isTextNode = (childNode.nodeType === 3);
-                    if (!isTextNode) continue;
-                    var isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
-                    if (isOnlyWhiteSpace) continue;
-                    $found = $tag;
-                }
-                if ($found) {
-                    break;
-                }
-            }
-
-            if (!$found) {
-                $found = $element.parent().focusOrNext(returnOnly);
-            }
-
+            if ($element.isReadable(true)) return $element;
+            var $found = $element.findForward(function($tag) {
+                return $tag.isReadable();
+            });
             $found = $found || $element;
-
-            if (!returnOnly) {
-                $found.focusNoScroll();
-            }
-
+            if (!returnOnly && $found)  $found.focusNoScroll();
             return $found;
-
         };
 
+        /**
+         * Search forward in the DOM, descending and ascending to move forward
+         * as appropriate.
+         *
+         * iterator returns true, false or undefined.
+         * true: match this item
+         * false: do not match or descend into this item
+         * undefined: do not match, descend into this item
+         */
+        $.fn.findForward = function(selector) {
+            // make sure iterator is correct, use boolean or selector comparison
+            // appropriately
+            var iterator;
+            switch (typeof selector) {
+                case "string":
+                    // make selector iterator
+                    iterator = function($tag) {
+                        return $tag.is(selector) || undefined;
+                    };
+                    break;
+                case "function":
+                    iterator = selector;
+                    break;
+                case "undefined":
+                    // find first next element
+                    iterator = Boolean;
+            }
+
+            if (this.length === 0) return this.not('*');
+
+            // check children by walking the tree
+            var $found = this.findWalk(iterator);
+            if ($found && $found.length) return $found;
+
+            // move through parents towards the body element
+            var $branch = this.add(this.parents()).toArray().reverse();
+            $branch.find(function(parent) {
+                var $parent = $(parent);
+                if (iterator($parent) === false) {
+                    // skip this parent if explicitly instructed
+                    return false;
+                }
+
+                // move through parents nextAll siblings
+                var $siblings = $parent.nextAll().toArray();
+                return $siblings.find(function(sibling) {
+                    var $sibling = $(sibling);
+                    var value = iterator($sibling);
+
+                    // skip this sibling if explicitly instructed
+                    if (value === false) return;
+
+                    if (value) {
+                        // sibling matched
+                        $found = $sibling;
+                        return true;
+                    }
+
+                    // check parent sibling children by walking the tree
+                    $found = $sibling.findWalk(iterator);
+                    if ($found && $found.length) return true;
+                });
+            });
+
+            if (!$found || !$found.length) return this.not('*');
+            return $found;
+        };
+
+        /**
+         * Search a DOM tree, work from parent to branch-end, through allowed
+         * branch structures
+         *
+         * iterator returns true, false or undefined.
+         * true: match this item
+         * false: do not match or descend into this item
+         * undefined: do not match, descend into this item
+         */
+        $.fn.findWalk = function(selector) {
+
+            // make sure iterator is correct, use boolean or selector comparison
+            // appropriately
+            var iterator;
+            switch (typeof selector) {
+                case "string":
+                    // make selector iterator
+                    iterator = function($tag) {
+                        return $tag.is(selector) || undefined;
+                    };
+                    break;
+                case "function":
+                    iterator = selector;
+                    break;
+                case "undefined":
+                    // find first next element
+                    iterator = Boolean;
+            }
+
+
+            var $found = this.not('*');
+            if (this.length === 0) return $found;
+
+            // keep walked, passed children in a stack
+            var stack = [ this[0] ];
+            var i = 0;
+            do {
+                // get i stack children
+                var $children = $(stack[i]).children().toArray();
+                $children.find(function(item) {
+                    var $item = $(item);
+                    var value = iterator($item);
+
+                    // item explicitly not allowed, don't add to stack, skip
+                    // children
+                    if (value === false) return false;
+
+                    if (value) {
+                        // item matched
+                        $found = $(item);
+                        return true;
+                    }
+
+                    // item passed, add to stack, check children later
+                    stack.push(item);
+                });
+
+                // move to next stack item
+                i++;
+            } while (!$found.length && i < stack.length)
+
+            return $found;
+        };
+
+        /**
+         * Check if item is readable by a screen reader.
+         */
+        $.fn.isReadable = function(checkParents) {
+            var firstItem = this[0];
+            var $firstItem = $(firstItem);
+
+            var $branch =  checkParents
+                ? $firstItem.add($firstItem.parents())
+                : $firstItem;
+
+            var isNotVisible = $branch.toArray().find(function(item) {
+                var $item = $(item);
+                // make sure item is not explicitly invisible
+                var isNotVisible = $item.css('display') === "none"
+                    || $item.css('visibility') === "hidden"
+                    || $item.attr('aria-hidden') === "true";
+                if (isNotVisible) return true;
+            });
+            if (isNotVisible) return false;
+
+            // check that the component is natively tabbable or
+            // will be knowingly read by a screen reader
+            var hasNativeFocusOrIsScreenReadable = $firstItem.is(domSelectors.focusableElements)
+                || $firstItem.is(domSelectors.readableElements);
+            if (hasNativeFocusOrIsScreenReadable) return true;
+            var childNodes = firstItem.childNodes;
+            for (var c = 0, cl = childNodes.length; c < cl; c++) {
+                var childNode = childNodes[c];
+                var isTextNode = (childNode.nodeType === 3);
+                if (!isTextNode) continue;
+                var isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
+                if (isOnlyWhiteSpace) continue;
+                return true;
+            }
+
+        };
 
     // PRIVATE EVENT HANDLERS
         function onKeyUp(event) {
