@@ -28,8 +28,7 @@ define([
                 'notify:resize': this.resetNotifySize,
                 'notify:cancel': this.cancelNotify,
                 'notify:close': this.closeNotify,
-                'device:resize': this.resetNotifySize,
-                'accessibility:toggle': this.onAccessibilityToggle
+                'device:resize': this.resetNotifySize
             });
 
             this._onKeyUp = _.bind(this.onKeyUp, this);
@@ -39,10 +38,6 @@ define([
         setupEscapeKey: function() {
             $(window).on('keyup', this._onKeyUp);
             this.escapeKeyAttached = true;
-        },
-
-        onAccessibilityToggle: function() {
-            this.setupEscapeKey();
         },
 
         onKeyUp: function(event) {
