@@ -37,7 +37,6 @@ define([
 
         setupEscapeKey: function() {
             $(window).on('keyup', this._onKeyUp);
-            this.escapeKeyAttached = true;
         },
 
         onKeyUp: function(event) {
@@ -215,11 +214,11 @@ define([
 
         remove: function() {
             this.removeSubView();
+            $(window).off('keyup', this._onKeyUp);
             Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         removeSubView: function() {
-
             if (!this.subView) return;
             this.subView.remove();
             this.subView = null;
