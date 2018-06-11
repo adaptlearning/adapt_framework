@@ -6,9 +6,7 @@ define([
 
         attributes: function() {
             return {
-                "data-adapt-id": this.model.get('_id'),
-                "aria-labelledby": this.model.get('_id')+"-heading",
-                "role": "region"
+                "data-adapt-id": this.model.get('_id')
             };
         },
 
