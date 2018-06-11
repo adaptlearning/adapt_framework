@@ -7,17 +7,16 @@ define([
     var PageView = AdaptView.extend({
 
         attributes: function() {
-            return {
-                "data-adapt-id": this.model.get('_id'),
+            return AdaptView.resultExtend('attributes', {
                 "aria-labelledby": this.model.get('_id')+"-heading",
                 "role": "main"
-            };
+            }, this);
         },
 
         className: function() {
-            return "page " + 
-            this.model.get('_id') + 
-            " " + this.model.get('_classes') + 
+            return "page " +
+            this.model.get('_id') +
+            " " + this.model.get('_classes') +
             " " + this.setVisibility() +
             " " + (this.model.get('_isComplete') ? 'completed' : '');
         },
