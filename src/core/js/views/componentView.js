@@ -17,11 +17,6 @@ define([
             " " + (this.model.get('_isComplete') ? 'completed' : '');
         },
 
-        initialize: function(){
-			//standard initialization + renderState function
-            AdaptView.prototype.initialize.apply(this, arguments);
-        },
-
         renderState: function() {
             Adapt.log.warn("REMOVED - renderState is removed and moved to item title");
         },
