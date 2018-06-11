@@ -5,7 +5,15 @@ define([
 ], function(Adapt, AdaptView, ArticleView) {
 
     var PageView = AdaptView.extend({
-        
+
+        attributes: function() {
+            return {
+                "data-adapt-id": this.model.get('_id'),
+                "aria-labelledby": this.model.get('_id')+"-heading",
+                "role": "main"
+            };
+        },
+
         className: function() {
             return "page " + 
             this.model.get('_id') + 

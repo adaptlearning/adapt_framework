@@ -5,6 +5,14 @@ define([
 
     var ComponentView = AdaptView.extend({
 
+        attributes: function() {
+            return {
+                "data-adapt-id": this.model.get('_id'),
+                "aria-labelledby": this.model.get('_id')+"-heading",
+                "role": "region"
+            };
+        },
+
         className: function() {
             return "component " + 
             this.model.get('_component') + 
