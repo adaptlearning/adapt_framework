@@ -657,46 +657,6 @@
             }
         }
 
-        function onFocusCapture(event) {
-            var options = $.a11y.options;
-            var state = $.a11y.state;
-            var $element = $(event.target);
-
-            //search out intended click element
-            if (!$element.is(domSelectors.globalTabIndexElements)) {
-                //if element receiving click is not tabbable, search parents
-                var $parents = $element.parents();
-                var $tabbableParents = $parents.filter(domSelectors.globalTabIndexElements);
-                if ($tabbableParents.length === 0) {
-                    //if no tabbable parents, search for proxy elements
-                    var $proxyElements = $parents.filter("[for]");
-
-                    //if no proxy elements, ignore
-                    if ($proxyElements.length === 0) {
-                        //find next focusable element if no proxy element found
-                        $element = $element.focusOrNext(true);
-                    } else {
-                        //isolate proxy element by id
-                        var $proxyElement = $("#"+$proxyElements.attr("for"));
-                        if (!$proxyElement.is(domSelectors.globalTabIndexElements)) {
-                            //find next focusable element if no tabbable element found
-                            $element = $element.focusOrNext(true);
-                        } else {
-                            //use tabbable proxy
-                            $element = $proxyElement;
-                        }
-                    }
-                } else {
-
-                    //use tabbable parent
-                    $element = $($tabbableParents[0]);
-                }
-            }
-
-            state.$activeElement = $element;
-            if (options.isDebug) console.log("focusCapture", $element[0]);
-        }
-
         function onClick(event) {
             var $element = $(event.target);
             if ($element.parents(domSelectors.globalTabIndexElements).length) return;
@@ -799,13 +759,11 @@
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
             $("body")
-                .off("mousedown touchstart", '*', onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .off("click", '*', onClick)
                 .off("focus", '*', onFocus)
                 .off("blur", '*', onBlur);
 
             $("body")
-                .on("mousedown touchstart", '*', onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .on("click", '*', onClick)
                 .on("focus", '*', onFocus)
                 .on("blur", '*', onBlur);
