@@ -420,11 +420,13 @@
          */
         $.fn.focusOrNext = function(returnOnly) {
             if (this.length === 0) return this;
+            var $found;
             var $element = $(this[0]);
-            if ($element.isReadable(true)) return $element;
-            var $found = $element.findForward(function($tag) {
-                return $tag.isReadable();
-            });
+            if (!$element.isReadable(true)) {
+                $found = $element.findForward(function($tag) {
+                    return $tag.isReadable();
+                });
+            }
             $found = $found || $element;
             if (!returnOnly && $found)  $found.focusNoScroll();
             return $found;
