@@ -1096,21 +1096,8 @@
                 $.a11y.state.floorStack[$.a11y.state.floorStack.length-1].scrollEnable();
             }
 
-            defer(function() {
-                // Listeners for popup close may shift focus so respect this
-                if ($activeElement != $.a11y.state.$activeElement) return;
+            return $activeElement;
 
-                if ($activeElement) {
-                    state.$activeElement = $activeElement;
-                    //scroll to focused element
-                    state.$activeElement.focusOrNext().limitedScrollTo();
-                } else {
-                    $.a11y_focus();
-                }
-
-            }, this, 500);
-
-            return this;
         };
 
 

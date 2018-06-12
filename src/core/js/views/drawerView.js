@@ -62,7 +62,7 @@ define([
 
         events: {
             'click .drawer-back': 'onBackButtonClicked',
-            'click .drawer-close':'onCloseDrawer'
+            'click .drawer-close':'onCloseClicked'
         },
 
         render: function() {
@@ -107,11 +107,13 @@ define([
             this.showDrawer(true);
         },
 
-        onCloseDrawer: function(event) {
-            if (event) {
-                event.preventDefault();
-            }
+        onCloseClicked: function(event) {
+            event.preventDefault();
             this.hideDrawer();
+        },
+
+        onCloseDrawer: function($toElement) {
+            this.hideDrawer($toElement);
         },
 
         toggleDrawer: function() {
@@ -162,7 +164,7 @@ define([
                 direction[this.drawerDir]=0;
                 this.$el.css(direction);
                 complete.call(this);
-                
+
             } else {
 
                 $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
@@ -181,10 +183,10 @@ define([
             function complete() {
                 this.addShadowEvent();
                 Adapt.trigger('drawer:opened');
-                
+
                 //focus on first tabbable element in drawer
                 this.$el.a11y_focus();
-	    }
+        }
 
         },
 
@@ -202,10 +204,10 @@ define([
             }
         },
 
-        hideDrawer: function() {
+        hideDrawer: function($toElement) {
             //only trigger popup:closed if drawer is visible
             if (this._isVisible) {
-                Adapt.trigger('popup:closed');
+                Adapt.trigger('popup:closed', $toElement);
                 this._isVisible = false;
                 $('body').scrollEnable();
             } else {
