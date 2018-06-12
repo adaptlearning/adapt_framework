@@ -86,21 +86,16 @@ define([
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
+
+            this.updateAttemptsCount();
+
             // Use 'correct' instead of 'complete' to signify button state
             var buttonState = BUTTON_STATE(changedAttribute);
             if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
                 // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-                this.$('.buttons-action').a11y_cntrl_enabled(false);
+                this.$('.buttons-action').focusNext();
+                this.$('.buttons-action').a11y_cntrl_enabled(false)
 
-                if (!this.model.get("_canShowFeedback")) {
-                    if (!this.$el.is(".no-state")) {
-                        //if no feedback, complete correct and has state, force focus to component state
-                        _.defer(_.bind(function() {
-                            $("." + this.model.get("_id") + " .accessibility-state [tabindex]").focusNoScroll();
-                        }, this));
-                    }
-                }
-              
             } else {
 
                 var propertyName = textPropertyName[buttonState.asString];
@@ -119,8 +114,6 @@ define([
                 }
 
             }
-
-            this.updateAttemptsCount();
         },
 
         checkFeedbackState: function(){
@@ -154,7 +147,7 @@ define([
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').a11y_text(attemptsString);
+                this.$('.buttons-display-inner').html(attemptsString);
             }
 
         },
