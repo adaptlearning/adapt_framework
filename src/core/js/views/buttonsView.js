@@ -90,10 +90,10 @@ define([
             this.updateAttemptsCount();
 
             // Use 'correct' instead of 'complete' to signify button state
+            var $buttonsAction = this.$('.buttons-action');
             var buttonState = BUTTON_STATE(changedAttribute);
             if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
                 // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-                var $buttonsAction = this.$('.buttons-action');
                 $buttonsAction.focusNext();
                 $buttonsAction.a11y_cntrl_enabled(false);
 
@@ -104,14 +104,14 @@ define([
                 var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
                 // Enable the button, make accessible and update aria labels and text
-                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                $buttonsAction.a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
 
                 // Make model answer button inaccessible (but still enabled) for visual users due to
                 // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
                 switch (changedAttribute) {
                     case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-                        this.$('.buttons-action').a11y_cntrl(false);
+                        $buttonsAction.a11y_cntrl(false);
                 }
 
             }
