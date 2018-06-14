@@ -382,22 +382,20 @@
         $.fn.focusNoScroll = function() {
             if (this.length === 0) return this;
 
-            defer(function() {
-                var options = $.a11y.options;
-                if (options.isDebug) console.log("focusNoScroll", this[0]);
+            var options = $.a11y.options;
+            if (options.isDebug) console.log("focusNoScroll", this[0]);
 
-                var y = $(window).scrollTop();
-                try {
-                if (this.attr('tabindex') === undefined) {
-                    this.attr({
-                        "tabindex": "-1",
-                        "data-a11y-force-focus": "true"
-                    });
-                }
-                this.focus();
-                } catch(e){}
-                window.scrollTo(null, y);
-            }, $(this[0]));
+            var y = $(window).scrollTop();
+            try {
+            if (this.attr('tabindex') === undefined) {
+                this.attr({
+                    "tabindex": "-1",
+                    "data-a11y-force-focus": "true"
+                });
+            }
+            this[0].focus();
+            } catch(e){}
+            window.scrollTo(null, y);
             return this; //chainability
         };
 
@@ -502,7 +500,7 @@
 
         /**
          * Search a DOM tree, work from parent to branch-end, through allowed
-         * branch structures
+         * branch structures and in hierarchy order
          *
          * iterator returns true, false or undefined.
          * true: match this item
@@ -530,38 +528,54 @@
             }
 
 
-            var $found = this.not('*');
-            if (this.length === 0) return $found;
+            var $notFound = this.not('*');
+            if (this.length === 0) return $notFound;
 
-            // keep walked, passed children in a stack
-            var stack = [ this[0] ];
+            // keep walked+passed children in a stack
+            var stack = [{
+                item: this[0],
+                value: undefined
+            }];
             var i = 0;
+            var c = i+1;
             do {
+
+                var stackEntry = stack[i];
+                var $stackItem = $(stackEntry.item);
+
+                // check current item
+                switch (stackEntry.value) {
+                    case true:
+                        return $stackItem;
+                    case false:
+                        return $notFound;
+                }
+
                 // get i stack children
-                var $children = $(stack[i]).children().toArray();
+                var $children = $stackItem.children().toArray();
                 $children.find(function(item) {
                     var $item = $(item);
                     var value = iterator($item);
 
-                    // item explicitly not allowed, don't add to stack, skip
-                    // children
+                    // item explicitly not allowed, don't add to stack,
+                    // skip children
                     if (value === false) return false;
 
-                    if (value) {
-                        // item matched
-                        $found = $(item);
-                        return true;
-                    }
-
-                    // item passed, add to stack, check children later
-                    stack.push(item);
+                    // item passed or readable, add to stack before any parent
+                    // siblings
+                    stack.splice(c++, 0, {
+                        item: item,
+                        value: value
+                    });
                 });
 
                 // move to next stack item
                 i++;
-            } while (!$found.length && i < stack.length)
+                // keep place to inject children
+                c = i+1;
+            } while (i < stack.length)
 
-            return $found;
+            return $notFound;
         };
 
         /**
