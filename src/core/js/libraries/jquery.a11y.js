@@ -29,7 +29,6 @@
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
             "focusableElementsFilter": ":visible:not(.disabled):not([tabindex='-1']):not(:disabled):not(.a11y-ignore-focus)",
-            "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
             "ariaHiddenParentsFilter": ":not(#wrapper):not(body)",
         };
 
@@ -47,15 +46,13 @@
             "globalTabIndexElements": 'a,button,input,select,textarea,[tabindex]',
             "focusableElements": "a,button,input,select,textarea,[tabindex],label",
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
-            "hideableElements": ".a11y-hideable",
-            "ariaLabelElements": "div[aria-label], span[aria-label]"
+            "hideableElements": ".a11y-hideable"
         };
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
             "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>',
-            "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
+            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1">&nbsp;</a>'
         };
 
 
@@ -529,46 +526,6 @@
             }
         }
 
-        function onFocusCapture(event) {
-            var options = $.a11y.options;
-            var state = $.a11y.state;
-            var $element = $(event.target);
-
-            //search out intended click element
-            if (!$element.is(domSelectors.globalTabIndexElements)) {
-                //if element receiving click is not tabbable, search parents
-                var $parents = $element.parents();
-                var $tabbableParents = $parents.filter(domSelectors.globalTabIndexElements);
-                if ($tabbableParents.length === 0) {
-                    //if no tabbable parents, search for proxy elements
-                    var $proxyElements = $parents.filter("[for]");
-
-                    //if no proxy elements, ignore
-                    if ($proxyElements.length === 0) {
-                        //find next focusable element if no proxy element found
-                        $element = $element.focusOrNext(true);
-                    } else {
-                        //isolate proxy element by id
-                        var $proxyElement = $("#"+$proxyElements.attr("for"));
-                        if (!$proxyElement.is(domSelectors.globalTabIndexElements)) {
-                            //find next focusable element if no tabbable element found
-                            $element = $element.focusOrNext(true);
-                        } else {
-                            //use tabbable proxy
-                            $element = $proxyElement;
-                        }
-                    }
-                } else {
-
-                    //use tabbable parent
-                    $element = $($tabbableParents[0]);
-                }
-            }
-
-            state.$activeElement = $element;
-            if (options.isDebug) console.log("focusCapture", $element[0]);
-        }
-
         function onFocus(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
@@ -651,11 +608,9 @@
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
             $("body")
-                .off("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .off("focus", domSelectors.globalTabIndexElements, onFocus);
 
             $("body")
-                .on("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
                 .on("focus", domSelectors.globalTabIndexElements, onFocus);
         }
 
@@ -726,7 +681,6 @@
             isFocusControlEnabled: true,
             isFocusLimited: false,
             isRemoveNotAccessiblesEnabled: true,
-            isAriaLabelFixEnabled: true,
             isScrollDisableEnabled: true,
             isScrollDisabledOnPopupEnabled: false,
             isSelectedAlertsEnabled: false,
@@ -774,10 +728,6 @@
 
             if (options.isRemoveNotAccessiblesEnabled) {
                 a11y_removeNotAccessibles();
-            }
-
-            if (options.isAriaLabelFixEnabled) {
-                $('body').a11y_aria_label(true);
             }
 
             if (!options.isTabbableTextEnabled) {
@@ -1167,21 +1117,8 @@
                 $.a11y.state.floorStack[$.a11y.state.floorStack.length-1].scrollEnable();
             }
 
-            defer(function() {
-                // Listeners for popup close may shift focus so respect this
-                if ($activeElement != $.a11y.state.$activeElement) return;
+            return $activeElement;
 
-                if ($activeElement) {
-                    state.$activeElement = $activeElement;
-                    //scroll to focused element
-                    state.$activeElement.focusOrNext().limitedScrollTo();
-                } else {
-                    $.a11y_focus();
-                }
-
-            }, this, 500);
-
-            return this;
         };
 
 
@@ -1241,55 +1178,7 @@
     //CONVERT ARIA LABELS
         //TURNS aria-label ATTRIBUTES INTO SPAN TAGS
         $.fn.a11y_aria_label = function(deep) {
-            var options = $.a11y.options;
-
-            if (!options.isAriaLabelFixEnabled) return this;
-
-            var ariaLabels = [];
-
-            for (var i = 0; i < this.length; i++) {
-                var $item = $(this[i]);
-
-                if ($item.not(domSelectors.ariaLabelElementsFilter).is(domSelectors.ariaLabelElements)) {
-                    ariaLabels.push(this[i]);
-                }
-
-                if (deep === true) {
-                    var children = $item.find(domSelectors.ariaLabelElements).filter(domFilters.ariaLabelElementsFilter);
-                    ariaLabels = ariaLabels.concat(children.toArray());
-                }
-
-            }
-
-            if (ariaLabels.length === 0) return this;
-
-            for (var i = 0; i < ariaLabels.length; i++) {
-                var $item = $(ariaLabels[i]);
-
-                var $itemChildren = $item.children();
-                if ($itemChildren.length === 0) continue;
-
-                var firstChild = $itemChildren[0];
-                var $firstChild = $(firstChild)
-
-                if ($firstChild.is(".aria-label")) continue;
-
-                var ariaLabel = $item.attr("aria-label");
-
-                if (ariaLabel) {
-                    var injectElement = $(domInjectElements.arialabel);
-                    if (!options.isTabbableTextEnabled) {
-                        injectElement.attr({
-                            "tabindex": "-1"
-                        }).addClass("a11y-ignore");
-                    }
-                    injectElement.html( ariaLabel );
-                    $item.prepend(injectElement);
-                }
-
-                $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
-            }
-
+            console.warn("REMOVED $.fn.a11y_aria_label incorrect behaviour.");
             return this;
         };
 
