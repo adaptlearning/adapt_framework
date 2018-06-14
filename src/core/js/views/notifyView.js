@@ -172,10 +172,11 @@ define([
 
                 } else {
 
-                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
+                    this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
                         this.$('.notify-popup').css('visibility', 'visible');
+                    }.bind(this), complete: function() {
                         complete.call(this);
-                    }, this) });
+                    }.bind(this)});
 
                 }
 
