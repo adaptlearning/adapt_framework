@@ -111,6 +111,7 @@ define([
                 switch (changedAttribute) {
                     case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+                        $buttonsAction.focusNext();
                         $buttonsAction.a11y_cntrl(false);
                 }
 
