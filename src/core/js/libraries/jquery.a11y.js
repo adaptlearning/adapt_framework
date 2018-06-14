@@ -1308,8 +1308,13 @@
         };
 
         //FOCUSES ON FIRST TABBABLE ELEMENT IN SELECTION
-        $.fn.a11y_focus = function() {
+        $.fn.a11y_focus = function(dontDefer) {
             if (this.length === 0) return this;
+
+            if (dontDefer) {
+                this.focusOrNext();
+                return this;
+            }
             // FOCUS ON FIRST READABLE ELEMENT
             defer(function(){
                 this.focusOrNext();
