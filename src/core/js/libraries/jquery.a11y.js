@@ -1,6 +1,7 @@
-//https://github.com/adaptlearning/jquery.a11y 2015-08-13
-
-(function($, window) {
+define([
+    'jquery',
+    'underscore'
+], function($, _) {
 
     var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
@@ -466,7 +467,7 @@
 
             // move through parents towards the body element
             var $branch = this.add(this.parents()).toArray().reverse();
-            $branch.find(function(parent) {
+            _.find($branch, function(parent) {
                 var $parent = $(parent);
                 if (iterator($parent) === false) {
                     // skip this parent if explicitly instructed
@@ -475,7 +476,7 @@
 
                 // move through parents nextAll siblings
                 var $siblings = $parent.nextAll().toArray();
-                return $siblings.find(function(sibling) {
+                return _.find($siblings, function(sibling) {
                     var $sibling = $(sibling);
                     var value = iterator($sibling);
 
@@ -553,7 +554,7 @@
 
                 // get i stack children
                 var $children = $stackItem.children().toArray();
-                $children.find(function(item) {
+                _.find($children, function(item) {
                     var $item = $(item);
                     var value = iterator($item);
 
@@ -589,7 +590,7 @@
                 ? $firstItem.add($firstItem.parents())
                 : $firstItem;
 
-            var isNotVisible = $branch.toArray().find(function(item) {
+            var isNotVisible = _.find($branch.toArray(), function(item) {
                 var $item = $(item);
                 // make sure item is not explicitly invisible
                 var isNotVisible = $item.css('display') === "none"
@@ -1378,8 +1379,4 @@
             return this;
         };
 
-
-
-
-})(jQuery, window);
-
+});
