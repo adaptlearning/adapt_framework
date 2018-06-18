@@ -2,20 +2,27 @@
 define('underscore.results', [
   'underscore'
 ], function(_) {
-  
+
   _.mixin({
 
     /*
-      This function is useful to resolve instance properties which are an array or object 
+      This function is useful to resolve instance properties which are an array or object
       or instance functions which return an array/object, to copy and extend the returned value.
     */
-    resultExtend: function(instance, propertyName, withData) {
+    resultExtend: function(instance, propertyName, withData, context) {
 
-      /* 
-        Resolve the propertyName on the instance, it should be an object or array or 
+      /*
+        Resolve the propertyName on the instance, it should be an object or array or
         a function returning an object or an array
       */
-      var result = _.result(instance, propertyName);
+      var result;
+      var attrValue = instance[propertyName];
+      if (typeof attrValue === "function") {
+        result = attrValue.call(context || instance, propertyName);
+      } else {
+        result = _.result(instance, propertyName);
+      }
+
       var resultType = (result instanceof Array ? "array" : typeof result);
 
       if (!withData) {

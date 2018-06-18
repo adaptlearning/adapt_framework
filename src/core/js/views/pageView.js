@@ -6,6 +6,13 @@ define([
 
     var PageView = AdaptView.extend({
 
+        attributes: function() {
+            return AdaptView.resultExtend('attributes', {
+                "aria-labelledby": this.model.get('_id')+"-heading",
+                "role": "main"
+            }, this);
+        },
+       
         className: function() {
             return "page " +
             this.model.get('_id') +

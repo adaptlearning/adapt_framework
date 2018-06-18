@@ -19,6 +19,10 @@ define([
             'click [data-event]':'triggerEvent'
         },
 
+        attributes: {
+            'role': 'navigation'
+        },
+
         preRender: function() {
             Adapt.trigger('navigationView:preRender', this);
             this.render();

@@ -7,6 +7,13 @@ define([
         className: 'drawer display-none',
         disableAnimation: false,
 
+        attributes: {
+            'role': 'dialog',
+            'aria-modal': 'true',
+            'aria-labelledby': 'drawer-heading',
+            'tabindex': '-1'
+        },
+
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
             this._isVisible = false;
