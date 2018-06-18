@@ -188,8 +188,6 @@ define([
                 isFocusControlEnabled: true,
                 isFocusLimited: false,
                 isRemoveNotAccessiblesEnabled: true,
-                isAriaLabelFixEnabled: true,
-                isFocusWrapEnabled: false,
                 isScrollDisableEnabled: true,
                 isScrollDisabledOnPopupEnabled: false,
                 isSelectedAlertsEnabled: true,

@@ -11,6 +11,7 @@ define([
         },
 
         disableAnimation: false,
+        isOpen: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
@@ -128,7 +129,7 @@ define([
         },
 
         showNotify: function() {
-
+            this.isOpen = true;
             this.addSubView();
 
             Adapt.trigger('notify:opened', this);
@@ -185,6 +186,9 @@ define([
         },
 
         closeNotify: function (event) {
+            //prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
+            if (!this.isOpen) return;
+            this.isOpen = false;
 
             if (this.disableAnimation) {
 
