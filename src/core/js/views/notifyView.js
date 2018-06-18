@@ -11,8 +11,7 @@ define([
         },
 
         disableAnimation: false,
-
-        escapeKeyAttached: false,
+        isOpen: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
@@ -30,8 +29,7 @@ define([
                 'notify:resize': this.resetNotifySize,
                 'notify:cancel': this.cancelNotify,
                 'notify:close': this.closeNotify,
-                'device:resize': this.resetNotifySize,
-                'accessibility:toggle': this.onAccessibilityToggle
+                'device:resize': this.resetNotifySize
             });
 
             this._onKeyUp = _.bind(this.onKeyUp, this);
@@ -39,19 +37,7 @@ define([
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
-
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on('keyup', this._onKeyUp);
-                this.escapeKeyAttached = true;
-            } else {
-                $(window).off('keyup', this._onKeyUp);
-                this.escapeKeyAttached = false;
-            }
-        },
-
-        onAccessibilityToggle: function() {
-            this.setupEscapeKey();
+            $(window).on('keyup', this._onKeyUp);
         },
 
         onKeyUp: function(event) {
@@ -143,7 +129,7 @@ define([
         },
 
         showNotify: function() {
-
+            this.isOpen = true;
             this.addSubView();
 
             Adapt.trigger('notify:opened', this);
@@ -200,6 +186,9 @@ define([
         },
 
         closeNotify: function (event) {
+            //prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
+            if (!this.isOpen) return;
+            this.isOpen = false;
 
             if (this.disableAnimation) {
 
@@ -229,11 +218,11 @@ define([
 
         remove: function() {
             this.removeSubView();
+            $(window).off('keyup', this._onKeyUp);
             Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         removeSubView: function() {
-
             if (!this.subView) return;
             this.subView.remove();
             this.subView = null;
