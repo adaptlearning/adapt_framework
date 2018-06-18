@@ -204,14 +204,6 @@
               "type": "object",
               "title": "ARIA labels",
               "properties": {
-                "navigation": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Course navigation bar",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
                 "skipNavigation": {
                   "type": "string",
                   "title": "Skip Navigation",
@@ -224,14 +216,6 @@
                   "type": "string",
                   "title": "",
                   "default": "Menu loaded",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "page": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Page",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
