@@ -11,7 +11,7 @@ define([
             'role': 'dialog',
             'aria-modal': 'true',
             'aria-labelledby': 'drawer-heading',
-            'tabindex': '-1'
+            'aria-hidden': 'true'
         },
 
         initialize: function() {
@@ -118,7 +118,7 @@ define([
         },
 
         showDrawer: function(emptyDrawer) {
-            this.$el.removeClass('display-none');
+            this.$el.removeClass('display-none').removeAttr('aria-hidden');
             //only trigger popup:opened if drawer is visible, pass popup manager drawer element
             if (!this._isVisible) {
                 Adapt.trigger('popup:opened', this.$el);
@@ -211,7 +211,10 @@ define([
 
                 var direction={};
                 direction[this.drawerDir]=-this.$el.width();
-                this.$el.css(direction).addClass('display-none');
+                this.$el
+                    .css(direction)
+                    .addClass('display-none')
+                    .attr('aria-hidden', 'true');
 
                 $('#shadow').addClass("display-none");
 
@@ -225,7 +228,10 @@ define([
                 var direction={};
                 direction[this.drawerDir]=-this.$el.width();
                 this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
-                    this.$el.addClass('display-none');
+                    this.$el
+                        .addClass('display-none')
+                        .attr('aria-hidden', 'true');
+
                     Adapt.trigger('drawer:closed');
                 }, this));
 
