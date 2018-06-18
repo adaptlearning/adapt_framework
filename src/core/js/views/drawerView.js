@@ -6,7 +6,6 @@ define([
 
         className: 'drawer display-none',
         disableAnimation: false,
-        escapeKeyAttached: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
@@ -29,8 +28,7 @@ define([
                 'drawer:triggerCustomView': this.openCustomView,
                 'drawer:closeDrawer': this.onCloseDrawer,
                 'remove': this.onCloseDrawer,
-                'drawer:remove': this.remove,
-                'accessibility:toggle': this.onAccessibilityToggle
+                'drawer:remove': this.remove
             });
 
             this._onKeyUp = _.bind(this.onKeyUp, this);
@@ -38,19 +36,7 @@ define([
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
-
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on("keyup", this._onKeyUp);
-                this.escapeKeyAttached = true;
-            } else {
-                $(window).off("keyup", this._onKeyUp);
-                this.escapeKeyAttached = false;
-            }
-        },
-
-        onAccessibilityToggle: function() {
-            this.setupEscapeKey();
+            $(window).on("keyup", this._onKeyUp);
         },
 
         onKeyUp: function(event) {

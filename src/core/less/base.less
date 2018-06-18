@@ -1,5 +1,5 @@
 // default variables, remove when core theme is implemented
-@focus-outline: 3px solid orange;
+@focus-outline: 1px; // deprecated - reverting to browser outline
 @primary-color: #078292;
 @device-width-medium: 520px;
 @body-text-font-size: 14px;
@@ -26,23 +26,6 @@
 
 .display-none {
     display:none!important;
-}
-
-.accessibility {
-    :focus {
-        outline: @focus-outline;
-    }
-}
-
-#accessibility-toggle {
-    float:left;
-    .dir-rtl & {
-        float:right;
-    }
-    &:focus {
-        border: @focus-outline;
-        padding: 17px 20px;
-    }
 }
 
 .skip-nav-link {
