@@ -5,14 +5,21 @@ define([
 
     var ComponentView = AdaptView.extend({
 
+        attributes: function() {
+            return AdaptView.resultExtend('attributes', {
+                "aria-labelledby": this.model.get('_id')+"-heading",
+                "role": "region"
+            }, this);
+        },
+
         className: function() {
-            return "component " + 
-            this.model.get('_component') + 
-            "-component " + this.model.get('_id') + 
-            " " + this.model.get('_classes') + 
+            return "component " +
+            this.model.get('_component') +
+            "-component " + this.model.get('_id') +
+            " " + this.model.get('_classes') +
             " " + this.setVisibility() +
             " " + this.setHidden() +
-            " component-" + this.model.get('_layout') + 
+            " component-" + this.model.get('_layout') +
             " nth-child-" + this.model.get("_nthChild") +
             " " + (this.model.get('_isComplete') ? 'completed' : '');
         },

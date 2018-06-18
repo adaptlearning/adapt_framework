@@ -10,17 +10,20 @@ define([
             return classes;
         },
 
-        disableAnimation: false,
+        attributes: {
+            'role': 'dialog',
+            'aria-labelledby': 'notify-heading',
+            'aria-modal': 'true'
+        },
 
-        escapeKeyAttached: false,
+        disableAnimation: false,
+        isOpen: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
 
             this.setupEventListeners();
 
-            //include accessibility globals in notify model
-            this.model.set('_globals', Adapt.course.get('_globals'));
             this.render();
         },
 
@@ -30,28 +33,15 @@ define([
                 'notify:resize': this.resetNotifySize,
                 'notify:cancel': this.cancelNotify,
                 'notify:close': this.closeNotify,
-                'device:resize': this.resetNotifySize,
-                'accessibility:toggle': this.onAccessibilityToggle
+                'device:resize': this.resetNotifySize
             });
 
-            this._onKeyUp = _.bind(this.onKeyUp, this);
+            this._onKeyUp = this.onKeyUp.bind(this);
             this.setupEscapeKey();
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
-
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on('keyup', this._onKeyUp);
-                this.escapeKeyAttached = true;
-            } else {
-                $(window).off('keyup', this._onKeyUp);
-                this.escapeKeyAttached = false;
-            }
-        },
-
-        onAccessibilityToggle: function() {
-            this.setupEscapeKey();
+            $(window).on('keyup', this._onKeyUp);
         },
 
         onKeyUp: function(event) {
@@ -143,21 +133,21 @@ define([
         },
 
         showNotify: function() {
-
+            this.isOpen = true;
             this.addSubView();
 
             Adapt.trigger('notify:opened', this);
 
-            this.$el.imageready( _.bind(loaded, this));
+            this.$el.imageready(loaded.bind(this));
 
             function loaded() {
                 if (this.disableAnimation) {
                     this.$('.notify-shadow').css('display', 'block');
                 } else {
 
-                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
+                    this.$('.notify-shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
                         this.$('.notify-shadow').css('display', 'block');
-                    }, this)});
+                    }.bind(this)});
 
                 }
 
@@ -170,10 +160,10 @@ define([
 
                 } else {
 
-                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
+                    this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
                         this.$('.notify-popup').css('visibility', 'visible');
                         complete.call(this);
-                    }, this) });
+                    }.bind(this)});
 
                 }
 
@@ -200,6 +190,9 @@ define([
         },
 
         closeNotify: function (event) {
+            //prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
+            if (!this.isOpen) return;
+            this.isOpen = false;
 
             if (this.disableAnimation) {
 
@@ -210,30 +203,29 @@ define([
 
             } else {
 
-                this.$('.notify-popup').velocity({ opacity: 0 }, {duration:400, complete: _.bind(function() {
+                this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
                     this.$('.notify-popup').css('visibility', 'hidden');
-                }, this)});
+                }.bind(this)});
 
-                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:400, complete:_.bind(function() {
+                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
                     this.$el.css('visibility', 'hidden');
                     this.remove();
-                }, this)});
+                }.bind(this)});
             }
 
             $('body').scrollEnable();
             $('html').removeClass('notify');
 
-            Adapt.trigger('popup:closed');
-            Adapt.trigger('notify:closed');
+            Adapt.trigger('popup:closed notify:closed');
         },
 
         remove: function() {
             this.removeSubView();
+            $(window).off('keyup', this._onKeyUp);
             Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         removeSubView: function() {
-
             if (!this.subView) return;
             this.subView.remove();
             this.subView = null;
