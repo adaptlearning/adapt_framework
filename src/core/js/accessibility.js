@@ -92,20 +92,28 @@ define([
                     }
                 },
 
-                a11y_normalize: function(text) {
-                    return $.a11y_normalize(text);
+                a11y_normalize: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(Boolean);
+                    return $.a11y_normalize(values.join(" "));
                 },
 
-                a11y_remove_breaks: function(text) {
-                    return $.a11y_remove_breaks(text);
+                a11y_remove_breaks: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(Boolean);
+                    return $.a11y_remove_breaks(values.join(" "));
                 },
 
-                a11y_aria_label: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default">'+text+'</div>');
+                a11y_aria_label: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(Boolean);
+                    return new Handlebars.SafeString('<div class="aria-label prevent-default">'+values.join(" ")+'</div>');
                 },
 
-                a11y_aria_label_relative: function(text) {
-                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default">'+text+'</div>');
+                a11y_aria_label_relative: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(Boolean);
+                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default">'+values.join(" ")+'</div>');
                 },
 
                 a11y_wrap_focus: function(text) {
