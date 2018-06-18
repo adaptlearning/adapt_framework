@@ -10,6 +10,12 @@ define([
             return classes;
         },
 
+        attributes: {
+            'role': 'dialog',
+            'aria-labelledby': 'notify-heading',
+            'aria-modal': 'true'
+        },
+
         disableAnimation: false,
         isOpen: false,
 
@@ -18,8 +24,6 @@ define([
 
             this.setupEventListeners();
 
-            //include accessibility globals in notify model
-            this.model.set('_globals', Adapt.course.get('_globals'));
             this.render();
         },
 
@@ -32,7 +36,7 @@ define([
                 'device:resize': this.resetNotifySize
             });
 
-            this._onKeyUp = _.bind(this.onKeyUp, this);
+            this._onKeyUp = this.onKeyUp.bind(this);
             this.setupEscapeKey();
         },
 
@@ -134,16 +138,16 @@ define([
 
             Adapt.trigger('notify:opened', this);
 
-            this.$el.imageready( _.bind(loaded, this));
+            this.$el.imageready(loaded.bind(this));
 
             function loaded() {
                 if (this.disableAnimation) {
                     this.$('.notify-shadow').css('display', 'block');
                 } else {
 
-                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
+                    this.$('.notify-shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
                         this.$('.notify-shadow').css('display', 'block');
-                    }, this)});
+                    }.bind(this)});
 
                 }
 
@@ -156,10 +160,10 @@ define([
 
                 } else {
 
-                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
+                    this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
                         this.$('.notify-popup').css('visibility', 'visible');
                         complete.call(this);
-                    }, this) });
+                    }.bind(this)});
 
                 }
 
@@ -199,21 +203,20 @@ define([
 
             } else {
 
-                this.$('.notify-popup').velocity({ opacity: 0 }, {duration:400, complete: _.bind(function() {
+                this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
                     this.$('.notify-popup').css('visibility', 'hidden');
-                }, this)});
+                }.bind(this)});
 
-                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:400, complete:_.bind(function() {
+                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
                     this.$el.css('visibility', 'hidden');
                     this.remove();
-                }, this)});
+                }.bind(this)});
             }
 
             $('body').scrollEnable();
             $('html').removeClass('notify');
 
-            Adapt.trigger('popup:closed');
-            Adapt.trigger('notify:closed');
+            Adapt.trigger('popup:closed notify:closed');
         },
 
         remove: function() {
