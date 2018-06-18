@@ -6,7 +6,13 @@ define([
 
         className: 'drawer display-none',
         disableAnimation: false,
-        escapeKeyAttached: false,
+
+        attributes: {
+            'role': 'dialog',
+            'aria-modal': 'true',
+            'aria-labelledby': 'drawer-heading',
+            'tabindex': '-1'
+        },
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
@@ -29,8 +35,7 @@ define([
                 'drawer:triggerCustomView': this.openCustomView,
                 'drawer:closeDrawer': this.onCloseDrawer,
                 'remove': this.onCloseDrawer,
-                'drawer:remove': this.remove,
-                'accessibility:toggle': this.onAccessibilityToggle
+                'drawer:remove': this.remove
             });
 
             this._onKeyUp = _.bind(this.onKeyUp, this);
@@ -38,19 +43,7 @@ define([
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
-
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on("keyup", this._onKeyUp);
-                this.escapeKeyAttached = true;
-            } else {
-                $(window).off("keyup", this._onKeyUp);
-                this.escapeKeyAttached = false;
-            }
-        },
-
-        onAccessibilityToggle: function() {
-            this.setupEscapeKey();
+            $(window).on("keyup", this._onKeyUp);
         },
 
         onKeyUp: function(event) {
@@ -62,7 +55,7 @@ define([
 
         events: {
             'click .drawer-back': 'onBackButtonClicked',
-            'click .drawer-close':'onCloseDrawer'
+            'click .drawer-close':'onCloseClicked'
         },
 
         render: function() {
@@ -107,11 +100,13 @@ define([
             this.showDrawer(true);
         },
 
-        onCloseDrawer: function(event) {
-            if (event) {
-                event.preventDefault();
-            }
+        onCloseClicked: function(event) {
+            event.preventDefault();
             this.hideDrawer();
+        },
+
+        onCloseDrawer: function($toElement) {
+            this.hideDrawer($toElement);
         },
 
         toggleDrawer: function() {
@@ -162,7 +157,7 @@ define([
                 direction[this.drawerDir]=0;
                 this.$el.css(direction);
                 complete.call(this);
-                
+
             } else {
 
                 $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
@@ -181,10 +176,10 @@ define([
             function complete() {
                 this.addShadowEvent();
                 Adapt.trigger('drawer:opened');
-                
+
                 //focus on first tabbable element in drawer
                 this.$el.a11y_focus();
-	    }
+        }
 
         },
 
@@ -202,10 +197,10 @@ define([
             }
         },
 
-        hideDrawer: function() {
+        hideDrawer: function($toElement) {
             //only trigger popup:closed if drawer is visible
             if (this._isVisible) {
-                Adapt.trigger('popup:closed');
+                Adapt.trigger('popup:closed', $toElement);
                 this._isVisible = false;
                 $('body').scrollEnable();
             } else {

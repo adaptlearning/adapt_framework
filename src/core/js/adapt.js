@@ -207,9 +207,10 @@ define([
     Adapt.register = function(name, object) {
         // Used to register components
         // Store the component view
-        if (Adapt.componentStore[name])
+        if (Adapt.componentStore[name]) {
             throw Error('The component "' + name + '" already exists in your project');
-
+        }
+        
         if (object.view) {
             //use view+model object
             if(!object.view.template) object.view.template = name;
@@ -221,6 +222,14 @@ define([
         Adapt.componentStore[name] = object;
 
         return object;
+    };
+
+    Adapt.getViewClass = function(name) {
+        var object = Adapt.componentStore[name];
+        if (!object) {
+            throw Error('The component "' + name + '" doesn\'t exist in your project');
+        }
+        return object.view || object;
     };
 
     // Used to map ids to collections
