@@ -304,9 +304,7 @@ define([
         // be a full reset
         resetQuestion: function() {},
 
-        refresh: function() {
-            this.renderState();
-            
+        refresh: function() {            
             this.model.set('_buttonState', this.model.getButtonState());
 
             if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
