@@ -42,8 +42,6 @@ require([
             && Adapt.components.models.length > 0
             && Adapt.course.get('_id')) {
 
-            configureInview();
-
             mapAdaptIdsToObjects();
 
             if (typeof Adapt.course.get('_buttons').submit !== 'undefined') {
@@ -134,18 +132,6 @@ require([
         }
 
         Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-
-    }
-
-    function configureInview() {
-
-        var adaptConfig = Adapt.config.get("_inview");
-
-        var allowScrollOver = (adaptConfig && adaptConfig._allowScrollOver === false ? false : true);
-
-        $.inview.config({
-            allowScrollOver: allowScrollOver
-        });
 
     }
 
