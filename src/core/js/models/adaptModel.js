@@ -77,7 +77,7 @@ define([
 
                 }, this),
                 _.debounce(_.bind(function() {
-                    
+
                     // Trigger original function
                     originalTrackableStateFunction.apply(this);
 
@@ -152,9 +152,9 @@ define([
         },
 
         triggerTrackableState: function() {
-            
+
             Adapt.trigger("state:change", this, this.getTrackableState());
-            
+
         },
 
         reset: function(type, force) {
@@ -211,12 +211,12 @@ define([
         },
 
         /**
-         * Function for checking whether the supplied completion attribute should be set to true or false. 
+         * Function for checking whether the supplied completion attribute should be set to true or false.
          * It iterates over our immediate children, checking the same completion attribute on any mandatory child
-         * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true; 
+         * to see if enough/all of them them have been completed. If enough/all have, we set our attribute to true;
          * if not, we set it to false.
          * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
-         */        
+         */
         checkCompletionStatusFor: function(completionAttribute) {
             if (!completionAttribute) completionAttribute = "_isComplete";
 
@@ -312,19 +312,19 @@ define([
             }
         },
 
-        
+
         // Fetchs the sub structure of a model as a flattened array
-        // 
+        //
         // Such that the tree:
         //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
-        // 
+        //
         // will become the array (parent first = false):
         //  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
-        // 
+        //
         // or (parent first = true):
         //  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
-        // 
-        // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.        
+        //
+        // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
         getAllDescendantModels: function(isParentFirst) {
 
             var descendants = [];
@@ -352,7 +352,7 @@ define([
                 }
 
                 descendants = descendants.concat(subDescendants);
-                
+
                 if (isParentFirst !== true) {
                     descendants.push(child);
                 }
@@ -402,16 +402,16 @@ define([
         },
 
         // Returns a relative model from the Adapt hierarchy
-        //    
+        //
         // Such that in the tree:
         //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
-        // 
+        //
         //  findRelative(modelC1, "@block +1") = modelB2;
         //  findRelative(modelC1, "@component +4") = modelC5;
         //
         // See Adapt.parseRelativeString() for a description of relativeStrings
         findRelativeModel: function(relativeString, options) {
-            
+
             var types = [ "menu", "page", "article", "block", "component" ];
 
             options = options || {};
@@ -481,7 +481,7 @@ define([
                     typeCounts[type]++;
                 });
                 moveBy = moveBy % typeCounts[relativeDescriptor.type];
-                
+
                 // double up entries to allow for overflow looping
                 pageDescendants = pageDescendants.concat(pageDescendants.slice(0));
 
