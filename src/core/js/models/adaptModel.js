@@ -258,17 +258,19 @@ define([
 
         },
 
-        findDescendantModels: function(descendants) {
-            var children = this.getChildren().models;
-
-            // first check if descendant is child and return child
-            if (this._children === descendants) {
-                return children;
-            }
-
+        /**
+         * Returns all the descendant models of a specific type
+         * @param {string} descendants Valid values are 'contentObject', 'article', 'block' or 'component'
+         * @param {object} options an object that defines the search type and the properties/values to search on. Currently only the `where` search type (equivalent to `Backbone.Collection.where()`) is supported.
+         * @return {array}
+         * @example
+         * //find all available, non-optional components
+         * this.findDescendantModels('components', { where: { _isAvailable: true, _isOptional: false }});
+         */
+        findDescendantModels: function(descendants, options) {
+            var returnedDescendants;
             var allDescendants = [];
             var flattenedDescendants;
-            var returnedDescendants;
 
             function searchChildren(models) {
                 for (var i = 0, len = models.length; i < len; i++) {
@@ -287,9 +289,27 @@ define([
                 }
             }
 
-            searchChildren(children);
+            if (this._children === descendants) {
+                returnedDescendants = this.getChildren().models;
+            } else {
+                searchChildren(this.getChildren().models);
+            }
 
-            return returnedDescendants;
+            if (!options) {
+                return returnedDescendants;
+            }
+
+            if (options.where) {
+                return _.filter(returnedDescendants, function(descendant) {
+                    for (var property in options.where) {
+                        var value = options.where[property];
+                        if (descendant.get(property) !== value) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+            }
         },
 
         
