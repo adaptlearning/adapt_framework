@@ -300,7 +300,7 @@ define([
             }
 
             if (options.where) {
-                return _.filter(returnedDescendants, function(descendant) {
+                return returnedDescendants.filter(function(descendant) {
                     for (var property in options.where) {
                         var value = options.where[property];
                         if (descendant.get(property) !== value) {
