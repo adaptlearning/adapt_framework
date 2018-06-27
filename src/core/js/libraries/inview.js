@@ -143,25 +143,6 @@
                 visiblePartY //top, bottom, both, none
             ];
 
-            if (item._inviewPreviousState !== undefined && config.options.allowScrollOver ) {
-                //this is for browsers which pause javascript execution on scroll
-
-                //check previous state and current state
-                var wasScrolledOver = (item._measurePreviousState.percentFromBottom <= 100 && measure.percentFromBottom >= 100 );
-                
-                //if inview state hasn't changed, don't retrigger event
-                if (item._inviewPreviousState[0] == inviewState[0] &&
-                    item._inviewPreviousState[1] == inviewState[1] && 
-                    item._inviewPreviousState[2] == inviewState[2] &&
-                    !wasScrolledOver) return;
-
-                if (wasScrolledOver) {
-                    //make sure to trigger a scrolled over both top and bottom event
-                    inviewState[0] = true;
-                    inviewState[1] = "both";
-                    inviewState[2] = "both";
-                }
-            }
 
             item._inviewPreviousState = inviewState;
             item._measurePreviousState = measure;
@@ -371,9 +352,7 @@
 
     var config = {
         
-        options: {
-            allowScrollOver: true
-        },
+        options: {},
 
         config: function(options) {
             if (typeof options !== "object") return;
