@@ -36,11 +36,11 @@ require([
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
     Adapt.checkDataIsLoaded = function(newLanguage) {
-        if (Adapt.contentObjects.models.length > 0 &&
-            Adapt.articles.models.length > 0 &&
-            Adapt.blocks.models.length > 0 &&
-            Adapt.components.models.length > 0 &&
-            Adapt.course.get('_id')) {
+        if (Adapt.contentObjects.models.length > 0
+            && Adapt.articles.models.length > 0
+            && Adapt.blocks.models.length > 0
+            && Adapt.components.models.length > 0
+            && Adapt.course.get('_id')) {
 
             mapAdaptIdsToObjects();
 
