@@ -5,6 +5,13 @@ define([
 
     var ComponentView = AdaptView.extend({
 
+        attributes: function() {
+            return AdaptView.resultExtend('attributes', {
+                "aria-labelledby": this.model.get('_id')+"-heading",
+                "role": "region"
+            }, this);
+        },
+
         className: function() {
             return "component " +
             this.model.get('_component') +
@@ -15,11 +22,6 @@ define([
             " component-" + this.model.get('_layout') +
             " nth-child-" + this.model.get("_nthChild") +
             " " + (this.model.get('_isComplete') ? 'completed' : '');
-        },
-
-        initialize: function(){
-			//standard initialization + renderState function
-            AdaptView.prototype.initialize.apply(this, arguments);
         },
 
         renderState: function() {
