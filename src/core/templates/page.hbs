@@ -9,7 +9,10 @@
 
 					{{#if displayTitle}}
 					<div class="page-title">
-						<div class="page-title-inner" {{{a11y_attrs_heading "page"}}}>
+						{{#unless _disableAccessibilityState}}
+							<div class="js-heading"></div>
+						{{/unless}}
+						<div class="page-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
 							{{{compile displayTitle this}}}
 						</div>
 					</div>

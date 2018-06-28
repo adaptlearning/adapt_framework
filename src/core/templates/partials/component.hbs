@@ -2,15 +2,18 @@
 {{import_globals}}
 <div class="{{_component}}-header component-header">
     <div class="{{_component}}-header-inner component-header-inner">
-        
+
         {{#if displayTitle}}
         <div class="{{_component}}-title component-title">
-            <div class="{{_component}}-title-inner component-title-inner" {{{a11y_attrs_heading "component"}}}>
+            {{#unless _disableAccessibilityState}}
+                <div class="js-heading"></div>
+            {{/unless}}
+            <div class="{{_component}}-title-inner component-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
                 {{{compile displayTitle this}}}
             </div>
         </div>
         {{/if}}
-        
+
         {{#if body}}
         <div class="{{_component}}-body component-body">
             <div class="{{_component}}-body-inner component-body-inner">
@@ -18,6 +21,8 @@
             </div>
         </div>
         {{/if}}
+
+        {{#if instruction}}
         
         {{#any instruction mobileInstruction}}
         <div class="{{_component}}-instruction component-instruction">
