@@ -223,37 +223,7 @@ define([
         };
 
         $.fn.limitedScrollTo = function() {
-            var options = $.a11y.options;
-
-            if (!options.isFocusLimited) return this;
-
-            if (this.length === 0) return this;
-
-            var $element = $(this[0]);
-
-            if ($element.isFixedPostion()) return this;
-
-            options = options || {};
-
-            var topOffset = options.focusOffsetTop || 0;
-            var bottomOffset = options.focusOffsetTop || 0;
-
-            var elementTop = $element.offset()["top"];
-            var scrollTopWithTopOffset = $(window).scrollTop() + topOffset;
-
-            var windowAvailableHeight = $(window).innerHeight() - bottomOffset - topOffset;
-
-            var scrollBottomWithTopOffset = scrollTopWithTopOffset + windowAvailableHeight
-
-            var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
-            if (scrollToPosition < 0) scrollToPosition = 0;
-
-
-            if (options.isDebug) console.log("limitedScrollTo", scrollToPosition);
-            defer(function() {
-                $.scrollTo(this.scrollToPosition, { duration: 0 });
-            }, {scrollToPosition:scrollToPosition});
-
+            console.warn("REMOVED $.limitedScrollTo had no impact on the screen reader cursor.");
             return this;
         };
 
@@ -578,10 +548,6 @@ define([
                 //Capture that the user has interacted with a native form element
                 $.a11y.userInteracted = true;
             }
-
-            var options = $.a11y.options;
-
-            $element.limitedScrollTo();
         }
 
         function onBlur(event) {
@@ -701,12 +667,9 @@ define([
         };
 
         $.a11y.options = {
-            focusOffsetTop: 0,
-            focusOffsetBottom: 0,
             OS: "",
             isUserInputControlEnabled: true,
             isFocusControlEnabled: true,
-            isFocusLimited: false,
             isRemoveNotAccessiblesEnabled: true,
             isScrollDisableEnabled: true,
             isScrollDisabledOnPopupEnabled: false,
@@ -1036,8 +999,6 @@ define([
             $.a11y.state.floorStack.push(this);
 
             this.a11y_only(container, true);
-
-            if (this.length > 0) $(this[0]).limitedScrollTo();
 
             if (options.isScrollDisabledOnPopupEnabled) {
                 $('html').css('overflow-y', 'hidden');
