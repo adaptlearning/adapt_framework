@@ -17,7 +17,6 @@ define([
         var domSelectors = {
             "focuser": "#a11y-focuser",
             "focusguard": ".a11y-focusguard",
-            "selected": "#a11y-selected",
             "ignoreFocusElements": ".a11y-ignore-focus",
             "nativeSpaceElements": "textarea, input[type='text'], div[contenteditable=true]",
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
@@ -34,8 +33,7 @@ define([
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation">&nbsp;</a>'
+            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>'
         };
 
 
@@ -769,7 +767,6 @@ define([
         }
 
         function a11y_injectControlElements() {
-            if ($(domSelectors.selected).length === 0) $('body').append($(domInjectElements.selected))
             if ($(domSelectors.focuser).length === 0)$('body').append($(domInjectElements.focuser))
         }
 
@@ -803,8 +800,6 @@ define([
             isRemoveNotAccessiblesEnabled: true,
             isScrollDisableEnabled: true,
             isScrollDisabledOnPopupEnabled: false,
-            isSelectedAlertsEnabled: false,
-            isAlertsEnabled: false,
             isDebug: false
         };
         $.a11y.state = {
@@ -1031,69 +1026,12 @@ define([
     //MAKE SELECTED
 
         $.fn.a11y_selected = function(isOn, noFocus) {
-            if (this.length === 0) return this;
-
-            var options = $.a11y.options;
-            if (!options.isSelectedAlertsEnabled) return this;
-
-            if (isOn === undefined) isOn = true;
-            if (isOn) {
-                var selected = $(this[0]);
-                switch ($.a11y.options.OS) {
-                case "mac":
-                    //ANNOUNCES SELECTION ON A MAC BY ADDING A SPAN AND SHIFTING FOCUS
-                    if (noFocus !== true) $("#a11y-selected").focusNoScroll();
-                    _.delay(function() {
-                        selected.prepend($("<span class='a11y-selected aria-label'>selected </span>"))
-                        if (noFocus !== true) $(selected).focusNoScroll();
-                    },250);
-                    break;
-                default:
-                    //ANOUNCES THE SELECTION ON TABLETS AND PCS
-                    if (noFocus !== true) $.a11y_alert("selected " + selected.text());
-                    selected.attr( "aria-label", "selected " + selected.text()).addClass("a11y-selected");
-                    break;
-                }
-            } else {
-                switch ($.a11y.options.OS) {
-                case "mac":
-                    for (var i = 0; i < this.length; i++) {
-                        $(this[i]).find(".a11y-selected").remove()
-                    }
-                    break;
-                default:
-                    for (var i = 0; i < this.length; i++) {
-                        if ($(this[i]).is(".a11y-selected")) $(this[i]).removeClass("a11y-selected").removeAttr("aria-label");
-                        $(this[i]).find(".a11y-selected").removeClass("a11y-selected").removeAttr("aria-label");
-                    }
-                }
-            }
+            console.log("REMOVED - $.fn.a11y_selected is removed. Please use aria-live instead.");
             return this;
         };
 
         $.a11y_alert = function(text) {
-            if (this.length === 0) return this;
-
-            var options = $.a11y.options;
-            if (!options.isAlertsEnabled) return this;
-
-            var $alert = $('<div role="alert">'+text+'</div>');
-
-            $($.a11y).trigger("reading", text);
-            switch(options.OS) {
-            case "mac":
-                $("#a11y-selected").append($alert);
-                break;
-            default:
-            $alert.css("visibility","hidden");
-                $("#a11y-selected").append($alert);
-            $alert.css("visibility","visible");
-            }
-
-            setTimeout(function() {
-                $alert.remove();
-            }, 20000);
-
+            console.log("REMOVED - $.a11y_alert is removed. Please use aria-live instead.");
             return this;
         };
 
