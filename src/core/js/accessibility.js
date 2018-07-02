@@ -187,9 +187,7 @@ define([
                 isFocusControlEnabled: true,
                 isRemoveNotAccessiblesEnabled: true,
                 isScrollDisableEnabled: true,
-                isScrollDisabledOnPopupEnabled: false,
-                isSelectedAlertsEnabled: true,
-                isAlertsEnabled: true
+                isScrollDisabledOnPopupEnabled: false
             });
 
             this.setupNoSelect();
