@@ -17,7 +17,6 @@ define([
         var domSelectors = {
             "focuser": "#a11y-focuser",
             "focusguard": ".a11y-focusguard",
-            "selected": "#a11y-selected",
             "ignoreFocusElements": ".a11y-ignore-focus",
             "nativeSpaceElements": "textarea, input[type='text'], div[contenteditable=true]",
             "nativeEnterElements": "textarea, a, button, input[type='checkbox'], input[type='radio']",
@@ -34,8 +33,7 @@ define([
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>',
-            "selected": '<a id="a11y-selected" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation">&nbsp;</a>'
+            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>'
         };
 
 
@@ -803,7 +801,6 @@ define([
         }
 
         function a11y_injectControlElements() {
-            if ($(domSelectors.selected).length === 0) $('body').append($(domInjectElements.selected))
             if ($(domSelectors.focuser).length === 0)$('body').append($(domInjectElements.focuser))
         }
 
