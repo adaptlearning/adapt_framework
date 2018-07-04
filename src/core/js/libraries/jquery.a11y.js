@@ -583,6 +583,9 @@
             return true;
         }
 
+        function nativePreventScroll(event) {
+            return preventScroll($.event.fix(event));
+        }
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
@@ -590,7 +593,7 @@
             $(window).on(scrollEventName, preventScroll);
             $(document).on(scrollEventName, preventScroll);
             $(window).on("touchstart", onScrollStartCapture); // mobile
-            $(window).on("touchmove", preventScroll); // mobile
+            window.addEventListener("touchmove", nativePreventScroll, { passive:false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
@@ -600,7 +603,7 @@
             $(window).off(scrollEventName, preventScroll);
             $(document).off(scrollEventName, preventScroll);
             $(window).off("touchstart", onScrollStartCapture); // mobile
-            $(window).off("touchmove", preventScroll); // mobile
+            window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
             $(document).off("keydown", preventScrollKeys);
         }
