@@ -4,7 +4,10 @@
 
     {{#if displayTitle}}
         <div class="block-title">
-            <div class="block-title-inner" {{{a11y_attrs_heading "block"}}}>
+            {{#unless _disableAccessibilityState}}
+                <div class="js-heading"></div>
+            {{/unless}}
+            <div class="block-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
                 {{{compile displayTitle this}}}
             </div>
         </div>

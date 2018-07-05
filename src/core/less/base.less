@@ -1,5 +1,5 @@
 // default variables, remove when core theme is implemented
-@focus-outline: 3px solid orange;
+@focus-outline: 1px; // deprecated - reverting to browser outline
 @primary-color: #078292;
 @device-width-medium: 520px;
 @body-text-font-size: 14px;
@@ -26,23 +26,6 @@
 
 .display-none {
     display:none!important;
-}
-
-.accessibility {
-    :focus {
-        outline: @focus-outline;
-    }
-}
-
-#accessibility-toggle {
-    float:left;
-    .dir-rtl & {
-        float:right;
-    }
-    &:focus {
-        border: @focus-outline;
-        padding: 17px 20px;
-    }
 }
 
 .skip-nav-link {
@@ -267,10 +250,10 @@
     z-index:1;
 }
 
-    /*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
-    .aria-label.aria-hidden {
-        display:none !important;
-    }
+/*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
+.aria-label.aria-hidden {
+    display:none !important;
+}
 
 /*HIDDEN FOCUS GUARD*/
 .a11y-focusguard {
@@ -296,23 +279,6 @@
     .no-touchevents & {
         position: fixed !important;
     }
-}
-
-/*HIDDEN FOCUS/ALERT ELEMENT */
-#a11y-selected, #a11y-selected * {
-    position:fixed !important;
-    left:0px !important;
-    bottom:0px !important;
-    width:auto !important;
-    height:auto !important;
-    overflow:auto !important;
-    color: rgba(0,0,0,0) !important;
-    background: rgba(0,0,0,0) !important;
-    font-size: 1px !important;
-    padding:0 !important;
-    margin:0 !important;
-    line-height: normal !important;
-    z-index:1;
 }
 
 /*FOCUS DISTRACTION*/
