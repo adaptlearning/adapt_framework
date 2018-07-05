@@ -1,0 +1,137 @@
+define([
+    'core/js/adapt'
+], function(Adapt) {
+
+    var Scrolling = Backbone.Controller.extend({
+
+        $app: null,
+        isLegacyScrolling : true,
+
+        initialize: function() {
+            this._checkApp();
+            Adapt.once('configModel:loadCourseData', this._loadConfig.bind(this));
+        },
+
+        _checkApp: function() {
+            this.$app = $('#app');
+            if (this.$app.length) return;
+            this.$app = $('<div id="app">');
+            $('body').append(this.$app);
+            this.$app.append($('#wrapper'));
+            Adapt.log.warn("UPDATE - Your html file needs to have #app adding. See https://github.com/adaptlearning/adapt_framework/issues/2168");
+        },
+
+        _loadConfig: function() {
+            var config = Adapt.config.get("_scrolling");
+            if (!config || !config._isEnabled) return;
+            this.isLegacyScrolling = false;
+            this._addStyling();
+            this._fixJQuery();
+            this._fixScrollTo();
+            this._fixBrowser();
+        },
+
+        _addStyling: function() {
+            $('html').addClass("adapt-scrolling");
+        },
+
+        _fixJQuery: function() {
+            var selectorScrollTop = $.fn.scrollTop;
+            $.fn.scrollTop = function() {
+                if (this[0] === window || this[0] === document.body) {
+                    return selectorScrollTop.apply($("#app"), arguments);
+                }
+                return selectorScrollTop.apply(this, arguments);
+            };
+        },
+
+        _fixScrollTo: function() {
+            var selectorScrollTo = $.fn.scrollTo;
+            $.fn.scrollTo = function(target, duration, settings) {
+                if (this[0] === window || this[0] === document.body) {
+                    return selectorScrollTo.apply($("#app"), arguments);
+                }
+                return selectorScrollTo.apply(this, arguments);
+            };
+            $.scrollTo = function(target, duration, settings) {
+                return selectorScrollTo.apply($("#app"), arguments);
+            };
+        },
+
+        _fixBrowser: function() {
+            var app = Adapt.scrolling.$app[0];
+            window.scrollTo = function(x, y) {
+                app.scrollTop = y || 0;
+                app.scrollLeft = x || 0;
+            };
+            var $window = $(window);
+            this.$app.on("scroll", function() {
+                $window.scroll();
+            });
+        }
+
+    });
+
+    Adapt.scrolling = new Scrolling();
+
+    Adapt.scrollTo = function(selector, settings) {
+        // Get the current location - this is set in the router
+        var location = (Adapt.location._contentType) ?
+            Adapt.location._contentType : Adapt.location._currentLocation;
+        // Trigger initial scrollTo event
+        Adapt.trigger(location+':scrollTo', selector);
+        //Setup duration variable passed upon arguments
+        var settings = (settings || {});
+        var disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
+        if (disableScrollToAnimation) {
+            settings.duration = 0;
+        }
+        else if (!settings.duration) {
+            settings.duration = $.scrollTo.defaults.duration;
+        }
+
+        var offsetTop = 0;
+        if (Adapt.scrolling.isLegacyScrolling) {
+            offsetTop = -$(".navigation").outerHeight();
+            // prevent scroll issue when component description aria-label coincident with top of component
+            if ($(selector).hasClass('component')) {
+                offsetTop -= $(selector).find('.aria-label').height() || 0;
+            }
+        }
+
+        if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
+        if (settings.offset.top === undefined) settings.offset.top = offsetTop;
+        if (settings.offset.left === undefined) settings.offset.left = 0;
+
+        if (settings.offset.left === 0) settings.axis = "y";
+
+        if (Adapt.get("_canScroll") !== false) {
+            // Trigger scrollTo plugin
+            $.scrollTo(selector, settings);
+        }
+
+        // Trigger an event after animation
+        // 300 milliseconds added to make sure queue has finished
+        _.delay(function() {
+            $(selector).a11y_focus();
+            Adapt.trigger(location+':scrolledTo', selector);
+        }, settings.duration+300);
+    };
+
+    Adapt.getOffset = function(selector) {
+        var $app = Adapt.scrolling.$app;
+        var $element = $(selector);
+        var offset = $element.offset();
+        var $stack = $element.parents().add($element);
+        var $scrollParents = $stack.filter('#app');
+        $scrollParents.each(function(index, parent) {
+            var $parent = $(parent);
+            var scrolltop = parseInt($parent.scrollTop());
+            var scrollleft = parseInt($parent.scrollLeft());
+            offset.top += scrolltop - $app.offset()['top'];
+            offset.left += scrollleft;
+        });
+        return offset;
+    };
+
+});

@@ -33,7 +33,7 @@ define([
                     _globals: Adapt.course.get("_globals"),
                     _accessibility: Adapt.config.get("_accessibility")
                 }
-            )).insertBefore('#wrapper');
+            )).insertBefore('#app');
 
             _.defer(_.bind(function() {
                 Adapt.trigger('navigationView:postRender', this);
@@ -94,7 +94,7 @@ define([
 
         onA11yToggle:function() {
             // listen once because if a11y active on launch instructions will already be setup
-            
+
             if (Adapt.accessibility.isActive()) {
                 this.setupUsageInstructions();
             }

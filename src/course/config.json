@@ -45,6 +45,9 @@
         }
     },
     "_disableAnimationFor": [],
+    "_scrolling": {
+        "_isEnabled": true
+    },
     "build": {
     }
 }
