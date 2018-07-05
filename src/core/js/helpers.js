@@ -191,8 +191,10 @@ define([
             var description;
             if (hasOverride) {
                 description = override;
+                description = helpers.compile(description, context);
             } else {
                 description = this._globals._components['_'+this._component].ariaRegion;
+                description = helpers.compile(description, override);
             }
             if (!description) return;
             return new Handlebars.SafeString('<div class="aria-label prevent-default">'+description+'</div>');
