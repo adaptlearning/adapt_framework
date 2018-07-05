@@ -42,9 +42,9 @@
             var isLocked = locking.isLocked();
 
             var $element = $(element);
-            handlers.registered.push({ 
+            handlers.registered.push({
                 id: expando.make(element, data),
-                data: data, 
+                data: data,
                 $element: $element,
                 type: type,
                 _onscreen: isLocked ? null : measurements.get($element).uniqueMeasurementId,
@@ -76,10 +76,10 @@
             handlers.shouldReProcess = true;
             while (handlers.shouldReProcess) {
                 handlers.shouldReProcess = false;
-                
+
                 registeredCount = registered.length;
                 if  (registeredCount == 0) return;
-                
+
                 for (var i = 0; i < registeredCount; i++) {
                     var item = registered[i];
                     var measure = measurements.get(item.$element);
@@ -120,7 +120,7 @@
 
         processInView: function(item, measure) {
 
-            var isTopOnScreen = (measure.percentFromTop >= 0 && measure.percentFromTop <= 100); 
+            var isTopOnScreen = (measure.percentFromTop >= 0 && measure.percentFromTop <= 100);
             var isBottomOnScreen = (measure.percentFromBottom >= 0 && measure.percentFromBottom <= 100);
             var isLeftOnScreen = (measure.percentFromLeft >= 0 && measure.percentFromLeft <= 100);
             var isRightOnScreen = (measure.percentFromRight >= 0 && measure.percentFromRight <= 100);
@@ -142,26 +142,6 @@
                 visiblePartX, //left, right, both, none
                 visiblePartY //top, bottom, both, none
             ];
-
-            if (item._inviewPreviousState !== undefined && config.options.allowScrollOver ) {
-                //this is for browsers which pause javascript execution on scroll
-
-                //check previous state and current state
-                var wasScrolledOver = (item._measurePreviousState.percentFromBottom <= 100 && measure.percentFromBottom >= 100 );
-                
-                //if inview state hasn't changed, don't retrigger event
-                if (item._inviewPreviousState[0] == inviewState[0] &&
-                    item._inviewPreviousState[1] == inviewState[1] && 
-                    item._inviewPreviousState[2] == inviewState[2] &&
-                    !wasScrolledOver) return;
-
-                if (wasScrolledOver) {
-                    //make sure to trigger a scrolled over both top and bottom event
-                    inviewState[0] = true;
-                    inviewState[1] = "both";
-                    inviewState[2] = "both";
-                }
-            }
 
             item._inviewPreviousState = inviewState;
             item._measurePreviousState = measure;
@@ -187,7 +167,7 @@
         },
 
         repeat: function() {
-            
+
             loop.stop();
 
             if (loop.hasRaf) {
@@ -202,7 +182,7 @@
 
             var timeSinceLast = (new Date()).getTime() - loop.lastStartEvent;
             if (timeSinceLast < 1500) return;
-            
+
             loop.stop()
             return true;
         },
@@ -267,21 +247,21 @@
     $.extend($.event.special, {
 
         onscreen: {
-            
+
             noBubble: true,
 
             add: function(data) {
                 handlers.register(this, data, handlers.TYPE.onscreen);
             },
 
-            remove: function(data) { 
+            remove: function(data) {
                 handlers.unregister(this, data, handlers.TYPE.onscreen);
             }
 
         },
 
         inview: {
-            
+
             noBubble: true,
 
             add: function(data) {
@@ -325,7 +305,7 @@
         }
 
     });
-    
+
     //interface to allow for inview/onscreen to be disabled
     var locking =  {
         locks: [],
@@ -364,16 +344,14 @@
                 }
             }
             return false;
-            
+
         }
 
     };
 
     var config = {
-        
-        options: {
-            allowScrollOver: true
-        },
+
+        options: {},
 
         config: function(options) {
             if (typeof options !== "object") return;
@@ -409,14 +387,14 @@
             loop.start();
         }
 
-    };  
+    };
 
     var measurements = {
 
         featureDetect: function() {
-            
+
             loop.hasRaf = (window.requestAnimationFrame && window.cancelAnimationFrame);
-            
+
         },
 
         get: function get($element) {
@@ -432,10 +410,10 @@
                 // IE11 throws an error if the element isn't present in the DOM
                 offset = { top: 0, right: 0, bottom: 0, left: 0, width: 0, height: 0 };
             }
-            
+
             var height = offset.height;
             var width = offset.width;
-            
+
             //topleft from topleft of window
             var top = offset["top"];
             var left = offset["left"];
@@ -472,7 +450,7 @@
             } else { //fully inscreen
                 inviewVertical = height;
             }
-            
+
             // cap floor at 0 - cannot have negative inviews.
             if (inviewVertical < 0) inviewVertical = 0;
             if (inviewHorizontal < 0) inviewHorizontal = 0;
@@ -495,16 +473,16 @@
             if (cssHidden) onscreen = false;
 
             if (onscreen) {
-                
+
                 // perform some extra checks to make sure item is onscreen
                 var parents = measurements.getParents(el);
-                
+
                 // go through all the parents except the html tag
                 for (var i = 0, l = parents.length-1; i < l; i++) {
                     var parent = parents[i];
-                
+
                     cssHidden = measurements.isElementHidden(parent);
-                    
+
                     // check if parents are visibility hidden or display none
                     if (cssHidden) {
                         onscreen = false;
@@ -523,17 +501,17 @@
             }
 
             var uniqueMeasurementId = ""+top+left+bottom+right+height+width+wndw.height+wndw.width+onscreen;
-            
-            return { 
-                top: top, 
-                left: left, 
+
+            return {
+                top: top,
+                left: left,
                 bottom: bottom,
-                right: right, 
-                percentFromTop: percentFromTop, 
-                percentFromLeft: percentFromLeft, 
-                percentFromBottom: percentFromBottom, 
-                percentFromRight: percentFromRight, 
-                percentInview: percentInview, 
+                right: right,
+                percentFromTop: percentFromTop,
+                percentFromLeft: percentFromLeft,
+                percentFromBottom: percentFromBottom,
+                percentFromRight: percentFromRight,
+                percentInview: percentInview,
                 percentInviewHorizontal: percentInviewHorizontal,
                 percentInviewVertical: percentInviewVertical,
                 onscreen: onscreen,
@@ -567,7 +545,7 @@
             var isScrollWidthOverflowing = (parent.clientWidth < parent.scrollWidth);
             var isScrollHeightOverflowing = (parent.clientHeight < parent.scrollHeight);
             var isOverflowing = (isScrollWidthOverflowing || isScrollHeightOverflowing);
-            
+
             var $parent = $(parent);
 
             if (!isOverflowing || ($parent.css("overflow") === "visible")) {
@@ -586,7 +564,7 @@
 
             // check inclusive of bounding rectangle edges
             var isOutOfBounds = (childOffsetTop >= parent.clientHeight
-                || childOffsetLeft >= parent.clientWidth 
+                || childOffsetLeft >= parent.clientWidth
                 || childOffsetBottom <= 0
                 || childOffsetRight <= 0);
 

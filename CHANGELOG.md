@@ -1,5 +1,21 @@
 ## [Unreleased][unreleased]
 
+## [3.2.0] - 2018-06-28
+
+### Added
+- Framework version is now exposed in the DOM as a `data` attribute of the `<html>` element ([#2143](https://github.com/adaptlearning/adapt_framework/issues/2143))
+- New `Adapt.getViewClass` function to allow a component view to be fetched from the `componentStore` in a consistent manner ([#2073](https://github.com/adaptlearning/adapt_framework/issues/2073))
+- Ability to easily filter the results of `findDescendantModels` ([#2058](https://github.com/adaptlearning/adapt_framework/issues/2058))
+
+### Fixed
+- A backwards-compatibility issue with `ItemsComponentModel` ([#2071](https://github.com/adaptlearning/adapt_framework/issues/2071))
+- Components that implement `mobileInstruction` wouldn't display it if the standard `instruction` was left blank ([#2069](https://github.com/adaptlearning/adapt_framework/issues/2069))
+- The `notify:closeNotify` event could be invoked multiple times ([#1659](https://github.com/adaptlearning/adapt_framework/issues/1659))
+
+### Removed
+- Page 'tab wrapping' ([#2076](https://github.com/adaptlearning/adapt_framework/issues/2076))
+- Legacy `_allowScrollOver` setting and related code that allowed `inview` to work with those (old) versions of Safari for iOS that would pause JavaScript execution whilst the user was scrolling ([#2054](https://github.com/adaptlearning/adapt_framework/pull/2054))
+
 ## [3.1.0] - 2018-05-14
 
 ### Added
@@ -606,7 +622,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.1.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.0...v3.0.0
 [2.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.1.3...v2.2.0
