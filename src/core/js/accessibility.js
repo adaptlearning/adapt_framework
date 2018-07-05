@@ -214,11 +214,6 @@ define([
                 if (view.model.get("_id") != Adapt.location._currentId) return;
             }
 
-            //always use detached aria labels for divs and spans
-            _.defer(function() {
-                $('body').a11y_aria_label(true);
-            });
-
             $.a11y_on(true, '.page');
             $.a11y_on(true, '.menu');
 
