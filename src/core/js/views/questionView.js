@@ -280,14 +280,13 @@ define([
             // onResetClicked is called as part of the checkIfResetOnRevisit
             // function and as a button click. if the view is already rendered,
             // then the button was clicked, focus on the first tabbable element
-            if (this.model.get("_isReady")) {
-                // Attempt to get the current page location
-                var currentModel = Adapt.findById(Adapt.location._currentId);
-                // Make sure the page is ready
-                if (!currentModel || !currentModel.get("_isReady")) return;
-                // Focus on the first readable item in this element
-                this.$el.focusNext();
-            }
+            if (!this.model.get("_isReady")) return;
+            // Attempt to get the current page location
+            var currentModel = Adapt.findById(Adapt.location._currentId);
+            // Make sure the page is ready
+            if (!currentModel || !currentModel.get("_isReady")) return;
+            // Focus on the first readable item in this element
+            this.$el.focusNext();
 
         },
 
