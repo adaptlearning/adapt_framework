@@ -37,9 +37,10 @@ define([
 
         _fixJQuery: function() {
             var selectorScrollTop = $.fn.scrollTop;
+            var $app = Adapt.scrolling.$app;
             $.fn.scrollTop = function() {
                 if (this[0] === window || this[0] === document.body) {
-                    return selectorScrollTop.apply($("#app"), arguments);
+                    return selectorScrollTop.apply($app, arguments);
                 }
                 return selectorScrollTop.apply(this, arguments);
             };
@@ -47,14 +48,15 @@ define([
 
         _fixScrollTo: function() {
             var selectorScrollTo = $.fn.scrollTo;
+            var $app = Adapt.scrolling.$app;
             $.fn.scrollTo = function(target, duration, settings) {
                 if (this[0] === window || this[0] === document.body) {
-                    return selectorScrollTo.apply($("#app"), arguments);
+                    return selectorScrollTo.apply($app, arguments);
                 }
                 return selectorScrollTo.apply(this, arguments);
             };
             $.scrollTo = function(target, duration, settings) {
-                return selectorScrollTo.apply($("#app"), arguments);
+                return selectorScrollTo.apply($app, arguments);
             };
         },
 
