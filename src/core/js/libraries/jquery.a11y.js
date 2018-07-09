@@ -584,6 +584,8 @@
         }
 
         function nativePreventScroll(event) {
+            // Intermediate function to turn the native event object into a jquery event object. 
+            // preventScroll function is expecting a jquery event object.
             return preventScroll($.event.fix(event));
         }
 
