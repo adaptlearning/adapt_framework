@@ -1,7 +1,6 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 <div class="page-inner article-container">
-	{{{a11y_aria_label _globals._accessibility._ariaLabels.page}}}
 	<div class="page-header">
 		<div class="page-header-inner clearfix">
 
@@ -10,7 +9,10 @@
 
 					{{#if displayTitle}}
 					<div class="page-title">
-						<div class="page-title-inner" {{{a11y_attrs_heading "page"}}}>
+						{{#unless _disableAccessibilityState}}
+							<div class="js-heading"></div>
+						{{/unless}}
+						<div class="page-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
 							{{{compile displayTitle this}}}
 						</div>
 					</div>

@@ -1,16 +1,15 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
-<div class="notify-push-inner">
-	{{{a11y_aria_label _globals._accessibility._ariaLabels.feedbackPopUp}}}
+<div id="notify-push-heading" class="notify-push-inner">
 	<div class="notify-push-title">
 		<div class="notify-push-title-inner h5" tabindex="0" role="heading" aria-level="1">
-			{{{compile title this}}}
+			{{{compile title}}}
 		</div>
 	</div>
-	
+
 	<div class="notify-push-body">
 		<div class="notify-push-body-inner">
-			{{{compile_a11y_text body this}}}
+			{{{compile_a11y_text body}}}
 		</div>
 	</div>
 </div>

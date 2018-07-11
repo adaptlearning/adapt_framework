@@ -23,6 +23,7 @@ require([
     'core/js/models/lockingModel',
     'core/js/helpers',
     'core/js/scrolling',
+    'core/js/headings',
     'plugins'
 ], function (Adapt, AdaptCollection, StartController, BuildModel, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
