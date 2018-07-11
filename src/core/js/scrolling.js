@@ -123,17 +123,19 @@ define([
     Adapt.getOffset = function(selector) {
         var $app = Adapt.scrolling.$app;
         var $element = $(selector);
-        var offset = $element.offset();
-        var $stack = $element.parents().add($element);
-        var $scrollParents = $stack.filter('#app');
-        $scrollParents.each(function(index, parent) {
-            var $parent = $(parent);
-            var scrolltop = parseInt($parent.scrollTop());
-            var scrollleft = parseInt($parent.scrollLeft());
-            offset.top += scrolltop - $app.offset()['top'];
-            offset.left += scrollleft;
-        });
-        return offset;
+        var elementOffset = $element.offset();
+        var isInsideAppContainer = Boolean($element.parents('#app').length);
+        if (!isInsideAppContainer) {
+            // Do not adjust the offset measurement as not in $app container
+            return elementOffset;
+        }
+        // Adjust measurement by scrolling and offset of $app container
+        var scrolltop = parseInt($app.scrollTop());
+        var scrollleft = parseInt($app.scrollLeft());
+        var appOffset = $app.offset();
+        elementOffset.top += (scrolltop - appOffset.top);
+        elementOffset.left += (scrollleft - appOffset.left);
+        return elementOffset;
     };
 
 });
