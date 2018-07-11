@@ -130,11 +130,11 @@ define([
             return elementOffset;
         }
         // Adjust measurement by scrolling and offset of $app container
-        var scrolltop = parseInt($app.scrollTop());
-        var scrollleft = parseInt($app.scrollLeft());
+        var scrollTop = parseInt($app.scrollTop());
+        var scrollLeft = parseInt($app.scrollLeft());
         var appOffset = $app.offset();
-        elementOffset.top += (scrolltop - appOffset.top);
-        elementOffset.left += (scrollleft - appOffset.left);
+        elementOffset.top += (scrollTop - appOffset.top);
+        elementOffset.left += (scrollLeft - appOffset.left);
         return elementOffset;
     };
 
