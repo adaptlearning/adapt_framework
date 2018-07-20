@@ -44,6 +44,24 @@ define([
                 }
                 return selectorScrollTop.apply(this, arguments);
             };
+            var selectorOffset = $.fn.offset;
+            $.fn.offset = function() {
+                var $app = Adapt.scrolling.$app;
+                var $element = this;
+                var elementOffset = selectorOffset.call($element);
+                var isInsideAppContainer = Boolean($element.parents().add($element).filter('#app').length);
+                if (!isInsideAppContainer) {
+                    // Do not adjust the offset measurement as not in $app container
+                    return elementOffset;
+                }
+                // Adjust measurement by scrolling and offset of $app container
+                var scrollTop = parseInt($app.scrollTop());
+                var scrollLeft = parseInt($app.scrollLeft());
+                var appOffset = selectorOffset.call($app);
+                elementOffset.top += (scrollTop - appOffset.top);
+                elementOffset.left += (scrollLeft - appOffset.left);
+                return elementOffset;
+            };
         },
 
         _fixScrollTo: function() {
@@ -119,23 +137,5 @@ define([
             Adapt.trigger(location+':scrolledTo', selector);
         }, settings.duration+300);
     };
-
-    Adapt.getOffset = function(selector) {
-        var $app = Adapt.scrolling.$app;
-        var $element = $(selector);
-        var elementOffset = $element.offset();
-        var isInsideAppContainer = Boolean($element.parents('#app').length);
-        if (!isInsideAppContainer) {
-            // Do not adjust the offset measurement as not in $app container
-            return elementOffset;
-        }
-        // Adjust measurement by scrolling and offset of $app container
-        var scrollTop = parseInt($app.scrollTop());
-        var scrollLeft = parseInt($app.scrollLeft());
-        var appOffset = $app.offset();
-        elementOffset.top += (scrollTop - appOffset.top);
-        elementOffset.left += (scrollLeft - appOffset.left);
-        return elementOffset;
-    };
-
+    
 });
