@@ -49,9 +49,8 @@ define([
                 var $app = Adapt.scrolling.$app;
                 var $element = this;
                 var elementOffset = selectorOffset.call($element);
-                var isInsideAppContainer = Boolean($element.parents().add($element).filter('#app').length);
-                var isHTMLOrBody = $element.is("html,body");
-                if (!isInsideAppContainer && !isHTMLOrBody) {
+                var isCorrectedContainer = Boolean($element.parents().add($element).filter('html,body,#app').length);
+                if (!isCorrectedContainer) {
                     // Do not adjust the offset measurement as not in $app container and isn't html or body
                     return elementOffset;
                 }
