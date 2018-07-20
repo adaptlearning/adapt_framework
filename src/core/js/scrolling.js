@@ -50,8 +50,9 @@ define([
                 var $element = this;
                 var elementOffset = selectorOffset.call($element);
                 var isInsideAppContainer = Boolean($element.parents().add($element).filter('#app').length);
-                if (!isInsideAppContainer) {
-                    // Do not adjust the offset measurement as not in $app container
+                var isHTMLOrBody = $element.is("html,body");
+                if (!isInsideAppContainer && !isHTMLOrBody) {
+                    // Do not adjust the offset measurement as not in $app container and isn't html or body
                     return elementOffset;
                 }
                 // Adjust measurement by scrolling and offset of $app container
