@@ -281,7 +281,9 @@ define([
 
                 returnedDescendants = flattenedDescendants;
 
-                if (models.length === 0 || models[0]._children === descendants) {
+                if (models.length === 0 ||
+                    models[0]._children === descendants ||
+                    models[0]._children === undefined) {
                     return;
                 } else {
                     allDescendants = [];
