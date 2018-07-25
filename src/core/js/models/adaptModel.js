@@ -276,7 +276,7 @@ define([
 
             var allDescendantsModels = this.getAllDescendantModels();
             var returnedDescendants = allDescendantsModels.filter(function(model) {
-                return _.contains(typesm model.get("_type"));
+                return _.contains(types, model.get("_type"));
             });
 
             if (!options) {
