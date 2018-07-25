@@ -268,34 +268,16 @@ define([
          * this.findDescendantModels('components', { where: { _isAvailable: true, _isOptional: false }});
          */
         findDescendantModels: function(descendants, options) {
-            var returnedDescendants;
-            var allDescendants = [];
-            var flattenedDescendants;
 
-            function searchChildren(models) {
-                for (var i = 0, len = models.length; i < len; i++) {
-                    var model = models[i];
-                    allDescendants.push(model.getChildren().models);
-                    flattenedDescendants = _.flatten(allDescendants);
-                }
+            var types = [
+                descendants.slice(0, -1),
+                descendants
+            ];
 
-                returnedDescendants = flattenedDescendants;
-
-                if (models.length === 0 ||
-                    models[0]._children === descendants ||
-                    models[0]._children === undefined) {
-                    return;
-                } else {
-                    allDescendants = [];
-                    searchChildren(returnedDescendants);
-                }
-            }
-
-            if (this._children === descendants) {
-                returnedDescendants = this.getChildren().models;
-            } else {
-                searchChildren(this.getChildren().models);
-            }
+            var allDescendantsModels = this.getAllDescendantModels();
+            var returnedDescendants = allDescendantsModels.filter(function(model) {
+                return _.contains(typesm model.get("_type"));
+            });
 
             if (!options) {
                 return returnedDescendants;
