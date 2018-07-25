@@ -170,7 +170,7 @@ define([
         },
 
         closeNotify: function (event) {
-            if (this.isOpen) return;
+            if (!this.isOpen) return;
             this.isOpen = false;
             
             if (this.disableAnimation) {
