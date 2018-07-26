@@ -276,26 +276,23 @@ define([
             this._runModelCompatibleFunction("resetUserAnswer");
 
             this.resetQuestion();
-            if (this.model.get("_isReady")) {
-                //if the model is already rendered, focus on the first tabbable element
-                //onResetClicked is called as part of the checkIfResetOnRevisit function and as a button click
-                _.defer(_.bind(function(){
-                    this.$el.a11y_focus();
-                }, this));
-            }
+
+            // onResetClicked is called as part of the checkIfResetOnRevisit
+            // function and as a button click. if the view is already rendered,
+            // then the button was clicked, focus on the first tabbable element
+            if (!this.model.get("_isReady")) return;
+            // Attempt to get the current page location
+            var currentModel = Adapt.findById(Adapt.location._currentId);
+            // Make sure the page is ready
+            if (!currentModel || !currentModel.get("_isReady")) return;
+            // Focus on the first readable item in this element
+            this.$el.focusNext();
+
         },
 
         setQuestionAsReset: function() {
             this.model.setQuestionAsReset();
             this.$(".component-widget").removeClass("submitted");
-
-            // Attempt to get the current page location
-            var currentModel = Adapt.findById(Adapt.location._currentId);
-            if (currentModel && currentModel.get("_isReady")) {
-                //if the page is ready, focus on the first tabbable item
-                //otherwise will try to set focus as page loads and components are rendered
-                this.$el.a11y_focus();
-            }
         },
 
         // Used by the question view to reset the look and feel of the component.
