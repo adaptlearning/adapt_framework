@@ -18,7 +18,7 @@
 					</div>
 					{{/if}}
 
-					{{#if body}}
+					{{#any body pageBody}}
 					<div class="page-body">
 						<div class="page-body-inner">
 							{{#if pageBody}}
@@ -28,7 +28,7 @@
 							{{/if}}
 						</div>
 					</div>
-					{{/if}}
+					{{/any}}
 
 					{{#if instruction}}
 					<div class="page-instruction">
