@@ -22,6 +22,7 @@ require([
     'core/js/router',
     'core/js/models/lockingModel',
     'core/js/helpers',
+    'core/js/subviews',
     'plugins'
 ], function (Adapt, AdaptCollection, StartController, BuildModel, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
@@ -40,7 +41,7 @@ require([
             Adapt.articles.models.length > 0 &&
             Adapt.blocks.models.length > 0 &&
             Adapt.components.models.length > 0 &&
-            Adapt.course.get('_id')) { 
+            Adapt.course.get('_id')) {
 
             mapAdaptIdsToObjects();
 
@@ -206,7 +207,7 @@ require([
     }
 
     function onBuildDataLoaded() {
-        $('html').attr("data-adapt-framework-version", Adapt.build.get('package').version);  
+        $('html').attr("data-adapt-framework-version", Adapt.build.get('package').version);
         Adapt.config = new ConfigModel(null, {url: "course/config."+Adapt.build.get("jsonext"), reset:true});
         Adapt.config.on({
             'change:_activeLanguage': onLanguageChange,
