@@ -11,6 +11,7 @@ define([
         initialize: function() {
             this._addHelpers();
             this._addMutationObserver();
+            this.listenTo(Adapt, 'remove', this._onRemove);
         },
 
         /**
@@ -68,6 +69,10 @@ define([
                 if (subview) $placeholder.replaceWith(subview.$el);
                 delete this._hold[cid];
             }.bind(this));
+        },
+
+        _onRemove: function() {
+            this._hold = {};
         },
 
         /**
