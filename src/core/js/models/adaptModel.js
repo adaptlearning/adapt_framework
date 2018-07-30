@@ -270,8 +270,7 @@ define([
         findDescendantModels: function(descendants, options) {
 
             var types = [
-                descendants.slice(0, -1),
-                descendants
+                descendants.slice(0, -1)
             ];
             if (descendants === 'contentObjects') {
                 types.push.apply(types, ['page', 'menu']);
