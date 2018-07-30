@@ -7,7 +7,7 @@ define([
 
         _register: {},
         _hold: {},
-        
+
         initialize: function() {
             this._addHelpers();
             this._addMutationObserver();
@@ -20,12 +20,18 @@ define([
         _addHelpers: function() {
             Handlebars.registerHelper('subview', function(options) {
                 var name = options.hash.name;
-                var subview = Adapt.subviews.create(name, {
+                var hold = Adapt.subviews._hold;
+                hold.id = hold.id || 0;
+                if (hold.id >= Number.MAX_SAFE_INTEGER) hold.id = 0;
+                var subview = {
+                    name: name,
+                    cid: hold.id++,
                     data: options.hash.model || this || {},
                     id: options.hash.id || null
-                });
+                };
+                hold[subview.cid] = subview;
                 if (!subview) return;
-                var html = '<' + subview.el.tagName + ' data-subview-cid="'+subview.cid+'" />';
+                var html = '<div data-subview-cid="'+subview.cid+'" />';
                 return new Handlebars.SafeString(html);
             });
         },
@@ -57,8 +63,9 @@ define([
             $placeholders.each(function(index, placeholder) {
                 var $placeholder = $(placeholder);
                 var cid = $placeholder.attr("data-subview-cid");
-                var subview = this._hold[cid];
-                $placeholder.replaceWith(subview.$el);
+                var data = this._hold[cid];
+                var subview = Adapt.subviews.create(data.name, data);
+                if (subview) $placeholder.replaceWith(subview.$el);
                 delete this._hold[cid];
             }.bind(this));
         },
