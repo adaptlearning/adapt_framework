@@ -260,7 +260,7 @@ define([
 
         /**
          * Returns all the descendant models of a specific type
-         * @param {string} descendants Valid values are 'contentObjects', 'articles', 'blocks' or 'components'
+         * @param {string} descendants Valid values are 'contentObjects', 'pages', 'menus', 'articles', 'blocks' or 'components'
          * @param {object} options an object that defines the search type and the properties/values to search on. Currently only the `where` search type (equivalent to `Backbone.Collection.where()`) is supported.
          * @return {array}
          * @example
@@ -273,6 +273,9 @@ define([
                 descendants.slice(0, -1),
                 descendants
             ];
+            if (descendants === 'contentObjects') {
+                types.push.apply(types, ['page', 'menu']);
+            }
 
             var allDescendantsModels = this.getAllDescendantModels();
             var returnedDescendants = allDescendantsModels.filter(function(model) {
