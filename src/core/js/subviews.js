@@ -5,9 +5,10 @@ define([
 
     var Subviews = Backbone.Controller.extend({
 
+        _register: {},
+        _hold: {},
+        
         initialize: function() {
-            this._register = {};
-            this._hold = {};
             this._addHelpers();
             this._addMutationObserver();
         },
@@ -45,7 +46,7 @@ define([
          * @param  {MutationList} list List of browser mutations
          */
         _onMutated: function(list) {
-            var $placeholders = $([]);
+            var $placeholders = $();
             for (var i = 0, l = list.length; i < l; i++) {
                 var mutation = list[i];
                 var $news = $(mutation.addedNodes).find("[data-subview-cid]");
