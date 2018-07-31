@@ -103,13 +103,13 @@ define([
                 a11y_aria_label: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
                     values = values.filter(Boolean);
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default">'+values.join(" ")+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label">'+values.join(" ")+'</div>');
                 },
 
                 a11y_aria_label_relative: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
                     values = values.filter(Boolean);
-                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default">'+values.join(" ")+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label relative">'+values.join(" ")+'</div>');
                 },
 
                 a11y_wrap_focus: function(text) {

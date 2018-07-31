@@ -197,7 +197,7 @@ define([
                 description = helpers.compile(description, override);
             }
             if (!description) return;
-            return new Handlebars.SafeString('<div class="aria-label prevent-default">'+description+'</div>');
+            return new Handlebars.SafeString('<div class="aria-label">'+description+'</div>');
         }
 
     };

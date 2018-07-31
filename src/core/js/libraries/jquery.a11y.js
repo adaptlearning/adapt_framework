@@ -33,7 +33,7 @@ define([
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<div id="a11y-focuser" class="prevent-default a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>'
+            "focuser": '<div id="a11y-focuser" class="a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>'
         };
 
 
@@ -464,60 +464,6 @@ define([
         };
 
     // PRIVATE EVENT HANDLERS
-        function onKeyUp(event) {
-            var options = $.a11y.options;
-
-            var $element = $(event.target);
-
-            switch (event.which) {
-            case 32: //SPACE
-
-                //IF ELEMENT HANDLES SPACE THEN SKIP
-                if ($element.is(domSelectors.nativeSpaceElements)) return;
-
-                //STOP SPACE FROM SCROLLING / SELECTING
-                preventDefault(event);
-
-                if (options.isDebug) console.log("a11y: space keyup > click");
-
-                //TURN SPACE INTO CLICK
-                $element.trigger("click");
-
-                break;
-            }
-        }
-
-        function onKeyDown(event) {
-            var options = $.a11y.options;
-
-            var $element = $(event.target);
-
-            switch (event.which) {
-            case 32: //SPACE
-                //IF ELEMENT HANDLES SPACE SKIP
-                if ($element.is(domSelectors.nativeSpaceElements)) return;
-
-                //STOP SPACE FROM SCROLLING / SELECTING
-                preventDefault(event);
-
-                if (options.isDebug) console.log("a11y: space keydown > blocked default");
-
-                break;
-            case 13: //ENTER
-
-                //IF ELEMENT HANDLES ENTER THEN SKIP
-                if ($element.is(domSelectors.nativeEnterElements)) return;
-
-                //STOP ENTER FROM SCROLLING / SELECTING
-                preventDefault(event);
-
-                if (options.isDebug) console.log("a11y: enter keydown > click");
-
-                //TURN ENTER INTO CLICK
-                $element.trigger("click");
-            }
-        }
-
         function onClick(event) {
             var $element = $(event.target);
             if ($element.parents(domSelectors.globalTabIndexElements).length) return;
@@ -601,18 +547,6 @@ define([
             $(document).trigger("reading", stringTrim(readText));
         }
 
-        function a11y_setupUserInputControlListeners() {
-             $('body')
-                .off("click", ".prevent-default", preventDefault)
-                .off("keyup", onKeyUp)
-                .off("keydown", onKeyDown);
-
-            $('body')
-                .on("click", ".prevent-default", preventDefault)
-                .on("keyup", onKeyUp)
-                .on("keydown", onKeyDown);
-        }
-
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
             $("body")
@@ -665,7 +599,6 @@ define([
 
         $.a11y.options = {
             OS: "",
-            isUserInputControlEnabled: true,
             isFocusControlEnabled: true,
             isRemoveNotAccessiblesEnabled: true,
             isScrollDisableEnabled: true,
@@ -689,10 +622,6 @@ define([
 
             a11y_injectControlElements();
             a11y_setupFocusGuard();
-
-            if (options.isUserInputControlEnabled) {
-                a11y_setupUserInputControlListeners();
-            }
 
             if (options.isFocusControlEnabled) {
                 a11y_setupFocusControlListeners();
