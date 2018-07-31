@@ -5,6 +5,6 @@
     {{#if _accessibility._isSkipNavigationEnabled}}
         <button class="skip-nav-link a11y-ignore a11y-ignore-focus" data-event="skipNavigation" aria-label="{{_globals._accessibility._ariaLabels.skipNavigation}}">{{{_globals._accessibility.skipNavigationText}}}</button>
     {{/if}}
-    <button class="base navigation-back-button icon icon-controls-small-left" data-event="backButton" aria-label="{{_globals._accessibility._ariaLabels.previous}}"></button>
+    <button class="base navigation-back-button icon icon-controls-small-left" data-event="backButton" aria-label="{{_globals._accessibility._ariaLabels.previous}}" role="link"></button>
     <button class="base navigation-drawer-toggle-button icon icon-list" data-event="toggleDrawer" aria-label="{{_globals._accessibility._ariaLabels.navigationDrawer}}"></button>
 </div>
