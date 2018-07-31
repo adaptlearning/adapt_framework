@@ -7,8 +7,8 @@ define([
 
         attributes: function() {
             if (!this.model.get("_isA11yRegionEnabled")) {
-				return AdaptView.resultExtend('attributes', {}, this);
-			}
+                return AdaptView.resultExtend('attributes', {}, this);
+            }
             return AdaptView.resultExtend('attributes', {
                 "aria-labelledby": this.model.get('_id')+"-heading",
                 "role": "region"
