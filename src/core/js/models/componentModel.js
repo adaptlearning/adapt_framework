@@ -8,7 +8,7 @@ define([
         _siblings:'components',
 
         defaults: AdaptModel.resultExtend('defaults', {
-            _isA11yComponentDescriptionEnabled: false
+            _isA11yComponentDescriptionEnabled: true
         }),
 
         trackable: AdaptModel.resultExtend("trackable", [

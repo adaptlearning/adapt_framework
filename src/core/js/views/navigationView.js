@@ -35,7 +35,7 @@ define([
                     _globals: Adapt.course.get("_globals"),
                     _accessibility: Adapt.config.get("_accessibility")
                 }
-            )).insertBefore('#wrapper');
+            )).insertBefore('#app');
 
             _.defer(_.bind(function() {
                 Adapt.trigger('navigationView:postRender', this);

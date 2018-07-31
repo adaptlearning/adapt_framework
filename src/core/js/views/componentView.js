@@ -6,6 +6,7 @@ define([
     var ComponentView = AdaptView.extend({
 
         attributes: function() {
+            if (!this.model.get("_isA11yRegionEnabled")) return;
             return AdaptView.resultExtend('attributes', {
                 "aria-labelledby": this.model.get('_id')+"-heading",
                 "role": "region"
