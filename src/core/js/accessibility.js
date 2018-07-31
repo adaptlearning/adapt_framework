@@ -119,7 +119,7 @@ define([
                 a11y_aria_image: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
                     values = values.filter(Boolean);
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default" role="img" aria-label="'+values.join(" ")+'"></div>');
+                    return new Handlebars.SafeString('<div class="aria-label" role="img" aria-label="'+values.join(" ")+'"></div>');
                 },
 
                 a11y_wrap_focus: function(text) {
