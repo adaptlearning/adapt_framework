@@ -311,6 +311,27 @@ define([
             var $found = this.findWalk(iterator);
             if ($found && $found.length) return $found;
 
+            // check subsequent siblings
+            var $nextSiblings = this.nextAll().toArray();
+            _.find($nextSiblings, function(sibling) {
+                var $sibling = $(sibling);
+                var value = iterator($sibling);
+
+                // skip this sibling if explicitly instructed
+                if (value === false) return;
+
+                if (value) {
+                    // sibling matched
+                    $found = $sibling;
+                    return true;
+                }
+
+                // check parent sibling children by walking the tree
+                $found = $sibling.findWalk(iterator);
+                if ($found && $found.length) return true;
+            });
+            if ($found) return $found;
+
             // move through parents towards the body element
             var $branch = this.add(this.parents()).toArray().reverse();
             _.find($branch, function(parent) {
