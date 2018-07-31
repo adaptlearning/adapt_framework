@@ -197,6 +197,11 @@ define([
         // Used to setup the correct, incorrect and partly correct feedback
         setupFeedback: function() {
 
+            var feedback = this.get("_feedback");
+            var canShowFeedback = this.get("_canShowFeedback");
+            
+            if (!feedback || !canShowFeedback) return;
+
             if (this.get('_isCorrect')) {
                 this.setupCorrectFeedback();
             } else if (this.isPartlyCorrect()) {
