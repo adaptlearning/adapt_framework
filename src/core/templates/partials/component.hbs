@@ -9,7 +9,7 @@
                 <div class="js-heading"></div>
             {{/unless}}
             <div class="{{_component}}-title-inner component-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
-                {{{compile displayTitle this}}}
+                {{{compile displayTitle}}}
             </div>
         </div>
         {{/if}}
@@ -19,7 +19,7 @@
         {{#if body}}
         <div class="{{_component}}-body component-body">
             <div class="{{_component}}-body-inner component-body-inner">
-                {{{compile body this}}}
+                {{{compile body}}}
             </div>
         </div>
         {{/if}}
@@ -27,7 +27,7 @@
         {{#any instruction mobileInstruction}}
         <div class="{{_component}}-instruction component-instruction">
             <div class="{{_component}}-instruction-inner component-instruction-inner">
-                {{{compile instruction this}}}
+                {{{compile instruction}}}
             </div>
         </div>
         {{/any}}

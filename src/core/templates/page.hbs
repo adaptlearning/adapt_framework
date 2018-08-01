@@ -13,7 +13,7 @@
 							<div class="js-heading"></div>
 						{{/unless}}
 						<div class="page-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
-							{{{compile displayTitle this}}}
+							{{{compile displayTitle}}}
 						</div>
 					</div>
 					{{/if}}
@@ -22,9 +22,9 @@
 					<div class="page-body">
 						<div class="page-body-inner">
 							{{#if pageBody}}
-								{{{compile pageBody this}}}
+								{{{compile pageBody}}}
 							{{else}}
-								{{{compile body this}}}
+								{{{compile body}}}
 							{{/if}}
 						</div>
 					</div>
@@ -33,7 +33,7 @@
 					{{#if instruction}}
 					<div class="page-instruction">
 						<div class="page-instruction-inner">
-							{{{compile instruction this}}}
+							{{{compile instruction}}}
 						</div>
 					</div>
 					{{/if}}
