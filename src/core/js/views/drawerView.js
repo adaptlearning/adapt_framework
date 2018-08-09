@@ -141,6 +141,8 @@ define([
                 this.emptyDrawer();
                 if(this.collection.models.length === 1) {
                     Adapt.trigger(this.collection.models[0].get('eventCallback'));
+                    // These are only drawer items so set customView to false
+                    this._isCustomViewVisible = false;
                 } else {
                     this.renderItems();
                     Adapt.trigger('drawer:openedItemView');
