@@ -116,6 +116,12 @@ define([
                     return new Handlebars.SafeString('<div class="aria-label relative prevent-default">'+values.join(" ")+'</div>');
                 },
 
+                a11y_aria_image: function(texts) {
+                    var values = Array.prototype.slice.call(arguments, 0,-1);
+                    values = values.filter(Boolean);
+                    return new Handlebars.SafeString('<div class="aria-label" role="img" aria-label="'+values.join(" ")+'"></div>');
+                },
+
                 a11y_wrap_focus: function(text) {
                     return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" role="presentation">&nbsp;</a>');
                 },
