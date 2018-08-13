@@ -32,7 +32,7 @@ module.exports = function(grunt) {
                 if (!script) return done();
 
                 try {
-                    var buildModule = require(path.join(plugindir, script));
+                    var buildModule = require(path.join(process.cwd(), plugindir, script));
                     buildModule(fs, path, grunt.log.writeln, {
                        sourcedir: options.sourcedir,
                        outputdir: options.outputdir,
