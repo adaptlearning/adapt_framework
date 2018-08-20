@@ -139,8 +139,14 @@ define([
                 this.$('.drawer-back').addClass('display-none');
                 this._isCustomViewVisible = false;
                 this.emptyDrawer();
-                if(this.collection.models.length === 1) {
+                if (this.collection.models.length === 1) {
+                    // This callback triggers openCustomView() and sets
+                    // _isCustomViewVisible to true, causing toggleDrawer()
+                    // to re-render the drawer on every toggle button press
                     Adapt.trigger(this.collection.models[0].get('eventCallback'));
+                    // Set _isCustomViewVisible to false to prevent re-rendering
+                    // the drawer and fix the toggle functionality on toggle button press
+                    this._isCustomViewVisible = false;
                 } else {
                     this.renderItems();
                     Adapt.trigger('drawer:openedItemView');
