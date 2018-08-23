@@ -29,9 +29,13 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['<%=languages%>/**/*', '!**/*.<% jsonext %>'],
+                    src: ['<%=languages%>/**/*', '!**/*.<%=jsonext%>'],
                     cwd: '<%= sourcedir %>course/',
-                    dest: '<%= outputdir %>course/'
+                    dest: '<%= outputdir %>course/',
+                    filter: function(filepath) {
+                        console.log("copy:courseAssets", filepath);
+                        return true;
+                    }
                 }
             ]
         },
@@ -39,9 +43,13 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['<%=languages%>/*.<% jsonext %>'],
+                    src: ['<%=languages%>/*.<%=jsonext%>'],
                     cwd: '<%= sourcedir %>course/',
-                    dest: '<%= outputdir %>course/'
+                    dest: '<%= outputdir %>course/',
+                    filter: function(filepath) {
+                        console.log("copy:courseJson", filepath);
+                        return true;
+                    }
                 }
             ]
         }
