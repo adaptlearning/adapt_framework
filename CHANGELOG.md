@@ -1,6 +1,6 @@
 ## [Unreleased][unreleased]
 
-## [3.3.0] - 2018-08-23
+## [3.2.1] - 2018-08-23
 
 ### Fixed
 - Corrected issue with drawer button when the drawer only contains one item ([#2217](https://github.com/adaptlearning/adapt_framework/issues/2217))
