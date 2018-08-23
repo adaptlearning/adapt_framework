@@ -1,5 +1,17 @@
 ## [Unreleased][unreleased]
 
+## [3.3.0] - 2018-08-23
+
+### Fixed
+- Corrected issue with drawer button when the drawer only contains one item ([#2217](https://github.com/adaptlearning/adapt_framework/issues/2217))
+- Bug where `pageBody` was only output in Handlebars template if `body` was also set ([#2178](https://github.com/adaptlearning/adapt_framework/issues/2178))
+- Corrected bug in Grunt scripts.js task: Added `process.cwd()` to correct an issue with running post build scripts, e.g. as used in adapt-contrib-xapi. ([#2212](https://github.com/adaptlearning/adapt_framework/issues/2212))
+- Corrected issue with Grunt task reverting device size defaults ([#2153](https://github.com/adaptlearning/adapt_framework/issues/2153))
+
+### Changed
+- Updated Underscore JS library to v1.9.1 ([#2047](https://github.com/adaptlearning/adapt_framework/issues/2047))
+- Removed the list of contributors from package.json ([#2214](https://github.com/adaptlearning/adapt_framework/issues/2214))
+
 ## [3.2.0] - 2018-06-28
 
 ### Added
