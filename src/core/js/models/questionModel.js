@@ -198,6 +198,11 @@ define([
         setupFeedback: function() {
             if (!this.has('_feedback')) return;
 
+            var feedback = this.get("_feedback");
+            var canShowFeedback = this.get("_canShowFeedback");
+            
+            if (!feedback || !canShowFeedback) return;
+
             if (this.get('_isCorrect')) {
                 this.setupCorrectFeedback();
             } else if (this.isPartlyCorrect()) {
