@@ -272,6 +272,10 @@ define([
 
         className: 'drawer-item',
 
+        attributes: {
+            role: 'listitem'
+        },
+
         initialize: function() {
             this.listenTo(Adapt, 'drawer:empty', this.remove);
             this.render();

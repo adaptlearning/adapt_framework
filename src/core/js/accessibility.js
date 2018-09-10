@@ -84,12 +84,8 @@ define([
             var helpers = {
 
                 a11y_text: function(text) {
-                    //ALLOW ENABLE/DISABLE OF a11y_text HELPER
-                    if (config && config._isTextProcessorEnabled === false) {
-                        return text;
-                    } else {
-                        return $.a11y_text(text);
-                    }
+                    Adapt.log.warn("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+                    return text;
                 },
 
                 a11y_normalize: function(texts) {
@@ -107,13 +103,13 @@ define([
                 a11y_aria_label: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
                     values = values.filter(Boolean);
-                    return new Handlebars.SafeString('<div class="aria-label prevent-default">'+values.join(" ")+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label">'+values.join(" ")+'</div>');
                 },
 
                 a11y_aria_label_relative: function(texts) {
                     var values = Array.prototype.slice.call(arguments, 0,-1);
                     values = values.filter(Boolean);
-                    return new Handlebars.SafeString('<div class="aria-label relative prevent-default">'+values.join(" ")+'</div>');
+                    return new Handlebars.SafeString('<div class="aria-label relative">'+values.join(" ")+'</div>');
                 },
 
                 a11y_aria_image: function(texts) {
@@ -193,7 +189,6 @@ define([
             $.a11y.options.isTouchDevice = Adapt.device.touch;
 
             _.extend($.a11y.options, {
-                isTabbableTextEnabled: false,
                 isUserInputControlEnabled: true,
                 isFocusControlEnabled: true,
                 isRemoveNotAccessiblesEnabled: true,
