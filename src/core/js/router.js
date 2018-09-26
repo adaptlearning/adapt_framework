@@ -375,7 +375,7 @@ define([
         },
 
         handleNavigationFocus: function() {
-            if (!Adapt.router.get("_shouldNavigateReFocus")) return;
+            if (!Adapt.router.get("_shouldNavigateFocus")) return;
             // Body will be forced to accept focus to start the
             // screen reader reading the page.
             $("body").focusNoScroll();
