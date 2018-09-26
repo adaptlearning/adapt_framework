@@ -195,12 +195,14 @@ define([
         // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
+                Adapt.router.set("_shouldNavigateFocus", true);
                 Adapt.scrollTo(selector, settings);
             });
         });
 
         var shouldReplaceRoute = settings.replace || false;
-
+        
+        Adapt.router.set("_shouldNavigateFocus", false);
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true, replace: shouldReplaceRoute});
     };
 
