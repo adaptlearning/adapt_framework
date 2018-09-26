@@ -486,11 +486,13 @@ define([
 
     // PRIVATE EVENT HANDLERS
         function onClick(event) {
+            var options = $.a11y.options;
             var $element = $(event.target);
             var $stack = $().add($element).add($element.parents());
             var $focusable = $stack.filter(domSelectors.globalTabIndexElements);
             if (!$focusable.length) return;
             // Force focus for screen reader enter / space press
+            if (options.isDebug) console.log("clicked", $focusable[0]);
             $focusable[0].focus();
         }
     
@@ -506,11 +508,6 @@ define([
             if (options.isDebug) console.log("focus", $element[0]);
 
             state.$activeElement = $(event.target);
-
-            if (state.$activeElement.is(domSelectors.nativeTabElements)) {
-                //Capture that the user has interacted with a native form element
-                $.a11y.userInteracted = true;
-            }
         }
 
         function onBlur(event) {
@@ -518,7 +515,7 @@ define([
             var $element = $(element);
 
             if ($element.is('[data-a11y-force-focus]')) {
-                $element.removeAttr('tabindex');
+                $element.removeAttr('tabindex data-a11y-force-focus');
             }
         }
 
@@ -571,11 +568,15 @@ define([
             var $body = $('body');
             $body
                 .off('focus', '*', onFocus)
-                .off('blur', '*', onBlur);
+                .off('blur', '*', onBlur)
+                .off('focus', onFocus)
+                .off("blur", onBlur);
 
             $body
                 .on('focus', '*', onFocus)
-                .on('blur', '*', onBlur);
+                .on('blur', '*', onBlur)
+                .on('focus', onFocus)
+                .on("blur", onBlur);
 
             // "Capture" event attachement for click
             $body[0].removeEventListener('click', onClick);
