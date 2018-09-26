@@ -70,7 +70,7 @@ module.exports = function(grunt) {
             var currentCourseJson = _.deepExtend({}, defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
      
             //write modified course json to build
-            var outputDirCourseJson = currentCourseJsonFile.replace(path.basename(sourcedir),path.basename(grunt.config('outputdir')));
+            var outputDirCourseJson = currentCourseJsonFile.replace(path.basename(sourcedir), path.basename(grunt.config('outputdir')));
             grunt.file.write(outputDirCourseJson, JSON.stringify(currentCourseJson, null, 4));
         });
     });
