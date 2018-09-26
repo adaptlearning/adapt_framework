@@ -487,15 +487,13 @@ define([
     // PRIVATE EVENT HANDLERS
         function onClick(event) {
             var $element = $(event.target);
-            if ($element.parents(domSelectors.globalTabIndexElements).length) return;
-            if ($element.is(domSelectors.globalTabIndexElements)) return;
-            $element.attr({
-                'tabindex': '-1',
-                'data-a11y-force-focus': true
-            });
-            $element.focus();
+            var $stack = $().add($element).add($element.parents());
+            var $focusable = $stack.filter(domSelectors.globalTabIndexElements);
+            if (!$focusable.length) return;
+            // Force focus for screen reader enter / space press
+            $focusable[0].focus();
         }
-
+    
         function onFocus(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
@@ -570,15 +568,18 @@ define([
 
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
-            $("body")
-                .off("click", '*', onClick)
-                .off("focus", '*', onFocus)
-                .off("blur", '*', onBlur);
+            var $body = $('body');
+            $body
+                .off('focus', '*', onFocus)
+                .off('blur', '*', onBlur);
 
-            $("body")
-                .on("click", '*', onClick)
-                .on("focus", '*', onFocus)
-                .on("blur", '*', onBlur);
+            $body
+                .on('focus', '*', onFocus)
+                .on('blur', '*', onBlur);
+
+            // "Capture" event attachement for click
+            $body[0].removeEventListener('click', onClick);
+            $body[0].addEventListener('click', onClick, true);
         }
 
         function a11y_setupFocusGuard() {
