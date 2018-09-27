@@ -495,7 +495,7 @@ define([
             if (options.isDebug) console.log("clicked", $focusable[0]);
             $focusable[0].focus();
         }
-    
+
         function onFocus(event) {
             var options = $.a11y.options;
             var state = $.a11y.state;
