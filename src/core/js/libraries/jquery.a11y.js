@@ -578,7 +578,7 @@ define([
                 .on('focus', onFocus)
                 .on("blur", onBlur);
 
-            // "Capture" event attachement for click
+            // "Capture" event attachment for click
             $body[0].removeEventListener('click', onClick);
             $body[0].addEventListener('click', onClick, true);
         }
