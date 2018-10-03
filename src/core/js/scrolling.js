@@ -71,6 +71,7 @@ define([
 
         _fixScrollTo: function() {
             var selectorScrollTo = $.fn.scrollTo;
+            var scrollTo = $.scrollTo;
             var $app = Adapt.scrolling.$app;
             $.fn.scrollTo = function(target, duration, settings) {
                 if (this[0] === window || this[0] === document.body) {
@@ -81,6 +82,7 @@ define([
             $.scrollTo = function(target, duration, settings) {
                 return selectorScrollTo.apply($app, arguments);
             };
+            _.extend($.scrollTo, scrollTo);
         },
 
         _fixBrowser: function() {
