@@ -262,7 +262,7 @@ define([
 
         /**
          * Returns all the descendant models of a specific type
-         * @param {string} descendants Valid values are 'contentObject', 'article', 'block' or 'component'
+         * @param {string} descendants Valid values are 'contentObjects', 'pages', 'menus', 'articles', 'blocks' or 'components'
          * @param {object} options an object that defines the search type and the properties/values to search on. Currently only the `where` search type (equivalent to `Backbone.Collection.where()`) is supported.
          * @return {array}
          * @example
@@ -270,32 +270,18 @@ define([
          * this.findDescendantModels('components', { where: { _isAvailable: true, _isOptional: false }});
          */
         findDescendantModels: function(descendants, options) {
-            var returnedDescendants;
-            var allDescendants = [];
-            var flattenedDescendants;
 
-            function searchChildren(models) {
-                for (var i = 0, len = models.length; i < len; i++) {
-                    var model = models[i];
-                    allDescendants.push(model.getChildren().models);
-                    flattenedDescendants = _.flatten(allDescendants);
-                }
-
-                returnedDescendants = flattenedDescendants;
-
-                if (models.length === 0 || models[0]._children === descendants) {
-                    return;
-                } else {
-                    allDescendants = [];
-                    searchChildren(returnedDescendants);
-                }
+            var types = [
+                descendants.slice(0, -1)
+            ];
+            if (descendants === 'contentObjects') {
+                types.push.apply(types, ['page', 'menu']);
             }
 
-            if (this._children === descendants) {
-                returnedDescendants = this.getChildren().models;
-            } else {
-                searchChildren(this.getChildren().models);
-            }
+            var allDescendantsModels = this.getAllDescendantModels();
+            var returnedDescendants = allDescendantsModels.filter(function(model) {
+                return _.contains(types, model.get("_type"));
+            });
 
             if (!options) {
                 return returnedDescendants;

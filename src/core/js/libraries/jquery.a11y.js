@@ -536,6 +536,11 @@ define([
             return true;
         }
 
+        function nativePreventScroll(event) {
+            // Intermediate function to turn the native event object into a jquery event object. 
+            // preventScroll function is expecting a jquery event object.
+            return preventScroll($.event.fix(event));
+        }
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
@@ -543,7 +548,7 @@ define([
             $(window).on(scrollEventName, preventScroll);
             $(document).on(scrollEventName, preventScroll);
             $(window).on("touchstart", onScrollStartCapture); // mobile
-            $(window).on("touchmove", preventScroll); // mobile
+            window.addEventListener("touchmove", nativePreventScroll, { passive:false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
@@ -553,7 +558,7 @@ define([
             $(window).off(scrollEventName, preventScroll);
             $(document).off(scrollEventName, preventScroll);
             $(window).off("touchstart", onScrollStartCapture); // mobile
-            $(window).off("touchmove", preventScroll); // mobile
+            window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
             $(document).off("keydown", preventScrollKeys);
         }
