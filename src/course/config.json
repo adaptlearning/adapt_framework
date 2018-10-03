@@ -45,8 +45,9 @@
         }
     },
     "_disableAnimationFor": [],
-    "_scrolling": {
-        "_isEnabled": true
+    "_scrollingContainer": {
+        "_isEnabled": false,
+		"_limitToSelector": ""
     },
     "build": {
     }

@@ -4,6 +4,7 @@ define([
 
     var Scrolling = Backbone.Controller.extend({
 
+        $html: null,
         $app: null,
         isLegacyScrolling : true,
 
@@ -13,6 +14,7 @@ define([
         },
 
         _checkApp: function() {
+            this.$html = $('html');
             this.$app = $('#app');
             if (this.$app.length) return;
             this.$app = $('<div id="app">');
@@ -22,8 +24,11 @@ define([
         },
 
         _loadConfig: function() {
-            var config = Adapt.config.get("_scrolling");
+            var config = Adapt.config.get("_scrollingContainer");
             if (!config || !config._isEnabled) return;
+            var limitTo = config._limitToSelector;
+            var isIncluded = !limitTo || (this.$html.is(limitTo) || this.$html.hasClass(limitTo));
+            if (!isIncluded) return;
             this.isLegacyScrolling = false;
             this._addStyling();
             this._fixJQuery();
@@ -32,7 +37,7 @@ define([
         },
 
         _addStyling: function() {
-            $('html').addClass("adapt-scrolling");
+            this.$html.addClass("adapt-scrolling");
         },
 
         _fixJQuery: function() {
