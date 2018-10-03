@@ -47,7 +47,7 @@
     "_disableAnimationFor": [],
     "_scrollingContainer": {
         "_isEnabled": false,
-		"_limitToSelector": ""
+        "_limitToSelector": ""
     },
     "build": {
     }
