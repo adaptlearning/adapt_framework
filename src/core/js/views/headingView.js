@@ -4,15 +4,9 @@ define([
 
     var HeadingView = Backbone.View.extend({
 
-        attributes: {
-            'aria-live': 'polite',
-            'aria-atomic': 'true'
-        },
-
         initialize: function() {
             this.listenTo(Adapt, "remove", this.remove);
             this.listenTo(this.model, "change:_isComplete", this.render);
-            this.$el.attr(this.attributes);
             this.render();
         },
 

@@ -94,7 +94,7 @@ define([
             var buttonState = BUTTON_STATE(changedAttribute);
             if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
                 // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-                $buttonsAction.focusNext();
+
                 $buttonsAction.a11y_cntrl_enabled(false);
 
             } else {
@@ -111,7 +111,7 @@ define([
                 switch (changedAttribute) {
                     case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-                        $buttonsAction.focusNext();
+
                         $buttonsAction.a11y_cntrl(false);
                 }
 

@@ -33,7 +33,7 @@ define([
 
     // JQUERY INJECTED ELEMENTS
         var domInjectElements = {
-            "focuser": '<a id="a11y-focuser" href="#" class="prevent-default a11y-ignore" tabindex="-1" role="presentation" aria-label=".">&nbsp;</a>'
+            "focuser": '<div id="a11y-focuser" class="a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>'
         };
 
 
@@ -169,127 +169,6 @@ define([
             }
             return $('body');
         }
-
-        //PERFORMS CALCULATIONS TO TURN HTML/TEXT STRINGS INTO TABBABLE CONTENT
-        /**
-         * Re written to group child nodes according to their readability
-         * @param  {string} text any html string
-         * @return {string}      returns html string with tabbable wrappers where appropriate
-         */
-        function makeHTMLOrTextAccessible(text) {
-
-            return getInnerHTML( makeChildNodesAccessible( wrapInDivAndMakeIntoDOMNode(text) ) );
-
-            function wrapInDivAndMakeIntoDOMNode(text) {
-                var $element;
-                try {
-                    // CONVERT ELEMENT TO DOM NODE
-                    $element = $("<div>"+text+"</div>");
-                } catch (e) {
-                    throw e;
-                }
-                return $element;
-            }
-
-            function getInnerHTML($element) {
-                var rtn = "";
-                for (var i = 0; i < $element[0].children.length; i++) {
-                    rtn += $element[0].children[i].outerHTML;
-                }
-                return rtn;
-            }
-
-            function makeChildNodesAccessible($element) {
-                //CAPTURE DOMNODE CHILDREN
-                var children = $element.children();
-
-
-                if (children.length === 0) {
-                    //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
-                    var textContent = $element.text();
-                    if (stringTrim(textContent) === "") return $element;
-                    removeChildNodes($element);
-                    $element.append( makeElementTabbable($("<span>"+textContent+"</span>")) );
-                    return $element;
-                }
-
-
-                //IF ONLY STYLE TAGS WRAP IN SPAN
-                var styleChildCount = 0;
-                for (var c = 0; c < children.length; c++) {
-                    if ($(children[c]).is(domSelectors.wrapStyleElements)) styleChildCount++;
-                }
-                if (styleChildCount === children.length) {
-                    return $("<span>").append(makeElementTabbable($element));
-                }
-
-                //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
-                var newChildren = [];
-                var newCluster = [];
-                for (var i = 0; i < $element[0].childNodes.length; i++) {
-                    var child = $element[0].childNodes[i];
-                    var cloneChild = $(child.outerHTML)[0];
-                    switch(child.nodeType) {
-                    case 3: //TEXT NODE
-                        //IF TEXT NODE WRAP IN A TABBABLE SPAN
-                        if (!stringTrim(child.textContent)) break;
-                        newCluster.push( child.textContent );
-                        break;
-                    case 1: //DOM NODE
-                        var $child = $(cloneChild);
-                        if ($child.is(domSelectors.wrapStyleElements) || $child.is(domSelectors.wrapIgnoreElements)) {
-                            //IGNORE NATIVELY TABBABLE ELEMENTS AND STYLING ELEMENTS
-                            newCluster.push( $child[0].outerHTML );
-                        } else {
-                            var childChildren = $child.children();
-                            if (childChildren.length === 0) {
-                                //DO NOT DESCEND INTO TEXT ONLY NODES
-                                var textContent = $child.text();
-                                if (stringTrim(textContent) !== "") makeElementTabbable($child);
-                            } else {
-                                //DESCEND INTO NODES WITH CHILDREN
-                                makeChildNodesAccessible($child);
-                            }
-                            if (newCluster.length) {
-                                newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")))
-                                newCluster.length = 0;
-                            }
-                            newChildren.push( $child );
-                        }
-                        break;
-                    }
-                }
-                if (newCluster.length) {
-                    newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")))
-                    newCluster.length = 0;
-                }
-
-                removeChildNodes($element);
-                $element.append(newChildren);
-
-                return $element;
-
-                function removeChildNodes($element) {
-                    var childNodes = $element[0].childNodes.length;
-                    for (var i = childNodes - 1; i > -1 ; i--) {
-                        if ($element[0].childNodes[i].remove) $element[0].childNodes[i].remove();
-                        else if ($element[0].removeChild) $element[0].removeChild($element[0].childNodes[i]); //safari fix
-                        else if ($element[0].childNodes[i].removeNode) $element[0].childNodes[i].removeNode(true); //ie 11 fix
-                    }
-                    return $element;
-                }
-
-                //MAKES AN ELEMENT TABBABLE
-                function makeElementTabbable($element) {
-                    $element.attr({
-                        "role": "region",
-                        "tabindex": 0,
-                    }).addClass("prevent-default");
-                    return $element;
-                }
-            }
-        }
-
 
     // JQUERY UTILITY FUNCTIONS
         $.fn.scrollDisable = function() {
@@ -431,6 +310,27 @@ define([
             // check children by walking the tree
             var $found = this.findWalk(iterator);
             if ($found && $found.length) return $found;
+
+            // check subsequent siblings
+            var $nextSiblings = this.nextAll().toArray();
+            _.find($nextSiblings, function(sibling) {
+                var $sibling = $(sibling);
+                var value = iterator($sibling);
+
+                // skip this sibling if explicitly instructed
+                if (value === false) return;
+
+                if (value) {
+                    // sibling matched
+                    $found = $sibling;
+                    return true;
+                }
+
+                // check parent sibling children by walking the tree
+                $found = $sibling.findWalk(iterator);
+                if ($found && $found.length) return true;
+            });
+            if ($found) return $found;
 
             // move through parents towards the body element
             var $branch = this.add(this.parents()).toArray().reverse();
@@ -585,60 +485,6 @@ define([
         };
 
     // PRIVATE EVENT HANDLERS
-        function onKeyUp(event) {
-            var options = $.a11y.options;
-
-            var $element = $(event.target);
-
-            switch (event.which) {
-            case 32: //SPACE
-
-                //IF ELEMENT HANDLES SPACE THEN SKIP
-                if ($element.is(domSelectors.nativeSpaceElements)) return;
-
-                //STOP SPACE FROM SCROLLING / SELECTING
-                preventDefault(event);
-
-                if (options.isDebug) console.log("a11y: space keyup > click");
-
-                //TURN SPACE INTO CLICK
-                $element.trigger("click");
-
-                break;
-            }
-        }
-
-        function onKeyDown(event) {
-            var options = $.a11y.options;
-
-            var $element = $(event.target);
-
-            switch (event.which) {
-            case 32: //SPACE
-                //IF ELEMENT HANDLES SPACE SKIP
-                if ($element.is(domSelectors.nativeSpaceElements)) return;
-
-                //STOP SPACE FROM SCROLLING / SELECTING
-                preventDefault(event);
-
-                if (options.isDebug) console.log("a11y: space keydown > blocked default");
-
-                break;
-            case 13: //ENTER
-
-                //IF ELEMENT HANDLES ENTER THEN SKIP
-                if ($element.is(domSelectors.nativeEnterElements)) return;
-
-                //STOP ENTER FROM SCROLLING / SELECTING
-                preventDefault(event);
-
-                if (options.isDebug) console.log("a11y: enter keydown > click");
-
-                //TURN ENTER INTO CLICK
-                $element.trigger("click");
-            }
-        }
-
         function onClick(event) {
             var $element = $(event.target);
             if ($element.parents(domSelectors.globalTabIndexElements).length) return;
@@ -690,6 +536,11 @@ define([
             return true;
         }
 
+        function nativePreventScroll(event) {
+            // Intermediate function to turn the native event object into a jquery event object. 
+            // preventScroll function is expecting a jquery event object.
+            return preventScroll($.event.fix(event));
+        }
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
@@ -697,7 +548,7 @@ define([
             $(window).on(scrollEventName, preventScroll);
             $(document).on(scrollEventName, preventScroll);
             $(window).on("touchstart", onScrollStartCapture); // mobile
-            $(window).on("touchmove", preventScroll); // mobile
+            window.addEventListener("touchmove", nativePreventScroll, { passive:false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
@@ -707,7 +558,7 @@ define([
             $(window).off(scrollEventName, preventScroll);
             $(document).off(scrollEventName, preventScroll);
             $(window).off("touchstart", onScrollStartCapture); // mobile
-            $(window).off("touchmove", preventScroll); // mobile
+            window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
             $(document).off("keydown", preventScrollKeys);
         }
@@ -720,18 +571,6 @@ define([
             } else readText = $element.attr("aria-label") || $element.text();
 
             $(document).trigger("reading", stringTrim(readText));
-        }
-
-        function a11y_setupUserInputControlListeners() {
-             $('body')
-                .off("click", ".prevent-default", preventDefault)
-                .off("keyup", onKeyUp)
-                .off("keydown", onKeyDown);
-
-            $('body')
-                .on("click", ".prevent-default", preventDefault)
-                .on("keyup", onKeyUp)
-                .on("keydown", onKeyDown);
         }
 
         function a11y_setupFocusControlListeners() {
@@ -778,14 +617,6 @@ define([
             }).addClass("aria-hidden");
         }
 
-        function a11y_disabledAccessibleTabElements() {
-            var accessibleTabElements = $(domSelectors.focusableElementsAccessible);
-            accessibleTabElements.attr({
-                "aria-hidden": "true",
-                "tabindex": "-1"
-            });
-        }
-
         //TURN ON ACCESSIBILITY FEATURES
         $.a11y = function(isOn, options) {
             if ($.a11y.options.isDebug) console.log("$.a11y called", isOn, options )
@@ -794,8 +625,6 @@ define([
 
         $.a11y.options = {
             OS: "",
-            isTabbableTextEnabled: false,
-            isUserInputControlEnabled: true,
             isFocusControlEnabled: true,
             isRemoveNotAccessiblesEnabled: true,
             isScrollDisableEnabled: true,
@@ -807,6 +636,7 @@ define([
             floorStack: [$("body")],
             focusStack: [],
             tabIndexes: {},
+            ariaHiddens: {},
             elementUIDIndex: 0,
             scrollDisabledElements: null,
             scrollStartEvent: null
@@ -819,10 +649,6 @@ define([
 
             a11y_injectControlElements();
             a11y_setupFocusGuard();
-
-            if (options.isUserInputControlEnabled) {
-                a11y_setupUserInputControlListeners();
-            }
 
             if (options.isFocusControlEnabled) {
                 a11y_setupFocusControlListeners();
@@ -838,10 +664,6 @@ define([
 
             if (options.isRemoveNotAccessiblesEnabled) {
                 a11y_removeNotAccessibles();
-            }
-
-            if (!options.isTabbableTextEnabled) {
-                a11y_disabledAccessibleTabElements();
             }
 
             if (options.isDebug) console.log("a11y_update");
@@ -897,30 +719,24 @@ define([
                 var $item = $(this[i]);
 
                 if (enabled && $item.is(domSelectors.hideableElements)) {
-                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
-                        $item.removeAttr("aria-hidden").removeClass("aria-hidden");
-                        $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                    }
+                    $item.removeAttr("aria-hidden").removeClass("aria-hidden");
+                    $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                     if (withDisabled) {
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
                 } else if (enabled) {
-                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
-                        $item.attr({
-                            tabindex: "0",
-                        }).removeAttr("aria-hidden").removeClass("aria-hidden");
-                        $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                    }
+                    $item.attr({
+                        tabindex: "0",
+                    }).removeAttr("aria-hidden").removeClass("aria-hidden");
+                    $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
                     if (withDisabled) {
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
                 } else {
-                    if (options.isTabbableTextEnabled || !$item.is(domSelectors.focusableElementsAccessible)) {
-                        $item.attr({
-                            tabindex: "-1",
-                            "aria-hidden": "true"
-                        }).addClass("aria-hidden");
-                    }
+                    $item.attr({
+                        tabindex: "-1",
+                        "aria-hidden": "true"
+                    }).addClass("aria-hidden");
                     if (withDisabled) {
                         $item.attr("disabled","disabled").addClass("disabled");
                     }
@@ -943,7 +759,6 @@ define([
         $.a11y_normalize = function(text) {
             var options = $.a11y.options;
 
-            if (!options.isTabbableTextEnabled) return text;
             //USED SPECIFICALLY FOR CONVERTING TITLE TEXT TO ARIA-LABELS
             var text = $("<div>" + text + "</div>").text();
             //REMOVE HTML CHARACTERS SUCH AS &apos;
@@ -959,8 +774,6 @@ define([
          */
         $.a11y_remove_breaks = function(text) {
             var options = $.a11y.options;
-
-            if (!options.isTabbableTextEnabled) return text;
 
             var $div = $("<div>" + text + "</div>");
             var stack = [ $div[0] ];
@@ -993,31 +806,13 @@ define([
 
         //CONVERTS HTML OR TEXT STRING TO ACCESSIBLE HTML STRING
         $.a11y_text = function (text) {
-            var options = $.a11y.options;
-
-            if (!options.isTabbableTextEnabled) return text;
-
-            return makeHTMLOrTextAccessible(text)
+            console.log("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            return text;
         };
 
         //CONVERTS DOM NODE TEXT TO ACCESSIBLE DOM NODES
         $.fn.a11y_text = function(text) {
-            var options = $.a11y.options;
-
-            if (!options.isTabbableTextEnabled) {
-                if (text) {
-                    this.html(text);
-                }
-
-                return this;
-            }
-
-            for (var i = 0; i < this.length; i++) {
-                // If an argument is given then convert that to accessible text
-                // Otherwise convert existing content
-                text = text || this[i].innerHTML;
-                this[i].innerHTML = makeHTMLOrTextAccessible(text);
-            }
+            console.log("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
             return this;
         };
 
@@ -1057,6 +852,10 @@ define([
                 $hideable = $(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter);
             }
 
+            var $branch = this.add(this.parents());
+            var $siblings = $branch.siblings().filter(domFilters.globalTabIndexElementFilter);
+            $elements = $elements.add($siblings);
+
             $elements.each(function(index, item) {
                 var $item = $(item);
 
@@ -1068,20 +867,24 @@ define([
 
                 if (storeLastTabIndex) {
                     if (state.tabIndexes[elementUID] === undefined) state.tabIndexes[elementUID] = [];
-                    state.tabIndexes[elementUID].push( $item.attr('tabindex') || 0 );
+                    if (state.ariaHiddens[elementUID] === undefined) state.ariaHiddens[elementUID] = [];
+                    var tabindex = $item.attr('tabindex');
+                    var ariaHidden = $item.attr('aria-hidden');
+                    state.tabIndexes[elementUID].push( tabindex === undefined ? "" : tabindex );
+                    state.ariaHiddens[elementUID].push( ariaHidden === undefined ? "" : ariaHidden);
                 }
 
                 $item.attr({
                     'tabindex': -1,
                     'aria-hidden': true
-                }).addClass("aria-hidden");
+                });
             });
 
-            $hideable.attr("aria-hidden", true).attr("tabindex", "-1").addClass("aria-hidden");
+            $hideable.attr("aria-hidden", true).attr("tabindex", "-1");
 
             this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).attr({
                 'tabindex': 0
-            }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
+            }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.ariaHiddenParentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
             this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
 
             $.a11y_update();
@@ -1121,7 +924,8 @@ define([
 
             $(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).each(function(index, item) {
                 var $item = $(item);
-                var previousTabIndex = 0;
+                var previousTabIndex = "";
+                var previousAriaHidden = "";
 
                 var elementUID;
                 if (item.a11y_uid == undefined) {
@@ -1133,24 +937,30 @@ define([
 
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length !== 0) {
                     //get previous tabindex if saved
-                    previousTabIndex = parseInt(state.tabIndexes[elementUID].pop());
+                    previousTabIndex = state.tabIndexes[elementUID].pop();
+                    previousAriaHidden = state.ariaHiddens[elementUID].pop();
                 }
                 if (state.tabIndexes[elementUID] !== undefined && state.tabIndexes[elementUID].length > 0) {
                     //delete element tabindex store if empty
                     delete state.tabIndexes[elementUID];
+                    delete state.ariaHiddens[elementUID];
                 }
 
-                $item.attr({
-                    'tabindex': previousTabIndex
-                });
-
-                if (previousTabIndex === -1) {
-                    //hide element from screen reader
-                    return $item.attr('aria-hidden', true).addClass("aria-hidden");
+                if (previousTabIndex === "") {
+                    $item.removeAttr("tabindex");
+                } else {
+                    $item.attr({
+                        'tabindex': previousTabIndex
+                    });
                 }
 
-                //show element to screen reader
-                $item.removeAttr('aria-hidden').removeClass("aria-hidden");
+                if (previousAriaHidden === "") {
+                    $item.removeAttr("aria-hidden");
+                } else {
+                    $item.attr({
+                        'aria-hidden': previousAriaHidden
+                    });
+                }
 
                 if ($item.is(domSelectors.hideableElements)) {
                     $item.removeAttr("tabindex");

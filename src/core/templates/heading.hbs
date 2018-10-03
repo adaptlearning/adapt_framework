@@ -1,12 +1,16 @@
 {{import_globals}}
 <div id="{{_id}}-heading" class="js-heading-inner" {{{a11y_attrs_heading _type}}} >
     <span class="aria-label">
-    {{#if _isOptional}}
-        {{compile displayTitle}}
-    {{else if _isComplete}}
-        {{_globals._accessibility._ariaLabels.complete}} {{compile displayTitle}}
+    {{#if _isA11yCompletionDescriptionEnabled}}
+        {{#if _isOptional}}
+            {{compile displayTitle}}
+        {{else if _isComplete}}
+            {{_globals._accessibility._ariaLabels.complete}} {{compile displayTitle}}
+        {{else}}
+            {{_globals._accessibility._ariaLabels.incomplete}} {{compile displayTitle}}
+        {{/if}}
     {{else}}
-        {{_globals._accessibility._ariaLabels.incomplete}} {{compile displayTitle}}
+        {{compile displayTitle}}
     {{/if}}
     </span>
 </div>
