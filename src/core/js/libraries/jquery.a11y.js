@@ -486,14 +486,14 @@ define([
 
     // PRIVATE EVENT HANDLERS
         function onClick(event) {
+            var options = $.a11y.options;
             var $element = $(event.target);
-            if ($element.parents(domSelectors.globalTabIndexElements).length) return;
-            if ($element.is(domSelectors.globalTabIndexElements)) return;
-            $element.attr({
-                'tabindex': '-1',
-                'data-a11y-force-focus': true
-            });
-            $element.focus();
+            var $stack = $().add($element).add($element.parents());
+            var $focusable = $stack.filter(domSelectors.globalTabIndexElements);
+            if (!$focusable.length) return;
+            // Force focus for screen reader enter / space press
+            if (options.isDebug) console.log("clicked", $focusable[0]);
+            $focusable[0].focus();
         }
 
         function onFocus(event) {
@@ -508,11 +508,6 @@ define([
             if (options.isDebug) console.log("focus", $element[0]);
 
             state.$activeElement = $(event.target);
-
-            if (state.$activeElement.is(domSelectors.nativeTabElements)) {
-                //Capture that the user has interacted with a native form element
-                $.a11y.userInteracted = true;
-            }
         }
 
         function onBlur(event) {
@@ -520,7 +515,7 @@ define([
             var $element = $(element);
 
             if ($element.is('[data-a11y-force-focus]')) {
-                $element.removeAttr('tabindex');
+                $element.removeAttr('tabindex data-a11y-force-focus');
             }
         }
 
@@ -575,15 +570,22 @@ define([
 
         function a11y_setupFocusControlListeners() {
             var options = $.a11y.options;
-            $("body")
-                .off("click", '*', onClick)
-                .off("focus", '*', onFocus)
-                .off("blur", '*', onBlur);
+            var $body = $('body');
+            $body
+                .off('focus', '*', onFocus)
+                .off('blur', '*', onBlur)
+                .off('focus', onFocus)
+                .off("blur", onBlur);
 
-            $("body")
-                .on("click", '*', onClick)
-                .on("focus", '*', onFocus)
-                .on("blur", '*', onBlur);
+            $body
+                .on('focus', '*', onFocus)
+                .on('blur', '*', onBlur)
+                .on('focus', onFocus)
+                .on("blur", onBlur);
+
+            // "Capture" event attachment for click
+            $body[0].removeEventListener('click', onClick);
+            $body[0].addEventListener('click', onClick, true);
         }
 
         function a11y_setupFocusGuard() {
