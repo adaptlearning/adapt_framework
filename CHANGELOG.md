@@ -1,12 +1,17 @@
 ## [Unreleased][unreleased]
 
+## [2.2.6] - 2018-10-15
+- The `closeNotify` event could be invoked multiple times ([#1659](https://github.com/adaptlearning/adapt_framework/issues/1659))
+- Fix for [#1659](https://github.com/adaptlearning/adapt_framework/issues/1659) prevented user from being able to close Notify ([2183](https://github.com/adaptlearning/adapt_framework/issues/2183))
+- Drawer button not closing drawer when it contains only 1 item ([#2209](https://github.com/adaptlearning/adapt_framework/issues/2209))
+
 ## [2.2.5] - 2018-01-26
 
 A maintenance release to correct the 2.2.4 release which was based on 'master' and not the 'legacy' branch.
 
 ## [2.2.4] - 2018-01-25
-- Standard events triggered on subsequent initialise calls (#1923)
-- Drawer icon is removed when changing language (#1917)
+- Standard Adapt event queue doesn't fire on language change ([#1909](https://github.com/adaptlearning/adapt_framework/issues/1909))
+- Drawer icon is removed when changing language ([#1917](https://github.com/adaptlearning/adapt_framework/issues/1917))
 
 ## [2.2.3] - 2017-11-17
 
@@ -565,7 +570,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.5...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.6...HEAD
+[2.2.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.5...v2.2.6
 [2.2.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.4...v2.2.5
 [2.2.4]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.3...v2.2.4
 [2.2.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.2...v2.2.3

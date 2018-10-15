@@ -1,6 +1,6 @@
 {
   "name": "adapt_framework",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Adapt Learning output framework",
   "repository": {
     "type": "git",
@@ -80,8 +80,7 @@
       "email": "kirsty.hames@kineo.com"
     },
     {
-      "name": "Laura Haselum",
-      "email": "laura.haselum@kineo.com"
+      "name": "Laura Haselum"
     },
     {
       "name": "Lukasz Grela",
@@ -104,8 +103,7 @@
       "email": "ryana@learningpool.com"
     },
     {
-      "name": "Sal Ali",
-      "email": ""
+      "name": "Sal Ali"
     },
     {
       "name": "Sven Laux",
