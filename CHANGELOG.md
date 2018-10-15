@@ -3,9 +3,9 @@
 ## [3.2.2] - 2018-10-15
 
 ### Fixed
-- The 'component not found' can be quite misleading ([#2142](https://github.com/adaptlearning/adapt_framework/issues/2142))
-- On feedback popup open, background content is scrollable on Android ([](https://github.com/adaptlearning/adapt_framework/issues/2154))
-- The `findDescendantModels` function throwing an error ([#2180](https://github.com/adaptlearning/adapt_framework/issues/2180))
+- The 'component not found' error can be quite misleading ([#2142](https://github.com/adaptlearning/adapt_framework/issues/2142))
+- On feedback popup open, background content is scrollable on Android ([#2154](https://github.com/adaptlearning/adapt_framework/issues/2154))
+- The `findDescendantModels` function throwing error when there's no defined `_children` type ([#2180](https://github.com/adaptlearning/adapt_framework/issues/2180))
 - Unnecessary Grunt process ([#2224](https://github.com/adaptlearning/adapt_framework/issues/2224))
 - Accessibility library causing elements to scroll into view unnecessarily ([#2228](https://github.com/adaptlearning/adapt_framework/issues/2228))
 
