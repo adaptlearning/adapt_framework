@@ -2,7 +2,7 @@
 
 ## [2.2.6] - 2018-10-15
 - The `closeNotify` event could be invoked multiple times ([#1659](https://github.com/adaptlearning/adapt_framework/issues/1659))
-- Fix for [#1659](https://github.com/adaptlearning/adapt_framework/issues/1659) prevented user from being able to close Notify ([2183](https://github.com/adaptlearning/adapt_framework/issues/2183))
+- Fix for [#1659](https://github.com/adaptlearning/adapt_framework/issues/1659) preventing user from being able to close Notify ([#2183](https://github.com/adaptlearning/adapt_framework/issues/2183))
 - Drawer button not closing drawer when it contains only 1 item ([#2209](https://github.com/adaptlearning/adapt_framework/issues/2209))
 
 ## [2.2.5] - 2018-01-26
