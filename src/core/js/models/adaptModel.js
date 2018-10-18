@@ -188,14 +188,16 @@ define([
                 return;
             }
 
-            this.set({_isReady: true});
+            this.set('_isReady', true);
         },
 
         setCompletionStatus: function() {
-            if (this.get('_isVisible')) {
-                this.set('_isComplete', true);
-                this.set('_isInteractionComplete', true);
-            }
+            if (!this.get('_isVisible')) return;
+
+            this.set({
+                _isComplete: true,
+                _isInteractionComplete: true
+            });
         },
 
         checkCompletionStatus: function () {
