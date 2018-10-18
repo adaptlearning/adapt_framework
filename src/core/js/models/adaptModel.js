@@ -50,7 +50,7 @@ define([
 
             this.init();
 
-            _.defer(_.bind(function() {
+            _.defer(function() {
                 if (this._children) {
                     this.checkCompletionStatus();
 
@@ -61,7 +61,7 @@ define([
 
                 this.setupTrackables();
 
-            }, this));
+            }.bind(this));
 
         },
 
@@ -70,13 +70,13 @@ define([
             // Limit state trigger calls and make state change callbacks batched-asynchronous
             var originalTrackableStateFunction = this.triggerTrackableState;
             this.triggerTrackableState = _.compose(
-                _.bind(function() {
+                function() {
 
                     // Flag that the function is awaiting trigger
                     this.triggerTrackableState.isQueued = true;
 
-                }, this),
-                _.debounce(_.bind(function() {
+                }.bind(this),
+                _.debounce(function() {
 
                     // Trigger original function
                     originalTrackableStateFunction.apply(this);
@@ -84,7 +84,7 @@ define([
                     // Unset waiting flag
                     this.triggerTrackableState.isQueued = false;
 
-                }, this), 17)
+                }.bind(this), 17)
             );
 
             // Listen to model changes, trigger trackable state change when appropriate
@@ -99,7 +99,7 @@ define([
                 var trackablePropertyNames = _.result(this, 'trackable', []);
                 var changedPropertyNames = _.keys(model.changed);
                 var isTrackable = _.find(changedPropertyNames, function(item, index) {
-                     return _.contains(trackablePropertyNames, item);
+                    return _.contains(trackablePropertyNames, item);
                 }.bind(this));
 
                 if (isTrackable) {
@@ -203,13 +203,13 @@ define([
         checkCompletionStatus: function () {
             //defer to allow other change:_isComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isComplete"));
+            _.defer(this.checkCompletionStatusFor.bind(this), '_isComplete');
         },
 
         checkInteractionCompletionStatus: function () {
             //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isInteractionComplete"));
+            _.defer(this.checkCompletionStatusFor.bind(this), '_isInteractionComplete');
         },
 
         /**
@@ -601,10 +601,10 @@ define([
                     return this.get("_siblings");
                 }
                 siblings = _.reject(Adapt[this._siblings].where({
-                    _parentId: this.get("_parentId")
-                }), _.bind(function (model) {
+                    _parentId: this.get('_parentId')
+                }), function (model) {
                     return model.get('_id') == this.get('_id');
-                }, this));
+                }.bind(this));
 
                 this._hasSiblingsAndSelf = false;
 
