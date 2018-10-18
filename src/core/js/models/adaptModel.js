@@ -42,9 +42,6 @@ define([
                 this._parent = 'contentObjects';
             }
             if (this._children) {
-                //if parent is optional, apply to children
-                if (this.get('_isOptional')) this.setOptional(true);
-
                 this.setupChildListeners();
             }
 
