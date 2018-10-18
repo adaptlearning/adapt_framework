@@ -241,23 +241,21 @@ define([
             Adapt.checkedCompletion();
         },
 
-        findAncestor: function (ancestors) {
-
+        /**
+         * Searches the model's ancestors to find the first instance of the specified ancestor type
+         * @param {string} [ancestorType] Valid values are 'course', contentObjects', 'articles' or 'blocks'.
+         * If left blank, the immediate ancestor (if there is one) is returned
+         * @return {object} Reference to the model of the first ancestor of the specified type that's found - or `undefined` if none found
+         */
+        findAncestor: function (ancestorType) {
             var parent = this.getParent();
+            if (!parent) return;
 
-            if (this._parent === ancestors) {
+            if (!ancestorType || ancestorType === "" || this._parent === ancestorType) {
                 return parent;
             }
 
-            var returnedAncestor = parent.getParent();
-
-            if (parent._parent !== ancestors) {
-                returnedAncestor = returnedAncestor.getParent();
-            }
-
-            // Returns a single model
-            return returnedAncestor;
-
+            return parent.findAncestor(ancestorType);
         },
 
         /**
