@@ -637,6 +637,9 @@ define([
 
         },
 
+        /**
+         * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
+         */
         setOptional: function(value) {
             this.set({_isOptional: value});
         },
