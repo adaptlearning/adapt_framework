@@ -351,6 +351,9 @@ define([
 
         },
 
+        /**
+         * @deprecated Since v2.2.0 - please use findDescendantModels instead
+         */
         findDescendants: function (descendants) {
             Adapt.log.warn("DEPRECATED - Use findDescendantModels() as findDescendants() may be removed in the future");
 
@@ -521,6 +524,9 @@ define([
             });
         },
 
+        /**
+         * @deprecated since v2.2.0 please use getAvailableChildModels instead
+         */
         getAvailableChildren: function() {
             Adapt.log.warn("DEPRECATED - Use getAvailableChildModels() as getAvailableChildren() may be removed in the future");
 
@@ -555,6 +561,9 @@ define([
             return parents.length ? parents : null;
         },
 
+        /**
+         * @deprecated since v2.2.0 please use getAncestorModels instead
+         */
         getParents: function(shouldIncludeChild) {
             Adapt.log.warn("DEPRECATED - Use getAncestorModels() as getParents() may be removed in the future");
 
