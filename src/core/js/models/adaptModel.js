@@ -264,6 +264,7 @@ define([
          * Returns all the descendant models of a specific type
          * @param {string} descendants Valid values are 'contentObjects', 'pages', 'menus', 'articles', 'blocks' or 'components'
          * @param {object} options an object that defines the search type and the properties/values to search on. Currently only the `where` search type (equivalent to `Backbone.Collection.where()`) is supported.
+         * @param {object} options.where
          * @return {array}
          * @example
          * //find all available, non-optional components
