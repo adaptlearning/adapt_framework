@@ -300,19 +300,22 @@ define([
             }
         },
 
-
-        // Fetchs the sub structure of a model as a flattened array
-        //
-        // Such that the tree:
-        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
-        //
-        // will become the array (parent first = false):
-        //  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
-        //
-        // or (parent first = true):
-        //  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
-        //
-        // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
+        /**
+         * Fetches the sub structure of a model as a flattened array
+         *
+         * Such that the tree:
+         *  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+         *
+         * will become the array (parent first = false):
+         *  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
+         *
+         * or (parent first = true):
+         *  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
+         *
+         * This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
+         * @param {boolean} isParentFirst 
+         * @return {array}
+         */
         getAllDescendantModels: function(isParentFirst) {
 
             var descendants = [];
@@ -392,15 +395,23 @@ define([
             return returnedDescendants;
         },
 
-        // Returns a relative model from the Adapt hierarchy
-        //
-        // Such that in the tree:
-        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
-        //
-        //  findRelative(modelC1, "@block +1") = modelB2;
-        //  findRelative(modelC1, "@component +4") = modelC5;
-        //
-        // See Adapt.parseRelativeString() for a description of relativeStrings
+        /**
+         * Returns a relative model from the Adapt hierarchy
+         *
+         * Such that in the tree:
+         *  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+         *
+         *  c1.findRelativeModel("@block +1") = b2;
+         *  c1.findRelativeModel("@component +4") = c5;
+         *
+         * @see Adapt.parseRelativeString for a description of relativeStrings
+         * @param {string} relativeString
+         * @param {object} options Search configuration settings
+         * @param {boolean} options.limitParentId
+         * @param {function} options.filter
+         * @param {boolean} options.loop
+         * @return {array}
+         */
         findRelativeModel: function(relativeString, options) {
 
             var types = [ "menu", "page", "article", "block", "component" ];
