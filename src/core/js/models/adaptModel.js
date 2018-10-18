@@ -503,8 +503,10 @@ define([
                 childrenCollection = new Backbone.Collection(children);
             }
 
-            if (this.get('_type') == 'block' && childrenCollection.length == 2
-                && childrenCollection.models[0].get('_layout') !== 'left' && this.get('_sortComponents') !== false) {
+            if (this.get('_type') == 'block' &&
+                childrenCollection.length == 2 &&
+                childrenCollection.models[0].get('_layout') !== 'left' &&
+                this.get('_sortComponents') !== false) {
                 // Components may have a 'left' or 'right' _layout,
                 // so ensure they appear in the correct order
                 // Re-order component models to correct it
@@ -514,7 +516,6 @@ define([
 
             this.set("_children", childrenCollection);
 
-            // returns a collection of children
             return childrenCollection;
         },
 
