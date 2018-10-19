@@ -248,7 +248,7 @@ define([
             var parent = this.getParent();
             if (!parent) return;
 
-            if (!ancestorType || ancestorType === "" || this._parent === ancestorType) {
+            if (!ancestorType || this._parent === ancestorType) {
                 return parent;
             }
 
