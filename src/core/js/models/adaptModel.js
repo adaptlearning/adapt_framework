@@ -309,7 +309,7 @@ define([
          *  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
          *
          * This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
-         * @param {boolean} isParentFirst 
+         * @param {boolean} [isParentFirst]
          * @return {array}
          */
         getAllDescendantModels: function(isParentFirst) {
