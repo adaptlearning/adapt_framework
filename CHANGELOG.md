@@ -1,5 +1,8 @@
 ## [Unreleased][unreleased]
 
+## [2.2.7] - 2018-10-24
+- Fix compatibility with authoring tool ([#2111](https://github.com/adaptlearning/adapt_authoring/issues/2111))
+
 ## [2.2.6] - 2018-10-15
 - The `closeNotify` event could be invoked multiple times ([#1659](https://github.com/adaptlearning/adapt_framework/issues/1659))
 - Fix for [#1659](https://github.com/adaptlearning/adapt_framework/issues/1659) preventing user from being able to close Notify ([#2183](https://github.com/adaptlearning/adapt_framework/issues/2183))
@@ -570,7 +573,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.6...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.7...HEAD
+[2.2.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.6...v2.2.7
 [2.2.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.5...v2.2.6
 [2.2.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.4...v2.2.5
 [2.2.4]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.3...v2.2.4
