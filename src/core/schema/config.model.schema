@@ -359,7 +359,6 @@
         }
       }
     },
-
     "_scrollingContainer": {
       "type": "object",
       "title": "iFrame and Screen Reader scrolling support",
