@@ -378,7 +378,7 @@
           "title": "Limit to selector",
           "inputType": "Text",
           "validators": [],
-          "help": "A comma-separated list of classes to look for on the HTML element when determining whether this should be active or not."
+          "help": "CSS selector to match against the HTML element when determining whether this should be active or not."
         }
       }
     }
