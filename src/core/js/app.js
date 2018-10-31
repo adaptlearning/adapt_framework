@@ -22,6 +22,7 @@ require([
     'core/js/router',
     'core/js/models/lockingModel',
     'core/js/helpers',
+    'core/js/scrolling',
     'core/js/headings',
     'plugins'
 ], function (Adapt, AdaptCollection, StartController, BuildModel, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
@@ -30,7 +31,7 @@ require([
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
 
     var template = Handlebars.templates['loading'];
-    $('#wrapper').append(template());
+    $('body').append(template());
 
     Adapt.build = new BuildModel(null, {url: "adapt/js/build.min.js", reset:true});
 
@@ -41,7 +42,7 @@ require([
             Adapt.articles.models.length > 0 &&
             Adapt.blocks.models.length > 0 &&
             Adapt.components.models.length > 0 &&
-            Adapt.course.get('_id')) { 
+            Adapt.course.get('_id')) {
 
             mapAdaptIdsToObjects();
 
@@ -207,7 +208,7 @@ require([
     }
 
     function onBuildDataLoaded() {
-        $('html').attr("data-adapt-framework-version", Adapt.build.get('package').version);  
+        $('html').attr("data-adapt-framework-version", Adapt.build.get('package').version);
         Adapt.config = new ConfigModel(null, {url: "course/config."+Adapt.build.get("jsonext"), reset:true});
         Adapt.config.on({
             'change:_activeLanguage': onLanguageChange,

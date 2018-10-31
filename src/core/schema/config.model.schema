@@ -358,6 +358,29 @@
           "title": "Log to browser console?"
         }
       }
+    },
+    "_scrollingContainer": {
+      "type": "object",
+      "title": "iFrame and Screen Reader scrolling support",
+      "properties" : {
+        "_isEnabled": {
+          "type": "boolean",
+          "default": false,
+          "required": true,
+          "inputType": "Checkbox",
+          "validators": [],
+          "title": "Enabled?"
+        },
+        "_limitToSelector": {
+          "type": "string",
+          "required": false,
+          "default": "",
+          "title": "Limit to selector",
+          "inputType": "Text",
+          "validators": [],
+          "help": "CSS selector to match against the HTML element when determining whether this should be active or not."
+        }
+      }
     }
   }
 }
