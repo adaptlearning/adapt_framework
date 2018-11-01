@@ -18,6 +18,7 @@ define([
 
         disableAnimation: false,
         isOpen: false,
+        hasOpened: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
@@ -136,6 +137,9 @@ define([
             this.isOpen = true;
             this.addSubView();
 
+            // Keep focus from previous action
+            this.$previousActiveElement = $(document.activeElement);
+
             Adapt.trigger('notify:opened', this);
 
             this.$el.imageready(loaded.bind(this));
@@ -161,21 +165,23 @@ define([
                 } else {
 
                     this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
+                        // Make sure to make the notify visible and then set
+                        // focus, disabled scroll and manage tabs
                         this.$('.notify-popup').css('visibility', 'visible');
-                    }.bind(this), complete: function() {
                         complete.call(this);
                     }.bind(this)});
 
                 }
 
                 function complete() {
-                    /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
+                    this.hasOpened = true;
+                    // Allows popup manage to control focus
                     Adapt.trigger('popup:opened', this.$('.notify-popup'));
                     $('body').scrollDisable();
                     $('html').addClass('notify');
 
-                    //set focus to first accessible element
-                    this.$('.notify-popup').a11y_focus();
+                    // Set focus to first accessible element
+                    this.$('.notify-popup').a11y_focus(true);
                 }
             }
 
@@ -191,33 +197,44 @@ define([
         },
 
         closeNotify: function (event) {
-            //prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
+            // Prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
             if (!this.isOpen) return;
             this.isOpen = false;
 
-            if (this.disableAnimation) {
+            var complete = function() {
+                if (this.disableAnimation) {
 
-                this.$('.notify-popup').css('visibility', 'hidden');
-                this.$el.css('visibility', 'hidden');
-
-                this.remove();
-
-            } else {
-
-                this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
                     this.$('.notify-popup').css('visibility', 'hidden');
-                }.bind(this)});
-
-                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
                     this.$el.css('visibility', 'hidden');
+
                     this.remove();
-                }.bind(this)});
+
+                } else {
+
+                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
+                        this.$('.notify-popup').css('visibility', 'hidden');
+                    }.bind(this)});
+
+                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
+                        this.$el.css('visibility', 'hidden');
+                        this.remove();
+                    }.bind(this)});
+                }
+
+                $('body').scrollEnable();
+                $('html').removeClass('notify');
+
+                // Return focus to previous active element
+                Adapt.trigger('popup:closed notify:closed', this.$previousActiveElement);
+            }.bind(this);
+
+            // If closeNotify is called before showNotify has finished then wait
+            // until it's open.
+            if (!this.hasOpened) {
+                this.listenToOnce(Adapt, 'popup:opened', _.debounce(complete, 1));
+            } else {
+                complete();
             }
-
-            $('body').scrollEnable();
-            $('html').removeClass('notify');
-
-            Adapt.trigger('popup:closed notify:closed');
         },
 
         remove: function() {
