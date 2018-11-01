@@ -65,11 +65,12 @@ module.exports = function(grunt) {
         grunt.file.expand({filter: 'isDirectory'}, languageFolderGlob ).forEach(function(languageFolderPath) {
             var currentCourseFolder = languageFolderPath;
             var currentCourseJsonFile = path.join(currentCourseFolder, 'course.' + jsonext);
-
-            //read course json and overlay onto defaults object
-            var currentCourseJson = _.deepExtend({}, defaultsObject, grunt.file.readJSON(currentCourseJsonFile));
-            //write modified course json to build
             var outputDirCourseJson = currentCourseJsonFile.replace(path.basename(sourcedir), path.basename(grunt.config('outputdir')));
+
+            // Read course json from build and overlay onto defaults object
+            var currentCourseJson = _.deepExtend({}, defaultsObject, grunt.file.readJSON(outputDirCourseJson));
+
+            // Write modified course json to build
             grunt.file.write(outputDirCourseJson, JSON.stringify(currentCourseJson, null, 4));
         });
     });
