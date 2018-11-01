@@ -201,12 +201,14 @@ define([
             // question isCorrect or isPartlyCorrect
             this._runModelCompatibleFunction("setupFeedback");
 
+            // Used to trigger an event so plugins can display feedback
+            // Do this before updating the buttons so that the focus can be
+            // shifted immediately
+            this.showFeedback();
+
             // Used to update buttonsView based upon question state
             // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
             this._runModelCompatibleFunction("updateButtons");
-
-            // Used to trigger an event so plugins can display feedback
-            this.showFeedback();
 
             this.onSubmitted();
         },
@@ -301,7 +303,7 @@ define([
         // be a full reset
         resetQuestion: function() {},
 
-        refresh: function() {            
+        refresh: function() {
             this.model.set('_buttonState', this.model.getButtonState());
 
             if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
@@ -397,7 +399,7 @@ define([
             getResponseType: function() {
                 return this.model.getResponseType();
             },
-            
+
             // Calls default methods to setup on questions
             setupDefaultSettings: function() {
                 return this.model.setupDefaultSettings();
@@ -529,7 +531,7 @@ define([
             if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
                 switch (checkForFunction) {
                     case "setupFeedback":
-                    case "markQuestion": 
+                    case "markQuestion":
                         return true; //questionView
                 }
                 return false; //questionModel
