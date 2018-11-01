@@ -157,9 +157,13 @@ define([
         showMarking: function() {
             if (!this.model.get('_canShowMarking')) return;
 
+            var isCorrect = this.model.get('_isCorrect');
+            var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
+
             this.$('.buttons-marking-icon')
                 .removeClass('display-none')
-                .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
+                .addClass(isCorrect ? 'icon-tick' : 'icon-cross')
+                .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
         },
 
         refresh: function() {

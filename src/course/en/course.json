@@ -107,6 +107,8 @@
                 "ipad": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select."
             },
             "_ariaLabels": {
+                "answeredIncorrectly": "You answered incorrectly",
+                "answeredCorrectly": "You answered correctly",
                 "navigation": "Course navigation bar",
                 "skipNavigation": "Skip Navigation",
                 "menuLoaded": "Menu Loaded.",
