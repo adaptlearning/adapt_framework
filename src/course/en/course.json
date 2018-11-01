@@ -109,6 +109,8 @@
             "_ariaLabels": {
                 "answeredIncorrectly": "You answered incorrectly",
                 "answeredCorrectly": "You answered correctly",
+                "selectedAnswer": "selected",
+                "unselectedAnswer": "not selected",
                 "navigation": "Course navigation bar",
                 "skipNavigation": "Skip Navigation",
                 "menuLoaded": "Menu Loaded.",
