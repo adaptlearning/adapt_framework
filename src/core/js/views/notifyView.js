@@ -175,7 +175,7 @@ define([
 
                 function complete() {
                     this.hasOpened = true;
-                    // Allows popup manage to control focus
+                    // Allows popup manager to control focus
                     Adapt.trigger('popup:opened', this.$('.notify-popup'));
                     $('body').scrollDisable();
                     $('html').addClass('notify');
