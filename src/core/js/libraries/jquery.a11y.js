@@ -525,7 +525,7 @@ define([
             // due to the addition of a disabled class
             if ($element.is("[disabled]")) {
                 // Move focus to next readable element
-                defer($element.focusNext, $element, 1000);
+                $element.focusNext();
             }
         }
 
