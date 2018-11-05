@@ -524,7 +524,7 @@ define([
             // Check if element losing focus is losing focus
             // due to the addition of a disabled class
             if ($element.is("[disabled]")) {
-                // Nove focus to next readable element
+                // Move focus to next readable element
                 defer($element.focusNext, $element, 1000);
             }
         }
