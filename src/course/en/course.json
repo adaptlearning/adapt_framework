@@ -80,7 +80,6 @@
             "mediaAria": "View media resources",
             "linkAria": "View resource links"
         },
-        "itemAriaExternal": "This content will open in a new window",
         "_resourcesItems": [
             {
                 "_type": "document",
