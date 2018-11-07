@@ -171,38 +171,99 @@ define([
 
         },
 
-        findDescendantModels: function(descendants) {
-            var children = this.getChildren().models;
+        /**
+         * Returns all the descendant models of a specific type
+         * @param {string} descendants Valid values are 'contentObjects', 'pages', 'menus', 'articles', 'blocks' or 'components'
+         * @param {object} options an object that defines the search type and the properties/values to search on. Currently only the `where` search type (equivalent to `Backbone.Collection.where()`) is supported.
+         * @param {object} options.where
+         * @return {array}
+         * @example
+         * //find all available, non-optional components
+         * this.findDescendantModels('components', { where: { _isAvailable: true, _isOptional: false }});
+         */
+        findDescendantModels: function(descendants, options) {
 
-            // first check if descendant is child and return child
-            if (this._children === descendants) {
-                return children;
+            var types = [
+                descendants.slice(0, -1)
+            ];
+            if (descendants === 'contentObjects') {
+                types.push.apply(types, ['page', 'menu']);
             }
 
-            var allDescendants = [];
-            var flattenedDescendants;
-            var returnedDescendants;
+            var allDescendantsModels = this.getAllDescendantModels();
+            var returnedDescendants = allDescendantsModels.filter(function(model) {
+                return _.contains(types, model.get("_type"));
+            });
 
-            function searchChildren(models) {
-                for (var i = 0, len = models.length; i < len; i++) {
-                    var model = models[i];
-                    allDescendants.push(model.getChildren().models);
-                    flattenedDescendants = _.flatten(allDescendants);
-                }
-
-                returnedDescendants = flattenedDescendants;
-
-                if (models.length === 0 || models[0]._children === descendants) {
-                    return;
-                } else {
-                    allDescendants = [];
-                    searchChildren(returnedDescendants);
-                }
+            if (!options) {
+                return returnedDescendants;
             }
 
-            searchChildren(children);
+            if (options.where) {
+                return returnedDescendants.filter(function(descendant) {
+                    for (var property in options.where) {
+                        var value = options.where[property];
+                        if (descendant.get(property) !== value) {
+                            return false;
+                        }
+                    }
+                    return true;
+                });
+            }
+        },
 
-            return returnedDescendants;
+        /**
+         * Fetches the sub structure of a model as a flattened array
+         *
+         * Such that the tree:
+         *  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+         *
+         * will become the array (parent first = false):
+         *  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
+         *
+         * or (parent first = true):
+         *  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
+         *
+         * This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
+         * @param {boolean} [isParentFirst]
+         * @return {array}
+         */
+        getAllDescendantModels: function(isParentFirst) {
+
+            var descendants = [];
+
+            if (this.get("_type") === "component") {
+                descendants.push(this);
+                return descendants;
+            }
+
+            var children = this.getChildren();
+
+            for (var i = 0, l = children.models.length; i < l; i++) {
+
+                var child = children.models[i];
+                if (child.get("_type") === "component") {
+
+                    descendants.push(child);
+                    continue;
+
+                }
+
+                var subDescendants = child.getAllDescendantModels(isParentFirst);
+                if (isParentFirst === true) {
+                    descendants.push(child);
+                }
+
+                descendants = descendants.concat(subDescendants);
+
+                if (isParentFirst !== true) {
+                    descendants.push(child);
+                }
+
+            }
+
+            return descendants;
+
         },
 
         findDescendants: function (descendants) {
