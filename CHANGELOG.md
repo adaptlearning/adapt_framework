@@ -1,5 +1,10 @@
 ## [Unreleased][unreleased]
 
+## [2.3.0] - 2018-11-08
+- Fix bug with `findDescendantModels` ([#2260](https://github.com/adaptlearning/adapt_framework/issues/2260))
+- Add ability to easily filter the results of `findDescendantModels` ([#2058](https://github.com/adaptlearning/adapt_framework/issues/2058))
+- Add `getAllDescendantModels` (required by updated version of `findDescendantModels`)
+
 ## [2.2.7] - 2018-10-24
 - Fix compatibility with authoring tool ([#2111](https://github.com/adaptlearning/adapt_authoring/issues/2111))
 
@@ -573,7 +578,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.7...legacy
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.0...legacy
+[2.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.7...v2.3.0
 [2.2.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.6...v2.2.7
 [2.2.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.5...v2.2.6
 [2.2.5]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.4...v2.2.5
