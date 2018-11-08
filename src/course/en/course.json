@@ -8,113 +8,39 @@
     "_buttons": {
         "_submit": {
             "buttonText": "Submit",
-            "ariaLabel": "Submit your answer by clicking here."
+            "ariaLabel": "Submit"
         },
         "_reset": {
             "buttonText": "Reset",
-            "ariaLabel": "Reset the question by clicking here."
+            "ariaLabel": "Reset"
         },
         "_showCorrectAnswer": {
             "buttonText": "Correct answer",
-            "ariaLabel": "Show the correct answer by clicking here."
+            "ariaLabel": "Show correct answer"
         },
         "_hideCorrectAnswer": {
             "buttonText": "My answer",
-            "ariaLabel": "Show the answer you gave by clicking here."
+            "ariaLabel": "Show my answer"
         },
         "_showFeedback": {
             "buttonText": "Show feedback",
-            "ariaLabel": "View the question feedback again by clicking here."
+            "ariaLabel": "Show feedback"
         },
         "remainingAttemptsText": "attempts remaining",
-        "remainingAttemptText": "final attempt",
-        "disabledAriaLabel": "This button is disabled at the moment."
+        "remainingAttemptText": "final attempt"
     },
     "_globals": {
-        "_components": {
-            "_accordion": {
-                "ariaRegion": "This component is an accordion comprised of collapsible content panels containing display text. Select the item titles to toggle the visibility of these content panels."
-            },
-            "_gmcq": {
-                "ariaRegion": "This component is a graphical multiple choice question. Once you have selected an option select the submit button below."
-            },
-            "_graphic": {
-                "ariaRegion": ""
-            },
-            "_hotgraphic": {
-                "ariaRegion": "Below is a component which allows you to select hot spots over an image. Select a hot spot to trigger a popup that includes an image with display text. Select the close button to close the popup.",
-                "ariaPopupLabel": "Hotgraphic popup"
-            },
-            "_matching": {
-                "ariaRegion": "This question component requires you to select the matching answer from a drop down list below. When you have selected your answers select the submit button."
-            },
-            "_mcq": {
-                "ariaRegion": "This component is a multiple choice question. Once you have selected an option select the submit button below"
-            },
-            "_media": {
-                "ariaRegion": "This is a media component which plays a video. Select the play / pause button to watch or listen.",
-                "transcriptButton": "Alternatively you can select the link below for the transcript."
-            },
-            "_narrative": {
-                "ariaRegion": "This component displays an image gallery with accompanying text. Use the next and back navigation controls to work through the narrative."
-            },
-            "_slider": {
-                "ariaRegion": "This component requires you to answer the question by selecting the relevant value. After selecting a value select the submit button below."
-            },
-            "_text": {
-                "ariaRegion": ""
-            },
-            "_textinput": {
-                "ariaRegion": "This question component requires you to input your answer in the textbox provided. When you have answered the question select the submit button below."
-            }
-        },
-        "_extensions": {
-            "_pageLevelProgress": {
-                "pageLevelProgress": "Page sections",
-                "pageLevelProgressIndicatorBar": "Progress bar. Select here to view your current progress, and select an item to navigate to it. You have completed ",
-                "pageLevelProgressMenuBar": "You have completed ",
-                "pageLevelProgressEnd": "You have reached the end of the list of page sections.",
-                "optionalContent": "Optional Content"
-            },
-            "_resources": {
-                "resourcesEnd": "You have reached the end of the list of resources."
-            },
-            "_trickle": {
-                "incompleteContent": "There is incomplete content above. You must complete this before you can proceed through the course."
-            }
-        },
         "_learnerInfo": {
             "id": "student.name@example.org",
             "name": "Name, Student",
             "firstname": "Student",
             "lastname": "Name"
         },
-        "_menu": {
-            "_boxmenu": {
-                "ariaRegion": "Menu",
-                "durationLabel": "Duration:",
-                "menuItem": "Menu item.",
-                "menuEnd": "You have reached the end of the menu."
-            }
-        },
         "_accessibility": {
-            "accessibilityToggleTextOn": "Turn accessibility on?",
-            "accessibilityToggleTextOff": "Turn accessibility off?",
             "skipNavigationText": "Skip navigation",
-            "_accessibilityInstructions": {
-                "touch": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
-                "notouch": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
-                "ipad": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select."
-            },
             "_ariaLabels": {
-                "navigation": "Course navigation bar",
                 "skipNavigation": "Skip Navigation",
-                "menuLoaded": "Menu Loaded.",
-                "menu": "Menu",
-                "page": "Page",
-                "pageLoaded": "Page Loaded.",
                 "previous": "Back",
-                "navigationBack": "Navigate back",
                 "navigationDrawer": "Open course resources.",
                 "close": "Close",
                 "closeDrawer": "Close Drawer",
@@ -128,9 +54,6 @@
                 "incorrect": "Incorrect",
                 "correct": "Correct",
                 "locked": "Locked",
-                "accessibilityToggleButton": "By selecting this button you can set whether accessibility is turned on or off",
-                "feedbackPopUp": "Popup opened.",
-                "menuBack": "Back to menu",
                 "visited": "Visited"
             }
         }
@@ -157,7 +80,6 @@
             "mediaAria": "View media resources",
             "linkAria": "View resource links"
         },
-        "itemAriaExternal": "This content will open in a new window",
         "_resourcesItems": [
             {
                 "_type": "document",
