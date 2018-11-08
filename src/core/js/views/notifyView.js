@@ -142,49 +142,48 @@ define([
 
             Adapt.trigger('notify:opened', this);
 
-            this.$el.imageready(loaded.bind(this));
+            this.$el.imageready(this.onLoaded.bind(this));
+        },
+        
+        onLoaded: function() {
+            if (this.disableAnimation) {
+                this.$('.notify-shadow').css('display', 'block');
+            } else {
 
-            function loaded() {
-                if (this.disableAnimation) {
+                this.$('.notify-shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
                     this.$('.notify-shadow').css('display', 'block');
-                } else {
+                }.bind(this)});
 
-                    this.$('.notify-shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
-                        this.$('.notify-shadow').css('display', 'block');
-                    }.bind(this)});
-
-                }
-
-                this.resizeNotify();
-
-                if (this.disableAnimation) {
-
-                    this.$('.notify-popup').css('visibility', 'visible');
-                    complete.call(this);
-
-                } else {
-
-                    this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
-                        // Make sure to make the notify visible and then set
-                        // focus, disabled scroll and manage tabs
-                        this.$('.notify-popup').css('visibility', 'visible');
-                        complete.call(this);
-                    }.bind(this)});
-
-                }
-
-                function complete() {
-                    this.hasOpened = true;
-                    // Allows popup manager to control focus
-                    Adapt.trigger('popup:opened', this.$('.notify-popup'));
-                    $('body').scrollDisable();
-                    $('html').addClass('notify');
-
-                    // Set focus to first accessible element
-                    this.$('.notify-popup').a11y_focus(true);
-                }
             }
 
+            this.resizeNotify();
+
+            if (this.disableAnimation) {
+
+                this.$('.notify-popup').css('visibility', 'visible');
+                this.onOpened();
+
+            } else {
+
+                this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
+                    // Make sure to make the notify visible and then set
+                    // focus, disabled scroll and manage tabs
+                    this.$('.notify-popup').css('visibility', 'visible');
+                    this.onOpened();
+                }.bind(this)});
+
+            }
+        },
+
+        onOpened: function() {
+            this.hasOpened = true;
+            // Allows popup manager to control focus
+            Adapt.trigger('popup:opened', this.$('.notify-popup'));
+            $('body').scrollDisable();
+            $('html').addClass('notify');
+
+            // Set focus to first accessible element
+            this.$('.notify-popup').a11y_focus(true);
         },
 
         addSubView: function() {
@@ -201,40 +200,43 @@ define([
             if (!this.isOpen) return;
             this.isOpen = false;
 
-            var complete = function() {
-                if (this.disableAnimation) {
-
-                    this.$('.notify-popup').css('visibility', 'hidden');
-                    this.$el.css('visibility', 'hidden');
-
-                    this.remove();
-
-                } else {
-
-                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
-                        this.$('.notify-popup').css('visibility', 'hidden');
-                    }.bind(this)});
-
-                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
-                        this.$el.css('visibility', 'hidden');
-                        this.remove();
-                    }.bind(this)});
-                }
-
-                $('body').scrollEnable();
-                $('html').removeClass('notify');
-
-                // Return focus to previous active element
-                Adapt.trigger('popup:closed notify:closed', this.$previousActiveElement);
-            }.bind(this);
-
             // If closeNotify is called before showNotify has finished then wait
             // until it's open.
             if (!this.hasOpened) {
-                this.listenToOnce(Adapt, 'popup:opened', _.debounce(complete, 1));
+                this.listenToOnce(Adapt, 'popup:opened', function() {
+                    // Wait for popup:opened to finish processing
+                    _.defer(this.onCloseReady.bind(this)));
+                });
             } else {
-                complete();
+                this.onCloseReady();
             }
+        },
+        
+        onCloseReady: function() {
+            if (this.disableAnimation) {
+
+                this.$('.notify-popup').css('visibility', 'hidden');
+                this.$el.css('visibility', 'hidden');
+
+                this.remove();
+
+            } else {
+
+                this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
+                    this.$('.notify-popup').css('visibility', 'hidden');
+                }.bind(this)});
+
+                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
+                    this.$el.css('visibility', 'hidden');
+                    this.remove();
+                }.bind(this)});
+            }
+
+            $('body').scrollEnable();
+            $('html').removeClass('notify');
+
+            // Return focus to previous active element
+            Adapt.trigger('popup:closed notify:closed', this.$previousActiveElement);
         },
 
         remove: function() {
