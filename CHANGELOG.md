@@ -1,5 +1,29 @@
 ## [Unreleased][unreleased]
 
+## [3.2.2] - 2018-10-15
+
+### Fixed
+- The 'component not found' error can be quite misleading ([#2142](https://github.com/adaptlearning/adapt_framework/issues/2142))
+- On feedback popup open, background content is scrollable on Android ([#2154](https://github.com/adaptlearning/adapt_framework/issues/2154))
+- The `findDescendantModels` function throwing error when there's no defined `_children` type ([#2180](https://github.com/adaptlearning/adapt_framework/issues/2180))
+- Unnecessary Grunt process ([#2224](https://github.com/adaptlearning/adapt_framework/issues/2224))
+- Accessibility library causing elements to scroll into view unnecessarily ([#2228](https://github.com/adaptlearning/adapt_framework/issues/2228))
+
+### Changed
+- Refactor of feedback code in questionModel ([#2208](https://github.com/adaptlearning/adapt_framework/pull/2208))
+
+## [3.2.1] - 2018-08-23
+
+### Fixed
+- Corrected issue with drawer button when the drawer only contains one item ([#2217](https://github.com/adaptlearning/adapt_framework/issues/2217))
+- Bug where `pageBody` was only output in Handlebars template if `body` was also set ([#2178](https://github.com/adaptlearning/adapt_framework/issues/2178))
+- Corrected bug in Grunt scripts.js task: Added `process.cwd()` to correct an issue with running post build scripts, e.g. as used in adapt-contrib-xapi. ([#2212](https://github.com/adaptlearning/adapt_framework/issues/2212))
+- Corrected issue with Grunt task reverting device size defaults ([#2153](https://github.com/adaptlearning/adapt_framework/issues/2153))
+
+### Changed
+- Updated Underscore JS library to v1.9.1 ([#2047](https://github.com/adaptlearning/adapt_framework/issues/2047))
+- Removed the list of contributors from package.json ([#2214](https://github.com/adaptlearning/adapt_framework/issues/2214))
+
 ## [3.2.0] - 2018-06-28
 
 ### Added
@@ -622,7 +646,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...HEAD
+[3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.1...v3.2.2
+[3.2.1]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.0...v3.0.0

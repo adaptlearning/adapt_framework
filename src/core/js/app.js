@@ -160,7 +160,7 @@ require([
                 var ViewModelObject = Adapt.componentStore[json._component];
 
                 if(!ViewModelObject) {
-                    throw new Error(json._component + ' component not found. Is it installed and included?');
+                    throw new Error('One or more components of type "'+json._component+'" were included in the course - but no component of that type is installed...');
                 }
 
                 //if model defined for component use component model
