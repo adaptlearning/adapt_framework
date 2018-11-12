@@ -570,8 +570,7 @@
             var cssHidden = (element.style.display == "none" || element.style.visibility == "hidden");
             if (cssHidden) return true;
 
-            var style = window.getComputedStyle(element, null);
-            cssHidden = (style.display == "none" || style.visibility == "hidden");
+            cssHidden = $(element).css("display") === "none" || $(element).css("visibility") === "hidden";
             return cssHidden;
         },
 
