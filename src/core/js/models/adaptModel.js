@@ -240,13 +240,17 @@ define([
 
         /**
          * Searches the model's ancestors to find the first instance of the specified ancestor type
-         * @param {string} [ancestorType] Valid values are 'course', 'contentObjects', 'articles' or 'blocks'.
+         * @param {string} [ancestorType] Valid values are 'course', 'pages', 'contentObjects', 'articles' or 'blocks'.
          * If left blank, the immediate ancestor (if there is one) is returned
          * @return {object} Reference to the model of the first ancestor of the specified type that's found - or `undefined` if none found
          */
         findAncestor: function (ancestorType) {
             var parent = this.getParent();
             if (!parent) return;
+
+            if (ancestorType === 'pages') {
+                ancestorType = 'contentObjects';
+            }
 
             if (!ancestorType || this._parent === ancestorType) {
                 return parent;
