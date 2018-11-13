@@ -567,10 +567,12 @@
         },
 
         isElementHidden: function(element) {
-            var cssHidden = (element.style.display == "none" || element.style.visibility == "hidden");
+            var cssHidden = (element.style.display === "none" || element.style.visibility === "hidden");
             if (cssHidden) return true;
 
-            cssHidden = $(element).css("display") === "none" || $(element).css("visibility") === "hidden";
+            var $element = $(element);
+
+            cssHidden = ($element.css("display") === "none" || $element.css("visibility") === "hidden");
             return cssHidden;
         },
 
