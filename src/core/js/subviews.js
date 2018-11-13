@@ -6,7 +6,7 @@ define([
 
     /**
      * Represents a handlebars subview statement and associated subview instance.
-     * @param  {Objcect} context Handlebars defined subview name nad model id
+     * @param  {Objcect} context Handlebars defined subview name and model id
      */
     var Invocation = Backbone.Controller.extend({
 
@@ -224,7 +224,7 @@ define([
         },
 
         /**
-         * Create and invocation item from the handlebars defined context
+         * Create an invocation item from the handlebars defined context
          * @param  {Object} context Handlebars context, containing and model id and subview class name
          * @return {Invocation}     Newly created or existing invocation
          */
