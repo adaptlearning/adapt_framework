@@ -16,6 +16,10 @@ define([
         uid: null,
         instance: null,
 
+        /**
+         * Initialize. Warn if missing required name, id or model.
+         * @param  {Object} context Handlebars statement details
+         */
         initialize: function(context) {
             if (!context.name) {
                 Adapt.log.warn('SubViews: No name specified.');
@@ -43,13 +47,22 @@ define([
             Adapt.log.warn('SubView: No model found for name="'+this.name+'" id="'+this.id+'"');
         },
 
-        isEqual: function(entry) {
-            if (this.name !== entry.name) return false;
-            if (this.id !== entry.id) return false;
-            if (this.model !== entry.model) return false;
+        /**
+         * Equality test for invocation instances
+         * @param  {Invocation}  invocation Compare with
+         * @return {Boolean}
+         */
+        isEqual: function(invocation) {
+            if (this.name !== invocation.name) return false;
+            if (this.id !== invocation.id) return false;
+            if (this.model !== invocation.model) return false;
             return true;
         },
 
+        /**
+         * Returns boolean true if this invocation has instantiated a subview
+         * @return {Boolean}
+         */
         hasInstance: function() {
             return Boolean(this.instance);
         },
@@ -80,6 +93,9 @@ define([
             return this;
         },
 
+        /**
+         * Destroy subview instance and clear up invocation
+         */
         destroy: function() {
             if (this.hasInstance()) {
                 // Make sure to unset instance as remove causes circular clearup
@@ -120,6 +136,9 @@ define([
 
         items: null,
 
+        /**
+         * Setup invocations list
+         */
         initialize: function() {
             this.items = [];
             this.updatePlaceholders = _.debounce(this.updatePlaceholders, 1);
