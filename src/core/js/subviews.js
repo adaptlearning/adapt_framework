@@ -1,47 +1,187 @@
 define([
+    'core/js/adapt',
     'handlebars',
-    'core/js/adapt'
-], function(Handlebars, Adapt){
+    './views/subView'
+], function(Adapt, Handlebars, SubView) {
 
-    var Subviews = Backbone.Controller.extend({
+    /**
+     * Represents a handlebars subview statement and associated subview instance.
+     * @param  {Objcect} context Handlebars defined subview name nad model id
+     */
+    var Invocation = Backbone.Controller.extend({
 
-        _register: {},
-        _hold: {},
+        name: null,
+        id: null,
+        model: null,
+        uid: null,
+        instance: null,
+
+        initialize: function(context) {
+            if (!context.name) {
+                Adapt.log.warn('SubViews: No name specified.');
+            }
+            if (!context.id && !context.data) {
+                Adapt.log.warn('SubViews: No id or data specified for name="'+context.name+'"');
+            }
+
+            this.name = context.name || null;
+            this.id = context.id || null;
+            this.uid = Invocation.getNextId();
+
+            // Find the model by id if specified
+            if (this.id) {
+                this.model = Adapt.findById(context.id);
+            }
+
+            // Find the original model by id if specified in the data
+            if (!this.model && context.data && context.data._id) {
+                this.model = Adapt.findById(context.data._id);
+            }
+
+            // If no model was found.
+            if (this.model) return;
+            Adapt.log.warn('SubView: No model found for name="'+this.name+'" id="'+this.id+'"');
+        },
+
+        isEqual: function(entry) {
+            if (this.name !== entry.name) return false;
+            if (this.id !== entry.id) return false;
+            if (this.model !== entry.model) return false;
+            return true;
+        },
+
+        hasInstance: function() {
+            return Boolean(this.instance);
+        },
+
+        /**
+         * Create an instance of the named subview
+         * @return {Object}      Self
+         */
+        createInstance: function() {
+            if (!this.model) {
+                return this;
+            }
+
+            var SubViewClass = Adapt.subviews.get(this.name);
+            if (!SubViewClass) {
+                this.instance = null;
+                return this;
+            }
+
+            var instance = new SubViewClass({
+                attributes: {
+                    "data-adapt-subview": this.uid
+                },
+                model: this.model
+            });
+
+            this.instance = instance;
+            return this;
+        },
+
+        destroy: function() {
+            if (this.hasInstance()) {
+                // Make sure to unset instance as remove causes circular clearup
+                var instance = this.instance;
+                this.instance = null;
+                instance.remove();
+            }
+            this.name = null;
+            this.id = null;
+            this.data = null;
+            this.uid = null;
+        }
+
+    }, {
+
+        uid: 0,
+
+        /**
+         * Generate a unique id for each invocation. This is used to match
+         * placeholders with subviews.
+         * @return {Number}
+         */
+        getNextId: function() {
+            if (this.uid >= Number.MAX_SAFE_INTEGER) {
+                this.uid = 0;
+            } else {
+                this.uid++
+            }
+            return this.uid;
+        }
+
+    });
+
+    /**
+     * Represents the handlebars subview statements from the current Adapt location.
+     */
+    var Invocations = Backbone.Controller.extend({
+
+        items: null,
 
         initialize: function() {
-            this._addHelpers();
-            this._addMutationObserver();
-            this.listenTo(Adapt, 'remove', this._onRemove);
+            this.items = [];
+            this.updatePlaceholders = _.debounce(this.updatePlaceholders, 1);
+            this.addHelper();
+            this.addMutationObserver();
+            this.listenTo(Adapt, {
+                "remove": this.destroy,
+                "subview:remove": this.onRemoveSubView
+            });
         },
 
         /**
          * Add the subview helper for handlebars
+         *
+         * Lookup model by id
          * {{subview name="menu:progress" id="co-200"}}
+         *
+         * Lookup the model by object id
+         * {{subview name="menu:progress" model={ _id:"co-200" } }}
+         *
+         * Pass context through and lookup { _id: "co-200" } from there
+         * {{subview name="menu:progress"}}
+         *
+         * Note: A view must have a model id which is available through Adapt.findById
          */
-        _addHelpers: function() {
+        addHelper: function() {
             Handlebars.registerHelper('subview', function(options) {
-                var name = options.hash.name;
-                var hold = Adapt.subviews._hold;
-                hold.id = hold.id || 0;
-                if (hold.id >= Number.MAX_SAFE_INTEGER) hold.id = 0;
-                var subview = {
-                    name: name,
-                    cid: hold.id++,
-                    data: options.hash.model || this || {},
-                    id: options.hash.id || null
+                // Create an invocation for a subview
+                var context = {
+                    name: options.hash.name,
+                    id: options.hash.id,
+                    data: options.hash.id ? null : options.hash.model || this,
                 };
-                hold[subview.cid] = subview;
-                if (!subview) return;
-                var html = '<div data-subview-cid="'+subview.cid+'" />';
+                var invocation = Adapt.subviews.invocations.create(context);
+                var html = '';
+                if (invocation.hasInstance()) {
+                    // Generate a subview placeholder
+                    html = invocation.instance.getOuterHTML();
+                }
                 return new Handlebars.SafeString(html);
             });
         },
 
         /**
-         * Listen for new elements added to the document.body
+         * Listen for new elements added to the document.body. Trigger to update
+         * placeholders with subviews if found.
          */
-        _addMutationObserver: function() {
-            var observer = new MutationObserver(this._onMutated.bind(this));
+        addMutationObserver: function() {
+            var observer = new MutationObserver(function(mutations) {
+                // Find subview placeholders
+                var hasPlaceholders = false;
+                _.find(mutations, function(mutation) {
+                    if (mutation.type !== "childList") return;
+                    if (!mutation.addedNodes || !mutation.addedNodes.length) return;
+                    var $newSeats = $(mutation.addedNodes).find("[data-adapt-subview]");
+                    if (!$newSeats.length) return;
+                    hasPlaceholders = true;
+                    return true;
+                });
+                if (!hasPlaceholders) return;
+                this.updatePlaceholders();
+            }.bind(this));
             observer.observe(document.body, {
                 childList: true,
                 subtree: true
@@ -49,30 +189,101 @@ define([
         },
 
         /**
-         * Check newly added elements for subviews references
-         * @param  {MutationList} list List of browser mutations
+         * Swap placeholders for subview elements, debounced
          */
-        _onMutated: function(list) {
-            var $placeholders = $();
-            for (var i = 0, l = list.length; i < l; i++) {
-                var mutation = list[i];
-                var $news = $(mutation.addedNodes).find("[data-subview-cid]");
-                if (!$news.length) continue;
-                $placeholders = $placeholders.add($news);
-            }
+        updatePlaceholders: function() {
+            var $placeholders = $('body').find("[data-adapt-subview]");
             if (!$placeholders.length) return;
             $placeholders.each(function(index, placeholder) {
                 var $placeholder = $(placeholder);
-                var cid = $placeholder.attr("data-subview-cid");
-                var data = this._hold[cid];
-                var subview = Adapt.subviews.create(data.name, data);
-                if (subview) $placeholder.replaceWith(subview.$el);
-                delete this._hold[cid];
+                var uid = parseInt($placeholder.attr("data-adapt-subview"));
+                var invocation = this.findByUID(uid);
+                if (!invocation || !invocation.hasInstance()) return;
+                // Swap subview placeholder for subview element
+                invocation.instance.replaceElement($placeholder);
             }.bind(this));
         },
 
-        _onRemove: function() {
-            this._hold = {};
+        /**
+         * Create and invocation item from the handlebars defined context
+         * @param  {Object} context Handlebars context, containing and model id and subview class name
+         * @return {Invocation}     Newly created or existing invocation
+         */
+        create: function(context) {
+            var newInvocation = new Invocation(context);
+            var existingInvocations = this.items.filter(function(entry) {
+                if (!entry.isEqual(newInvocation)) return;
+                return true;
+            });
+            if (!existingInvocations.length) {
+                // If no existing and matching invocations are available, then
+                // use the newly created invocation and create a subview instance
+                this.items.push(newInvocation);
+                this.updatePlaceholders();
+                return newInvocation.createInstance();
+            }
+            if (existingInvocations.length > 1) {
+                // If more than one invocation matched, then warn that there could
+                // be rendering issues
+                throw "SubViews: Overlapping views for name '"+newInvocation.name+"'";
+            }
+            // Reuse the single pre-existing invocation and its subview instance
+            this.updatePlaceholders();
+            return existingInvocations[0];
+        },
+
+        /**
+         * Get an invocation from the current list based upon its unique id
+         * @param  {Number} uid Placeholder defined invocation uid
+         * @return {Invocation} Found invocation object
+         */
+        findByUID: function(uid) {
+            return _.find(this.items, function(entry) {
+                if (entry.uid !== uid) return;
+                return entry;
+            });
+        },
+
+        /**
+         * Destroy all invocations and associated view instances
+         */
+        destroy: function() {
+            // List length is liable to change during remove procedure
+            // perform in reverse order.
+            for (var i = this.items.length-1; i > -1; i--) {
+                var invocation = this.items[i];
+                invocation.destroy();
+            }
+            this.items.length = 0;
+        },
+
+        /**
+         * When remove is called on subview, make sure to clear up invocation
+         * @param  {SubView} instance
+         */
+        onRemoveSubView: function(instance) {
+            for (var i = this.items.length-1; i > -1; i--) {
+                var invocation = this.items[i];
+                if (invocation.instance !== instance) continue;
+                invocation.destroy();
+                this.items.splice(i, 1);
+            }
+        }
+
+    });
+
+    var SubViews = Backbone.Controller.extend({
+
+        Invocation: Invocation,
+        Invocations: Invocations,
+        SubView: SubView,
+
+        classes: null,
+        invocations: null,
+
+        initialize: function() {
+            this.classes = {};
+            this.invocations = new Invocations();
         },
 
         /**
@@ -80,8 +291,8 @@ define([
          * @param  {String} name The name of your subview
          * @param  {Function} view The subview class
          */
-        register: function(name, view) {
-            this._register[name] = view;
+        register: function(name, SubViewClass) {
+            this.classes[name] = SubViewClass;
         },
 
         /**
@@ -90,31 +301,11 @@ define([
          * @return {Function}
          */
         get: function(name) {
-            return this._register[name];
-        },
-
-        /**
-         * Create an instance of the named subview assigning it a model by id
-         * @param  {String} name Named subview model
-         * @param  {String} id   Subview model id
-         * @return {Object}      Instantiated subview
-         */
-        create: function(name, data) {
-            var Subview = this.get(name);
-            if (!Subview) return;
-            var model;
-            // Find the original model by id if specified
-            if (data.id) model = Adapt.findById(data.id);
-            // If no model was found, create a new one from the data supplied
-            if (!model) model = new Backbone.Model(data.model);
-            var subview = new Subview({
-                model: model
-            });
-            return this._hold[subview.cid] = subview;
+            return this.classes[name];
         }
 
     });
 
-    return Adapt.subviews = new Subviews();
+    return Adapt.subviews = new SubViews();
 
 });
