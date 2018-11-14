@@ -23,6 +23,47 @@ define([
             this.renderState();
         },
 
+        /**
+         * Allows components that want to use inview for completion to set that up
+         * @param {string} [inviewElementSelector] Allows to you to specify (via a selector) which DOM element to use for inview.
+         * Defaults to `'.component-inner'` if not supplied.
+         * @param {function} [callback] Allows you to specify what function is called when the component has been viewed.
+         * Defaults to `view.setCompletionStatus` if not specified
+         */
+        setupInviewListener: function(inviewElementSelector, callback) {
+            this.$inviewElement = this.$(inviewElementSelector || '.component-inner');
+            this.inviewCallback = (callback || this.setCompletionStatus);
+
+            this.$inviewElement.on('inview.componentView', this.onInview.bind(this));
+        },
+
+        removeInviewListener: function() {
+            this.$inviewElement.off('inview.componentView');
+        },
+
+        onInview: function(event, visible, visiblePartX, visiblePartY) {
+            if (!visible) return;
+
+            switch (visiblePartY) {
+				case 'top':
+					this.hasSeenTop = true;
+					break;
+				case 'bottom':
+					this.hasSeenBottom = true;
+					break;
+				case 'both':
+					this.hasSeenTop = this.hasSeenBottom = true;
+			}
+
+            if (!this.hasSeenTop || !this.hasSeenBottom) return;
+
+            this.inviewCallback();
+
+            if (this.model.get('_isComplete')) {
+                this.removeInviewListener();
+            }
+        },
+
         renderState: function() {
             if (!Handlebars.partials['state']) return;
 
@@ -48,7 +89,13 @@ define([
             this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
 
-        postRender: function() {}
+        postRender: function() {},
+
+        remove: function() {
+            this.removeInviewListener();
+
+            AdaptView.prototype.remove.call(this);
+        }
 
     }, {
         type:'component'
