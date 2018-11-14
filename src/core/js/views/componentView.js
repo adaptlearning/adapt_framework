@@ -30,7 +30,7 @@ define([
          * @param {function} [callback] Allows you to specify what function is called when the component has been viewed.
          * Defaults to `view.setCompletionStatus` if not specified
          */
-        setupInviewListener: function(inviewElementSelector, callback) {
+        setupInviewCompletion: function(inviewElementSelector, callback) {
             this.$inviewElement = this.$(inviewElementSelector || '.component-inner');
             this.inviewCallback = (callback || this.setCompletionStatus);
 
