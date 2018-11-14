@@ -45,15 +45,15 @@ define([
             if (!visible) return;
 
             switch (visiblePartY) {
-				case 'top':
-					this.hasSeenTop = true;
-					break;
-				case 'bottom':
-					this.hasSeenBottom = true;
-					break;
-				case 'both':
-					this.hasSeenTop = this.hasSeenBottom = true;
-			}
+                case 'top':
+                    this.hasSeenTop = true;
+                    break;
+                case 'bottom':
+                    this.hasSeenBottom = true;
+                    break;
+                case 'both':
+                    this.hasSeenTop = this.hasSeenBottom = true;
+            }
 
             if (!this.hasSeenTop || !this.hasSeenBottom) return;
 
