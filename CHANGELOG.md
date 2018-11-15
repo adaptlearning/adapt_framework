@@ -1,5 +1,8 @@
 ## [Unreleased][unreleased]
 
+## [2.3.1] - 2018-11-15
+- Update inview to check computed styles ([#1873](https://github.com/adaptlearning/adapt_framework/issues/1873))
+
 ## [2.3.0] - 2018-11-08
 - Fix bug with `findDescendantModels` ([#2260](https://github.com/adaptlearning/adapt_framework/issues/2260))
 - Add ability to easily filter the results of `findDescendantModels` ([#2058](https://github.com/adaptlearning/adapt_framework/issues/2058))
