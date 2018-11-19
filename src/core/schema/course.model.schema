@@ -453,7 +453,7 @@
         "remainingAttemptsText": {
           "type": "string",
           "title": "Remaining attempts label",
-          "default": "remaining attempts",
+          "default": "attempts remaining",
           "inputType": "Text",
           "required": true,
           "validators": [
