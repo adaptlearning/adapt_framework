@@ -41,7 +41,9 @@ define([
         },
 
         removeInviewListener: function() {
+            if (!this.$inviewElement) return;
             this.$inviewElement.off('inview.componentView');
+            this.$inviewElement = null;
         },
 
         onInview: function(event, visible, visiblePartX, visiblePartY) {
