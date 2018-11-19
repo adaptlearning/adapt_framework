@@ -371,7 +371,7 @@
         },
         "_showCorrectAnswer": {
           "type": "object",
-          "title": "Show correct answer",
+          "title": "Correct answer",
           "properties": {
             "buttonText": {
               "type": "string",
@@ -398,7 +398,7 @@
         },
         "_hideCorrectAnswer": {
           "type": "object",
-          "title": "Hide correct answer",
+          "title": "My answer",
           "properties": {
             "buttonText": {
               "type": "string",
