@@ -205,7 +205,7 @@ define([
             if (!this.hasOpened) {
                 this.listenToOnce(Adapt, 'popup:opened', function() {
                     // Wait for popup:opened to finish processing
-                    _.defer(this.onCloseReady.bind(this)));
+                    _.defer(this.onCloseReady.bind(this));
                 });
             } else {
                 this.onCloseReady();
