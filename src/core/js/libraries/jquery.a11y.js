@@ -330,7 +330,7 @@ define([
                 $found = $sibling.findWalk(iterator);
                 if ($found && $found.length) return true;
             });
-            if ($found) return $found;
+            if ($found && $found.length) return $found;
 
             // move through parents towards the body element
             var $branch = this.add(this.parents()).toArray().reverse();
@@ -516,6 +516,16 @@ define([
 
             if ($element.is('[data-a11y-force-focus]')) {
                 $element.removeAttr('tabindex data-a11y-force-focus');
+            }
+
+            // From here, only check source elements
+            if (event.target !== event.currentTarget) return;
+
+            // Check if element losing focus is losing focus
+            // due to the addition of a disabled class
+            if ($element.is("[disabled]")) {
+                // Move focus to next readable element
+                $element.focusNext();
             }
         }
 
