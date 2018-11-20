@@ -27,7 +27,8 @@
             "ariaLabel": "Show feedback"
         },
         "remainingAttemptsText": "attempts remaining",
-        "remainingAttemptText": "final attempt"
+        "remainingAttemptText": "final attempt",
+        "disabledAriaLabel": "This button is disabled at the moment"
     },
     "_globals": {
         "_learnerInfo": {
