@@ -128,28 +128,6 @@
           "title": "Accessibility",
           "required": true,
           "properties": {
-            "accessibilityToggleTextOn": {
-              "type": "string",
-              "title": "Toggle on label",
-              "default": "Turn accessibility on?",
-              "inputType": "Text",
-              "required": true,
-              "validators": [
-                "required"
-              ],
-              "translatable": true
-            },
-            "accessibilityToggleTextOff": {
-              "type": "string",
-              "title": "Toggle off label",
-              "default": "Turn accessibility off?",
-              "inputType": "Text",
-              "required": true,
-              "validators": [
-                "required"
-              ],
-              "translatable": true
-            },
             "skipNavigationText": {
               "type": "string",
               "title": "Skip navigation label",
@@ -161,69 +139,46 @@
               ],
               "translatable": true
             },
-            "_accessibilityInstructions": {
-              "type": "object",
-              "title": "Accessibility instructions",
-              "properties": {
-                "touch": {
-                  "type": "string",
-                  "title": "For touch devices",
-                  "default": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page.",
-                  "inputType": "Text",
-                  "required": true,
-                  "validators": [
-                    "required"
-                  ],
-                  "translatable": true
-                },
-                "notouch": {
-                  "type": "string",
-                  "title": "For non-touch devices",
-                  "default": "Usage instructions. Use tab for next. Use shift tab for previous. Use enter to select. Use escape to go to the top of the page.",
-                  "inputType": "Text",
-                  "required": true,
-                  "validators": [
-                    "required"
-                  ],
-                  "translatable": true
-                },
-                "ipad": {
-                  "type": "string",
-                  "title": "For iPad",
-                  "default": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select.",
-                  "inputType": "Text",
-                  "required": true,
-                  "validators": [
-                    "required"
-                  ],
-                  "translatable": true
-                }
-              }
-            },
             "_ariaLabels": {
               "type": "object",
               "title": "ARIA labels",
               "properties": {
+                "answeredIncorrectly": {
+                  "type": "string",
+                  "title": "",
+                  "default": "You answered incorrectly",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "answeredCorrectly": {
+                  "type": "string",
+                  "title": "",
+                  "default": "You answered correctly",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "selectedAnswer": {
+                  "type": "string",
+                  "title": "",
+                  "default": "selected",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "unselectedAnswer": {
+                  "type": "string",
+                  "title": "",
+                  "default": "not selected",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
                 "skipNavigation": {
                   "type": "string",
                   "title": "Skip Navigation",
                   "default": "Skip Navigation",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "menuLoaded": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Menu loaded",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "pageLoaded": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Page loaded",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -239,15 +194,15 @@
                 "navigationDrawer": {
                   "type": "string",
                   "title": "",
-                  "default": "Open course resources and search",
+                  "default": "Open course resources.",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
                 },
-                "drawer": {
+                "close": {
                   "type": "string",
                   "title": "",
-                  "default": "Side drawer",
+                  "default": "Close",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -255,7 +210,23 @@
                 "closeDrawer": {
                   "type": "string",
                   "title": "",
-                  "default": "Close drawer",
+                  "default": "Close Drawer",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "closeResources": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Close resources",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "drawer": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Top of side drawer",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -287,7 +258,7 @@
                 "complete": {
                   "type": "string",
                   "title": "",
-                  "default": "Complete",
+                  "default": "Completed",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -300,18 +271,18 @@
                   "required": true,
                   "translatable": true
                 },
-                "correct": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Correct",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
                 "incorrect": {
                   "type": "string",
                   "title": "",
                   "default": "Incorrect",
+                  "inputType": "Text",
+                  "required": true,
+                  "translatable": true
+                },
+                "correct": {
+                  "type": "string",
+                  "title": "",
+                  "default": "Correct",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -324,34 +295,10 @@
                   "required": true,
                   "translatable": true
                 },
-                "accessibilityToggleButton": {
-                  "type": "string",
-                  "title": "",
-                  "default": "By selecting this button you can set whether accessibility is turned on or off",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "feedbackPopUp": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Popup opened",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
                 "visited": {
                   "type": "string",
                   "title": "",
                   "default": "Visited",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "menuIndicatorHeading": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Menu item heading ",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -428,7 +375,7 @@
           "properties": {
             "buttonText": {
               "type": "string",
-              "default": "Show correct answer",
+              "default": "Correct answer",
               "inputType": "Text",
               "required": true,
               "validators": [
@@ -455,7 +402,7 @@
           "properties": {
             "buttonText": {
               "type": "string",
-              "default": "Hide correct answer",
+              "default": "My answer",
               "inputType": "Text",
               "required": true,
               "validators": [
@@ -506,7 +453,7 @@
         "remainingAttemptsText": {
           "type": "string",
           "title": "Remaining attempts label",
-          "default": "remaining attempts",
+          "default": "attempts remaining",
           "inputType": "Text",
           "required": true,
           "validators": [

@@ -9,7 +9,7 @@
     </div>
     {{#if _shouldDisplayAttempts}}
     <div class="buttons-display">
-        <div class="buttons-marking-icon icon display-none">
+        <div class="buttons-marking-icon icon display-none" aria-label="{{#if _isCorrect}}{{@root/_globals._accessibility._ariaLabels.answeredCorrectly}}{{else}}{{@root/_globals._accessibility._ariaLabels.answeredIncorrectly}}{{/if}}">
         </div>
         <div class="buttons-display-inner" aria-live="assertive">
         </div>

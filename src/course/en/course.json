@@ -40,6 +40,10 @@
         "_accessibility": {
             "skipNavigationText": "Skip navigation",
             "_ariaLabels": {
+                "answeredIncorrectly": "You answered incorrectly",
+                "answeredCorrectly": "You answered correctly",
+                "selectedAnswer": "selected",
+                "unselectedAnswer": "not selected",
                 "skipNavigation": "Skip Navigation",
                 "previous": "Back",
                 "navigationDrawer": "Open course resources.",
