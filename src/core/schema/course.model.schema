@@ -371,11 +371,11 @@
         },
         "_showCorrectAnswer": {
           "type": "object",
-          "title": "Correct answer",
+          "title": "Show correct answer",
           "properties": {
             "buttonText": {
               "type": "string",
-              "default": "Show correct answer",
+              "default": "Correct answer",
               "inputType": "Text",
               "required": true,
               "validators": [
@@ -398,11 +398,11 @@
         },
         "_hideCorrectAnswer": {
           "type": "object",
-          "title": "My answer",
+          "title": "Hide correct answer",
           "properties": {
             "buttonText": {
               "type": "string",
-              "default": "Hide correct answer",
+              "default": "My answer",
               "inputType": "Text",
               "required": true,
               "validators": [
