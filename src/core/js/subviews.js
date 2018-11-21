@@ -58,7 +58,6 @@ define([
         },
 
         /**
-         * Returns boolean true if this invocation has instantiated a subview
          * @return {Boolean}  Whether this invocation has instantiated a subview or not
          */
         hasInstance: function() {
