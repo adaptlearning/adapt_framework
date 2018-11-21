@@ -3,10 +3,7 @@ define([
 ], function(Adapt){
 
     var SubView = Backbone.View.extend({
-
-        /**
-         * Initialize, render and run stub function
-         */
+        
         initialize: function() {
             this.render();
             this.init();
@@ -17,9 +14,6 @@ define([
          */
         init: function() {},
 
-        /**
-         * Render template and trigger events
-         */
         render: function() {
             Adapt.trigger("subView:preRender", this);
             var templateName = this.constructor.template;
@@ -64,9 +58,6 @@ define([
          */
         attach: function() {},
 
-        /**
-         * Clear up view and trigger removal events
-         */
         remove: function() {
             Adapt.trigger("subView:remove", this);
             Backbone.View.prototype.remove.apply(this, arguments);
