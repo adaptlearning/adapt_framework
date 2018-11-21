@@ -69,7 +69,7 @@ define([
 
         /**
          * Create an instance of the named subview
-         * @return {Object}      Self
+         * @return {Object}   an instance of the named subview
          */
         createInstance: function() {
             if (!this.model) {
