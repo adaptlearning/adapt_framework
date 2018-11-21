@@ -17,7 +17,6 @@ define([
         instance: null,
 
         /**
-         * Initialize. Warn if missing required name, id or model.
          * @param  {Object} context Handlebars statement details
          */
         initialize: function(context) {
@@ -31,8 +30,6 @@ define([
             this.name = context.name || null;
             this.id = context.id || null;
             this.uid = Invocation.getNextId();
-
-            // Find the model by id if specified
             if (this.id) {
                 this.model = Adapt.findById(context.id);
             }
@@ -42,8 +39,9 @@ define([
                 this.model = Adapt.findById(context.data._id);
             }
 
-            // If no model was found.
             if (this.model) return;
+            
+            // If no model was found.
             Adapt.log.warn('SubView: No model found for name="'+this.name+'" id="'+this.id+'"');
         },
 
@@ -61,7 +59,7 @@ define([
 
         /**
          * Returns boolean true if this invocation has instantiated a subview
-         * @return {Boolean}
+         * @return {Boolean}  Whether this invocation has instantiated a subview or not
          */
         hasInstance: function() {
             return Boolean(this.instance);
@@ -93,9 +91,6 @@ define([
             return this;
         },
 
-        /**
-         * Destroy subview instance and clear up invocation
-         */
         destroy: function() {
             if (this.hasInstance()) {
                 // Make sure to unset instance as remove causes circular clearup
@@ -136,9 +131,6 @@ define([
 
         items: null,
 
-        /**
-         * Setup invocations list
-         */
         initialize: function() {
             this.items = [];
             this.updatePlaceholders = _.debounce(this.updatePlaceholders, 1);
@@ -263,9 +255,6 @@ define([
             });
         },
 
-        /**
-         * Destroy all invocations and associated view instances
-         */
         destroy: function() {
             // List length is liable to change during remove procedure
             // perform in reverse order.
@@ -308,7 +297,7 @@ define([
         /**
          * Register a named subview
          * @param  {String} name The name of your subview
-         * @param  {Function} view The subview class
+         * @param  {Function} SubViewClass The subview class
          */
         register: function(name, SubViewClass) {
             this.classes[name] = SubViewClass;
