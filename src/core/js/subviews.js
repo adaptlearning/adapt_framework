@@ -6,7 +6,7 @@ define([
 
     /**
      * Represents a handlebars subview statement and associated subview instance.
-     * @param  {Objcect} context Handlebars defined subview name and model id
+     * @param  {Object} context Handlebars defined subview name and model id
      */
     var Invocation = Backbone.Controller.extend({
 
