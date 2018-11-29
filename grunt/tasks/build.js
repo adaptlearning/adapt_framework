@@ -5,10 +5,10 @@ module.exports = function(grunt) {
     grunt.registerTask('build', 'Creates a production-ready build of the course', [
         '_log-vars',
         'check-json',
-        'schema-defaults',
         'clean:output',
         'build-config',
         'copy',
+        'schema-defaults',
         'handlebars',
         'create-json-config',
         'tracking-insert',
