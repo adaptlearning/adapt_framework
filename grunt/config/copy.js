@@ -1,6 +1,6 @@
 module.exports = function (grunt, options) {
-    
-    
+
+
     var renameAssets = function (destFolder, srcFileName) {
         var collateAtName = "assets";
         var collateAtFolder = collateAtName + "/";
@@ -14,9 +14,9 @@ module.exports = function (grunt, options) {
         }
         return collatedFilePath;
     }
-    
-    
-    
+
+
+
     return {
         index: {
             files: [
@@ -33,7 +33,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['<%=languages%>/**/*', '!**/*.json'],
+                    src: ['<%=languages%>/**/*', '!**/*.<% jsonext %>'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }
@@ -43,7 +43,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['<%=languages%>/*.json'],
+                    src: ['<%=languages%>/*.<% jsonext %>'],
                     cwd: '<%= sourcedir %>course/',
                     dest: '<%= outputdir %>course/'
                 }
@@ -69,7 +69,7 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
+
                     rename: renameAssets
                 }
             ]
@@ -96,7 +96,7 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
+
                     rename: renameAssets
                 }
             ]
@@ -123,7 +123,7 @@ module.exports = function (grunt, options) {
                     filter: function(filepath) {
                         return grunt.config('helpers').includedFilter(filepath);
                     },
-                    
+
                     rename: renameAssets
                 }
             ]

@@ -76,6 +76,7 @@ module.exports = function(grunt) {
     exports.defaults = {
         sourcedir: process.cwd() + path.sep + 'src' + path.sep,
         outputdir: process.cwd() + path.sep + 'build' + path.sep,
+        jsonext: 'json',
         theme: '**',
         menu: '**',
         languages: '**',
@@ -127,6 +128,7 @@ module.exports = function(grunt) {
             root: __dirname.split(path.sep).slice(0,-1).join(path.sep),
             sourcedir: appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir,
             outputdir: appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir,
+            jsonext: grunt.option('jsonext') || exports.defaults.jsonext,
             theme: grunt.option('theme') || exports.defaults.theme,
             menu: grunt.option('menu') || exports.defaults.menu,
             languages: languageFolders || exports.defaults.languages
@@ -135,7 +137,7 @@ module.exports = function(grunt) {
         // Selectively load the course.json ('outputdir' passed by server-build)
         var outputdir = grunt.option('outputdir') ? data.outputdir : data.sourcedir;
         // add root path if necessary, and point to course/config.json
-        var configPath = path.join(path.resolve(data.root, outputdir), 'course', 'config.json');
+        var configPath = path.join(path.resolve(data.root, outputdir), 'course', 'config.' + data.jsonext);
 
         try {
             var buildConfig = require(configPath).build;
@@ -145,6 +147,7 @@ module.exports = function(grunt) {
         }
 
         if(buildConfig) {
+            if(buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
             if(buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
             if(buildConfig.excludes) data.excludes = buildConfig.excludes;
         }

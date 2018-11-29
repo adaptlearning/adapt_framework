@@ -6,21 +6,18 @@ module.exports = function (grunt, options) {
 
   var courseDir = path.join(options.sourcedir, 'course');
 
-  if (options.outputdir.indexOf('build') > -1) {
-    courseDir = path.join(options.outputdir, 'course');
-  }
-
-  var pathToConfig = path.join(courseDir, 'config.json');
-
   var generatePatterns = function() {
+    var jsonext = grunt.config('jsonext');
+    var pathToConfig = path.join(courseDir, 'config.'+jsonext);
+
     try {
       // Verify that the configuration file exists.
       fs.accessSync(pathToConfig);
-      
+
       var configJson = grunt.file.readJSON(pathToConfig);
       var defaultLanguage = configJson._defaultLanguage || 'en';
-      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.json'));
-      
+      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.'+jsonext));
+
       // Backwards compatibility for courses missing 'description'
       if (!courseJson.hasOwnProperty('description')) {
         courseJson.description = '';
@@ -39,11 +36,7 @@ module.exports = function (grunt, options) {
         }
       }
 
-      // Ensure that only whitelisted attributes can be replaced.
-      courseJson = _.pick(courseJson, 'title', 'displayTitle', 'body', 'description');
-      configJson = _.pick(configJson, '_xapi', '_spoor');
-      
-      // Combine the course and config JSON so both can be passed to replace.  
+      // Combine the course and config JSON so both can be passed to replace.
       return {
         'course': courseJson,
         'config': configJson
