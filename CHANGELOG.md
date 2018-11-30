@@ -1,6 +1,7 @@
 ## [Unreleased][unreleased]
 
 ## [3.3.0] - 2018-11-30
+
 ### Added
 - Implemented 'complete on inview' functionality in ComponentView so that plugins can use this rather than having to have their own implementations ([#2269](https://github.com/adaptlearning/adapt_framework/issues/2269))
 
@@ -10,7 +11,6 @@
 ### Fixed
 - AdaptModel's `findAncestor` triggered a `TypeError` if no ancestor of the specified type was found ([##240](https://github.com/adaptlearning/adapt_framework/issues/2240))
 - Schema defaults were not being written to `build/{lang}/course/course.json` ([#2248](https://github.com/adaptlearning/adapt_framework/issues/2248))
-
 
 ## [3.2.2] - 2018-10-15
 
@@ -659,7 +659,7 @@ The initial version of the Adapt framework.
 
 
 [unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...HEAD
-[3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...v3.3.0
+[3.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...v3.3.0
 [3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.0...v3.2.1
 [3.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.1.0...v3.2.0
