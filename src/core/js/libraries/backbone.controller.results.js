@@ -1,6 +1,6 @@
 // 2017-09-06 https://github.com/cgkineo/backbone.controller.results
 /*
-  These functions are useful to resolve instance properties which are an array or object 
+  These functions are useful to resolve instance properties which are an array or object
   or instance functions which return an array/object, to copy and extend the returned value.
 */
 define('backbone.controller.results', [
@@ -8,32 +8,32 @@ define('backbone.controller.results', [
     'backbone.controller'
 ], function(_, Backbone) {
 
-    var extend = [ Backbone.View, Backbone.Model, Backbone.Collection, Backbone.Controller ];
+  var extend = [ Backbone.View, Backbone.Model, Backbone.Collection, Backbone.Controller ];
 
-    function resultExtendClass() {
+  function resultExtendClass() {
 
-        var args = Array.prototype.slice.call(arguments, 0);
-        args.unshift(this.prototype);
+    var args = Array.prototype.slice.call(arguments, 0);
+    args.unshift(this.prototype);
 
-        return _.resultExtend.apply(this, args);
+    return _.resultExtend.apply(this, args);
 
-    };
+  };
 
-    function resultExtendInstance() {
+  function resultExtendInstance() {
 
-        var args = Array.prototype.slice.call(arguments, 0);
-        args.unshift(this);
+    var args = Array.prototype.slice.call(arguments, 0);
+    args.unshift(this);
 
-        return _.resultExtend.apply(this, args);
+    return _.resultExtend.apply(this, args);
 
-    };
-    
-    _.each(extend, function(item) {
+  };
 
-        item.resultExtend = resultExtendClass;
-        item.prototype.resultExtend = resultExtendInstance;
+  _.each(extend, function(item) {
 
-    });
+    item.resultExtend = resultExtendClass;
+    item.prototype.resultExtend = resultExtendInstance;
+
+  });
 
 
 });

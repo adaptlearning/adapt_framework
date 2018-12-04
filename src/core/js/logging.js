@@ -1,111 +1,112 @@
 define([
-    'core/js/adapt',
-    'core/js/enums/logLevelEnum'
+  'core/js/adapt',
+  'core/js/enums/logLevelEnum'
 ], function(Adapt, LOG_LEVEL) {
 
-    var Logging = Backbone.Controller.extend({
+  var Logging = Backbone.Controller.extend({
 
-        _config: {
-            _isEnabled: true,
-            _level: LOG_LEVEL.INFO.asLowerCase, // Default log level
-            _console: true // Log to console
-        },      
-        
-        initialize: function() {
+    _config: {
+      _isEnabled: true,
+      _level: LOG_LEVEL.INFO.asLowerCase, // Default log level
+      _console: true // Log to console
+    },
 
-            Adapt.once('configModel:loadCourseData', this.onLoadCourseData.bind(this));
+    initialize: function() {
 
-        },
-        
-        onLoadCourseData: function() {
+      Adapt.once('configModel:loadCourseData', this.onLoadCourseData.bind(this));
 
-            this.loadConfig();
+    },
 
-            this.debug('Logging config loaded');
+    onLoadCourseData: function() {
 
-            this.trigger('log:ready');
+      this.loadConfig();
 
-        },
+      this.debug('Logging config loaded');
 
-        loadConfig: function() {
+      this.trigger('log:ready');
 
-            if (Adapt.config.has('_logging')) {
-                this._config = Adapt.config.get('_logging');
-            }
+    },
 
-            this.checkQueryStringOverride();
+    loadConfig: function() {
 
-        },
+      if (Adapt.config.has('_logging')) {
+        this._config = Adapt.config.get('_logging');
+      }
 
-        checkQueryStringOverride: function() {
+      this.checkQueryStringOverride();
 
-            // Override default log level with level present in query string
-            var matches = window.location.search.match(/[?&]loglevel=([a-z]*)/i);
-            if (!matches || matches.length < 2) return;
+    },
 
-            var override = LOG_LEVEL(matches[1].toUpperCase());
-            if (!override) return;
+    checkQueryStringOverride: function() {
 
-            this._config._level = override.asLowerCase;
-            this.debug('Loglevel override in query string:', this._config._level);
-            
-        },
-        
-        debug: function() {            
-            this._log(LOG_LEVEL.DEBUG, Array.prototype.slice.call(arguments));
-        },
-        
-        info: function() {
-            this._log(LOG_LEVEL.INFO, Array.prototype.slice.call(arguments));
-        },
-        
-        warn: function() {
-            this._log(LOG_LEVEL.WARN, Array.prototype.slice.call(arguments));
-        },
-        
-        error: function() {
-            this._log(LOG_LEVEL.ERROR, Array.prototype.slice.call(arguments));
-        },
-        
-        fatal: function() {
-            this._log(LOG_LEVEL.FATAL, Array.prototype.slice.call(arguments));
-        },
-        
-        _log: function(level, data) {
+      // Override default log level with level present in query string
+      var matches = window.location.search.match(/[?&]loglevel=([a-z]*)/i);
+      if (!matches || matches.length < 2) return;
 
-            var isEnabled = (this._config._isEnabled);
-            if (!isEnabled) return;
+      var override = LOG_LEVEL(matches[1].toUpperCase());
+      if (!override) return;
 
-            var configLevel = LOG_LEVEL(this._config._level.toUpperCase());
+      this._config._level = override.asLowerCase;
+      this.debug('Loglevel override in query string:', this._config._level);
 
-            var isLogLevelAllowed = (level >= configLevel);
-            if (!isLogLevelAllowed) return;
+    },
 
-            this._logToConsole(level, data);
+    debug: function() {
+      this._log(LOG_LEVEL.DEBUG, Array.prototype.slice.call(arguments));
+    },
 
-            // Allow error reporting plugins to hook and report to logging systems
-            this.trigger('log', level, data);
-            this.trigger('log:' + level.asLowerCase, level, data);
+    info: function() {
+      this._log(LOG_LEVEL.INFO, Array.prototype.slice.call(arguments));
+    },
 
-        },
+    warn: function() {
+      this._log(LOG_LEVEL.WARN, Array.prototype.slice.call(arguments));
+    },
 
-        _logToConsole: function(level, data) {
+    error: function() {
+      this._log(LOG_LEVEL.ERROR, Array.prototype.slice.call(arguments));
+    },
 
-            var shouldLogToConsole = (this._config._console);
-            if (!shouldLogToConsole) return;
+    fatal: function() {
+      this._log(LOG_LEVEL.FATAL, Array.prototype.slice.call(arguments));
+    },
 
-            var log = [level.asUpperCase + ':'];
-            data && log.push.apply(log, data);
+    _log: function(level, data) {
 
-            // is there a matching console method we can use e.g. console.error()?
-            if(console[level.asLowerCase]) {
-                console[level.asLowerCase].apply(console, log);
-            } else {
-                console.log.apply(console, log);
-            }
-        }
+      var isEnabled = (this._config._isEnabled);
+      if (!isEnabled) return;
 
-    });
+      var configLevel = LOG_LEVEL(this._config._level.toUpperCase());
 
-    Adapt.log = new Logging();
+      var isLogLevelAllowed = (level >= configLevel);
+      if (!isLogLevelAllowed) return;
+
+      this._logToConsole(level, data);
+
+      // Allow error reporting plugins to hook and report to logging systems
+      this.trigger('log', level, data);
+      this.trigger('log:' + level.asLowerCase, level, data);
+
+    },
+
+    _logToConsole: function(level, data) {
+
+      var shouldLogToConsole = (this._config._console);
+      if (!shouldLogToConsole) return;
+
+      var log = [level.asUpperCase + ':'];
+      data && log.push.apply(log, data);
+
+      // is there a matching console method we can use e.g. console.error()?
+      if(console[level.asLowerCase]) {
+        console[level.asLowerCase].apply(console, log);
+      } else {
+        console.log.apply(console, log);
+      }
+    }
+
+  });
+
+  Adapt.log = new Logging();
+
 });

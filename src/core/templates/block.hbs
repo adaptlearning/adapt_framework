@@ -1,34 +1,38 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
+
 <div class="block-inner">
 
-    {{#if displayTitle}}
-        <div class="block-title">
-            {{#unless _disableAccessibilityState}}
-                <div class="js-heading"></div>
-            {{/unless}}
-            <div class="block-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
-                {{{compile displayTitle}}}
-            </div>
-        </div>
-    {{/if}}
+  {{#if displayTitle}}
+  <div class="block-title">
 
-    {{#if body}}
-        <div class="block-body">
-            <div class="block-body-inner">
-                {{{compile body}}}
-            </div>
-        </div>
-    {{/if}}
+    {{#unless _disableAccessibilityState}}
+    <div class="js-heading"></div>
+    {{/unless}}
 
-    {{#if instruction}}
-        <div class="block-instruction">
-            <div class="block-instruction-inner">
-                {{{compile instruction}}}
-            </div>
-        </div>
-    {{/if}}
-
-    <div class="component-container">
+    <div class="block-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
+      {{{compile displayTitle}}}
     </div>
+
+  </div>
+  {{/if}}
+
+  {{#if body}}
+  <div class="block-body">
+    <div class="block-body-inner">
+      {{{compile body}}}
+    </div>
+  </div>
+  {{/if}}
+
+  {{#if instruction}}
+  <div class="block-instruction">
+    <div class="block-instruction-inner">
+      {{{compile instruction}}}
+    </div>
+  </div>
+  {{/if}}
+
+  <div class="component-container"></div>
+
 </div>

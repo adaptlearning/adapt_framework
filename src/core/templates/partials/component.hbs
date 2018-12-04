@@ -1,36 +1,40 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
+
 <div class="{{_component}}-header component-header">
-    <div class="{{_component}}-header-inner component-header-inner">
+  <div class="{{_component}}-header-inner component-header-inner">
 
-        {{#if displayTitle}}
-        <div class="{{_component}}-title component-title">
-            {{#unless _disableAccessibilityState}}
-                <div class="js-heading"></div>
-            {{/unless}}
-            <div class="{{_component}}-title-inner component-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
-                {{{compile displayTitle}}}
-            </div>
-        </div>
-        {{/if}}
+    {{#if displayTitle}}
+    <div class="{{_component}}-title component-title">
 
-        {{component_description}}
+      {{#unless _disableAccessibilityState}}
+      <div class="js-heading"></div>
+      {{/unless}}
 
-        {{#if body}}
-        <div class="{{_component}}-body component-body">
-            <div class="{{_component}}-body-inner component-body-inner">
-                {{{compile body}}}
-            </div>
-        </div>
-        {{/if}}
-
-        {{#any instruction mobileInstruction}}
-        <div class="{{_component}}-instruction component-instruction">
-            <div class="{{_component}}-instruction-inner component-instruction-inner">
-                {{{compile instruction}}}
-            </div>
-        </div>
-        {{/any}}
+      <div class="{{_component}}-title-inner component-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
+        {{{compile displayTitle}}}
+      </div>
 
     </div>
+    {{/if}}
+
+    {{component_description}}
+
+    {{#if body}}
+    <div class="{{_component}}-body component-body">
+      <div class="{{_component}}-body-inner component-body-inner">
+        {{{compile body}}}
+      </div>
+    </div>
+    {{/if}}
+
+    {{#any instruction mobileInstruction}}
+    <div class="{{_component}}-instruction component-instruction">
+      <div class="{{_component}}-instruction-inner component-instruction-inner">
+        {{{compile instruction}}}
+      </div>
+    </div>
+    {{/any}}
+
+  </div>
 </div>
