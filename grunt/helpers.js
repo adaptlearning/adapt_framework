@@ -140,7 +140,7 @@ module.exports = function(grunt) {
         var configPath = path.join(path.resolve(data.root, outputdir), 'course', 'config.' + data.jsonext);
 
         try {
-            var buildConfig = require(configPath).build;
+            var buildConfig = grunt.file.readJSON(configPath).build;
         }
         catch(error) {
             return grunt.log.error(error);
