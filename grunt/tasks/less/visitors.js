@@ -1,17 +1,15 @@
 "use strict";
 
-var getReplaceUrls = require("./replaceUrls");
+var ReplaceUrls = require("./replaceUrls");
 
 class LessPluginPreprocess {
 
     constructor (options) {
         this.minVersion = [2, 1, 0];
-        this._options = options;
+        this._replaceUrlsHandler = new ReplaceUrls(options);
     }
 
     install (less, pluginManager) {
-        var ReplaceUrls = getReplaceUrls(less);
-        this._replaceUrlsHandler = new ReplaceUrls(this._options);
         pluginManager.addVisitor(this._replaceUrlsHandler);
     }
 
