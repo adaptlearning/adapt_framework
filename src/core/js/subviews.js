@@ -177,6 +177,11 @@ define([
                 }
                 return new Handlebars.SafeString(html);
             });
+            Handlebars.registerHelper('using', function(id, options) {
+                var model = Adapt.findById(id);
+                if (!model) return new Handlebars.SafeString(options.inverse(this));
+                return new Handlebars.SafeString(options.fn(model.toJSON()));
+            });
         },
 
         /**
