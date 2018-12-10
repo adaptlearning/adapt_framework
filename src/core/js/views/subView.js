@@ -3,8 +3,9 @@ define([
 ], function(Adapt){
 
     var SubView = Backbone.View.extend({
-        
-        initialize: function() {
+
+        initialize: function(options) {
+            this.options = options.options;
             this.render();
             this.init();
         },
@@ -18,7 +19,9 @@ define([
             Adapt.trigger("subView:preRender", this);
             var templateName = this.constructor.template;
             var template = Handlebars.templates[templateName];
-            var data = this.model.toJSON();
+            var data = _.extend(this.model.toJSON(), {
+                options: this.options
+            });
             this.$el.html(template(data));
             Adapt.trigger("subView:render", this);
             _.defer(function() {
@@ -47,9 +50,12 @@ define([
          */
         replaceElement: function(element) {
             var $element = $(element);
+            if ($element[0] === this.$el[0]) return;
             Adapt.trigger("subView:attach", this);
             $element.replaceWith(this.$el);
+            this.undelegateEvents();
             this.attach();
+            this.delegateEvents();
             Adapt.trigger("subView:attached", this);
         },
 

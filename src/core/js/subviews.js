@@ -13,6 +13,7 @@ define([
         name: null,
         id: null,
         model: null,
+        options: null,
         uid: null,
         instance: null,
 
@@ -29,6 +30,7 @@ define([
 
             this.name = context.name || null;
             this.id = context.id || null;
+            this.options = context.options;
             this.uid = Invocation.getNextId();
             if (this.id) {
                 this.model = Adapt.findById(context.id);
@@ -40,7 +42,7 @@ define([
             }
 
             if (this.model) return;
-            
+
             // If no model was found.
             Adapt.log.warn('SubView: No model found for name="'+this.name+'" id="'+this.id+'"');
         },
@@ -54,6 +56,7 @@ define([
             if (this.name !== invocation.name) return false;
             if (this.id !== invocation.id) return false;
             if (this.model !== invocation.model) return false;
+            if (!_.isEqual(this.options, invocation.options)) return false;
             return true;
         },
 
@@ -83,7 +86,8 @@ define([
                 attributes: {
                     "data-adapt-subview": this.uid
                 },
-                model: this.model
+                model: this.model,
+                options: this.options
             });
 
             this.instance = instance;
@@ -99,7 +103,8 @@ define([
             }
             this.name = null;
             this.id = null;
-            this.data = null;
+            this.model = null;
+            this.options = null;
             this.uid = null;
         }
 
@@ -162,6 +167,7 @@ define([
                     name: options.hash.name,
                     id: options.hash.id,
                     data: options.hash.id ? null : options.hash.model || this,
+                    options: options.hash || {}
                 };
                 var invocation = Adapt.subviews.invocations.create(context);
                 var html = '';
