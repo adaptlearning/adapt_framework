@@ -9,7 +9,6 @@
     },
     "_accessibility": {
         "_isEnabled": true,
-        "_isTextProcessorEnabled": true,
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
             "_menu": 1,
@@ -45,6 +44,10 @@
         }
     },
     "_disableAnimationFor": [],
+    "_scrollingContainer": {
+        "_isEnabled": false,
+        "_limitToSelector": ""
+    },
     "build": {
     }
 }

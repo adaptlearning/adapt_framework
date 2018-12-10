@@ -23,6 +23,8 @@ require([
     'core/js/models/lockingModel',
     'core/js/helpers',
     'core/js/subviews',
+    'core/js/scrolling',
+    'core/js/headings',
     'plugins'
 ], function (Adapt, AdaptCollection, StartController, BuildModel, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
@@ -30,7 +32,7 @@ require([
     window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
 
     var template = Handlebars.templates['loading'];
-    $('#wrapper').append(template());
+    $('body').append(template());
 
     Adapt.build = new BuildModel(null, {url: "adapt/js/build.min.js", reset:true});
 

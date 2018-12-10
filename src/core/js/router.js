@@ -138,7 +138,8 @@ define([
                     Adapt.once('menuView:ready', function() {
                         // Allow navigation.
                         Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
-                    });
+                        this.handleNavigationFocus();
+                    }.bind(this));
 
                     Adapt.trigger('router:menu', Adapt.course);
                 }, this));
@@ -179,7 +180,8 @@ define([
                                     Adapt.once('pageView:ready', function() {
                                         // Allow navigation.
                                         Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
-                                    });
+                                        this.handleNavigationFocus();
+                                    }.bind(this));
                                     Adapt.trigger('router:page', currentModel);
                                     this.$wrapper.append(new PageView({ model: currentModel }).$el);
                                 }, this));
@@ -189,7 +191,8 @@ define([
                                     Adapt.once('menuView:ready', function() {
                                         // Allow navigation.
                                         Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
-                                    });
+                                        this.handleNavigationFocus();
+                                    }.bind(this));
                                     Adapt.trigger('router:menu', currentModel);
                                 }, this));
                             }
@@ -369,6 +372,13 @@ define([
             Adapt.once('pageView:ready menuView:ready', function() {
                 document.title = documentTitle;
             });
+        },
+
+        handleNavigationFocus: function() {
+            if (!Adapt.router.get("_shouldNavigateFocus")) return;
+            // Body will be forced to accept focus to start the
+            // screen reader reading the page.
+            $("body").focusNoScroll();
         }
     });
 

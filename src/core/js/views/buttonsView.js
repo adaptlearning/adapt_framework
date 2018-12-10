@@ -86,21 +86,17 @@ define([
         },
 
         onButtonStateChanged: function(model, changedAttribute) {
+
+            this.updateAttemptsCount();
+
             // Use 'correct' instead of 'complete' to signify button state
+            var $buttonsAction = this.$('.buttons-action');
             var buttonState = BUTTON_STATE(changedAttribute);
             if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
                 // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-                this.$('.buttons-action').a11y_cntrl_enabled(false);
 
-                if (!this.model.get("_canShowFeedback")) {
-                    if (!this.$el.is(".no-state")) {
-                        //if no feedback, complete correct and has state, force focus to component state
-                        _.defer(_.bind(function() {
-                            $("." + this.model.get("_id") + " .accessibility-state [tabindex]").focusNoScroll();
-                        }, this));
-                    }
-                }
-              
+                $buttonsAction.a11y_cntrl_enabled(false);
+
             } else {
 
                 var propertyName = textPropertyName[buttonState.asString];
@@ -108,19 +104,18 @@ define([
                 var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
                 // Enable the button, make accessible and update aria labels and text
-                this.$('.buttons-action').a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+                $buttonsAction.a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
 
                 // Make model answer button inaccessible (but still enabled) for visual users due to
                 // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
                 switch (changedAttribute) {
                     case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-                        this.$('.buttons-action').a11y_cntrl(false);
+
+                        $buttonsAction.a11y_cntrl(false);
                 }
 
             }
-
-            this.updateAttemptsCount();
         },
 
         checkFeedbackState: function(){
@@ -154,7 +149,7 @@ define([
             }
 
             if (shouldDisplayAttempts) {
-                this.$('.buttons-display-inner').a11y_text(attemptsString);
+                this.$('.buttons-display-inner').html(attemptsString);
             }
 
         },
@@ -162,9 +157,13 @@ define([
         showMarking: function() {
             if (!this.model.get('_canShowMarking')) return;
 
+            var isCorrect = this.model.get('_isCorrect');
+            var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
+
             this.$('.buttons-marking-icon')
                 .removeClass('display-none')
-                .addClass(this.model.get('_isCorrect') ? 'icon-tick' : 'icon-cross');
+                .addClass(isCorrect ? 'icon-tick' : 'icon-cross')
+                .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
         },
 
         refresh: function() {

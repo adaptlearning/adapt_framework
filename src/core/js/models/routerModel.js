@@ -5,11 +5,13 @@ define([
  	var RouterModel = Backbone.Model.extend({
 
  		defaults: {
- 			_canNavigate: true
+ 			_canNavigate: true,
+			_shouldNavigateFocus: true
  		},
 
  		lockedAttributes: {
- 			_canNavigate: false
+ 			_canNavigate: false,
+			_shouldNavigateFocus: false
  		}
  		
  	});

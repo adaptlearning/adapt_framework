@@ -10,19 +10,21 @@ define([
             return classes;
         },
 
+        attributes: {
+            'role': 'dialog',
+            'aria-labelledby': 'notify-heading',
+            'aria-modal': 'true'
+        },
+
         disableAnimation: false,
-
-        escapeKeyAttached: false,
-
         isOpen: false,
+        hasOpened: false,
 
         initialize: function() {
             this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
 
             this.setupEventListeners();
 
-            //include accessibility globals in notify model
-            this.model.set('_globals', Adapt.course.get('_globals'));
             this.render();
         },
 
@@ -32,28 +34,15 @@ define([
                 'notify:resize': this.resetNotifySize,
                 'notify:cancel': this.cancelNotify,
                 'notify:close': this.closeNotify,
-                'device:resize': this.resetNotifySize,
-                'accessibility:toggle': this.onAccessibilityToggle
+                'device:resize': this.resetNotifySize
             });
 
-            this._onKeyUp = _.bind(this.onKeyUp, this);
+            this._onKeyUp = this.onKeyUp.bind(this);
             this.setupEscapeKey();
         },
 
         setupEscapeKey: function() {
-            var hasAccessibility = Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isActive;
-
-            if (!hasAccessibility && ! this.escapeKeyAttached) {
-                $(window).on('keyup', this._onKeyUp);
-                this.escapeKeyAttached = true;
-            } else {
-                $(window).off('keyup', this._onKeyUp);
-                this.escapeKeyAttached = false;
-            }
-        },
-
-        onAccessibilityToggle: function() {
-            this.setupEscapeKey();
+            $(window).on('keyup', this._onKeyUp);
         },
 
         onKeyUp: function(event) {
@@ -148,48 +137,53 @@ define([
             this.isOpen = true;
             this.addSubView();
 
+            // Keep focus from previous action
+            this.$previousActiveElement = $(document.activeElement);
+
             Adapt.trigger('notify:opened', this);
 
-            this.$el.imageready( _.bind(loaded, this));
+            this.$el.imageready(this.onLoaded.bind(this));
+        },
+        
+        onLoaded: function() {
+            if (this.disableAnimation) {
+                this.$('.notify-shadow').css('display', 'block');
+            } else {
 
-            function loaded() {
-                if (this.disableAnimation) {
+                this.$('.notify-shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
                     this.$('.notify-shadow').css('display', 'block');
-                } else {
+                }.bind(this)});
 
-                    this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, {duration:400, begin: _.bind(function() {
-                        this.$('.notify-shadow').css('display', 'block');
-                    }, this)});
-
-                }
-
-                this.resizeNotify();
-
-                if (this.disableAnimation) {
-
-                    this.$('.notify-popup').css('visibility', 'visible');
-                    complete.call(this);
-
-                } else {
-
-                    this.$('.notify-popup').velocity({ opacity: 0 }, {duration:0}).velocity({ opacity: 1 }, { duration:400, begin: _.bind(function() {
-                        this.$('.notify-popup').css('visibility', 'visible');
-                        complete.call(this);
-                    }, this) });
-
-                }
-
-                function complete() {
-                    /*ALLOWS POPUP MANAGER TO CONTROL FOCUS*/
-                    Adapt.trigger('popup:opened', this.$('.notify-popup'));
-                    $('body').scrollDisable();
-                    $('html').addClass('notify');
-
-                    //set focus to first accessible element
-                    this.$('.notify-popup').a11y_focus();
-                }
             }
 
+            this.resizeNotify();
+
+            if (this.disableAnimation) {
+
+                this.$('.notify-popup').css('visibility', 'visible');
+                this.onOpened();
+
+            } else {
+
+                this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
+                    // Make sure to make the notify visible and then set
+                    // focus, disabled scroll and manage tabs
+                    this.$('.notify-popup').css('visibility', 'visible');
+                    this.onOpened();
+                }.bind(this)});
+
+            }
+        },
+
+        onOpened: function() {
+            this.hasOpened = true;
+            // Allows popup manager to control focus
+            Adapt.trigger('popup:opened', this.$('.notify-popup'));
+            $('body').scrollDisable();
+            $('html').addClass('notify');
+
+            // Set focus to first accessible element
+            this.$('.notify-popup').a11y_focus(true);
         },
 
         addSubView: function() {
@@ -202,10 +196,23 @@ define([
         },
 
         closeNotify: function (event) {
-            //prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
+            // Prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
             if (!this.isOpen) return;
             this.isOpen = false;
 
+            // If closeNotify is called before showNotify has finished then wait
+            // until it's open.
+            if (!this.hasOpened) {
+                this.listenToOnce(Adapt, 'popup:opened', function() {
+                    // Wait for popup:opened to finish processing
+                    _.defer(this.onCloseReady.bind(this));
+                });
+            } else {
+                this.onCloseReady();
+            }
+        },
+        
+        onCloseReady: function() {
             if (this.disableAnimation) {
 
                 this.$('.notify-popup').css('visibility', 'hidden');
@@ -215,30 +222,30 @@ define([
 
             } else {
 
-                this.$('.notify-popup').velocity({ opacity: 0 }, {duration:400, complete: _.bind(function() {
+                this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
                     this.$('.notify-popup').css('visibility', 'hidden');
-                }, this)});
+                }.bind(this)});
 
-                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration:400, complete:_.bind(function() {
+                this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
                     this.$el.css('visibility', 'hidden');
                     this.remove();
-                }, this)});
+                }.bind(this)});
             }
 
             $('body').scrollEnable();
             $('html').removeClass('notify');
 
-            Adapt.trigger('popup:closed');
-            Adapt.trigger('notify:closed');
+            // Return focus to previous active element
+            Adapt.trigger('popup:closed notify:closed', this.$previousActiveElement);
         },
 
         remove: function() {
             this.removeSubView();
+            $(window).off('keyup', this._onKeyUp);
             Backbone.View.prototype.remove.apply(this, arguments);
         },
 
         removeSubView: function() {
-
             if (!this.subView) return;
             this.subView.remove();
             this.subView = null;
