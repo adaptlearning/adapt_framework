@@ -44,16 +44,14 @@ define([
         // This is important for returning or showing the users answer
         // This should preserve the state of the users answers
         storeUserAnswer: function() {
-            var userAnswer = [];
-
             var items = this.getChildren().slice(0);
             items.sort(function(a, b) {
                 return a.get('_index') - b.get('_index');
             });
 
-            _.each(items, function(itemModel, index) {
-                userAnswer.push(itemModel.get('_isActive'));
-            }, this);
+            var userAnswer = items.map(function(itemModel) {
+                return itemModel.get('_isActive');
+            });
             this.set('_userAnswer', userAnswer);
         },
 
