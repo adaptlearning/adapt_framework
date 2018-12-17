@@ -245,6 +245,10 @@ define([
             return this.get('_feedback').title || this.get('displayTitle') ||  this.get('title') || "";
         },
 
+        /**
+         * Used to determine whether the learner is allowed to interact with the question component or not.
+         * @return {Boolean}
+         */
         isInteractive: function() {
             return !this.get('_isComplete') || (this.get('_isEnabled') && !this.get('_isSubmitted'));
         },
