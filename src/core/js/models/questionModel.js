@@ -91,10 +91,10 @@ define([
             this.restoreUserAnswers();
         },
 
-        // Used to restore the user answers 
+        // Used to restore the user answers
         restoreUserAnswers: function() {},
 
-        
+
         //////
         // Submit process
         ////
@@ -240,9 +240,13 @@ define([
                 feedbackMessage: body
             });
         },
-        
+
         getFeedbackTitle: function() {
             return this.get('_feedback').title || this.get('displayTitle') ||  this.get('title') || "";
+        },
+
+        isInteractive: function() {
+            return !this.get('_isComplete') || (this.get('_isEnabled') && !this.get('_isSubmitted'));
         },
 
         // Reset the model to let the user have another go (not the same as attempts)
@@ -272,7 +276,7 @@ define([
 
         // Used by the question view to reset the stored user answer
         resetUserAnswer: function() {},
-        
+
         refresh: function() {
             this.trigger('question:refresh');
         },
