@@ -18,7 +18,7 @@ define([
       this.model.get('_id') +
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
-      " " + (this.model.get('_isComplete') ? 'completed' : '');
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     },
 
     preRender: function() {
@@ -58,7 +58,7 @@ define([
     }
 
   }, {
-    childContainer: '.article-container',
+    childContainer: '.article__container',
     childView: ArticleView,
     type: 'page',
     template: 'page'
