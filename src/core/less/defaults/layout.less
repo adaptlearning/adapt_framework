@@ -1,0 +1,34 @@
+// --------------------------------------------------
+// Mixin to generate a horizontally and vertically centered container
+// --------------------------------------------------
+.l-fill-viewport-mixin(absolute);
+.l-fill-viewport-mixin(fixed);
+
+.l-fill-viewport-mixin(@position) {
+  .l-fill-viewport-@{position} {
+    position: @position;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Mixin to generate a variable width horizontally centered container
+// --------------------------------------------------
+.l-container-responsive(@size) {
+  margin: auto;
+  max-width: @size;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Mixin to provide responsive container padding
+// --------------------------------------------------
+.l-container-padding(@padding-ver, @padding-hoz) {
+  padding: @padding-ver @padding-hoz;
+}
+// --------------------------------------------------
