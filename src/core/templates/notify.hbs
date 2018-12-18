@@ -1,46 +1,46 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 
-<div {{#each _attributes}}{{@key}}="{{this}}" {{/each}} class="notify-popup notify-type-{{_type}} {{_classes}}">
-  <div class="notify-popup-inner">
+<div {{#each _attributes}}{{@key}}="{{this}}" {{/each}} class="notify__popup notify__popup-type-{{_type}}{{#if _classes}} {{_classes}}{{/if}}">
+  <div class="notify__popup-inner">
 
-    <div class="notify-popup-content">
-      <div class="notify-popup-content-inner">
+    <div class="notify__content">
+      <div class="notify__content-inner">
 
         {{#if _showIcon}}
-        <div class="notify-popup-icon">
+        <div class="notify__icon">
           <div class="icon{{#if_value_equals _type "prompt"}} icon-question{{/if_value_equals}}{{#if_value_equals _type "alert"}} icon-warning{{/if_value_equals}}"></div>
         </div>
         {{/if}}
 
         {{#if title}}
-        <div id="notify-heading" class="notify-popup-title">
-          <div class="notify-popup-title-inner h5" role="heading" aria-level="1">
+        <div id="notify-heading" class="notify__title">
+          <div class="notify__title-inner" role="heading" aria-level="1">
             {{{compile title}}}
           </div>
         </div>
         {{/if}}
 
         {{#if body}}
-        <div class="notify-popup-body">
-          <div class="notify-popup-body-inner">
+        <div class="notify__body">
+          <div class="notify__body-inner">
             {{{compile body}}}
           </div>
         </div>
         {{/if}}
 
         {{#if_value_equals _type "alert"}}
-        <div class="notify-popup-buttons">
-          <button class="notify-popup-button notify-popup-alert-button" aria-label="{{{confirmText}}}">
+        <div class="notify__btn-container">
+          <button class="btn-text notify__btn notify__btn-alert js-notify-btn-alert" aria-label="{{{confirmText}}}">
             {{{confirmText}}}
           </button>
         </div>
         {{/if_value_equals}}
 
         {{#if_value_equals _type "prompt"}}
-        <div class="notify-popup-buttons">
+        <div class="notify__btn-container">
           {{#each _prompts}}
-          <button class="notify-popup-button notify-popup-prompt-button" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">
+          <button class="btn-text notify__btn notify__btn-prompt js-notify-btn-prompt" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">
             {{{promptText}}}
           </button>
           {{/each}}
@@ -53,8 +53,8 @@
     {{! toolbar moved for AA purposes - last tabbable element}}
     {{#all _isCancellable _showCloseButton}}
     {{#if_value_equals _type "popup"}}
-    <button class="base notify-popup-done" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
-      <div class="notify-popup-icon-close icon icon-cross"></div>
+    <button class="btn-icon notify__close-btn js-notify-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
+      <div class="icon"></div>
     </button>
     {{/if_value_equals}}
     {{/all}}
@@ -65,4 +65,4 @@
 
 </div>
 
-<div class="notify-shadow"></div>
+<div class="notify__shadow js-notify-shadow-click"></div>

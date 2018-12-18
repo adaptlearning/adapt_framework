@@ -1,22 +1,26 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 
-<div id="notify-push-heading" class="notify-push-inner">
+<div id="notify-push-heading" class="notify__push-inner js-notify-push-inner">
 
-  <div class="notify-push-title">
-    <div class="notify-push-title-inner h5" role="heading" aria-level="1">
+  {{#if title}}
+  <div class="notify__push-title">
+    <div class="notify__push-title-inner" role="heading" aria-level="1">
       {{{compile title}}}
     </div>
   </div>
+  {{/if}}
 
-  <div class="notify-push-body">
-    <div class="notify-push-body-inner">
+  {{#if body}}
+  <div class="notify__push-body">
+    <div class="notify__push-body-inner">
       {{{compile body}}}
     </div>
   </div>
+  {{/if}}
 
 </div>
 
-<button class="base notify-push-close" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
-  <span class="icon icon-cross"></span>
+<button class="btn-icon notify__push-close-btn js-notify-push-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
+  <div class="icon"></div>
 </button>

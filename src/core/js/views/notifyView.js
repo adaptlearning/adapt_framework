@@ -53,10 +53,10 @@ define([
     },
 
     events: {
-      'click .notify-popup-alert-button':'onAlertButtonClicked',
-      'click .notify-popup-prompt-button': 'onPromptButtonClicked',
-      'click .notify-popup-done': 'onCloseButtonClicked',
-      'click .notify-shadow': 'onShadowClicked'
+      'click .js-notify-btn-alert':'onAlertButtonClicked',
+      'click .js-notify-btn-prompt': 'onPromptButtonClicked',
+      'click .js-notify-close-btn': 'onCloseButtonClicked',
+      'click .js-notify-shadow-click': 'onShadowClicked'
     },
 
     render: function() {
@@ -68,7 +68,7 @@ define([
       //attach popup + shadow
       this.$el.html(template(data)).prependTo('body');
       //hide popup
-      this.$('.notify-popup').css('visibility', 'hidden');
+      this.$('.notify__popup').css('visibility', 'hidden');
       //show notify container
       this.$el.css('visibility', 'visible');
 
@@ -110,24 +110,24 @@ define([
     },
 
     resetNotifySize: function() {
-      $('.notify-popup').removeAttr('style');
+      $('.notify__popup').removeAttr('style');
 
       this.resizeNotify();
     },
 
     resizeNotify: function() {
       var windowHeight = $(window).height();
-      var notifyHeight = this.$('.notify-popup').outerHeight();
+      var notifyHeight = this.$('.notify__popup').outerHeight();
 
       if (notifyHeight > windowHeight) {
-        this.$('.notify-popup').css({
+        this.$('.notify__popup').css({
           'height':'100%',
           'top':0,
           'overflow-y': 'scroll',
           '-webkit-overflow-scrolling': 'touch'
         });
       } else {
-        this.$('.notify-popup').css({
+        this.$('.notify__popup').css({
           'margin-top': -(notifyHeight/2)
         });
       }
@@ -147,11 +147,11 @@ define([
 
     onLoaded: function() {
       if (this.disableAnimation) {
-        this.$('.notify-shadow').css('display', 'block');
+        this.$('.notify__shadow').css('display', 'block');
       } else {
 
-        this.$('.notify-shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
-          this.$('.notify-shadow').css('display', 'block');
+        this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
+          this.$('.notify__shadow').css('display', 'block');
         }.bind(this)});
 
       }
@@ -160,15 +160,15 @@ define([
 
       if (this.disableAnimation) {
 
-        this.$('.notify-popup').css('visibility', 'visible');
+        this.$('.notify__popup').css('visibility', 'visible');
         this.onOpened();
 
       } else {
 
-        this.$('.notify-popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
+        this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
           // Make sure to make the notify visible and then set
           // focus, disabled scroll and manage tabs
-          this.$('.notify-popup').css('visibility', 'visible');
+          this.$('.notify__popup').css('visibility', 'visible');
           this.onOpened();
         }.bind(this)});
 
@@ -178,12 +178,12 @@ define([
     onOpened: function() {
       this.hasOpened = true;
       // Allows popup manager to control focus
-      Adapt.trigger('popup:opened', this.$('.notify-popup'));
+      Adapt.trigger('popup:opened', this.$('.notify__popup'));
       $('body').scrollDisable();
       $('html').addClass('notify');
 
       // Set focus to first accessible element
-      this.$('.notify-popup').a11y_focus(true);
+      this.$('.notify__popup').a11y_focus(true);
     },
 
     addSubView: function() {
@@ -191,7 +191,7 @@ define([
       this.subView = this.model.get("_view");
       if (!this.subView) return;
 
-      this.$(".notify-popup-content-inner").append(this.subView.$el);
+      this.$(".notify__content-inner").append(this.subView.$el);
 
     },
 
@@ -215,18 +215,18 @@ define([
     onCloseReady: function() {
       if (this.disableAnimation) {
 
-        this.$('.notify-popup').css('visibility', 'hidden');
+        this.$('.notify__popup').css('visibility', 'hidden');
         this.$el.css('visibility', 'hidden');
 
         this.remove();
 
       } else {
 
-        this.$('.notify-popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
-          this.$('.notify-popup').css('visibility', 'hidden');
+        this.$('.notify__popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
+          this.$('.notify__popup').css('visibility', 'hidden');
         }.bind(this)});
 
-        this.$('.notify-shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
+        this.$('.notify__shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
           this.$el.css('visibility', 'hidden');
           this.remove();
         }.bind(this)});
