@@ -1,17 +1,18 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 
-<div class="{{_component}}-header component-header">
-  <div class="{{_component}}-header-inner component-header-inner">
+{{#any displayTitle body instruction}}
+<div class="component__header {{lowercase _component}}__header">
+  <div class="component__header-inner {{lowercase _component}}__header-inner">
 
     {{#if displayTitle}}
-    <div class="{{_component}}-title component-title">
+    <div class="component__title {{lowercase _component}}__title">
 
       {{#unless _disableAccessibilityState}}
       <div class="js-heading"></div>
       {{/unless}}
 
-      <div class="{{_component}}-title-inner component-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
+      <div class="component__title-inner {{lowercase _component}}__title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
         {{{compile displayTitle}}}
       </div>
 
@@ -21,16 +22,16 @@
     {{component_description}}
 
     {{#if body}}
-    <div class="{{_component}}-body component-body">
-      <div class="{{_component}}-body-inner component-body-inner">
+    <div class="component__body {{lowercase _component}}__body">
+      <div class="component__body-inner {{lowercase _component}}__body-inner">
         {{{compile body}}}
       </div>
     </div>
     {{/if}}
 
     {{#any instruction mobileInstruction}}
-    <div class="{{_component}}-instruction component-instruction">
-      <div class="{{_component}}-instruction-inner component-instruction-inner">
+    <div class="component__instruction {{lowercase _component}}__instruction">
+      <div class="component__instruction-inner {{lowercase _component}}__instruction-inner">
         {{{compile instruction}}}
       </div>
     </div>
@@ -38,3 +39,4 @@
 
   </div>
 </div>
+{{/any}}

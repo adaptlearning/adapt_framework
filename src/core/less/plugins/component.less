@@ -1,0 +1,56 @@
+.component {
+  // width: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    @media (min-width: (@device-width-medium + 1)) {
+      flex-direction: row;
+    }
+  }
+
+  &.is-left {
+    @media (min-width: (@device-width-medium + 1)) {
+      padding-right: 1%;
+      width: 50%;
+    }
+  }
+
+  &.is-right {
+    @media (min-width: (@device-width-medium + 1)) {
+      padding-left: 1%;
+      width: 50%;
+    }
+  }
+
+  // &.is-left {
+  //   @media (min-width: @device-width-medium) {
+  //     float: left;
+  //     padding-right: 1%;
+  //     width: 50%;
+  //   }
+  // }
+
+  // &.is-right {
+  //   @media (min-width: @device-width-medium) {
+  //     float: right;
+  //     padding-left: 1%;
+  //     width: 50%;
+  //   }
+  // }
+
+  &__title {
+    margin-bottom: 1em;
+  }
+
+  &__body {
+    margin-bottom: 1em;
+  }
+
+  &__instruction {
+    margin-bottom: 1em;
+  }
+}

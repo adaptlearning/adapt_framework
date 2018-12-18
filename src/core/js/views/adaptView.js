@@ -162,9 +162,9 @@ define([
 
     toggleVisibility: function() {
       if (this.model.get('_isVisible')) {
-        return this.$el.removeClass('visibility-hidden');
+        return this.$el.removeClass('u-visibility-hidden');
       }
-      this.$el.addClass('visibility-hidden');
+      this.$el.addClass('u-visibility-hidden');
     },
 
     setHidden: function() {
@@ -177,13 +177,13 @@ define([
 
     toggleHidden: function() {
       if (!this.model.get('_isHidden')) {
-        return this.$el.removeClass('display-none');
+        return this.$el.removeClass('u-display-none');
       }
-      this.$el.addClass('display-none');
+      this.$el.addClass('u-display-none');
     },
 
     onIsCompleteChange:function(model, isComplete){
-      this.$el.toggleClass('completed', isComplete);
+      this.$el.toggleClass('is-complete', isComplete);
     }
 
   });
