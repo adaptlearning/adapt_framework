@@ -6,9 +6,9 @@ define([
 
     defaults: {
       screenSize: {
-        small: 520,
-        medium: 760,
-        large: 1024
+        large: 56.25,
+        medium: 47.5,
+        small: 32.5
       },
       _forceRouteLocking: false,
       _canLoadData: true,
