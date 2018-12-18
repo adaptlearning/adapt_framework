@@ -16,7 +16,7 @@ html.adapt-scrolling {
 
   #app {
     position: relative;
-    height: ~"calc(100% - @{navigation-height})";
+    height: calc(~'100% - @{navigation-height}');
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
   }
@@ -24,5 +24,4 @@ html.adapt-scrolling {
   #wrapper {
     padding: 0;
   }
-
 }
