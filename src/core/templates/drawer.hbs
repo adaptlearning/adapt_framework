@@ -1,17 +1,21 @@
-<div class="drawer-inner">
+<div class="drawer__inner">
 
   {{{a11y_aria_label _globals._accessibility._ariaLabels.drawer}}}
 
-  <div class="drawer-holder" role="list"></div>
+  <div class="drawer__holder" role="list"></div>
 
-  <div class="drawer-toolbar clearfix">
+  <div class="drawer__toolbar u-clearfix">
 
-    <div class="drawer-back-button">
-      <button class="base drawer-back icon icon-controls-small-left" aria-label="{{_globals._accessibility._ariaLabels.previous}}"></button>
+    <div class="drawer__back">
+      <button class="btn-icon drawer__btn drawer__back-btn js-drawer-back-btn" aria-label="{{_globals._accessibility._ariaLabels.previous}}">
+        <div class="icon"></div>
+      </button>
     </div>
 
-    <div class="drawer-close-button">
-      <button class="base drawer-close icon icon-cross" aria-label="{{_globals._accessibility._ariaLabels.closeDrawer}}"></button>
+    <div class="drawer__close">
+      <button class="btn-icon drawer__btn drawer__close-btn js-drawer-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closeDrawer}}">
+        <div class="icon"></div>
+      </button>
     </div>
 
   </div>

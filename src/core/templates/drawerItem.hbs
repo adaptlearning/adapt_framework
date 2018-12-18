@@ -1,15 +1,19 @@
-<button class="base drawer-item-open {{className}}">
+<button class="drawer__item-open {{className}}">
 
-  <div class="drawer-item-title">
-    <div class="drawer-item-title-inner h5">
+  {{#if title}}
+  <div class="drawer__item-title">
+    <div class="drawer__item-title-inner">
       {{{title}}}
     </div>
   </div>
+  {{/if}}
 
-  <div class="drawer-item-description">
-    <div class="drawer-item-description-inner">
+  {{#if description}}
+  <div class="drawer__item-description">
+    <div class="drawer__item-description-inner">
       {{{description}}}
     </div>
   </div>
+  {{/if}}
 
 </button>

@@ -4,7 +4,7 @@ define([
 
   var DrawerView = Backbone.View.extend({
 
-    className: 'drawer display-none',
+    className: 'drawer u-display-none',
     disableAnimation: false,
 
     attributes: {
@@ -54,8 +54,8 @@ define([
     },
 
     events: {
-      'click .drawer-back': 'onBackButtonClicked',
-      'click .drawer-close':'onCloseClicked'
+      'click .drawer__back': 'onBackButtonClicked',
+      'click .drawer__close':'onCloseClicked'
     },
 
     render: function() {
@@ -83,15 +83,15 @@ define([
       this._isCustomViewVisible = true;
       Adapt.trigger('drawer:empty');
       this.showDrawer();
-      this.$('.drawer-holder').html(view);
+      this.$('.drawer__holder').html(view);
     },
 
     checkIfDrawerIsAvailable: function() {
       if (this.collection.length == 0) {
-        $('.navigation-drawer-toggle-button').addClass('display-none');
+        $('.js-nav-drawer-btn').addClass('u-display-none');
         Adapt.trigger('drawer:noItems');
       } else {
-        $('.navigation-drawer-toggle-button').removeClass('display-none');
+        $('.js-nav-drawer-btn').removeClass('u-display-none');
       }
     },
 
@@ -118,7 +118,7 @@ define([
     },
 
     showDrawer: function(emptyDrawer) {
-      this.$el.removeClass('display-none').removeAttr('aria-hidden');
+      this.$el.removeClass('u-display-none').removeAttr('aria-hidden');
       //only trigger popup:opened if drawer is visible, pass popup manager drawer element
       if (!this._isVisible) {
         Adapt.trigger('popup:opened', this.$el);
@@ -131,7 +131,7 @@ define([
       this.$('a, button, input, select, textarea').attr('tabindex', 0);
 
       if (emptyDrawer) {
-        this.$('.drawer-back').addClass('display-none');
+        this.$('.drawer__back').addClass('u-display-none');
         this._isCustomViewVisible = false;
         this.emptyDrawer();
         if (this.collection.models.length === 1) {
@@ -148,16 +148,16 @@ define([
         }
       } else {
         if (this._hasBackButton && this.collection.models.length > 1) {
-          this.$('.drawer-back').removeClass('display-none');
+          this.$('.drawer__back').removeClass('u-display-none');
         } else {
-          this.$('.drawer-back').addClass('display-none');
+          this.$('.drawer__back').addClass('u-display-none');
         }
         Adapt.trigger('drawer:openedCustomView');
       }
 
       //delay drawer animation until after background fadeout animation is complete
       if (this.disableAnimation) {
-        $('#shadow').removeClass("display-none");
+        $('.js-shadow').removeClass("u-display-none");
 
         var direction={};
         direction[this.drawerDir]=0;
@@ -166,8 +166,8 @@ define([
 
       } else {
 
-        $('#shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
-          $("#shadow").removeClass("display-none");
+        $('.js-shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
+          $(".js-shadow").removeClass("u-display-none");
           complete.call(this);
         }, this)});
 
@@ -190,7 +190,7 @@ define([
     },
 
     emptyDrawer: function() {
-      this.$('.drawer-holder').empty();
+      this.$('.drawer__holder').empty();
     },
 
     renderItems: function() {
@@ -219,10 +219,10 @@ define([
         direction[this.drawerDir]=-this.$el.width();
         this.$el
             .css(direction)
-            .addClass('display-none')
+            .addClass('u-display-none')
             .attr('aria-hidden', 'true');
 
-        $('#shadow').addClass("display-none");
+        $('.js-shadow').addClass("u-display-none");
 
         Adapt.trigger('drawer:closed');
 
@@ -235,14 +235,14 @@ define([
         direction[this.drawerDir]=-this.$el.width();
         this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
           this.$el
-              .addClass('display-none')
+              .addClass('u-display-none')
               .attr('aria-hidden', 'true');
 
           Adapt.trigger('drawer:closed');
         }, this));
 
-        $('#shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
-          $('#shadow').addClass("display-none");
+        $('.js-shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
+          $('.js-shadow').addClass("u-display-none");
         }});
 
       }
@@ -253,13 +253,13 @@ define([
     },
 
     addShadowEvent: function() {
-      $('#shadow').one('click touchstart', _.bind(function() {
+      $('.js-shadow').one('click touchstart', _.bind(function() {
         this.onCloseDrawer();
       }, this));
     },
 
     removeShadowEvent: function() {
-      $('#shadow').off('click touchstart');
+      $('.js-shadow').off('click touchstart');
     },
 
     remove: function() {
@@ -268,14 +268,14 @@ define([
 
       Adapt.trigger('drawer:empty');
       this.collection.reset();
-      $('#shadow').remove();
+      $('.js-shadow').remove();
     }
 
   });
 
   var DrawerItemView = Backbone.View.extend({
 
-    className: 'drawer-item',
+    className: 'drawer__item',
 
     attributes: {
       role: 'listitem'
@@ -287,13 +287,13 @@ define([
     },
 
     events: {
-      'click .drawer-item-open': 'onDrawerItemClicked'
+      'click .drawer__item-open': 'onDrawerItemClicked'
     },
 
     render: function() {
       var data = this.model.toJSON();
       var template = Handlebars.templates['drawerItem']
-      $(this.el).html(template(data)).appendTo('.drawer-holder');
+      $(this.el).html(template(data)).appendTo('.drawer__holder');
       return this;
     },
 
