@@ -1,0 +1,61 @@
+
+// body {
+//  -webkit-tap-highlight-color: rgba(0,0,0,0);
+//  .dir-rtl & { direction:rtl; }
+// }
+// a, button {-webkit-tap-highlight-color: rgba(0,0,0,0.2);}
+// .icon {
+//  // Fix for iOS devices not displaying icons if hidden then shown
+//  -webkit-transform: translateZ(0);
+// }
+
+
+
+
+
+// html = 16px
+// 87.5em = 1400px
+// 56.25em = 900px
+// 47.5em = 760px
+// 32.5em = 520px
+
+@device-width-large: unit(@adapt-device-large, em);
+@device-width-medium: unit(@adapt-device-medium, em);
+@device-width-small: unit(@adapt-device-small, em);
+
+//
+@max-width: 87.5em;
+
+@icon-size: 1.5em;
+@icon-padding: 1em;
+
+@item-padding: 1em;
+@item-margin: 0.25em;
+
+//
+@duration: 0.2s;
+
+
+@white: #fff;
+@black: #000;
+
+@pass: #378153;
+@fail: #da3510;
+
+@validation-success: @pass;
+@validation-success-inverted: @white;
+
+@validation-error: @fail;
+@validation-error-inverted: @white;
+
+@block-padding-ver: 4em;
+@block-padding-hoz: 1em;
+
+@background-color: @black;
+@background-color-inverted: @white;
+
+// @block-padding: ;
+
+@navigation-height: 40px;
+
+@focus-outline: 0; // deprecated - reverting to browser outline
