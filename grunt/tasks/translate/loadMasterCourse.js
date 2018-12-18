@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 
     checkCourseExists();
     copyCourse();
-    getCourseDate();
+    getCourseData();
 
     function checkCourseExists () {
       if (grunt.file.isDir(srcPath, "course", targetLang) && !grunt.config('translate.shouldReplaceExisting')) {
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
       grunt.file.copy(path.join(srcPath,"course",masterLang,"components."+jsonext), path.join(srcPath,"course",targetLang,"components."+jsonext));
     }
 
-    function getCourseDate () {
+    function getCourseData () {
       ["config"].forEach(function (filename) {
         var src = path.join(srcPath,"course",filename+"."+jsonext);
 
