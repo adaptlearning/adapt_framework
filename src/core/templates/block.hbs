@@ -1,38 +1,48 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 
-<div class="block-inner">
+<div class="block__inner">
 
-  {{#if displayTitle}}
-  <div class="block-title">
+  {{#any displayTitle body instruction}}
+  <div class="block__header">
+    <div class="block__header-inner">
 
-    {{#unless _disableAccessibilityState}}
-    <div class="js-heading"></div>
-    {{/unless}}
+      {{#if displayTitle}}
+      <div class="block__title">
 
-    <div class="block-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
-      {{{compile displayTitle}}}
+        {{#unless _disableAccessibilityState}}
+        <div class="js-heading"></div>
+        {{/unless}}
+
+        <div class="block__title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
+          {{{compile displayTitle}}}
+        </div>
+
+      </div>
+      {{/if}}
+
+      {{#if body}}
+      <div class="block__body">
+        <div class="block__body-inner">
+          {{{compile body}}}
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if instruction}}
+      <div class="block__instruction">
+        <div class="block__instruction-inner">
+          {{{compile instruction}}}
+        </div>
+      </div>
+      {{/if}}
+
     </div>
-
   </div>
-  {{/if}}
+  {{/any}}
 
-  {{#if body}}
-  <div class="block-body">
-    <div class="block-body-inner">
-      {{{compile body}}}
-    </div>
+  <div class="component__container u-clearfix">
+    {{!-- Components render here --}}
   </div>
-  {{/if}}
-
-  {{#if instruction}}
-  <div class="block-instruction">
-    <div class="block-instruction-inner">
-      {{{compile instruction}}}
-    </div>
-  </div>
-  {{/if}}
-
-  <div class="component-container"></div>
 
 </div>

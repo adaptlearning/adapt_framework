@@ -10,13 +10,12 @@ define([
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
       " " + this.setHidden() +
-      " nth-child-" +
-      this.model.get("_nthChild") +
-      " " + (this.model.get('_isComplete') ? 'completed' : '');
+      " nth-child-" + this.model.get("_nthChild") +
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     }
 
   }, {
-    childContainer: '.component-container',
+    childContainer: '.component__container',
     type: 'block',
     template: 'block'
   });
