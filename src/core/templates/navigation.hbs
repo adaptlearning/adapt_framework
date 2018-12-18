@@ -2,13 +2,20 @@
 {{import_globals}}
 
 {{! All links in the nav bar should have an attribute of data-event, navigationView uses this to fire a global event}}
-<div class="navigation-inner clearfix">
+<div class="nav__inner u-clearfix">
 
   {{#if _accessibility._isSkipNavigationEnabled}}
-  <button class="skip-nav-link a11y-ignore a11y-ignore-focus" data-event="skipNavigation" aria-label="{{_globals._accessibility._ariaLabels.skipNavigation}}">{{{_globals._accessibility.skipNavigationText}}}</button>
+  <button class="skip-nav-link a11y-ignore a11y-ignore-focus" data-event="skipNavigation" aria-label="{{_globals._accessibility._ariaLabels.skipNavigation}}">
+      {{{_globals._accessibility.skipNavigationText}}}
+  </button>
   {{/if}}
 
-  <button class="base navigation-back-button icon icon-controls-small-left" data-event="backButton" aria-label="{{_globals._accessibility._ariaLabels.previous}}" role="link"></button>
-  <button class="base navigation-drawer-toggle-button icon icon-list" data-event="toggleDrawer" aria-label="{{_globals._accessibility._ariaLabels.navigationDrawer}}"></button>
+  <button class="btn-icon nav__btn nav__back-btn js-nav-back-btn" data-event="backButton" aria-label="{{_globals._accessibility._ariaLabels.previous}}" role="link">
+    <div class="icon"></div>
+  </button>
+
+  <button class="btn-icon nav__btn nav__drawer-btn js-nav-drawer-btn" data-event="toggleDrawer" aria-label="{{_globals._accessibility._ariaLabels.navigationDrawer}}">
+    <div class="icon"></div>
+  </button>
 
 </div>

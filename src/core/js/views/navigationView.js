@@ -4,7 +4,7 @@ define([
 
   var NavigationView = Backbone.View.extend({
 
-    className: "navigation",
+    className: "nav",
 
     initialize: function() {
       this.listenToOnce(Adapt, {
@@ -52,14 +52,14 @@ define([
 
     hideNavigationButton: function(model) {
       if (model.get('_type') === "course") {
-        $('.navigation-back-button, .navigation-home-button').addClass('display-none');
+        $('.nav__back-btn, .nav-home-button').addClass('u-display-none');
       } else {
         this.showNavigationButton();
       }
     },
 
     showNavigationButton: function() {
-      $('.navigation-back-button, .navigation-home-button').removeClass('display-none');
+      $('.nav__back-btn, .nav-home-button').removeClass('u-display-none');
     }
 
   });

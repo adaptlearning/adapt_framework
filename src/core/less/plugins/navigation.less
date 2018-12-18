@@ -1,0 +1,40 @@
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: red;
+  z-index: 80;
+
+  &__inner {
+    margin: auto;
+    max-width: 87.5em;
+  }
+
+  &__btn {
+    // padding: @navigation-padding;
+    // border: 0;
+  }
+
+  &__back-btn {
+    .u-float-left;
+
+    .icon {
+      .icon-controls-small-left;
+    }
+  }
+
+  &__drawer-btn {
+    .u-float-right;
+
+    .icon {
+      .icon-list;
+    }
+  }
+
+  // AA nav skip link
+  // Move to accessibility less?
+  .skip-nav-link {
+    .u-float-left;
+    border: 0;
+  }
+}
