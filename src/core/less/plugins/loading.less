@@ -1,0 +1,75 @@
+@loading-anim-delay: 0.16s;
+
+.loading {
+  .l-fill-viewport-fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+  background-color: fade(@background-color, 50%);
+  color: @background-color-inverted;
+
+  &__inner,
+  &__inner:before,
+  &__inner:after {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation: loading 1.25s infinite ease-in-out;
+    animation: loading 1.25s infinite ease-in-out;
+  }
+
+  &__inner {
+    position: absolute;
+    top: 51%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    text-indent: -9999em;
+    -webkit-animation-delay: -@loading-anim-delay;
+    animation-delay: -@loading-anim-delay;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  &__inner:before,
+  &__inner:after {
+    content: "";
+    position: absolute;
+    top: 0;
+  }
+
+  &__inner:before {
+    left: -3em;
+    -webkit-animation-delay: -(@loading-anim-delay * 2);
+    animation-delay: -(@loading-anim-delay * 2);
+  }
+
+  &__inner:after {
+    left: 3em;
+  }
+}
+
+@-webkit-keyframes loading {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+
+@keyframes loading {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
