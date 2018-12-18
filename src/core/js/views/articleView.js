@@ -11,13 +11,12 @@ define([
       " " + this.model.get('_classes') +
       " " + this.setVisibility() +
       " " + this.setHidden() +
-      " nth-child-" +
-      this.model.get("_nthChild") +
-      " " + (this.model.get('_isComplete') ? 'completed' : '');
+      " nth-child-" + this.model.get("_nthChild") +
+      " " + (this.model.get('_isComplete') ? 'is-complete' : '');
     }
 
   }, {
-    childContainer: '.block-container',
+    childContainer: '.block__container',
     childView: BlockView,
     type: 'article',
     template: 'article'
