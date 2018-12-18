@@ -1,22 +1,33 @@
-<div class="buttons-inner">
+<div class="btn__response-container">
 
-  <div class="buttons-cluster clearfix">
+  {{!-- <div class="btn__cluster clearfix"> --}}
 
     {{#unless _shouldDisplayAttempts}}
-    <div class="buttons-marking-icon icon display-none">
+    <div class="btn__marking u-display-none">
+      <div class="icon"></div>
     </div>
     {{/unless}}
 
-    <button class="buttons-action" aria-label="{{_buttons._submit.ariaLabel}}">{{{_buttons._submit.buttonText}}}</button>
-    <button class="buttons-feedback" aria-label="{{_buttons._showFeedback.ariaLabel}}" disabled="true">{{{_buttons._showFeedback.buttonText}}}</button>
+    <button class="btn-text btn-question btn__action js-btn-action" aria-label="{{_buttons._submit.ariaLabel}}">
+      {{{_buttons._submit.buttonText}}}
+    </button>
 
-  </div>
+    <button class="btn-text btn-question btn__feedback js-btn-feedback" aria-label="{{_buttons._showFeedback.ariaLabel}}" disabled="true">
+      {{{_buttons._showFeedback.buttonText}}}
+    </button>
+
+  {{!-- </div> --}}
 
   {{#if _shouldDisplayAttempts}}
-  <div class="buttons-display">
+  <div class="btn__display js-display-attempts">
 
-    <div class="buttons-marking-icon icon display-none" aria-label="{{#if _isCorrect}}{{@root/_globals._accessibility._ariaLabels.answeredCorrectly}}{{else}}{{@root/_globals._accessibility._ariaLabels.answeredIncorrectly}}{{/if}}"></div>
-    <div class="buttons-display-inner" aria-live="assertive"></div>
+    <div class="btn__marking u-display-none" aria-label="{{#if _isCorrect}}{{@root/_globals._accessibility._ariaLabels.answeredCorrectly}}{{else}}{{@root/_globals._accessibility._ariaLabels.answeredIncorrectly}}{{/if}}">
+      <div class="icon"></div>
+    </div>
+
+    <div class="btn__display-inner js-insert-attempts-string" aria-live="assertive">
+      {{!-- Attempts remaining string is inserted here --}}
+    </div>
 
   </div>
   {{/if}}

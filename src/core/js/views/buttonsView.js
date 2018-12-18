@@ -27,8 +27,8 @@ define([
     },
 
     events: {
-      'click .buttons-action': 'onActionClicked',
-      'click .buttons-feedback': 'onFeedbackClicked'
+      'click .js-btn-action': 'onActionClicked',
+      'click .js-btn-feedback': 'onFeedbackClicked'
     },
 
     render: function() {
@@ -50,17 +50,17 @@ define([
 
       if (!isSubmitted) {
 
-        var $icon = this.$('.buttons-marking-icon');
+        var $icon = this.$('.btn__marking');
         $icon.removeClass('icon-cross');
         $icon.removeClass('icon-tick');
-        $icon.addClass('display-none');
-        this.$el.removeClass("submitted");
+        $icon.addClass('u-display-none');
+        this.$el.removeClass("is-submitted");
         this.model.set('feedbackMessage', undefined);
-        this.$('.buttons-feedback').a11y_cntrl_enabled(false);
+        this.$('.js-btn-feedback').a11y_cntrl_enabled(false);
 
       } else {
 
-        this.$el.addClass("submitted");
+        this.$el.addClass("is-submitted");
 
       }
     },
@@ -78,10 +78,10 @@ define([
     onFeedbackMessageChanged: function(model, changedAttribute) {
       if (changedAttribute && this.model.get('_canShowFeedback')) {
         //enable feedback button
-        this.$('.buttons-feedback').a11y_cntrl_enabled(true);
+        this.$('.btn__feedback').a11y_cntrl_enabled(true);
       } else {
         //disable feedback button
-        this.$('.buttons-feedback').a11y_cntrl_enabled(false);
+        this.$('.btn__feedback').a11y_cntrl_enabled(false);
       }
     },
 
@@ -90,7 +90,7 @@ define([
       this.updateAttemptsCount();
 
       // Use 'correct' instead of 'complete' to signify button state
-      var $buttonsAction = this.$('.buttons-action');
+      var $buttonsAction = this.$('.btn__action');
       var buttonState = BUTTON_STATE(changedAttribute);
       if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
         // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
@@ -121,9 +121,9 @@ define([
     checkFeedbackState: function(){
       var canShowFeedback = this.model.get('_canShowFeedback');
 
-      this.$('.buttons-action').toggleClass('buttons-action-fullwidth buttons-action-enlarge', !canShowFeedback);
-      this.$('.buttons-feedback').toggleClass('no-feedback', !canShowFeedback);
-      this.$('.buttons-marking-icon').toggleClass('no-feedback', !canShowFeedback);
+      this.$('.btn__action').toggleClass('btn__action-fullwidth btn__action-enlarge', !canShowFeedback);
+      this.$('.btn__feedback').toggleClass('no-feedback', !canShowFeedback);
+      this.$('.btn__marking').toggleClass('no-feedback', !canShowFeedback);
     },
 
     updateAttemptsCount: function(model, changedAttribute) {
@@ -144,12 +144,12 @@ define([
         }
 
       } else {
-        this.$('.buttons-display-inner').addClass('visibility-hidden');
+        this.$('.js-display-attempts').addClass('u-visibility-hidden');
         this.showMarking();
       }
 
       if (shouldDisplayAttempts) {
-        this.$('.buttons-display-inner').html(attemptsString);
+        this.$('.js-insert-attempts-string').html(attemptsString);
       }
 
     },
@@ -160,8 +160,8 @@ define([
       var isCorrect = this.model.get('_isCorrect');
       var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
 
-      this.$('.buttons-marking-icon')
-          .removeClass('display-none')
+      this.$('.btn__marking')
+          .removeClass('u-display-none')
           .addClass(isCorrect ? 'icon-tick' : 'icon-cross')
           .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
     },

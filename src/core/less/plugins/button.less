@@ -1,0 +1,73 @@
+.btn {
+  &-icon {
+    padding: @icon-padding;
+    border: 0;
+  }
+
+  &-text {
+    padding: 0.5em 1.5em;
+    // min-height: 3em; // should value be double button text line height?
+    // padding: 0 2em;
+  }
+
+  &-question {
+    padding: 0.5em 1.5em;
+  }
+}
+
+// --------------------------------------------------
+// Question component buttons
+// --------------------------------------------------
+.btn {
+  &__response-container {
+    display: flex;
+    position: relative;
+  }
+
+  &__action {
+    // margin-right: 0.5%;
+    width: 50%;
+  }
+
+  &__feedback {
+    // margin-left: 0.5%;
+    width: 50%;
+
+    &.no-feedback {
+      display: none;
+    }
+  }
+
+  &__action-fullwidth {
+    // width: 100%;
+    // margin: 0;
+  }
+
+  &__marking {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    .transform(translate(-50%, -50%));
+
+    .dir-rtl & {
+      left: inherit;
+      right: 50%;
+    }
+  }
+
+  &__marking.validation-success {
+    .icon {
+      .icon-tick;
+      background-color: @validation-success;
+      color: @validation-success-inverted;
+    }
+  }
+
+  &__marking.validation-error {
+    .icon {
+      .icon-cross;
+      background-color: @validation-error;
+      color: @validation-error-inverted;
+    }
+  }
+}
