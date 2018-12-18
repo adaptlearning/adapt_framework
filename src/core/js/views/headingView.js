@@ -22,8 +22,8 @@ define([
     checkCompletion: function() {
       var isComplete = this.model.get("_isComplete");
       this.$el
-          .toggleClass("complete", isComplete)
-          .toggleClass("incomplete", !isComplete);
+          .toggleClass("is-complete", isComplete)
+          .toggleClass("is-incomplete", !isComplete);
     }
 
   }, {
