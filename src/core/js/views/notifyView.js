@@ -87,7 +87,7 @@ define([
             event.preventDefault();
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
-            Adapt.trigger($(event.currentTarget).attr('data-event'));
+            Adapt.trigger($(event.currentTarget).attr('data-event'), this);
         },
 
         onCloseButtonClicked: function(event) {
@@ -106,7 +106,7 @@ define([
             if (this.model.get("_isCancellable") === false) return;
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
-            Adapt.trigger('notify:cancelled');
+            Adapt.trigger('notify:cancelled', this);
         },
 
         resetNotifySize: function() {
@@ -144,7 +144,7 @@ define([
 
             this.$el.imageready(this.onLoaded.bind(this));
         },
-        
+
         onLoaded: function() {
             if (this.disableAnimation) {
                 this.$('.notify-shadow').css('display', 'block');
@@ -211,7 +211,7 @@ define([
                 this.onCloseReady();
             }
         },
-        
+
         onCloseReady: function() {
             if (this.disableAnimation) {
 
@@ -236,7 +236,9 @@ define([
             $('html').removeClass('notify');
 
             // Return focus to previous active element
-            Adapt.trigger('popup:closed notify:closed', this.$previousActiveElement);
+            Adapt.trigger('popup:closed', this.$previousActiveElement);
+            // Return reference to the notify view
+            Adapt.trigger('notify:closed', this);
         },
 
         remove: function() {

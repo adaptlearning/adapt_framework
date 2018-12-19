@@ -44,15 +44,12 @@ define([
                 this._parent = 'contentObjects';
             }
             if (this._children) {
-                //if parent is optional, apply to children
-                if (this.get('_isOptional')) this.setOptional(true);
-
                 this.setupChildListeners();
             }
 
             this.init();
 
-            _.defer(_.bind(function() {
+            _.defer(function() {
                 if (this._children) {
                     this.checkCompletionStatus();
 
@@ -63,7 +60,7 @@ define([
 
                 this.setupTrackables();
 
-            }, this));
+            }.bind(this));
 
         },
 
@@ -72,13 +69,13 @@ define([
             // Limit state trigger calls and make state change callbacks batched-asynchronous
             var originalTrackableStateFunction = this.triggerTrackableState;
             this.triggerTrackableState = _.compose(
-                _.bind(function() {
+                function() {
 
                     // Flag that the function is awaiting trigger
                     this.triggerTrackableState.isQueued = true;
 
-                }, this),
-                _.debounce(_.bind(function() {
+                }.bind(this),
+                _.debounce(function() {
 
                     // Trigger original function
                     originalTrackableStateFunction.apply(this);
@@ -86,7 +83,7 @@ define([
                     // Unset waiting flag
                     this.triggerTrackableState.isQueued = false;
 
-                }, this), 17)
+                }.bind(this), 17)
             );
 
             // Listen to model changes, trigger trackable state change when appropriate
@@ -101,7 +98,7 @@ define([
                 var trackablePropertyNames = _.result(this, 'trackable', []);
                 var changedPropertyNames = _.keys(model.changed);
                 var isTrackable = _.find(changedPropertyNames, function(item, index) {
-                     return _.contains(trackablePropertyNames, item);
+                    return _.contains(trackablePropertyNames, item);
                 }.bind(this));
 
                 if (isTrackable) {
@@ -190,26 +187,28 @@ define([
                 return;
             }
 
-            this.set({_isReady: true});
+            this.set('_isReady', true);
         },
 
         setCompletionStatus: function() {
-            if (this.get('_isVisible')) {
-                this.set('_isComplete', true);
-                this.set('_isInteractionComplete', true);
-            }
+            if (!this.get('_isVisible')) return;
+
+            this.set({
+                _isComplete: true,
+                _isInteractionComplete: true
+            });
         },
 
         checkCompletionStatus: function () {
             //defer to allow other change:_isComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isComplete"));
+            _.defer(this.checkCompletionStatusFor.bind(this), '_isComplete');
         },
 
         checkInteractionCompletionStatus: function () {
             //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
             Adapt.checkingCompletion();
-            _.defer(_.bind(this.checkCompletionStatusFor, this, "_isInteractionComplete"));
+            _.defer(this.checkCompletionStatusFor.bind(this), '_isInteractionComplete');
         },
 
         /**
@@ -241,29 +240,32 @@ define([
             Adapt.checkedCompletion();
         },
 
-        findAncestor: function (ancestors) {
-
+        /**
+         * Searches the model's ancestors to find the first instance of the specified ancestor type
+         * @param {string} [ancestorType] Valid values are 'course', 'pages', 'contentObjects', 'articles' or 'blocks'.
+         * If left blank, the immediate ancestor (if there is one) is returned
+         * @return {object} Reference to the model of the first ancestor of the specified type that's found - or `undefined` if none found
+         */
+        findAncestor: function (ancestorType) {
             var parent = this.getParent();
+            if (!parent) return;
 
-            if (this._parent === ancestors) {
+            if (ancestorType === 'pages') {
+                ancestorType = 'contentObjects';
+            }
+
+            if (!ancestorType || this._parent === ancestorType) {
                 return parent;
             }
 
-            var returnedAncestor = parent.getParent();
-
-            if (parent._parent !== ancestors) {
-                returnedAncestor = returnedAncestor.getParent();
-            }
-
-            // Returns a single model
-            return returnedAncestor;
-
+            return parent.findAncestor(ancestorType);
         },
 
         /**
          * Returns all the descendant models of a specific type
          * @param {string} descendants Valid values are 'contentObjects', 'pages', 'menus', 'articles', 'blocks' or 'components'
          * @param {object} options an object that defines the search type and the properties/values to search on. Currently only the `where` search type (equivalent to `Backbone.Collection.where()`) is supported.
+         * @param {object} options.where
          * @return {array}
          * @example
          * //find all available, non-optional components
@@ -300,19 +302,22 @@ define([
             }
         },
 
-
-        // Fetchs the sub structure of a model as a flattened array
-        //
-        // Such that the tree:
-        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
-        //
-        // will become the array (parent first = false):
-        //  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
-        //
-        // or (parent first = true):
-        //  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
-        //
-        // This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
+        /**
+         * Fetches the sub structure of a model as a flattened array
+         *
+         * Such that the tree:
+         *  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+         *
+         * will become the array (parent first = false):
+         *  [ c1, c2, b1, c3, c4, b2, a1, c5, c6, b3, a2 ]
+         *
+         * or (parent first = true):
+         *  [ a1, b1, c1, c2, b2, c3, c4, a2, b3, c5, c6 ]
+         *
+         * This is useful when sequential operations are performed on the menu/page/article/block/component hierarchy.
+         * @param {boolean} [isParentFirst]
+         * @return {array}
+         */
         getAllDescendantModels: function(isParentFirst) {
 
             var descendants = [];
@@ -351,6 +356,9 @@ define([
 
         },
 
+        /**
+         * @deprecated Since v2.2.0 - please use findDescendantModels instead
+         */
         findDescendants: function (descendants) {
             Adapt.log.warn("DEPRECATED - Use findDescendantModels() as findDescendants() may be removed in the future");
 
@@ -389,15 +397,23 @@ define([
             return returnedDescendants;
         },
 
-        // Returns a relative model from the Adapt hierarchy
-        //
-        // Such that in the tree:
-        //  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
-        //
-        //  findRelative(modelC1, "@block +1") = modelB2;
-        //  findRelative(modelC1, "@component +4") = modelC5;
-        //
-        // See Adapt.parseRelativeString() for a description of relativeStrings
+        /**
+         * Returns a relative model from the Adapt hierarchy
+         *
+         * Such that in the tree:
+         *  { a1: { b1: [ c1, c2 ], b2: [ c3, c4 ] }, a2: { b3: [ c5, c6 ] } }
+         *
+         *  c1.findRelativeModel("@block +1") = b2;
+         *  c1.findRelativeModel("@component +4") = c5;
+         *
+         * @see Adapt.parseRelativeString for a description of relativeStrings
+         * @param {string} relativeString
+         * @param {object} options Search configuration settings
+         * @param {boolean} options.limitParentId
+         * @param {function} options.filter
+         * @param {boolean} options.loop
+         * @return {array}
+         */
         findRelativeModel: function(relativeString, options) {
 
             var types = [ "menu", "page", "article", "block", "component" ];
@@ -500,8 +516,10 @@ define([
                 childrenCollection = new Backbone.Collection(children);
             }
 
-            if (this.get('_type') == 'block' && childrenCollection.length == 2
-                && childrenCollection.models[0].get('_layout') !== 'left' && this.get('_sortComponents') !== false) {
+            if (this.get('_type') == 'block' &&
+                childrenCollection.length == 2 &&
+                childrenCollection.models[0].get('_layout') !== 'left' &&
+                this.get('_sortComponents') !== false) {
                 // Components may have a 'left' or 'right' _layout,
                 // so ensure they appear in the correct order
                 // Re-order component models to correct it
@@ -511,7 +529,6 @@ define([
 
             this.set("_children", childrenCollection);
 
-            // returns a collection of children
             return childrenCollection;
         },
 
@@ -521,6 +538,9 @@ define([
             });
         },
 
+        /**
+         * @deprecated since v2.2.0 please use getAvailableChildModels instead
+         */
         getAvailableChildren: function() {
             Adapt.log.warn("DEPRECATED - Use getAvailableChildModels() as getAvailableChildren() may be removed in the future");
 
@@ -555,6 +575,9 @@ define([
             return parents.length ? parents : null;
         },
 
+        /**
+         * @deprecated since v2.2.0 please use getAncestorModels instead
+         */
         getParents: function(shouldIncludeChild) {
             Adapt.log.warn("DEPRECATED - Use getAncestorModels() as getParents() may be removed in the future");
 
@@ -579,10 +602,10 @@ define([
                     return this.get("_siblings");
                 }
                 siblings = _.reject(Adapt[this._siblings].where({
-                    _parentId: this.get("_parentId")
-                }), _.bind(function (model) {
+                    _parentId: this.get('_parentId')
+                }), function (model) {
                     return model.get('_id') == this.get('_id');
-                }, this));
+                }.bind(this));
 
                 this._hasSiblingsAndSelf = false;
 
@@ -620,6 +643,9 @@ define([
 
         },
 
+        /**
+         * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
+         */
         setOptional: function(value) {
             this.set({_isOptional: value});
         },
