@@ -61,22 +61,23 @@ define([
             var numberOfCorrectAnswers = 0;
             var numberOfIncorrectAnswers = 0;
 
-            this.getChildren().each(function(itemModel, index) {
-                var itemActive = (itemModel.get('_isActive') || false);
+            this.getChildren().each(function(itemModel) {
                 var itemShouldBeActive = itemModel.get('_shouldBeSelected');
                 if (itemShouldBeActive) {
-                    numberOfRequiredAnswers ++;
-
-                    if (!itemActive) return;
-                    numberOfCorrectAnswers ++;
-
-                    itemModel.set('_isCorrect', true);
-
-                } else if (!itemShouldBeActive && itemActive) {
-                    numberOfIncorrectAnswers ++;
+                    numberOfRequiredAnswers++;
                 }
 
-            }.bind(this));
+                var itemActive = itemModel.get('_isActive');
+                if (!itemActive) return;
+
+                if (itemShouldBeActive) {
+                    numberOfCorrectAnswers++;
+                    itemModel.set('_isCorrect', true);
+                    return;
+                }
+
+                numberOfIncorrectAnswers++;
+            });
 
             this.set({
                 '_numberOfCorrectAnswers': numberOfCorrectAnswers,
@@ -122,13 +123,8 @@ define([
         },
 
         setupIndividualFeedback: function(selectedItem) {
-            // for compatibility with framework v2
-            var title = this.getFeedbackTitle ?
-                this.getFeedbackTitle(this.get('_feedback')) :
-                this.get('title');
-
             this.set({
-                feedbackTitle: title,
+                feedbackTitle: this.getFeedbackTitle(this.get('_feedback')),
                 feedbackMessage: selectedItem.get("feedback")
             });
         },
@@ -157,9 +153,7 @@ define([
 
         resetItems: function() {
             this.resetActiveItems();
-            this.set({
-                _isAtLeastOneCorrectSelection: false
-            });
+            this.set('_isAtLeastOneCorrectSelection', false);
         },
 
         getInteractionObject: function() {
@@ -180,7 +174,7 @@ define([
             });
 
             interactions.correctResponsesPattern = [
-                _.map(correctItems, function(itemModel) {
+                correctItems.map(function(itemModel) {
                     // indexes are 0-based, we need them to be 1-based for cmi.interactions
                     return String(itemModel.get('_index') + 1);
                 })
