@@ -10,10 +10,12 @@
       "type":"object"
     },
     "_theme": {
-      "type": "string"
+      "type": "string",
+      "default": "adapt-contrib-vanilla"
     },
     "_menu": {
-      "type": "string"
+      "type": "string",
+      "default": "adapt-contrib-boxMenu"
     },
     "_courseId": {
       "type": "objectid",
@@ -316,7 +318,8 @@
     },
     "_disableAnimationFor": {
       "type": "array",
-      "required": false,
+      "default": [],
+      "title": "Disable animation for",
       "isSetting": true,
       "inputType": "List",
       "help": "Allows you to disable some animations (e.g. the drawer close animation) on platform(s) where they are not performing well, using CSS selectors to target the relevant platform(s) via the classes on the HTML element."
@@ -381,6 +384,9 @@
           "help": "CSS selector to match against the HTML element when determining whether this should be active or not."
         }
       }
+    },
+    "themeSettings": {
+      "type": "object"
     }
   }
 }
