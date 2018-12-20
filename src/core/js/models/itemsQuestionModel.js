@@ -62,7 +62,6 @@ define([
                 _numberOfIncorrectAnswers: 0,
                 _isAtLeastOneCorrectSelection: false,
                 _numberOfCorrectAnswers: 0,
-                _isCorrect: false
             };
 
             this.getChildren().each(function(itemModel) {
@@ -83,15 +82,12 @@ define([
                 itemModel.set('_isCorrect', true);
             });
 
+            this.set(props);
+
             var hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
             var hasNoIncorrectAnswers = !props._numberOfIncorrectAnswers;
 
-            props._isCorrect = hasRightNumberOfCorrectAnswers && hasNoIncorrectAnswers;
-
-            this.set(props);
-
-            return props._isCorrect;
-
+            return hasRightNumberOfCorrectAnswers && hasNoIncorrectAnswers;
         },
 
         // Sets the score based upon the questionWeight
