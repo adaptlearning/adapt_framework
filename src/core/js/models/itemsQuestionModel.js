@@ -57,37 +57,41 @@ define([
 
         isCorrect: function() {
 
-            var numberOfRequiredAnswers = 0;
-            var numberOfCorrectAnswers = 0;
-            var numberOfIncorrectAnswers = 0;
+            var props = {
+                _numberOfRequiredAnswers: 0,
+                _numberOfIncorrectAnswers: 0,
+                _isAtLeastOneCorrectSelection: false,
+                _numberOfCorrectAnswers: 0,
+                _isCorrect: false
+            };
 
             this.getChildren().each(function(itemModel) {
                 var itemShouldBeActive = itemModel.get('_shouldBeSelected');
                 if (itemShouldBeActive) {
-                    numberOfRequiredAnswers++;
+                    props._numberOfRequiredAnswers++;
                 }
 
-                var itemActive = itemModel.get('_isActive');
-                if (!itemActive) return;
+                if (!itemModel.get('_isActive')) return;
 
-                if (itemShouldBeActive) {
-                    numberOfCorrectAnswers++;
-                    itemModel.set('_isCorrect', true);
+                if (!itemShouldBeActive) {
+                    props._numberOfIncorrectAnswers++;
                     return;
                 }
 
-                numberOfIncorrectAnswers++;
+                props._isAtLeastOneCorrectSelection = true;
+                props._numberOfCorrectAnswers++;
+                itemModel.set('_isCorrect', true);
             });
 
-            this.set({
-                '_numberOfCorrectAnswers': numberOfCorrectAnswers,
-                '_numberOfRequiredAnswers': numberOfRequiredAnswers,
-                '_isAtLeastOneCorrectSelection': numberOfCorrectAnswers > 0
-            });
+            var hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
+            var hasNoIncorrectAnswers = !props._numberOfIncorrectAnswers;
 
-            // Check if correct answers matches correct items and there are no incorrect selections
-            var answeredCorrectly = (numberOfCorrectAnswers === numberOfRequiredAnswers) && (numberOfIncorrectAnswers === 0);
-            return answeredCorrectly;
+            props._isCorrect = hasRightNumberOfCorrectAnswers && hasNoIncorrectAnswers;
+
+            this.set(props);
+
+            return props._isCorrect;
+
         },
 
         // Sets the score based upon the questionWeight
