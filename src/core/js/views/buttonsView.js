@@ -50,18 +50,15 @@ define([
 
       if (!isSubmitted) {
 
-        var $icon = this.$('.btn__marking');
-        $icon.removeClass('icon-cross');
-        $icon.removeClass('icon-tick');
+        var $icon = this.$('.js-btn-marking');
+        $icon.removeClass('validation-error');
+        $icon.removeClass('validation-success');
         $icon.addClass('u-display-none');
         this.$el.removeClass("is-submitted");
         this.model.set('feedbackMessage', undefined);
         this.$('.js-btn-feedback').a11y_cntrl_enabled(false);
-
       } else {
-
         this.$el.addClass("is-submitted");
-
       }
     },
 
@@ -78,10 +75,10 @@ define([
     onFeedbackMessageChanged: function(model, changedAttribute) {
       if (changedAttribute && this.model.get('_canShowFeedback')) {
         //enable feedback button
-        this.$('.btn__feedback').a11y_cntrl_enabled(true);
+        this.$('.js-btn-feedback').a11y_cntrl_enabled(true);
       } else {
         //disable feedback button
-        this.$('.btn__feedback').a11y_cntrl_enabled(false);
+        this.$('.js-btn-feedback').a11y_cntrl_enabled(false);
       }
     },
 
@@ -90,7 +87,7 @@ define([
       this.updateAttemptsCount();
 
       // Use 'correct' instead of 'complete' to signify button state
-      var $buttonsAction = this.$('.btn__action');
+      var $buttonsAction = this.$('.js-btn-action');
       var buttonState = BUTTON_STATE(changedAttribute);
       if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
         // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
@@ -121,9 +118,9 @@ define([
     checkFeedbackState: function(){
       var canShowFeedback = this.model.get('_canShowFeedback');
 
-      this.$('.btn__action').toggleClass('btn__action-fullwidth btn__action-enlarge', !canShowFeedback);
-      this.$('.btn__feedback').toggleClass('no-feedback', !canShowFeedback);
-      this.$('.btn__marking').toggleClass('no-feedback', !canShowFeedback);
+      this.$('.js-btn-action').toggleClass('is-full-width', !canShowFeedback);
+      this.$('.js-btn-feedback').toggleClass('u-display-none', !canShowFeedback);
+      this.$('.js-btn-marking').toggleClass('is-full-width u-display-none', !canShowFeedback);
     },
 
     updateAttemptsCount: function(model, changedAttribute) {
@@ -160,9 +157,9 @@ define([
       var isCorrect = this.model.get('_isCorrect');
       var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
 
-      this.$('.btn__marking')
+      this.$('.js-btn-marking')
           .removeClass('u-display-none')
-          .addClass(isCorrect ? 'icon-tick' : 'icon-cross')
+          .addClass(isCorrect ? 'validation-success' : 'validation-error')
           .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
     },
 

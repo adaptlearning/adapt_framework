@@ -1,3 +1,6 @@
+// --------------------------------------------------
+// Global button styles
+// --------------------------------------------------
 .btn {
   &-icon {
     padding: @icon-padding;
@@ -14,6 +17,7 @@
     padding: 0.5em 1.5em;
   }
 }
+// --------------------------------------------------
 
 // --------------------------------------------------
 // Question component buttons
@@ -21,28 +25,26 @@
 .btn {
   &__response-container {
     display: flex;
+    flex-wrap: wrap;
     position: relative;
   }
 
   &__action {
-    // margin-right: 0.5%;
     width: 50%;
   }
 
   &__feedback {
-    // margin-left: 0.5%;
     width: 50%;
-
-    &.no-feedback {
-      display: none;
-    }
   }
 
-  &__action-fullwidth {
-    // width: 100%;
-    // margin: 0;
+  &__action.is-full-width,
+  &__feedback.is-full-width {
+    width: 100%;
   }
 
+  // --------------------------------------------------
+  // Button marking
+  // --------------------------------------------------
   &__marking {
     position: absolute;
     left: 50%;
@@ -52,22 +54,35 @@
     .dir-rtl & {
       left: inherit;
       right: 50%;
+      .transform(translate(50%, -50%));
     }
   }
 
-  &__marking.validation-success {
-    .icon {
-      .icon-tick;
-      background-color: @validation-success;
-      color: @validation-success-inverted;
+  &__marking.is-full-width {
+    left: inherit;
+    right: 0;
+    .transform(translate(0, -50%));
+
+    .dir-rtl & {
+      left: 0;
+      right: inherit;
     }
+  }
+  // --------------------------------------------------
+
+  // --------------------------------------------------
+  // Button marking icon states
+  // --------------------------------------------------
+  &__marking.validation-success .icon {
+    .icon-tick;
+    background-color: @validation-success;
+    color: @validation-success-inverted;
   }
 
-  &__marking.validation-error {
-    .icon {
-      .icon-cross;
-      background-color: @validation-error;
-      color: @validation-error-inverted;
-    }
+  &__marking.validation-error .icon {
+    .icon-cross;
+    background-color: @validation-error;
+    color: @validation-error-inverted;
   }
+  // --------------------------------------------------
 }
