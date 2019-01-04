@@ -11,15 +11,17 @@ define([
   var QuestionView = ComponentView.extend({
 
     className: function() {
-      return "component "
-      + "question-component "
-      + this.model.get('_component')
-      + "-component " + this.model.get('_id').toLowerCase()
-      + " " + this.model.get('_classes')
-      + " " + this.setVisibility()
-      + " component-" + this.model.get('_layout')
-      + " nth-child-" + this.model.get("_nthChild")
-      + (this.model.get('_isComplete') ? ' is-complete' : '');
+      return [
+        'component',
+        'is-question',
+        this.model.get('_component').toLowerCase(),
+        this.model.get('_id'),
+        this.model.get('_classes'),
+        this.setVisibility(),
+        'is-' + this.model.get('_layout'),
+        'nth-child-' + this.model.get('_nthChild'),
+        (this.model.get('_isComplete') ? 'is-complete' : '')
+      ].join(' ');
     },
 
     //////
