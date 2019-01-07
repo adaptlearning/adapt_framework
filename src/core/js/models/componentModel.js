@@ -1,11 +1,10 @@
 define([
-  'core/js/adapt',
   'core/js/models/adaptModel'
-], function (Adapt, AdaptModel) {
+], function (AdaptModel) {
 
   var ComponentModel = AdaptModel.extend({
-    _parent:'blocks',
-    _siblings:'components',
+    _parent: 'blocks',
+    _siblings: 'components',
 
     defaults: AdaptModel.resultExtend('defaults', {
       _isA11yComponentDescriptionEnabled: true
