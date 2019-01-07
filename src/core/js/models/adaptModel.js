@@ -1,7 +1,8 @@
 define([
     'core/js/adapt',
+    'core/js/modelEvent',
     'core/js/logging'
-], function (Adapt) {
+], function (Adapt, ModelEvent) {
 
     var AdaptModel = Backbone.Model.extend({
 
@@ -28,6 +29,11 @@ define([
             '_id',
             '_isComplete',
             '_isInteractionComplete'
+        ],
+
+        bubblingEvents: [
+            'change:_isComplete',
+            'change:_isInteractionComplete'
         ],
 
         initialize: function () {
@@ -115,6 +121,8 @@ define([
             }
 
             this.listenTo(children, {
+                "all": this.onAll,
+                "bubble": this.bubble,
                 "change:_isReady": this.checkReadyStatus,
                 "change:_isComplete": this.onIsComplete,
                 "change:_isInteractionComplete": this.checkInteractionCompletionStatus
@@ -739,8 +747,20 @@ define([
 
         onIsComplete: function() {
             this.checkCompletionStatus();
-
             this.checkLocking();
+        },
+
+        onAll: function(type, model, value) {
+            if (!_.contains(this.bubblingEvents, type)) return;
+            var event = new ModelEvent(type, model, value);
+            this.bubble(event);
+        },
+
+        bubble: function(event) {
+            if (!event.bubbles) return;
+            event.addPath(this);
+            this.trigger("bubble:"+event.type, event);
+            this.trigger("bubble", event);
         }
 
     });
