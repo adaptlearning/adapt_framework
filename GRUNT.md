@@ -7,22 +7,23 @@ All Adapt grunt commands are run from the root directory of the Adapt course whe
 Lists out all available tasks along with descriptions. Useful to quickly look up what's available without having to leave the command line. <br/>_**Note**: Simply running `grunt` will have the same effect._ 
 
 **build**  
-`grunt build [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx]`  
+`grunt build [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx] [--jsonext=xxx]`  
 Compiles all files in `src` to create a production-ready minified/compressed version of your course. Includes a variety of error-checking tasks.  
 `--languages` Specifies which language folder/s should be built. Can take any value that matches the name of an existing */src/course/* subfolder. Defaults to `en`.  
 `--menu` If more than one menu is present in the */src/menu* folder, specifies the name of the menu to include in the build.  
 `--theme` If more than one theme is present in the */src/theme* folder, specifies the name of the theme to include in the build.  
 `--sourcedir` Specifies the absolute path to parent folder of the code to be processed. Defaults to the path to */src*.  
 `--outputdir`  Specifies the absolute path to parent folder where the build will be written. Defaults to the path to */build*. 
+`--jsonext` Specifies the file extension your JSON files use. Defaults to *json*. If the server your content is hosted on doesn't support the JSON mime-type you can use *txt* here to use the .txt file extension instead. You will need to manually amend the extension of all your JSON files to .txt initially.
 
 **dev**  
-`grunt dev [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx]`   
+`grunt dev [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx] [--jsonext=xxx]`   
 The same as `build`, with a few notable *developer-friendly* differences:  
 -Includes [source maps](http://blog.teamtreehouse.com/introduction-source-maps) for both JavaScript and Less.  
 -Runs the `watch` task, which monitors the source code for any file changes and updates the build when changes occur.  
 
 **diff**  
-`grunt diff [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx]`   
+`grunt diff [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx] [--jsonext=xxx]`   
 Similar to `dev`, except that the `watch` task is not run and handlebars, JavaScript and Less files will only be recompiled if they have been changed - making this task very quick to run.
 
 **check-json**    

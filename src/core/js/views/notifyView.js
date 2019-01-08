@@ -98,7 +98,7 @@ define([
             event.preventDefault();
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
-            Adapt.trigger($(event.currentTarget).attr('data-event'));
+            Adapt.trigger($(event.currentTarget).attr('data-event'), this);
         },
 
         onCloseButtonClicked: function(event) {
@@ -117,7 +117,7 @@ define([
             if (this.model.get("_isCancellable") === false) return;
             //tab index preservation, notify must close before subsequent callback is triggered
             this.closeNotify();
-            Adapt.trigger('notify:cancelled');
+            Adapt.trigger('notify:cancelled', this);
         },
 
         resetNotifySize: function() {
@@ -229,7 +229,7 @@ define([
             $('html').removeClass('notify');
 
             Adapt.trigger('popup:closed');
-            Adapt.trigger('notify:closed');
+            Adapt.trigger('notify:closed', this);
         },
 
         remove: function() {
