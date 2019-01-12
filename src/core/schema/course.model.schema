@@ -168,7 +168,7 @@
                 "touch": {
                   "type": "string",
                   "title": "For touch devices",
-                  "default": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page.",
+                  "default": "Usage instructions. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page.",
                   "inputType": "Text",
                   "required": true,
                   "validators": [
@@ -190,7 +190,7 @@
                 "ipad": {
                   "type": "string",
                   "title": "For iPad",
-                  "default": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tab to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select.",
+                  "default": "Usage instructions for touchscreens. Use swipe left for next. Use swipe right for previous. Use a double tap to select. Use a two finger slide up to go to the top of the page. Usage instructions for keyboard access. Use left for next. Use right for previous. Use up and down together to select.",
                   "inputType": "Text",
                   "required": true,
                   "validators": [
