@@ -5,8 +5,9 @@
 		"_type": "article",
 		"_classes": "",
 		"title": "a-05",
-		"displayTitle": "",
-		"body": ""
+		"displayTitle": "display title",
+		"body": "body",
+    "instruction": "instruction"
 	},
 	{
 		"_id": "a-10",

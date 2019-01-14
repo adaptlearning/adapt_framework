@@ -5,8 +5,9 @@
         "_type": "block",
         "_classes": "",
         "title": "b-05",
-        "displayTitle": "",
-        "body": "",
+        "displayTitle": "display title",
+        "body": "body",
+        "instruction": "instruction",
         "_trackingId": 0
     },
     {

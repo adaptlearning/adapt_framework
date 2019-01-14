@@ -85,15 +85,13 @@ define([
     // Selection restoration process
     ////
 
-
     // Used to add post-load changes to the model
     onAdaptInitialize: function() {
-        this.restoreUserAnswers();
+      this.restoreUserAnswers();
     },
 
     // Used to restore the user answers
     restoreUserAnswers: function() {},
-
 
     //////
     // Submit process
@@ -243,6 +241,14 @@ define([
 
     getFeedbackTitle: function() {
       return this.get('_feedback').title || this.get('displayTitle') ||  this.get('title') || "";
+    },
+
+    /**
+     * Used to determine whether the learner is allowed to interact with the question component or not.
+     * @return {Boolean}
+     */
+    isInteractive: function() {
+      return !this.get('_isComplete') || (this.get('_isEnabled') && !this.get('_isSubmitted'));
     },
 
     // Reset the model to let the user have another go (not the same as attempts)

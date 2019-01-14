@@ -28,9 +28,13 @@
 		"_graphic": {
 			"large": "course/en/images/single_width.jpg",
 			"small": "course/en/images/single_width.jpg",
-			"alt": "Placeholder graphic.",
+			"alt": "",
 			"attribution": ""
-		}
+		},
+    "_isOptional": true,
+    "_pageLevelProgress": {
+      "_isEnabled": false
+    }
 	},
 	{
 		"_id": "c-15",
@@ -247,7 +251,8 @@
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
-				}
+				},
+        "_classes": "align-image-left"
 			},
 			{
 				"title": "Steps in a process",
@@ -255,7 +260,8 @@
 				"_graphic": {
 					"src": "course/en/images/accordion_full_width.jpg",
 					"alt": "Placeholder graphic."
-				}
+				},
+        "_classes": "align-image-right"
 			},
 			{
 				"title": "Recaps",
@@ -315,25 +321,60 @@
 		"_pageLevelProgress": {
 			"_isEnabled": true
 		}
-	},
-	{
-		"_id": "c-62",
-		"_parentId": "b-40",
-		"_type": "component",
-		"_component": "graphic",
-		"_classes": "",
-		"_layout": "right",
-		"title": "c-62",
-		"displayTitle": "",
-		"body": "",
-		"instruction": "",
-		"_graphic": {
-			"large": "course/en/images/single_width.jpg",
-			"small": "course/en/images/single_width.jpg",
-			"alt": "Placeholder graphic.",
-			"attribution": ""
-		}
-	},
+	},{
+        "_id": "c-62",
+        "_parentId": "b-40",
+        "_type": "component",
+        "_component": "mcq",
+        "_classes": "",
+        "_layout": "right",
+        "_attempts": 2,
+        "_shouldDisplayAttempts": false,
+        "_questionWeight": 1,
+        "_isRandom": false,
+        "_selectable": 2,
+        "_canShowModelAnswer": true,
+        "_canShowFeedback": false,
+        "_canShowMarking": true,
+        "title": "MCQ",
+        "displayTitle": "MCQ",
+        "body": "Which of the following options would you consider to be correct?",
+        "instruction": "",
+        "_items": [
+            {
+                "text": "This is option 1.",
+                "_shouldBeSelected": false
+            },
+            {
+                "text": "This is option 2.",
+                "_shouldBeSelected": false,
+                "feedback": "Option two incorrect feedback"
+            },
+            {
+                "text": "This is option 3.",
+                "_shouldBeSelected": true
+            },
+            {
+                "text": "This is option 4.",
+                "_shouldBeSelected": true
+            }
+        ],
+        "_feedback":{
+            "title": "Feedback",
+            "correct": "Congratulations, this is the correct feedback.",
+            "_incorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question incorrectly."
+            },
+            "_partlyCorrect": {
+                "notFinal": "",
+                "final": "This feedback will appear if you answered the question correctly."
+            }
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true
+        }
+    },
 	{
 		"_id": "c-65",
 		"_parentId": "b-45",
@@ -569,8 +610,8 @@
 		"displayTitle": "Slider",
 		"body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulate information, but according to a paper by Miller (1956) what ‘magic number’ describes its capacity?",
 		"instruction": "Drag the slider to make your choice and select Submit.",
-		"labelStart": "",
-		"labelEnd": "",
+		"labelStart": "Start",
+		"labelEnd": "End",
 		"_correctAnswer": "",
 		"_correctRange": {
 			"_bottom": 5,
