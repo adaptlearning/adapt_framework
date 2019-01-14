@@ -1,7 +1,7 @@
 <div class="buttons-inner">
     <div class="buttons-cluster clearfix">
         {{#unless _shouldDisplayAttempts}}
-        <div class="buttons-marking-icon icon display-none">
+        <div class="buttons-marking-icon icon display-none" aria-label="{{#if _isCorrect}}{{@root/_globals._accessibility._ariaLabels.answeredCorrectly}}{{else}}{{@root/_globals._accessibility._ariaLabels.answeredIncorrectly}}{{/if}}">
         </div>
         {{/unless}}
         <button class="buttons-action" aria-label="{{_buttons._submit.ariaLabel}}">{{{_buttons._submit.buttonText}}}</button>
