@@ -134,6 +134,9 @@
     },
     "_extensions": {
       "type": "object"
+    },
+    "themeSettings": {
+      "type": "object"
     }
   }
 }

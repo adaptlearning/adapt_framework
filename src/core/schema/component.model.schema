@@ -154,8 +154,16 @@
     "_extensions": {
       "type": "object"
     },
+    "themeSettings": {
+      "type": "object"
+    },
     "properties" : {
       "type": "object"
+    },
+    "_colorLabel": {
+      "type": "string",
+      "required": false,
+      "editorOnly": true
     }
   }
 }

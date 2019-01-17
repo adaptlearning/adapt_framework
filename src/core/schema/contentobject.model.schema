@@ -96,6 +96,23 @@
       "validators": [],
       "help": "If the course is using a 'custom' Menu Lock Type, this should contain the unique ID of the item(s) which must be completed before this is unlocked"
     },
+    "_lockType": {
+      "type": "string",
+      "default": "",
+      "inputType": {
+        "type": "Select",
+        "options": [
+          "",
+          "custom",
+          "lockLast",
+          "sequential",
+          "unlockFirst"
+        ]
+      },
+      "title": "Menu lock type",
+      "help": "Defines which (if any) locking mechanism will be used. To be used only on submenus.",
+      "validators": []
+    },
     "_classes": {
       "type": "string",
       "default": "",
@@ -191,6 +208,12 @@
       "required": true,
       "default": 1,
       "editorOnly": true
+    },
+    "menuSettings": {
+      "type": "object"
+    },
+    "themeSettings": {
+      "type": "object"
     }
   }
 }
