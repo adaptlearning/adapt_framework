@@ -6,10 +6,12 @@
   "properties": {
     "heroImage": {
       "type": "string",
+      "title": "Preview image",
       "default": "",
       "inputType": "Asset:image",
       "validators": [],
-      "editorOnly": true
+      "editorOnly": true,
+      "help": "The image that will be shown in the dashboard for this course"
     },
     "title": {
       "type": "string",
@@ -27,7 +29,7 @@
       "default": "New Course Title",
       "inputType": "DisplayTitle",
       "validators": [],
-      "help": "This is the title that will be displayed on the main menu",
+      "help": "This is the title that will be displayed on the course's main menu",
       "translatable": true
     },
     "description": {
@@ -36,7 +38,8 @@
       "default": "",
       "inputType": "Text",
       "validators": [],
-      "translatable": true
+      "translatable": true,
+      "help": "This will be added to the course's manifest file metadata. It is not (currently) displayed anywhere within the course."
     },
     "body": {
       "type": "string",
@@ -56,6 +59,7 @@
     "_start": {
       "type": "object",
       "title": "Start settings",
+      "help": "The start settings allow you to control which page is rendered when a course loads, potentially bypassing the menu.",
       "properties": {
         "_isEnabled": {
           "type": "boolean",
@@ -63,8 +67,7 @@
           "editorOnly": true,
           "inputType": "Checkbox",
           "validators": [],
-          "title": "Enable start controller",
-          "help": "The start controller allows you to control which page is rendered when a course loads, potentially bypassing the menu"
+          "title": "Enabled?"
         },
         "_startIds": {
           "type": "array",
@@ -84,8 +87,8 @@
                 "editorOnly": true,
                 "inputType": "Checkbox",
                 "validators": [],
-                "title": "Skip if complete",
-                "help": "When this is set to 'true', the page will not be selected as the first page if it has been already viewed/completed"
+                "title": "Skip if complete?",
+                "help": "If enabled, the page will not be selected as the first page if it has been already viewed/completed"
               },
               "_className": {
                 "type": "string",
@@ -225,30 +228,6 @@
                   "required": true,
                   "translatable": true
                 },
-                "menu": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Menu",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "menuItem": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Menu item",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "menuViewButton": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Select here to enter",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
                 "page": {
                   "type": "string",
                   "title": "",
@@ -273,34 +252,10 @@
                   "required": true,
                   "translatable": true
                 },
-                "navigationBack": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Navigate back",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
                 "navigationDrawer": {
                   "type": "string",
                   "title": "",
                   "default": "Open course resources and search",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "closeResources": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Close resources",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "drawerBack": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Back to drawer",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
@@ -397,14 +352,6 @@
                   "type": "string",
                   "title": "",
                   "default": "Visited",
-                  "inputType": "Text",
-                  "required": true,
-                  "translatable": true
-                },
-                "menuBack": {
-                  "type": "string",
-                  "title": "",
-                  "default": "Back to menu",
                   "inputType": "Text",
                   "required": true,
                   "translatable": true
