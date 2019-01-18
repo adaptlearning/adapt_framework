@@ -1,5 +1,17 @@
 ## [Unreleased][unreleased]
 
+## [3.4.0] - 2019-01-18
+### Added
+- Support for translatable content in config.json to the `translate:import` task ([#2300](https://github.com/adaptlearning/adapt_framework/issues/2300))
+- Ability to insert variables into HTML files during build/dev process ([#2317](https://github.com/adaptlearning/adapt_framework/pull/2317))
+
+### Changed
+- Future-proof schema files for Authoring Tool compatibility ([#2306](https://github.com/adaptlearning/adapt_framework/issues/2306))
+
+### Fixed
+- Typo in accessibility instructions ([#2320](https://github.com/adaptlearning/adapt_framework/issues/2320))
+- Reference to 'Version 2.0 core bundle' in the default course content
+
 ## [3.3.0] - 2018-11-30
 
 ### Added
@@ -658,7 +670,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...HEAD
+[3.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...v3.3.0
 [3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.0...v3.2.1
