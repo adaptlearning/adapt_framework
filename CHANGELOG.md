@@ -1,5 +1,12 @@
 ## [Unreleased][unreleased]
 
+## [2.3.2] - 2019-01-18
+### Changed
+- Future-proof schema files for Authoring Tool compatibility ([#2306](https://github.com/adaptlearning/adapt_framework/issues/2306))
+
+### Fixed
+- Typo in accessibility instructions ([#2320](https://github.com/adaptlearning/adapt_framework/issues/2320))
+
 ## [2.3.1] - 2018-11-15
 - Update inview to check computed styles ([#1873](https://github.com/adaptlearning/adapt_framework/issues/1873))
 
@@ -581,7 +588,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.0...legacy
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.2...legacy
+[2.3.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.1...v2.3.2
+[2.3.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.7...v2.3.0
 [2.2.7]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.6...v2.2.7
 [2.2.6]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.5...v2.2.6
