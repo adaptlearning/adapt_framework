@@ -21,7 +21,7 @@
 - Amended NotifyView to get it to pass a reference to itself when triggering `notify:*` events ([#2279](https://github.com/adaptlearning/adapt_framework/issues/2279))
 
 ### Fixed
-- AdaptModel's `findAncestor` triggered a `TypeError` if no ancestor of the specified type was found ([##240](https://github.com/adaptlearning/adapt_framework/issues/2240))
+- AdaptModel's `findAncestor` triggered a `TypeError` if no ancestor of the specified type was found ([#2240](https://github.com/adaptlearning/adapt_framework/issues/2240))
 - Schema defaults were not being written to `build/{lang}/course/course.json` ([#2248](https://github.com/adaptlearning/adapt_framework/issues/2248))
 
 ## [3.2.2] - 2018-10-15
