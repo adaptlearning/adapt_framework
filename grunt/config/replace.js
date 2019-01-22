@@ -70,7 +70,9 @@ module.exports = function (grunt, options) {
             configJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
           }
         } else {
-          configJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
+          configJson._spoor._advancedSettings = { 
+            _manifestIdentifier: 'adapt_scorm'
+          };
         }
       }
 
