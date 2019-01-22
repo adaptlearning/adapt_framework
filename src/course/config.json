@@ -32,7 +32,7 @@
     "_spoor": {
         "_isEnabled": true,
         "_tracking": {
-            "_shouldSubmitScore": false,
+            "_shouldSubmitScore": true,
             "_shouldStoreResponses": false,
             "_shouldRecordInteractions": true
         },
