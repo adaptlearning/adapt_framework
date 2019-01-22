@@ -9,7 +9,7 @@
 		"title": "Introduction",
 		"displayTitle": "",
 		"body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br>These presentation components can be structured in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
-		"instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the Version 4 core bundle.",
+		"instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the core bundle.",
 		"_pageLevelProgress": {
 			"_isEnabled": true
 		}
@@ -888,7 +888,7 @@
 		"_selectable": 1,
 		"title": "Adding titles to icons",
 		"displayTitle": "Adding titles to icons",
-		"body": "Version 2.0 of the framework makes it possible to add titles to the icons shown on the navigation bar. Do you know what JSON file you would need to edit to add a title to an icon?",
+		"body": "What JSON file would you need to edit in order to add a title to an icon in the navigation bar?",
 		"instruction": "Choose an option and select Submit.",
 		"_items": [
 			{
