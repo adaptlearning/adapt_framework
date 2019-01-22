@@ -1,5 +1,16 @@
 ## [Unreleased][unreleased]
 
+## [4.0.0] - 2019-01-22
+### Added
+- Shim to ensure the new 'manifest identifier' property is set even if not defined in config.json ([#2232](https://github.com/adaptlearning/adapt_framework/pull/2332) and [#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
+
+### Changed
+- Updates to Accessibility - for a complete list of changes see the [Accessibility v4 Milestone](https://github.com/adaptlearning/adapt_framework/milestone/17?closed=1)
+
+### Fixed
+- Notify styling issue ([#2308](https://github.com/adaptlearning/adapt_framework/issues/2308))
+- Framework schemas not aligned with authoring tool versions ([#2306](https://github.com/adaptlearning/adapt_framework/issues/2306))
+
 ## [3.4.0] - 2019-01-18
 ### Added
 - Support for translatable content in config.json to the `translate:import` task ([#2300](https://github.com/adaptlearning/adapt_framework/issues/2300))
@@ -670,7 +681,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.0...HEAD
+[3.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...v4.0.0
 [3.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...v3.3.0
 [3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.1...v3.2.2
