@@ -62,7 +62,18 @@ module.exports = function (grunt, options) {
           grunt.log.writeln('WARNING: xAPI activityID has not been set');
         }
       }
-      
+
+      // Shim to preserve the 'adapt_scorm' identifier.
+      if (configJson.hasOwnProperty('_spoor')) {
+        if (comfigJson._spoor._advancedSettings) {
+          if (!comfigJson._spoor._advancedSettings._manifestIdentifier) {
+            comfigJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
+          }
+        } else {
+          comfigJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
+        }
+      }
+
       // Combine the course and config JSON so both can be passed to replace.  
       return {
         'course': filterNullValues(courseJson),
