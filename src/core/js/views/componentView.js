@@ -5,6 +5,16 @@ define([
 
     var ComponentView = AdaptView.extend({
 
+        attributes: function() {
+            if (!this.model.get("_isA11yRegionEnabled")) {
+                return AdaptView.resultExtend('attributes', {}, this);
+            }
+            return AdaptView.resultExtend('attributes', {
+                "aria-labelledby": this.model.get('_id')+"-heading",
+                "role": "region"
+            }, this);
+        },
+
         className: function() {
             return [
                 'component',
@@ -19,10 +29,8 @@ define([
             ].join(' ');
         },
 
-        initialize: function(){
-			//standard initialization + renderState function
-            AdaptView.prototype.initialize.apply(this, arguments);
-            this.renderState();
+        renderState: function() {
+            Adapt.log.warn("REMOVED - renderState is removed and moved to item title");
         },
 
         /**
@@ -67,31 +75,6 @@ define([
             if (this.model.get('_isComplete')) {
                 this.removeInviewListener();
             }
-        },
-
-        renderState: function() {
-            if (!Handlebars.partials['state']) return;
-
-            // the preferred way to indicate that a state is not required
-            if (this.model.get('_disableAccessibilityState')) return;
-            // do not perform if component has .not-accessible class
-            if (this.$el.is('.not-accessible')) return;
-			// do not perform if component has .no-state class
-            if (this.$el.is('.no-state')) return;
-
-            var $previousState = this.$('.accessibility-state');
-            var isStateRendered = $previousState.length;
-
-            var data = _.extend(this.model.toJSON(), {a11yConfig: Adapt.config.get('_accessibility')});
-            var element = Handlebars.partials['state'](data);
-
-            if (isStateRendered) {
-                $previousState.html(element);
-            } else {
-                this.$el.append(element);
-            }
-
-            this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
 
         postRender: function() {},

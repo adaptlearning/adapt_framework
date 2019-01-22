@@ -11,6 +11,8 @@ define([
             _canReset: false,
             _isComplete: false,
             _isInteractionComplete: false,
+            _isA11yRegionEnabled: false,
+            _isA11yCompletionDescriptionEnabled: true,
             _requireCompletionOf: -1,
             _isEnabled: true,
             _isResetOnRevisit: false,

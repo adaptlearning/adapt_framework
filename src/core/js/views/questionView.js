@@ -201,12 +201,14 @@ define([
             // question isCorrect or isPartlyCorrect
             this._runModelCompatibleFunction("setupFeedback");
 
+            // Used to trigger an event so plugins can display feedback
+            // Do this before updating the buttons so that the focus can be
+            // shifted immediately
+            this.showFeedback();
+
             // Used to update buttonsView based upon question state
             // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
             this._runModelCompatibleFunction("updateButtons");
-
-            // Used to trigger an event so plugins can display feedback
-            this.showFeedback();
 
             this.onSubmitted();
         },
@@ -276,26 +278,23 @@ define([
             this._runModelCompatibleFunction("resetUserAnswer");
 
             this.resetQuestion();
-            if (this.model.get("_isReady")) {
-                //if the model is already rendered, focus on the first tabbable element
-                //onResetClicked is called as part of the checkIfResetOnRevisit function and as a button click
-                _.defer(_.bind(function(){
-                    this.$el.a11y_focus();
-                }, this));
-            }
+
+            // onResetClicked is called as part of the checkIfResetOnRevisit
+            // function and as a button click. if the view is already rendered,
+            // then the button was clicked, focus on the first tabbable element
+            if (!this.model.get("_isReady")) return;
+            // Attempt to get the current page location
+            var currentModel = Adapt.findById(Adapt.location._currentId);
+            // Make sure the page is ready
+            if (!currentModel || !currentModel.get("_isReady")) return;
+            // Focus on the first readable item in this element
+            this.$el.focusNext();
+
         },
 
         setQuestionAsReset: function() {
             this.model.setQuestionAsReset();
             this.$(".component-widget").removeClass("submitted");
-
-            // Attempt to get the current page location
-            var currentModel = Adapt.findById(Adapt.location._currentId);
-            if (currentModel && currentModel.get("_isReady")) {
-                //if the page is ready, focus on the first tabbable item
-                //otherwise will try to set focus as page loads and components are rendered
-                this.$el.a11y_focus();
-            }
         },
 
         // Used by the question view to reset the look and feel of the component.
@@ -305,8 +304,6 @@ define([
         resetQuestion: function() {},
 
         refresh: function() {
-            this.renderState();
-            
             this.model.set('_buttonState', this.model.getButtonState());
 
             if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
@@ -402,7 +399,7 @@ define([
             getResponseType: function() {
                 return this.model.getResponseType();
             },
-            
+
             // Calls default methods to setup on questions
             setupDefaultSettings: function() {
                 return this.model.setupDefaultSettings();
@@ -534,7 +531,7 @@ define([
             if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
                 switch (checkForFunction) {
                     case "setupFeedback":
-                    case "markQuestion": 
+                    case "markQuestion":
                         return true; //questionView
                 }
                 return false; //questionModel

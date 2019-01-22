@@ -1,7 +1,0 @@
-<div class="accessibility-state">
-	{{#if _isComplete}}
-		<span tabindex="{{#if a11yConfig._isActive}}0{{else}}-1{{/if}}" role="region" class="aria-label a11y-ignore-focus prevent-default" id="buttons-aria-label-complete">{{a11y_normalize displayTitle}} {{_globals._accessibility._ariaLabels.complete}} {{#if _isQuestionType}}{{#if _canShowFeedback}}{{#if _isCorrect}}{{_globals._accessibility._ariaLabels.correct}}{{else}}{{_globals._accessibility._ariaLabels.incorrect}}{{/if}}{{/if}}{{/if}}</span>
-	{{else}}
-		<span tabindex="{{#if a11yConfig._isActive}}0{{else}}-1{{/if}}" role="region" class="aria-label a11y-ignore-focus prevent-default" id="buttons-aria-label-incomplete">{{a11y_normalize displayTitle}} {{_globals._accessibility._ariaLabels.incomplete}}</span>
-	{{/if}}
-</div>

@@ -4,6 +4,7 @@ src/menu
 src/extensions
 src/less
 src/less/adapt.less
+src/plugins.js
 build
 bower_components
 node_modules

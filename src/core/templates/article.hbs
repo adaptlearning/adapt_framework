@@ -5,8 +5,11 @@
     <div class="article-header">
         {{#if displayTitle}}
         <div class="article-title">
-            <div class="article-title-inner" {{{a11y_attrs_heading "article"}}}>
-                {{{compile displayTitle this}}}
+            {{#unless _disableAccessibilityState}}
+                <div class="js-heading"></div>
+            {{/unless}}
+            <div class="article-title-inner" {{#unless _disableAccessibilityState}}aria-hidden="true"{{/unless}}>
+                {{{compile displayTitle}}}
             </div>
         </div>
         {{/if}}
@@ -14,7 +17,7 @@
         {{#if body}}
         <div class="article-body">
             <div class="article-body-inner">
-                {{{compile_a11y_text body this}}}
+                {{{compile body}}}
             </div>
         </div>
         {{/if}}
@@ -22,7 +25,7 @@
         {{#if instruction}}
         <div class="article-instruction">
             <div class="article-instruction-inner">
-                {{{compile_a11y_text instruction this}}}
+                {{{compile instruction}}}
             </div>
         </div>
         {{/if}}

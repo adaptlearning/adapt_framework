@@ -66,7 +66,7 @@ define([
             case "%": return lvalue % rvalue;
             }
         },
-        
+
         /**
          * Equivalent to:
          *  if (conditionA || conditionB)
@@ -115,9 +115,8 @@ define([
          * Allow JSON to be a template and accessible text
          */
         compile_a11y_text: function(template, context) {
-            if (!template) return "";
-            if (template instanceof Object) template = template.toString();
-            return Handlebars.helpers.a11y_text.call(this, helpers.compile.call(this, template, context));
+            Adapt.log.warn("DEPRECATED: a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            return helpers.compile.call(this, template, context);
         },
 
         /**
@@ -180,6 +179,25 @@ define([
 
             return "";
 
+        },
+
+        /**
+         * Allow components to fetch their component description.
+         */
+        component_description: function(override, context) {
+            if (!this._isA11yComponentDescriptionEnabled) return;
+            if (!this._globals._components['_'+this._component]) return;
+            var hasOverride = (arguments.length > 1);
+            var description;
+            if (hasOverride) {
+                description = override;
+                description = helpers.compile(description, context);
+            } else {
+                description = this._globals._components['_'+this._component].ariaRegion;
+                description = helpers.compile(description, override);
+            }
+            if (!description) return;
+            return new Handlebars.SafeString('<div class="aria-label">'+description+'</div>');
         }
 
     };

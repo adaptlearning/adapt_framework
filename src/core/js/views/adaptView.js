@@ -41,6 +41,8 @@ define([
             var template = Handlebars.templates[this.constructor.template];
             this.$el.html(template(data));
 
+            Adapt.trigger(this.constructor.type + 'View:render', this);
+
             _.defer(function() {
                 // don't call postRender after remove
                 if(this._isRemoved) return;
@@ -179,7 +181,7 @@ define([
             }
             this.$el.addClass('display-none');
         },
-        
+
         onIsCompleteChange:function(model, isComplete){
             this.$el.toggleClass('completed', isComplete);
         }

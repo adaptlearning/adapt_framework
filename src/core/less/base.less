@@ -1,22 +1,23 @@
 // default variables, remove when core theme is implemented
-@focus-outline: 3px solid orange;
+@focus-outline: 0; // deprecated - reverting to browser outline
 @primary-color: #078292;
 @device-width-medium: 520px;
 @body-text-font-size: 14px;
 @button-color: #000;
 @button-text-color: #fff;
+@navigation-height: 40px;
 
 .responsive-layout {
-    width:100%;
+    max-width:100%;
     margin: 0 auto;
     @media all and (min-width:520px) {
-        width:520px;
+        max-width:520px;
     }
     @media all and (min-width:760px) {
-        width:100%;
+        max-width:100%;
     }
     @media all and (min-width:960px) {
-        width:960px;
+        max-width:960px;
     }
 }
 
@@ -26,23 +27,6 @@
 
 .display-none {
     display:none!important;
-}
-
-.accessibility {
-    :focus {
-        outline: @focus-outline;
-    }
-}
-
-#accessibility-toggle {
-    float:left;
-    .dir-rtl & {
-        float:right;
-    }
-    &:focus {
-        border: @focus-outline;
-        padding: 17px 20px;
-    }
 }
 
 .skip-nav-link {
@@ -68,7 +52,6 @@
 }
 
 #wrapper {
-    .responsive-layout;
     padding-top:40px;
 }
 
@@ -134,10 +117,9 @@
 }
 
 .navigation {
-    .responsive-layout;
     position:fixed;
     top:0;
-    height:40px;
+    height: @navigation-height;
     z-index:500;
     width:100%;
 
@@ -267,10 +249,10 @@
     z-index:1;
 }
 
-    /*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
-    .aria-label.aria-hidden {
-        display:none !important;
-    }
+/*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
+.aria-label.aria-hidden {
+    display:none !important;
+}
 
 /*HIDDEN FOCUS GUARD*/
 .a11y-focusguard {
@@ -289,30 +271,13 @@
 
     /*IPAD: Stop accessibility cursor focusing until end of page;*/
     .touchevents & {
-        position: relative !important;
+        position: absolute !important;
     }
 
-    /*DESTKOP: stop focus making window jump to bottom of page;*/
+    /*DESKTOP: stop focus making window jump to bottom of page;*/
     .no-touchevents & {
         position: fixed !important;
     }
-}
-
-/*HIDDEN FOCUS/ALERT ELEMENT */
-#a11y-selected, #a11y-selected * {
-    position:fixed !important;
-    left:0px !important;
-    bottom:0px !important;
-    width:auto !important;
-    height:auto !important;
-    overflow:auto !important;
-    color: rgba(0,0,0,0) !important;
-    background: rgba(0,0,0,0) !important;
-    font-size: 1px !important;
-    padding:0 !important;
-    margin:0 !important;
-    line-height: normal !important;
-    z-index:1;
 }
 
 /*FOCUS DISTRACTION*/
