@@ -1,10 +1,10 @@
 {
     "_id": "course",
     "_type": "course",
-    "title": "Adapt Version 4.0 demonstration",
-    "displayTitle": "Adapt Version 4.0 demonstration",
-    "description": "A sample course demonstrating the capabilities of the Adapt Framework v4.0",
-    "body": "Hello {{_globals._learnerInfo.firstname}} - welcome to the demonstration build for version 4.0 of the Adapt framework.<br><br>This focus of this release has been on accessibility. This has undergone a significant update in order to provide a greatly improved experience for users of assistive technology. Find out more <a href='https://www.adaptlearning.org/index.php/adapt-framework/' target='_blank'>here</a>.",
+    "title": "Adapt v4",
+    "displayTitle": "Adapt Version 4",
+    "description": "A sample course demonstrating the capabilities of the Adapt Framework",
+    "body": "Welcome to the demonstration build for version 4 of the Adapt framework.<br><br>The focus of this release has been on accessibility, which has been updated to provide a greatly improved experience for users of assistive technology - most noticeably by removing the need to have an 'accessibility mode'.<br>For a complete list of changes, see <a href='https://github.com/adaptlearning/adapt_framework/milestone/17?closed=1' target='_blank'>the Accessibility v4 milestone</a>.",
     "_buttons": {
         "_submit": {
             "buttonText": "Submit",
@@ -48,7 +48,7 @@
                 "previous": "Back",
                 "navigationDrawer": "Open course resources.",
                 "close": "Close",
-                "closeDrawer": "Close Drawer",
+                "closeDrawer": "Close drawer",
                 "closeResources": "Close resources",
                 "drawer": "Top of side drawer",
                 "closePopup": "Close popup",
@@ -89,7 +89,7 @@
             {
                 "_type": "document",
                 "title": "Vanilla Theme Swatch",
-                "description": "See the swatch for the default vanilla by clicking here.",
+                "description": "See the swatch for the vanilla theme by clicking here.",
                 "_link": "course/en/images/vanilla-swatch.jpg"
             },
             {
@@ -100,22 +100,27 @@
             },
             {
                 "_type": "link",
-                "title": "Community Site",
-                "description": "View our community site by clicking here.",
-                "_link": "https://community.adaptlearning.org"
+                "title": "Adapt Project Site",
+                "description": "View the project's web site by clicking here.",
+                "_link": "https://www.adaptlearning.org/"
+            },
+            {
+                "_type": "link",
+                "title": "Framework chat",
+                "description": "Join the framework chat room by clicking here.",
+                "_link": "https://gitter.im/adaptlearning/adapt_framework"
             }
         ]
     },
     "_assessment": {
-        "_postTotalScoreToLms": true,
         "_isPercentageBased": true,
         "_scoreToPass": 75
     },
     "_bookmarking": {
         "_isEnabled": true,
         "_level": "component",
-        "title": "Bookmarking",
-        "body": "Would you like to continue where you left off?",
+        "title": "Resume?",
+        "body": "Would you like to resume the course from the location you were at last time?",
         "_buttons": {
             "yes": "Yes",
             "no": "No"
