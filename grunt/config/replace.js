@@ -65,12 +65,12 @@ module.exports = function (grunt, options) {
 
       // Shim to preserve the 'adapt_scorm' identifier.
       if (configJson.hasOwnProperty('_spoor')) {
-        if (comfigJson._spoor._advancedSettings) {
-          if (!comfigJson._spoor._advancedSettings._manifestIdentifier) {
-            comfigJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
+        if (configJson._spoor._advancedSettings) {
+          if (!configJson._spoor._advancedSettings._manifestIdentifier) {
+            configJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
           }
         } else {
-          comfigJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
+          configJson._spoor._advancedSettings._manifestIdentifier = 'adapt_scorm';
         }
       }
 
