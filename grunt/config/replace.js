@@ -63,7 +63,7 @@ module.exports = function (grunt, options) {
         }
       }
 
-      // Shim to preserve the 'adapt_scorm' identifier.
+      // Shim to preserve the 'adapt_manifest' identifier.
       if (configJson.hasOwnProperty('_spoor')) {
         configJson._spoor._advancedSettings = configJson._spoor._advancedSettings || {};
         configJson._spoor._advancedSettings._manifestIdentifier = spoor._advancedSettings._manifestIdentifier || 'adapt_manifest';
