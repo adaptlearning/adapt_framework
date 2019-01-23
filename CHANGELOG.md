@@ -3,6 +3,7 @@
 ## [4.0.0] - 2019-01-22
 ### Added
 - Shim to ensure the new 'manifest identifier' property is set even if not defined in config.json ([#2232](https://github.com/adaptlearning/adapt_framework/pull/2332) and [#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
+- new `_scrollingContainer` setting to allow for better rendering/scrolling of Adapt when loaded into an `iframe` ([#505](https://github.com/adaptlearning/adapt_framework/issues/585) & [#751](https://github.com/adaptlearning/adapt_framework/issues/751))
 
 ### Changed
 - Updates to Accessibility - for a complete list of changes see the [Accessibility v4 Milestone](https://github.com/adaptlearning/adapt_framework/milestone/17?closed=1)
@@ -682,7 +683,7 @@ The initial version of the Adapt framework.
 
 
 [unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.0...HEAD
-[3.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...v4.0.0
+[4.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...v4.0.0
 [3.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...v3.3.0
 [3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.1...v3.2.2
