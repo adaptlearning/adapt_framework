@@ -1,5 +1,10 @@
 ## [Unreleased][unreleased]
 
+## [4.0.1] - 2019-01-30
+### Fixed
+- Helper expecting missing object ([#2339](https://github.com/adaptlearning/adapt_framework/pull/2339)
+- Support for custom 'manifest identifier' in Spoor ([#2232](https://github.com/adaptlearning/adapt_framework/pull/2332)
+
 ## [4.0.0] - 2019-01-22
 ### Added
 - Shim to ensure the new 'manifest identifier' property is set even if not defined in config.json ([#2232](https://github.com/adaptlearning/adapt_framework/pull/2332) and [#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
