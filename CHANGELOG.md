@@ -1,6 +1,6 @@
 ## [Unreleased][unreleased]
 
-## [3.4.1] - 2019-01-30
+## [3.5.0] - 2019-01-30
 ### Added
 - Support for changing the identifier in SCORM imsmanifest.xml ([#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
 
