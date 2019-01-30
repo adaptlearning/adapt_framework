@@ -64,9 +64,10 @@ module.exports = function (grunt, options) {
       }
 
       // Shim to preserve the 'adapt_manifest' identifier.
-      if (configJson.hasOwnProperty('_spoor')) {
-        configJson._spoor._advancedSettings = configJson._spoor._advancedSettings || {};
-        configJson._spoor._advancedSettings._manifestIdentifier = onfigJson._spoor._advancedSettings._manifestIdentifier || 'adapt_manifest';
+      var spoor = configJson._spoor;
+      if (spoor) {
+        spoor._advancedSettings = spoor._advancedSettings || {};
+        spoor._advancedSettings._manifestIdentifier = spoor._advancedSettings._manifestIdentifier || 'adapt_manifest';
       }
 
       // Combine the course and config JSON so both can be passed to replace.  
