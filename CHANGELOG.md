@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [3.4.1] - 2019-01-30
+### Added
+- Support for changing the identifier in SCORM imsmanifest.xml ([#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
+
 ## [3.4.0] - 2019-01-18
 ### Added
 - Support for translatable content in config.json to the `translate:import` task ([#2300](https://github.com/adaptlearning/adapt_framework/issues/2300))
