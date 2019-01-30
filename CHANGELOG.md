@@ -1,5 +1,29 @@
 ## [Unreleased][unreleased]
 
+## [4.0.0] - 2019-01-22
+### Added
+- Shim to ensure the new 'manifest identifier' property is set even if not defined in config.json ([#2232](https://github.com/adaptlearning/adapt_framework/pull/2332) and [#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
+- new `_scrollingContainer` setting to allow for better rendering/scrolling of Adapt when loaded into an `iframe` ([#505](https://github.com/adaptlearning/adapt_framework/issues/585) & [#751](https://github.com/adaptlearning/adapt_framework/issues/751))
+
+### Changed
+- Updates to Accessibility - for a complete list of changes see the [Accessibility v4 Milestone](https://github.com/adaptlearning/adapt_framework/milestone/17?closed=1)
+
+### Fixed
+- Notify styling issue ([#2308](https://github.com/adaptlearning/adapt_framework/issues/2308))
+- Framework schemas not aligned with authoring tool versions ([#2306](https://github.com/adaptlearning/adapt_framework/issues/2306))
+
+## [3.4.0] - 2019-01-18
+### Added
+- Support for translatable content in config.json to the `translate:import` task ([#2300](https://github.com/adaptlearning/adapt_framework/issues/2300))
+- Ability to insert variables into HTML files during build/dev process ([#2317](https://github.com/adaptlearning/adapt_framework/pull/2317))
+
+### Changed
+- Future-proof schema files for Authoring Tool compatibility ([#2306](https://github.com/adaptlearning/adapt_framework/issues/2306))
+
+### Fixed
+- Typo in accessibility instructions ([#2320](https://github.com/adaptlearning/adapt_framework/issues/2320))
+- Reference to 'Version 2.0 core bundle' in the default course content
+
 ## [3.3.0] - 2018-11-30
 
 ### Added
@@ -9,7 +33,7 @@
 - Amended NotifyView to get it to pass a reference to itself when triggering `notify:*` events ([#2279](https://github.com/adaptlearning/adapt_framework/issues/2279))
 
 ### Fixed
-- AdaptModel's `findAncestor` triggered a `TypeError` if no ancestor of the specified type was found ([##240](https://github.com/adaptlearning/adapt_framework/issues/2240))
+- AdaptModel's `findAncestor` triggered a `TypeError` if no ancestor of the specified type was found ([#2240](https://github.com/adaptlearning/adapt_framework/issues/2240))
 - Schema defaults were not being written to `build/{lang}/course/course.json` ([#2248](https://github.com/adaptlearning/adapt_framework/issues/2248))
 
 ## [3.2.2] - 2018-10-15
@@ -658,7 +682,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...v4.0.0
+[3.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.2...v3.3.0
 [3.2.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.1...v3.2.2
 [3.2.1]: https://github.com/adaptlearning/adapt_framework/compare/v3.2.0...v3.2.1
