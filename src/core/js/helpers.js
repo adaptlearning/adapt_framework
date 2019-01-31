@@ -186,7 +186,7 @@ define([
      */
     component_description: function(override, context) {
       if (!this._isA11yComponentDescriptionEnabled) return;
-      if (!this._globals._components['_'+this._component]) return;
+      if (!this._globals._components || !this._globals._components['_'+this._component]) return;
       var hasOverride = (arguments.length > 1);
       var description;
       if (hasOverride) {
