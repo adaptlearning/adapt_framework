@@ -8,16 +8,16 @@
 @navigation-height: 40px;
 
 .responsive-layout {
-    width:100%;
+    max-width:100%;
     margin: 0 auto;
     @media all and (min-width:520px) {
-        width:520px;
+        max-width:520px;
     }
     @media all and (min-width:760px) {
-        width:100%;
+        max-width:100%;
     }
     @media all and (min-width:960px) {
-        width:960px;
+        max-width:960px;
     }
 }
 
@@ -52,7 +52,6 @@
 }
 
 #wrapper {
-    .responsive-layout;
     padding-top:40px;
 }
 
@@ -118,7 +117,6 @@
 }
 
 .navigation {
-    .responsive-layout;
     position:fixed;
     top:0;
     height: @navigation-height;

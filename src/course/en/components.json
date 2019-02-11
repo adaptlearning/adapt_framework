@@ -8,8 +8,8 @@
 		"_layout": "left",
 		"title": "Introduction",
 		"displayTitle": "",
-		"body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br>These presentation components can be structured in any way to help you create learning experiences that meet the needs of your learners.",
-		"instruction": "Scroll down to see what presentation components are available as part of the Version 2.0 core bundle.",
+		"body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br>These presentation components can be structured in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
+		"instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the core bundle.",
 		"_pageLevelProgress": {
 			"_isEnabled": true
 		}
@@ -122,7 +122,8 @@
 			}
 		],
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -188,7 +189,8 @@
 			}
 		],
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -221,12 +223,13 @@
 			"_externalTranscript": false,
 			"inlineTranscriptButton": "Transcript",
 			"inlineTranscriptCloseButton": "Close Transcript",
-			"inlineTranscriptBody": "Transcript body text should go here",
+			"inlineTranscriptBody": "Responsive design means you can create a course once but view it on a wide range of browsers, devices or operating systems. This is achieved by using fluid layouts to ensure the presentation of content is tailored to suit the size of the screen. This means you can start a course on your laptop and finish it later on your mobile or tablet. We call it Adapt",
 			"transcriptLinkButton": "Transcript",
 			"transcriptLink": ""
 		},
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -238,7 +241,7 @@
 		"_layout": "full",
 		"title": "Accordion",
 		"displayTitle": "Accordion",
-		"body": "You can use the <strong>accordion</strong> component to present learners with a series of headings, which once selected, expand to reveal associated text. Select each of the headings below to find out more about how accordions can be used.<br><br>These components can be either single or spanned. If spanned they can also contain a graphic.",
+		"body": "You can use the <strong>accordion</strong> component to present learners with a series of headings which, once selected, expand to reveal associated text. Select each of the headings below to find out more about how accordions can be used.<br><br>These components can be either single or spanned. If spanned they can also contain a graphic.",
 		"instruction": "Select the headings to find out more.",
 		"_items": [
 			{
@@ -267,7 +270,8 @@
 			}
 		],
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -313,7 +317,8 @@
 			}
 		},
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -389,7 +394,8 @@
 			}
 		},
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -424,16 +430,17 @@
 		],
 		"_feedback": {
 			"title": "Feedback",
-			"correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>",
+			"correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>",
 			"_partlyCorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>"
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>"
 			},
 			"_incorrect": {
-				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by City & Guilds Kineo, Learning Pool and Sponge. At the time of writing, there are a total of seven <a href='https://community.adaptlearning.org/mod/page/view.php?id=51' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>"
+				"final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><em>Component facts: <strong>Text input</strong> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</em>"
 			}
 		},
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -494,7 +501,7 @@
 				]
 			},
 			{
-				"text": "Adapt adheres to the WCAG 2.0 guidelines to level AA, but when were these published?",
+				"text": "Adapt adheres to level 'AA' of the <abbr title='Web Content Accessibility Guidelines'>WCAG</abbr> version 2, but when were these published?",
 				"_options": [
 					{
 						"text": "2008",
@@ -547,7 +554,8 @@
 			}
 		},
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -584,7 +592,8 @@
 			}
 		},
 		"_pageLevelProgress": {
-			"_isEnabled": true
+			"_isEnabled": true,
+			"_isCompletionIndicatorEnabled": true
 		}
 	},
 	{
@@ -879,7 +888,7 @@
 		"_selectable": 1,
 		"title": "Adding titles to icons",
 		"displayTitle": "Adding titles to icons",
-		"body": "Version 2.0 of the framework makes it possible to add titles to the icons shown on the navigation bar. Do you know what JSON file you would need to edit to add a title to an icon?",
+		"body": "What JSON file would you need to edit in order to add a title to an icon in the navigation bar?",
 		"instruction": "Choose an option and select Submit.",
 		"_items": [
 			{
@@ -1006,7 +1015,7 @@
 		"_layout": "full",
 		"title": "Scoring bands",
 		"displayTitle": "",
-		"body": "The new Assessment Results component allows you to specify the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 75% or above and provided four scoring bands, each of which has some accompanying feedback. The four scoring bands were:<br><br><ul><li>0-49% (fail)</li><li>50-74% (fail)</li><li>75-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let’s find out.",
+		"body": "The Assessment Results component allows you to specify the assessment pass mark, and provide tailored feedback to as many scoring bands as you wish.<br><br>In this short assessment we set the pass mark at 75% or above and provided four scoring bands, each of which has some accompanying feedback. The four scoring bands were:<br><br><ul><li>0-49% (fail)</li><li>50-74% (fail)</li><li>75-99% (pass)</li><li>100% (perfect score)</li></ul><br>So, how did you do? Let’s find out.",
 		"_canReset": true,
 		"_isResetOnRevisit": "hard",
 		"_pageLevelProgress": {
@@ -1036,22 +1045,22 @@
 		"_bands": [
 			{
 				"_score": 0,
-				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You didn’t do so well in the Adapt assessment demo, but don’t worry. There’s lots of information about the Adapt basics on our site. We’d also suggest you pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
+				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You didn’t do so well in the Adapt assessment demo, but don’t worry. There’s lots of information about the Adapt basics on <a href='http://www.adaptlearning.org/' target='_blank'>our site</a>. We’d also suggest you pay a visit to <a href='https://community.adaptlearning.org/mod/forum/view.php?id=4' target='_blank'>the forum</a> or <a href='https://gitter.im/adaptlearning/adapt_framework'>chat room</a> and ask our ever-helpful community to answer any questions that you might have.",
 				"_allowRetry": true
 			},
 			{
 				"_score": 50,
-				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You already know some of the Adapt basics but please explore our site for more information. Also pay a visit to the forums and ask our ever helpful community to answer any questions that you might have.",
+				"feedback": "You didn’t pass, achieving a score of {{scoreAsPercent}}%.<br><br>You already know some of the Adapt basics but please explore <a href='http://www.adaptlearning.org/' target='_blank'>our site</a> for more information. Also pay a visit to <a href='https://community.adaptlearning.org/mod/forum/view.php?id=4' target='_blank'>the forum</a> or <a href='https://gitter.im/adaptlearning/adapt_framework'>chat room</a> and ask our ever-helpful community to answer any questions that you might have.",
 				"_allowRetry": true
 			},
 			{
 				"_score": 75,
-				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already pretty knowledgeable about Adapt so, if you haven’t already, please consider sharing your expertise on the Adapt community forums.",
+				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already pretty knowledgeable about Adapt so, if you haven’t already, please consider sharing your expertise on the <a href='https://community.adaptlearning.org/mod/forum/view.php?id=4' target='_blank'>Adapt community forums</a>.",
 				"_allowRetry": true
 			},
 			{
 				"_score": 100,
-				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already a black belt in Adapt! If you haven’t already, please consider sharing your expertise on the Adapt community forums.",
+				"feedback": "You passed, achieving a score of {{scoreAsPercent}}%.<br><br>You’re clearly already a black belt in Adapt! If you haven’t already, please consider sharing your expertise on the <a href='https://community.adaptlearning.org/mod/forum/view.php?id=4' target='_blank'>Adapt community forums</a>.",
 				"_allowRetry": false
 			}
 		],

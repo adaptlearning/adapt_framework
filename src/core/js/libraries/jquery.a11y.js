@@ -28,7 +28,7 @@ define([
             "focusableElementsAccessible": ":not(a,button,input,select,textarea)[tabindex]",
             "hideableElements": ".a11y-hideable",
             "ariaLabelElements": "div[aria-label], span[aria-label]",
-            "readableElements": "[aria-label],[aria-labelledby],[alt]"
+            "readableElements": "[role=heading],[aria-label],[aria-labelledby],[alt]"
         };
 
     // JQUERY INJECTED ELEMENTS

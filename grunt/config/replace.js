@@ -62,7 +62,14 @@ module.exports = function (grunt, options) {
           grunt.log.writeln('WARNING: xAPI activityID has not been set');
         }
       }
-      
+
+      // Shim to preserve the 'adapt_manifest' identifier.
+      var spoor = configJson._spoor;
+      if (spoor) {
+        spoor._advancedSettings = spoor._advancedSettings || {};
+        spoor._advancedSettings._manifestIdentifier = spoor._advancedSettings._manifestIdentifier || 'adapt_manifest';
+      }
+
       // Combine the course and config JSON so both can be passed to replace.  
       return {
         'course': filterNullValues(courseJson),
@@ -89,7 +96,10 @@ module.exports = function (grunt, options) {
         {
           expand: true,
           flatten: true,
-          src: [path.join(options.outputdir, '*.xml')],
+          src: [
+            path.join(options.outputdir, '*.xml'),
+            path.join(options.outputdir, '*.html')
+          ],
           dest: options.outputdir
         }
       ]
