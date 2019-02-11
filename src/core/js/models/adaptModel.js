@@ -750,17 +750,28 @@ define([
             this.checkLocking();
         },
 
+        /**
+         * Internal event handler for all module events. Triggers event bubbling
+         * through the module hierarchy when the event is included in
+         * `this.bubblingEvents`.
+         * @param {string} type Event name / type
+         * @param {Backbone.Model} model Origin backbone model
+         * @param {*} value New property value
+         */
         onAll: function(type, model, value) {
             if (!_.contains(this.bubblingEvents, type)) return;
             var event = new ModelEvent(type, model, value);
             this.bubble(event);
         },
 
+        /**
+         * Internal event handler for bubbling events.
+         * @param {ModelEvent} event
+         */
         bubble: function(event) {
-            if (!event.bubbles) return;
+            if (!event.canBubble) return;
             event.addPath(this);
-            this.trigger("bubble:"+event.type, event);
-            this.trigger("bubble", event);
+            this.trigger("bubble:" + event.type + " bubble", event);
         }
 
     });

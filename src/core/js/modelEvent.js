@@ -5,11 +5,16 @@ define(function() {
         type: null,
         target: null,
         value: null,
-        bubbles: true,
+        canBubble: true,
         deepPath: null,
         target: null,
         timeStamp: null,
 
+        /**
+         * @param {string} type Event name / type
+         * @param {Backbone.Model} target Origin model
+         * @param {*} [value] Any value that should be carried through on the event
+         */
         initialize: function(type, target, value) {
             this.type = type;
             this.target = target;
@@ -18,7 +23,7 @@ define(function() {
         },
 
         stopPropagation: function() {
-            this.bubbles = false;
+            this.canBubble = false;
         },
 
         addPath: function(target) {
