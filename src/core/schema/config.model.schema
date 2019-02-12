@@ -291,6 +291,19 @@
     },
     "themeSettings": {
       "type": "object"
+    },
+    "_inview": {
+      "type": "object",
+      "title": "jquery.onscreen (inview)",
+      "properties": {
+      "_allowScrollOver": {
+        "type": "boolean",
+        "default": true,
+        "title": "Allow scroll over",
+        "inputType": "Checkbox",
+        "help": "Some browsers pause script execution during scroll (e.g. IE8). If this option is selected the inview library will determine if elements became visible during the scroll event."
+        }
+      }
     }
   }
 }
