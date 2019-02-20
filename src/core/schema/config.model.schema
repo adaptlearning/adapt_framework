@@ -294,7 +294,7 @@
     },
     "_inview": {
       "type": "object",
-      "title": "jquery.onscreen (inview)",
+      "title": "",
       "properties": {
       "_allowScrollOver": {
         "type": "boolean",
