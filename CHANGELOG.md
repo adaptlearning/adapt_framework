@@ -1,7 +1,6 @@
 ## [Unreleased][unreleased]
 
-## [2.3.3] - 2019-02-12
-### Changed
+## [2.3.3] - 2019-02-21
 - Made jquery.onscreen (inview) `_allowScrollOver` configurable ([#2352](https://github.com/adaptlearning/adapt_framework/issues/2352))
 
 ## [2.3.2] - 2019-01-18
@@ -592,7 +591,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.2...legacy
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.3...legacy
+[2.3.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.2.7...v2.3.0
