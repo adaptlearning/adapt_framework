@@ -291,6 +291,19 @@
     },
     "themeSettings": {
       "type": "object"
+    },
+    "_inview": {
+      "type": "object",
+      "title": "",
+      "properties": {
+      "_allowScrollOver": {
+        "type": "boolean",
+        "default": true,
+        "title": "Allow scroll over",
+        "inputType": "Checkbox",
+        "help": "This setting relates to browsers that pause script execution whilst the learner is scrolling (e.g. Safari for iOS 6 & 7). This causes problems for components that use 'inview' completion. Once scrolling has stopped 'scroll over' works around the paused execution by checking to see if the content was made visible during the scroll. Unless you need support for browsers that pause script execution on scroll, you can disable this setting."
+        }
+      }
     }
   }
 }

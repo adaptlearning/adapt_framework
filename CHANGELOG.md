@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [2.3.3] - 2019-02-12
+### Changed
+- Made jquery.onscreen (inview) `_allowScrollOver` configurable ([#2352](https://github.com/adaptlearning/adapt_framework/issues/2352))
+
 ## [2.3.2] - 2019-01-18
 ### Changed
 - Future-proof schema files for Authoring Tool compatibility ([#2306](https://github.com/adaptlearning/adapt_framework/issues/2306))
