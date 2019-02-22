@@ -89,9 +89,9 @@ define(function() {
       },
 
       /**
-       * Wait for this asynchonous function to execute before triggering ready event.
+       * Wait for this asynchronous function to execute before triggering ready event.
        *
-       * @param  {Function} callback   [ Function to execute whilst holding queued callback. Once complete run first argiument, done(). ]
+       * @param  {Function} callback   [ Function to execute whilst holding queued callback. Once complete run first argument, done(). ]
        * @return {Object}
        */
       for: function(callback) {
