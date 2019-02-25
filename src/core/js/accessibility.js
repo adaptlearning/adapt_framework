@@ -176,9 +176,9 @@ define([
       }
 
       if (isMatch) {
-        $('html').addClass("no-select");
+        $('html').addClass("u-no-select");
       } else  {
-        $('html').removeClass("no-select");
+        $('html').removeClass("u-no-select");
       }
 
     },
