@@ -7,20 +7,26 @@
     background-color: @background-color-inverted;
   }
 
+  // --------------------------------------------------
+  //
+  // --------------------------------------------------
   &__icon {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
 
     .dir-rtl & {
-      left: inherit;
-      right: 0;
+      right: inherit;
+      left: 0;
     }
   }
+  // --------------------------------------------------
 
+  // --------------------------------------------------
+  //
+  // --------------------------------------------------
   &__content {
     .l-container-responsive(@device-width-large);
-    // .l-container-padding(4em, 1em);
     .l-container-padding(@block-padding-ver, @block-padding-hoz);
   }
 
@@ -46,7 +52,11 @@
       .icon-cross;
     }
   }
+  // --------------------------------------------------
 
+  // --------------------------------------------------
+  //
+  // --------------------------------------------------
   &__shadow {
     .l-fill-viewport-fixed;
     z-index: 90;
