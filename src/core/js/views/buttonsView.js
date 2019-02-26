@@ -51,8 +51,8 @@ define([
       if (!isSubmitted) {
 
         var $icon = this.$('.js-btn-marking');
-        $icon.removeClass('validation-error');
-        $icon.removeClass('validation-success');
+        $icon.removeClass('is-incorrect');
+        $icon.removeClass('is-correct');
         $icon.addClass('u-display-none');
         this.$el.removeClass("is-submitted");
         this.model.set('feedbackMessage', undefined);
@@ -159,7 +159,7 @@ define([
 
       this.$('.js-btn-marking')
           .removeClass('u-display-none')
-          .addClass(isCorrect ? 'validation-success' : 'validation-error')
+          .addClass(isCorrect ? 'is-correct' : 'is-incorrect')
           .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
     },
 
