@@ -1,7 +1,8 @@
 define([
   'core/js/adapt',
+  'core/js/modelEvent',
   'core/js/logging'
-], function (Adapt) {
+], function (Adapt, ModelEvent) {
 
   var AdaptModel = Backbone.Model.extend({
 
@@ -28,6 +29,11 @@ define([
       '_id',
       '_isComplete',
       '_isInteractionComplete'
+    ],
+
+    bubblingEvents: [
+      'change:_isComplete',
+      'change:_isInteractionComplete'
     ],
 
     initialize: function () {
@@ -115,6 +121,8 @@ define([
       }
 
       this.listenTo(children, {
+        "all": this.onAll,
+        "bubble": this.bubble,
         "change:_isReady": this.checkReadyStatus,
         "change:_isComplete": this.onIsComplete,
         "change:_isInteractionComplete": this.checkInteractionCompletionStatus
@@ -741,6 +749,30 @@ define([
       this.checkCompletionStatus();
 
       this.checkLocking();
+    },
+
+    /**
+     * Internal event handler for all module events. Triggers event bubbling
+     * through the module hierarchy when the event is included in
+     * `this.bubblingEvents`.
+     * @param {string} type Event name / type
+     * @param {Backbone.Model} model Origin backbone model
+     * @param {*} value New property value
+     */
+    onAll: function(type, model, value) {
+        if (!_.contains(this.bubblingEvents, type)) return;
+        var event = new ModelEvent(type, model, value);
+        this.bubble(event);
+    },
+
+    /**
+     * Internal event handler for bubbling events.
+     * @param {ModelEvent} event
+     */
+    bubble: function(event) {
+        if (!event.canBubble) return;
+        event.addPath(this);
+        this.trigger("bubble:" + event.type + " bubble", event);
     }
 
   });
