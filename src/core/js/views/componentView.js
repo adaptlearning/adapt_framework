@@ -24,7 +24,6 @@ define([
         this.setVisibility(),
         this.setHidden(),
         'is-' + this.model.get('_layout'),
-        'nth-child-' + this.model.get('_nthChild'),
         (this.model.get('_isComplete') ? 'is-complete' : '')
       ].join(' ');
     },
