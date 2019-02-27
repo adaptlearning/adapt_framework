@@ -16,6 +16,11 @@
     @media (min-width: @device-width-medium) {
       padding-right: 1%;
       width: 50%;
+
+      .dir-rtl & {
+        padding-right: inherit;
+        padding-left: 1%;
+      }
     }
   }
 
@@ -23,6 +28,11 @@
     @media (min-width: @device-width-medium) {
       padding-left: 1%;
       width: 50%;
+
+      .dir-rtl & {
+        padding-left: inherit;
+        padding-right: 1%;
+      }
     }
   }
 
