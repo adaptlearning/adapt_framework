@@ -78,7 +78,7 @@ define([
       var models = children.models;
       for (var i = 0, len = models.length; i < len; i++) {
         var model = models[i];
-        if (model.get('_isAvailable')) {
+        if (model.get('_isAvailable') && !model.get('_isHidden')) {
           nthChild ++;
 
           var ChildView;
@@ -102,6 +102,10 @@ define([
                   ' (\'' + models[i].attributes._component + '\')' +
                   ' has not been installed, and so is not available in your project.';
           }
+        }
+
+        if (model.get('_isHidden')) {
+          model.set('_isReady', true);
         }
       }
     },
@@ -186,6 +190,8 @@ define([
       this.$el.toggleClass('is-complete', isComplete);
     }
 
+  },{
+    className: ''
   });
 
   return AdaptView;

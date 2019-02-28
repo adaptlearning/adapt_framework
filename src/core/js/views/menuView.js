@@ -1,21 +1,27 @@
 define([
   'core/js/adapt',
-  'core/js/views/adaptView'
-], function(Adapt, AdaptView) {
+  'core/js/views/adaptView',
+  'core/js/views/menuItemView'
+], function(Adapt, AdaptView, MenuItemView) {
 
   var MenuView = AdaptView.extend({
 
+    attributes: function() {
+      return AdaptView.resultExtend('attributes', {
+        'role': 'main',
+        'aria-labelledby': this.model.get('_id')+'-heading'
+      }, this);
+    },
+
     className: function() {
-      var visible = "visibility-hidden";
-      if (this.model.get('_isVisible')) {
-        visible = "";
-      }
-      return 'menu ' +
-        'menu-' +
-        this.model.get('_id') +
-        " " + this.model.get('_classes') +
-        " " + this.setVisibility() +
-        " " + (this.model.get('_isComplete') ? 'is-complete' : '');
+      return [
+        'menu',
+        this.constructor.className,
+        this.model.get('_id'),
+        this.model.get('_classes'),
+        this.setVisibility(),
+        (this.model.get('_isComplete') ? 'is-complete' : '')
+      ].join(' ');
     },
 
     preRender: function() {
@@ -24,34 +30,36 @@ define([
       this.listenTo(this.model, 'change:_isReady', this.isReady);
     },
 
-    postRender: function() {
-    },
-
     isReady: function() {
-      if (this.model.get('_isReady')) {
-        _.defer(function() {
-          $('.loading').hide();
-          $(window).scrollTop(0);
-          Adapt.trigger('menuView:ready', this);
-          var styleOptions = { opacity: 1 };
-          if (this.disableAnimation) {
-            this.$el.css(styleOptions);
+      if (!this.model.get('_isReady')) return;
+
+      var performIsReady = function() {
+        $('.loading').hide();
+        $(window).scrollTop(0);
+        Adapt.trigger('menuView:ready', this);
+        var styleOptions = { opacity: 1 };
+        if (this.disableAnimation) {
+          this.$el.css(styleOptions);
+          $.inview();
+          return;
+        }
+        this.$el.velocity(styleOptions, {
+          duration: 'fast',
+          complete: function() {
             $.inview();
-          } else {
-            this.$el.velocity(styleOptions, {
-              duration: 'fast',
-              complete: function() {
-                $.inview();
-              }
-            });
           }
-          $(window).scroll();
-        }.bind(this));
-      }
+        });
+        $(window).scroll();
+      }.bind(this);
+
+      _.defer(performIsReady);
     }
 
   }, {
-    type:'menu'
+    childContainer: '.js-children',
+    childView: MenuItemView,
+    type: 'menu',
+    template: 'menu'
   });
 
   return MenuView;
