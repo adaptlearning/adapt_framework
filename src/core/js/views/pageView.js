@@ -33,7 +33,7 @@ define([
       if (!this.model.get('_isReady')) return;
 
       var performIsReady = function() {
-        $('.loading').hide();
+        $('.js-loading').hide();
         $(window).scrollTop(0);
         Adapt.trigger('pageView:ready', this);
         var styleOptions = { opacity: 1 };
