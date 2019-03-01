@@ -95,11 +95,43 @@ require([
   function triggerInitialize() {
     Adapt.log.debug('Calling Adapt.initialize');
 
+    addDirection();
+    disableAnimation();
     addNavigationBar();
 
     Adapt.initialize();
 
     Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
+  }
+
+  function addDirection() {
+    var defaultDirection = Adapt.config.get('_defaultDirection');
+
+    if (defaultDirection === 'rtl') {
+      $('html').addClass('dir-rtl').attr('dir', 'rtl');
+    } else {
+      $('html').addClass('dir-ltr').attr('dir', 'ltr');
+    }
+  }
+
+  function disableAnimation() {
+    var disableAnimationArray = Adapt.config.get('_disableAnimationFor');
+    var disableAnimation = Adapt.config.get('_disableAnimation');
+
+    // Check if animations should be disabled
+    if (disableAnimationArray && disableAnimationArray.length > 0) {
+      for (var i = 0; i < disableAnimationArray.length; i++) {
+        if ($("html").is(disableAnimationArray[i])) {
+          Adapt.config.set('_disableAnimation', true);
+          $('html').addClass('disable-animation');
+          console.log('Animation disabled.');
+        }
+      }
+    } else if (disableAnimation === true) {
+      $('html').addClass('disable-animation');
+    } else {
+      $('html').removeClass('disable-animation');
+    }
   }
 
   function addNavigationBar() {
