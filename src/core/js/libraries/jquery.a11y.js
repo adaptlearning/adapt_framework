@@ -53,6 +53,8 @@
         }
 
         function preventDefault(event) {
+            // Do not prevent default on focusable elements
+            if ($(event.target).is(domSelectors.focusableElements)) return;
             event.preventDefault();
             event.stopPropagation();
         }
