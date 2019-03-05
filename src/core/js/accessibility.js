@@ -51,7 +51,7 @@ define([
 
     removeLegacyElements: function() {
       var $legacyElements = $("body").children("#accessibility-toggle, #accessibility-instructions");
-      var $navigationElements = $(".navigation").find("#accessibility-toggle, #accessibility-instructions");
+      var $navigationElements = $(".nav").find("#accessibility-toggle, #accessibility-instructions");
 
       if (!$legacyElements.length && !$navigationElements.length) return
 

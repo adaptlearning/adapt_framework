@@ -103,7 +103,7 @@ define([
       if (this.model.get('_index') != undefined) {
         var elementHeight = this.$el.height();
         var offset = 20;
-        var navigationHeight = $('.navigation').height();
+        var navigationHeight = $('.nav').height();
         var currentIndex = this.model.get('_index');
         var flippedIndex = (currentIndex == 0) ? 1 : 0;
 

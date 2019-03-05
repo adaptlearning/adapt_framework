@@ -119,7 +119,7 @@ define([
 
     var offsetTop = 0;
     if (Adapt.scrolling.isLegacyScrolling) {
-      offsetTop = -$(".navigation").outerHeight();
+      offsetTop = -$(".nav").outerHeight();
       // prevent scroll issue when component description aria-label coincident with top of component
       if ($(selector).hasClass('component')) {
         offsetTop -= $(selector).find('.aria-label').height() || 0;
