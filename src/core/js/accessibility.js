@@ -30,7 +30,7 @@ define([
             }, this);
 
             //SETUP NO SELECT PARAMETERS ON DEVICE CHANGE
-            Adapt.on("device:changed", this.setupNoSelect);
+            Adapt.on('device:changed', this.setupNoSelect);
 
             //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
             this.listenTo(Adapt, {
@@ -53,7 +53,7 @@ define([
             var $legacyElements = $('body').children('#accessibility-toggle, #accessibility-instructions');
             var $navigationElements = $('.navigation').find('#accessibility-toggle, #accessibility-instructions');
 
-            if (!$legacyElements.length && !$navigationElements.length) return
+            if (!$legacyElements.length && !$navigationElements.length) return;
 
             Adapt.log.warn('REMOVED - #accessibility-toggle and #accessibility-instructions have been removed. Please remove them from all of your .html files.');
             $legacyElements.remove();
@@ -224,18 +224,17 @@ define([
         },
 
         isActive: function() {
-            Adapt.log.warn('REMOVED - accessibility is now always active when enabled. Please unify your user experiences.')
+            Adapt.log.warn('REMOVED - accessibility is now always active when enabled. Please unify your user experiences.');
             return false;
         },
 
         isEnabled: function() {
-            return Adapt.config.has('_accessibility')
-                && Adapt.config.get('_accessibility')._isEnabled;
+            return Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isEnabled;
         },
 
         setupDocument: function() {
             this.$html.addClass('accessibility');
-            $.a11y(true)
+            $.a11y(true);
         },
 
         setupPopupListeners: function() {
