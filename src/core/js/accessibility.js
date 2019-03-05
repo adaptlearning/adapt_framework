@@ -16,6 +16,7 @@ define([
     var Accessibility = Backbone.Controller.extend({
 
         $html: $('html'),
+        config: null,
 
         initialize: function() {
 
@@ -36,7 +37,9 @@ define([
         },
 
         initialSetup: function() {
-            Adapt.config.get('_accessibility')._isActive = false;
+            this.config = Adapt.config.get('_accessibility');
+
+            this.config._isActive = false;
 
             this.setupAccessibility();
 
@@ -148,9 +151,9 @@ define([
         },
 
         setupNoSelect: function() {
-            if (!Adapt.config.get('_accessibility') || !Adapt.config.get('_accessibility')._disableTextSelectOnClasses) return;
+            if (!this.config || !this.config._disableTextSelectOnClasses) return;
 
-            var classes = Adapt.config.get('_accessibility')._disableTextSelectOnClasses.split(' ');
+            var classes = this.config._disableTextSelectOnClasses.split(' ');
 
             var isMatch = false;
             for (var i = 0, item; item = classes[i++];) {
@@ -216,7 +219,7 @@ define([
         },
 
         isEnabled: function() {
-            return Adapt.config.has('_accessibility') && Adapt.config.get('_accessibility')._isEnabled;
+            return this.confi && this.config._isEnabled;
         },
 
         setupDocument: function() {
@@ -229,7 +232,7 @@ define([
         },
 
         setupLogging: function() {
-            if (!Adapt.config.get('_accessibility') || !Adapt.config.get('_accessibility')._logReading) return;
+            if (!this.config || !this.config._logReading) return;
             $(document).on('reading', this.onRead);
         },
 
