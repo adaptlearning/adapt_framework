@@ -22,17 +22,13 @@ define([
             this.removeLegacyElements();
 
             this.listenToOnce(Adapt, {
-                //TRIGGER SETUP ON DATA LOADED
                 'app:dataLoaded': this.initialSetup,
-                //Configure the accessibility library
                 'app:dataReady': this.configureA11yLibrary,
                 'navigationView:postRender': this.removeLegacyElements
             }, this);
 
-            //SETUP NO SELECT PARAMETERS ON DEVICE CHANGE
             Adapt.on('device:changed', this.setupNoSelect);
 
-            //CAPTURE ROUTING/NEW DOCUMENT LOADING START AND END
             this.listenTo(Adapt, {
                 'router:location': this.onNavigationStart,
                 'pageView:ready menuView:ready router:plugin': this.onNavigationEnd
@@ -40,13 +36,11 @@ define([
         },
 
         initialSetup: function() {
-
             Adapt.config.get('_accessibility')._isActive = false;
+
             this.setupAccessibility();
 
-            //SETUP RENDERING HELPERS
             this.setupHelpers();
-
         },
 
         removeLegacyElements: function() {
@@ -61,17 +55,14 @@ define([
         },
 
         setupAccessibility: function() {
-            //CALLED ON DATA LOAD
             if (!this.isEnabled()) return;
 
-            //save accessibility state
             Adapt.offlineStorage.set('a11y', false);
 
             this.configureA11yLibrary();
             this.setupDocument();
             this.setupPopupListeners();
             this.setupLogging();
-
         },
 
         setupHelpers: function() {
@@ -195,8 +186,10 @@ define([
             $.a11y.ready();
         },
 
+        /**
+         * stop document reading, move focus to appropriate location
+         */
         onNavigationStart: function() {
-            //STOP DOCUMENT READING, MOVE FOCUS TO APPROPRIATE LOCATION
             _.defer(function() {
                 $.a11y_on(false, '.page');
                 $.a11y_on(false, '.menu');
@@ -240,13 +233,17 @@ define([
             $(document).on('reading', this.onRead);
         },
 
+        /**
+         * output read text to console
+         */
         onRead: function(event, text) {
-            //OUTPUT READ TEXT TO CONSOLE
             console.log('READING: ' + text);
         },
 
+        /**
+         * make sure popup is configured correctly with aria labels, tabindexes etc
+         */
         onPop: function() {
-            //MAKE SURE POPUP IS CONFIGURED CORRECTLY WITH ARIA LABELS, TABINDEXES ETC
             $.a11y_update();
         }
 
