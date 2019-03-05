@@ -75,12 +75,6 @@ define([
         },
 
         setupHelpers: function() {
-
-            //MAKE $.a11y_text and $.a11y_normalize IN GLOBAL HANDLEBARS HELPERS a11y_text and a11y_normalize
-            var config = Adapt.config.has('_accessibility')
-                ? Adapt.config.get('_accessibility')
-                : false;
-
             var helpers = {
 
                 a11y_text: function(text) {
