@@ -219,7 +219,7 @@ define([
         },
 
         isEnabled: function() {
-            return this.confi && this.config._isEnabled;
+            return this.config && this.config._isEnabled;
         },
 
         setupDocument: function() {
