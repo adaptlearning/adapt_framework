@@ -163,12 +163,7 @@ define([
                 }
             }
 
-            if (isMatch) {
-                $('html').addClass('no-select');
-            } else  {
-                $('html').removeClass('no-select');
-            }
-
+            $('html').toggleClass('no-select', isMatch);
         },
 
         configureA11yLibrary: function() {
@@ -202,7 +197,7 @@ define([
         onNavigationEnd: function(view) {
             //prevent sub-menu items provoking behaviour
             if (view && view.model) {
-                if (view.model.get('_id') != Adapt.location._currentId) return;
+                if (view.model.get('_id') !== Adapt.location._currentId) return;
             }
 
             $.a11y_on(true, '.page');
