@@ -1,6 +1,7 @@
 define([
-  'core/js/adapt'
-], function(Adapt) {
+  'core/js/adapt',
+  'core/js/views/drawerItemView'
+], function(Adapt, DrawerItemView) {
 
   var DrawerView = Backbone.View.extend({
 
@@ -271,38 +272,9 @@ define([
       $('.js-shadow').remove();
     }
 
-  });
-
-  var DrawerItemView = Backbone.View.extend({
-
-    className: 'drawer__item',
-
-    attributes: {
-      role: 'listitem'
-    },
-
-    initialize: function() {
-      this.listenTo(Adapt, 'drawer:empty', this.remove);
-      this.render();
-    },
-
-    events: {
-      'click .drawer__item-open': 'onDrawerItemClicked'
-    },
-
-    render: function() {
-      var data = this.model.toJSON();
-      var template = Handlebars.templates['drawerItem']
-      $(this.el).html(template(data)).appendTo('.drawer__holder');
-      return this;
-    },
-
-    onDrawerItemClicked: function(event) {
-      event.preventDefault();
-      var eventCallback = this.model.get('eventCallback');
-      Adapt.trigger(eventCallback);
-    }
-
+  }, {
+    childContainer: '.js-drawer-holder',
+    childView: DrawerItemView
   });
 
   return DrawerView;
