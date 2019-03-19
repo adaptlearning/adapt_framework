@@ -20,7 +20,7 @@ define([
       var itemModels = this.getChildren();
       var userAnswer = this.get('_userAnswer');
       itemModels.each(function(item, index) {
-        item.toggleActive(userAnswer[item._index]);
+        item.toggleActive(userAnswer[item.get('_index')]);
       });
 
       this.setQuestionAsSubmitted();
