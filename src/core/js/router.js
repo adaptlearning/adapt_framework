@@ -213,7 +213,7 @@ define([
     },
 
     showLoading: function() {
-      $('.jsloading').show();
+      $('.js-loading').show();
     },
 
     navigateToArguments: function(args) {
