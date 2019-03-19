@@ -10,7 +10,7 @@ define([
 
     initialize: function() {
       this._checkApp();
-      Adapt.once('configModel:loadCourseData', this._loadConfig.bind(this));
+      Adapt.once('configModel:dataLoaded', this._loadConfig.bind(this));
     },
 
     _checkApp: function() {

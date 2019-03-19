@@ -13,11 +13,11 @@ define([
 
     initialize: function() {
 
-      Adapt.once('configModel:loadCourseData', this.onLoadCourseData.bind(this));
+      Adapt.once('configModel:dataLoaded', this.onLoadConfigData.bind(this));
 
     },
 
-    onLoadCourseData: function() {
+    onLoadConfigData: function() {
 
       this.loadConfig();
 
