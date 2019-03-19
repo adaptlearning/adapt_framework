@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [3.5.1] - 2019-03-19
+### Fixed
+- Language Picker breaks tracking.js module completion criteria ([#2386](https://github.com/adaptlearning/adapt_framework/issues/2386))
+
 ## [3.5.0] - 2019-01-30
 ### Added
 - Support for changing the identifier in SCORM imsmanifest.xml ([#2247](https://github.com/adaptlearning/adapt_framework/issues/2247))
