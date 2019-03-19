@@ -13,7 +13,7 @@ define([
         _assessmentState: null,
 
         initialize: function() {
-            Adapt.once('configModel:loadCourseData', this.loadConfig.bind(this));
+            Adapt.once('configModel:dataLoaded', this.loadConfig.bind(this));
             Adapt.on('app:dataReady', this.setupEventListeners.bind(this));
         },
 
