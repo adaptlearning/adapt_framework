@@ -5,7 +5,7 @@
 - Model event bubbling system ([#2314](https://github.com/adaptlearning/adapt_framework/issues/2314))
 
 ### Fixed
-- Use of the Language Picker extension prevented the course completion criteria from being read in ([2386](https://github.com/adaptlearning/adapt_framework/issues/2386))
+- Use of the Language Picker extension prevented the course completion criteria from being read in ([#2386](https://github.com/adaptlearning/adapt_framework/issues/2386))
 - Question components that used `ItemsQuestionModel` weren't correctly restoring user answers or marking ([#2379](https://github.com/adaptlearning/adapt_framework/issues/2379))
 
 ### Changed
