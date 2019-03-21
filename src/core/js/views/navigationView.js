@@ -11,12 +11,12 @@ define([
         'courseModel:dataLoading': this.remove
       });
       this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
-      this.template = "navigation";
+      this.template = "nav";
       this.preRender();
     },
 
     events: {
-      'click [data-event]':'triggerEvent'
+      'click [data-event]': 'triggerEvent'
     },
 
     attributes: {
@@ -52,14 +52,14 @@ define([
 
     hideNavigationButton: function(model) {
       if (model.get('_type') === "course") {
-        $('.nav__back-btn, .nav-home-button').addClass('u-display-none');
+        $('.nav__back-btn, .nav__home-btn').addClass('u-display-none');
       } else {
         this.showNavigationButton();
       }
     },
 
     showNavigationButton: function() {
-      $('.nav__back-btn, .nav-home-button').removeClass('u-display-none');
+      $('.nav__back-btn, .nav__home-btn').removeClass('u-display-none');
     }
 
   });
