@@ -20,21 +20,17 @@
     height: 100%;
   }
 
-  &__item {
-    display: block;
-    width: 100%;
-  }
-
+  // --------------------------------------------------
   // Add top padding equal to the height of the navigation bar
+  // --------------------------------------------------
   &__holder {
     padding-top: @icon-size + (@icon-padding * 2);
   }
+  // --------------------------------------------------
 
-  &__item-open {
-    width: 100%;
-  }
-
+  // --------------------------------------------------
   // Reposition the toolbar to visually sit at the top of the drawer
+  // --------------------------------------------------
   &__toolbar {
     position: absolute;
     top: 0;
@@ -43,25 +39,22 @@
 
   &__back {
     .u-float-left;
-
-    .icon {
-      .icon-controls-small-left;
-    }
-
-    &.show {
-      display: inline-block;
-    }
-  }
-
-  &__back--show {
-    display: inline-block;
   }
 
   &__close {
     .u-float-right;
-
-    .icon {
-      .icon-cross;
-    }
   }
+  // --------------------------------------------------
+
+  // --------------------------------------------------
+  // Drawer button icons
+  // --------------------------------------------------
+  &__back .icon {
+    .icon-controls-small-left;
+  }
+
+  &__close .icon {
+    .icon-cross;
+  }
+  // --------------------------------------------------
 }
