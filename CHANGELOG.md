@@ -1,5 +1,16 @@
 ## [Unreleased][unreleased]
 
+## [4.1.0] - 2019-03-21
+### Added
+- Model event bubbling system ([#2314](https://github.com/adaptlearning/adapt_framework/issues/2314))
+
+### Fixed
+- Use of the Language Picker extension prevented the course completion criteria from being read in ([2386](https://github.com/adaptlearning/adapt_framework/issues/2386))
+- Question components that used `ItemsQuestionModel` weren't correctly restoring user answers or marking ([#2379](https://github.com/adaptlearning/adapt_framework/issues/2379))
+
+### Changed
+- config.model.schema `_isEnabled` default value amended to `true` ([#2374](https://github.com/adaptlearning/adapt_framework/issues/2374))
+
 ## [4.0.1] - 2019-01-31
 ### Fixed
 - Helper expecting missing object ([#2339](https://github.com/adaptlearning/adapt_framework/pull/2339))
@@ -687,7 +698,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.1...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.0...HEAD
+[4.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.0...v4.0.0
 [3.5.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.4.0...v3.5.0
