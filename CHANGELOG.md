@@ -9,7 +9,7 @@
 - Question components that used `ItemsQuestionModel` weren't correctly restoring user answers or marking ([#2379](https://github.com/adaptlearning/adapt_framework/issues/2379))
 
 ### Changed
-- config.model.schema `_isEnabled` default value amended to `true` ([#2374](https://github.com/adaptlearning/adapt_framework/issues/2374))
+- default value of `_accessibility._isEnabled` amended to `true` in config.model.schema ([#2374](https://github.com/adaptlearning/adapt_framework/issues/2374))
 
 ## [4.0.1] - 2019-01-31
 ### Fixed
