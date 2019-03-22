@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [3.5.2] - 2019-03-22
+### Fixed
+- Hyperlinks not clickable when accessibility is enabled ([#2370](https://github.com/adaptlearning/adapt_framework/issues/2370))
+
 ## [3.5.1] - 2019-03-19
 ### Fixed
 - Language Picker breaks tracking.js module completion criteria ([#2386](https://github.com/adaptlearning/adapt_framework/issues/2386))
