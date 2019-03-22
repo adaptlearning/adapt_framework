@@ -153,7 +153,7 @@ define([
     },
 
     setVisibility: function() {
-      var visible = "visibility-hidden";
+      var visible = "u-visibility-hidden";
       if (this.model.get('_isVisible')) {
         visible = "";
       }
@@ -170,7 +170,7 @@ define([
     setHidden: function() {
       var hidden = "";
       if (this.model.get('_isHidden')) {
-        hidden = "display-none";
+        hidden = "u-display-none";
       }
       return hidden;
     },

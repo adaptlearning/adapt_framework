@@ -1,18 +1,26 @@
 // --------------------------------------------------
-// Mixin to generate a horizontally and vertically centered container
+// Create a scrollable horizontal and vertically centered container
 // --------------------------------------------------
-.l-fill-viewport-mixin(absolute);
-.l-fill-viewport-mixin(fixed);
+.l-fill-viewport-absolute() {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+// --------------------------------------------------
 
-.l-fill-viewport-mixin(@position) {
-  .l-fill-viewport-@{position} {
-    position: @position;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-  }
+// --------------------------------------------------
+// Create a fixed horizontal and vertically centered container
+// --------------------------------------------------
+.l-fill-viewport-fixed() {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
 }
 // --------------------------------------------------
 

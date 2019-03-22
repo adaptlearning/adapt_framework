@@ -218,7 +218,7 @@ define([
     },
 
     setupDocument: function() {
-      this.$html.addClass('accessibility');
+      this.$html.addClass('has-accessibility');
       $.a11y(true);
     },
 

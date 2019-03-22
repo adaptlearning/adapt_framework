@@ -9,7 +9,7 @@
 .u-clearfix:after { clear: both; }
 .u-clearfix { zoom: 1; }
 
-.u-float-left {
+.u-float-left() {
   float: left;
 
   .dir-rtl & {
@@ -17,7 +17,7 @@
   }
 }
 
-.u-float-right {
+.u-float-right() {
   float: right;
 
   .dir-rtl & {
@@ -25,17 +25,14 @@
   }
 }
 
-.display-none,
 .u-display-none {
   display: none !important;
 }
 
-.visibility-hidden,
 .u-visibility-hidden {
   visibility: hidden !important;
 }
 
-.no-select,
 .u-no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
