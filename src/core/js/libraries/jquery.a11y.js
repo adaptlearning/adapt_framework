@@ -228,6 +228,7 @@
                 //SEARCH FOR TEXT ONLY NODES AND MAKE TABBABLE
                 var newChildren = [];
                 var newCluster = [];
+                var nonTabbableChildren = 0;
                 for (var i = 0; i < $element[0].childNodes.length; i++) {
                     var child = $element[0].childNodes[i];
                     var cloneChild = $(child.outerHTML)[0];
@@ -236,6 +237,7 @@
                         //IF TEXT NODE WRAP IN A TABBABLE SPAN
                         if (!stringTrim(child.textContent)) break;
                         newCluster.push( child.textContent );
+                        nonTabbableChildren++;
                         break;
                     case 1: //DOM NODE
                         var $child = $(cloneChild);
@@ -257,13 +259,19 @@
                                 newCluster.length = 0;
                             }
                             newChildren.push( $child );
+                            nonTabbableChildren++
                         }
                         break;
                     }
                 }
                 if (newCluster.length) {
-                    newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")))
+                    if (!nonTabbableChildren) {
+                        newChildren.push($(newCluster.join("")));
+                    } else {
+                        newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")));
+                    }
                     newCluster.length = 0;
+                    nonTabbableChildren = 0;
                 }
 
                 removeChildNodes($element);
@@ -368,7 +376,7 @@
 
             var scrollToPosition = elementTop - topOffset - (windowAvailableHeight / 2);
             if (scrollToPosition < 0) scrollToPosition = 0;
-            
+
             var isElementTopOutOfView = (elementTop < scrollTopWithTopOffset || elementTop > scrollBottomWithTopOffset);
 
             if (!isElementTopOutOfView) return;
@@ -589,7 +597,7 @@
         }
 
         function nativePreventScroll(event) {
-            // Intermediate function to turn the native event object into a jquery event object. 
+            // Intermediate function to turn the native event object into a jquery event object.
             // preventScroll function is expecting a jquery event object.
             return preventScroll($.event.fix(event));
         }
