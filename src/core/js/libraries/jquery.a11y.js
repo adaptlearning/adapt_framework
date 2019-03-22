@@ -254,17 +254,20 @@
                                 //DESCEND INTO NODES WITH CHILDREN
                                 makeChildNodesAccessible($child);
                             }
-                            if (newCluster.length) {
-                                newChildren.push(makeElementTabbable($("<span>"+newCluster.join("")+"</span>")))
-                                newCluster.length = 0;
-                            }
+                            if (newCluster.length) convertClusterToChild();
                             newChildren.push( $child );
-                            nonTabbableChildren++
                         }
                         break;
                     }
                 }
-                if (newCluster.length) {
+                if (newCluster.length) convertClusterToChild();
+
+                removeChildNodes($element);
+                $element.append(newChildren);
+
+                return $element;
+
+                function convertClusterToChild() {
                     if (!nonTabbableChildren) {
                         newChildren.push($(newCluster.join("")));
                     } else {
@@ -273,11 +276,6 @@
                     newCluster.length = 0;
                     nonTabbableChildren = 0;
                 }
-
-                removeChildNodes($element);
-                $element.append(newChildren);
-
-                return $element;
 
                 function removeChildNodes($element) {
                     var childNodes = $element[0].childNodes.length;
