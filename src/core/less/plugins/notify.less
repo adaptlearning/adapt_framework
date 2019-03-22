@@ -8,94 +8,18 @@
   }
 
   // --------------------------------------------------
-  //
+  // Notify icons
   // --------------------------------------------------
-  &__icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    .dir-rtl & {
-      right: inherit;
-      left: 0;
-    }
-  }
-  // --------------------------------------------------
-
-  // --------------------------------------------------
-  //
-  // --------------------------------------------------
-  &__content {
-    .l-container-responsive(@device-width-large);
-    .l-container-padding(@block-padding-ver, @block-padding-hoz);
+  &__close-btn .icon {
+    .icon-cross;
   }
 
-  &__content-inner {
-    position: relative;
+  &__icon .icon.is-prompt {
+    .icon-question;
   }
 
-  &__done {
-    display: inline-block;
-  }
-
-  &__close-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    .dir-rtl & {
-      right: inherit;
-      left: 0;
-    }
-
-    .icon {
-      .icon-cross;
-    }
-  }
-  // --------------------------------------------------
-
-  // --------------------------------------------------
-  //
-  // --------------------------------------------------
-  &__shadow {
-    .l-fill-viewport-fixed;
-    z-index: 90;
-    // opacity: 0;
-    background-color: fade(@background-color, 50%);
-  }
-
-  // --------------------------------------------------
-  // Sets up full width title and 50/50 text/image split below
-  // --------------------------------------------------
-  @media (min-width: @device-width-medium) {
-    &__content.has-image {
-      .notify__content-inner {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-
-      .notify__title {
-        width: 100%;
-      }
-
-      .notify__body,
-      .notify__image-container {
-        width: 50%;
-      }
-    }
-  }
-  // --------------------------------------------------
-
-  // --------------------------------------------------
-  // Left aligns image in notify pop up
-  // --------------------------------------------------
-  @media (min-width: @device-width-medium) {
-    &__content.align-image-left {
-      .notify__content-inner {
-        flex-direction: row-reverse;
-      }
-    }
+  &__icon .icon.is-alert {
+    .icon-warning;
   }
   // --------------------------------------------------
 }

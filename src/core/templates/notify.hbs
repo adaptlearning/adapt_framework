@@ -9,7 +9,7 @@
 
         {{#if _showIcon}}
         <div class="notify__icon">
-          <div class="icon{{#if_value_equals _type "prompt"}} icon-question{{/if_value_equals}}{{#if_value_equals _type "alert"}} icon-warning{{/if_value_equals}}"></div>
+          <div class="icon{{#if_value_equals _type "prompt"}} is-prompt{{/if_value_equals}}{{#if_value_equals _type "alert"}} is-alert{{/if_value_equals}}"></div>
         </div>
         {{/if}}
 
@@ -65,4 +65,4 @@
 
 </div>
 
-<div class="notify__shadow js-notify-shadow-click"></div>
+<div class="shadow notify__shadow js-notify-shadow-click"></div>
