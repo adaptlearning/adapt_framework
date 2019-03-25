@@ -14,7 +14,9 @@
 
 
 // html = 16px
+// 120em = 1920px
 // 87.5em = 1400px
+// 80em = 1280px
 // 56.25em = 900px
 // 47.5em = 760px
 // 32.5em = 520px
@@ -49,13 +51,13 @@
 @validation-error-inverted: @white;
 
 @block-padding-ver: 4em;
-@block-padding-hoz: 1em;
+@block-padding-hoz: 0.5em;
 
 @background-color: @black;
 @background-color-inverted: @white;
 
 // @block-padding: ;
 
-@navigation-height: 40px;
+@navigation-height: @icon-size + (@icon-padding * 2);
 
 @focus-outline: 0; // deprecated - reverting to browser outline
