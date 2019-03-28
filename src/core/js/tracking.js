@@ -71,14 +71,17 @@ define([
 
             // Assessment completed required.
             if (this._config._requireAssessmentCompleted) {
-                if (!this._assessmentState) {
+                if (!this._assessmentState && !Adapt.offlineStorage.get("assessment")) {
                     // INCOMPLETE: assessment is not complete.
                     return completionData;
                 }
 
                 // PASSED/FAILED: assessment completed.
-                completionData.status = this._assessmentState.isPass ? COMPLETION_STATE.PASSED : COMPLETION_STATE.FAILED;
-                completionData.assessment = this._assessmentState;
+                completionData.status =
+					(this._assessmentState && this._assessmentState.isPass) ||
+					Adapt.offlineStorage.get("_isAssessmentPassed")
+                    ? COMPLETION_STATE.PASSED : COMPLETION_STATE.FAILED
+				completionData.assessment = this._assessmentState || null
 
                 return completionData;
             }
