@@ -20,7 +20,10 @@ define([
         setupEventListeners: function() {
             // Check if completion requires passing an assessment. 
             if (this._config._requireAssessmentCompleted) {
-                this.listenTo(Adapt, 'assessment:complete', this.onAssessmentComplete);
+                this.listenTo(Adapt, {
+                    'assessment:complete': this.onAssessmentComplete,
+                    'assessments:register': this.onAssessmentRestored
+                });
             }
 
             // Check if completion requires completing all content.
@@ -37,6 +40,15 @@ define([
             this._assessmentState = assessmentState;
 
             this.checkCompletion();
+        },
+
+        /**
+         * Restores the _assessmentState object when an assessment is registered.
+         * @param {object} state - An object representing the (intial) assessment state
+         * @param {assessmentModel} - A restored Assessment model
+         */
+        onAssessmentRestored: function(state, assessmentModel) {
+            this._assessmentState = assessmentModel.getState();
         },
 
         /**
