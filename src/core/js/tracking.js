@@ -22,7 +22,7 @@ define([
             if (this._config._requireAssessmentCompleted) {
                 this.listenTo(Adapt, {
                     'assessment:complete': this.onAssessmentComplete,
-                    'assessments:register': this.onAssessmentRestored
+                    'assessment:restored': this.onAssessmentRestored
                 });
             }
 
@@ -44,11 +44,10 @@ define([
 
         /**
          * Restores the _assessmentState object when an assessment is registered.
-         * @param {object} state - An object representing the (intial) assessment state
-         * @param {assessmentModel} - A restored Assessment model
+         * @param {object} assessmentState - An object representing the overall assessment state
          */
-        onAssessmentRestored: function(state, assessmentModel) {
-            this._assessmentState = assessmentModel.getState();
+        onAssessmentRestored: function(assessmentState) {
+            this._assessmentState = assessmentState;
         },
 
         /**
