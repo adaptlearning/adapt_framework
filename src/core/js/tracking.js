@@ -47,7 +47,7 @@ define([
          * @param {object} assessmentState - An object representing the overall assessment state
          */
         onAssessmentRestored: function(assessmentState) {
-            this._assessmentState = assessmentState;  
+            this._assessmentState = assessmentState;
         },
 
         /**
