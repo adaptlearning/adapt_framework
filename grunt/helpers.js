@@ -315,7 +315,7 @@ module.exports = function(grunt) {
             return grunt.file.write(filepath, contents);
         }
 
-        let event = `${grunt.task.current.name}:${event}`;
+        let event = `${grunt.task.current.name}:output`;
         if (eventParam) {
             event += `:${eventParam}`;
         }
