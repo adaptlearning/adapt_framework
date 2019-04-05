@@ -345,6 +345,7 @@ define([
                 .attr('data-location', Adapt.location._currentLocation);
 
             this.setDocumentTitle();
+            this.setStartPageClass(type, id);
 
             // Trigger event when location changes.
             Adapt.trigger('router:location', Adapt.location);
@@ -352,6 +353,51 @@ define([
             Adapt.wait.queue(onComplete);
         },
 
+        /**
+         * Sets the start page class as per configuration mentioned in "_start" attribute.
+         * Below code also considers all the example scenarios mentioned in below URL
+         * https://github.com/adaptlearning/adapt_framework/wiki/Content-starts-with-course.json#example-1
+         */
+        setStartPageClass: function(type, id) {
+            var startConfig = Adapt.course.get('_start');
+
+            if (!startConfig && !startConfig._isEnabled) return;
+
+            var startIds =  startConfig._startIds;
+            var startIdIndex = null;
+            var pageID = null;
+            var availableStartClasses = _.pluck(startIds, '_className');
+
+            //Decide page id - handle Example 1 and 4
+            if (startConfig._id) {
+                pageID = startConfig._id;
+            }
+
+            //Decide page id - handle Example 2, 3, 4
+            _.each(availableStartClasses, function(classes, index) {
+                if (!classes) {
+                    pageID = startIds[index]._id;
+                } else {
+                    var touchClass = Adapt.device.touch ? 'touch' : 'no-touch';
+                    if (this.$html.is(classes) && this.$html.hasClass(touchClass)) {
+                        startIdIndex = index;
+                    }
+                }
+            }.bind(this));
+
+                //Get the "_id" from _startIds to be applicable 
+                if (startIdIndex != null) {
+                    pageID = startIds[startIdIndex]._id;
+                }
+
+                if (type === 'page' && pageID === id) {
+                    this.$html.addClass('is-start-page');
+                } else {
+                    if (this.$html.hasClass('is-start-page'))
+                        this.$html.removeClass('is-start-page');
+                }
+        },
+        
         setDocumentTitle: function() {
             if (!Adapt.location._currentId) return;
 
