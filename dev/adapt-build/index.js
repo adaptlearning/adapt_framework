@@ -47,7 +47,7 @@ class AdaptBuild extends EventEmitter {
 
             const outputEvent = `${taskName}:output`;
             
-            grunt.event.on(outputEvent, (output) => {
+            grunt.event.once(outputEvent, (output) => {
                 this.emit(outputEvent, output);
                 resolve(output);
             });
