@@ -90,11 +90,12 @@ module.exports = function(grunt) {
 					return;
 				}
 
-				grunt.file.write(path.join(options.dest, options.cssFilename), output.css);
+				var outputHelper = grunt.config('helpers').output;
+                outputHelper(path.join(options.dest, options.cssFilename), output.css);
 
 				if (output.map) {
-					grunt.file.write(path.join(options.dest, options.mapFilename)+".imports", imports);
-					grunt.file.write(path.join(options.dest, options.mapFilename), output.map);
+                    outputHelper(path.join(options.dest, options.mapFilename)+".imports", imports, 'imports');
+                    outputHelper(path.join(options.dest, options.mapFilename), output.map, 'map');
 				}
 				done();
 			}

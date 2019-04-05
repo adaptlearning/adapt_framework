@@ -229,7 +229,7 @@ module.exports = function(grunt) {
         }
 
         filesCount++;
-        grunt.file.write(f.dest, output.join(grunt.util.normalizelf(options.separator)));
+        grunt.config('helpers').output(f.dest, output.join(grunt.util.normalizelf(options.separator)));
         grunt.verbose.writeln('File ' + chalk.cyan(f.dest) + ' created.');
       }
     });

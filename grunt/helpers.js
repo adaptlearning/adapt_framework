@@ -310,5 +310,18 @@ module.exports = function(grunt) {
         return exports.isPluginScriptSafe(filepath);
     };
 
+    exports.output = function(filepath, contents, eventParam) {
+        if (grunt.config('env') !== 'dev') {
+            return grunt.file.write(filepath, contents);
+        }
+
+        let event = `${grunt.task.current.name}:${event}`;
+        if (eventParam) {
+            event += `:${eventParam}`;
+        }
+
+        grunt.event.emit(event, contents);
+    };
+
     return exports;
 };

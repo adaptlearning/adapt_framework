@@ -32,8 +32,9 @@ module.exports = function(grunt) {
             }
             course._latestTrackingId = options._latestTrackingId;
             grunt.log.writeln("The latest tracking ID is " + course._latestTrackingId);
-            grunt.file.write(coursePath, JSON.stringify(course, null, 4));
-            grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
+            var output = grunt.config('helpers').output;
+            output(coursePath, JSON.stringify(course, null, 4), 'course');
+            output(blocksPath, JSON.stringify(blocks, null, 4) ,'blocks');
         }
 
     });

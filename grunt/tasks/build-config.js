@@ -13,7 +13,6 @@ module.exports = function(grunt) {
         var buildConfigPath = path.join(buildConfig.outputdir, "adapt/js/build.min.js");
 
         var allowedProperties = options.allowedProperties || {};
-
         // add package json
         buildConfig.package = grunt.file.readJSON(path.join(buildConfig.root, 'package.json'));
         if (allowedProperties.package) {
@@ -34,7 +33,7 @@ module.exports = function(grunt) {
         var hideAttributes = [ 'outputdir', 'sourcedir', 'root' ];
         hideAttributes.forEach(function(attrName) { delete buildConfig[attrName]; });
 
-        grunt.file.write(buildConfigPath, JSON.stringify(buildConfig));
+        Helpers.output(buildConfigPath, JSON.stringify(buildConfig));
 
     });
 

@@ -12,9 +12,11 @@ module.exports = function(grunt) {
 
         var isOutputDir= (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
         var sourcedir = isOutputDir ? grunt.option('outputdir') : grunt.config('sourcedir');
-
+        
         var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
         var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));
+
+        console.log(blocksFiles);
 
         for (var i = 0; i < blocksFiles.length; i++) {
             insertTrackingIds(blocksFiles[i], courseFiles[i]);
@@ -49,8 +51,9 @@ module.exports = function(grunt) {
             }
             course._latestTrackingId = options._latestTrackingId;
             grunt.log.writeln("Task complete. The latest tracking ID is " + course._latestTrackingId);
-            grunt.file.write(coursePath, JSON.stringify(course, null, 4));
-            grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
+            var output = grunt.config('helpers').output;
+            output(coursePath, JSON.stringify(course, null, 4), 'course');
+            output(blocksPath, JSON.stringify(blocks, null, 4), 'blocks');
         }
 
     });

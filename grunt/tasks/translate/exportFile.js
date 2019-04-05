@@ -4,6 +4,8 @@ var csv = require("csv");
 var async = require("async");
 
 module.exports = function (grunt) {
+
+  var outputHelper = grunt.config('helpers').output;
   
   grunt.registerTask("_exportLangFiles", function () {
     
@@ -58,7 +60,7 @@ module.exports = function (grunt) {
             _cb(error);
           } else {
             var src = path.join(outputFolder, name+".csv");
-            grunt.file.write(src, "\ufeff" + output);
+            outputHelper (src, "\ufeff" + output, 'csv');
             _cb();
           }
         });
@@ -73,7 +75,7 @@ module.exports = function (grunt) {
     }
     
     function _exportRaw (filename) {
-      grunt.file.write(path.join(outputFolder, filename + "." + grunt.config('jsonext')), JSON.stringify(global.translate.exportTextData, null, 4));
+      outputHelper(path.join(outputFolder, filename + "." + grunt.config('jsonext')), JSON.stringify(global.translate.exportTextData, null, 4), 'raw');
       next();
     }
     

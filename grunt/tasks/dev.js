@@ -3,6 +3,7 @@
 */
 module.exports = function(grunt) {
     grunt.registerTask('dev', 'Creates a developer-friendly build of the course', [
+        'setenv:dev',
         '_log-vars',
         'check-json',
         'build-config',
