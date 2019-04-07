@@ -17,8 +17,8 @@ module.exports = function(grunt) {
             grunt.log.writeln("Tracking IDs removed.");
 
             var output = grunt.config('helpers').output;
-            output(coursePath, JSON.stringify(course, null, 4), 'course');
-            output(blocksPath, JSON.stringify(blocks, null, 4), 'blocks');
+            output(coursePath, course, 'course');
+            output(blocksPath, blocks, 'blocks');
         }
 
         var isOutputDir = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");

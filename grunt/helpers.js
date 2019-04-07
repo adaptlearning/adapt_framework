@@ -312,6 +312,9 @@ module.exports = function(grunt) {
 
     exports.output = function(filepath, contents, eventParam) {
         if (grunt.config('env') !== 'dev') {
+            if (typeof contents !== 'string') {
+                contents = JSON.stringify(contents, null, 4);
+            }
             return grunt.file.write(filepath, contents);
         }
 

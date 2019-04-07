@@ -33,7 +33,7 @@ module.exports = function(grunt) {
         var hideAttributes = [ 'outputdir', 'sourcedir', 'root' ];
         hideAttributes.forEach(function(attrName) { delete buildConfig[attrName]; });
 
-        Helpers.output(buildConfigPath, JSON.stringify(buildConfig));
+        Helpers.output(buildConfigPath, buildConfig);
 
     });
 

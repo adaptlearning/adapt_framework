@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 
         });
 
-        grunt.config('helpers').output(grunt.config('outputdir') + 'course/config.' + jsonext, JSON.stringify(configJson, null, 4));
+        grunt.config('helpers').output(grunt.config('outputdir') + 'course/config.' + jsonext, configJson);
 
     });
 
