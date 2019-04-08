@@ -311,7 +311,7 @@ module.exports = function(grunt) {
     };
 
     exports.output = function(filepath, contents, eventParam) {
-        if (grunt.config('env') !== 'dev') {
+        if (grunt.config('outputConfig') !== 'event') {
             if (typeof contents !== 'string') {
                 contents = JSON.stringify(contents, null, 4);
             }
