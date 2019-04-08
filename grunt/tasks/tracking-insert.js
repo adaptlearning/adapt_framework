@@ -16,8 +16,6 @@ module.exports = function(grunt) {
         var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
         var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));
 
-        console.log(blocksFiles);
-
         for (var i = 0; i < blocksFiles.length; i++) {
             insertTrackingIds(blocksFiles[i], courseFiles[i]);
             options._latestTrackingId = -1;
