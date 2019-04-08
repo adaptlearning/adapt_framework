@@ -1,3 +1,5 @@
+// This module connects the abstracted build API to the current grunt setup
+
 const grunt = require('grunt');
 require('../../Gruntfile')(grunt);
 

@@ -53,6 +53,14 @@ class AdaptBuild extends EventEmitter {
         return this.runTask('build-config');
     }
 
+    styles() {
+        return this.runTask('less:dev');
+    }
+
+    templates() {
+        return this.runTask('handlebars');
+    }
+
 
 }
 
