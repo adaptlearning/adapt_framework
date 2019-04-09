@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [4.1.1] - 2019-04-09
+### Fixed
+- Incorrect "Unknown" lesson status when completing assessment and course in different attempts ([#2398](https://github.com/adaptlearning/adapt_framework/issues/2398))
+
 ## [4.1.0] - 2019-03-21
 ### Added
 - Model event bubbling system ([#2314](https://github.com/adaptlearning/adapt_framework/issues/2314))
