@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [4.1.1] - 2019-04-09
+### Fixed
+- Incorrect "Unknown" lesson status when completing assessment and course in different attempts ([#2398](https://github.com/adaptlearning/adapt_framework/issues/2398))
+
 ## [4.1.0] - 2019-03-21
 ### Added
 - Model event bubbling system ([#2314](https://github.com/adaptlearning/adapt_framework/issues/2314))
@@ -698,7 +702,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.1...HEAD
+[4.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.0...v4.0.0
