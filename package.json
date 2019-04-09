@@ -10,6 +10,7 @@
     "bugs": {
         "url": "https://github.com/adaptlearning/adapt_framework/issues"
     },
+    "main": "grunt/api/index.js",
     "dependencies": {
         "async": "^2.6.1",
         "chalk": "^2.4.1",
