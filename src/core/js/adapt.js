@@ -238,6 +238,40 @@ define([
 
     };
 
+    Adapt.findViewByModelId = function(id) {
+        var model = Adapt.findById(id);
+
+        if (!model) {
+            return;
+        }
+
+        // Create an array of ids which will lead to the specified view
+        var idPath = [model.get('_id')];
+        while (model && model !== Adapt.parentView.model) {
+            model = model.getParent();
+
+            if (model) {
+                idPath.push(model.get('_id'));
+            }
+        }
+
+        // View does not exist on the page
+        if (_.last(idPath) !== Adapt.location._currentId) {
+            return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id)
+        }
+
+        var currentView = Adapt.parentView;
+        // Throw away the top level view as the reference already exists
+        idPath = idPath.slice(0, -1).reverse();
+
+        for (var i = 0; i < idPath.length; i++) {
+            var currentId = idPath[i];
+            currentView = currentView.childViews[currentId];
+        }
+
+        return currentView;
+    };
+
     // Relative strings describe the number and type of hops in the model hierarchy
     //
     // "@component +1" means to move one component forward from the current model
