@@ -22,6 +22,11 @@ define([
                 '_isReady': false
             });
             this._isRemoved = false;
+
+            if (Adapt.location._currentId === this.model.get('_id')) {
+                Adapt.parentView = this;
+            }
+            
             this.preRender();
             this.render();
             this.setupOnScreenHandler();
@@ -76,32 +81,32 @@ define([
             var nthChild = 0;
             var children = this.model.getChildren();
             var models = children.models;
+            this.childViews = {};
             for (var i = 0, len = models.length; i < len; i++) {
                 var model = models[i];
-                if (model.get('_isAvailable')) {
-                    nthChild ++;
+                if (!model.get('_isAvailable')) return;
 
-                    var ChildView;
-                    var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+                nthChild++;
+                model.set("_nthChild", nthChild);
 
-                    //use view+model object
-                    if (ViewModelObject.view) ChildView = ViewModelObject.view;
-                    //use view only object
-                    else ChildView = ViewModelObject;
+                var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+                var ChildView = ViewModelObject.view || ViewModelObject;
 
-                    if (ChildView) {
-                        var $parentContainer = this.$(this.constructor.childContainer);
-                        model.set("_nthChild", nthChild);
-                        if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
-                            $parentContainer.prepend(new ChildView({model:model}).$el);
-                        } else {
-                            $parentContainer.append(new ChildView({model:model}).$el);
-                        }
-                    } else {
-                        throw 'The component \'' + models[i].attributes._id + '\'' +
-                              ' (\'' + models[i].attributes._component + '\')' +
-                              ' has not been installed, and so is not available in your project.';
-                    }
+                if (!ChildView) {
+                    throw 'The component \'' + models[i].attributes._id + '\'' +
+                    ' (\'' + models[i].attributes._component + '\')' +
+                    ' has not been installed, and so is not available in your project.';
+                }
+
+                var $parentContainer = this.$(this.constructor.childContainer);
+                var childView = new ChildView({ model: model });
+
+                this.childViews[model.get('_id')] = childView;
+                
+                if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
+                    $parentContainer.prepend(childView.$el);
+                } else {
+                    $parentContainer.append(childView.$el);
                 }
             }
         },
@@ -182,9 +187,14 @@ define([
             this.$el.addClass('display-none');
         },
 
-        onIsCompleteChange:function(model, isComplete){
+        onIsCompleteChange: function(model, isComplete){
             this.$el.toggleClass('completed', isComplete);
+        },
+
+        getChildViews: function() {
+            return this.childViews;
         }
+
     });
 
     return AdaptView;
