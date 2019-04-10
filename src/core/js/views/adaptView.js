@@ -102,12 +102,8 @@ define([
                 var childView = new ChildView({ model: model });
 
                 this.childViews[model.get('_id')] = childView;
-                
-                if (Adapt.config.get("_defaultDirection") == 'rtl' && model.get("_type") == 'component') {
-                    $parentContainer.prepend(childView.$el);
-                } else {
-                    $parentContainer.append(childView.$el);
-                }
+
+                $parentContainer.append(childView.$el);
             }
         },
 
