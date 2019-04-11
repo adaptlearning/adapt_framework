@@ -240,36 +240,27 @@ define([
 
     Adapt.findViewByModelId = function(id) {
         var model = Adapt.findById(id);
-
         if (!model) {
             return;
         }
 
-        // Create an array of ids which will lead to the specified view
-        var idPath = [model.get('_id')];
-        while (model && model !== Adapt.parentView.model) {
-            model = model.getParent();
+        var idPathToView = [];
+        var currentLocationId = Adapt.location._currentId;
+        var currentLocationModel = _.find(model.getAncestorModels(), function(model) {
+            var modelId = model.get('_id');
+            if (modelId === currentLocationId) return true;
+            idPathToView.unshift(modelId);
+        });
 
-            if (model) {
-                idPath.push(model.get('_id'));
-            }
+        if (!currentLocationModel) {
+            return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id);
         }
 
-        // View does not exist on the page
-        if (_.last(idPath) !== Adapt.location._currentId) {
-            return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id)
-        }
+        var foundView = _.reduce(idPathToView, function(view, currentId) {
+            return view && view.childViews && view.childViews[currentId];
+        }, Adapt.parentView);
 
-        var currentView = Adapt.parentView;
-        // Throw away the top level view as the reference already exists
-        idPath = idPath.slice(0, -1).reverse();
-
-        for (var i = 0; i < idPath.length; i++) {
-            var currentId = idPath[i];
-            currentView = currentView.childViews[currentId];
-        }
-
-        return currentView;
+        return foundView;
     };
 
     // Relative strings describe the number and type of hops in the model hierarchy
