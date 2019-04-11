@@ -84,7 +84,7 @@ define([
             this.childViews = {};
             for (var i = 0, len = models.length; i < len; i++) {
                 var model = models[i];
-                if (!model.get('_isAvailable')) return;
+                if (!model.get('_isAvailable')) continue;
 
                 nthChild++;
                 model.set("_nthChild", nthChild);
