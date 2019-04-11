@@ -131,49 +131,6 @@ define([
 
     };
 
-    Adapt.scrollTo = function(selector, settings) {
-        // Get the current location - this is set in the router
-        var location = (Adapt.location._contentType) ?
-            Adapt.location._contentType : Adapt.location._currentLocation;
-        // Trigger initial scrollTo event
-        Adapt.trigger(location+':scrollTo', selector);
-        //Setup duration variable passed upon arguments
-        var settings = (settings || {});
-        var disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
-        if (disableScrollToAnimation) {
-            settings.duration = 0;
-        }
-        else if (!settings.duration) {
-            settings.duration = $.scrollTo.defaults.duration;
-        }
-
-        var offsetTop = -$(".navigation").outerHeight();
-        // prevent scroll issue when component description aria-label coincident with top of component
-        if (Adapt.config.get('_accessibility')._isActive &&
-            $(selector).hasClass('component')) {
-            offsetTop -= $(selector).find('.aria-label').height() || 0;
-        }
-
-        if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
-        if (settings.offset.top === undefined) settings.offset.top = offsetTop;
-        if (settings.offset.left === undefined) settings.offset.left = 0;
-
-        if (settings.offset.left === 0) settings.axis = "y";
-
-        if (Adapt.get("_canScroll") !== false) {
-            // Trigger scrollTo plugin
-            $.scrollTo(selector, settings);
-        }
-
-        // Trigger an event after animation
-        // 300 milliseconds added to make sure queue has finished
-        _.delay(function() {
-            $(selector).a11y_focus();
-            Adapt.trigger(location+':scrolledTo', selector);
-        }, settings.duration+300);
-
-    };
-
     Adapt.navigateToElement = function(selector, settings) {
         // Allows a selector to be passed in and Adapt will navigate to this element
 
@@ -195,12 +152,14 @@ define([
         // Then scrollTo element
         Adapt.once('pageView:ready', function() {
             _.defer(function() {
+                Adapt.router.set("_shouldNavigateFocus", true);
                 Adapt.scrollTo(selector, settings);
             });
         });
 
         var shouldReplaceRoute = settings.replace || false;
-
+        
+        Adapt.router.set("_shouldNavigateFocus", false);
         Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true, replace: shouldReplaceRoute});
     };
 

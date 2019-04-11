@@ -13,14 +13,17 @@ define([
         _assessmentState: null,
 
         initialize: function() {
-            Adapt.once('configModel:loadCourseData', this.loadConfig.bind(this));
+            Adapt.once('configModel:dataLoaded', this.loadConfig.bind(this));
             Adapt.on('app:dataReady', this.setupEventListeners.bind(this));
         },
 
         setupEventListeners: function() {
             // Check if completion requires passing an assessment. 
             if (this._config._requireAssessmentCompleted) {
-                this.listenTo(Adapt, 'assessment:complete', this.onAssessmentComplete);
+                this.listenTo(Adapt, {
+                    'assessment:complete': this.onAssessmentComplete,
+                    'assessment:restored': this.onAssessmentRestored
+                });
             }
 
             // Check if completion requires completing all content.
@@ -37,6 +40,14 @@ define([
             this._assessmentState = assessmentState;
 
             this.checkCompletion();
+        },
+
+        /**
+         * Restores the _assessmentState object when an assessment is registered.
+         * @param {object} assessmentState - An object representing the overall assessment state
+         */
+        onAssessmentRestored: function(assessmentState) {
+            this._assessmentState = assessmentState;  
         },
 
         /**
