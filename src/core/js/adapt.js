@@ -244,7 +244,7 @@ define([
             return;
         }
 
-        var idPathToView = [];
+        var idPathToView = [id];
         var currentLocationId = Adapt.location._currentId;
         var currentLocationModel = _.find(model.getAncestorModels(), function(model) {
             var modelId = model.get('_id');
