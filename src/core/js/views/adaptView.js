@@ -107,6 +107,17 @@ define([
             }
         },
 
+        findDescendantViews: function(isParentFirst) {
+            var descendants = [];
+            this.childViews && _.each(this.childViews, function(view) {
+                if (isParentFirst) descendants.push(view);
+                var children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
+                if (children) descendants.push.apply(descendants, children);
+                if (!isParentFirst) descendants.push(view);
+            });
+            return descendants;
+        },
+
         setReadyStatus: function() {
             this.model.set('_isReady', true);
         },
