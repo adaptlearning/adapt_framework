@@ -322,6 +322,10 @@ define([
             }
 
             Adapt.location._currentLocation = currentLocation;
+            
+            var locationModel = Adapt.findById(id);
+            var isStartPage = locationModel.get('isStartPage');
+            var startControllerClass = (locationModel && isStartPage) ? locationModel.get('_htmlClassName') : '';
 
             var classes = (Adapt.location._currentId) ? 'location-'
                     + Adapt.location._contentType
@@ -333,10 +337,12 @@ define([
             if (previousClasses) {
                 this.$html.removeClass(previousClasses);
             }
-            Adapt.location._previousClasses = classes;
-
+            
+            Adapt.location._previousClasses = classes + ' ' + startControllerClass;
+            
             this.$html
                 .addClass(classes)
+                .addClass(startControllerClass)
                 .attr('data-location', Adapt.location._currentLocation);
                 
             this.$wrapper
