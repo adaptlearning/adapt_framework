@@ -324,8 +324,7 @@ define([
             Adapt.location._currentLocation = currentLocation;
             
             var locationModel = Adapt.findById(id);
-            var isStartPage = locationModel.get('isStartPage');
-            var startControllerClass = (locationModel && isStartPage) ? locationModel.get('_htmlClassName') : '';
+            var startControllerClass = (locationModel && locationModel.get('isStartPage')) ? locationModel.get('_htmlClassName') : '';
 
             var classes = (Adapt.location._currentId) ? 'location-'
                     + Adapt.location._contentType
