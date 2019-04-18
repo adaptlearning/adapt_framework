@@ -22,26 +22,6 @@ define([
                 ? true
                 : false;
             
-            if (hasStartId) {
-                var startPageClass = 'is-start-page';
-                var locationModel = Adapt.findById(startId);
-                if (locationModel) {
-                    var htmlClassName = locationModel.get('_htmlClassName') || '';
-
-                    if (Adapt.course.get('_htmlClassName'))
-                        htmlClassName += ' ' + Adapt.course.get('_htmlClassName');
-
-                    var htmlClassNames = _.uniq(htmlClassName.split(' '));
-                    var hasStartPageClass = _.contains(htmlClassNames, startPageClass);
-
-                    if (!hasStartPageClass) {
-                        htmlClassNames.push(startPageClass);
-                    }
-                    htmlClassName = htmlClassNames.join(' ');
-                    locationModel.set({'_htmlClassName' : htmlClassName, isStartPage : true});
-                }
-            }
-            
             var isRouteSpecified = (_.indexOf(window.location.href,"#") > -1);
             var shouldForceStartId = alwaysForce || this.model.get("_force");
             var shouldNavigateToStartId = hasStartId && (!isRouteSpecified || shouldForceStartId);
