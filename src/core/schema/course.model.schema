@@ -54,7 +54,7 @@
       "default": "",
       "inputType": "Text",
       "validators": [],
-      "help": "If set, this class will be applied to the html"
+      "help": "If set, this class will be applied to the <html> element"
     },
     "_extensions": {
       "type": "object"
