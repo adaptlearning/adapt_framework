@@ -3,20 +3,37 @@
 const grunt = require('grunt');
 require('../../Gruntfile')(grunt);
 
+const allowedConfig = [
+    'outputConfig',
+    'sourcedir',
+    'coursedir',
+    'outputdir'
+];
+
 module.exports = {
+    /**
+     * Set grunt options from a given hash
+     * @param {object} options
+     */
+    setConfig(options) {
+        for (var key in options) {
+            if (allowedConfig.includes(key)) {
+                grunt.config(key, options[key]);
+            }
+        }
+    },
+
     /**
      * Run a grunt task
      * @param {string} task - the grunt task to run
-     * @param {string} outputConfig - file || event
      * @return {Promise}
      */
-    run(task, outputConfig = 'file') {
+    run(task) {
         return new Promise((resolve, reject) => {
             const taskComponents = task.split(':');
             const taskName = taskComponents[0];
             const outputEvent = `${taskName}:output`;
 
-            grunt.task.run(`setoutput:${outputConfig}`);
             grunt.event.once(outputEvent, resolve);
             grunt.task.run(task);
             grunt.task.start();

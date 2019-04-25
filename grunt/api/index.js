@@ -2,9 +2,10 @@ const EventEmitter = require('events');
 const bridge = require('./bridge');
 
 module.exports = class AdaptBuild extends EventEmitter {
-    constructor(options = { outputConfig: 'event' }) {
+    constructor(config = { outputConfig: 'event' }) {
         super();
-        this.options = options;
+
+        bridge.setConfig(config);
     }
 
     get tasks() {
@@ -43,7 +44,7 @@ module.exports = class AdaptBuild extends EventEmitter {
             return console.log(`Task ${task} does not exist`);
         }
 
-        const output = await bridge.run(task, this.options.outputConfig);
+        const output = await bridge.run(task, this.options);
 
         this.emit(outputEvent, output);
 
