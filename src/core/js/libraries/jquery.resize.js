@@ -262,8 +262,8 @@
 
     //attach event handlers
     $(window).on({
-        "touchmove scroll": loop.start, // asynchronous
-        "mousedown keydown touchstart resize": loop.force // synchronous
+        "touchmove scroll mousedown keydown": loop.start, // asynchronous
+        "resize": loop.force // synchronous
     });
     $(measurements.featureDetect);
 
