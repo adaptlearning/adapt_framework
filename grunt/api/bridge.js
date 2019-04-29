@@ -16,7 +16,7 @@ module.exports = {
      * @param {object} options
      */
     setConfig(options) {
-        for (var key in options) {
+        for (let key in options) {
             if (allowedConfig.includes(key)) {
                 grunt.config(key, options[key]);
             }
