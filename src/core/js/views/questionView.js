@@ -206,6 +206,10 @@ define([
             // shifted immediately
             this.showFeedback();
 
+            // Force height re-calculations before the submit button
+            // becomes disabled.
+            $(window).resize();
+
             // Used to update buttonsView based upon question state
             // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
             this._runModelCompatibleFunction("updateButtons");
