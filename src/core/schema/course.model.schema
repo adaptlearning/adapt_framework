@@ -524,7 +524,7 @@
       "inputType": "Checkbox",
       "validators": [],
       "title": "Share with all users",
-      "help": "Controls whether or not all colleagues will be able to see this course from the 'Shared courses' option"
+      "help": "Defines whether this course will be editable by all users"
     },
     "_shareWithUsers": {
       "type": "array",
@@ -537,7 +537,7 @@
         "ref": "user"
       },
       "title": "Share with specific users",
-      "help": "Specifies which colleagues will be able to see this course from the 'Shared courses' option"
+      "help": "Defines which individual users are able to edit this course"
     },
     "themeSettings": {
       "type": "object"
