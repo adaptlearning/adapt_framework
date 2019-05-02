@@ -1,6 +1,6 @@
 {
   "name": "adapt_framework",
-  "version": "2.3.3",
+  "version": "2.4.0",
   "description": "Adapt Learning output framework",
   "repository": {
     "type": "git",
@@ -11,122 +11,6 @@
   "bugs": {
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
-  "contributors": [
-    {
-      "name": "Alan Bourne",
-      "email": "alan@zenduo.co.uk"
-    },
-    {
-      "name": "Aniket Dharia",
-      "email": "aniket.dharia@vyassystems.com"
-    },
-    {
-      "name": "Belal Almassri",
-      "email": "belal.almassri@spongeuk.com"
-    },
-    {
-      "name": "Brian Quinn",
-      "email": "brian@learningpool.com"
-    },
-    {
-      "name": "Chris Jones",
-      "email": "chris.jones@spongeuk.com"
-    },
-    {
-      "name": "Chris Steele",
-      "email": "chris.steele@kineo.com"
-    },
-    {
-      "name": "Chuck Lorenz",
-      "email": "chucklorenz@yahoo.com"
-    },
-    {
-      "name": "Dan Ghost",
-      "email": "daniel.ghost@kineo.com"
-    },
-    {
-      "name": "Dan Gray",
-      "email": "dan@sinensis.co.uk"
-    },
-    {
-      "name": "Daryl Hedley",
-      "email": "darylhedley@hotmail.com"
-    },
-    {
-      "name": "Dennis Dobrenko",
-      "email": "dennis.dobrenko@kineo.co.il"
-    },
-    {
-      "name": "Fabien O'Carroll",
-      "email": "fabien@allou.is"
-    },
-    {
-      "name": "Gavin McMaster",
-      "email": "gavin.mcmaster@kineo.com"
-    },
-    {
-      "name": "Guy Willis",
-      "email": "guy.willis@kineo.com"
-    },
-    {
-      "name": "Himanshu Rajotia",
-      "email": "himanshu.rajotia@vyassys.com"
-    },
-    {
-      "name": "Kevin Corry",
-      "email": "kevinc@learningpool.com"
-    },
-    {
-      "name": "Kirsty Hames",
-      "email": "kirsty.hames@kineo.com"
-    },
-    {
-      "name": "Laura Haselum"
-    },
-    {
-      "name": "Lukasz Grela",
-      "email": "lukasz.grela@gmail.com"
-    },
-    {
-      "name": "Matt Leathes",
-      "email": "matt.leathes@kineo.com"
-    },
-    {
-      "name": "Oliver Foster",
-      "email": "oliver.foster@kineo.com"
-    },
-    {
-      "name": "Petra Nußdorfer",
-      "email": "petra.nussdorfer@learnchamp.com"
-    },
-    {
-      "name": "Ryan Adams",
-      "email": "ryana@learningpool.com"
-    },
-    {
-      "name": "Sal Ali"
-    },
-    {
-      "name": "Sven Laux",
-      "email": "sven.laux@kineo.com"
-    },
-    {
-      "name": "Thomas Berger",
-      "email": "thomas.berger@learnchamp.com"
-    },
-    {
-      "name": "Thomas Eitler",
-      "email": "thomas.eitler@learnchamp.com"
-    },
-    {
-      "name": "Thomas Taylor",
-      "email": "me@taylortom.co.uk"
-    },
-    {
-      "name": "Tom Greenfield",
-      "email": "tom.greenfield@kineo.com"
-    }
-  ],
   "dependencies": {
     "async": "^1.5.2",
     "chalk": "~1.1.3",

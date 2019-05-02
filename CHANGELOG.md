@@ -1,5 +1,12 @@
 ## [Unreleased][unreleased]
 
+## [2.4.0] - 2019-05-02
+### Added
+- Support for sharing courses with specific users ([#2345](https://github.com/adaptlearning/adapt_framework/issues/2345))
+- Support for authoring tool theme editor ([#2360](https://github.com/adaptlearning/adapt_framework/issues/2360))
+
+**Note: if using the authoring tool, this release requires you to be running version 0.8 or higher**
+
 ## [2.3.3] - 2019-02-21
 - Made jquery.onscreen (inview) `_allowScrollOver` configurable ([#2352](https://github.com/adaptlearning/adapt_framework/issues/2352))
 
@@ -591,7 +598,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.3...legacy
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.4.0...legacy
+[2.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.0...v2.3.1
