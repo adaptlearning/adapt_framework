@@ -48,6 +48,14 @@
       "validators": [],
       "translatable": true
     },
+    "_htmlClassName": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "If set, this class will be applied to the <html> element when the top-level menu in the course is displayed"
+    },
     "_extensions": {
       "type": "object"
     },

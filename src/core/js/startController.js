@@ -21,7 +21,7 @@ define([
             var hasStartId = (startId)
                 ? true
                 : false;
-
+            
             var isRouteSpecified = (_.indexOf(window.location.href,"#") > -1);
             var shouldForceStartId = alwaysForce || this.model.get("_force");
             var shouldNavigateToStartId = hasStartId && (!isRouteSpecified || shouldForceStartId);
