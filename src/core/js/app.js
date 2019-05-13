@@ -35,34 +35,6 @@ require([
 
     Adapt.build = new BuildModel(null, {url: 'adapt/js/build.min.js', reset:true});
 
-    // This function is called anytime a course object is loaded
-    // Once all course files are loaded trigger events and call Adapt.initialize
-    Adapt.checkDataIsLoaded = function(newLanguage) {
-        if (Adapt.contentObjects.models.length > 0 &&
-            Adapt.articles.models.length > 0 &&
-            Adapt.blocks.models.length > 0 &&
-            Adapt.components.models.length > 0 &&
-            Adapt.course.get('_id')) {
-
-            mapAdaptIdsToObjects();
-
-            Adapt.log.debug('Firing app:dataLoaded');
-
-            try {
-                Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
-            } catch(e) {
-                Adapt.log.error('Error during app:dataLoading trigger', e);
-            }
-
-            Adapt.setupMapping();
-
-            Adapt.wait.queue(function() {
-                triggerDataReady(newLanguage);
-            });
-
-        }
-    };
-
     function triggerDataReady(newLanguage) {
         if (newLanguage) {
 
@@ -115,76 +87,9 @@ require([
 
     }
 
-    function mapAdaptIdsToObjects () {
-        Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy('_id');
-        Adapt.articles._byAdaptID = Adapt.articles.groupBy('_id');
-        Adapt.blocks._byAdaptID = Adapt.blocks.groupBy('_id');
-        Adapt.components._byAdaptID = Adapt.components.groupBy('_id');
-    }
-
-    // This function is called when the config model triggers 'configModel:loadCourseData'
-    // Once the config model is loaded get the course files
-    // This enables plugins to tap in before the course files are loaded & also to change the default language
-    Adapt.loadCourseData = function(newLanguage) {
-        Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
-            Adapt.checkDataIsLoaded(newLanguage);
-        });
-
-        // All code that needs to run before adapt starts should go here
-        var language = Adapt.config.get('_activeLanguage');
-        var jsonext = Adapt.build.get('jsonext');
-        var courseFolder = 'course/' + language +'/';
-
-        $('html').attr('lang', language);
-
-        Adapt.course = new CourseModel(null, {url:courseFolder + 'course.'+jsonext, reset:true});
-
-        Adapt.contentObjects = new AdaptCollection(null, {
-            model: ContentObjectModel,
-            url: courseFolder +'contentObjects.'+jsonext
-        });
-
-        Adapt.articles = new AdaptCollection(null, {
-            model: ArticleModel,
-            url: courseFolder + 'articles.'+jsonext
-        });
-
-        Adapt.blocks = new AdaptCollection(null, {
-            model: BlockModel,
-            url: courseFolder + 'blocks.'+jsonext
-        });
-
-        Adapt.components = new AdaptCollection(null, {
-            model: function(json) {
-
-                //use view+model object
-                var ViewModelObject = Adapt.componentStore[json._component];
-
-                if(!ViewModelObject) {
-                    throw new Error('One or more components of type "'+json._component+'" were included in the course - but no component of that type is installed...');
-                }
-
-                //if model defined for component use component model
-                if (ViewModelObject.model) {
-                    return new ViewModelObject.model(json);
-                }
-
-                var View = ViewModelObject.view || ViewModelObject;
-                //if question type use question model
-                if (View._isQuestionType) {
-                    return new QuestionModel(json);
-                }
-
-                //otherwise use component model
-                return new ComponentModel(json);
-            },
-            url: courseFolder + 'components.' + jsonext
-        });
-    };
-
     function onLanguageChange(model, language) {
         Adapt.offlineStorage.set('lang', language);
-        Adapt.loadCourseData(language);
+        Adapt.loadCourseData(triggerDataReady, language);
     }
 
     function onDirectionChange(model, direction) {
@@ -201,7 +106,7 @@ require([
     */
     function onLoadCourseData() {
         if (Adapt.config.get('_activeLanguage')) {
-            Adapt.loadCourseData();
+            Adapt.loadCourseData(triggerDataReady);
         } else {
             Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
         }

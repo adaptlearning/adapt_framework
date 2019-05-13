@@ -1,7 +1,14 @@
 define([
     'core/js/wait',
+    'core/js/adaptCollection',
+    'core/js/models/articleModel',
+    'core/js/models/blockModel',
+    'core/js/models/contentObjectModel',
+    'core/js/models/componentModel',
+    'core/js/models/courseModel',
+    'core/js/models/questionModel',
     'core/js/models/lockingModel'
-], function(Wait) {
+], function(Wait, AdaptCollection, ArticleModel, BlockModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel) {
 
     var AdaptModel = Backbone.Model.extend({
         loadScript: window.__loadScript,
@@ -128,6 +135,96 @@ define([
                 return;
             }
             this.trigger('plugins:ready');
+        },
+
+        checkDataIsLoaded: function(callback, newLanguage) {
+            if (this.contentObjects.models.length > 0 &&
+                this.articles.models.length > 0 &&
+                this.blocks.models.length > 0 &&
+                this.components.models.length > 0 &&
+                this.course.get('_id')) {
+
+                this.mapAdaptIdsToObjects();
+
+                this.log.debug('Firing app:dataLoaded');
+
+                try {
+                    this.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
+                } catch(e) {
+                    this.log.error('Error during app:dataLoading trigger', e);
+                }
+
+                this.setupMapping();
+
+                this.wait.queue(function() {
+                    callback(newLanguage);
+                });
+
+            }
+        },
+
+        loadCourseData: function(callback, newLanguage) {
+            this.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
+                this.checkDataIsLoaded(callback, newLanguage);
+            }.bind(this));
+
+            // All code that needs to run before adapt starts should go here
+            var language = this.config.get('_activeLanguage');
+            var jsonext = this.build.get('jsonext');
+            var courseFolder = 'course/' + language +'/';
+
+            $('html').attr('lang', language);
+
+            this.course = new CourseModel(null, {url:courseFolder + 'course.'+jsonext, reset:true});
+
+            this.contentObjects = new AdaptCollection(null, {
+                model: ContentObjectModel,
+                url: courseFolder +'contentObjects.'+jsonext
+            });
+
+            this.articles = new AdaptCollection(null, {
+                model: ArticleModel,
+                url: courseFolder + 'articles.'+jsonext
+            });
+
+            this.blocks = new AdaptCollection(null, {
+                model: BlockModel,
+                url: courseFolder + 'blocks.'+jsonext
+            });
+
+            this.components = new AdaptCollection(null, {
+                model: function(json) {
+
+                    //use view+model object
+                    var ViewModelObject = this.componentStore[json._component];
+
+                    if(!ViewModelObject) {
+                        throw new Error('One or more components of type "'+json._component+'" were included in the course - but no component of that type is installed...');
+                    }
+
+                    //if model defined for component use component model
+                    if (ViewModelObject.model) {
+                        return new ViewModelObject.model(json);
+                    }
+
+                    var View = ViewModelObject.view || ViewModelObject;
+                    //if question type use question model
+                    if (View._isQuestionType) {
+                        return new QuestionModel(json);
+                    }
+
+                    //otherwise use component model
+                    return new ComponentModel(json);
+                },
+                url: courseFolder + 'components.' + jsonext
+            });
+        },
+
+        mapAdaptIdsToObjects: function () {
+            this.contentObjects._byAdaptID = this.contentObjects.groupBy('_id');
+            this.articles._byAdaptID = this.articles.groupBy('_id');
+            this.blocks._byAdaptID = this.blocks.groupBy('_id');
+            this.components._byAdaptID = this.components.groupBy('_id');
         },
 
         /**
