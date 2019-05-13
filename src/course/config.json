@@ -48,10 +48,6 @@
         "_isEnabled": false,
         "_limitToSelector": ""
     },
-    "_devtools": {
-        "_isEnabled": true,
-        "_theme": "theme-dark"
-    },
     "build": {
     }
 }
