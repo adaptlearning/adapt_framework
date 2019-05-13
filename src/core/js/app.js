@@ -28,12 +28,12 @@ require([
 ], function (Adapt, AdaptCollection, StartController, BuildModel, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel, NavigationView) {
 
     // Append loading template and show
-    window.Handlebars = _.extend(require("handlebars"), window.Handlebars);
+    window.Handlebars = _.extend(require('handlebars'), window.Handlebars);
 
     var template = Handlebars.templates['loading'];
     $('body').append(template());
 
-    Adapt.build = new BuildModel(null, {url: "adapt/js/build.min.js", reset:true});
+    Adapt.build = new BuildModel(null, {url: 'adapt/js/build.min.js', reset:true});
 
     // This function is called anytime a course object is loaded
     // Once all course files are loaded trigger events and call Adapt.initialize
@@ -88,26 +88,26 @@ require([
             Adapt.log.error('Error during app:dataReady trigger', e);
         }
 
-        Adapt.wait.queue(triggerInitialize);
+        Adapt.wait.queue(triggerInit);
 
     }
 
-    function triggerInitialize() {
-        Adapt.log.debug('Calling Adapt.initialize');
+    function triggerInit() {
+        Adapt.log.debug('Calling Adapt.init');
 
         addNavigationBar();
 
-        Adapt.initialize();
+        Adapt.init();
 
         Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
     }
 
     function addNavigationBar() {
 
-        var adaptConfig = Adapt.course.get("_navigation");
+        var adaptConfig = Adapt.course.get('_navigation');
 
         if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
-            Adapt.trigger("navigation:initialize");
+            Adapt.trigger('navigation:initialize');
             return;
         }
 
@@ -116,10 +116,10 @@ require([
     }
 
     function mapAdaptIdsToObjects () {
-        Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy("_id");
-        Adapt.articles._byAdaptID = Adapt.articles.groupBy("_id");
-        Adapt.blocks._byAdaptID = Adapt.blocks.groupBy("_id");
-        Adapt.components._byAdaptID = Adapt.components.groupBy("_id");
+        Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy('_id');
+        Adapt.articles._byAdaptID = Adapt.articles.groupBy('_id');
+        Adapt.blocks._byAdaptID = Adapt.blocks.groupBy('_id');
+        Adapt.components._byAdaptID = Adapt.components.groupBy('_id');
     }
 
     // This function is called when the config model triggers 'configModel:loadCourseData'
@@ -132,26 +132,26 @@ require([
 
         // All code that needs to run before adapt starts should go here
         var language = Adapt.config.get('_activeLanguage');
-        var jsonext = Adapt.build.get("jsonext");
-        var courseFolder = "course/" + language +"/";
+        var jsonext = Adapt.build.get('jsonext');
+        var courseFolder = 'course/' + language +'/';
 
-        $('html').attr("lang", language);
+        $('html').attr('lang', language);
 
-        Adapt.course = new CourseModel(null, {url:courseFolder + "course."+jsonext, reset:true});
+        Adapt.course = new CourseModel(null, {url:courseFolder + 'course.'+jsonext, reset:true});
 
         Adapt.contentObjects = new AdaptCollection(null, {
             model: ContentObjectModel,
-            url: courseFolder +"contentObjects."+jsonext
+            url: courseFolder +'contentObjects.'+jsonext
         });
 
         Adapt.articles = new AdaptCollection(null, {
             model: ArticleModel,
-            url: courseFolder + "articles."+jsonext
+            url: courseFolder + 'articles.'+jsonext
         });
 
         Adapt.blocks = new AdaptCollection(null, {
             model: BlockModel,
-            url: courseFolder + "blocks."+jsonext
+            url: courseFolder + 'blocks.'+jsonext
         });
 
         Adapt.components = new AdaptCollection(null, {
@@ -178,7 +178,7 @@ require([
                 //otherwise use component model
                 return new ComponentModel(json);
             },
-            url: courseFolder + "components."+jsonext
+            url: courseFolder + 'components.' + jsonext
         });
     };
 
@@ -208,8 +208,8 @@ require([
     }
 
     function onBuildDataLoaded() {
-        $('html').attr("data-adapt-framework-version", Adapt.build.get('package').version);
-        Adapt.config = new ConfigModel(null, {url: "course/config."+Adapt.build.get("jsonext"), reset:true});
+        $('html').attr('data-adapt-framework-version', Adapt.build.get('package').version);
+        Adapt.config = new ConfigModel(null, {url: 'course/config.' + Adapt.build.get('jsonext'), reset:true});
         Adapt.config.on({
             'change:_activeLanguage': onLanguageChange,
             'change:_defaultDirection': onDirectionChange
