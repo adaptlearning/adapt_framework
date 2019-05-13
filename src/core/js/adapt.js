@@ -117,12 +117,12 @@ define([
 
         },
 
-        isWaitingForPlugins:function() {
+        isWaitingForPlugins: function() {
             this.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future");
             return this.wait.isWaiting();
         },
 
-        checkPluginsReady:function() {
+        checkPluginsReady: function() {
             this.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future");
             if (this.isWaitingForPlugins()) {
                 return;
