@@ -1,5 +1,6 @@
 define([
-    'core/js/wait'
+    'core/js/wait',
+    'core/js/models/lockingModel'
 ], function(Wait) {
 
     var AdaptModel = Backbone.Model.extend({
