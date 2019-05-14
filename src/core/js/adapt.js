@@ -1,20 +1,12 @@
 define([
-    'core/js/wait',
-    'core/js/adaptCollection',
-    'core/js/models/articleModel',
-    'core/js/models/blockModel',
-    'core/js/models/contentObjectModel',
-    'core/js/models/componentModel',
-    'core/js/models/courseModel',
-    'core/js/models/questionModel',
-    'core/js/models/lockingModel'
-], function(Wait, AdaptCollection, ArticleModel, BlockModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel) {
+    'core/js/wait'
+], function(Wait) {
 
     var AdaptModel = Backbone.Model.extend({
+
         loadScript: window.__loadScript,
         location: {},
         componentStore: {},
-        mappedIds: {},
 
         defaults: {
             _canScroll: true, //to stop scrollTo behaviour,
@@ -137,96 +129,6 @@ define([
             this.trigger('plugins:ready');
         },
 
-        checkDataIsLoaded: function(callback, newLanguage) {
-            if (this.contentObjects.models.length > 0 &&
-                this.articles.models.length > 0 &&
-                this.blocks.models.length > 0 &&
-                this.components.models.length > 0 &&
-                this.course.get('_id')) {
-
-                this.mapAdaptIdsToObjects();
-
-                this.log.debug('Firing app:dataLoaded');
-
-                try {
-                    this.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
-                } catch(e) {
-                    this.log.error('Error during app:dataLoading trigger', e);
-                }
-
-                this.setupMapping();
-
-                this.wait.queue(function() {
-                    callback(newLanguage);
-                });
-
-            }
-        },
-
-        loadCourseData: function(callback, newLanguage) {
-            this.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
-                this.checkDataIsLoaded(callback, newLanguage);
-            }.bind(this));
-
-            // All code that needs to run before adapt starts should go here
-            var language = this.config.get('_activeLanguage');
-            var jsonext = this.build.get('jsonext');
-            var courseFolder = 'course/' + language +'/';
-
-            $('html').attr('lang', language);
-
-            this.course = new CourseModel(null, {url:courseFolder + 'course.'+jsonext, reset:true});
-
-            this.contentObjects = new AdaptCollection(null, {
-                model: ContentObjectModel,
-                url: courseFolder +'contentObjects.'+jsonext
-            });
-
-            this.articles = new AdaptCollection(null, {
-                model: ArticleModel,
-                url: courseFolder + 'articles.'+jsonext
-            });
-
-            this.blocks = new AdaptCollection(null, {
-                model: BlockModel,
-                url: courseFolder + 'blocks.'+jsonext
-            });
-
-            this.components = new AdaptCollection(null, {
-                model: function(json) {
-
-                    //use view+model object
-                    var ViewModelObject = this.componentStore[json._component];
-
-                    if(!ViewModelObject) {
-                        throw new Error('One or more components of type "'+json._component+'" were included in the course - but no component of that type is installed...');
-                    }
-
-                    //if model defined for component use component model
-                    if (ViewModelObject.model) {
-                        return new ViewModelObject.model(json);
-                    }
-
-                    var View = ViewModelObject.view || ViewModelObject;
-                    //if question type use question model
-                    if (View._isQuestionType) {
-                        return new QuestionModel(json);
-                    }
-
-                    //otherwise use component model
-                    return new ComponentModel(json);
-                },
-                url: courseFolder + 'components.' + jsonext
-            });
-        },
-
-        mapAdaptIdsToObjects: function () {
-            this.contentObjects._byAdaptID = this.contentObjects.groupBy('_id');
-            this.articles._byAdaptID = this.articles.groupBy('_id');
-            this.blocks._byAdaptID = this.blocks.groupBy('_id');
-            this.components._byAdaptID = this.components.groupBy('_id');
-        },
-
         /**
          * Allows a selector to be passed in and Adapt will navigate to this element
          * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
@@ -296,22 +198,6 @@ define([
             return object.view || object;
         },
 
-        setupMapping: function() {
-            this.mappedIds = {};
-
-            // Setup course Id
-            this.mappedIds[this.course.get('_id')] = 'course';
-
-            var collections = ['contentObjects', 'articles', 'blocks', 'components'];
-
-            collections.forEach(function(collection) {
-                this[collection].models.forEach(function(model) {
-                    var id = model.get('_id');
-                    this.mappedIds[id] = collection;
-                }.bind(this));
-            }.bind(this));
-        },
-
         /**
          * Looks up which collection a model belongs to
          * @param {string} id The id of the item you want to look up e.g. `"co-05"`
@@ -323,7 +209,7 @@ define([
          * - "components"
          */
         mapById: function(id) {
-            return this.mappedIds[id];
+            return this.data.mapById(id);
         },
 
         /**
@@ -332,18 +218,7 @@ define([
          * @return {Backbone.Model}
          */
         findById: function(id) {
-            if (id === this.course.get('_id')) {
-                return this.course;
-            }
-
-            var collectionType = this.mapById(id);
-
-            if (!collectionType) {
-                console.warn('Adapt.findById() unable to find collection type for id: ' + id);
-                return;
-            }
-
-            return this[collectionType]._byAdaptID[id][0];
+            return this.data.findById(id);
         },
 
         /**
@@ -388,6 +263,7 @@ define([
                 this.trigger('postRemove');
             }.bind(this));
         }
+
     });
 
     return new AdaptModel();
