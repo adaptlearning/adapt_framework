@@ -199,9 +199,9 @@ define([
 
         whenReady: function() {
             if (this.isReady) return Promise.resolve();
-            return new Promise((resolve)=>{
+            return new Promise(function (resolve) {
                 this.once("ready", resolve);
-            });
+            }.bind(this));
         },
 
         /**

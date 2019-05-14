@@ -62,6 +62,7 @@
                 }
             },
             paths: {
+                promise: 'libraries/promise-polyfill.min',
                 jquery: 'libraries/jquery.min',
                 underscore: 'libraries/underscore.min',
                 'underscore.results': 'libraries/underscore.results',
@@ -107,6 +108,7 @@
     //6. Load foundation libraries and templates then load Adapt itself
     function loadFoundationLibraries() {
         require([
+            'promise',
             'underscore',
             'underscore.results',
             'backbone',

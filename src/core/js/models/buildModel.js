@@ -28,9 +28,9 @@ define([
 
         whenReady: function() {
             if (this.isLoaded) return Promise.resolve();
-            return new Promise((resolve)=>{
+            return new Promise(function (resolve) {
                 Adapt.once("buildModel:dataLoaded", resolve);
-            });
+            }.bind(this));
         }
 
     });
