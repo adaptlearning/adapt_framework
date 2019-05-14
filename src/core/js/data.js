@@ -194,6 +194,7 @@ define([
         },
 
         triggerInit: function() {
+            this.isReady = true;
             this.trigger("ready");
         },
 
