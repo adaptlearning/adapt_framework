@@ -195,13 +195,14 @@ define([
 
         triggerInit: function() {
             this.isReady = true;
-            this.trigger("ready");
+            this.trigger('ready');
         },
 
         whenReady: function() {
             if (this.isReady) return Promise.resolve();
+
             return new Promise(function (resolve) {
-                this.once("ready", resolve);
+                this.once('ready', resolve);
             }.bind(this));
         },
 
