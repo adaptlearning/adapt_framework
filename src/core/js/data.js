@@ -241,5 +241,5 @@ define([
 
     });
 
-    return Adapt.data = new Data();
+    return (Adapt.data = new Data());
 });
