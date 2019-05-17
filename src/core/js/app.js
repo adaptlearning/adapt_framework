@@ -21,8 +21,7 @@ require([
     // Append loading template and show
     window.Handlebars = _.extend(require('handlebars'), window.Handlebars);
 
-    var template = Handlebars.templates['loading'];
-    $('body').append(template());
+    $('body').append(Handlebars.templates.loading());
 
 
     Adapt.data.whenReady().then(function triggerInit() {
@@ -45,7 +44,5 @@ require([
         }
 
         Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-
     }
-
 });
