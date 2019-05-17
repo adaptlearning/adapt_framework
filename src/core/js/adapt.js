@@ -3,7 +3,7 @@ define([
     'core/js/models/lockingModel'
 ], function(Wait) {
 
-    var AdaptModel = Backbone.Model.extend({
+    var Adapt = Backbone.Model.extend({
 
         loadScript: window.__loadScript,
         location: {},
@@ -267,5 +267,5 @@ define([
 
     });
 
-    return new AdaptModel();
+    return new Adapt();
 });
