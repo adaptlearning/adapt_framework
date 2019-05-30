@@ -1,5 +1,12 @@
 ## [Unreleased][unreleased]
 
+## [4.2.0] - 2019-05-02
+### Added
+- Support for sharing courses with specific users ([#2345](https://github.com/adaptlearning/adapt_framework/issues/2345))
+- Support for authoring tool theme editor ([#2360](https://github.com/adaptlearning/adapt_framework/issues/2360))
+
+**Note: if using the authoring tool, this release requires you to be running version 0.8 or higher**
+
 ## [4.1.1] - 2019-04-09
 ### Fixed
 - Incorrect "Unknown" lesson status when completing assessment and course in different attempts ([#2398](https://github.com/adaptlearning/adapt_framework/issues/2398))
@@ -702,7 +709,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.1...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.1...v4.1.0
 [4.0.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.0...v4.0.1

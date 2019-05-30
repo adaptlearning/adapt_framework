@@ -4,7 +4,10 @@ define([
   'core/js/models/itemsComponentModel'
 ], function(Adapt, QuestionModel, ItemsComponentModel) {
 
-  var BlendedModel = QuestionModel.extend(ItemsComponentModel.prototype);
+  var ItemsComponentModelFunctions = _.extendOwn({}, ItemsComponentModel.prototype);
+  delete ItemsComponentModelFunctions.constructor;
+  var BlendedModel = QuestionModel.extend(ItemsComponentModelFunctions);
+
   var ItemsQuestionModel = BlendedModel.extend({
 
     init: function() {

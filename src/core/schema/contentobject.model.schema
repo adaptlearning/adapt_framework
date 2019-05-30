@@ -45,6 +45,14 @@
       "validators": [],
       "translatable": true
     },
+    "_htmlClassName": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "If set, this class will be applied to the <html> element whenever this is the active page in the course"
+    },
     "_graphic": {
       "type": "object",
       "title": "",

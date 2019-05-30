@@ -1,11 +1,12 @@
 {
     "name": "adapt_framework",
-    "version": "4.1.1",
+    "version": "4.2.0",
     "description": "Adapt Learning output framework",
     "repository": {
         "type": "git",
         "url": "git://github.com/adaptlearning/adapt_framework.git"
     },
+    "authoringTool": ">=0.8",
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/adaptlearning/adapt_framework/issues"
