@@ -34,7 +34,7 @@ module.exports = {
             '!<%= sourcedir %>templates/templates.js',
             '!<%= sourcedir %>core/js/scriptLoader.js',
             '!<%= sourcedir %>core/js/libraries/**/*.js',
-            '!<%= sourcedir %>extensions/*/libraries/**/*.js',
+            '!<%= sourcedir %>extensions/**/libraries/**/*.js',
             '!<%= sourcedir %>components/**/libraries/**/*.js',
             '!<%= sourcedir %>menu/<%= menu %>/libraries/**/*.js', 
             '!<%= sourcedir %>theme/<%= theme %>/libraries/**/*.js'
@@ -82,17 +82,17 @@ module.exports = {
         tasks: ['newer:copy:scriptLoader']
     },
     libraries: {
-        files: ['<%= sourcedir %>core/js/libraries/**/*'],
-        tasks: ['newer:copy:libraries']
-    },
-    required: {
         files: [
-            '<%= sourcedir %>extensions/*/required/**/*',
-            '<%= sourcedir %>extensions/*/libraries/**/*',
+            '<%= sourcedir %>core/js/libraries/**/*',
+            '<%= sourcedir %>extensions/**/libraries/**/*',
             '<%= sourcedir %>components/**/libraries/**/*',
             '<%= sourcedir %>menu/<%= menu %>/libraries/**/*',
             '<%= sourcedir %>theme/<%= theme %>/libraries/**/*'
         ],
-        tasks: 'newer:copy:required'
+        tasks: ['newer:copy:libraries']
+    },
+    required: {
+        files: ['<%= sourcedir %>extensions/*/required/**/*'],
+        tasks: ['newer:copy:required']
     }
 }
