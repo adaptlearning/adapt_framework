@@ -1,5 +1,8 @@
 ## [Unreleased][unreleased]
 
+## [2.4.1] - 2019-05-31
+- Removed buggy iOS fixes from jquery.a11y ([#1998](https://github.com/adaptlearning/adapt_framework/issues/1998))
+
 ## [2.4.0] - 2019-05-02
 ### Added
 - Support for sharing courses with specific users ([#2345](https://github.com/adaptlearning/adapt_framework/issues/2345))
@@ -598,7 +601,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.4.0...legacy
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v2.4.1...legacy
+[2.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v2.4.0...v2.4.1
+[2.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.3...v2.4.0
 [2.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.3...v2.4.0
 [2.3.3]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/adaptlearning/adapt_framework/compare/v2.3.1...v2.3.2
