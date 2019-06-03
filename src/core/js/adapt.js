@@ -21,6 +21,9 @@ define([
         },
 
         init: function() {
+
+            this.trigger('adapt:preInitialize');
+
             //wait until no more completion checking
             this.deferUntilCompletionChecked(function() {
 

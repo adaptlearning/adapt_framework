@@ -108,13 +108,13 @@
     //6. Load foundation libraries and templates then load Adapt itself
     function loadFoundationLibraries() {
         require([
+            'handlebars',
             'promise',
             'underscore',
             'underscore.results',
             'backbone',
             'backbone.controller',
             'backbone.controller.results',
-            'handlebars',
             'velocity',
             'imageReady',
             'inview',
@@ -123,12 +123,19 @@
             'a11y',
             'scrollTo',
             'bowser',
-            'enum',
+            'enum'
+        ], loadTemplates);
+    }
+
+    //7. Load templates after making handlebars context global
+    function loadTemplates(Handlebars) {
+        window.Handlebars = Handlebars;
+        require([
             'templates'
         ], loadAdapt);
     }
 
-    //7. Allow cross-domain AJAX then load Adapt
+    //8. Allow cross-domain AJAX then load Adapt
     function loadAdapt() {
         $.ajaxPrefilter(function( options ) {
             options.crossDomain = true;

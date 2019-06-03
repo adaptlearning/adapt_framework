@@ -1,6 +1,5 @@
 require([
     'core/js/adapt',
-    'core/js/views/navigationView',
     'core/js/accessibility',
     'core/js/data',
     'core/js/offlineStorage',
@@ -15,34 +14,18 @@ require([
     'core/js/helpers',
     'core/js/scrolling',
     'core/js/headings',
+    'core/js/navigation',
     'plugins'
-], function (Adapt, NavigationView) {
-
-    // Append loading template and show
-    window.Handlebars = _.extend(require('handlebars'), window.Handlebars);
+], function (Adapt) {
 
     $('body').append(Handlebars.templates.loading());
 
-
-    Adapt.data.whenReady().then(function triggerInit() {
+    Adapt.data.on("ready", function triggerInit() {
         Adapt.log.debug('Calling Adapt.init');
-
-        addNavigationBar();
 
         Adapt.init();
 
         Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
     });
 
-    function addNavigationBar() {
-
-        var adaptConfig = Adapt.course.get('_navigation');
-
-        if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
-            Adapt.trigger('navigation:initialize');
-            return;
-        }
-
-        Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-    }
 });
