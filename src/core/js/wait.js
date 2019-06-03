@@ -28,15 +28,15 @@ define(function() {
             this.stopTimer();
 
             this._timeoutHandlerId = setInterval(function() {
-              // Flush Adapt.wait due to timeout
-              while (this._waitCount > 0) {
-                // Trigger an end() for anything waiting.
-                this.end();
-              }
+                // Flush Adapt.wait due to timeout
+                while (this._waitCount > 0) {
+                    // Trigger an end() for anything waiting.
+                    this.end();
+                }
   
-              if (this._waitCount === 0) {
-                this.stopTimer();
-              }
+                if (this._waitCount === 0) {
+                    this.stopTimer();
+                }
             }.bind(this), this._timeoutInSeconds * 1000)
         },
 
@@ -45,7 +45,7 @@ define(function() {
          */
         stopTimer: function() {
             if (this._timeoutHandlerId) {
-              clearInterval(this._timeoutHandlerId);
+                clearInterval(this._timeoutHandlerId);
             }
         },
 
@@ -67,6 +67,8 @@ define(function() {
                 this._callbackHandle = null;
             }
 
+            this.startTimer();
+
             return this;
 
         },
@@ -83,6 +85,10 @@ define(function() {
             }
 
             this._waitCount--;
+
+            if (this._waitCount === 0) {
+                this.stopTimer();
+            }
 
             if (this.isWaiting()) {
                 return this;
@@ -129,7 +135,7 @@ define(function() {
 
             this.begin();
             _.defer(function() {
-                _.once(callback(this.end));
+                callback(_.once(this.end));
             }.bind(this));
 
             return this;
