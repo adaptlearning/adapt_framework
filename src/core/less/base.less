@@ -225,6 +225,32 @@
     }
 }
 
+.component-left {
+    @media all and (min-width:(@device-width-medium + 1px)) {
+      .dir-rtl & {
+        float: right;
+
+        .component-inner {
+          margin-right: inherit;
+          margin-left: 5%;
+        }
+      }
+    }
+}
+
+.component-right {
+    @media all and (min-width:(@device-width-medium + 1px)) {
+      .dir-rtl & {
+        float: left;
+
+        .component-inner {
+          margin-left: inherit;
+          margin-right: 5%;
+        }
+      }
+    }
+}
+
 /*TO ALLOW CHILDREN ELEMENTS TO BE POSITIONED ABSOLUTELY*/
 .component { position:relative; }
 .block { position: relative; }
