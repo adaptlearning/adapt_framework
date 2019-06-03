@@ -549,21 +549,21 @@ define([
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
-            window.addEventListener("wheel", nativePreventScroll, { passive:false });
-            window.addEventListener("mousewheel", nativePreventScroll, { passive:false });
-            document.addEventListener("wheel", nativePreventScroll, { passive:false });
-            document.addEventListener("mousewheel", nativePreventScroll, { passive:false });
+            window.addEventListener("wheel", nativePreventScroll, { passive: false });
+            window.addEventListener("mousewheel", nativePreventScroll, { passive: false });
+            document.addEventListener("wheel", nativePreventScroll, { passive: false });
+            document.addEventListener("mousewheel", nativePreventScroll, { passive: false });
             $(window).on("touchstart", onScrollStartCapture); // mobile
-            window.addEventListener("touchmove", nativePreventScroll, { passive:false }); // mobile
+            window.addEventListener("touchmove", nativePreventScroll, { passive: false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
 
         function a11y_removeScrollListeners() {
-            window.removeEventListener("wheel", nativePreventScroll, { passive:false });
-            window.removeEventListener("mousewheel", nativePreventScroll, { passive:false });
-            document.removeEventListener("wheel", nativePreventScroll, { passive:false });
-            document.removeEventListener("mousewheel", nativePreventScroll, { passive:false });
+            window.removeEventListener("wheel", nativePreventScroll);
+            window.removeEventListener("mousewheel", nativePreventScroll);
+            document.removeEventListener("wheel", nativePreventScroll);
+            document.removeEventListener("mousewheel", nativePreventScroll);
             $(window).off("touchstart", onScrollStartCapture); // mobile
             window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
