@@ -20,7 +20,7 @@ require([
 
     $('body').append(Handlebars.templates.loading());
 
-    Adapt.data.on("ready", function triggerInit() {
+    Adapt.data.on('ready', function triggerInit() {
         Adapt.log.debug('Calling Adapt.init');
 
         Adapt.init();

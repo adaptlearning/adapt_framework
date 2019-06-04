@@ -7,7 +7,7 @@ define([
     var NavigationController = Backbone.Controller.extend({
 
         initialize: function() {
-            this.listenTo(Adapt, "adapt:preInitialize", this.addNavigationBar);
+            this.listenTo(Adapt, 'adapt:preInitialize', this.addNavigationBar);
         },
 
         addNavigationBar() {
