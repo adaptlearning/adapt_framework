@@ -2,10 +2,14 @@ const EventEmitter = require('events');
 const bridge = require('./bridge');
 
 module.exports = class AdaptBuild extends EventEmitter {
-    constructor(config = { outputConfig: 'event' }) {
+    constructor(options = {}) {
         super();
 
-        bridge.setConfig(config);
+        if (!options.outputConfig) {
+            options.outputConfig = 'event'
+        }
+
+        bridge.setOptions(options);
     }
 
     get tasks() {

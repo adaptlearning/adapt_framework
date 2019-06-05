@@ -3,10 +3,11 @@
 const grunt = require('grunt');
 require('../../Gruntfile')(grunt);
 
-const allowedConfig = [
+const allowedOptions = [
     'outputConfig',
     'sourcedir',
     'coursedir',
+    'outputcoursedir',
     'outputdir'
 ];
 
@@ -15,10 +16,10 @@ module.exports = {
      * Set grunt options from a given hash
      * @param {object} options
      */
-    setConfig(options) {
+    setOptions(options) {
         for (let key in options) {
-            if (allowedConfig.includes(key)) {
-                grunt.config(key, options[key]);
+            if (allowedOptions.includes(key)) {
+                grunt.option(key, options[key]);
             }
         }
     },
