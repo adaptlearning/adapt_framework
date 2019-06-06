@@ -238,6 +238,33 @@ define([
 
   };
 
+  Adapt.findViewByModelId = function(id) {
+    var model = Adapt.findById(id);
+    if (!model) {
+      return;
+    }
+
+    if (model === Adapt.parentView.model) return Adapt.parentView;
+
+    var idPathToView = [id];
+    var currentLocationId = Adapt.location._currentId;
+    var currentLocationModel = _.find(model.getAncestorModels(), function(model) {
+      var modelId = model.get('_id');
+      if (modelId === currentLocationId) return true;
+      idPathToView.unshift(modelId);
+    });
+
+    if (!currentLocationModel) {
+      return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id);
+    }
+
+    var foundView = _.reduce(idPathToView, function(view, currentId) {
+      return view && view.childViews && view.childViews[currentId];
+    }, Adapt.parentView);
+
+    return foundView;
+  };
+
   // Relative strings describe the number and type of hops in the model hierarchy
   //
   // "@component +1" means to move one component forward from the current model

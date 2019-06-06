@@ -22,6 +22,11 @@ define([
         '_isReady': false
       });
       this._isRemoved = false;
+
+      if (Adapt.location._currentId === this.model.get('_id')) {
+        Adapt.parentView = this;
+      }
+
       this.preRender();
       this.render();
       this.setupOnScreenHandler();
@@ -76,34 +81,41 @@ define([
       var nthChild = 0;
       var children = this.model.getChildren();
       var models = children.models;
+      this.childViews = {};
       for (var i = 0, len = models.length; i < len; i++) {
         var model = models[i];
-        if (model.get('_isAvailable') && !model.get('_isHidden')) {
-          nthChild ++;
+        if (!model.get('_isAvailable')) continue;
 
-          var ChildView;
-          var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+        nthChild ++;
+        model.set("_nthChild", nthChild);
 
-          //use view+model object
-          if (ViewModelObject.view) ChildView = ViewModelObject.view;
-          //use view only object
-          else ChildView = ViewModelObject;
+        var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+        var ChildView = ViewModelObject.view || ViewModelObject;
 
-          if (ChildView) {
-            var $parentContainer = this.$(this.constructor.childContainer);
-            model.set("_nthChild", nthChild);
-            $parentContainer.append(new ChildView({model:model}).$el);
-          } else {
-            throw 'The component \'' + models[i].attributes._id + '\'' +
-                  ' (\'' + models[i].attributes._component + '\')' +
-                  ' has not been installed, and so is not available in your project.';
-          }
+        if (!ChildView) {
+          throw 'The component \'' + models[i].attributes._id + '\'' +
+          ' (\'' + models[i].attributes._component + '\')' +
+          ' has not been installed, and so is not available in your project.';
         }
 
-        if (model.get('_isHidden')) {
-          model.set('_isReady', true);
-        }
+        var $parentContainer = this.$(this.constructor.childContainer);
+        var childView = new ChildView({ model: model });
+
+        this.childViews[model.get('_id')] = childView;
+
+        $parentContainer.append(childView.$el);
       }
+    },
+
+    findDescendantViews: function(isParentFirst) {
+      var descendants = [];
+      this.childViews && _.each(this.childViews, function(view) {
+        if (isParentFirst) descendants.push(view);
+        var children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
+        if (children) descendants.push.apply(descendants, children);
+        if (!isParentFirst) descendants.push(view);
+      });
+      return descendants;
     },
 
     setReadyStatus: function() {
@@ -182,8 +194,12 @@ define([
       this.$el.addClass('u-display-none');
     },
 
-    onIsCompleteChange:function(model, isComplete){
+    onIsCompleteChange: function(model, isComplete){
       this.$el.toggleClass('is-complete', isComplete);
+    },
+
+    getChildViews: function() {
+      return this.childViews;
     }
 
   },{

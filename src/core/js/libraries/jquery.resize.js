@@ -129,6 +129,14 @@
 
     },
 
+    force: function() {
+
+      loop.lastStartEvent = (new Date()).getTime();
+      loop.main(true);
+      loop.repeat();
+
+    },
+
     repeat: function() {
 
       loop.stop();
@@ -158,16 +166,16 @@
       return true;
     },
 
-    main: function() {
+    main: function(force) {
 
-      if (loop.isThrottled()) {
+      if (!force && loop.isThrottled()) {
         loop.repeat();
         return;
       }
 
       loop.lastMain = (new Date()).getTime();
 
-      if (loop.hasExpired()) {
+      if (!force && loop.hasExpired()) {
         loop.stop();
         return;
       }
@@ -254,7 +262,8 @@
 
   //attach event handlers
   $(window).on({
-    "touchmove scroll mousedown keydown resize": loop.start
+    "touchmove scroll mousedown keydown": loop.start, // asynchronous
+    "resize": loop.force // synchronous
   });
   $(measurements.featureDetect);
 
