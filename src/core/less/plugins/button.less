@@ -8,13 +8,11 @@
   }
 
   &-text {
-    padding: 0.5em 1.5em;
-    // min-height: 3em; // should value be double button text line height?
-    // padding: 0 2em;
+    padding: @btn-padding-ver @btn-padding-hoz;
   }
 
   &-question {
-    padding: 0.5em 1.5em;
+    padding: @btn-padding-ver @btn-padding-hoz;
   }
 }
 // --------------------------------------------------
@@ -30,11 +28,23 @@
   }
 
   &__action {
-    width: 50%;
+    width: calc(~'50% - @{btn-padding-hoz}');
+    margin-right: @btn-padding-hoz;
+
+    .dir-rtl & {
+      margin-right: inherit;
+      margin-left: @btn-padding-hoz;
+    }
   }
 
   &__feedback {
-    width: 50%;
+    width: calc(~'50% - @{btn-padding-hoz}');
+    margin-left: @btn-padding-hoz;
+
+    .dir-rtl & {
+      margin-left: inherit;
+      margin-right: @btn-padding-hoz;
+    }
   }
 
   &__action.is-full-width,
@@ -73,16 +83,22 @@
   // --------------------------------------------------
   // Button marking icon states
   // --------------------------------------------------
-  &__marking.is-correct .icon {
-    .icon-tick;
+  &__marking.is-correct {
     background-color: @validation-success;
     color: @validation-success-inverted;
   }
 
-  &__marking.is-incorrect .icon {
-    .icon-cross;
+  &__marking.is-correct .icon {
+    .icon-tick;
+  }
+
+  &__marking.is-incorrect {
     background-color: @validation-error;
     color: @validation-error-inverted;
+  }
+
+  &__marking.is-incorrect .icon {
+    .icon-cross;
   }
   // --------------------------------------------------
 }

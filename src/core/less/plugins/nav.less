@@ -1,21 +1,35 @@
+// --------------------------------------------------
+// Add top padding equal to the height of the navigation bar
+// --------------------------------------------------
+#wrapper {
+  padding-top: @navigation-height;
+}
+// --------------------------------------------------
+
 .nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 80;
+  background-color: red;
+
+  &__inner {
+    .l-container-responsive(@max-width);
+  }
+
   &__back-btn {
-    .u-float-left();
+    .u-float-left;
+  }
+
+  &__back-btn .icon {
+    .icon-controls-small-left;
   }
 
   &__drawer-btn {
-    .u-float-right();
-  }
-
-  // --------------------------------------------------
-  // Navigation button icons
-  // --------------------------------------------------
-  &__back-btn .icon {
-    .icon-controls-small-left;
+    .u-float-right;
   }
 
   &__drawer-btn .icon {
     .icon-list;
   }
-  // --------------------------------------------------
 }

@@ -7,6 +7,10 @@
     background-color: @background-color-inverted;
   }
 
+  &__popup-inner {
+    .l-container-responsive(@device-width-large);
+  }
+
   // --------------------------------------------------
   // Notify icons
   // --------------------------------------------------
@@ -20,6 +24,43 @@
 
   &__icon .icon.is-alert {
     .icon-warning;
+  }
+  // --------------------------------------------------
+
+
+  // --------------------------------------------------
+  // Sets up full width title and 50/50 text/image split below
+  // --------------------------------------------------
+  @media (min-width: @device-width-medium) {
+    &__content.has-image {
+      .notify__content-inner {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .notify__title {
+        width: 100%;
+      }
+
+      .notify__body,
+      .notify__image-container {
+        width: 50%;
+      }
+    }
+  }
+  // --------------------------------------------------
+
+
+  // --------------------------------------------------
+  // Left aligns image in notify pop up
+  // --------------------------------------------------
+  @media (min-width: @device-width-medium) {
+    &__content.align-image-left {
+      .notify__content-inner {
+        flex-direction: row-reverse;
+      }
+    }
   }
   // --------------------------------------------------
 }

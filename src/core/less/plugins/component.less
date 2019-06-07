@@ -1,0 +1,36 @@
+.component {
+  width: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    @media (min-width: @device-width-medium) {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: @device-width-medium) {
+    &.is-left {
+      padding-right: 1%;
+      width: 50%;
+
+      .dir-rtl & {
+        padding-right: inherit;
+        padding-left: 1%;
+      }
+    }
+
+    &.is-right {
+      padding-left: 1%;
+      width: 50%;
+
+      .dir-rtl & {
+        padding-left: inherit;
+        padding-right: 1%;
+      }
+    }
+  }
+}
