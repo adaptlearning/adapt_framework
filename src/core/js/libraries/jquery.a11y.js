@@ -8,7 +8,7 @@ define([
   // JQUERY FILTERS FOR ELEMENTS
     var domFilters = {
       "globalTabIndexElementFilter": ':not(.a11y-ignore):not([data-a11y-force-focus])',
-      "focusableElementsFilter": ":visible:not(.disabled):not(:disabled):not([aria-hidden=true]):not(.a11y-ignore-focus)",
+      "focusableElementsFilter": ":visible:not(.is-disabled):not(:disabled):not([aria-hidden=true]):not(.a11y-ignore-focus)",
       "ariaLabelElementsFilter": ":not( .a11y-ignore-aria [aria-label] )",
       "ariaHiddenParentsFilter": ":not(#wrapper):not(body)"
     };
@@ -734,7 +734,7 @@ define([
           $item.removeAttr("aria-hidden").removeClass("aria-hidden");
           $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
           if (withDisabled) {
-            $item.removeAttr("disabled").removeClass("disabled");
+            $item.removeAttr("disabled").removeClass("is-disabled");
           }
         } else if (enabled) {
           $item.attr({
@@ -742,7 +742,7 @@ define([
           }).removeAttr("aria-hidden").removeClass("aria-hidden");
           $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
           if (withDisabled) {
-            $item.removeAttr("disabled").removeClass("disabled");
+            $item.removeAttr("disabled").removeClass("is-disabled");
           }
         } else {
           $item.attr({
@@ -750,7 +750,7 @@ define([
             "aria-hidden": "true"
           }).addClass("aria-hidden");
           if (withDisabled) {
-            $item.attr("disabled","disabled").addClass("disabled");
+            $item.attr("disabled","disabled").addClass("is-disabled");
           }
         }
 
