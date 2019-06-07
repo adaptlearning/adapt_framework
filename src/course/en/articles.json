@@ -5,8 +5,13 @@
         "_type": "article",
         "_classes": "",
         "title": "a-05",
-        "displayTitle": "",
-        "body": ""
+        "displayTitle": "article title",
+        "body": "article body",
+        "instruction": "article instruction",
+        "_pageLevelProgress": {
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": true
+        }
     },
     {
         "_id": "a-10",
@@ -14,8 +19,13 @@
         "_type": "article",
         "_classes": "",
         "title": "a-10",
-        "displayTitle": "",
-        "body": ""
+        "displayTitle": "article title",
+        "body": "article body",
+        "instruction": "article instruction",
+        "_pageLevelProgress": {
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": true
+        }
     },
     {
         "_id": "a-15",
@@ -37,7 +47,7 @@
             "_banks": {
                 "_isEnabled": true,
                 "_split": "2,2",
-                "_randomisation": true
+                "_randomisation": false
             },
             "_questions": {
                 "_resetType": "hard",
@@ -45,16 +55,30 @@
                 "_canShowMarking": false,
                 "_canShowModelAnswer": false
             },
-            "_isResetOnRevisit": true,
+            "_isResetOnRevisit": false,
             "_attempts": "infinite"
         },
         "_trickle": {
             "_isEnabled": true,
             "_button": {
                 "_isEnabled": true,
+                "_styleBeforeCompletion": "visible",
+                "_comment1": "hidden | visible",
+                "_styleAfterClick": "disabled",
+                "_comment2": "hidden | disabled | scroll",
+                "_isFullWidth": false,
+                "_autoHide": false,
+                "_className": "",
+                "_hasIcon": true,
                 "text": "Continue",
-                "startText": "Continue",
-                "finalText": "Continue"
+                "startText": "Begin",
+                "finalText": "Finish",
+                "_component": "trickle-button"
+            },
+            "_stepLocking": {
+                "_isEnabled": true,
+                "_isCompletionRequired": true,
+                "_isLockedOnRevisit": false
             }
         }
     },

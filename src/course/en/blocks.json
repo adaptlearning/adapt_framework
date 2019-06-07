@@ -5,10 +5,20 @@
         "_type": "block",
         "_classes": "",
         "title": "b-05",
-        "displayTitle": "display title",
-        "body": "body",
-        "instruction": "instruction",
-        "_trackingId": 0
+        "displayTitle": "block title",
+        "body": "block body",
+        "instruction": "block instruction",
+        "_trackingId": 0,
+        "_pageLevelProgress": {
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": true
+        },
+        "_onScreen": {
+            "_isEnabled": true,
+            "_classesBefore": "fade-in-bottom-before",
+            "_classes": "fade-in-bottom-after",
+            "_percentInviewVertical": 50
+        }
     },
     {
         "_id": "b-10",
@@ -16,9 +26,20 @@
         "_type": "block",
         "_classes": "",
         "title": "b-10",
-        "displayTitle": "",
-        "body": "",
-        "_trackingId": 1
+        "displayTitle": "block title",
+        "body": "block body",
+        "instruction": "block instruction",
+        "_trackingId": 1,
+        "_trickle": {
+            "_isEnabled": false,
+            "_button": {
+                "_isEnabled": true
+            }
+        },
+        "_pageLevelProgress": {
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": true
+        }
     },
     {
         "_id": "b-15",
@@ -26,9 +47,14 @@
         "_type": "block",
         "_classes": "",
         "title": "b-15",
-        "displayTitle": "",
-        "body": "",
-        "_trackingId": 2
+        "displayTitle": "block title",
+        "body": "block body",
+        "instruction": "block instruction",
+        "_trackingId": 2,
+        "_pageLevelProgress": {
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": true
+        }
     },
     {
         "_id": "b-20",
@@ -36,9 +62,14 @@
         "_type": "block",
         "_classes": "",
         "title": "b-20",
-        "displayTitle": "",
-        "body": "",
-        "_trackingId": 3
+        "displayTitle": "block title",
+        "body": "block body",
+        "instruction": "block instruction",
+        "_trackingId": 3,
+        "_pageLevelProgress": {
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": true
+        }
     },
     {
         "_id": "b-25",

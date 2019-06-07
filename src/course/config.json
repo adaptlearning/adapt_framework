@@ -44,6 +44,7 @@
         }
     },
     "_disableAnimationFor": [],
+    "_disableAnimation": false,
     "_scrollingContainer": {
         "_isEnabled": false,
         "_limitToSelector": ""
