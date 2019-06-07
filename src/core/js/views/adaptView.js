@@ -64,6 +64,10 @@ define([
 
       if (!onscreen || !onscreen._isEnabled) return;
 
+      this.$el
+        .addClass('has-animation')
+        .addClass(onscreen._classesBefore);
+
       this.$el.on('onscreen.adaptView', function (e, m) {
 
         if (!m.onscreen) return;
