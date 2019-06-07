@@ -1,7 +1,6 @@
 
 // body {
 //  -webkit-tap-highlight-color: rgba(0,0,0,0);
-//  .dir-rtl & { direction:rtl; }
 // }
 // a, button {-webkit-tap-highlight-color: rgba(0,0,0,0.2);}
 // .icon {
@@ -10,54 +9,89 @@
 // }
 
 
-
-
-
+// --------------------------------------------------
+// Screen sizings
+// --------------------------------------------------
 // html = 16px
-// 120em = 1920px
-// 87.5em = 1400px
-// 80em = 1280px
-// 56.25em = 900px
-// 47.5em = 760px
+
+// 20em = 320px
 // 32.5em = 520px
+// 47.5em = 760px
+// 56.25em = 900px
+// 80em = 1280px
+// 87.5em = 1400px
+// 120em = 1920px
 
-@device-width-large: unit(@adapt-device-large, em);
-@device-width-medium: unit(@adapt-device-medium, em);
 @device-width-small: unit(@adapt-device-small, em);
+@device-width-medium: unit(@adapt-device-medium, em);
+@device-width-large: unit(@adapt-device-large, em);
 
-//
 @max-width: 87.5em;
+// --------------------------------------------------
 
+// --------------------------------------------------
+// Icons
+// --------------------------------------------------
 @icon-size: 1.5em;
 @icon-padding: 1em;
+// --------------------------------------------------
 
+// --------------------------------------------------
+// Spacings
+// --------------------------------------------------
+@item-margin: 0.5em;
 @item-padding: 1em;
-@item-margin: 0.25em;
+// --------------------------------------------------
 
-//
+// --------------------------------------------------
+// Button padding
+// --------------------------------------------------
+@btn-padding-ver: 0.5em;
+@btn-padding-hoz: 1em;
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Duration
+// --------------------------------------------------
 @duration: 0.2s;
+// --------------------------------------------------
 
-
+// --------------------------------------------------
+// Colours
+// --------------------------------------------------
 @white: #fff;
 @black: #000;
 
-@pass: #378153;
-@fail: #da3510;
-
-@validation-success: @pass;
-@validation-success-inverted: @white;
-
-@validation-error: @fail;
-@validation-error-inverted: @white;
-
-@block-padding-ver: 4em;
-@block-padding-hoz: 0.5em;
+@green: #378153;
+@red: #da3510;
 
 @background-color: @black;
 @background-color-inverted: @white;
 
-// @block-padding: ;
+@validation-success: @green;
+@validation-success-inverted: @white;
 
+@validation-error: @red;
+@validation-error-inverted: @white;
+
+// --------------------------------------------------
+//
+// --------------------------------------------------
+@block-padding-ver: 4em;
+@block-padding-hoz: 0.5em;
+// --------------------------------------------------
+
+// --------------------------------------------------
+// --------------------------------------------------
 @navigation-height: @icon-size + (@icon-padding * 2);
+// --------------------------------------------------
 
+// --------------------------------------------------
+// --------------------------------------------------
 @focus-outline: 0; // deprecated - reverting to browser outline
+// --------------------------------------------------
+
+// --------------------------------------------------
+// --------------------------------------------------
+@drawer-width: 20em;
+// --------------------------------------------------
