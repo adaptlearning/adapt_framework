@@ -3,9 +3,9 @@
 
 <div class="page__inner">
 
-  {{#any displayTitle body instruction}}
+  {{#any displayTitle subTitle body instruction}}
   <div class="page__header">
-    <div class="page__header-inner clearfix">
+    <div class="page__header-inner">
 
       {{#if displayTitle}}
       <div class="page__title">
@@ -18,6 +18,14 @@
           {{{compile displayTitle}}}
         </div>
 
+      </div>
+      {{/if}}
+
+      {{#if subTitle}}
+      <div class="page__subtitle">
+        <div class="page__subtitle-inner">
+          {{{compile subTitle}}}
+        </div>
       </div>
       {{/if}}
 
