@@ -150,9 +150,9 @@ define([
         /**
          * Adds or removes `aria-hidden` attribute to elements.
          *
-         * @param {Object} $elements jQuery elements
+         * @param {Object} $elements
          * @param {boolean} [isHidden=true]
-         * @returns {Object} Returns original object.
+         * @returns {Object} Returns `Adapt.a11y`
          */
         toggleHidden: function($elements, isHidden) {
             $elements = $($elements);
@@ -168,6 +168,14 @@ define([
             return this;
         },
 
+        /**
+         * Adds or removes `aria-hidden` and `disabled` attributes and `disabled`
+         * classes to elements.
+         *
+         * @param {Object} $elements
+         * @param {boolean} [isHidden=true]
+         * @returns {Object} Returns `Adapt.a11y`
+         */
         toggleAccessibleEnabled: function($elements, isAccessibleEnabled) {
             this.toggleAccessible($elements, isAccessibleEnabled);
             this.toggleEnabled($elements, isAccessibleEnabled);
@@ -177,9 +185,9 @@ define([
         /**
          * Adds or removes `aria-hidden` attribute and disables `tabindex` on elements.
          *
-         * @param {boolean} [enabled=true]
-         * @param {boolean} [withDisabled =false]
-         * @returns {Object} Returns original object.
+         * @param {boolean} $elements
+         * @param {boolean} [isReadable=true]
+         * @returns {Object} Returns `Adapt.a11y`
          */
         toggleAccessible: function($elements, isReadable) {
             $elements = $($elements);
@@ -200,6 +208,13 @@ define([
             return this;
         },
 
+        /**
+         * Adds or removes `disabled` attribute and `disabled` class.
+         *
+         * @param {boolean} $elements
+         * @param {boolean} [isEnabled=true]
+         * @returns {Object} Returns `Adapt.a11y`
+         */
         toggleEnabled: function($elements, isEnabled) {
             $elements = $($elements);
             if ($elements.length === 0) return this;
@@ -215,7 +230,8 @@ define([
         /**
          * Find the first tabbable element after the specified element.
          *
-         * @param {*} $element
+         * @param {Object} $element
+         * @returns {Object}
          */
         findFirstTabbable: function($element) {
             $element = $($element).first();
@@ -225,7 +241,8 @@ define([
         /**
          * Find the first readable element after the specified element.
          *
-         * @param {*} $element
+         * @param {Object} $element
+         * @returns {Object}
          */
         findFirstReadable: function($element) {
             $element = $($element).first();
@@ -235,7 +252,8 @@ define([
         /**
          * Find all tabbable elements in the specified element.
          *
-         * @param {*} $element
+         * @param {Object} $element
+         * @returns {Object}
          */
         findTabbable: function($element) {
             var config = Adapt.a11y.config;
@@ -257,7 +275,7 @@ define([
         /**
          * Check if the element is natively or explicitly tabbable.
          *
-         * @param {*} $element
+         * @param {Object} $element
          * @returns {boolean}
          */
         isTabbable: function($element) {
@@ -268,6 +286,7 @@ define([
         /**
          * Check if the first item is readable by a screen reader.
          *
+         * @param {Object} $element
          * @param {boolean} [checkParents=true] Check if parents are inaccessible.
          * @returns {boolean}
          */
@@ -316,7 +335,7 @@ define([
          * not match or descend into this item, returning undefined means do not match,
          * but descend into this item.
          *
-         * @param {Object} $element jQuery element to start from
+         * @param {Object} $element
          * @param {string|function|undefined} selector
          * @returns {Object} Returns found descendant.
          */
@@ -492,22 +511,25 @@ define([
         /**
          * Assign focus to the next readable element.
          *
-         * @param {} $element
-         * @param {*} options
+         * @param {Object} $element
+         * @param {FocusOptions} options
+         * @returns {Object} Returns `Adapt.a11y`
          */
         focusNext: function($element, options) {
             options = new FocusOptions(options);
             $element = $($element).first();
             $element = Adapt.a11y.findFirstReadable($element);
             this.focus($element, options);
-            return $element;
+            return this;
         },
 
         /**
          * Assign focus to either the specified element if it is readable or the
-         * next readable element
-         * @param {A} $element
-         * @param {*} options
+         * next readable element.
+         *
+         * @param {Object} $element
+         * @param {FocusOptions} options
+         * @returns {Object} Returns `Adapt.a11y`
          */
         focusFirst: function($element, options) {
             options = new FocusOptions(options);
@@ -522,10 +544,11 @@ define([
         },
 
         /**
-         * Force focus to the specified element with/without a defer.
+         * Force focus to the specified element with/without a defer or scroll.
          *
-         * @param {} $element
-         * @param {*} options
+         * @param {Object} $element
+         * @param {FocusOptions} options
+         * @returns {Object} Returns `Adapt.a11y`
          */
         focus: function($element, options) {
             options = new FocusOptions(options);
@@ -614,22 +637,42 @@ define([
             return rtnText;
         },
 
+        /**
+         * @param {Object} $elements
+         * @returns {Object} Returns `Adapt.a11y`
+         */
         scrollEnable: function($elements) {
             this._scroll.enable($elements);
             return this;
         },
 
+        /**
+         * @param {Object} $elements
+         * @returns {Object} Returns `Adapt.a11y`
+         */
         scrollDisable: function($elements) {
             this._scroll.disable($elements);
             return this;
         },
 
+        /**
+         * To apply accessibilty handling to a tag, isolating the user.
+         *
+         * @param {Object} $popupElement Element encapsulating the popup.
+         * @returns {Object} Returns `Adapt.a11y`
+         */
         popupOpened: function($popupElement) {
             this._popup.opened($popupElement);
             this.trigger("popup:opened");
             return this;
         },
 
+        /**
+         * Remove the isolation applied which a call to `popupOpened`.
+         *
+         * @param {Object} [$focusElement] Element to move focus to.
+         * @returns {Object} Returns `Adapt.a11y`
+         */
         popupClosed: function($focusElement) {
             this._popup.closed($focusElement);
             this.trigger("popup:closed");

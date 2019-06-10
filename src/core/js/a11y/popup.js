@@ -22,7 +22,7 @@ define([
          */
         _focusStack: [],
         /**
-         * Hash of tabindex states for each tabbable elemen in the popup stack.
+         * Hash of tabindex states for each tabbable element in the popup stack.
          *
          * @type {Object}
          */
@@ -57,6 +57,7 @@ define([
          * restrict user interaction to the element specified.
          *
          * @param {Object} [$popupElement] Element encapulating the popup.
+         * @returns {Object} Returns `Adapt.a11y._popup`.
          */
         opened: function($popupElement) {
             // Capture currently active element or element specified
@@ -121,6 +122,7 @@ define([
          * attributes.
          *
          * @param {Object} [$focusElement] Element at which to move focus.
+         * @returns {Object} Returns `Adapt.a11y._popup`.
          */
         closed: function($focusElement) {
             var $previousFocusElement = this._removeLastPopupLayer();
