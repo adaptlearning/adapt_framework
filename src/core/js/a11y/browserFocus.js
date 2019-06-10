@@ -9,7 +9,7 @@ define([
     var BrowserFocus = Backbone.Controller.extend({
 
         initialize: function() {
-            _.bindAll(this, "_onBlur", "_onClick");
+            _.bindAll(this, '_onBlur', '_onClick');
             this.$body = $('body');
             this.listenTo(Adapt, {
                 'accessibility:ready': this._attachEventListeners
@@ -19,8 +19,8 @@ define([
         _attachEventListeners: function() {
             this.$body
                 .on('blur', '*', this._onBlur)
-                .on("blur", this._onBlur);
-            // "Capture" event attachment for click
+                .on('blur', this._onBlur);
+            // 'Capture' event attachment for click
             this.$body[0].addEventListener('click', this._onClick, true);
         },
 
@@ -46,7 +46,7 @@ define([
             if (event.target !== event.currentTarget) return;
             // Check if element losing focus is losing focus
             // due to the addition of a disabled class
-            if (!$element.is("[disabled]")) return;
+            if (!$element.is('[disabled]')) return;
             // Move focus to next readable element
             Adapt.a11y.focusNext($element);
         },

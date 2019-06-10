@@ -36,28 +36,28 @@ define([
         },
 
         equals: function(value, text, block) {
-            return helpers.compare.call(this, value, "==", text, block);
+            return helpers.compare.call(this, value, '==', text, block);
         },
 
         compare: function(value, operator, text, block) {
             // Comparison operators
             switch (operator) {
-            case "===":
+            case '===':
                 if (value === text) return block.fn(this);
                 break;
-            case "=": case "==":
+            case '=': case '==':
                 if (value == text) return block.fn(this);
                 break;
-            case ">=":
+            case '>=':
                 if (value >= text) return block.fn(this);
                 break;
-            case "<=":
+            case '<=':
                 if (value <= text) return block.fn(this);
                 break;
-            case ">":
+            case '>':
                 if (value > text) return block.fn(this);
                 break;
-            case "<":
+            case '<':
                 if (value < text) return block.fn(this);
                 break;
             }
@@ -69,11 +69,11 @@ define([
             lvalue = parseFloat(lvalue);
             rvalue = parseFloat(rvalue);
             switch (operator) {
-            case "+": return lvalue + rvalue;
-            case "-": return lvalue - rvalue;
-            case "*": return lvalue * rvalue;
-            case "/": return lvalue / rvalue;
-            case "%": return lvalue % rvalue;
+            case '+': return lvalue + rvalue;
+            case '-': return lvalue - rvalue;
+            case '*': return lvalue * rvalue;
+            case '/': return lvalue / rvalue;
+            case '%': return lvalue % rvalue;
             }
         },
 
@@ -82,7 +82,7 @@ define([
          *  if (conditionA || conditionB)
          * @example
          * {{#any displayTitle body instruction}}
-         * <div class="component__header {{_component}}__header"></div>
+         * <div class='component__header {{_component}}__header'></div>
          * {{/any}}
          */
         any: function() {
@@ -97,7 +97,7 @@ define([
          *  if (conditionA && conditionB)
          * @example
          * {{#all displayTitle body instruction}}
-         * <div class="component__header {{_component}}__header"></div>
+         * <div class='component__header {{_component}}__header'></div>
          * {{/all}}
          */
         all: function() {
@@ -111,7 +111,7 @@ define([
          * Allow JSON to be a template i.e. you can use handlebars {{expressions}} within your JSON
          */
         compile: function(template, context) {
-            if (!template) return "";
+            if (!template) return '';
             if (template instanceof Object) template = template.toString();
             var data = this;
             if (context) {
@@ -125,7 +125,7 @@ define([
          * Allow JSON to be a template and accessible text
          */
         compile_a11y_text: function(template, context) {
-            Adapt.a11y.log.deprecated("a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/");
+            Adapt.a11y.log.deprecated('a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/');
             return helpers.compile.call(this, template, context);
         },
 
@@ -133,7 +133,7 @@ define([
          * Allow JSON to be a template and normalized text
          */
         compile_a11y_normalize: function(template, context) {
-            if (!template) return "";
+            if (!template) return '';
             if (template instanceof Object) template = template.toString();
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
         },
@@ -142,7 +142,7 @@ define([
          * Remove all html tags except styling tags
          */
         compile_a11y_remove_breaks: function(template, context) {
-            if (!template) return "";
+            if (!template) return '';
             return Handlebars.helpers.a11y_remove_breaks.call(this, helpers.compile.call(this, template, context));
         },
 
@@ -150,9 +150,9 @@ define([
          * makes the _globals object in course.json available to a template
          */
         import_globals: function(context) {
-            if (context.data.root._globals) return "";
+            if (context.data.root._globals) return '';
             context.data.root._globals = Adapt.course.get('_globals');
-            return "";
+            return '';
         },
 
         /**
@@ -187,7 +187,7 @@ define([
                 adapt[name] = importIndex;
             }
 
-            return "";
+            return '';
 
         },
 
@@ -296,7 +296,7 @@ define([
          */
         a11y_wrap_focus: function() {
             var cfg = Adapt.config.get('_accessibility');
-            if (cfg._isPopupWrapFocusEnabled === false) return "";
+            if (cfg._isPopupWrapFocusEnabled === false) return '';
             return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" role="presentation">&nbsp;</a>');
         },
 
@@ -326,8 +326,8 @@ define([
             } else if (_.isString(levelOrType)) {
                 // if a string is passed check if it is defined in global configuration
                 cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
-                if (cfg._ariaLevels && cfg._ariaLevels["_"+levelOrType] !== undefined) {
-                    level = cfg._ariaLevels["_"+levelOrType];
+                if (cfg._ariaLevels && cfg._ariaLevels['_'+levelOrType] !== undefined) {
+                    level = cfg._ariaLevels['_'+levelOrType];
                 }
             }
 
@@ -335,7 +335,7 @@ define([
         },
 
         a11y_attrs_tabbable: function() {
-            Adapt.a11y.log.deprecated("a11y_attrs_tabbable should not be used. tabbable elements should be natively tabbable.");
+            Adapt.a11y.log.deprecated('a11y_attrs_tabbable should not be used. tabbable elements should be natively tabbable.');
             return new Handlebars.SafeString(' role="region" tabindex="0" ');
         }
 
@@ -345,17 +345,17 @@ define([
     _.extend(helpers, {
 
         if_value_equals: function() {
-            Adapt.a11y.log.deprecated("if_value_equals, use equals instead.");
+            Adapt.a11y.log.deprecated('if_value_equals, use equals instead.');
             return helpers['equals'].apply(this, arguments);
         },
 
         numbers: function() {
-            Adapt.a11y.log.deprecated("numbers, use inc instead.");
+            Adapt.a11y.log.deprecated('numbers, use inc instead.');
             return helpers['inc'].apply(this, arguments);
         },
 
         lowerCase: function() {
-            Adapt.a11y.log.deprecated("lowerCase, use lowercase instead.");
+            Adapt.a11y.log.deprecated('lowerCase, use lowercase instead.');
             return helpers['lowercase'].apply(this, arguments);
         }
 

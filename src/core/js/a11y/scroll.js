@@ -17,7 +17,7 @@ define(function() {
                 39: true,
                 40: true
             };
-            this._ignoreKeysOnElementsMatching = "textarea, input, select";
+            this._ignoreKeysOnElementsMatching = 'textarea, input, select';
             this._isRunning = false;
             this._touchStartEventObject = null;
         },
@@ -193,11 +193,11 @@ define(function() {
          */
         _isScrollable: function($target) {
             var scrollType = $target.css('overflow-y');
-            if (scrollType !== "auto" && scrollType !== "scroll") {
+            if (scrollType !== 'auto' && scrollType !== 'scroll') {
                 return false;
             }
             var pointerEvents = $target.css('pointer-events');
-            if (pointerEvents === "none") {
+            if (pointerEvents === 'none') {
                 return false;
             }
             return true;
@@ -215,17 +215,14 @@ define(function() {
             var scrollTop = Math.ceil($target.scrollTop());
             var innerHeight = $target.outerHeight();
             var scrollHeight = $target[0].scrollHeight;
+            var hasScrollingSpace = false;
             switch (directionY) {
                 case 'down':
-                    if (scrollTop + innerHeight < scrollHeight) {
-                        return true;
-                    }
-                    break;
+                    hasScrollingSpace = scrollTop + innerHeight < scrollHeight;
+                    if (hasScrollingSpace) return true;
                 case 'up':
-                    if (scrollTop > 0) {
-                        return true;
-                    }
-                    break;
+                    hasScrollingSpace = scrollTop > 0;
+                    if (hasScrollingSpace) return true;
             }
             return false;
         },

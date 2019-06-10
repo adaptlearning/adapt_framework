@@ -17,7 +17,7 @@ define([
 
         _attachEventListeners: function() {
             var config = Adapt.a11y.config;
-            $('body').on("click focus", config._focusguard, this._onWrapAround);
+            $('body').on('click focus', config._focusguard, this._onWrapAround);
         },
 
         /**

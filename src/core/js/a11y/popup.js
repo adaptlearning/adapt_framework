@@ -10,11 +10,11 @@ define([
 
         /**
          * List of elements which form the base at which elements are generally tabbale
-         * and aria-hidden="false".
+         * and aria-hidden='false'.
          *
          * @type {Array<Object>}
          */
-        _floorStack: [$("body")],
+        _floorStack: [$('body')],
         /**
          * List of elements to return the focus to once leaving each stack.
          *
@@ -43,12 +43,12 @@ define([
             this.listenTo(Adapt, {
                 'popup:opened': function($element, ignoreInternalTrigger) {
                     if (ignoreInternalTrigger) return;
-                    Adapt.a11y.log.deprecated("Adapt.trigger('popup:opened', $element) is replaced with Adapt.a11y.popupOpened($element);");
+                    Adapt.a11y.log.deprecated('Adapt.trigger("popup:opened", $element) is replaced with Adapt.a11y.popupOpened($element);');
                     this.opened($element, true);
                 },
                 'popup:closed': function($target, ignoreInternalTrigger) {
                     if (ignoreInternalTrigger) return;
-                    Adapt.a11y.log.deprecated("Adapt.trigger('popup:closed', $target) is replaced with Adapt.a11y.popupClosed($target);");
+                    Adapt.a11y.log.deprecated('Adapt.trigger("popup:closed", $target) is replaced with Adapt.a11y.popupClosed($target);');
                     this.closed($target, true);
                 }
             });
@@ -65,7 +65,7 @@ define([
             // Capture currently active element or element specified
             $popupElement = $popupElement || $(document.activeElement);
             this._addPopupLayer($popupElement);
-            if (!silent) Adapt.trigger("popup:opened", $popupElement, true);
+            if (!silent) Adapt.trigger('popup:opened', $popupElement, true);
             return this;
         },
 
@@ -90,15 +90,15 @@ define([
                 var $item = $(item);
                 var elementUID;
                 if (item.a11y_uid == undefined) {
-                    item.a11y_uid = "UID" + ++this._elementUIDIndex;
+                    item.a11y_uid = 'UID' + ++this._elementUIDIndex;
                 }
                 elementUID = item.a11y_uid;
                 if (this._tabIndexes[elementUID] === undefined) this._tabIndexes[elementUID] = [];
                 if (this._ariaHiddens[elementUID] === undefined) this._ariaHiddens[elementUID] = [];
                 var tabindex = $item.attr('tabindex');
                 var ariaHidden = $item.attr('aria-hidden');
-                this._tabIndexes[elementUID].push( tabindex === undefined ? "" : tabindex );
-                this._ariaHiddens[elementUID].push( ariaHidden === undefined ? "" : ariaHidden);
+                this._tabIndexes[elementUID].push( tabindex === undefined ? '' : tabindex );
+                this._ariaHiddens[elementUID].push( ariaHidden === undefined ? '' : ariaHidden);
                 if (config._isPopupTabIndexManagementEnabled) {
                     $item.attr('tabindex', -1);
                 }
@@ -113,10 +113,10 @@ define([
             if (config._isPopupAriaHiddenManagementEnabled) {
                 $items
                     .removeAttr('aria-hidden')
-                    .removeClass("aria-hidden")
+                    .removeClass('aria-hidden')
                     .parents(config._ariaHiddenExcludes)
                     .removeAttr('aria-hidden')
-                    .removeClass("aria-hidden");
+                    .removeClass('aria-hidden');
             }
         },
 
@@ -130,7 +130,7 @@ define([
         closed: function($focusElement, silent) {
             var $previousFocusElement = this._removeLastPopupLayer();
             $focusElement = $focusElement || $previousFocusElement || $('body');
-            if (!silent) Adapt.trigger("popup:closed", $focusElement, true);
+            if (!silent) Adapt.trigger('popup:closed', $focusElement, true);
             Adapt.a11y.focusFirst($($focusElement));
             return this;
         },
@@ -150,12 +150,12 @@ define([
             this._floorStack.pop();
             $(config._tabbableElements).filter(config._tabbableElementsExcludes).each(function(index, item) {
                 var $item = $(item);
-                var previousTabIndex = "";
-                var previousAriaHidden = "";
+                var previousTabIndex = '';
+                var previousAriaHidden = '';
                 var elementUID;
                 if (item.a11y_uid == undefined) {
                     //assign element a unique id
-                    item.a11y_uid = "UID" + ++this._elementUIDIndex;
+                    item.a11y_uid = 'UID' + ++this._elementUIDIndex;
                 }
                 elementUID = item.a11y_uid;
                 if (this._tabIndexes[elementUID] !== undefined && this._tabIndexes[elementUID].length !== 0) {
@@ -169,8 +169,8 @@ define([
                     delete this._ariaHiddens[elementUID];
                 }
                 if (config._isPopupTabIndexManagementEnabled) {
-                    if (previousTabIndex === "") {
-                        $item.removeAttr("tabindex");
+                    if (previousTabIndex === '') {
+                        $item.removeAttr('tabindex');
                     } else {
                         $item.attr({
                             'tabindex': previousTabIndex
@@ -178,8 +178,8 @@ define([
                     }
                 }
                 if (config._isPopupAriaHiddenManagementEnabled) {
-                    if (previousAriaHidden === "") {
-                        $item.removeAttr("aria-hidden");
+                    if (previousAriaHidden === '') {
+                        $item.removeAttr('aria-hidden');
                     } else {
                         $item.attr({
                             'aria-hidden': previousAriaHidden

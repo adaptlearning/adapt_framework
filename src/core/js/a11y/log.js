@@ -13,7 +13,7 @@ define([
         _hasWarned: function(args) {
             var config = Adapt.a11y.config;
             if (!config._warnFirstOnly) return false;
-            var hash = _.map(args, String).join(":");
+            var hash = _.map(args, String).join(':');
             if (this._warned[hash]) return true;
             this._warned[hash] = true;
             return false;
@@ -28,7 +28,7 @@ define([
             if (!this._canWarn) return;
             var args = Array.prototype.slice.call(arguments);
             if (this._hasWarned(args)) return;
-            Adapt.log.warn.apply(Adapt.log, ["A11Y REMOVED:"].concat(args));
+            Adapt.log.warn.apply(Adapt.log, ['A11Y REMOVED:'].concat(args));
             return this;
         },
 
@@ -36,7 +36,7 @@ define([
             if (!this._canWarn) return;
             var args = Array.prototype.slice.call(arguments);
             if (this._hasWarned(args)) return;
-            Adapt.log.warn.apply(Adapt.log, ["A11Y DEPRECATED:"].concat(args));
+            Adapt.log.warn.apply(Adapt.log, ['A11Y DEPRECATED:'].concat(args));
             return this;
         }
 

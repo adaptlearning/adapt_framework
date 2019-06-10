@@ -36,7 +36,7 @@ define([
             /**
              * Do not change aria-hidden on these elements.
              */
-            _ariaHiddenExcludes: ":not(#wrapper):not(body)",
+            _ariaHiddenExcludes: ':not(#wrapper):not(body)',
             _tabbableElements: 'a,button,input,select,textarea,[tabindex]:not([data-a11y-force-focus])',
             /**
              * Designate these elements as not tabbable.
@@ -161,9 +161,9 @@ define([
             if (!config._isAriaHiddenManagementEnabled) return this;
             isHidden = isHidden === undefined ? true : isHidden;
             if (isHidden === true) {
-                $elements.attr("aria-hidden", true);
+                $elements.attr('aria-hidden', true);
             } else {
-                $elements.removeAttr("aria-hidden");
+                $elements.removeAttr('aria-hidden');
             }
             return this;
         },
@@ -198,12 +198,12 @@ define([
             isReadable = isReadable === undefined ? true : isReadable;
             if (!isReadable) {
                 $elements.attr({
-                    tabindex: "-1",
-                    "aria-hidden": "true"
-                }).addClass("aria-hidden");
+                    tabindex: '-1',
+                    'aria-hidden': 'true'
+                }).addClass('aria-hidden');
             } else {
-                $elements.removeAttr("aria-hidden tabindex").removeClass("aria-hidden");
-                $elements.parents(config._ariaHiddenExcludes).removeAttr("aria-hidden").removeClass("aria-hidden");
+                $elements.removeAttr('aria-hidden tabindex').removeClass('aria-hidden');
+                $elements.parents(config._ariaHiddenExcludes).removeAttr('aria-hidden').removeClass('aria-hidden');
             }
             return this;
         },
@@ -220,9 +220,9 @@ define([
             if ($elements.length === 0) return this;
             isEnabled = isEnabled === undefined ? true : isEnabled;
             if (!isEnabled) {
-                $elements.attr("disabled","disabled").addClass("disabled");
+                $elements.attr('disabled','disabled').addClass('disabled');
             } else {
-                $elements.removeAttr("disabled").removeClass("disabled");
+                $elements.removeAttr('disabled').removeClass('disabled');
             }
             return this;
         },
@@ -280,7 +280,9 @@ define([
          */
         isTabbable: function($element) {
             var config = Adapt.a11y.config;
-            return $element.is(config._tabbableElements).is(config._tabbableElementsExcludes);
+            var value = $element.is(config._tabbableElements).is(config._tabbableElementsExcludes);
+            if (!value) return undefined; // Allow _findForward to descend
+            return value;
         },
 
         /**
@@ -302,9 +304,9 @@ define([
             var isNotVisible = _.find($branch.toArray(), function(item) {
                 var $item = $(item);
                 // make sure item is not explicitly invisible
-                var isNotVisible = $item.css('display') === "none"
-                    || $item.css('visibility') === "hidden"
-                    || $item.attr('aria-hidden') === "true";
+                var isNotVisible = $item.css('display') === 'none'
+                    || $item.css('visibility') === 'hidden'
+                    || $item.attr('aria-hidden') === 'true';
                 if (isNotVisible) return true;
             });
             if (isNotVisible) return false;
@@ -323,7 +325,7 @@ define([
                 if (isOnlyWhiteSpace) continue;
                 return true;
             }
-            return false;
+            return undefined; // Allows _findForward to decend.
         },
 
         /**
@@ -346,18 +348,18 @@ define([
             // appropriately
             var iterator;
             switch (typeof selector) {
-                case "string":
-                // make selector iterator
-                iterator = function($tag) {
-                    return $tag.is(selector) || undefined;
-                };
-                break;
-                case "function":
-                iterator = selector;
-                break;
-                case "undefined":
-                // find first next element
-                iterator = Boolean;
+                case 'string':
+                    // make selector iterator
+                    iterator = function($tag) {
+                        return $tag.is(selector) || undefined;
+                    };
+                    break;
+                case 'function':
+                    iterator = selector;
+                    break;
+                case 'undefined':
+                    // find first next element
+                    iterator = Boolean;
             }
 
             if ($element.length === 0) return $element.not('*');
@@ -441,16 +443,16 @@ define([
             // appropriately
             var iterator;
             switch (typeof selector) {
-                case "string":
+                case 'string':
                     // make selector iterator
                     iterator = function($tag) {
                         return $tag.is(selector) || undefined;
                     };
                     break;
-                case "function":
+                case 'function':
                     iterator = selector;
                     break;
-                case "undefined":
+                case 'undefined':
                     // find first next element
                     iterator = Boolean;
             }
@@ -563,8 +565,8 @@ define([
                     try {
                     if ($element.attr('tabindex') === undefined) {
                         $element.attr({
-                            "tabindex": "-1",
-                            "data-a11y-force-focus": "true"
+                            'tabindex': '-1',
+                            'data-a11y-force-focus': 'true'
                         });
                     }
                     $element[0].focus({
@@ -595,10 +597,10 @@ define([
         normalize: function(htmls) {
             var values = Array.prototype.slice.call(arguments, 0,-1);
             values = values.filter(Boolean);
-            htmls = values.join(" ");
-            var text = $("<div>" + htmls + "</div>").html();
+            htmls = values.join(' ');
+            var text = $('<div>' + htmls + '</div>').html();
             // Remove all html encoded characters, such as &apos;
-            return text.replace(this._htmlCharRegex, "");
+            return text.replace(this._htmlCharRegex, '');
         },
 
         /**
@@ -612,8 +614,8 @@ define([
         removeBreaks: function(htmls) {
             var values = Array.prototype.slice.call(arguments, 0,-1);
             values = values.filter(Boolean);
-            htmls = values.join(" ");
-            var $div = $("<div>" + htmls + "</div>");
+            htmls = values.join(' ');
+            var $div = $('<div>' + htmls + '</div>');
             var stack = [ $div[0] ];
             var stackIndex = 0;
             var outputs = [];
@@ -630,7 +632,7 @@ define([
                 }
                 stackIndex++;
             } while (stackIndex < stack.length)
-            var rtnText = "";
+            var rtnText = '';
             outputs.forEach(function(item) {
                 rtnText+=item.outerHTML||item.textContent;
             });

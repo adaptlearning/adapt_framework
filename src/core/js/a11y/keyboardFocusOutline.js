@@ -10,7 +10,7 @@ define([
     var KeyboardFocusOutline = Backbone.Controller.extend({
 
         initialize: function() {
-            _.bindAll(this, "_onKeyDown");
+            _.bindAll(this, '_onKeyDown');
             this.$html = $('html');
             this.showOnKeys = {
                 9: true, // tab
@@ -37,8 +37,8 @@ define([
         _start: function() {
             var config = Adapt.a11y.config;
             if (config._isFocusOutlineDisabled) {
-            this.$html.addClass('a11y-disable-focusoutline');
-            return;
+                this.$html.addClass('a11y-disable-focusoutline');
+                return;
             }
             if (!config._isEnabled) return;
             if (!config._isFocusOutlineKeyboardOnlyEnabled) return;
@@ -53,8 +53,8 @@ define([
         _onKeyDown: function(event) {
             var config = Adapt.a11y.config;
             if (config._isFocusOutlineDisabled) {
-            this.$html.addClass('a11y-disable-focusoutline');
-            return;
+                this.$html.addClass('a11y-disable-focusoutline');
+                return;
             }
             if (!config._isEnabled) return
             if (!config._isFocusOutlineKeyboardOnlyEnabled) return;
