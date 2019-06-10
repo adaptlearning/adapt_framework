@@ -10,54 +10,54 @@ define([
   './a11y/deprecated'
 ], function(Adapt, BrowserFocus, FocusOptions, KeyboardFocusOutline, Log, Scroll, WrapFocus, Popup) {
 
-  var A11y = Backbone.Controller.extend({
+    var A11y = Backbone.Controller.extend({
 
-      $html: $('html'),
-      _htmlCharRegex: /&.*;/g,
+        $html: $('html'),
+        _htmlCharRegex: /&.*;/g,
 
-      config: null,
-      defaults: {
+        config: null,
+        defaults: {
 
-          _isFocusOutlineKeyboardOnlyEnabled: false,
-          /**
-          * `_isFocusOutlineDisabled` ignores `_isEnabled` and can be used when all other
-          * accessibility features have been disabled.
-          */
-          _isFocusOutlineDisabled: false,
-          _isFocusAssignmentEnabled: true,
-          _isFocusOnClickEnabled: true,
-          _isFocusNextOnDisabled: true,
-          _isScrollDisableEnabled: true,
-          _isAriaHiddenManagementEnabled: true,
-          _isPopupManagementEnabled: true,
-          _isPopupWrapFocusEnabled: true,
-          _isPopupAriaHiddenManagementEnabled: true,
-          _isPopupTabIndexManagementEnabled: true,
-          /**
-           * Do not change aria-hidden on these elements.
-           */
-          _ariaHiddenExcludes: ":not(#wrapper):not(body)",
-          _tabbableElements: 'a,button,input,select,textarea,[tabindex]:not([data-a11y-force-focus])',
-          /**
-           * Designate these elements as not tabbable.
-           */
-          _tabbableElementsExcludes: ':not(.a11y-ignore):not([data-a11y-force-focus])',
-          _focusableElements: 'a,button,input,select,textarea,[tabindex],label',
-          _readableElements: '[role=heading],[aria-label],[aria-labelledby],[alt]',
-          /**
-           * Selector for elements which cause tab wrapping.
-           */
-          _focusguard: '.a11y-focusguard',
-          /**
-           * Specifies all stylistic elements.
-           */
-          _wrapStyleElements: 'b,i,abbr,strong,em,small,sub,sup,ins,del,mark,zw,nb',
+            _isFocusOutlineKeyboardOnlyEnabled: false,
+            /**
+             * `_isFocusOutlineDisabled` ignores `_isEnabled` and can be used when all other
+             * accessibility features have been disabled.
+             */
+            _isFocusOutlineDisabled: false,
+            _isFocusAssignmentEnabled: true,
+            _isFocusOnClickEnabled: true,
+            _isFocusNextOnDisabled: true,
+            _isScrollDisableEnabled: true,
+            _isAriaHiddenManagementEnabled: true,
+            _isPopupManagementEnabled: true,
+            _isPopupWrapFocusEnabled: true,
+            _isPopupAriaHiddenManagementEnabled: true,
+            _isPopupTabIndexManagementEnabled: true,
+            /**
+             * Do not change aria-hidden on these elements.
+             */
+            _ariaHiddenExcludes: ":not(#wrapper):not(body)",
+            _tabbableElements: 'a,button,input,select,textarea,[tabindex]:not([data-a11y-force-focus])',
+            /**
+             * Designate these elements as not tabbable.
+             */
+            _tabbableElementsExcludes: ':not(.a11y-ignore):not([data-a11y-force-focus])',
+            _focusableElements: 'a,button,input,select,textarea,[tabindex],label',
+            _readableElements: '[role=heading],[aria-label],[aria-labelledby],[alt]',
+            /**
+             * Selector for elements which cause tab wrapping.
+             */
+            _focusguard: '.a11y-focusguard',
+            /**
+             * Specifies all stylistic elements.
+             */
+            _wrapStyleElements: 'b,i,abbr,strong,em,small,sub,sup,ins,del,mark,zw,nb',
 
-          /**
-           * Logging settings
-           */
-          _warnFirstOnly: true,
-          _warn: true
+            /**
+             * Logging settings
+             */
+            _warnFirstOnly: true,
+            _warn: true
 
         },
 
