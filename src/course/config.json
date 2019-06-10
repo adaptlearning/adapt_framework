@@ -18,7 +18,20 @@
             "_block": 3,
             "_component": 4,
             "_componentItem": 5
-        }
+        },
+        "_isFocusOutlineKeyboardOnlyEnabled": false,
+        "_isFocusOutlineDisabled": false,
+        "_isFocusAssignmentEnabled": true,
+        "_isFocusOnClickEnabled": true,
+        "_isFocusNextOnDisabled": true,
+        "_isScrollDisableEnabled": true,
+        "_isAriaHiddenManagementEnabled": true,
+        "_isPopupManagementEnabled": true,
+        "_isPopupWrapFocusEnabled": true,
+        "_isPopupAriaHiddenManagementEnabled": true,
+        "_isPopupTabIndexManagementEnabled": true,
+        "_warn": true,
+        "_warnFirstOnly": true
     },
     "_drawer": {
         "_showEasing": "easeOutQuart",

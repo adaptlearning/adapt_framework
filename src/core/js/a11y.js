@@ -1,13 +1,13 @@
 define([
-  'core/js/adapt',
-  './a11y/browserFocus',
-  './a11y/focusOptions',
-  './a11y/keyboardFocusOutline',
-  './a11y/log',
-  './a11y/scroll',
-  './a11y/wrapFocus',
-  './a11y/popup',
-  './a11y/deprecated'
+    'core/js/adapt',
+    './a11y/browserFocus',
+    './a11y/focusOptions',
+    './a11y/keyboardFocusOutline',
+    './a11y/log',
+    './a11y/scroll',
+    './a11y/wrapFocus',
+    './a11y/popup',
+    './a11y/deprecated'
 ], function(Adapt, BrowserFocus, FocusOptions, KeyboardFocusOutline, Log, Scroll, WrapFocus, Popup) {
 
     var A11y = Backbone.Controller.extend({
@@ -668,7 +668,7 @@ define([
         },
 
         /**
-         * Remove the isolation applied which a call to `popupOpened`.
+         * Remove the isolation applied with a call to `popupOpened`.
          *
          * @param {Object} [$focusElement] Element to move focus to.
          * @returns {Object} Returns `Adapt.a11y`
