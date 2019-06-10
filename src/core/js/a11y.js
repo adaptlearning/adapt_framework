@@ -663,7 +663,6 @@ define([
          */
         popupOpened: function($popupElement) {
             this._popup.opened($popupElement);
-            this.trigger("popup:opened");
             return this;
         },
 
@@ -675,7 +674,6 @@ define([
          */
         popupClosed: function($focusElement) {
             this._popup.closed($focusElement);
-            this.trigger("popup:closed");
             return this;
         }
 

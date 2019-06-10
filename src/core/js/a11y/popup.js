@@ -41,13 +41,15 @@ define([
 
         initialize: function() {
             this.listenTo(Adapt, {
-                'popup:opened': function($element) {
+                'popup:opened': function($element, ignoreInternalTrigger) {
+                    if (ignoreInternalTrigger) return;
                     Adapt.a11y.log.deprecated("Adapt.trigger('popup:opened', $element) is replaced with Adapt.a11y.popupOpened($element);");
-                    this.opened($element);
+                    this.opened($element, true);
                 },
-                'popup:closed': function($target) {
+                'popup:closed': function($target, ignoreInternalTrigger) {
+                    if (ignoreInternalTrigger) return;
                     Adapt.a11y.log.deprecated("Adapt.trigger('popup:closed', $target) is replaced with Adapt.a11y.popupClosed($target);");
-                    this.closed($target);
+                    this.closed($target, true);
                 }
             });
         },
@@ -59,10 +61,11 @@ define([
          * @param {Object} [$popupElement] Element encapulating the popup.
          * @returns {Object} Returns `Adapt.a11y._popup`.
          */
-        opened: function($popupElement) {
+        opened: function($popupElement, silent) {
             // Capture currently active element or element specified
             $popupElement = $popupElement || $(document.activeElement);
             this._addPopupLayer($popupElement);
+            if (!silent) Adapt.trigger("popup:opened", $popupElement, true);
             return this;
         },
 
@@ -124,14 +127,10 @@ define([
          * @param {Object} [$focusElement] Element at which to move focus.
          * @returns {Object} Returns `Adapt.a11y._popup`.
          */
-        closed: function($focusElement) {
+        closed: function($focusElement, silent) {
             var $previousFocusElement = this._removeLastPopupLayer();
-            $focusElement = $focusElement || $previousFocusElement;
-            if (!$focusElement) {
-                // Focus on the first readable element
-                Adapt.a11y.focusFirst('body');
-                return this;
-            }
+            $focusElement = $focusElement || $previousFocusElement || $('body');
+            if (!silent) Adapt.trigger("popup:closed", $focusElement, true);
             Adapt.a11y.focusFirst($($focusElement));
             return this;
         },
