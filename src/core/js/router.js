@@ -51,7 +51,7 @@ define([
 
         handleRoute: function() {
             var args = this.pruneArguments(arguments);
-            
+
             if (Adapt.router.get('_canNavigate')) {
                 // Reset _isCircularNavigationInProgress protection as code is allowed to navigate away.
                 this._isCircularNavigationInProgress = false;
@@ -84,7 +84,7 @@ define([
 
             if (this._isCircularNavigationInProgress) {
                 // Navigation correction finished.
-                // Router has successfully re-navigated to the current _id as the URL was changed 
+                // Router has successfully re-navigated to the current _id as the URL was changed
                 // while _canNavigate: false
                 this._isCircularNavigationInProgress = false;
                 return;
@@ -133,7 +133,7 @@ define([
                 Adapt.course.set('_isReady', false);
 
                 this.setContentObjectToVisited(Adapt.course);
-                
+
                 this.updateLocation('course', null, null, _.bind(function() {
                     Adapt.once('menuView:ready', function() {
                         // Allow navigation.
@@ -244,7 +244,7 @@ define([
         },
 
         skipNavigation: function() {
-             $('.' + Adapt.location._contentType).a11y_focus();
+            Adapt.a11y.focusFirst('.' + Adapt.location._contentType);
         },
 
         navigateToPreviousRoute: function(force) {
@@ -322,7 +322,7 @@ define([
             }
 
             Adapt.location._currentLocation = currentLocation;
-            
+
             var locationModel = Adapt.findById(id) || Adapt.course;
             var htmlClassName = locationModel && locationModel.get('_htmlClassName') || '';
 
@@ -336,21 +336,21 @@ define([
             if (previousClasses) {
                 this.$html.removeClass(previousClasses);
             }
-            
+
             Adapt.location._previousClasses = classes + ' ' + htmlClassName;
-            
+
             this.$html
                 .addClass(classes)
                 .addClass(htmlClassName)
                 .attr('data-location', Adapt.location._currentLocation);
-                
+
             this.$wrapper
                 .removeClass()
                 .addClass(classes)
                 .attr('data-location', Adapt.location._currentLocation);
 
             this.setDocumentTitle();
-            
+
             // Trigger event when location changes.
             Adapt.trigger('router:location', Adapt.location);
 
@@ -365,7 +365,7 @@ define([
 
             if (currentModel && currentModel.get('_type') !== 'course') {
                 var currentTitle = currentModel.get('title');
-                
+
                 if (currentTitle) {
                     pageTitle = ' | ' + currentTitle;
                 }
@@ -383,7 +383,7 @@ define([
             if (!Adapt.router.get("_shouldNavigateFocus")) return;
             // Body will be forced to accept focus to start the
             // screen reader reading the page.
-            $("body").focusNoScroll();
+            Adapt.a11y.focus('body');
         }
     });
 

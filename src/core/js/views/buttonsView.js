@@ -56,7 +56,7 @@ define([
                 $icon.addClass('display-none');
                 this.$el.removeClass("submitted");
                 this.model.set('feedbackMessage', undefined);
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
+                Adapt.a11y.toggleAccessibleEnabled(this.$('.buttons-feedback'), false);
 
             } else {
 
@@ -78,10 +78,10 @@ define([
         onFeedbackMessageChanged: function(model, changedAttribute) {
             if (changedAttribute && this.model.get('_canShowFeedback')) {
                 //enable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(true);
+                Adapt.a11y.toggleAccessibleEnabled(this.$('.buttons-feedback'), true);
             } else {
                 //disable feedback button
-                this.$('.buttons-feedback').a11y_cntrl_enabled(false);
+                Adapt.a11y.toggleAccessibleEnabled(this.$('.buttons-feedback'), false);
             }
         },
 
@@ -95,7 +95,7 @@ define([
             if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
                 // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
 
-                $buttonsAction.a11y_cntrl_enabled(false);
+                Adapt.a11y.toggleAccessibleEnabled($buttonsAction, false);
 
             } else {
 
@@ -104,7 +104,9 @@ define([
                 var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
 
                 // Enable the button, make accessible and update aria labels and text
-                $buttonsAction.a11y_cntrl_enabled(true).html(buttonText).attr('aria-label', ariaLabel);
+
+                Adapt.a11y.toggleAccessibleEnabled($buttonsAction, true);
+                $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
 
                 // Make model answer button inaccessible (but still enabled) for visual users due to
                 // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
@@ -112,7 +114,8 @@ define([
                     case BUTTON_STATE.SHOW_CORRECT_ANSWER:
                     case BUTTON_STATE.HIDE_CORRECT_ANSWER:
 
-                        $buttonsAction.a11y_cntrl(false);
+                        Adapt.a11y.toggleAccessible($buttonsAction, false);
+
                 }
 
             }

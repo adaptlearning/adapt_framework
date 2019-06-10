@@ -18,7 +18,6 @@ require([
     'core/js/device',
     'core/js/drawer',
     'core/js/notify',
-    'core/js/popupManager',
     'core/js/router',
     'core/js/models/lockingModel',
     'core/js/helpers',
