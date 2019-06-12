@@ -3,11 +3,13 @@ define(function() {
      var Wait = Backbone.Controller.extend({
 
         initialize: function() {
-            _.bindAll(this, "begin", "end");
+            _.bindAll(this, 'begin', 'end');
         },
 
         _waitCount: 0,
         _callbackHandle: null,
+        _timeoutHandlerId: null,
+        _timeoutInSeconds: 7,
 
         /**
          * Returns true if there are items in the waiting count.
@@ -19,6 +21,35 @@ define(function() {
         },
 
         /**
+         * Starts or re-starts a timer to ensure that pending calls to end()
+         * are actually executed after a timeout period.
+         */
+        startTimer: function() {
+            this.stopTimer();
+
+            this._timeoutHandlerId = setInterval(function() {
+                // Flush Adapt.wait due to timeout
+                while (this._waitCount > 0) {
+                    // Trigger an end() for anything waiting.
+                    this.end();
+                }
+  
+                if (this._waitCount === 0) {
+                    this.stopTimer();
+                }
+            }.bind(this), this._timeoutInSeconds * 1000)
+        },
+
+        /**
+         * Clears the timer.
+         */
+        stopTimer: function() {
+            if (this._timeoutHandlerId) {
+                clearInterval(this._timeoutHandlerId);
+            }
+        },
+
+        /**
          * Add one item to the waiting count.
          * 
          * @return {Object}
@@ -26,7 +57,7 @@ define(function() {
         begin: function() {
 
             if (!this.isWaiting()) {
-                this.trigger("wait");
+                this.trigger('wait');
             }
 
             this._waitCount++;
@@ -35,6 +66,8 @@ define(function() {
                 clearTimeout(this._callbackHandle);
                 this._callbackHandle = null;
             }
+
+            this.startTimer();
 
             return this;
 
@@ -53,6 +86,10 @@ define(function() {
 
             this._waitCount--;
 
+            if (this._waitCount === 0) {
+                this.stopTimer();
+            }
+
             if (this.isWaiting()) {
                 return this;
             }
@@ -64,7 +101,7 @@ define(function() {
             this._callbackHandle = setTimeout(function() {
 
                 this._callbackHandle = null;
-                this.trigger("ready");
+                this.trigger('ready');
 
             }.bind(this), 0);
 
@@ -81,7 +118,7 @@ define(function() {
         queue: function(callback) {
 
             this.begin();
-            this.once("ready", callback);
+            this.once('ready', callback);
             this.end();
 
             return this;
@@ -98,7 +135,7 @@ define(function() {
 
             this.begin();
             _.defer(function() {
-                callback(this.end);
+                callback(_.once(this.end));
             }.bind(this));
 
             return this;
