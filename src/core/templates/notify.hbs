@@ -31,7 +31,7 @@
 
         {{#if_value_equals _type "alert"}}
         <div class="notify__btn-container">
-          <button class="btn-text notify__btn notify__btn-alert js-notify-btn-alert" aria-label="{{{confirmText}}}">
+          <button class="btn-text is-generic notify__btn notify__btn-alert js-notify-btn-alert" aria-label="{{{confirmText}}}">
             {{{confirmText}}}
           </button>
         </div>
@@ -40,7 +40,7 @@
         {{#if_value_equals _type "prompt"}}
         <div class="notify__btn-container">
           {{#each _prompts}}
-          <button class="btn-text notify__btn notify__btn-prompt js-notify-btn-prompt" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">
+          <button class="btn-text is-generic notify__btn notify__btn-prompt js-notify-btn-prompt" data-event="{{_callbackEvent}}" aria-label="{{{promptText}}}">
             {{{promptText}}}
           </button>
           {{/each}}
@@ -53,7 +53,7 @@
     {{! toolbar moved for AA purposes - last tabbable element}}
     {{#all _isCancellable _showCloseButton}}
     {{#if_value_equals _type "popup"}}
-    <button class="btn-icon notify__close-btn js-notify-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
+    <button class="btn-icon notify__btn-icon notify__close-btn js-notify-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
       <div class="icon"></div>
     </button>
     {{/if_value_equals}}

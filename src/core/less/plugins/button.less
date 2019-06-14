@@ -1,19 +1,13 @@
 // --------------------------------------------------
 // Global button styles
 // --------------------------------------------------
-.btn {
-  &-icon {
-    padding: @icon-padding;
-    border: 0;
-  }
+.btn-icon {
+  padding: @icon-padding;
+  border: 0;
+}
 
-  &-text {
-    padding: @btn-padding-ver @btn-padding-hoz;
-  }
-
-  &-question {
-    padding: @btn-padding-ver @btn-padding-hoz;
-  }
+.btn-text.is-generic {
+  padding: @btn-padding-ver @btn-padding-hoz;
 }
 // --------------------------------------------------
 
@@ -27,7 +21,7 @@
     position: relative;
   }
 
-  &__action {
+  &__action:not(.is-full-width) {
     width: calc(~'50% - @{btn-padding-hoz}');
     margin-right: @btn-padding-hoz;
 
@@ -37,7 +31,7 @@
     }
   }
 
-  &__feedback {
+  &__feedback:not(.is-full-width) {
     width: calc(~'50% - @{btn-padding-hoz}');
     margin-left: @btn-padding-hoz;
 
