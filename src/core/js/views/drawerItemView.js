@@ -4,7 +4,7 @@ define([
 
   var DrawerItemView = Backbone.View.extend({
 
-    className: 'drawer__item',
+    className: 'drawer__menu drawer__item',
 
     attributes: {
       role: 'listitem'
@@ -16,7 +16,7 @@ define([
     },
 
     events: {
-      'click .drawer__item-open': 'onDrawerItemClicked'
+      'click .drawer__item-btn': 'onDrawerItemClicked'
     },
 
     render: function() {

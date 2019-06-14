@@ -1,16 +1,16 @@
-<button class="drawer__item-open{{#if className}} {{className}}{{/if}}">
+<button class="drawer__menu-btn drawer__item-btn{{#if className}} {{className}}{{/if}}">
 
   {{#if title}}
-  <div class="drawer__item-title">
-    <div class="drawer__item-title-inner">
+  <div class="drawer__menu-title drawer__item-title">
+    <div class="drawer__menu-title-inner drawer__item-title-inner">
       {{{title}}}
     </div>
   </div>
   {{/if}}
 
   {{#if description}}
-  <div class="drawer__item-body">
-    <div class="drawer__item-body-inner">
+  <div class="drawer__menu-body drawer__item-body">
+    <div class="drawer__menu-body-inner drawer__item-body-inner">
       {{{description}}}
     </div>
   </div>
