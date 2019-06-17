@@ -144,7 +144,7 @@ define([
 
             // Removes . symbol from the selector to find the model
             var currentModelId = selector.replace(/\./g, '');
-            var currentModel = this.findById(currentModelId);
+            var currentModel = this.data.findById(currentModelId);
             // Get current page to check whether this is the current page
             var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
 
