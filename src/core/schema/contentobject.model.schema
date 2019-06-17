@@ -21,6 +21,15 @@
       "help": "When viewing a menu/page - this is the title that will be displayed on the menu/page",
       "translatable": true
     },
+    "subtitle": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "When viewing a menu/page - this is the subtitle that will be displayed on the menu/page",
+      "translatable": true
+    },
     "pageBody":{
       "type": "string",
       "default" : "",

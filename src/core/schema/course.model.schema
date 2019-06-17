@@ -32,6 +32,15 @@
       "help": "This is the title that will be displayed on the course's main menu",
       "translatable": true
     },
+    "subtitle": {
+      "type": "string",
+      "required": false,
+      "default": "",
+      "inputType": "Text",
+      "validators": [],
+      "help": "This is the subtitle that will be displayed on the course's main menu",
+      "translatable": true
+    },
     "description": {
       "type": "string",
       "required": false,

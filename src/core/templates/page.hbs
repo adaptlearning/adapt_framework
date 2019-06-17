@@ -3,7 +3,7 @@
 
 <div class="page__inner">
 
-  {{#any displayTitle subTitle body instruction}}
+  {{#any displayTitle subtitle body instruction}}
   <div class="page__header">
     <div class="page__header-inner">
 
@@ -21,10 +21,10 @@
       </div>
       {{/if}}
 
-      {{#if subTitle}}
+      {{#if subtitle}}
       <div class="page__subtitle">
         <div class="page__subtitle-inner">
-          {{{compile subTitle}}}
+          {{{compile subtitle}}}
         </div>
       </div>
       {{/if}}
