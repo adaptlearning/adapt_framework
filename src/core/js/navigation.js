@@ -10,7 +10,7 @@ define([
             this.listenTo(Adapt, 'adapt:preInitialize', this.addNavigationBar);
         },
 
-        addNavigationBar() {
+        addNavigationBar: function() {
 
             var adaptConfig = Adapt.course.get('_navigation');
 
