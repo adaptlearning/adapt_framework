@@ -220,7 +220,7 @@ define([
         findById: function(id) {
             return this.data.findById(id);
         },
-      
+
         findViewByModelId: function(id) {
             var model = this.data.findById(id);
             if (!model) return;
