@@ -42,7 +42,7 @@
         register: function(element, data) {
 
             var $element = $(element);
-            handlers.registered.push({ 
+            handlers.registered.push({
                 id: expando.make(element, data),
                 $element: $element,
                 _measurement: measurements.get($element).uniqueMeasurementId,
@@ -74,10 +74,10 @@
             handlers.shouldReProcess = true;
             while (handlers.shouldReProcess) {
                 handlers.shouldReProcess = false;
-                
+
                 registeredCount = registered.length;
                 if  (registeredCount == 0) return;
-                
+
                 for (var i = 0; i < registeredCount; i++) {
                     var item = registered[i];
                     var measure = measurements.get(item.$element);
@@ -107,7 +107,7 @@
         },
 
         trigger: function triggerResize(item) {
-            
+
             item.$element.trigger('resize');
 
         }
@@ -129,8 +129,16 @@
 
         },
 
+        force: function() {
+
+            loop.lastStartEvent = (new Date()).getTime();
+            loop.main(true);
+            loop.repeat();
+
+        },
+
         repeat: function() {
-            
+
             loop.stop();
 
             if (loop.hasRaf) {
@@ -145,7 +153,7 @@
 
             var timeSinceLast = (new Date()).getTime() - loop.lastStartEvent;
             if (timeSinceLast < 1500) return;
-            
+
             loop.stop()
             return true;
         },
@@ -158,16 +166,16 @@
             return true;
         },
 
-        main: function() {
+        main: function(force) {
 
-            if (loop.isThrottled()) {
+            if (!force && loop.isThrottled()) {
                 loop.repeat();
                 return;
             }
 
             loop.lastMain = (new Date()).getTime();
-            
-            if (loop.hasExpired()) {
+
+            if (!force && loop.hasExpired()) {
                 loop.stop();
                 return;
             }
@@ -235,7 +243,7 @@
         featureDetect: function() {
 
             loop.hasRaf = (window.requestAnimationFrame && window.cancelAnimationFrame);
-            
+
         },
 
         get: function($element) {
@@ -254,7 +262,8 @@
 
     //attach event handlers
     $(window).on({
-        "touchmove scroll mousedown keydown resize": loop.start
+        "touchmove scroll mousedown keydown": loop.start, // asynchronous
+        "resize": loop.force // synchronous
     });
     $(measurements.featureDetect);
 

@@ -549,19 +549,21 @@ define([
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
-            var scrollEventName = "wheel mousewheel";
-            $(window).on(scrollEventName, preventScroll);
-            $(document).on(scrollEventName, preventScroll);
+            window.addEventListener("wheel", nativePreventScroll, { passive: false });
+            window.addEventListener("mousewheel", nativePreventScroll, { passive: false });
+            document.addEventListener("wheel", nativePreventScroll, { passive: false });
+            document.addEventListener("mousewheel", nativePreventScroll, { passive: false });
             $(window).on("touchstart", onScrollStartCapture); // mobile
-            window.addEventListener("touchmove", nativePreventScroll, { passive:false }); // mobile
+            window.addEventListener("touchmove", nativePreventScroll, { passive: false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
 
         function a11y_removeScrollListeners() {
-            var scrollEventName = "wheel mousewheel";
-            $(window).off(scrollEventName, preventScroll);
-            $(document).off(scrollEventName, preventScroll);
+            window.removeEventListener("wheel", nativePreventScroll);
+            window.removeEventListener("mousewheel", nativePreventScroll);
+            document.removeEventListener("wheel", nativePreventScroll);
+            document.removeEventListener("mousewheel", nativePreventScroll);
             $(window).off("touchstart", onScrollStartCapture); // mobile
             window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile

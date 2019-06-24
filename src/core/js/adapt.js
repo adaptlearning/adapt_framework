@@ -21,7 +21,6 @@ define([
         },
 
         init: function() {
-
             this.trigger('adapt:preInitialize');
 
             //wait until no more completion checking
@@ -66,7 +65,6 @@ define([
          * @param {Function} callback Function to be called after all completion checks have been completed
          */
         deferUntilCompletionChecked: function(callback) {
-
             if (this.get('_outstandingCompletionChecks') === 0) return callback();
 
             var checkIfAnyChecksOutstanding = function(model, outstandingChecks) {
@@ -82,7 +80,6 @@ define([
         },
 
         setupWait: function() {
-
             this.wait = new Wait();
 
             // Setup legacy events and handlers
@@ -97,7 +94,6 @@ define([
             }.bind(this);
 
             var ready = function() {
-
                 if (this.wait.isWaiting()) {
                     return;
                 }
@@ -150,7 +146,7 @@ define([
 
             // If current page - scrollTo element
             if (currentPage.get('_id') === this.location._currentId) {
-            return this.scrollTo(selector, settings);
+                return this.scrollTo(selector, settings);
             }
 
             // If the element is on another page navigate and wait until pageView:ready is fired
@@ -224,6 +220,31 @@ define([
         findById: function(id) {
             return this.data.findById(id);
         },
+      
+        findViewByModelId: function(id) {
+            var model = this.data.findById(id);
+            if (!model) return;
+
+            if (model === this.parentView.model) return this.parentView;
+
+            var idPathToView = [id];
+            var currentLocationId = this.location._currentId;
+            var currentLocationModel = _.find(model.getAncestorModels(), function(model) {
+                var modelId = model.get('_id');
+                if (modelId === currentLocationId) return true;
+                idPathToView.unshift(modelId);
+            });
+
+            if (!currentLocationModel) {
+                return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id);
+            }
+
+            var foundView = _.reduce(idPathToView, function(view, currentId) {
+                return view && view.childViews && view.childViews[currentId];
+            }, this.parentView);
+
+            return foundView;
+        },
 
         /**
          * Relative strings describe the number and type of hops in the model hierarchy
@@ -263,9 +284,7 @@ define([
         remove: function() {
             this.trigger('preRemove');
             this.trigger('remove');
-            _.defer(function() {
-                this.trigger('postRemove');
-            }.bind(this));
+            _.defer(this.trigger.bind(this), 'postRemove');
         }
 
     });
