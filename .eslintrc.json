@@ -6,7 +6,8 @@
         "amd": true
     },
     "extends": [
-        "standard"
+        "standard",
+        "plugin:prettier/recommended"
     ],
     "globals": {
         "Backbone": true,
@@ -23,6 +24,7 @@
         "requirejs"
     ],
     "rules": {
+        "prettier/prettier": "error",
         "indent": ["error", 4],
         "semi": "off",
         "padded-blocks": "warn",
