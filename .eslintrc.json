@@ -1,0 +1,37 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": false,
+        "es6": false,
+        "amd": true
+    },
+    "extends": [
+        "standard"
+    ],
+    "globals": {
+        "Backbone": true,
+        "$": true,
+        "Modernizr": true,
+        "_": true,
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "plugins": [
+        "requirejs"
+    ],
+    "rules": {
+        "indent": ["error", 4],
+        "semi": "off",
+        "padded-blocks": "warn",
+        "no-new": "warn",
+        "space-before-function-paren": "off",
+        "requirejs/no-invalid-define": 2,
+        "requirejs/no-multiple-define": 2,
+        "requirejs/no-named-define": 2,
+        "requirejs/no-commonjs-wrapper": 2,
+        "requirejs/no-object-define": 1
+    }
+}
