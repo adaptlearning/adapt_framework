@@ -14,6 +14,7 @@
         "$": true,
         "Modernizr": true,
         "_": true,
+        "Handlebars": true,
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
@@ -25,10 +26,10 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        "indent": ["error", 4],
+        "indent": ["error", 2, { "SwitchCase": 1 }],
         "semi": "off",
-        "padded-blocks": "warn",
-        "no-new": "warn",
+        "padded-blocks": "off",
+        "no-new": "off",
         "space-before-function-paren": "off",
         "requirejs/no-invalid-define": 2,
         "requirejs/no-multiple-define": 2,
