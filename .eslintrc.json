@@ -6,12 +6,12 @@
         "amd": true
     },
     "extends": [
-        "standard",
-        "plugin:prettier/recommended"
+        "standard"
     ],
     "globals": {
         "Backbone": true,
         "$": true,
+        "ENUM": true,
         "Modernizr": true,
         "_": true,
         "Handlebars": true,
@@ -25,7 +25,6 @@
         "requirejs"
     ],
     "rules": {
-        "prettier/prettier": "error",
         "indent": ["error", 2, { "SwitchCase": 1 }],
         "semi": "off",
         "padded-blocks": "off",
@@ -33,7 +32,7 @@
         "space-before-function-paren": "off",
         "requirejs/no-invalid-define": 2,
         "requirejs/no-multiple-define": 2,
-        "requirejs/no-named-define": 2,
+        "requirejs/no-named-define": "off",
         "requirejs/no-commonjs-wrapper": 2,
         "requirejs/no-object-define": 1
     }
