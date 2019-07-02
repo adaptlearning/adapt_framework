@@ -712,13 +712,15 @@ define([
             children[lastIndex].set("_isLocked", false);
         },
 
-        setCustomLocking: function() {
-            var children = this.getAvailableChildModels();
+        setCustomLocking: function(childModels) {
+            var children = childModels || this.getAvailableChildModels();
 
             for (var i = 0, j = children.length; i < j; i++) {
                 var child = children[i];
 
                 child.set("_isLocked", this.shouldLock(child));
+
+                if (child.get('_type') === 'menu') this.setCustomLocking(child.getAvailableChildModels());
             }
         },
 
