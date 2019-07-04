@@ -25,7 +25,7 @@ define(function() {
         /**
          * Block scrolling on the given elements.
          *
-         * @param {Object|string} $elements
+         * @param {Object|string|Array} $elements
          */
         disable: function($elements) {
             $elements = $($elements);
@@ -37,7 +37,7 @@ define(function() {
         /**
          * Stop blocking scrolling on the given elements.
          *
-         * @param {Object|string} $items
+         * @param {Object|string|Array} $items
          */
         enable: function($elements) {
             $elements = $($elements);

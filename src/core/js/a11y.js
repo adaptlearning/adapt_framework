@@ -161,7 +161,7 @@ define([
         /**
          * Adds or removes `aria-hidden` attribute to elements.
          *
-         * @param {Object} $elements
+         * @param {Object|string|Array} $elements
          * @param {boolean} [isHidden=true]
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -184,7 +184,7 @@ define([
          * Adds or removes `aria-hidden` and `disabled` attributes and `disabled`
          * classes to elements.
          *
-         * @param {Object} $elements
+         * @param {Object|string|Array} $elements
          * @param {boolean} [isHidden=true]
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -197,7 +197,7 @@ define([
         /**
          * Adds or removes `aria-hidden` attribute and disables `tabindex` on elements.
          *
-         * @param {boolean} $elements
+         * @param {Object|string|Array} $elements
          * @param {boolean} [isReadable=true]
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -223,7 +223,7 @@ define([
         /**
          * Adds or removes `disabled` attribute and `disabled` class.
          *
-         * @param {boolean} $elements
+         * @param {Object|string|Array} $elements
          * @param {boolean} [isEnabled=true]
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -244,7 +244,7 @@ define([
         /**
          * Find the first tabbable element after the specified element.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @returns {Object}
          */
         findFirstTabbable: function($element) {
@@ -255,7 +255,7 @@ define([
         /**
          * Find the first readable element after the specified element.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @returns {Object}
          */
         findFirstReadable: function($element) {
@@ -266,22 +266,22 @@ define([
         /**
          * Find all tabbable elements in the specified element.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @returns {Object}
          */
         findTabbable: function($element) {
             var config = Adapt.a11y.config;
-            return $element.find(config._tabbableElements).filter(config._tabbableElementsExcludes);
+            return $($element).find(config._tabbableElements).filter(config._tabbableElementsExcludes);
         },
 
         /**
          * Find all readable elements in the specified element.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          */
         findReadable: function($element) {
             var config = Adapt.a11y.config;
-            return $element.find('*').filter(function(index, element) {
+            return $($element).find('*').filter(function(index, element) {
                 return this.isReadable(element);
             }.bind(this));
         },
@@ -289,12 +289,12 @@ define([
         /**
          * Check if the element is natively or explicitly tabbable.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @returns {boolean|undefined}
          */
         isTabbable: function($element) {
             var config = Adapt.a11y.config;
-            var value = $element.is(config._tabbableElements).is(config._tabbableElementsExcludes);
+            var value = $($element).is(config._tabbableElements).is(config._tabbableElementsExcludes);
             if (!value) {
                 return undefined; // Allow _findForward to descend
             }
@@ -304,7 +304,7 @@ define([
         /**
          * Check if the first item is readable by a screen reader.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @param {boolean} [checkParents=true] Check if parents are inaccessible.
          * @returns {boolean}
          */
@@ -363,7 +363,7 @@ define([
          * not match or descend into this item, returning undefined means do not match,
          * but descend into this item.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @param {string|function|undefined} selector
          * @returns {Object} Returns found descendant.
          */
@@ -472,7 +472,7 @@ define([
          * not match or descend into this item, returning undefined means do not match,
          * but descend into this item.
          *
-         * @param {Object} $element jQuery element to start from.
+         * @param {Object|string|Array} $element jQuery element to start from.
          * @param {string|function|undefined} selector
          * @returns {Object} Returns found descendant.
          */
@@ -555,7 +555,7 @@ define([
         /**
          * Assign focus to the next readable element.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @param {FocusOptions} options
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -571,7 +571,7 @@ define([
          * Assign focus to either the specified element if it is readable or the
          * next readable element.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @param {FocusOptions} options
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -590,7 +590,7 @@ define([
         /**
          * Force focus to the specified element with/without a defer or scroll.
          *
-         * @param {Object} $element
+         * @param {Object|string|Array} $element
          * @param {FocusOptions} options
          * @returns {Object} Returns `Adapt.a11y`
          */
@@ -691,7 +691,7 @@ define([
         },
 
         /**
-         * @param {Object} $elements
+         * @param {Object|string|Array} $elements
          * @returns {Object} Returns `Adapt.a11y`
          */
         scrollEnable: function($elements) {
@@ -700,7 +700,7 @@ define([
         },
 
         /**
-         * @param {Object} $elements
+         * @param {Object|string|Array} $elements
          * @returns {Object} Returns `Adapt.a11y`
          */
         scrollDisable: function($elements) {
