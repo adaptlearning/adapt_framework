@@ -90,13 +90,17 @@ define([
             this.$html.toggleClass('accessibility', this.isEnabled());
             this._setupNoSelect();
             this._addFocuserDiv();
-            if (this._isReady) return;
+            if (this._isReady) {
+                return;
+            }
             this._isReady = true;
             Adapt.trigger('accessibility:ready');
         },
 
         _setupNoSelect: function() {
-            if (!this.config || !this.config._disableTextSelectOnClasses) return;
+            if (!this.config || !this.config._disableTextSelectOnClasses) {
+                return;
+            }
             var classes = this.config._disableTextSelectOnClasses.split(' ');
             var isMatch = false;
             for (var i = 0, item; item = classes[i++];) {
@@ -109,21 +113,27 @@ define([
         },
 
         _addFocuserDiv: function() {
-            if ($('#a11y-focuser').length) return;
+            if ($('#a11y-focuser').length) {
+                return;
+            }
             $('body').append($('<div id="a11y-focuser" class="a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>'));
         },
 
         _removeLegacyElements: function() {
             var $legacyElements = $('body').children('#accessibility-toggle, #accessibility-instructions');
             var $navigationElements = $('.navigation').find('#accessibility-toggle, #accessibility-instructions');
-            if (!$legacyElements.length && !$navigationElements.length) return;
+            if (!$legacyElements.length && !$navigationElements.length) {
+                return;
+            }
             Adapt.log.warn('REMOVED: #accessibility-toggle and #accessibility-instructions have been removed. Please remove them from all of your .html files.');
             $legacyElements.remove();
             $navigationElements.remove();
         },
 
         _onNavigationStart: function() {
-            if (!this.isEnabled()) return;
+            if (!this.isEnabled()) {
+                return;
+            }
             // Stop document reading
             _.defer(function() {
                 Adapt.a11y.toggleHidden('.page, .menu', true);
@@ -132,8 +142,9 @@ define([
 
         _onNavigationEnd: function(view) {
             // Prevent sub-menu items provoking behaviour
-            if (view && view.model && view.model.get('_id') !== Adapt.location._currentId) return;
-            if (!this.isEnabled()) return;
+            if ((view && view.model && view.model.get('_id') !== Adapt.location._currentId) || !this.isEnabled())  {
+                return;
+            }
             // Allow document to be read
             Adapt.a11y.toggleHidden('.page, .menu', false);
         },
@@ -157,8 +168,9 @@ define([
         toggleHidden: function($elements, isHidden) {
             $elements = $($elements);
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return this;
-            if (!config._isAriaHiddenManagementEnabled) return this;
+            if (!config._isEnabled || !config._isAriaHiddenManagementEnabled) {
+                return this;
+            }
             isHidden = isHidden === undefined ? true : isHidden;
             if (isHidden === true) {
                 $elements.attr('aria-hidden', true);
@@ -192,9 +204,9 @@ define([
         toggleAccessible: function($elements, isReadable) {
             $elements = $($elements);
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return this;
-            if (!config._isAriaHiddenManagementEnabled) return this;
-            if ($elements.length === 0) return this;
+            if (!config._isEnabled || !config._isAriaHiddenManagementEnabled || $elements.length === 0) {
+                return this;
+            }
             isReadable = isReadable === undefined ? true : isReadable;
             if (!isReadable) {
                 $elements.attr({
@@ -217,7 +229,9 @@ define([
          */
         toggleEnabled: function($elements, isEnabled) {
             $elements = $($elements);
-            if ($elements.length === 0) return this;
+            if ($elements.length === 0) {
+                return this;
+            }
             isEnabled = isEnabled === undefined ? true : isEnabled;
             if (!isEnabled) {
                 $elements.attr('disabled','disabled').addClass('disabled');
@@ -263,7 +277,7 @@ define([
         /**
          * Find all readable elements in the specified element.
          *
-         * @param {*} $element
+         * @param {Object} $element
          */
         findReadable: function($element) {
             var config = Adapt.a11y.config;
@@ -276,12 +290,14 @@ define([
          * Check if the element is natively or explicitly tabbable.
          *
          * @param {Object} $element
-         * @returns {boolean}
+         * @returns {boolean|undefined}
          */
         isTabbable: function($element) {
             var config = Adapt.a11y.config;
             var value = $element.is(config._tabbableElements).is(config._tabbableElementsExcludes);
-            if (!value) return undefined; // Allow _findForward to descend
+            if (!value) {
+                return undefined; // Allow _findForward to descend
+            }
             return value;
         },
 
@@ -307,22 +323,32 @@ define([
                 var isNotVisible = $item.css('display') === 'none'
                     || $item.css('visibility') === 'hidden'
                     || $item.attr('aria-hidden') === 'true';
-                if (isNotVisible) return true;
+                if (isNotVisible) {
+                    return true;
+                }
             });
-            if (isNotVisible) return false;
+            if (isNotVisible) {
+                return false;
+            }
 
             // check that the component is natively tabbable or
             // will be knowingly read by a screen reader
             var hasNativeFocusOrIsScreenReadable = $element.is(config._focusableElements)
                 || $element.is(config._readableElements);
-            if (hasNativeFocusOrIsScreenReadable) return true;
+            if (hasNativeFocusOrIsScreenReadable) {
+                return true;
+            }
             var childNodes = $element[0].childNodes;
             for (var c = 0, cl = childNodes.length; c < cl; c++) {
                 var childNode = childNodes[c];
                 var isTextNode = (childNode.nodeType === 3);
-                if (!isTextNode) continue;
+                if (!isTextNode) {
+                    continue;
+                }
                 var isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
-                if (isOnlyWhiteSpace) continue;
+                if (isOnlyWhiteSpace) {
+                    continue;
+                }
                 return true;
             }
             return undefined; // Allows _findForward to decend.
@@ -362,11 +388,15 @@ define([
                     iterator = Boolean;
             }
 
-            if ($element.length === 0) return $element.not('*');
+            if ($element.length === 0) {
+                return $element.not('*');
+            }
 
             // check children by walking the tree
             var $found = this._findFirstForwardDescendant($element, iterator);
-            if ($found && $found.length) return $found;
+            if ($found && $found.length) {
+                return $found;
+            }
 
             // check subsequent siblings
             var $nextSiblings = $element.nextAll().toArray();
@@ -375,19 +405,23 @@ define([
                 var value = iterator($sibling);
 
                 // skip this sibling if explicitly instructed
-                if (value === false) return;
+                if (value === false) {
+                    return;
+                }
 
                 if (value) {
-                // sibling matched
-                $found = $sibling;
-                return true;
+                    // sibling matched
+                    $found = $sibling;
+                    return true;
                 }
 
                 // check parent sibling children by walking the tree
                 $found = this._findFirstForwardDescendant($sibling, iterator);
                 if ($found && $found.length) return true;
             }.bind(this));
-            if ($found && $found.length) return $found;
+            if ($found && $found.length) {
+                return $found;
+            }
 
             // move through parents towards the body element
             var $branch = $element.add($element.parents()).toArray().reverse();
@@ -405,7 +439,9 @@ define([
                     var value = iterator($sibling);
 
                     // skip this sibling if explicitly instructed
-                    if (value === false) return;
+                    if (value === false) {
+                        return;
+                    }
 
                     if (value) {
                         // sibling matched
@@ -415,11 +451,15 @@ define([
 
                     // check parent sibling children by walking the tree
                     $found = this._findFirstForwardDescendant($sibling, iterator);
-                    if ($found && $found.length) return true;
+                    if ($found && $found.length) {
+                        return true;
+                    }
                 }.bind(this));
             }.bind(this));
 
-            if (!$found || !$found.length) return $element.not('*');
+            if (!$found || !$found.length) {
+                return $element.not('*');
+            }
             return $found;
         },
 
@@ -468,11 +508,11 @@ define([
                 item: $element[0],
                 value: undefined
             }];
-            var i = 0;
-            var c = i+1;
+            var stackIndexPosition = 0;
+            var childIndexPosition = stackIndexPosition+1;
             do {
 
-                var stackEntry = stack[i];
+                var stackEntry = stack[stackIndexPosition];
                 var $stackItem = $(stackEntry.item);
 
                 // check current item
@@ -491,21 +531,23 @@ define([
 
                     // item explicitly not allowed, don't add to stack,
                     // skip children
-                    if (value === false) return false;
+                    if (value === false) {
+                        return false;
+                    }
 
                     // item passed or readable, add to stack before any parent
                     // siblings
-                    stack.splice(c++, 0, {
+                    stack.splice(childIndexPosition++, 0, {
                         item: item,
                         value: value
                     });
                 });
 
                 // move to next stack item
-                i++;
+                stackIndexPosition++;
                 // keep place to inject children
-                c = i+1;
-            } while (i < stack.length)
+                childIndexPosition = stackIndexPosition+1;
+            } while (stackIndexPosition < stack.length)
 
             return $notFound;
         },
@@ -556,23 +598,26 @@ define([
             options = new FocusOptions(options);
             $element = $($element).first();
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return this;
-            if (!config._isFocusAssignmentEnabled) return this;
-            if ($element.length === 0) return this;
+            if (!config._isEnabled || !config._isFocusAssignmentEnabled || $element.length === 0) {
+                return this;
+            }
             function perform() {
                 if (options.preventScroll) {
                     var y = $(window).scrollTop();
                     try {
-                    if ($element.attr('tabindex') === undefined) {
-                        $element.attr({
-                            'tabindex': '-1',
-                            'data-a11y-force-focus': 'true'
+                        if ($element.attr('tabindex') === undefined) {
+                            $element.attr({
+                                'tabindex': '-1',
+                                'data-a11y-force-focus': 'true'
+                            });
+                        }
+                        $element[0].focus({
+                            preventScroll: true
                         });
+                    } catch (e) {
+                        // Drop focus errors as only happens when the element
+                        // isn't attached to the DOM.
                     }
-                    $element[0].focus({
-                        preventScroll: true
-                    });
-                    } catch(e){}
                     window.scrollTo(null, y);
                 } else {
                     $element[0].focus();
@@ -623,8 +668,14 @@ define([
                 if (stack[stackIndex].childNodes.length) {
                     var nodes = stack[stackIndex].childNodes;
                     var usable = _.filter(nodes, function(node) {
-                        if (node.nodeType === 3) return true;
-                        if ($(node).is(Adapt.a11y.config._wrapStyleElements)) return true;
+                        var isTextNode = (node.nodeType === 3);
+                        if (isTextNode) {
+                            return true;
+                        }
+                        var isStyleElement = $(node).is(Adapt.a11y.config._wrapStyleElements);
+                        if (isStyleElement) {
+                            return true;
+                        }
                         return false;
                     });
                     outputs.push.apply(outputs, usable);

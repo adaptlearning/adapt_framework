@@ -42,12 +42,16 @@ define([
         initialize: function() {
             this.listenTo(Adapt, {
                 'popup:opened': function($element, ignoreInternalTrigger) {
-                    if (ignoreInternalTrigger) return;
+                    if (ignoreInternalTrigger) {
+                        return;
+                    }
                     Adapt.a11y.log.deprecated('Adapt.trigger("popup:opened", $element) is replaced with Adapt.a11y.popupOpened($element);');
                     this.opened($element, true);
                 },
                 'popup:closed': function($target, ignoreInternalTrigger) {
-                    if (ignoreInternalTrigger) return;
+                    if (ignoreInternalTrigger) {
+                        return;
+                    }
                     Adapt.a11y.log.deprecated('Adapt.trigger("popup:closed", $target) is replaced with Adapt.a11y.popupClosed($target);');
                     this.closed($target, true);
                 }
@@ -65,7 +69,9 @@ define([
             // Capture currently active element or element specified
             $popupElement = $popupElement || $(document.activeElement);
             this._addPopupLayer($popupElement);
-            if (!silent) Adapt.trigger('popup:opened', $popupElement, true);
+            if (!silent) {
+                Adapt.trigger('popup:opened', $popupElement, true);
+            }
             return this;
         },
 
@@ -77,9 +83,9 @@ define([
         _addPopupLayer: function($popupElement) {
             $popupElement = $($popupElement);
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return $popupElement;
-            if (!config._isPopupManagementEnabled) return $popupElement;
-            if ($popupElement.length === 0) return $popupElement;
+            if (!config._isEnabled || !config._isPopupManagementEnabled || $popupElement.length === 0) {
+                return $popupElement;
+            }
             this._floorStack.push($popupElement);
             this._focusStack.push($(document.activeElement));
             var $elements = $(config._tabbableElements).filter(config._tabbableElementsExcludes);
@@ -93,8 +99,12 @@ define([
                     item.a11y_uid = 'UID' + ++this._elementUIDIndex;
                 }
                 elementUID = item.a11y_uid;
-                if (this._tabIndexes[elementUID] === undefined) this._tabIndexes[elementUID] = [];
-                if (this._ariaHiddens[elementUID] === undefined) this._ariaHiddens[elementUID] = [];
+                if (this._tabIndexes[elementUID] === undefined) {
+                    this._tabIndexes[elementUID] = [];
+                }
+                if (this._ariaHiddens[elementUID] === undefined) {
+                    this._ariaHiddens[elementUID] = [];
+                }
                 var tabindex = $item.attr('tabindex');
                 var ariaHidden = $item.attr('aria-hidden');
                 this._tabIndexes[elementUID].push( tabindex === undefined ? '' : tabindex );
@@ -130,7 +140,9 @@ define([
         closed: function($focusElement, silent) {
             var $previousFocusElement = this._removeLastPopupLayer();
             $focusElement = $focusElement || $previousFocusElement || $('body');
-            if (!silent) Adapt.trigger('popup:closed', $focusElement, true);
+            if (!silent) {
+                Adapt.trigger('popup:closed', $focusElement, true);
+            }
             Adapt.a11y.focusFirst($($focusElement));
             return this;
         },
@@ -143,10 +155,13 @@ define([
          */
         _removeLastPopupLayer: function() {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return $(document.activeElement);
-            if (!config._isPopupManagementEnabled) return $(document.activeElement);
+            if (!config._isEnabled || !config._isPopupManagementEnabled) {
+                return $(document.activeElement);
+            }
             // the body layer is the first element and must always exist
-            if (this._floorStack.length <= 1) return;
+            if (this._floorStack.length <= 1) {
+                return;
+            }
             this._floorStack.pop();
             $(config._tabbableElements).filter(config._tabbableElementsExcludes).each(function(index, item) {
                 var $item = $(item);

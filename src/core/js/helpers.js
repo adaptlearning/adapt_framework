@@ -111,7 +111,9 @@ define([
          * Allow JSON to be a template i.e. you can use handlebars {{expressions}} within your JSON
          */
         compile: function(template, context) {
-            if (!template) return '';
+            if (!template) {
+                return '';
+            }
             if (template instanceof Object) template = template.toString();
             var data = this;
             if (context) {
@@ -133,7 +135,9 @@ define([
          * Allow JSON to be a template and normalized text
          */
         compile_a11y_normalize: function(template, context) {
-            if (!template) return '';
+            if (!template) {
+                return '';
+            }
             if (template instanceof Object) template = template.toString();
             return Handlebars.helpers.a11y_normalize.call(this, helpers.compile.call(this, template, context));
         },
@@ -142,7 +146,9 @@ define([
          * Remove all html tags except styling tags
          */
         compile_a11y_remove_breaks: function(template, context) {
-            if (!template) return '';
+            if (!template) {
+                return '';
+            }
             return Handlebars.helpers.a11y_remove_breaks.call(this, helpers.compile.call(this, template, context));
         },
 
@@ -150,7 +156,9 @@ define([
          * makes the _globals object in course.json available to a template
          */
         import_globals: function(context) {
-            if (context.data.root._globals) return '';
+            if (context.data.root._globals) {
+                return '';
+            }
             context.data.root._globals = Adapt.course.get('_globals');
             return '';
         },
@@ -160,7 +168,9 @@ define([
          */
         import_adapt: function(context) {
 
-            if (context.data.root.Adapt) return;
+            if (context.data.root.Adapt) {
+                return;
+            }
             var adapt = context.data.root.Adapt = {};
 
             var i, l, name;
@@ -203,8 +213,13 @@ define([
          * @returns {string}
          */
         component_description: function(override, context) {
-            if (!this._isA11yComponentDescriptionEnabled) return;
-            if (!this._globals._components || !this._globals._components['_'+this._component]) return;
+            if (!this._isA11yComponentDescriptionEnabled) {
+                return;
+            }
+            var isNotDefined = (!this._globals._components || !this._globals._components['_'+this._component]);
+            if (isNotDefined) {
+                return;
+            }
             var hasOverride = (arguments.length > 1);
             var description;
             if (hasOverride) {
@@ -214,7 +229,9 @@ define([
                 description = this._globals._components['_'+this._component].ariaRegion;
                 description = helpers.compile(description, override);
             }
-            if (!description) return;
+            if (!description) {
+                return;
+            }
             return new Handlebars.SafeString('<div class="aria-label">'+description+'</div>');
         },
 

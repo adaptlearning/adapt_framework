@@ -219,10 +219,14 @@ define(function() {
             switch (directionY) {
                 case 'down':
                     hasScrollingSpace = scrollTop + innerHeight < scrollHeight;
-                    if (hasScrollingSpace) return true;
+                    if (hasScrollingSpace) {
+                        return true;
+                    }
                 case 'up':
                     hasScrollingSpace = scrollTop > 0;
-                    if (hasScrollingSpace) return true;
+                    if (hasScrollingSpace) {
+                        return true;
+                    }
             }
             return false;
         },

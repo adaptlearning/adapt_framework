@@ -34,8 +34,9 @@ define([
          */
         _onBlur: function(event) {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return
-            if (!config._isFocusNextOnDisabled) return;
+            if (!config._isEnabled || !config._isFocusNextOnDisabled) {
+                return
+            }
             var $element = $(event.target);
             if ($element.is('[data-a11y-force-focus]')) {
                 _.defer(function() {
@@ -43,10 +44,14 @@ define([
                 });
             }
             // From here, only check source elements
-            if (event.target !== event.currentTarget) return;
+            if (event.target !== event.currentTarget) {
+                return;
+            }
             // Check if element losing focus is losing focus
             // due to the addition of a disabled class
-            if (!$element.is('[disabled]')) return;
+            if (!$element.is('[disabled]')) {
+                return;
+            }
             // Move focus to next readable element
             Adapt.a11y.focusNext($element);
         },
@@ -59,12 +64,15 @@ define([
          */
         _onClick: function(event) {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return;
-            if (!config._isFocusOnClickEnabled) return;
+            if (!config._isEnabled || !config._isFocusOnClickEnabled) {
+                return;
+            }
             var $element = $(event.target);
             var $stack = $().add($element).add($element.parents());
             var $focusable = $stack.filter(config._tabbableElements);
-            if (!$focusable.length) return;
+            if (!$focusable.length) {
+                return;
+            }
             // Force focus for screen reader enter / space press
             $focusable[0].focus();
         }

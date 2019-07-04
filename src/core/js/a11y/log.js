@@ -12,9 +12,13 @@ define([
 
         _hasWarned: function(args) {
             var config = Adapt.a11y.config;
-            if (!config._warnFirstOnly) return false;
+            if (!config._warnFirstOnly) {
+                return false;
+            }
             var hash = _.map(args, String).join(':');
-            if (this._warned[hash]) return true;
+            if (this._warned[hash]) {
+                return true;
+            }
             this._warned[hash] = true;
             return false;
         },
@@ -25,17 +29,25 @@ define([
         },
 
         removed: function() {
-            if (!this._canWarn) return;
+            if (!this._canWarn) {
+                return;
+            }
             var args = Array.prototype.slice.call(arguments);
-            if (this._hasWarned(args)) return;
+            if (this._hasWarned(args)) {
+                return;
+            }
             Adapt.log.warn.apply(Adapt.log, ['A11Y REMOVED:'].concat(args));
             return this;
         },
 
         deprecated: function() {
-            if (!this._canWarn) return;
+            if (!this._canWarn) {
+                return;
+            }
             var args = Array.prototype.slice.call(arguments);
-            if (this._hasWarned(args)) return;
+            if (this._hasWarned(args)) {
+                return;
+            }
             Adapt.log.warn.apply(Adapt.log, ['A11Y DEPRECATED:'].concat(args));
             return this;
         }

@@ -28,8 +28,9 @@ define([
          */
         _onWrapAround: function(event) {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled) return;
-            if (!config._isPopupWrapFocusEnabled) return;
+            if (!config._isEnabled || !config._isPopupWrapFocusEnabled) {
+                return;
+            }
             event.preventDefault();
             event.stopPropagation();
             Adapt.a11y.focusFirst('body', { defer: false });
