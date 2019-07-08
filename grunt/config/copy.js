@@ -48,17 +48,6 @@ module.exports = function (grunt, options) {
     };
 
     var mandatoryTasks = {
-        index: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%= sourcedir %>index.html'],
-                    dest: '<%= outputdir %>',
-                    filter: 'isFile',
-                    flatten: true
-                }
-            ]
-        },
         coreAssets: {
             files: [
                 {
@@ -184,34 +173,11 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
-        scriptLoader: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%= sourcedir %>core/js/scriptLoader.js'],
-                    dest: '<%= outputdir %>adapt/js/',
-                    filter: 'isFile',
-                    flatten: true
-                }
-            ]
-        },
         libraries: {
             files: [
                 {
                     expand: true,
-                    src: [
-                        '<%= sourcedir %>core/js/libraries/**/*'
-                    ],
-                    dest: '<%= outputdir %>libraries/',
-                    rename: _.partial(collate, "libraries")
-                }
-            ]
-        },
-        required: {
-            files: [
-                {
-                    expand: true,
-                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
+                    src: ['core/libraries/**/*', 'components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>/libraries/',
                     filter: function(filepath) {
@@ -219,9 +185,13 @@ module.exports = function (grunt, options) {
                     },
                     rename: _.partial(collate, "libraries")
                 },
+            ]
+        },
+        required: {
+            files: [
                 {
                     expand: true,
-                    src: ['core/**/required/**/*', 'components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
+                    src: ['core/required/**/*', 'components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {

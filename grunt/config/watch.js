@@ -25,23 +25,8 @@ module.exports = {
         tasks : ['copy:courseAssets']
     },
     js: {
-        files: [
-            '<%= sourcedir %>**/*.js',
-            '!<%= sourcedir %>components/components.js',
-            '!<%= sourcedir %>extensions/extensions.js',
-            '!<%= sourcedir %>menu/menu.js',
-            '!<%= sourcedir %>theme/theme.js',
-            '!<%= sourcedir %>templates/templates.js',
-            '!<%= sourcedir %>core/js/scriptLoader.js',
-            '!<%= sourcedir %>core/js/libraries/require.min.js',
-            '!<%= sourcedir %>core/js/libraries/modernizr.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.min.js'
-        ],
+        files: ['<%= sourcedir %>**/*.js'],
         tasks: ['javascript:dev']
-    },
-    index: {
-        files: ['<%= sourcedir %>index.html'],
-        tasks: ['copy:index']
     },
     componentsAssets: {
         files: ['<%= sourcedir %>components/**/assets/**'],
@@ -75,20 +60,12 @@ module.exports = {
         files: ['<%= sourcedir %>theme/<%= theme %>/**/fonts/**'],
         tasks: ['copy:themeFonts']
     },
-    scriptLoader: {
-        files: ['<%= sourcedir %>core/js/scriptLoader.js'],
-        tasks: ['copy:scriptLoader']
-    },
     libraries: {
-        files: [
-            '<%= sourcedir %>core/js/libraries/require.min.js',
-            '<%= sourcedir %>core/js/libraries/modernizr.js',
-            '<%= sourcedir %>core/js/libraries/jquery.min.js'
-        ],
+        files: ['<%= sourcedir %>core/libraries/**/*','<%= sourcedir %>*/*/libraries/**/*'],
         tasks: ['copy:libraries']
     },
     required: {
-        files: ['<%= sourcedir %>extensions/*/required/**/*', '<%= sourcedir %>extensions/*/libraries/**/*'],
+        files: ['<%= sourcedir %>core/required/**/*','<%= sourcedir %>*/*/required/**/*'],
         tasks: 'copy:required'
     }
 }
