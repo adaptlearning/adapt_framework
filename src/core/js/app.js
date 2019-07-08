@@ -26,6 +26,6 @@ require([
         Adapt.init();
 
         Adapt.off('adaptCollection:dataLoaded courseModel:dataLoaded');
-    });
+    }).init();
 
 });

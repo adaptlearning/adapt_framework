@@ -17,7 +17,7 @@ define([
 
         mappedIds: {},
 
-        initialize: function () {
+        init: function () {
             Adapt.build.whenReady().then(this.onBuildDataLoaded.bind(this));
         },
 
