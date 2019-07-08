@@ -82,9 +82,7 @@ define(function() {
             window.addEventListener('touchend', this._onTouchEnd); // mobile
             window.addEventListener('touchmove', this._onScrollEvent, { passive: false }); // mobile
             window.addEventListener('wheel', this._onScrollEvent, { passive: false });
-            window.addEventListener('mousewheel', this._onScrollEvent, { passive: false });
             document.addEventListener('wheel', this._onScrollEvent, { passive: false });
-            document.addEventListener('mousewheel', this._onScrollEvent, { passive: false });
             document.addEventListener('keydown', this._onKeyDown);
         },
 
@@ -292,11 +290,10 @@ define(function() {
             this._isRunning = false;
             window.removeEventListener('touchstart', this._onTouchStart); // mobile
             window.removeEventListener('touchend', this._onTouchEnd); // mobile
-            window.removeEventListener('touchmove', this._onScrollEvent); // mobile
-            window.removeEventListener('wheel', this._onScrollEvent);
-            window.removeEventListener('mousewheel', this._onScrollEvent);
-            document.removeEventListener('wheel', this._onScrollEvent);
-            document.removeEventListener('mousewheel', this._onScrollEvent);
+            // shouldn't need to supply 3rd arg when removing, but IE11 won't remove the event listener if you don't - see https://github.com/adaptlearning/adapt_framework/issues/2466
+            window.removeEventListener('touchmove', this._onScrollEvent, { passive: false }); // mobile
+            window.removeEventListener('wheel', this._onScrollEvent, { passive: false });
+            document.removeEventListener('wheel', this._onScrollEvent, { passive: false });
             document.removeEventListener('keydown', this._onKeyDown);
         }
 
