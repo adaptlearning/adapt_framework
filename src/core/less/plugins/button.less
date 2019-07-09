@@ -7,7 +7,7 @@
 }
 
 .btn-text.is-generic {
-  padding: @btn-padding-ver @btn-padding-hoz;
+  padding: (@btn-padding / 2) @btn-padding;
 }
 // --------------------------------------------------
 
@@ -22,22 +22,22 @@
   }
 
   &__action:not(.is-full-width) {
-    width: calc(~'50% - @{btn-padding-hoz}');
-    margin-right: @btn-padding-hoz;
+    width: calc(~'50% - @{btn-padding}');
+    margin-right: @btn-padding;
 
     .dir-rtl & {
       margin-right: inherit;
-      margin-left: @btn-padding-hoz;
+      margin-left: @btn-padding;
     }
   }
 
   &__feedback:not(.is-full-width) {
-    width: calc(~'50% - @{btn-padding-hoz}');
-    margin-left: @btn-padding-hoz;
+    width: calc(~'50% - @{btn-padding}');
+    margin-left: @btn-padding;
 
     .dir-rtl & {
       margin-left: inherit;
-      margin-right: @btn-padding-hoz;
+      margin-right: @btn-padding;
     }
   }
 
