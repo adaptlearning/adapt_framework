@@ -173,11 +173,22 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
+        coreLibraries: {
+            files: [
+                {
+                    expand: true,
+                    src: ['core/libraries/**/*'],
+                    cwd: '<%= sourcedir %>',
+                    dest: '<%= outputdir %>/libraries/',
+                    rename: _.partial(collate, "libraries")
+                },
+            ]
+        },
         libraries: {
             files: [
                 {
                     expand: true,
-                    src: ['core/libraries/**/*', 'components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
+                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>/libraries/',
                     filter: function(filepath) {
@@ -187,11 +198,22 @@ module.exports = function (grunt, options) {
                 },
             ]
         },
+        coreRequired: {
+            files: [
+                {
+                    expand: true,
+                    src: ['core/required/**/*'],
+                    cwd: '<%= sourcedir %>',
+                    dest: '<%= outputdir %>',
+                    rename: _.partial(collate, "required")
+                }
+            ]
+        },
         required: {
             files: [
                 {
                     expand: true,
-                    src: ['core/required/**/*', 'components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
+                    src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
