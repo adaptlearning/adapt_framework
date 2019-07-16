@@ -181,7 +181,7 @@ module.exports = function (grunt, options) {
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>/libraries/',
                     rename: _.partial(collate, "libraries")
-                },
+                }
             ]
         },
         libraries: {
