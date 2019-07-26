@@ -553,6 +553,9 @@
     "themeVariables": {
       "type": "object"
     },
+    "lastSelectedThemePresetId": {
+      "type": "string"
+    },
     "menuSettings": {
       "type": "object"
     },
