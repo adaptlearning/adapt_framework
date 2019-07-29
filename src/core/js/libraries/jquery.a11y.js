@@ -603,9 +603,7 @@
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
             window.addEventListener("wheel", nativePreventScroll, { passive: false });
-            window.addEventListener("mousewheel", nativePreventScroll, { passive: false });
             document.addEventListener("wheel", nativePreventScroll, { passive: false });
-            document.addEventListener("mousewheel", nativePreventScroll, { passive: false });
             $(window).on("touchstart", onScrollStartCapture); // mobile
             window.addEventListener("touchmove", nativePreventScroll, { passive: false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
@@ -613,10 +611,8 @@
         }
 
         function a11y_removeScrollListeners() {
-            window.removeEventListener("wheel", nativePreventScroll);
-            window.removeEventListener("mousewheel", nativePreventScroll);
-            document.removeEventListener("wheel", nativePreventScroll);
-            document.removeEventListener("mousewheel", nativePreventScroll);
+            window.removeEventListener("wheel", nativePreventScroll, { passive: false }); // shouldn't need to supply 3rd arg when removing, but IE11 won't remove the event listener if you don't - see https://github.com/adaptlearning/adapt_framework/issues/2466
+            document.removeEventListener("wheel", nativePreventScroll, { passive: false });
             $(window).off("touchstart", onScrollStartCapture); // mobile
             window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
