@@ -2,13 +2,13 @@ var path = require('path');
 var fs = require('fs');
 var _ = require('underscore');
 
-module.exports = function (grunt, options) {
+module.exports = function(grunt, options) {
 
   var courseDir = path.join(options.outputdir, 'course');
-  
+
   var filterNullValues = function(obj) {
     // hack to fix bug https://github.com/adaptlearning/adapt_framework/issues/1867
-    
+
     if (obj instanceof Array) {
       for (var i = obj.length - 1; i >= 0; i--) {
         var value = obj[i];
@@ -35,16 +35,16 @@ module.exports = function (grunt, options) {
 
   var generatePatterns = function() {
     var jsonext = grunt.config('jsonext');
-    var pathToConfig = path.join(courseDir, 'config.'+jsonext);
+    var pathToConfig = path.join(courseDir, 'config.' + jsonext);
 
     try {
       // Verify that the configuration file exists.
       fs.accessSync(pathToConfig);
-      
+
       var configJson = grunt.file.readJSON(pathToConfig);
       var defaultLanguage = configJson._defaultLanguage || 'en';
-      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.'+jsonext));
-      
+      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.' + jsonext));
+
       // Backwards compatibility for courses missing 'description'
       if (!courseJson.hasOwnProperty('description')) {
         courseJson.description = '';
@@ -84,25 +84,21 @@ module.exports = function (grunt, options) {
     dist: {
       options: {
         silent: true,
-        patterns: [
-          {
-            json: function (done) {
-              done(generatePatterns());
-            }
+        patterns: [{
+          json: function(done) {
+            done(generatePatterns());
           }
-        ]
+        }]
       },
-      files: [
-        {
-          expand: true,
-          flatten: true,
-          src: [
-            path.join(options.outputdir, '*.xml'),
-            path.join(options.outputdir, '*.html')
-          ],
-          dest: options.outputdir
-        }
-      ]
+      files: [{
+        expand: true,
+        flatten: true,
+        src: [
+          path.join(options.outputdir, '*.xml'),
+          path.join(options.outputdir, '*.html')
+        ],
+        dest: options.outputdir
+      }]
     }
   };
 }

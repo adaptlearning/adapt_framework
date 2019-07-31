@@ -14,18 +14,24 @@ module.exports = function(grunt) {
   var _ = grunt.util._;
 
   // content conversion for templates
-  var defaultProcessContent = function(content) { return content; };
+  var defaultProcessContent = function(content) {
+    return content;
+  };
 
   // AST processing for templates
-  var defaultProcessAST = function(ast) { return ast; };
+  var defaultProcessAST = function(ast) {
+    return ast;
+  };
 
   // filename conversion for templates
-  var defaultProcessName = function(name) { return name; };
+  var defaultProcessName = function(name) {
+    return name;
+  };
 
   // filename conversion for partials
   var defaultProcessPartialName = function(filepath) {
     var pieces = _.last(filepath.split('/')).split('.');
-    var name   = _(pieces).without(_.last(pieces)).join('.'); // strips file extension
+    var name = _(pieces).without(_.last(pieces)).join('.'); // strips file extension
     if (name.charAt(0) === '_') {
       name = name.substr(1, name.length); // strips leading _ character
     }
@@ -96,7 +102,10 @@ module.exports = function(grunt) {
       var nsDeclarations = {};
 
       // nsdeclare options when fetching namespace info
-      var nsDeclareOptions = {response: 'details', declared: nsDeclarations};
+      var nsDeclareOptions = {
+        response: 'details',
+        declared: nsDeclarations
+      };
 
       // Just get the namespace info for a given template
       var getNamespaceInfo = _.memoize(function(filepath) {
@@ -111,65 +120,65 @@ module.exports = function(grunt) {
 
       // iterate files, processing partials and templates separately
       f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        }
-        return true;
-      })
-      .forEach(function(filepath) {
-        var src = processContent(grunt.file.read(filepath), filepath);
-
-        var Handlebars = require('handlebars');
-        try {
-          // parse the handlebars template into it's AST
-          ast = processAST(Handlebars.parse(src));
-          compiled = Handlebars.precompile(ast, compilerOptions);
-
-          // if configured to, wrap template in Handlebars.template call
-          if (options.wrapped === true) {
-            compiled = 'Handlebars.template(' + compiled + ')';
+          // Warn on and remove invalid source files (if nonull was set).
+          if (!grunt.file.exists(filepath)) {
+            grunt.log.warn('Source file "' + filepath + '" not found.');
+            return false;
           }
-        } catch (e) {
-          grunt.log.error(e);
-          grunt.fail.warn('Handlebars failed to compile ' + filepath + '.');
-        }
+          return true;
+        })
+        .forEach(function(filepath) {
+          var src = processContent(grunt.file.read(filepath), filepath);
 
-        // register partial or add template to namespace
-        if (partialsPathRegex.test(filepath) && isPartialRegex.test(_.last(filepath.split('/')))) {
-          filename = processPartialName(filepath);
-          if (options.partialsUseNamespace === true) {
-            nsInfo = getNamespaceInfo(filepath);
-            if (nsInfo.declaration) {
-              declarations.push(nsInfo.declaration);
+          var Handlebars = require('handlebars');
+          try {
+            // parse the handlebars template into it's AST
+            ast = processAST(Handlebars.parse(src));
+            compiled = Handlebars.precompile(ast, compilerOptions);
+
+            // if configured to, wrap template in Handlebars.template call
+            if (options.wrapped === true) {
+              compiled = 'Handlebars.template(' + compiled + ')';
             }
-            partials[nsInfo.namespace + ':' + JSON.stringify(filename)] = ('Handlebars.registerPartial(' +
-              JSON.stringify(filename) + ', ' + nsInfo.namespace + '[' + JSON.stringify(filename) + '] = ' +
-              compiled + ');');
-          } else {
-            partials[JSON.stringify(filename)] = ('Handlebars.registerPartial(' + JSON.stringify(filename) +
-              ', ' + compiled + ');');
+          } catch (e) {
+            grunt.log.error(e);
+            grunt.fail.warn('Handlebars failed to compile ' + filepath + '.');
           }
-        } else {
-          if ((options.amd || options.commonjs) && !useNamespace) {
-            compiled = 'return ' + compiled;
-          }
-          filename = processName(filepath);
-          if (useNamespace) {
-            nsInfo = getNamespaceInfo(filepath);
-            if (nsInfo.declaration) {
-              declarations.push(nsInfo.declaration);
+
+          // register partial or add template to namespace
+          if (partialsPathRegex.test(filepath) && isPartialRegex.test(_.last(filepath.split('/')))) {
+            filename = processPartialName(filepath);
+            if (options.partialsUseNamespace === true) {
+              nsInfo = getNamespaceInfo(filepath);
+              if (nsInfo.declaration) {
+                declarations.push(nsInfo.declaration);
+              }
+              partials[nsInfo.namespace + ':' + JSON.stringify(filename)] = ('Handlebars.registerPartial(' +
+                JSON.stringify(filename) + ', ' + nsInfo.namespace + '[' + JSON.stringify(filename) + '] = ' +
+                compiled + ');');
+            } else {
+              partials[JSON.stringify(filename)] = ('Handlebars.registerPartial(' + JSON.stringify(filename) +
+                ', ' + compiled + ');');
             }
-            templates[nsInfo.namespace + ':' + JSON.stringify(filename)] = (nsInfo.namespace + '[' +
-              JSON.stringify(filename) + '] = ' + compiled + ';');
-          } else if (options.commonjs === true) {
-            templates[JSON.stringify(filename)] = compiled + ';';
           } else {
-            templates[JSON.stringify(filename)] = compiled;
+            if ((options.amd || options.commonjs) && !useNamespace) {
+              compiled = 'return ' + compiled;
+            }
+            filename = processName(filepath);
+            if (useNamespace) {
+              nsInfo = getNamespaceInfo(filepath);
+              if (nsInfo.declaration) {
+                declarations.push(nsInfo.declaration);
+              }
+              templates[nsInfo.namespace + ':' + JSON.stringify(filename)] = (nsInfo.namespace + '[' +
+                JSON.stringify(filename) + '] = ' + compiled + ';');
+            } else if (options.commonjs === true) {
+              templates[JSON.stringify(filename)] = compiled + ';';
+            } else {
+              templates[JSON.stringify(filename)] = compiled;
+            }
           }
-        }
-      });
+        });
 
       var output = declarations.concat(_.values(partials), _.values(templates));
       if (output.length < 1) {

@@ -1,6 +1,6 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
-  grunt.registerTask("_getTranslateConfig", function () {
+  grunt.registerTask("_getTranslateConfig", function() {
 
     // options masterLang, targetLang, format, files, csvDelimiter
     if (grunt.option("masterLang")) {
@@ -15,9 +15,9 @@ module.exports = function (grunt) {
       switch (grunt.option("format")) {
         case "raw":
         case "json":
-          grunt.config.set('translate.format', 'json');      
+          grunt.config.set('translate.format', 'json');
           break;
-        
+
         case "csv":
         default:
           grunt.config.set('translate.format', 'csv');
@@ -34,5 +34,5 @@ module.exports = function (grunt) {
     }
 
   });
-  
+
 };
