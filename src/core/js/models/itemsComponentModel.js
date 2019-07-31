@@ -21,7 +21,7 @@ define([
         },
 
         setUpItems: function() {
-            var items = this.get('_items');
+            var items = this.get('_items') || [];
             items.forEach(function(item, index) {
                 item._index = index;
             });
