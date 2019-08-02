@@ -200,7 +200,11 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: [
-                        '<%= sourcedir %>core/js/libraries/**/*'
+                        '<%= sourcedir %>core/js/libraries/**/*',
+                        '<%= sourcedir %>components/**/libraries/**/*',
+                        '<%= sourcedir %>extensions/**/libraries/**/*',
+                        '<%= sourcedir %>menu/<%= menu %>/libraries/**/*',
+                        '<%= sourcedir %>theme/<%= theme %>/libraries/**/*'
                     ],
                     dest: '<%= outputdir %>libraries/',
                     rename: _.partial(collate, "libraries")
@@ -209,16 +213,6 @@ module.exports = function (grunt, options) {
         },
         required: {
             files: [
-                {
-                    expand: true,
-                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
-                    cwd: '<%= sourcedir %>',
-                    dest: '<%= outputdir %>/libraries/',
-                    filter: function(filepath) {
-                        return grunt.config('helpers').includedFilter(filepath);
-                    },
-                    rename: _.partial(collate, "libraries")
-                },
                 {
                     expand: true,
                     src: ['core/**/required/**/*', 'components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
