@@ -1,5 +1,16 @@
 ## [Unreleased][unreleased]
 
+## [3.5.4] - 2019-08-02
+### Fixed
+- Chrome Hotgraphic scrolling background issue ([#2440](https://github.com/adaptlearning/adapt_framework/issues/2440))
+- IE11 Hotgraphic scrolling bug introduced by the fix for 2440 ([#2466](https://github.com/adaptlearning/adapt_framework/issues/2466))
+- Null `_items` property in components causing content to fail to load ([#2480](https://github.com/adaptlearning/adapt_framework/issues/2480))
+- `a11y_text()` rendering text now instead of HTML ([#2493](https://github.com/adaptlearning/adapt_framework/issues/2493))
+
+## [3.5.3] - 2019-04-04
+### Fixed
+- Incorrect "Unknown" lesson status when completing assessment and course in different attempts ([#2398](https://github.com/adaptlearning/adapt_framework/issues/2398))
+
 ## [3.5.2] - 2019-03-22
 ### Fixed
 - Hyperlinks not clickable when accessibility is enabled ([#2370](https://github.com/adaptlearning/adapt_framework/issues/2370))
