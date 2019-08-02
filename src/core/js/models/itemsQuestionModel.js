@@ -161,7 +161,7 @@ define([
 
         reset: function(type, force) {
             QuestionModel.prototype.reset.apply(this, arguments);
-            ItemsComponentModel.prototype.reset.call(this, type, force);
+            ItemsComponentModel.prototype.reset.apply(this, arguments);
         },
 
         getInteractionObject: function() {
