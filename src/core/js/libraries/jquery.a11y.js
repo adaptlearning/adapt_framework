@@ -208,7 +208,7 @@
 
                 if (children.length === 0) {
                     //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
-                    var textContent = $element.text();
+                    var textContent = $element[0].innerHTML;
                     if (stringTrim(textContent) === "") return $element;
                     removeChildNodes($element);
                     $element.append( makeElementTabbable($("<span>"+textContent+"</span>")) );
@@ -236,7 +236,7 @@
                     case 3: //TEXT NODE
                         //IF TEXT NODE WRAP IN A TABBABLE SPAN
                         if (!stringTrim(child.textContent)) break;
-                        newCluster.push( child.textContent );
+                        newCluster.push( _.escape(child.textContent) );
                         nonTabbableChildren++;
                         break;
                     case 1: //DOM NODE
@@ -248,7 +248,7 @@
                             var childChildren = $child.children();
                             if (childChildren.length === 0) {
                                 //DO NOT DESCEND INTO TEXT ONLY NODES
-                                var textContent = $child.text();
+                                var textContent = $child[0].innerHTML;
                                 if (stringTrim(textContent) !== "") makeElementTabbable($child);
                             } else {
                                 //DESCEND INTO NODES WITH CHILDREN
