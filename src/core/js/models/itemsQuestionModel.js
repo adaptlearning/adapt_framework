@@ -160,7 +160,7 @@ define([
         },
 
         reset: function(type, force) {
-            QuestionModel.prototype.reset.call(this, type, force);
+            QuestionModel.prototype.reset.apply(this, arguments);
             ItemsComponentModel.prototype.reset.call(this, type, force);
         },
 
