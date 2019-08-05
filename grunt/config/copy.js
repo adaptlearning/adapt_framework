@@ -214,12 +214,6 @@ module.exports = function (grunt, options) {
                 {
                     expand: true,
                     src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
-                    cwd: '<%= sourcedir %>',
-                    dest: '<%= outputdir %>',
-                    filter: function(filepath) {
-                        return grunt.config('helpers').includedFilter(filepath);
-                    },
-                    rename: _.partial(collate, "required")
                 }
             ]
         }
