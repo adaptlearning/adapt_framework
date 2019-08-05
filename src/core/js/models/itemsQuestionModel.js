@@ -159,6 +159,11 @@ define([
       this.set('_isAtLeastOneCorrectSelection', false);
     },
 
+    reset: function(type, force) {
+      QuestionModel.prototype.reset.apply(this, arguments);
+      ItemsComponentModel.prototype.reset.apply(this, arguments);
+    },
+
     getInteractionObject: function() {
       var interactions = {
         correctResponsesPattern: [],
