@@ -27,9 +27,9 @@ module.exports = function(grunt) {
 
 				console.log("screen size:", screenSize);
 
-				imports += "\n@adapt-device-small:"+screenSize.small+";";
-				imports += "\n@adapt-device-medium:"+screenSize.medium+";";
-				imports += "\n@adapt-device-large:"+screenSize.large+";\n";
+				imports += `\n@adapt-device-small: ${screenSize.small / 16}em;`;
+				imports += `\n@adapt-device-medium: ${screenSize.medium / 16}em;`;
+				imports += `\n@adapt-device-large: ${screenSize.large / 16}em;\n`;
 			}
 
 			if (options.mandatory) {
