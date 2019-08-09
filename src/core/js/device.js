@@ -54,11 +54,9 @@ define([
     var screenSizeConfig = Adapt.config.get('screenSize');
     var screenSize;
 
-    var fontSize = parseFloat($('body').css('font-size'));
-
-    if ((Adapt.device.screenWidth / fontSize) > screenSizeConfig.medium) {
+    if (Adapt.device.screenWidth > screenSizeConfig.medium) {
       screenSize = 'large';
-    } else if ((Adapt.device.screenWidth / fontSize) > screenSizeConfig.small) {
+    } else if (Adapt.device.screenWidth > screenSizeConfig.small) {
       screenSize = 'medium';
     } else {
       screenSize = 'small';

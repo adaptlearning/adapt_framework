@@ -1,19 +1,21 @@
-<button class="drawer__menu-btn drawer__item-btn{{#if className}} {{className}}{{/if}}">
+<div class="drawer__menu-inner drawer__item-inner" role="listitem">
+  <button class="drawer__menu-btn drawer__item-btn{{#if className}} {{className}}{{/if}}">
 
-  {{#if title}}
-  <div class="drawer__menu-title drawer__item-title">
-    <div class="drawer__menu-title-inner drawer__item-title-inner">
-      {{{title}}}
+    {{#if title}}
+    <div class="drawer__menu-title drawer__item-title">
+      <div class="drawer__menu-title-inner drawer__item-title-inner">
+        {{{title}}}
+      </div>
     </div>
-  </div>
-  {{/if}}
+    {{/if}}
 
-  {{#if description}}
-  <div class="drawer__menu-body drawer__item-body">
-    <div class="drawer__menu-body-inner drawer__item-body-inner">
-      {{{description}}}
+    {{#if description}}
+    <div class="drawer__menu-body drawer__item-body">
+      <div class="drawer__menu-body-inner drawer__item-body-inner">
+        {{{description}}}
+      </div>
     </div>
-  </div>
-  {{/if}}
+    {{/if}}
 
-</button>
+  </button>
+</div>

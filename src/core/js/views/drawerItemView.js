@@ -7,7 +7,7 @@ define([
     className: 'drawer__menu drawer__item',
 
     attributes: {
-      role: 'listitem'
+      role: 'list'
     },
 
     initialize: function() {
