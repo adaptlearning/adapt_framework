@@ -9,7 +9,8 @@ module.exports = function(grunt) {
     var done = this.async();
     var options = this.options({});
 
-    var rootPath = path.join(path.resolve(options.baseUrl), "../").replace(convertSlashes, "/");
+    var rootPath = path.join(path.resolve(options.baseUrl), "../")
+      .replace(convertSlashes, "/");
     var cwd = process.cwd();
 
     var imports = "";
@@ -21,28 +22,30 @@ module.exports = function(grunt) {
         "large": 900
       };
       try {
-        var configjson = JSON.parse(grunt.file.read(options.config).toString());
+        var configjson = JSON.parse(grunt.file.read(options.config)
+          .toString());
         screenSize = configjson.screenSize || screenSize;
       } catch (e) {}
 
       console.log("screen size:", screenSize);
 
-      imports += "\n@adapt-device-small:" + screenSize.small + ";";
-      imports += "\n@adapt-device-medium:" + screenSize.medium + ";";
-      imports += "\n@adapt-device-large:" + screenSize.large + ";\n";
+      imports += `\n@adapt-device-small: ${screenSize.small / 16}em;`;
+      imports += `\n@adapt-device-medium: ${screenSize.medium / 16}em;`;
+      imports += `\n@adapt-device-large: ${screenSize.large / 16}em;\n`;
     }
 
     if (options.mandatory) {
       for (var i = 0, l = options.mandatory.length; i < l; i++) {
         var src = path.join(cwd, options.mandatory[i]);
         grunt.file.expand({
-          follow: true,
-          order: options.order
-        }, src).forEach(function(lessPath) {
-          lessPath = path.normalize(lessPath);
-          var trimmed = lessPath.substr(rootPath.length);
-          imports += "@import '" + trimmed + "';\n";
-        });
+            follow: true,
+            order: options.order
+          }, src)
+          .forEach(function(lessPath) {
+            lessPath = path.normalize(lessPath);
+            var trimmed = lessPath.substr(rootPath.length);
+            imports += "@import '" + trimmed + "';\n";
+          });
       }
     }
 
@@ -50,14 +53,15 @@ module.exports = function(grunt) {
       for (var i = 0, l = options.src.length; i < l; i++) {
         var src = path.join(cwd, options.src[i]);
         grunt.file.expand({
-          follow: true,
-          filter: options.filter,
-          order: options.order
-        }, src).forEach(function(lessPath) {
-          lessPath = path.normalize(lessPath);
-          var trimmed = lessPath.substr(rootPath.length);
-          imports += "@import '" + trimmed + "';\n";
-        });
+            follow: true,
+            filter: options.filter,
+            order: options.order
+          }, src)
+          .forEach(function(lessPath) {
+            lessPath = path.normalize(lessPath);
+            var trimmed = lessPath.substr(rootPath.length);
+            imports += "@import '" + trimmed + "';\n";
+          });
       }
     }
 

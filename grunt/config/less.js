@@ -17,13 +17,6 @@ module.exports = function(grunt, options) {
   }
 
   function compareFilePaths(a, b) {
-    var nestingCompare = compareFilePathsNesting(a, b);
-
-    /**
-     * If at different level of nesting return comparison
-     */
-    if (nestingCompare !== 0) return nestingCompare;
-
     /**
      * If not in the same folder sort alphanumerically
      */
