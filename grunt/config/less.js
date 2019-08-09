@@ -81,11 +81,13 @@ module.exports = function(grunt, options) {
         mapFilename: "adapt.css.map",
         filter: includedFilter,
         order: sortLESSFilePaths,
-        replaceUrls: [{
-          "action": "Replace url(../../assets/ with url(assets/",
-          "find": /\.\.\/\.\.\/assets\//,
-          "replaceWith": "assets/"
-        }]
+        replaceUrls: [
+          {
+            "action": "Replace url(../../assets/ with url(assets/",
+            "find": /\.\.\/\.\.\/assets\//,
+            "replaceWith": "assets/"
+          }
+        ]
       },
       //newer configuration
       files: {
@@ -114,11 +116,13 @@ module.exports = function(grunt, options) {
         mapFilename: "adapt.css.map",
         filter: includedFilter,
         order: sortLESSFilePaths,
-        replaceUrls: [{
-          "action": "Replace url(../../assets/ with url(assets/",
-          "find": /\.\.\/\.\.\/assets\//,
-          "replaceWith": "assets/"
-        }]
+        replaceUrls: [
+          {
+            "action": "Replace url(../../assets/ with url(assets/",
+            "find": /\.\.\/\.\.\/assets\//,
+            "replaceWith": "assets/"
+          }
+        ]
       }
     }
   }

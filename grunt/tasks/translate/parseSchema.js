@@ -14,27 +14,29 @@ module.exports = function(grunt) {
     processPluginLocations();
 
     function getSchemaData() {
-      [{
-        type: "models",
-        globPattern: "core/schema/*.schema",
-        bowerAttr: false,
-        schemaLabel: "models"
-      }, {
-        type: "components",
-        globPattern: "components/*/properties.schema",
-        bowerAttr: "component",
-        schemaLabel: "components"
-      }, {
-        type: "extensions",
-        globPattern: "extensions/*/properties.schema",
-        bowerAttr: "targetAttribute",
-        schemaLabel: "extensions"
-      }, {
-        type: "menu",
-        globPattern: "menu/*/properties.schema",
-        bowerAttr: "targetAttribute",
-        schemaLabel: "menu"
-      }].forEach(function(item) {
+      [
+        {
+          type: "models",
+          globPattern: "core/schema/*.schema",
+          bowerAttr: false,
+          schemaLabel: "models"
+        }, {
+          type: "components",
+          globPattern: "components/*/properties.schema",
+          bowerAttr: "component",
+          schemaLabel: "components"
+        }, {
+          type: "extensions",
+          globPattern: "extensions/*/properties.schema",
+          bowerAttr: "targetAttribute",
+          schemaLabel: "extensions"
+        }, {
+          type: "menu",
+          globPattern: "menu/*/properties.schema",
+          bowerAttr: "targetAttribute",
+          schemaLabel: "menu"
+        }
+      ].forEach(function(item) {
         global.translate.schemaData[item.schemaLabel] = {};
         grunt.file.expand(srcPath + item.globPattern).forEach(function(filepath) {
           var dir = path.parse(filepath).dir;
@@ -55,19 +57,21 @@ module.exports = function(grunt) {
     }
 
     function processGlobals() {
-      [{
-        type: "components",
-        schemaKey: "components", // key to find in global.translate.schemaData
-        schemaLabel: "_components" // name used to save in global.translate.schemaData.models.course
-      }, {
-        type: "extensions",
-        schemaKey: "extensions",
-        schemaLabel: "_extensions"
-      }, {
-        type: "menu",
-        schemaKey: "menu",
-        schemaLabel: "_menu"
-      }].forEach(function(item) {
+      [
+        {
+          type: "components",
+          schemaKey: "components", // key to find in global.translate.schemaData
+          schemaLabel: "_components" // name used to save in global.translate.schemaData.models.course
+        }, {
+          type: "extensions",
+          schemaKey: "extensions",
+          schemaLabel: "_extensions"
+        }, {
+          type: "menu",
+          schemaKey: "menu",
+          schemaLabel: "_menu"
+        }
+      ].forEach(function(item) {
         var data = {};
         var collection = global.translate.schemaData[item.schemaKey];
 
@@ -95,16 +99,18 @@ module.exports = function(grunt) {
     }
 
     function processPluginLocations() {
-      [{
-        type: "components",
-        schemaKey: "components"
-      }, {
-        type: "extensions",
-        schemaKey: "extensions"
-      }, {
-        type: "menu",
-        schemaKey: "menu"
-      }].forEach(function(item) {
+      [
+        {
+          type: "components",
+          schemaKey: "components"
+        }, {
+          type: "extensions",
+          schemaKey: "extensions"
+        }, {
+          type: "menu",
+          schemaKey: "menu"
+        }
+      ].forEach(function(item) {
         var collection = global.translate.schemaData[item.schemaKey];
 
         for (var key in collection) {
@@ -119,7 +125,6 @@ module.exports = function(grunt) {
             }
           }
         }
-
       });
     }
 

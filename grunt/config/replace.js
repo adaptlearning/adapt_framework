@@ -90,15 +90,17 @@ module.exports = function(grunt, options) {
           }
         }]
       },
-      files: [{
-        expand: true,
-        flatten: true,
-        src: [
-          path.join(options.outputdir, '*.xml'),
-          path.join(options.outputdir, '*.html')
-        ],
-        dest: options.outputdir
-      }]
+      files: [
+        {
+          expand: true,
+          flatten: true,
+          src: [
+            path.join(options.outputdir, '*.xml'),
+            path.join(options.outputdir, '*.html')
+          ],
+          dest: options.outputdir
+        }
+      ]
     }
   };
 }

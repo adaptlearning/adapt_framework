@@ -48,7 +48,5 @@ module.exports = function(grunt) {
         global.translate.courseData[filename] = grunt.file.readJSON(src);
       });
     }
-
   });
-
 };
