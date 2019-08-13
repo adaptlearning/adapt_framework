@@ -18,11 +18,11 @@ module.exports = {
     },
     courseJson: {
         files: ['<%= sourcedir %>course/**/*.<%= jsonext %>'],
-        tasks : ['jsonlint', 'check-json', 'copy:courseJson', 'schema-defaults', 'create-json-config']
+        tasks : ['jsonlint', 'check-json', 'newer:copy:courseJson', 'schema-defaults', 'create-json-config']
     },
     courseAssets: {
         files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.<%= jsonext %>'],
-        tasks : ['copy:courseAssets']
+        tasks : ['newer:copy:courseAssets']
     },
     js: {
         files: [
@@ -33,62 +33,66 @@ module.exports = {
             '!<%= sourcedir %>theme/theme.js',
             '!<%= sourcedir %>templates/templates.js',
             '!<%= sourcedir %>core/js/scriptLoader.js',
-            '!<%= sourcedir %>core/js/libraries/require.min.js',
-            '!<%= sourcedir %>core/js/libraries/modernizr.js',
-            '!<%= sourcedir %>core/js/libraries/jquery.min.js'
+            '!<%= sourcedir %>core/js/libraries/**/*.js',
+            '!<%= sourcedir %>extensions/**/libraries/**/*.js',
+            '!<%= sourcedir %>components/**/libraries/**/*.js',
+            '!<%= sourcedir %>menu/<%= menu %>/libraries/**/*.js', 
+            '!<%= sourcedir %>theme/<%= theme %>/libraries/**/*.js'
         ],
         tasks: ['javascript:dev']
     },
     index: {
         files: ['<%= sourcedir %>index.html'],
-        tasks: ['copy:index']
+        tasks: ['newer:copy:index']
     },
     componentsAssets: {
         files: ['<%= sourcedir %>components/**/assets/**'],
-        tasks: ['copy:componentAssets']
+        tasks: ['newer:copy:componentAssets']
     },
     componentsFonts: {
         files: ['<%= sourcedir %>components/**/fonts/**'],
-        tasks: ['copy:componentFonts']
+        tasks: ['newer:copy:componentFonts']
     },
     extensionsAssets: {
         files: ['<%= sourcedir %>extensions/**/assets/**'],
-        tasks: ['copy:extensionAssets']
+        tasks: ['newer:copy:extensionAssets']
     },
     extensionsFonts: {
         files: ['<%= sourcedir %>extensions/**/fonts/**'],
-        tasks: ['copy:extensionFonts']
+        tasks: ['newer:copy:extensionFonts']
     },
     menuAssets: {
         files: ['<%= sourcedir %>menu/<%= menu %>/**/assets/**'],
-        tasks: ['copy:menuAssets']
+        tasks: ['newer:copy:menuAssets']
     },
     menuFonts: {
         files: ['<%= sourcedir %>menu/<%= menu %>/**/fonts/**'],
-        tasks: ['copy:menuFonts']
+        tasks: ['newer:copy:menuFonts']
     },
     themeAssets: {
         files: ['<%= sourcedir %>theme/<%= theme %>/**/assets/**'],
-        tasks: ['copy:themeAssets']
+        tasks: ['newer:copy:themeAssets']
     },
     themeFonts: {
         files: ['<%= sourcedir %>theme/<%= theme %>/**/fonts/**'],
-        tasks: ['copy:themeFonts']
+        tasks: ['newer:copy:themeFonts']
     },
     scriptLoader: {
         files: ['<%= sourcedir %>core/js/scriptLoader.js'],
-        tasks: ['copy:scriptLoader']
+        tasks: ['newer:copy:scriptLoader']
     },
     libraries: {
         files: [
-            '<%= sourcedir %>core/js/libraries/require.min.js',
-            '<%= sourcedir %>core/js/libraries/modernizr.js',
-            '<%= sourcedir %>core/js/libraries/jquery.min.js'
+            '<%= sourcedir %>core/js/libraries/**/*',
+            '<%= sourcedir %>extensions/**/libraries/**/*',
+            '<%= sourcedir %>components/**/libraries/**/*',
+            '<%= sourcedir %>menu/<%= menu %>/libraries/**/*',
+            '<%= sourcedir %>theme/<%= theme %>/libraries/**/*'
         ],
-        tasks: ['copy:libraries']
+        tasks: ['newer:copy:libraries']
     },
     required: {
-        files: ['<%= sourcedir %>extensions/*/required/**/*', '<%= sourcedir %>extensions/*/libraries/**/*'],
-        tasks: 'copy:required'
+        files: ['<%= sourcedir %>extensions/*/required/**/*'],
+        tasks: ['newer:copy:required']
     }
 }
