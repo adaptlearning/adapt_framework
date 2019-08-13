@@ -10,12 +10,6 @@ module.exports = function(grunt, options) {
     return a.length > b.length ? 1 : a.length < b.length ? -1 : 0;
   }
 
-  function compareFilePathsNesting(a, b) {
-    var aDirParts = a.split("/");
-    var bDirParts = b.split("/");
-    return lengthOrder(aDirParts, bDirParts);
-  }
-
   function compareFilePaths(a, b) {
     /**
      * If not in the same folder sort alphanumerically
