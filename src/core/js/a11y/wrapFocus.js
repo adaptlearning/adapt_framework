@@ -24,7 +24,7 @@ define([
          * If click or focus is received on any element with the focusguard class,
          * loop focus around to the top of the document.
          *
-         * @param {Object} event
+         * @param {JQuery.Event} event
          */
         _onWrapAround: function(event) {
             var config = Adapt.a11y.config;

@@ -49,7 +49,7 @@ define([
         /**
          * Handle key down events for on a tabbable element.
          *
-         * @param {Object} event jQuery event object.
+         * @param {JQuery.Event} event
          */
         _onKeyDown: function(event) {
             var config = Adapt.a11y.config;

@@ -89,7 +89,7 @@ define(function() {
         /**
          * Capture the touchstart event object for deltaY calculations.
          *
-         * @param {Object} event
+         * @param {JQuery.Event} event
          */
         _onTouchStart: function(event) {
             event = $.event.fix(event);
@@ -108,7 +108,7 @@ define(function() {
         /**
          * Process a native scroll event.
          *
-         * @param {Object} event
+         * @param {JQuery.Event} event
          */
         _onScrollEvent: function(event) {
             event = $.event.fix(event);
@@ -118,7 +118,7 @@ define(function() {
         /**
          * Process a native keydown event.
          *
-         * @param {Object} event
+         * @param {JQuery.Event} event
          */
         _onKeyDown: function(event) {
             event = $.event.fix(event);
@@ -135,7 +135,7 @@ define(function() {
         /**
          * Process jquery event object.
          *
-         * @param {Object} event
+         * @param {JQuery.Event} event
          */
         _preventScroll: function(event) {
             var $target = $(event.target);
@@ -153,7 +153,7 @@ define(function() {
         /**
          * Return the parent which will be scrolling from the current scroll event.
          *
-         * @param {Object} event jQuery event object.
+         * @param {JQuery.Event} event
          * @param {Object} $target jQuery element object.
          */
         _getScrollingParent: function(event, $target) {
@@ -220,11 +220,13 @@ define(function() {
                     if (hasScrollingSpace) {
                         return true;
                     }
+                    break;
                 case 'up':
                     hasScrollingSpace = scrollTop > 0;
                     if (hasScrollingSpace) {
                         return true;
                     }
+                    break;
             }
             return false;
         },
@@ -232,7 +234,7 @@ define(function() {
         /**
          * Returns the vertical direction of scroll.
          *
-         * @param {Object} event jQuery event object.
+         * @param {JQuery.Event} event
          * @returns {string} 'none' | 'up' | 'down'
          */
         _getScrollDirection: function(event) {
@@ -246,7 +248,7 @@ define(function() {
         /**
          * Returns the number of pixels which is intended to be scrolled.
          *
-         * @param {Object} event jQuery event object.
+         * @param {JQuery.Event} event
          * @returns {number}
          */
         _getScrollDelta: function(event) {

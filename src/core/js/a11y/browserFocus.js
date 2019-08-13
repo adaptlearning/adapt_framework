@@ -30,7 +30,7 @@ define([
          * and check to see if it was blurred because a disabled attribute was added.
          * If a disabled attribute was added, the focus will be moved forward.
          *
-         * @param {Object} event jQuery event object.
+         * @param {JQuery.Event} event
          */
         _onBlur: function(event) {
             var config = Adapt.a11y.config;
@@ -60,7 +60,7 @@ define([
          * Force focus when clicked on a tabbale element,
          * making sure `document.activeElement` is updated.
          *
-         * @param {Object} event jQuery event object.
+         * @param {JQuery.Event} event
          */
         _onClick: function(event) {
             var config = Adapt.a11y.config;
