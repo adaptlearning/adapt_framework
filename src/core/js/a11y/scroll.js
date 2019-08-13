@@ -7,7 +7,7 @@ define(function() {
     var Scroll = Backbone.Controller.extend({
 
         initialize: function() {
-            _.bindAll(this, `_onTouchStart`, `_onTouchEnd`, '_onScrollEvent', '_onKeyDown');
+            _.bindAll(this, '_onTouchStart', '_onTouchEnd', '_onScrollEvent', '_onKeyDown');
             this._scrollDisabledElements = $([]);
             this.$window = $(window);
             this.$body = $('body');
