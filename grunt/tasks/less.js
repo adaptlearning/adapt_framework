@@ -25,11 +25,25 @@ module.exports = function(grunt) {
 					screenSize = configjson.screenSize || screenSize;
 				} catch (e) {}
 
-				console.log("screen size:", screenSize);
+				var screensizeEmThreshold = 300;
+				var baseFontSize = 16;
 
-				imports += `\n@adapt-device-small: ${screenSize.small / 16}em;`;
-				imports += `\n@adapt-device-medium: ${screenSize.medium / 16}em;`;
-				imports += `\n@adapt-device-large: ${screenSize.large / 16}em;\n`;
+				// Check to see if the screen size value is larger than the em threshold
+				// If value is larger than em threshold, convert value (assumed px) to ems
+				// Otherwise assume value is in ems
+				var largeEmBreakpoint = screenSize.large > screensizeEmThreshold ?
+					screenSize.large / baseFontSize :
+					screenSize.large;
+				var mediumEmBreakpoint = screenSize.medium > screensizeEmThreshold ?
+					screenSize.medium / baseFontSize :
+					screenSize.medium;
+				var smallEmBreakpoint = screenSize.small > screensizeEmThreshold ?
+					screenSize.small / baseFontSize :
+					screenSize.small;
+
+				imports += `\n@adapt-device-large: ${largeEmBreakpoint}em;`;
+				imports += `\n@adapt-device-medium: ${mediumEmBreakpoint}em;`;
+				imports += `\n@adapt-device-small: ${smallEmBreakpoint}em;\n`;
 			}
 
 			if (options.mandatory) {

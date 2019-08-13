@@ -54,9 +54,28 @@ define([
     var screenSizeConfig = Adapt.config.get('screenSize');
     var screenSize;
 
-    if (Adapt.device.screenWidth > screenSizeConfig.medium) {
+    var screensizeEmThreshold = 300;
+    var baseFontSize = 16;
+
+    // Check to see if the screen size value is larger than the em threshold
+    // If value is larger than em threshold, convert value (assumed px) to ems
+    // Otherwise assume value is in ems
+    var mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold ?
+      screenSizeConfig.medium / baseFontSize :
+      screenSizeConfig.medium;
+    var smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold ?
+      screenSizeConfig.small / baseFontSize :
+      screenSizeConfig.small;
+
+    var fontSize = parseFloat($('body').css('font-size'));
+    var screenSizeEmWidth = (Adapt.device.screenWidth / fontSize);
+
+    // Check to see if client screen width is larger than medium em breakpoint
+    // If so apply large, otherwise check to see if client screen width is
+    // larger than small em breakpoint. If so apply medium, otherwise apply small
+    if (screenSizeEmWidth > mediumEmBreakpoint) {
       screenSize = 'large';
-    } else if (Adapt.device.screenWidth > screenSizeConfig.small) {
+    } else if (screenSizeEmWidth > smallEmBreakpoint) {
       screenSize = 'medium';
     } else {
       screenSize = 'small';
