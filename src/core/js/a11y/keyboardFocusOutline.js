@@ -36,11 +36,11 @@ define([
          */
         _start: function() {
             var config = Adapt.a11y.config;
-            if (config._isFocusOutlineDisabled) {
+            if (config._options._isFocusOutlineDisabled) {
                 this.$html.addClass('a11y-disable-focusoutline');
                 return;
             }
-            if (!config._isEnabled || !config._isFocusOutlineKeyboardOnlyEnabled) {
+            if (!config._isEnabled || !config._options._isFocusOutlineKeyboardOnlyEnabled) {
                 return;
             }
             this.$html.addClass('a11y-disable-focusoutline');
@@ -53,15 +53,15 @@ define([
          */
         _onKeyDown: function(event) {
             var config = Adapt.a11y.config;
-            if (config._isFocusOutlineDisabled) {
+            if (config._options._isFocusOutlineDisabled) {
                 this.$html.addClass('a11y-disable-focusoutline');
                 return;
             }
-            if (!config._isEnabled || !config._isFocusOutlineKeyboardOnlyEnabled || !this.showOnKeys[event.keyCode]) {
+            if (!config._isEnabled || !config._options._isFocusOutlineKeyboardOnlyEnabled || !this.showOnKeys[event.keyCode]) {
                 return;
             }
             var $element = $(event.target);
-            if (!$element.is(config._tabbableElements)) {
+            if (!$element.is(config._options._tabbableElements)) {
                 return;
             }
             this.$html.removeClass('a11y-disable-focusoutline');

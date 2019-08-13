@@ -46,7 +46,7 @@ define([
         },
 
         scrollDisable: function() {
-            if (Adapt.a11y.config._isScrollDisableEnabled === false) {
+            if (Adapt.a11y.config._options._isScrollDisableEnabled === false) {
                 return this;
             }
             Adapt.a11y.log.deprecated('$("..").scrollDisable, use Adapt.a11y.scrollDisable($elements); instead.');
@@ -55,7 +55,7 @@ define([
         },
 
         scrollEnable: function() {
-            if (Adapt.a11y.config._isScrollDisableEnabled === false) {
+            if (Adapt.a11y.config._options._isScrollDisableEnabled === false) {
                 return this;
             }
             Adapt.a11y.log.deprecated('$("..").scrollEnable, use Adapt.a11y.scrollEnable($elements); instead.');

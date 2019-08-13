@@ -34,7 +34,7 @@ define([
          */
         _onBlur: function(event) {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isFocusNextOnDisabled) {
+            if (!config._isEnabled || !config._options._isFocusNextOnDisabled) {
                 return
             }
             var $element = $(event.target);
@@ -64,12 +64,12 @@ define([
          */
         _onClick: function(event) {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isFocusOnClickEnabled) {
+            if (!config._isEnabled || !config._options._isFocusOnClickEnabled) {
                 return;
             }
             var $element = $(event.target);
             var $stack = $().add($element).add($element.parents());
-            var $focusable = $stack.filter(config._tabbableElements);
+            var $focusable = $stack.filter(config._options._tabbableElements);
             if (!$focusable.length) {
                 return;
             }

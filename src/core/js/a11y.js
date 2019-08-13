@@ -85,7 +85,7 @@ define([
         _onDataLoaded: function() {
             this.config = Adapt.config.get('_accessibility');
             this.config._isActive = false;
-            _.defaults(this.config, this.defaults);
+            this.config._options = _.defaults(this.config._options || {}, this.defaults);
             Adapt.offlineStorage.set('a11y', false);
             this.$html.toggleClass('accessibility', this.isEnabled());
             this._setupNoSelect();
@@ -168,7 +168,7 @@ define([
         toggleHidden: function($elements, isHidden) {
             $elements = $($elements);
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isAriaHiddenManagementEnabled) {
+            if (!config._isEnabled || !config._options._isAriaHiddenManagementEnabled) {
                 return this;
             }
             isHidden = isHidden === undefined ? true : isHidden;
@@ -204,7 +204,7 @@ define([
         toggleAccessible: function($elements, isReadable) {
             $elements = $($elements);
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isAriaHiddenManagementEnabled || $elements.length === 0) {
+            if (!config._isEnabled || !config._options._isAriaHiddenManagementEnabled || $elements.length === 0) {
                 return this;
             }
             isReadable = isReadable === undefined ? true : isReadable;
@@ -215,7 +215,7 @@ define([
                 }).addClass('aria-hidden');
             } else {
                 $elements.removeAttr('aria-hidden tabindex').removeClass('aria-hidden');
-                $elements.parents(config._ariaHiddenExcludes).removeAttr('aria-hidden').removeClass('aria-hidden');
+                $elements.parents(config._options._ariaHiddenExcludes).removeAttr('aria-hidden').removeClass('aria-hidden');
             }
             return this;
         },
@@ -271,7 +271,7 @@ define([
          */
         findTabbable: function($element) {
             var config = Adapt.a11y.config;
-            return $($element).find(config._tabbableElements).filter(config._tabbableElementsExcludes);
+            return $($element).find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
         },
 
         /**
@@ -294,7 +294,7 @@ define([
          */
         isTabbable: function($element) {
             var config = Adapt.a11y.config;
-            var value = $($element).is(config._tabbableElements).is(config._tabbableElementsExcludes);
+            var value = $($element).is(config._options._tabbableElements).is(config._options._tabbableElementsExcludes);
             if (!value) {
                 return undefined; // Allow _findForward to descend
             }
@@ -333,8 +333,8 @@ define([
 
             // check that the component is natively tabbable or
             // will be knowingly read by a screen reader
-            var hasNativeFocusOrIsScreenReadable = $element.is(config._focusableElements)
-                || $element.is(config._readableElements);
+            var hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements)
+                || $element.is(config._options._readableElements);
             if (hasNativeFocusOrIsScreenReadable) {
                 return true;
             }
@@ -598,7 +598,7 @@ define([
             options = new FocusOptions(options);
             $element = $($element).first();
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isFocusAssignmentEnabled || $element.length === 0) {
+            if (!config._isEnabled || !config._options._isFocusAssignmentEnabled || $element.length === 0) {
                 return this;
             }
             function perform() {
@@ -672,7 +672,7 @@ define([
                         if (isTextNode) {
                             return true;
                         }
-                        var isStyleElement = $(node).is(Adapt.a11y.config._wrapStyleElements);
+                        var isStyleElement = $(node).is(Adapt.a11y.config._options._wrapStyleElements);
                         if (isStyleElement) {
                             return true;
                         }

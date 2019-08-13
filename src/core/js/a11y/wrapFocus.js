@@ -17,7 +17,7 @@ define([
 
         _attachEventListeners: function() {
             var config = Adapt.a11y.config;
-            $('body').on('click focus', config._focusguard, this._onWrapAround);
+            $('body').on('click focus', config._options._focusguard, this._onWrapAround);
         },
 
         /**
@@ -28,7 +28,7 @@ define([
          */
         _onWrapAround: function(event) {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isPopupWrapFocusEnabled) {
+            if (!config._isEnabled || !config._options._isPopupWrapFocusEnabled) {
                 return;
             }
             event.preventDefault();

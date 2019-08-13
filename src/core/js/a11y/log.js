@@ -12,7 +12,7 @@ define([
 
         _hasWarned: function(args) {
             var config = Adapt.a11y.config;
-            if (!config._warnFirstOnly) {
+            if (!config._options._warnFirstOnly) {
                 return false;
             }
             var hash = _.map(args, String).join(':');
@@ -25,7 +25,7 @@ define([
 
         _canWarn: function() {
             var config = Adapt.a11y.config;
-            return Boolean(config._warn);
+            return Boolean(config._options._warn);
         },
 
         removed: function() {

@@ -83,14 +83,14 @@ define([
         _addPopupLayer: function($popupElement) {
             $popupElement = $($popupElement);
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isPopupManagementEnabled || $popupElement.length === 0) {
+            if (!config._isEnabled || !config._options._isPopupManagementEnabled || $popupElement.length === 0) {
                 return $popupElement;
             }
             this._floorStack.push($popupElement);
             this._focusStack.push($(document.activeElement));
-            var $elements = $(config._tabbableElements).filter(config._tabbableElementsExcludes);
+            var $elements = $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
             var $branch = $popupElement.add($popupElement.parents());
-            var $siblings = $branch.siblings().filter(config._tabbableElementsExcludes);
+            var $siblings = $branch.siblings().filter(config._options._tabbableElementsExcludes);
             $elements = $elements.add($siblings);
             $elements.each(function(index, item) {
                 var $item = $(item);
@@ -109,22 +109,22 @@ define([
                 var ariaHidden = $item.attr('aria-hidden');
                 this._tabIndexes[elementUID].push( tabindex === undefined ? '' : tabindex );
                 this._ariaHiddens[elementUID].push( ariaHidden === undefined ? '' : ariaHidden);
-                if (config._isPopupTabIndexManagementEnabled) {
+                if (config._options._isPopupTabIndexManagementEnabled) {
                     $item.attr('tabindex', -1);
                 }
-                if (config._isPopupAriaHiddenManagementEnabled) {
+                if (config._options._isPopupAriaHiddenManagementEnabled) {
                     $item.attr('aria-hidden', true);
                 }
             }.bind(this));
-            var $items = $popupElement.find(config._tabbableElements).filter(config._tabbableElementsExcludes);
-            if (config._isPopupTabIndexManagementEnabled) {
+            var $items = $popupElement.find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
+            if (config._options._isPopupTabIndexManagementEnabled) {
                 $items.attr('tabindex', 0);
             }
-            if (config._isPopupAriaHiddenManagementEnabled) {
+            if (config._options._isPopupAriaHiddenManagementEnabled) {
                 $items
                     .removeAttr('aria-hidden')
                     .removeClass('aria-hidden')
-                    .parents(config._ariaHiddenExcludes)
+                    .parents(config._options._ariaHiddenExcludes)
                     .removeAttr('aria-hidden')
                     .removeClass('aria-hidden');
             }
@@ -155,7 +155,7 @@ define([
          */
         _removeLastPopupLayer: function() {
             var config = Adapt.a11y.config;
-            if (!config._isEnabled || !config._isPopupManagementEnabled) {
+            if (!config._options._isEnabled || !config._options._isPopupManagementEnabled) {
                 return $(document.activeElement);
             }
             // the body layer is the first element and must always exist
@@ -163,7 +163,7 @@ define([
                 return;
             }
             this._floorStack.pop();
-            $(config._tabbableElements).filter(config._tabbableElementsExcludes).each(function(index, item) {
+            $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes).each(function(index, item) {
                 var $item = $(item);
                 var previousTabIndex = '';
                 var previousAriaHidden = '';
@@ -183,7 +183,7 @@ define([
                     delete this._tabIndexes[elementUID];
                     delete this._ariaHiddens[elementUID];
                 }
-                if (config._isPopupTabIndexManagementEnabled) {
+                if (config._options._isPopupTabIndexManagementEnabled) {
                     if (previousTabIndex === '') {
                         $item.removeAttr('tabindex');
                     } else {
@@ -192,7 +192,7 @@ define([
                         });
                     }
                 }
-                if (config._isPopupAriaHiddenManagementEnabled) {
+                if (config._options._isPopupAriaHiddenManagementEnabled) {
                     if (previousAriaHidden === '') {
                         $item.removeAttr('aria-hidden');
                     } else {
