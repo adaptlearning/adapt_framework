@@ -202,7 +202,7 @@ define([
                     }
                 }
             }.bind(this));
-            return document.activeElement = this._focusStack.pop();
+            return (document.activeElement = this._focusStack.pop());
         }
 
     });
