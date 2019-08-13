@@ -10,7 +10,8 @@ define([
         '_article': 2,
         '_block': 3,
         '_component': 4,
-        '_componentItem': 5
+        '_componentItem': 5,
+        '_notify': 1
     };
 
     var helpers = {
