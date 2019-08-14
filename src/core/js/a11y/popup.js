@@ -155,7 +155,7 @@ define([
          */
         _removeLastPopupLayer: function() {
             var config = Adapt.a11y.config;
-            if (!config._options._isEnabled || !config._options._isPopupManagementEnabled) {
+            if (!config._isEnabled || !config._options._isPopupManagementEnabled) {
                 return $(document.activeElement);
             }
             // the body layer is the first element and must always exist
