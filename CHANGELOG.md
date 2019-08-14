@@ -11,7 +11,7 @@
 - RTL layout issues ([#2389](https://github.com/adaptlearning/adapt_framework/issues/2389))
 - Inheritance bug broke `ItemsComponentModel` chain ([#2415](https://github.com/adaptlearning/adapt_framework/issues/2415))
 - Trickle flicker in IE11 ([#2423](https://github.com/adaptlearning/adapt_framework/issues/2423))
-- Bug in Chrome where main background could still be scrolled whilst a modal popup was open ([#2440](https://github.com/adaptlearning/adapt_framework/issues/2440))
+- Bug in Chrome where the page could still be scrolled whilst a popup or the drawer were open ([#2440](https://github.com/adaptlearning/adapt_framework/issues/2440))
 - Setting `_isResetOnRevisit` to `'soft'` prevented questions from being answered ([#2474](https://github.com/adaptlearning/adapt_framework/issues/2474))
 - JQuery `offset` override wasn't allowing coordinates to be set ([#2484](https://github.com/adaptlearning/adapt_framework/issues/2484))
 - Including an Accordion component with no items prevented the course from rendering ([#2480](https://github.com/adaptlearning/adapt_framework/issues/2480))
