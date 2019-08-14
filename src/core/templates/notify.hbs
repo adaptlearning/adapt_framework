@@ -12,7 +12,7 @@
                 {{/if}}
                 {{#if title}}
                     <div id="notify-heading" class="notify-popup-title">
-                        <div class="notify-popup-title-inner h5" role="heading" aria-level="1">
+                        <div class="notify-popup-title-inner h5" {{{a11y_attrs_heading 'notify'}}}>
                         {{{compile title}}}
                         </div>
                     </div>
