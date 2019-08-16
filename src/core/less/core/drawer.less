@@ -8,10 +8,6 @@
   width: @drawer-width;
   z-index: 100;
 
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-
   .dir-rtl & {
     right: inherit;
     left: -@drawer-width;
@@ -27,6 +23,10 @@
   // --------------------------------------------------
   &__holder {
     padding-top: @navigation-height;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
   // --------------------------------------------------
 
