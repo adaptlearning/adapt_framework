@@ -79,9 +79,9 @@
              * @param {Object|string|Array} $element
              */
             findReadable: function($element) {
-                return $($element).find('*').filter(function(index, element) {
+                return $($element).find('*').filter(_.bind(function(index, element) {
                     return this.isReadable(element);
-                }.bind(this));
+                }, this));
             },
 
             /**
@@ -181,7 +181,7 @@
 
                 // check subsequent siblings
                 var $nextSiblings = $element.nextAll().toArray();
-                _.find($nextSiblings, function(sibling) {
+                _.find($nextSiblings, _.bind(function(sibling) {
                     var $sibling = $(sibling);
                     var value = iterator($sibling);
 
@@ -199,14 +199,14 @@
                     // check parent sibling children by walking the tree
                     $found = this._findFirstForwardDescendant($sibling, iterator);
                     if ($found && $found.length) return true;
-                }.bind(this));
+                }, this));
                 if ($found && $found.length) {
                     return $found;
                 }
 
                 // move through parents towards the body element
                 var $branch = $element.add($element.parents()).toArray().reverse();
-                _.find($branch, function(parent) {
+                _.find($branch, _.bind(function(parent) {
                     var $parent = $(parent);
                     if (iterator($parent) === false) {
                         // skip this parent if explicitly instructed
@@ -215,7 +215,7 @@
 
                     // move through parents nextAll siblings
                     var $siblings = $parent.nextAll().toArray();
-                    return _.find($siblings, function(sibling) {
+                    return _.find($siblings, _.bind(function(sibling) {
                         var $sibling = $(sibling);
                         var value = iterator($sibling);
 
@@ -235,8 +235,8 @@
                         if ($found && $found.length) {
                             return true;
                         }
-                    }.bind(this));
-                }.bind(this));
+                    }, this));
+                }, this));
 
                 if (!$found || !$found.length) {
                     return $element.not('*');
@@ -401,9 +401,9 @@
                     }
                 }
                 if (options.defer) {
-                    _.defer(function() {
+                    _.defer(_.bind(function() {
                         perform();
-                    }.bind(this));
+                    }, this));
                 } else {
                     perform();
                 }
@@ -881,6 +881,14 @@
             $element.limitedScrollTo();
         }
 
+        function onBlur(event) {
+            var $element = $(event.target);
+
+            if ($element.is('[data-a11y-force-focus]')) {
+                $element.removeAttr("tabindex data-a11y-force-focus");
+            }
+        }
+
         function onScrollStartCapture(event) {
             var state = $.a11y.state;
             state.scrollStartEvent = event;
@@ -976,11 +984,13 @@
             var options = $.a11y.options;
             $("body")
                 .off("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-                .off("focus", domSelectors.globalTabIndexElements, onFocus);
+                .off("focus", domSelectors.globalTabIndexElements, onFocus)
+                .off("blur", domSelectors.globalTabIndexElements, onBlur);
 
             $("body")
                 .on("mousedown touchstart", domSelectors.focusableElements, onFocusCapture) //IPAD TOUCH-DOWN FOCUS FIX FOR BUTTONS
-                .on("focus", domSelectors.globalTabIndexElements, onFocus);
+                .on("focus", domSelectors.globalTabIndexElements, onFocus)
+                .on("blur", domSelectors.globalTabIndexElements, onBlur);
         }
 
         function a11y_injectControlElements() {
