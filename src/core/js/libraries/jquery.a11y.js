@@ -1,9 +1,9 @@
 //https://github.com/adaptlearning/jquery.a11y 2015-08-13
 
 (function($, window) {
-    
+
     var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
-    
+
     // JQUERY FILTERS FOR ELEMENTS
         var domFilters = {
             "globalTabIndexElementFilter": ':not(.a11y-ignore)',
@@ -38,6 +38,388 @@
             "arialabel": "<span class='aria-label prevent-default' tabindex='0' role='region'></span>"
         };
 
+    // Find functions backported from v5
+        var FocusOptions = function(options) {
+            _.defaults(this, options, {
+
+                /**
+                 * Stops the browser from scrolling to the focused point.
+                 * https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
+                 *
+                 * @type {boolean}
+                 */
+                preventScroll: true,
+
+                /**
+                 * Add a defer to the focus call, allowing for user interface settling.
+                 *
+                 * @type {boolean}
+                 */
+                defer: false
+
+            });
+        };
+
+        var fromV5 = {
+
+            /**
+             * Find the first readable element after the specified element.
+             *
+             * @param {Object|string|Array} $element
+             * @returns {Object}
+             */
+            findFirstReadable: function($element) {
+                $element = $($element).first();
+                return this._findFirstForward($element, this.isReadable);
+            },
+
+            /**
+             * Find all readable elements in the specified element.
+             *
+             * @param {Object|string|Array} $element
+             */
+            findReadable: function($element) {
+                //var config = fromV5.config;
+                return $($element).find('*').filter(function(index, element) {
+                    return this.isReadable(element);
+                }.bind(this));
+            },
+
+            /**
+             * Check if the first item is readable by a screen reader.
+             *
+             * @param {Object|string|Array} $element
+             * @param {boolean} [checkParents=true] Check if parents are inaccessible.
+             * @returns {boolean}
+             */
+            isReadable: function($element, checkParents) {
+                //var config = fromV5.config;
+                $element = $($element).first();
+                checkParents = checkParents === undefined ? true : false;
+
+                var $branch =  checkParents
+                    ? $element.add($element.parents())
+                    : $element;
+
+                var isNotVisible = _.find($branch.toArray(), function(item) {
+                    var $item = $(item);
+                    // make sure item is not explicitly invisible
+                    var isNotVisible = $item.css('display') === 'none'
+                        || $item.css('visibility') === 'hidden'
+                        || $item.attr('aria-hidden') === 'true';
+                    if (isNotVisible) {
+                        return true;
+                    }
+                });
+                if (isNotVisible) {
+                    return false;
+                }
+
+                // check that the component is natively tabbable or
+                // will be knowingly read by a screen reader
+                // var hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements)
+                //     || $element.is(config._options._readableElements);
+                var hasNativeFocusOrIsScreenReadable = $element.is(domSelectors.focusableElements);
+                if (hasNativeFocusOrIsScreenReadable) {
+                    return true;
+                }
+                var childNodes = $element[0].childNodes;
+                for (var c = 0, cl = childNodes.length; c < cl; c++) {
+                    var childNode = childNodes[c];
+                    var isTextNode = (childNode.nodeType === 3);
+                    if (!isTextNode) {
+                        continue;
+                    }
+                    var isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
+                    if (isOnlyWhiteSpace) {
+                        continue;
+                    }
+                    return true;
+                }
+                return undefined; // Allows _findForward to decend.
+            },
+
+            /**
+             * Find forward in the DOM, descending and ascending to move forward
+             * as appropriate.
+             *
+             * If the selector is a function it should returns true, false or undefined.
+             * Returning true matches the item and returns it. Returning false means do
+             * not match or descend into this item, returning undefined means do not match,
+             * but descend into this item.
+             *
+             * @param {Object|string|Array} $element
+             * @param {string|function|undefined} selector
+             * @returns {Object} Returns found descendant.
+             */
+            _findFirstForward: function($element, selector) {
+                $element = $($element).first();
+
+                // make sure iterator is correct, use boolean or selector comparison
+                // appropriately
+                var iterator;
+                switch (typeof selector) {
+                    case 'string':
+                        // make selector iterator
+                        iterator = function($tag) {
+                            return $tag.is(selector) || undefined;
+                        };
+                        break;
+                    case 'function':
+                        iterator = selector;
+                        break;
+                    case 'undefined':
+                        // find first next element
+                        iterator = Boolean;
+                }
+
+                if ($element.length === 0) {
+                    return $element.not('*');
+                }
+
+                // check children by walking the tree
+                var $found = this._findFirstForwardDescendant($element, iterator);
+                if ($found && $found.length) {
+                    return $found;
+                }
+
+                // check subsequent siblings
+                var $nextSiblings = $element.nextAll().toArray();
+                _.find($nextSiblings, function(sibling) {
+                    var $sibling = $(sibling);
+                    var value = iterator($sibling);
+
+                    // skip this sibling if explicitly instructed
+                    if (value === false) {
+                        return;
+                    }
+
+                    if (value) {
+                        // sibling matched
+                        $found = $sibling;
+                        return true;
+                    }
+
+                    // check parent sibling children by walking the tree
+                    $found = this._findFirstForwardDescendant($sibling, iterator);
+                    if ($found && $found.length) return true;
+                }.bind(this));
+                if ($found && $found.length) {
+                    return $found;
+                }
+
+                // move through parents towards the body element
+                var $branch = $element.add($element.parents()).toArray().reverse();
+                _.find($branch, function(parent) {
+                    var $parent = $(parent);
+                    if (iterator($parent) === false) {
+                        // skip this parent if explicitly instructed
+                        return false;
+                    }
+
+                    // move through parents nextAll siblings
+                    var $siblings = $parent.nextAll().toArray();
+                    return _.find($siblings, function(sibling) {
+                        var $sibling = $(sibling);
+                        var value = iterator($sibling);
+
+                        // skip this sibling if explicitly instructed
+                        if (value === false) {
+                            return;
+                        }
+
+                        if (value) {
+                            // sibling matched
+                            $found = $sibling;
+                            return true;
+                        }
+
+                        // check parent sibling children by walking the tree
+                        $found = this._findFirstForwardDescendant($sibling, iterator);
+                        if ($found && $found.length) {
+                            return true;
+                        }
+                    }.bind(this));
+                }.bind(this));
+
+                if (!$found || !$found.length) {
+                    return $element.not('*');
+                }
+                return $found;
+            },
+
+            /**
+             * Find descendant in a DOM tree, work from selected to branch-end, through allowed
+             * branch structures in hierarchy order
+             *
+             * If the selector is a function it should returns true, false or undefined.
+             * Returning true matches the item and returns it. Returning false means do
+             * not match or descend into this item, returning undefined means do not match,
+             * but descend into this item.
+             *
+             * @param {Object|string|Array} $element jQuery element to start from.
+             * @param {string|function|undefined} selector
+             * @returns {Object} Returns found descendant.
+             */
+            _findFirstForwardDescendant: function($element, selector) {
+                $element = $($element).first();
+
+                // make sure iterator is correct, use boolean or selector comparison
+                // appropriately
+                var iterator;
+                switch (typeof selector) {
+                    case 'string':
+                        // make selector iterator
+                        iterator = function($tag) {
+                            return $tag.is(selector) || undefined;
+                        };
+                        break;
+                    case 'function':
+                        iterator = selector;
+                        break;
+                    case 'undefined':
+                        // find first next element
+                        iterator = Boolean;
+                }
+
+
+                var $notFound = $element.not('*');
+                if ($element.length === 0) {
+                    return $notFound;
+                }
+
+                // keep walked+passed children in a stack
+                var stack = [{
+                    item: $element[0],
+                    value: undefined
+                }];
+                var stackIndexPosition = 0;
+                var childIndexPosition = stackIndexPosition+1;
+                do {
+
+                    var stackEntry = stack[stackIndexPosition];
+                    var $stackItem = $(stackEntry.item);
+
+                    // check current item
+                    switch (stackEntry.value) {
+                        case true:
+                            return $stackItem;
+                        case false:
+                            return $notFound;
+                    }
+
+                    // get i stack children
+                    var $children = $stackItem.children().toArray();
+                    _.find($children, function(item) {
+                        var $item = $(item);
+                        var value = iterator($item);
+
+                        // item explicitly not allowed, don't add to stack,
+                        // skip children
+                        if (value === false) {
+                            return false;
+                        }
+
+                        // item passed or readable, add to stack before any parent
+                        // siblings
+                        stack.splice(childIndexPosition++, 0, {
+                            item: item,
+                            value: value
+                        });
+                    });
+
+                    // move to next stack item
+                    stackIndexPosition++;
+                    // keep place to inject children
+                    childIndexPosition = stackIndexPosition+1;
+                } while (stackIndexPosition < stack.length)
+
+                return $notFound;
+            },
+
+            /**
+             * Assign focus to the next readable element.
+             *
+             * @param {Object|string|Array} $element
+             * @param {FocusOptions} options
+             * @returns {Object} Returns `fromV5`
+             */
+            focusNext: function($element, options) {
+                options = new FocusOptions(options);
+                $element = $($element).first();
+                $element = fromV5.findFirstReadable($element);
+                this.focus($element, options);
+                return this;
+            },
+
+            /**
+             * Assign focus to either the specified element if it is readable or the
+             * next readable element.
+             *
+             * @param {Object|string|Array} $element
+             * @param {FocusOptions} options
+             * @returns {Object} Returns `fromV5`
+             */
+            focusFirst: function($element, options) {
+                options = new FocusOptions(options);
+                $element = $($element).first();
+                if (fromV5.isReadable($element)) {
+                    this.focus($element, options);
+                    return $element;
+                }
+                $element = fromV5.findFirstReadable($element);
+                this.focus($element, options);
+                return $element;
+            },
+
+            /**
+             * Force focus to the specified element with/without a defer or scroll.
+             *
+             * @param {Object|string|Array} $element
+             * @param {FocusOptions} options
+             * @returns {Object} Returns `fromV5`
+             */
+            focus: function($element, options) {
+                options = new FocusOptions(options);
+                $element = $($element).first();
+                // var config = fromV5.config;
+                // if (!config._isEnabled || !config._options._isFocusAssignmentEnabled || $element.length === 0) {
+                //     return this;
+                // }
+                function perform() {
+                    if (options.preventScroll) {
+                        var y = $(window).scrollTop();
+                        try {
+                            if ($element.attr('tabindex') === undefined) {
+                                $element.attr({
+                                    'tabindex': '-1',
+                                    'data-a11y-force-focus': 'true'
+                                });
+                            }
+                            $element[0].focus({
+                                preventScroll: true
+                            });
+                        } catch (e) {
+                            // Drop focus errors as only happens when the element
+                            // isn't attached to the DOM.
+                        }
+                        window.scrollTo(null, y);
+                    } else {
+                        $element[0].focus();
+                    }
+                }
+                if (options.defer) {
+                    _.defer(function() {
+                        perform();
+                    }.bind(this));
+                } else {
+                    perform();
+                }
+                return this;
+            },
+
+        };
+
 
     // UTILITY FUNCTIONS
         function stringTrim(str) {
@@ -67,15 +449,15 @@
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
                 var scrollingParent = getScrollingParent(event);
                 if (scrollingParent.filter(state.scrollDisabledElements).length === 0) {
-                    $(window).scroll(); 
-                    return; 
+                    $(window).scroll();
+                    return;
                 }
             }
 
             if (options.isDebug) console.log("preventScroll2")
 
             event.preventDefault();
-            return false; 
+            return false;
         }
 
         var scrollKeys = {37: 1, 38: 1, 39: 1, 40: 1};
@@ -89,7 +471,7 @@
 
             if (state.scrollDisabledElements && state.scrollDisabledElements.length > 0) {
                 var scrollingParent = getScrollingParent(event);
-                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;    
+                if (scrollingParent.filter(state.scrollDisabledElements).length === 0) return;
             }
 
             if (options.isDebug) console.log("preventScroll2")
@@ -105,7 +487,7 @@
 
             var isTouchEvent = event.type == "touchmove";
 
-            var deltaY; 
+            var deltaY;
             var directionY;
 
             if (isTouchEvent) {
@@ -123,7 +505,7 @@
                     currentY = event.originalEvent.touches[0].pageY;
                     previousY = state.scrollStartEvent.originalEvent.touches[0].pageY;
                 }
-                
+
                 //touch: delta calculated from touchstart pos vs touchmove pos
                 deltaY = currentY - previousY;
                 if (deltaY === 0) return $('body');
@@ -137,10 +519,10 @@
                 //desktop: chrome & safari delta || firefox & ie delta inverted
                 deltaY = event.originalEvent.wheelDeltaY || event.originalEvent.deltaY !== undefined ? -event.originalEvent.deltaY : event.originalEvent.wheelDelta || undefined;
                 if (deltaY === 0) return $('body');
-                
+
                 directionY = deltaY > 0 ? "up" : "down";
 
-            }           
+            }
 
             var itemParents = $element.parents();
             var lastScrolling = null;
@@ -149,7 +531,7 @@
                 if ($parent.is("body")) return $parent;
                 var scrollType = $parent.css("overflow-y");
                 switch (scrollType){
-                case "auto": case "scroll": 
+                case "auto": case "scroll":
                     var parentScrollTop = Math.ceil($parent.scrollTop());
                     var parentInnerHeight = $parent.outerHeight();
                     var parentScrollHeight = $parent[0].scrollHeight;
@@ -163,7 +545,7 @@
                     }
 
                     lastScrolling = $parent;
-                    
+
                     break;
                 default:
                 }
@@ -199,7 +581,7 @@
                 //CAPTURE DOMNODE CHILDREN
                 var children = $element.children();
 
-                
+
                 if (children.length === 0) {
                     //IF NO CHILDREN, ASSUME TEXT ONLY, WRAP IN SPAN TAG
                     var textContent = $element.text();
@@ -306,7 +688,7 @@
 
              if (!options.isScrollDisableEnabled) return this;
 
-            if (!state.scrollDisabledElements) return;            
+            if (!state.scrollDisabledElements) return;
 
             state.scrollDisabledElements = state.scrollDisabledElements.not(this);
 
@@ -343,13 +725,13 @@
             if ($element.isFixedPostion()) return this;
 
             options = options || {};
-            
+
             var topOffset = options.focusOffsetTop || 0;
             var bottomOffset = options.focusOffsetTop || 0;
 
             var elementTop = $element.offset()["top"];
             var scrollTopWithTopOffset = $(window).scrollTop() + topOffset;
-            
+
             var windowAvailableHeight = $(window).innerHeight() - bottomOffset - topOffset;
 
             var scrollBottomWithTopOffset = scrollTopWithTopOffset + windowAvailableHeight
@@ -369,71 +751,17 @@
         //jQuery function to focus with no scroll (accessibility requirement for control focus)
         $.fn.focusNoScroll = function() {
             if (this.length === 0) return this;
-
-            defer(function() {
-                var options = $.a11y.options;
-                if (options.isDebug) console.log("focusNoScroll", this[0]);
-
-                var y = $(window).scrollTop();
-                try {
-                this[0].focus();
-                } catch(e){}
-                window.scrollTo(null, y);
-            }, this);
-            return this; //chainability
+            fromV5.focus(this, {defer: true})
+            return this;
         };
 
         $.fn.focusOrNext = function(returnOnly) {
             if (this.length === 0) return this;
-
             var $element = $(this[0]);
-
-            var isSpecialElement = $element.is(domSelectors.focuser) || $element.is(domSelectors.focusguard) || $element.is(domSelectors.selected); 
-            var isTabbable = $element.is(domSelectors.focusableElements) && $element.is(domFilters.focusableElementsFilter);
-
-            if (!isSpecialElement && !isTabbable) {
-                //if the element is not focusable, find the next focusable element in section
-                //light processing
-                var $nextElement = $element.nextAll(domSelectors.focusableElements);
-                //filter enabled+visible
-                var $nextElementFiltered = $nextElement.filter(domFilters.focusableElementsFilter);
-                if ($nextElement.length === 0 || $nextElementFiltered.length === 0) {
-                    //if next element isn't focusable find next element in document
-                    //heavy processing
-                    //fetch all parents subsequent siblings
-                    var $parents = $element.parents();
-                    var $nextSiblings = $parents.nextAll();
-                    //filter siblings for focusable
-                    var $nextAllElements = $nextSiblings.find(domSelectors.focusableElements);
-                    //filter enabled+visible focusable items
-                    var $nextAllElementsFiltered = $nextAllElements.filter(domFilters.focusableElementsFilter);
-                    
-                    //if none found go to focuser
-                    if ($nextAllElementsFiltered.length === 0) {
-                        $element = $(domSelectors.focuser);
-                    } else {
-                        //return first found element
-                        $element = $($nextAllElementsFiltered[0]);
-                    }
-
-                } else {
-
-                    //return first found element
-                    $element = $($nextElementFiltered[0]);
-                }
+            if (returnOnly) {
+                return fromV5.findFirstReadable($element);
             }
-
-            var options = $.a11y.options;
-            if (options.isDebug) console.log("focusOrNext", $element[0]);
-            
-            if (returnOnly !== true) {
-                if (options.OS != "mac") $(domSelectors.focuser).focusNoScroll();
-                $element.focusNoScroll();
-            }
-
-            //return element focused
-            return $element;
-
+            return fromV5.focusFirst($element);
         };
 
 
@@ -502,7 +830,7 @@
             var options = $.a11y.options;
             var state = $.a11y.state;
             var $element = $(event.target);
-            
+
             //search out intended click element
             if (!$element.is(domSelectors.globalTabIndexElements)) {
                 //if element receiving click is not tabbable, search parents
@@ -528,7 +856,7 @@
                         }
                     }
                 } else {
-                    
+
                     //use tabbable parent
                     $element = $($tabbableParents[0]);
                 }
@@ -548,7 +876,7 @@
             a11y_triggerReadEvent($element);
 
             if (options.isDebug) console.log("focus", $element[0]);
-            
+
             state.$activeElement = $(event.currentTarget);
 
             if (state.$activeElement.is(domSelectors.nativeTabElements)) {
@@ -592,7 +920,7 @@
             $(window).off("touchstart", onScrollStartCapture); // mobile
             $(window).off("touchmove", preventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
-            $(document).off("keydown", preventScrollKeys);  
+            $(document).off("keydown", preventScrollKeys);
         }
 
         function a11y_triggerReadEvent($element) {
@@ -818,7 +1146,7 @@
 
     //MAKE ACCESSIBLE CONTROLS
 
-        
+
         //MAKES NAVIGATION CONTROLS ACCESSIBLE OR NOT WITH OPTIONAL DISABLE CLASS AND ATTRIBUTE
         $.fn.a11y_cntrl = function(enabled, withDisabled) {
             if (this.length === 0) return this;
@@ -844,7 +1172,7 @@
                             tabindex: "0",
                         }).removeAttr("aria-hidden").removeClass("aria-hidden");
                         $item.parents(domFilters.parentsFilter).removeAttr("aria-hidden").removeClass("aria-hidden");
-                    }                    
+                    }
                     if (withDisabled) {
                         $item.removeAttr("disabled").removeClass("disabled");
                     }
@@ -870,7 +1198,7 @@
             return this.a11y_cntrl(enabled, true);
         };
 
-      
+
     //MAKE ACCESSIBLE TEXT
 
         var htmlCharRegex = /&.*;/g
@@ -978,7 +1306,7 @@
                 $("#a11y-selected").append($alert);
             $alert.css("visibility","visible");
             }
-            
+
             setTimeout(function() {
                 $alert.remove();
             }, 20000);
@@ -1010,7 +1338,7 @@
 
             $elements.each(function(index, item) {
                 var $item = $(item);
-                
+
                 var elementUID;
                 if (item.a11y_uid == undefined) {
                     item.a11y_uid = "UID" + ++state.elementUIDIndex;
@@ -1033,7 +1361,7 @@
             this.find(domSelectors.globalTabIndexElements).filter(domFilters.globalTabIndexElementFilter).attr({
                 'tabindex': 0
             }).removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
-            this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden"); 
+            this.find(domSelectors.hideableElements).filter(domFilters.globalTabIndexElementFilter).removeAttr("tabindex").removeAttr('aria-hidden').removeClass("aria-hidden").parents(domFilters.parentsFilter).removeAttr('aria-hidden').removeClass("aria-hidden");
 
             $.a11y_update();
 
@@ -1091,7 +1419,7 @@
                     //delete element tabindex store if empty
                     delete state.tabIndexes[elementUID];
                 }
-                
+
                 $item.attr({
                     'tabindex': previousTabIndex
                 });
@@ -1103,7 +1431,7 @@
 
                 //show element to screen reader
                 $item.removeAttr('aria-hidden').removeClass("aria-hidden");
-                
+
                 if ($item.is(domSelectors.hideableElements)) {
                     $item.removeAttr("tabindex");
                 }
@@ -1142,51 +1470,18 @@
 
         //FOCUSES ON FIRST TABBABLE ELEMENT
         $.a11y_focus = function(dontDefer) {
-            //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
-            if (dontDefer) {
-                var tags = $(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                if (tags.length > 0) {
-                    $(tags[0]).focusOrNext();
-                }
-                return this;
-            }
-
-            defer(function(){
-                var tags = $(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                if (tags.length > 0) {
-                    $(tags[0]).focusOrNext();
-                }
+            fromV5.focusFirst('body', {
+                defer: !dontDefer
             });
-            //SCROLL TO TOP IF NOT POPUPS ARE OPEN        
-            return this;
+			return this;
         };
 
         //FOCUSES ON FIRST TABBABLE ELEMENT IN SELECTION
         $.fn.a11y_focus = function() {
             if (this.length === 0) return this;
-            //IF HAS ACCESSIBILITY, FOCUS ON FIRST VISIBLE TAB INDEX
-            defer(function(){
-                var $this = $(this[0]);
-                if ($this.is(domSelectors.focusableElements)) {
-                    $this.focusOrNext();
-                } else {
-                    var tags = $this.find(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                    if (tags.length === 0) {
-                        var $parents = $this.parents();
-                        for (var i = 0, l = $parents.length; i < l; i++) {
-                            var $parent = $($parents[i]);
-                            tags = $parent.find(domSelectors.focusableElements).filter(domFilters.focusableElementsFilter);
-                            if (tags.length > 0) {
-                                return $(tags[0]).focusOrNext();
-                            }
-                        }
-                    } else {
-                        $(tags[0]).focusOrNext();
-                    }
-                    
-                }
-            }, this);
-            return this;
+            return fromV5.focusFirst(this, {
+                defer: true
+            });
         };
 
 
@@ -1236,7 +1531,7 @@
                         }).addClass("a11y-ignore");
                     }
                     injectElement.html( ariaLabel );
-                    $item.prepend(injectElement);    
+                    $item.prepend(injectElement);
                 }
 
                 $item.removeAttr("role").removeAttr("aria-label").removeAttr("tabindex").removeClass("aria-hidden");
