@@ -79,7 +79,6 @@
              * @param {Object|string|Array} $element
              */
             findReadable: function($element) {
-                //var config = fromV5.config;
                 return $($element).find('*').filter(function(index, element) {
                     return this.isReadable(element);
                 }.bind(this));
@@ -93,7 +92,6 @@
              * @returns {boolean}
              */
             isReadable: function($element, checkParents) {
-                //var config = fromV5.config;
                 $element = $($element).first();
                 checkParents = checkParents === undefined ? true : false;
 
@@ -117,8 +115,6 @@
 
                 // check that the component is natively tabbable or
                 // will be knowingly read by a screen reader
-                // var hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements)
-                //     || $element.is(config._options._readableElements);
                 var hasNativeFocusOrIsScreenReadable = $element.is(domSelectors.focusableElements);
                 if (hasNativeFocusOrIsScreenReadable) {
                     return true;
@@ -382,10 +378,6 @@
             focus: function($element, options) {
                 options = new FocusOptions(options);
                 $element = $($element).first();
-                // var config = fromV5.config;
-                // if (!config._isEnabled || !config._options._isFocusAssignmentEnabled || $element.length === 0) {
-                //     return this;
-                // }
                 function perform() {
                     if (options.preventScroll) {
                         var y = $(window).scrollTop();
