@@ -380,6 +380,7 @@
                 $element = $($element).first();
                 function perform() {
                     if (options.preventScroll) {
+                        $.a11y.state.isFocusPreventScroll = true;
                         var y = $(window).scrollTop();
                         try {
                             if ($element.attr('tabindex') === undefined) {
@@ -396,6 +397,7 @@
                             // isn't attached to the DOM.
                         }
                         window.scrollTo(null, y);
+                        $.a11y.state.isFocusPreventScroll = false;
                     } else {
                         $element[0].focus();
                     }
@@ -709,6 +711,7 @@
             var options = $.a11y.options;
 
             if (!options.isFocusLimited) return this;
+            if ($.a11y.state.isFocusPreventScroll) return this;
 
             if (this.length === 0) return this;
 
