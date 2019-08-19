@@ -84,11 +84,13 @@ module.exports = function(grunt, options) {
     dist: {
       options: {
         silent: true,
-        patterns: [{
-          json: function(done) {
-            done(generatePatterns());
+        patterns: [
+          {
+            json: function(done) {
+              done(generatePatterns());
+            }
           }
-        }]
+        ]
       },
       files: [
         {
