@@ -4,7 +4,7 @@
 	It still works exactly like Model, View and Collection, in that it has the Events API, .extend and an initialize function
 */
 define("backbone.controller", [
-	"backbone", 
+	"backbone",
 	"underscore"
 ], function(Backbone, _) {
 
