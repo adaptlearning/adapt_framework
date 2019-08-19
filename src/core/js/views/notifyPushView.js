@@ -5,7 +5,9 @@ define([
   var NotifyPushView = Backbone.View.extend({
 
     className: function () {
-      return 'notify-push ' + this.model.get('_classes');
+      var classes = 'notify-push ';
+      classes += (this.model.get('_classes') || '');
+      return classes;
     },
 
     attributes: {

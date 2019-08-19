@@ -1,5 +1,25 @@
 ## [Unreleased][unreleased]
 
+## [4.3.0] - 2019-08-14
+### Added
+- Ability for pages/menus to define a class that will be applied to the `<html>` element whenver that page/menu is active ([#2392](https://github.com/adaptlearning/adapt_framework/issues/2392))
+- Store for the page's View references, along with functions `Adapt.findViewByModelId`, `View.findDescendantViews` & `View.getChildViews` ([#2395](https://github.com/adaptlearning/adapt_framework/issues/2395))
+- A timeout to the `Adapt.wait` API ([#2439](https://github.com/adaptlearning/adapt_framework/issues/2439))
+- Notify heading aria-level can now be set via config.json ([#2486](https://github.com/adaptlearning/adapt_framework/issues/2486))
+
+### Fixed
+- RTL layout issues ([#2389](https://github.com/adaptlearning/adapt_framework/issues/2389))
+- Inheritance bug broke `ItemsComponentModel` chain ([#2415](https://github.com/adaptlearning/adapt_framework/issues/2415))
+- Trickle flicker in IE11 ([#2423](https://github.com/adaptlearning/adapt_framework/issues/2423))
+- Bug in Chrome where the page could still be scrolled whilst a popup or the drawer were open ([#2440](https://github.com/adaptlearning/adapt_framework/issues/2440))
+- Setting `_isResetOnRevisit` to `'soft'` prevented questions from being answered ([#2474](https://github.com/adaptlearning/adapt_framework/issues/2474))
+- JQuery `offset` override wasn't allowing coordinates to be set ([#2484](https://github.com/adaptlearning/adapt_framework/issues/2484))
+- Including an Accordion component with no items prevented the course from rendering ([#2480](https://github.com/adaptlearning/adapt_framework/issues/2480))
+- Less files were not being imported in the correct order ([#2487](https://github.com/adaptlearning/adapt_framework/issues/2487))
+
+### Removed
+- Class `a11y-ignore` from the 'skip navigation' button ([#2420](https://github.com/adaptlearning/adapt_framework/issues/2420))
+
 ## [4.2.0] - 2019-05-02
 ### Added
 - Support for sharing courses with specific users ([#2345](https://github.com/adaptlearning/adapt_framework/issues/2345))
@@ -709,7 +729,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...HEAD
+[4.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.0...v4.1.1
 [4.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.0.1...v4.1.0

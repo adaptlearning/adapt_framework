@@ -152,6 +152,14 @@
               "title": "Component Item element ARIA level",
               "inputType": "Number",
               "validators": ["required", "number"]
+            },
+            "_notify": {
+              "type": "number",
+              "required": true,
+              "default": 1,
+              "title": "Notify popup title ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
             }
           }
         }
