@@ -25,25 +25,8 @@ module.exports = {
     tasks: ['newer:copy:courseAssets']
   },
   js: {
-    files: [
-      '<%= sourcedir %>**/*.js',
-      '!<%= sourcedir %>components/components.js',
-      '!<%= sourcedir %>extensions/extensions.js',
-      '!<%= sourcedir %>menu/menu.js',
-      '!<%= sourcedir %>theme/theme.js',
-      '!<%= sourcedir %>templates/templates.js',
-      '!<%= sourcedir %>core/js/scriptLoader.js',
-      '!<%= sourcedir %>core/js/libraries/**/*.js',
-      '!<%= sourcedir %>extensions/**/libraries/**/*.js',
-      '!<%= sourcedir %>components/**/libraries/**/*.js',
-      '!<%= sourcedir %>menu/<%= menu %>/libraries/**/*.js',
-      '!<%= sourcedir %>theme/<%= theme %>/libraries/**/*.js'
-    ],
+    files: ['<%= sourcedir %>**/*.js'],
     tasks: ['javascript:dev']
-  },
-  index: {
-    files: ['<%= sourcedir %>index.html'],
-    tasks: ['newer:copy:index']
   },
   componentsAssets: {
     files: ['<%= sourcedir %>components/**/assets/**'],
@@ -77,22 +60,12 @@ module.exports = {
     files: ['<%= sourcedir %>theme/<%= theme %>/**/fonts/**'],
     tasks: ['newer:copy:themeFonts']
   },
-  scriptLoader: {
-    files: ['<%= sourcedir %>core/js/scriptLoader.js'],
-    tasks: ['newer:copy:scriptLoader']
-  },
   libraries: {
-    files: [
-      '<%= sourcedir %>core/js/libraries/**/*',
-      '<%= sourcedir %>extensions/**/libraries/**/*',
-      '<%= sourcedir %>components/**/libraries/**/*',
-      '<%= sourcedir %>menu/<%= menu %>/libraries/**/*',
-      '<%= sourcedir %>theme/<%= theme %>/libraries/**/*'
-    ],
+    files: ['<%= sourcedir %>core/libraries/**/*','<%= sourcedir %>*/*/libraries/**/*'],
     tasks: ['newer:copy:libraries']
   },
   required: {
-    files: ['<%= sourcedir %>extensions/*/required/**/*'],
+    files: ['<%= sourcedir %>core/required/**/*','<%= sourcedir %>*/*/required/**/*'],
     tasks: ['newer:copy:required']
   }
 }
