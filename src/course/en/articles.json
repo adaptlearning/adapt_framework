@@ -5,13 +5,9 @@
         "_type": "article",
         "_classes": "",
         "title": "a-05",
-        "displayTitle": "article title",
-        "body": "article body",
-        "instruction": "article instruction",
-        "_pageLevelProgress": {
-            "_isEnabled": true,
-            "_isCompletionIndicatorEnabled": true
-        }
+        "displayTitle": "",
+        "body": "",
+        "instruction": ""
     },
     {
         "_id": "a-10",
@@ -19,13 +15,9 @@
         "_type": "article",
         "_classes": "",
         "title": "a-10",
-        "displayTitle": "article title",
-        "body": "article body",
-        "instruction": "article instruction",
-        "_pageLevelProgress": {
-            "_isEnabled": true,
-            "_isCompletionIndicatorEnabled": true
-        }
+        "displayTitle": "",
+        "body": "",
+        "instruction": ""
     },
     {
         "_id": "a-15",

@@ -5,7 +5,7 @@
     "title": "Adapt v5",
     "displayTitle": "Adapt Version 5",
     "description": "A sample course demonstrating the capabilities of the Adapt Framework",
-    "body": "Welcome to the demonstration build for version 5 of the Adapt framework.<br><br>The focus of this release has been on accessibility, which has been updated to provide a greatly improved experience for users of assistive technology - most noticeably by removing the need to have an 'accessibility mode'. For a complete list of changes, see <a href='https://github.com/adaptlearning/adapt_framework/milestone/17?closed=1' target='_blank'>the Accessibility v5 milestone</a>.",
+    "body": "Welcome to the demonstration build for version 5 of the Adapt framework.",
     "instruction": "",
     "_buttons": {
         "_submit": {
@@ -69,7 +69,8 @@
     "_pageLevelProgress": {
         "_isEnabled": true,
         "_showPageCompletion": false,
-        "_altText": "of components completed on this page."
+        "_isCompletionIndicatorEnabled": false,
+        "_isShownInNavigationBar": true
     },
     "_resources": {
         "_isEnabled": true,

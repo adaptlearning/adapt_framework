@@ -7,7 +7,7 @@
         "_htmlClassName": "",
         "title": "Presentation Components",
         "displayTitle": "Presentation Components",
-        "body": "Find out what presentation components are available within the core bundle and how you might consider using them within your courses. ",
+        "body": "Find out what presentation components are available within the core bundle and how you might consider using them within your courses.",
         "pageBody": "",
         "instruction": "Scroll down to see what presentation components are available as part of the v5 core bundle.",
         "_graphic": {
@@ -17,7 +17,10 @@
         "linkText": "View",
         "duration": "2 mins",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_showPageCompletion": false,
+            "_excludeAssessments": false,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -33,12 +36,15 @@
         "instruction": "Scroll down to see what question components are available as part of the v5 core bundle.",
         "_graphic": {
             "src": "course/en/images/menu-item.png",
-            "alt": "Placeholder graphic."
+            "alt": ""
         },
         "linkText": "View",
         "duration": "2 mins",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_showPageCompletion": false,
+            "_excludeAssessments": false,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -54,12 +60,15 @@
         "instruction": "Think you can get a perfect score? Scroll down to attempt the first question.",
         "_graphic": {
             "src": "course/en/images/menu-item.png",
-            "alt": "Placeholder graphic."
+            "alt": ""
         },
         "linkText": "View",
         "duration": "2 mins",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_showPageCompletion": false,
+            "_excludeAssessments": false,
+            "_isCompletionIndicatorEnabled": false
         }
     }
 ]
