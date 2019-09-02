@@ -50,7 +50,10 @@ define([
                 return selectorScrollTop.apply(this, arguments);
             };
             var selectorOffset = $.fn.offset;
-            $.fn.offset = function() {
+            $.fn.offset = function(coordinates) {
+                if (coordinates) {
+                    return selectorOffset.apply(this, arguments);
+                }
                 var $app = Adapt.scrolling.$app;
                 var $element = this;
                 var elementOffset = selectorOffset.call($element);
