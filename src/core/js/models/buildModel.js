@@ -24,17 +24,10 @@ define([
                     Adapt.trigger('buildModel:dataLoaded');
                 }
             });
-        },
-
-        whenReady: function() {
-            if (this.isLoaded) return Promise.resolve();
-            return new Promise(function (resolve) {
-                Adapt.once("buildModel:dataLoaded", resolve);
-            }.bind(this));
         }
 
     });
 
-    return Adapt.build = new BuildModel(null, {url: 'adapt/js/build.min.js', reset:true});
+    return BuildModel;
 
 });
