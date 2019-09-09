@@ -163,6 +163,17 @@
             }
           }
         }
+        "_options": {
+          "type": "object",
+          "default": {},
+          "title": "Accessibility Extended Options",
+          "inputType": {
+            "type": "CodeEditor",
+            "mode": "json"
+          },
+          "validators": [],
+          "help": "Optional object that can be used to customize the accessibility behaviour"
+        }
       }
     },
     "screenSize": {
