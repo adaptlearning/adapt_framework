@@ -48,17 +48,6 @@ module.exports = function (grunt, options) {
     };
 
     var mandatoryTasks = {
-        index: {
-            files: [
-                {
-                    expand: true,
-                    src: ['<%= sourcedir %>index.html'],
-                    dest: '<%= outputdir %>',
-                    filter: 'isFile',
-                    flatten: true
-                }
-            ]
-        },
         coreAssets: {
             files: [
                 {
@@ -184,14 +173,14 @@ module.exports = function (grunt, options) {
                 }
             ]
         },
-        scriptLoader: {
+        coreLibraries: {
             files: [
                 {
                     expand: true,
-                    src: ['<%= sourcedir %>core/js/scriptLoader.js'],
-                    dest: '<%= outputdir %>adapt/js/',
-                    filter: 'isFile',
-                    flatten: true
+                    src: ['core/libraries/**/*'],
+                    cwd: '<%= sourcedir %>',
+                    dest: '<%= outputdir %>libraries/',
+                    rename: _.partial(collate, "libraries")
                 }
             ]
         },
@@ -199,15 +188,24 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: [
-                        '<%= sourcedir %>core/js/libraries/**/*',
-                        '<%= sourcedir %>components/**/libraries/**/*',
-                        '<%= sourcedir %>extensions/**/libraries/**/*',
-                        '<%= sourcedir %>menu/<%= menu %>/libraries/**/*',
-                        '<%= sourcedir %>theme/<%= theme %>/libraries/**/*'
-                    ],
+                    src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
+                    cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>libraries/',
+                    filter: function(filepath) {
+                        return grunt.config('helpers').includedFilter(filepath);
+                    },
                     rename: _.partial(collate, "libraries")
+                },
+            ]
+        },
+        coreRequired: {
+            files: [
+                {
+                    expand: true,
+                    src: ['core/required/**/*'],
+                    cwd: '<%= sourcedir %>',
+                    dest: '<%= outputdir %>',
+                    rename: _.partial(collate, "required")
                 }
             ]
         },
@@ -215,7 +213,7 @@ module.exports = function (grunt, options) {
             files: [
                 {
                     expand: true,
-                    src: ['core/**/required/**/*', 'components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
+                    src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
                     cwd: '<%= sourcedir %>',
                     dest: '<%= outputdir %>',
                     filter: function(filepath) {
