@@ -374,7 +374,7 @@ define([
 
         lowerCase: function() {
             Adapt.a11y.log.deprecated('lowerCase, use lowercase instead.');
-            return helpers['lowercase'].apply(this, arguments);
+            return helpers.lowercase.apply(this, arguments);
         }
 
     });
