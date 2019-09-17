@@ -369,7 +369,7 @@ define([
 
         numbers: function() {
             Adapt.a11y.log.deprecated('numbers, use inc instead.');
-            return helpers['inc'].apply(this, arguments);
+            return helpers.inc.apply(this, arguments);
         },
 
         lowerCase: function() {
