@@ -57,7 +57,7 @@ define([
         },
 
         /**
-         * Force focus when clicked on a tabbale element,
+         * Force focus when clicked on a tabbable element,
          * making sure `document.activeElement` is updated.
          *
          * @param {JQuery.Event} event
