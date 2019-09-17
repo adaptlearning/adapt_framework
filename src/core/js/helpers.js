@@ -364,7 +364,7 @@ define([
 
         if_value_equals: function() {
             Adapt.a11y.log.deprecated('if_value_equals, use equals instead.');
-            return helpers['equals'].apply(this, arguments);
+            return helpers.equals.apply(this, arguments);
         },
 
         numbers: function() {
