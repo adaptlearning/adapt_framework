@@ -12,10 +12,10 @@ define(function() {
             this.$window = $(window);
             this.$body = $('body');
             this._preventScrollOnKeys = {
-                37: true,
-                38: true,
-                39: true,
-                40: true
+                37: true, // left
+                38: true, // up
+                39: true, // right
+                40: true // down
             };
             this._ignoreKeysOnElementsMatching = 'textarea, input, select';
             this._isRunning = false;
