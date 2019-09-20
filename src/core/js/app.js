@@ -107,11 +107,9 @@ require([
   function addDirection() {
     var defaultDirection = Adapt.config.get('_defaultDirection');
 
-    if (defaultDirection === 'rtl') {
-      $('html').addClass('dir-rtl').attr('dir', 'rtl');
-    } else {
-      $('html').addClass('dir-ltr').attr('dir', 'ltr');
-    }
+    $('html')
+      .addClass('dir-' + defaultDirection)
+      .attr('dir', defaultDirection);
   }
 
   function disableAnimation() {
