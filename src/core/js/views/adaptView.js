@@ -66,7 +66,7 @@ define([
 
       this.$el
         .addClass('has-animation')
-        .addClass(onscreen._classesBefore);
+        .addClass(onscreen._classes + '-before');
 
       this.$el.on('onscreen.adaptView', function (e, m) {
 
@@ -76,7 +76,7 @@ define([
 
         if (m.percentInviewVertical < minVerticalInview) return;
 
-        this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen.adaptView');
+        this.$el.addClass( onscreen._classes + '-after' || 'onscreen' ).off('onscreen.adaptView');
 
       }.bind(this));
     },

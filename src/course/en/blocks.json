@@ -10,9 +10,8 @@
         "instruction": "",
         "_trackingId": 0,
         "_onScreen": {
-            "_isEnabled": false,
-            "_classesBefore": "fade-in-bottom-before",
-            "_classes": "fade-in-bottom-after",
+            "_isEnabled": true,
+            "_classes": "fade-in-bottom",
             "_percentInviewVertical": 50
         }
     },
