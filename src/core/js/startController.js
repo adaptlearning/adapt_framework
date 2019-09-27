@@ -6,7 +6,7 @@ define([
 
     model: null,
 
-    initialize: function() {
+    loadCourseData: function() {
       this.model = new Backbone.Model(Adapt.course.get("_start"));
     },
 
@@ -84,10 +84,10 @@ define([
   });
 
   Adapt.once("adapt:start", function() {
-    var startController = new StartController();
-    startController.setStartLocation();
+    Adapt.startController.loadCourseData();
+    Adapt.startController.setStartLocation();
   });
 
-  return StartController;
+  return Adapt.startController = new StartController();
 
 });
