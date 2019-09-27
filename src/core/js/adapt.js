@@ -21,6 +21,8 @@ define([
     },
 
     init: function() {
+      this.addDirection();
+      this.disableAnimation();
       this.trigger('adapt:preInitialize');
 
       //wait until no more completion checking
@@ -281,6 +283,34 @@ define([
         offset: offset
       };
 
+    },
+
+    addDirection: function() {
+      var defaultDirection = this.config.get('_defaultDirection');
+
+      $('html')
+        .addClass('dir-' + defaultDirection)
+        .attr('dir', defaultDirection);
+    },
+
+    disableAnimation: function() {
+      var disableAnimationArray = this.config.get('_disableAnimationFor');
+      var disableAnimation = this.config.get('_disableAnimation');
+
+      // Check if animations should be disabled
+      if (disableAnimationArray && disableAnimationArray.length > 0) {
+        for (var i = 0; i < disableAnimationArray.length; i++) {
+          if ($("html").is(disableAnimationArray[i])) {
+            this.config.set('_disableAnimation', true);
+            $('html').addClass('disable-animation');
+            console.log('Animation disabled.');
+          }
+        }
+      } else if (disableAnimation === true) {
+        $('html').addClass('disable-animation');
+      } else {
+        $('html').removeClass('disable-animation');
+      }
     },
 
     remove: function() {
