@@ -2,11 +2,11 @@
 
 ## [4.4.0] - 2019-09-27
 ### Added
-- new Accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
+- new accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
 
 ### Changed
 - Re-write and tidy up of Adapt's 'entry point' code ([#2436](https://github.com/adaptlearning/adapt_framework/issues/2436))
-- The browser's 'focus outline' is now hidden by default, unless the learner presses a key associated with keyboard/screen reader accessibility (part of ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
+- The browser's 'focus outline' is now hidden by default, unless the learner presses a key associated with keyboard/screen reader accessibility (part of [#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
 - Re-organise some core files to align with the structure used by plugins ([#2472](https://github.com/adaptlearning/adapt_framework/issues/2472))
 
 ### Fixed
