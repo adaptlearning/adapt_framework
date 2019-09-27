@@ -121,8 +121,8 @@ define([
             this.$el.removeClass('display-none').removeAttr('aria-hidden');
             //only trigger popup:opened if drawer is visible, pass popup manager drawer element
             if (!this._isVisible) {
-                Adapt.trigger('popup:opened', this.$el);
-                $('body').scrollDisable();
+                Adapt.a11y.popupOpened(this.$el);
+                Adapt.a11y.scrollDisable('body');
                 this._isVisible = true;
             }
 
@@ -184,7 +184,7 @@ define([
                 Adapt.trigger('drawer:opened');
 
                 //focus on first tabbable element in drawer
-                this.$el.a11y_focus();
+                Adapt.a11y.focusFirst(this.$el, { defer: true });
         }
 
         },
@@ -206,9 +206,9 @@ define([
         hideDrawer: function($toElement) {
             //only trigger popup:closed if drawer is visible
             if (this._isVisible) {
-                Adapt.trigger('popup:closed', $toElement);
+                Adapt.a11y.popupClosed($toElement);
                 this._isVisible = false;
-                $('body').scrollEnable();
+                Adapt.a11y.scrollEnable('body');
             } else {
                 return;
             }

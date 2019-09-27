@@ -178,12 +178,12 @@ define([
         onOpened: function() {
             this.hasOpened = true;
             // Allows popup manager to control focus
-            Adapt.trigger('popup:opened', this.$('.notify-popup'));
-            $('body').scrollDisable();
+            Adapt.a11y.popupOpened(this.$('.notify-popup'));
+            Adapt.a11y.scrollDisable('body');
             $('html').addClass('notify');
 
             // Set focus to first accessible element
-            this.$('.notify-popup').a11y_focus(true);
+            Adapt.a11y.focusFirst(this.$('.notify-popup'), { defer: false });
         },
 
         addSubView: function() {
@@ -232,11 +232,11 @@ define([
                 }.bind(this)});
             }
 
-            $('body').scrollEnable();
+            Adapt.a11y.scrollEnable('body');
             $('html').removeClass('notify');
 
             // Return focus to previous active element
-            Adapt.trigger('popup:closed', this.$previousActiveElement);
+            Adapt.a11y.popupClosed(this.$previousActiveElement);
             // Return reference to the notify view
             Adapt.trigger('notify:closed', this);
         },
