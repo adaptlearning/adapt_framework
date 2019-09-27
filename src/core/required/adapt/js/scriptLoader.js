@@ -73,7 +73,6 @@
         velocity: 'libraries/velocity.min',
         imageReady: 'libraries/imageReady',
         inview: 'libraries/inview',
-        a11y: 'libraries/jquery.a11y',
         scrollTo: 'libraries/scrollTo.min',
         bowser: 'libraries/bowser',
         'enum': 'libraries/enum',
@@ -120,7 +119,6 @@
       'inview',
       'jqueryMobile',
       'libraries/jquery.resize',
-      'a11y',
       'scrollTo',
       'bowser',
       'enum'

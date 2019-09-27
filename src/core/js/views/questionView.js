@@ -221,7 +221,7 @@ define([
     // Adds a validation error class when the canSubmit returns false
     showInstructionError: function() {
       this.$(".component__instruction-inner").addClass("validation-error");
-      this.$el.a11y_focus();
+      Adapt.a11y.focusFirst(this.$el, { defer: true });
     },
 
     // Blank method for question to fill out when the question cannot be submitted
@@ -293,7 +293,7 @@ define([
       // Make sure the page is ready
       if (!currentModel || !currentModel.get("_isReady")) return;
       // Focus on the first readable item in this element
-      this.$el.focusNext();
+      Adapt.a11y.focusNext(this.$el);
 
     },
 

@@ -143,7 +143,7 @@ define([
     // Trigger an event after animation
     // 300 milliseconds added to make sure queue has finished
     _.delay(function() {
-      $(selector).focusNext();
+      Adapt.a11y.focusNext(selector);
       Adapt.trigger(location+':scrolledTo', selector);
     }, settings.duration+300);
   };

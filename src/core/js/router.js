@@ -244,7 +244,7 @@ define([
     },
 
     skipNavigation: function() {
-      $('.' + Adapt.location._contentType).a11y_focus();
+      Adapt.a11y.focusFirst('.' + Adapt.location._contentType);
     },
 
     navigateToPreviousRoute: function(force) {
@@ -383,7 +383,7 @@ define([
       if (!Adapt.router.get("_shouldNavigateFocus")) return;
       // Body will be forced to accept focus to start the
       // screen reader reading the page.
-      $("body").focusNoScroll();
+      Adapt.a11y.focus('body');
     }
   });
 
