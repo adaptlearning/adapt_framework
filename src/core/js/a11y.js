@@ -18,7 +18,7 @@ define([
     config: null,
     defaults: {
 
-      _isFocusOutlineKeyboardOnlyEnabled: false,
+      _isFocusOutlineKeyboardOnlyEnabled: true,
       /**
        * `_isFocusOutlineDisabled` ignores `_isEnabled` and can be used when all other
        * accessibility features have been disabled.
@@ -38,6 +38,7 @@ define([
        */
       _ariaHiddenExcludes: ':not(#wrapper):not(body)',
       _tabbableElements: 'a,button,input,select,textarea,[tabindex]:not([data-a11y-force-focus])',
+      _focusOutlineKeyboardOnlyIgnore: 'input,textarea',
       /**
        * Designate these elements as not tabbable.
        */
