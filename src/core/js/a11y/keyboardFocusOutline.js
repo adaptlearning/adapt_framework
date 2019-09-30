@@ -61,7 +61,7 @@ define([
                 return;
             }
             var $element = $(event.target);
-            if (!$element.is(config._options._tabbableElements)) {
+            if (!$element.is(config._options._tabbableElements) || $element.is(config._options._focusOutlineKeyboardOnlyIgnore)) {
                 return;
             }
             this.$html.removeClass('a11y-disable-focusoutline');
