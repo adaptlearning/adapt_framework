@@ -1,97 +1,72 @@
 define([
 	'core/js/adapt',
+	'core/js/notifyPushCollection',
 	'core/js/views/notifyView',
-	'core/js/views/notifyPushView',
 	'core/js/models/notifyModel'
-], function(Adapt, NotifyView, NotifyPushView, NotifyModel) {
+], function(Adapt, NotifyPushCollection, NotifyView, NotifyModel) {
 
-	// Build a collection to store push notifications
-	var NotifyPushCollection = Backbone.Collection.extend({
+	var Notify = Backbone.Controller.extend({
 
-		model: NotifyModel,
+		notifyPushes: null,
+
+		_warnFirstOnly: true,
+		_warn: true,
+		_hasWarned: false,
 
 		initialize: function() {
-			this.listenTo(this, 'add', this.onPushAdded);
-			this.listenTo(Adapt, 'notify:pushRemoved', this.onRemovePush);
-		},
-
-		onPushAdded: function(model) {
-			this.checkPushCanShow(model);
-		},
-
-		checkPushCanShow: function(model) {
-			if (this.canShowPush()) {
-				model.set('_isActive', true);
-				this.showPush(model);
-			}
-		},
-
-		canShowPush: function() {
-			var availablePushNotifications = this.where({_isActive:true});
-			if (availablePushNotifications.length >= 2) {
-				return false;
-			}
-			return true;
-		},
-
-		showPush: function(model) {
-			new NotifyPushView({
-				model: model
+			this.notifyPushes = new NotifyPushCollection();
+			this.listenTo(Adapt, {
+				'notify:alert': this._deprecated.bind(this, 'alert'),
+				'notify:prompt': this._deprecated.bind(this, 'prompt'),
+				'notify:popup': this._deprecated.bind(this, 'popup'),
+				'notify:push': this._deprecated.bind(this, 'push')
 			});
 		},
 
-		onRemovePush: function(view) {
-			var inactivePushNotifications = this.where({_isActive:false});
-			if (inactivePushNotifications.length > 0) {
-				this.checkPushCanShow(inactivePushNotifications[0]);
+		_deprecated: function(type, notifyObject) {
+			if (this._warn && (this._warnFirstOnly && !this._hasWarned)) {
+				Adapt.log.warn('NOTIFY DEPRECATED: Adapt.trigger(\'notify:'+type+'\', notifyObject); is not longer supported, please use Adapt.notify.'+type+'(notifyObject);');
+				this._hasWarned = true;
 			}
+			return this.create(notifyObject, { _type: type });
+		},
+
+		create: function(notifyObject, defaults) {
+			notifyObject =_.defaults({}, notifyObject, defaults, {
+				_type: 'popup',
+				_isCancellable: true,
+				_showCloseButton: true,
+				_closeOnShadowClick: true,
+			});
+
+			if (notifyObject._type === 'push') {
+				this.notifyPushes.push(notifyObject);
+				return;
+			}
+
+			return new NotifyView({
+				model: new NotifyModel(notifyObject)
+			});
+		},
+
+		alert: function(notifyObject) {
+			return this.create(notifyObject, { _type: 'alert' });
+		},
+
+		prompt: function(notifyObject) {
+			return this.create(notifyObject, { _type: 'prompt' });
+		},
+
+		popup: function(notifyObject) {
+			return this.create(notifyObject, { _type: 'popup' });
+		},
+
+		push: function(notifyObject) {
+			return this.create(notifyObject, { _type: 'push' });
 		}
 
 	});
 
-	var NotifyPushes = new NotifyPushCollection();
-
-	Adapt.on('notify:alert', function(notifyObject) {
-		addNotifyView('alert', notifyObject);
-	});
-
-	Adapt.on('notify:prompt', function(notifyObject) {
-		addNotifyView('prompt', notifyObject);
-	});
-
-	Adapt.on('notify:popup', function(notifyObject) {
-		addNotifyView('popup', notifyObject);
-	});
-
-	Adapt.on('notify:push', function(notifyObject) {
-		addNotifyView('push', notifyObject);
-	});
-
-	function addNotifyView(type, notifyObject) {
-		// set default values 
-		notifyObject._isCancellable = (notifyObject._isCancellable === undefined) 
-			? true : notifyObject._isCancellable;
-		
-		notifyObject._showCloseButton = (notifyObject._showCloseButton === undefined) 
-			? true : notifyObject._showCloseButton;
-
-		notifyObject._closeOnShadowClick = (notifyObject._closeOnShadowClick === undefined) 
-			? true : notifyObject._closeOnShadowClick;
-
-		notifyObject._type = type;
-
-		if (type === 'push') {
-
-			NotifyPushes.push(notifyObject);
-
-			return;
-
-		}
-
-		var notify = new NotifyView({
-			model: new NotifyModel(notifyObject)
-		});
-
-	}
+	return (Adapt.notify = new Notify());
 
 });
