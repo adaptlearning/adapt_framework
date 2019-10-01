@@ -1,6 +1,6 @@
 define([
 	'core/js/adapt',
-	'core/js/notifyPushCollection',
+	'core/js/collections/notifyPushCollection',
 	'core/js/views/notifyView',
 	'core/js/models/notifyModel'
 ], function(Adapt, NotifyPushCollection, NotifyView, NotifyModel) {
