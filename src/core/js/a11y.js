@@ -641,8 +641,9 @@ define([
      * @returns {string} Returns text without markup or html encoded characters.
      */
     normalize: function(htmls) {
-      var values = Array.prototype.slice.call(arguments, 0,-1);
+      var values = Array.prototype.slice.call(arguments, 0);
       values = values.filter(Boolean);
+      values = values.filter(_.isString);
       htmls = values.join(' ');
       var text = $('<div>' + htmls + '</div>').html();
       // Remove all html encoded characters, such as &apos;
@@ -658,8 +659,9 @@ define([
      * @return {string} Returns html string without markup which would cause screen reader to pause.
      */
     removeBreaks: function(htmls) {
-      var values = Array.prototype.slice.call(arguments, 0,-1);
+      var values = Array.prototype.slice.call(arguments, 0);
       values = values.filter(Boolean);
+      values = values.filter(_.isString);
       htmls = values.join(' ');
       var $div = $('<div>' + htmls + '</div>');
       var stack = [ $div[0] ];
