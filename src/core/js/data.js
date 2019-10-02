@@ -1,6 +1,6 @@
 define([
   'core/js/adapt',
-  'core/js/adaptCollection',
+  'core/js/collections/adaptCollection',
   'core/js/models/articleModel',
   'core/js/models/blockModel',
   'core/js/models/configModel',
