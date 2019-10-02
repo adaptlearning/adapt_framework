@@ -52,7 +52,9 @@ define([
         $(window).scroll();
       }.bind(this);
 
-      _.defer(performIsReady);
+      Adapt.wait.queue(function() {
+        _.defer(performIsReady);
+      });
     }
 
   }, {
