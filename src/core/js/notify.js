@@ -16,9 +16,9 @@ define([
 		initialize: function() {
 			this.notifyPushes = new NotifyPushCollection();
 			this.listenTo(Adapt, {
+				'notify:popup': this._deprecated.bind(this, 'popup'),
 				'notify:alert': this._deprecated.bind(this, 'alert'),
 				'notify:prompt': this._deprecated.bind(this, 'prompt'),
-				'notify:popup': this._deprecated.bind(this, 'popup'),
 				'notify:push': this._deprecated.bind(this, 'push')
 			});
 		},
@@ -47,6 +47,20 @@ define([
 			return new NotifyView({
 				model: new NotifyModel(notifyObject)
 			});
+		},
+
+		/**
+		 * Creates a 'popup' notify
+		 * @param {Object} notifyObject An object containing all the settings for the popup
+		 * @param {string} notifyObject.title Title of the popup
+		 * @param {string} notifyObject.body Body of the popup
+		 * @param {Boolean} [notifyObject._showCloseButton=true] If set to `false` the popup will not have a close button. The learner will still be able to dismiss the popup by clicking outside of it or by pressing the Esc key. This setting is typically used mainly for popups that have a subview (where the subview contains the close button)
+		 * @param {Boolean} [notifyObject._isCancellable=true] If set to `false` the learner will not be able to close the popup - use with caution!
+		 * @param {string} [notifyObject._classes] A class name or (space separated) list of class names you'd like to be applied to the popup's `<div>`
+		 * @param {Backbone.View} [notifyObject._view] Subview to display in the popup instead of the standard view
+		 */
+		popup: function(notifyObject) {
+			return this.create(notifyObject, { _type: 'popup' });
 		},
 
 		/**
@@ -81,20 +95,6 @@ define([
 		 */
 		prompt: function(notifyObject) {
 			return this.create(notifyObject, { _type: 'prompt' });
-		},
-
-		/**
-		 * Creates a 'popup' notify
-		 * @param {Object} notifyObject An object containing all the settings for the popup
-		 * @param {string} notifyObject.title Title of the popup
-		 * @param {string} notifyObject.body Body of the popup
-		 * @param {Boolean} [notifyObject._showCloseButton=true] If set to `false` the popup will not have a close button. The learner will still be able to dismiss the popup by clicking outside of it or by pressing the Esc key. This setting is typically used mainly for popups that have a subview (where the subview contains the close button)
-		 * @param {Boolean} [notifyObject._isCancellable=true] If set to `false` the learner will not be able to close the popup - use with caution!
-		 * @param {string} [notifyObject._classes] A class name or (space separated) list of class names you'd like to be applied to the popup's `<div>`
-		 * @param {Backbone.View} [notifyObject._view] Subview to display in the popup instead of the standard view
-		 */
-		popup: function(notifyObject) {
-			return this.create(notifyObject, { _type: 'popup' });
 		},
 
 		/**
