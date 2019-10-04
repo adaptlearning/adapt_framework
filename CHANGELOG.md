@@ -1,8 +1,9 @@
 ## [Unreleased][unreleased]
 
-## [4.4.0] - 2019-09-27
+## [4.4.0] - 2019-10-??
 ### Added
 - new accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
+- new Notify API ([#2532](https://github.com/adaptlearning/adapt_framework/issues/2532))
 
 ### Changed
 - Re-write and tidy up of Adapt's 'entry point' code ([#2436](https://github.com/adaptlearning/adapt_framework/issues/2436))
