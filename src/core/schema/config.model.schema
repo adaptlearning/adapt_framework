@@ -162,7 +162,7 @@
               "validators": ["required", "number"]
             }
           }
-        }
+        },
         "_options": {
           "type": "object",
           "default": {},
