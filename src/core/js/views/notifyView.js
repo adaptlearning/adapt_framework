@@ -61,7 +61,7 @@ define([
 
         render: function() {
             var data = this.model.toJSON();
-            var template = Handlebars.templates['notify'];
+            var template = Handlebars.templates.notify;
 
             //hide notify container
             this.$el.css('visibility', 'hidden');
