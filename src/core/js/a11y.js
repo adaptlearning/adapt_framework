@@ -733,7 +733,6 @@ define([
             return this;
         },
 
-
         /**
          * When a popup is open, this function make it possible to swap the element
          * which should receive focus on popup close.
