@@ -731,6 +731,18 @@ define([
         popupClosed: function($focusElement) {
             this._popup.closed($focusElement);
             return this;
+        },
+
+
+        /**
+         * When a popup is open, this function make it possible to swap the element
+         * which should receive focus on popup close.
+         *
+         * @param {Object} $focusElement Set a new element to focus on.
+         * @returns {Object} Returns previously set focus element.
+         */
+        setPopupCloseTo($focusElement) {
+            return this._popup.setCloseTo($focusElement);
         }
 
   });
