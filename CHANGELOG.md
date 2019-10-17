@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [3.5.5] - 2019-10-17
+### Fixed
+- Null `_items` property in QuestionModel causing content to fail to load ([#2480](https://github.com/adaptlearning/adapt_framework/issues/2546))
+
 ## [3.5.4] - 2019-08-02
 ### Fixed
 - Chrome Hotgraphic scrolling background issue ([#2440](https://github.com/adaptlearning/adapt_framework/issues/2440))
@@ -693,7 +697,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.4...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.5...HEAD
+[3.5.5]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.4...v3.5.5
 [3.5.4]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.3...v3.5.4
 [3.5.3]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.2...v3.5.3
 [3.5.2]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.1...v3.5.2
