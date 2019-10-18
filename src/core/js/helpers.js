@@ -361,7 +361,7 @@ define([
          * Produce display text with alternative screen reader version.
          * @param {string} visible Text that will be displayed on screen
          * @param {string} alternatives Text that will be read by the screen reader (instead of what's displayed on screen)
-         * @usage {{a11y_alt_text '$5bn' 'five billion dollars'}} or {{a11y_alt_text 'Here are some bits to read' 'There are' _items.length 'items to read'}}
+         * @example {{a11y_alt_text '$5bn' 'five billion dollars'}} or {{a11y_alt_text 'Here are some bits to read' 'There are' _items.length 'items to read'}}
          */
         a11y_alt_text: function(visible, alternatives) {
             var values = Array.prototype.slice.call(arguments, 1, -1);
