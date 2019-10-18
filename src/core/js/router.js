@@ -324,7 +324,7 @@ define([
       Adapt.location._currentLocation = currentLocation;
 
       var locationModel = Adapt.findById(id) || Adapt.course;
-      var htmlClassName = locationModel && locationModel.get('_htmlClassName') || '';
+      var htmlClasses = locationModel && locationModel.get('_htmlClasses') || '';
 
       var classes = (Adapt.location._currentId) ? 'location-'
         + Adapt.location._contentType
@@ -337,11 +337,11 @@ define([
         this.$html.removeClass(previousClasses);
       }
 
-      Adapt.location._previousClasses = classes + ' ' + htmlClassName;
+      Adapt.location._previousClasses = classes + ' ' + htmlClasses;
 
       this.$html
           .addClass(classes)
-          .addClass(htmlClassName)
+          .addClass(htmlClasses)
           .attr('data-location', Adapt.location._currentLocation);
 
       this.$wrapper

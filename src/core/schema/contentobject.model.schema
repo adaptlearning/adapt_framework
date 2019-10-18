@@ -54,7 +54,7 @@
       "validators": [],
       "translatable": true
     },
-    "_htmlClassName": {
+    "_htmlClasses": {
       "type": "string",
       "required": false,
       "default": "",
