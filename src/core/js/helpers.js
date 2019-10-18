@@ -359,7 +359,7 @@ define([
 
         /**
          * Produce display text with alternative screen reader version.
-         * @param {string} visible Visual text
+         * @param {string} visible Text that will be displayed on screen
          * @param {string} alternatives Any number of additional arguments which will be concatenated and read
          * @usage {{a11y_alt_text '$5bn' 'five billion dollars'}}
          */
