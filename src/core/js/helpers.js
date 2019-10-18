@@ -362,6 +362,7 @@ define([
          * @param {string} visible Visual text
          * @param {string} alternatives Any number of additional arguments which will be concatenated and read
          * @usage {{a11y_alt_text '$5bn' 'five billion dollars'}}
+         * @usage {{a11y_alt_text '$5bn' 'five' 'billion' 'dollars'}}
          */
         a11y_alt_text: function(visible, alternatives) {
             var values = Array.prototype.slice.call(arguments, 1, -1);
