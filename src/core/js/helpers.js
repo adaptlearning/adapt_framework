@@ -355,6 +355,17 @@ define([
         a11y_attrs_tabbable: function() {
             Adapt.a11y.log.deprecated('a11y_attrs_tabbable should not be used. tabbable elements should be natively tabbable.');
             return new Handlebars.SafeString(' role="region" tabindex="0" ');
+        },
+
+        /**
+         * Produce display text with alternative screen reader version.
+         * @param {string} visible Visual text
+         * @param {string} alternatives Any number of additional arguments which will be concatenated and read
+         */
+        a11y_alt_text: function(visible, alternatives) {
+            var values = Array.prototype.slice.call(arguments, 1, -1);
+            values = values.filter(Boolean);
+            return new Handlebars.SafeString('<div aria-hidden="true">'+visible+'</div><div class="aria-label">'+values.join(' ')+'</div>');
         }
 
     };
