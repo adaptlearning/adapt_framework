@@ -365,7 +365,7 @@ define([
         a11y_alt_text: function(visible, alternatives) {
             var values = Array.prototype.slice.call(arguments, 1, -1);
             values = values.filter(Boolean);
-            return new Handlebars.SafeString('<div aria-hidden="true">'+visible+'</div><div class="aria-label">'+values.join(' ')+'</div>');
+            return new Handlebars.SafeString('<span aria-hidden="true">'+visible+'</span><span class="aria-label">'+values.join(' ')+'</span>');
         }
 
     };
