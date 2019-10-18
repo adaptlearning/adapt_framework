@@ -45,7 +45,7 @@
       "validators": [],
       "translatable": true
     },
-    "_htmlClasses": {
+    "_htmlClassName": {
       "type": "string",
       "required": false,
       "title": "HTML Classes",
