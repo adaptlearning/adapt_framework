@@ -21,6 +21,7 @@ define([
         _canShowMarking: true,
         _isSubmitted: false,
         _questionWeight: Adapt.config.get("_questionWeight"),
+        _items: [],
       });
     },
 

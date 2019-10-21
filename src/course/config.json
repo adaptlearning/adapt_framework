@@ -21,7 +21,7 @@
             "_notify": 1
         },
         "_options": {
-            "_isFocusOutlineKeyboardOnlyEnabled": false,
+            "_isFocusOutlineKeyboardOnlyEnabled": true,
             "_isFocusOutlineDisabled": false,
             "_isFocusAssignmentEnabled": true,
             "_isFocusOnClickEnabled": true,
