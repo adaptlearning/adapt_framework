@@ -24,7 +24,8 @@ define([
         this.setVisibility(),
         this.setHidden(),
         'is-' + this.model.get('_layout'),
-        (this.model.get('_isComplete') ? 'is-complete' : '')
+        (this.model.get('_isComplete') ? 'is-complete' : ''),
+        (this.model.get('_isOptional') ? 'is-optional' : '')
       ].join(' ');
     },
 

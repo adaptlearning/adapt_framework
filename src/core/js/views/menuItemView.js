@@ -21,7 +21,8 @@ define([
         this.setHidden(),
         (this.model.get('_isVisited') ? 'is-visited' : ''),
         (this.model.get('_isComplete') ? 'is-complete' : ''),
-        (this.model.get('_isLocked') ? 'is-locked' : '')
+        (this.model.get('_isLocked') ? 'is-locked' : ''),
+        (this.model.get('_isOptional') ? 'is-optional' : '')
       ].join(' ');
     },
 
