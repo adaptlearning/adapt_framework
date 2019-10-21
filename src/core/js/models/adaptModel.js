@@ -584,6 +584,7 @@ define([
      * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
      */
     setOptional: function(value) {
+      Adapt.log.warn("DEPRECATED - Use model.set('_isOptional', value) as setOptional() may be removed in the future");
       this.set({_isOptional: value});
     },
 
