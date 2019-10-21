@@ -5,14 +5,14 @@
   <span class="aria-label">
   {{#if _isA11yCompletionDescriptionEnabled}}
     {{#if _isOptional}}
-      {{{compile displayTitle}}}
+      {{{compile title}}}
       {{else if _isComplete}}
-      {{_globals._accessibility._ariaLabels.complete}} {{{compile displayTitle}}}
+      {{_globals._accessibility._ariaLabels.complete}} {{{compile title}}}
       {{else}}
-      {{_globals._accessibility._ariaLabels.incomplete}} {{{compile displayTitle}}}
+      {{_globals._accessibility._ariaLabels.incomplete}} {{{compile title}}}
     {{/if}}
     {{else}}
-    {{{compile displayTitle}}}
+    {{{compile title}}}
   {{/if}}
   </span>
 
