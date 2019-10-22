@@ -912,23 +912,39 @@
 
     // PRIVATE $.a11y FUNCTIONS
         function a11y_setupScrollListeners() {
-            window.addEventListener("wheel", nativePreventScroll, { passive: false });
-            window.addEventListener("mousewheel", nativePreventScroll, { passive: false });
-            document.addEventListener("wheel", nativePreventScroll, { passive: false });
-            document.addEventListener("mousewheel", nativePreventScroll, { passive: false });
+            if (window.addEventListener) {
+                window.addEventListener("wheel", nativePreventScroll, { passive: false });
+                window.addEventListener("mousewheel", nativePreventScroll, { passive: false });
+                document.addEventListener("wheel", nativePreventScroll, { passive: false });
+                document.addEventListener("mousewheel", nativePreventScroll, { passive: false });
+                window.addEventListener("touchmove", nativePreventScroll, { passive: false }); // mobile
+            } else {
+                // ie8 support
+                var scrollEventName = "wheel mousewheel";
+                $(window).on(scrollEventName, preventScroll);
+                $(document).on(scrollEventName, preventScroll);
+                $(window).on("touchmove", preventScroll);
+            }
             $(window).on("touchstart", onScrollStartCapture); // mobile
-            window.addEventListener("touchmove", nativePreventScroll, { passive: false }); // mobile
             $(window).on("touchend", onScrollEndCapture); // mobile
             $(document).on("keydown", preventScrollKeys);
         }
 
         function a11y_removeScrollListeners() {
-            window.removeEventListener("wheel", nativePreventScroll);
-            window.removeEventListener("mousewheel", nativePreventScroll);
-            document.removeEventListener("wheel", nativePreventScroll);
-            document.removeEventListener("mousewheel", nativePreventScroll);
+            if (window.addEventListener) {
+                window.removeEventListener("wheel", nativePreventScroll);
+                window.removeEventListener("mousewheel", nativePreventScroll);
+                document.removeEventListener("wheel", nativePreventScroll);
+                document.removeEventListener("mousewheel", nativePreventScroll);
+                window.removeEventListener("touchmove", nativePreventScroll); // mobile
+            } else {
+                // ie8 support
+                var scrollEventName = "wheel mousewheel";
+                $(window).off(scrollEventName, preventScroll);
+                $(document).off(scrollEventName, preventScroll);
+                $(window).off("touchmove", preventScroll);
+            }
             $(window).off("touchstart", onScrollStartCapture); // mobile
-            window.removeEventListener("touchmove", nativePreventScroll); // mobile
             $(window).off("touchend", onScrollEndCapture); // mobile
             $(document).off("keydown", preventScrollKeys);
         }
