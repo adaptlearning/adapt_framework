@@ -91,9 +91,9 @@ define([
       if (this.collection.length === 0) {
         $('.js-nav-drawer-btn').addClass('u-display-none');
         Adapt.trigger('drawer:noItems');
-      } else {
-        $('.js-nav-drawer-btn').removeClass('u-display-none');
+        return;
       }
+      $('.js-nav-drawer-btn').removeClass('u-display-none');
     },
 
     onBackButtonClicked: function(event) {
@@ -254,9 +254,9 @@ define([
     },
 
     addShadowEvent: function() {
-      $('.js-shadow').one('click touchstart', _.bind(function() {
+      $('.js-shadow').one('click touchstart', function() {
         this.onCloseDrawer();
-      }, this));
+      }.bind(this));
     },
 
     removeShadowEvent: function() {
