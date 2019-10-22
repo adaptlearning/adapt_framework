@@ -215,7 +215,7 @@ define([
      */
     component_description: function(override, context) {
       if (!this._isA11yComponentDescriptionEnabled) {
-        return
+        return;
       }
       var isNotDefined = (!this._globals._components || !this._globals._components['_'+this._component]);
       if (isNotDefined) {

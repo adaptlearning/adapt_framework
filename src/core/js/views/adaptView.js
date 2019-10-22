@@ -169,9 +169,9 @@ define([
     },
 
     setVisibility: function() {
-      var visible = "u-visibility-hidden";
+      var visible = 'u-visibility-hidden';
       if (this.model.get('_isVisible')) {
-        visible = "";
+        visible = '';
       }
       return visible;
     },
@@ -184,9 +184,9 @@ define([
     },
 
     setHidden: function() {
-      var hidden = "";
+      var hidden = '';
       if (this.model.get('_isHidden')) {
-        hidden = "u-display-none";
+        hidden = 'u-display-none';
       }
       return hidden;
     },

@@ -191,7 +191,7 @@ define([
       this.subView = this.model.get("_view");
       if (!this.subView) return;
 
-      this.$(".notify__content-inner").append(this.subView.$el);
+      this.$('.notify__content-inner').append(this.subView.$el);
 
     },
 

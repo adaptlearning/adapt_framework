@@ -49,16 +49,12 @@ define([
       var isSubmitted = this.model.get('_isSubmitted');
 
       if (!isSubmitted) {
-
-        var $icon = this.$('.js-btn-marking');
-        $icon.removeClass('is-incorrect');
-        $icon.removeClass('is-correct');
-        $icon.addClass('u-display-none');
-        this.$el.removeClass("is-submitted");
+        this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
+        this.$el.removeClass('is-submitted');
         this.model.set('feedbackMessage', undefined);
         Adapt.a11y.toggleAccessibleEnabled(this.$('.js-btn-feedback'), false);
       } else {
-        this.$el.addClass("is-submitted");
+        this.$el.addClass('is-submitted');
       }
     },
 

@@ -88,7 +88,7 @@ define([
     },
 
     checkIfDrawerIsAvailable: function() {
-      if (this.collection.length == 0) {
+      if (this.collection.length === 0) {
         $('.js-nav-drawer-btn').addClass('u-display-none');
         Adapt.trigger('drawer:noItems');
       } else {
@@ -223,7 +223,7 @@ define([
             .addClass('u-display-none')
             .attr('aria-hidden', 'true');
 
-        $('.js-shadow').addClass("u-display-none");
+        $('.js-shadow').addClass('u-display-none');
 
         Adapt.trigger('drawer:closed');
 
