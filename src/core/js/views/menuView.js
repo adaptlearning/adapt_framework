@@ -39,7 +39,6 @@ define([
                 var styleOptions = { opacity: 1 };
                 if (this.disableAnimation) {
                     this.$el.css(styleOptions);
-                    $.inview.unlock('menuView');
                     $.inview();
                 } else {
                     this.$el.velocity(styleOptions, {
