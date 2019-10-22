@@ -265,8 +265,6 @@ define([
         },
 
         touchDeviceCheck: function() {
-            //SCREEN READER DON@T USE TABBING
-            //FORCE ACCESSIBILITY ON TO RENDER NECESSARY STUFFS FOR TOUCH DEVICE SCREENREADERS
             if (!this.isEnabled()) return;
 
             if (Modernizr.touch) {
@@ -274,17 +272,12 @@ define([
                 this.$accessibilityToggle.remove();
             }
 
-            var config = Adapt.config.get("_accessibility");
-            // Backwards compatibility for _isDisabledOnTouchDevices
-            var isEnabledOnTouchDevices = config._isEnabledOnTouchDevices || (config._isDisabledOnTouchDevices === false);
+            if (!Modernizr.touch || this.isActive()) return;
 
-            if (!Modernizr.touch || this.isActive() || !isEnabledOnTouchDevices) return;
-
-            //If a touch device and not enabled, remove accessibility button and turn on accessibility
+            // Force off if active on touch devices
 
             this._isLoaded = true;
 
-            //Force accessibility on
             Adapt.config.get('_accessibility')._isEnabled = false;
             Adapt.config.get('_accessibility')._isActive = false;
 
