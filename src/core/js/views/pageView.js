@@ -25,6 +25,7 @@ define([
     },
 
     preRender: function() {
+      $.inview.lock('pageView');
       this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
       this.$el.css('opacity', 0);
       this.listenTo(this.model, 'change:_isReady', this.isReady);
@@ -37,18 +38,19 @@ define([
         $('.js-loading').hide();
         $(window).scrollTop(0);
         Adapt.trigger('pageView:ready', this);
+        $.inview.unlock('pageView');
         var styleOptions = { opacity: 1 };
         if (this.disableAnimation) {
           this.$el.css(styleOptions);
           $.inview();
-          return;
+        } else {
+          this.$el.velocity(styleOptions, {
+            duration: 'fast',
+            complete: function() {
+              $.inview();
+            }
+          });
         }
-        this.$el.velocity(styleOptions, {
-          duration: 'fast',
-          complete: function() {
-            $.inview();
-          }
-        });
         $(window).scroll();
       }.bind(this);
 
