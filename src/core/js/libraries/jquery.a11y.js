@@ -1,5 +1,3 @@
-//https://github.com/adaptlearning/jquery.a11y 2015-08-13
-
 (function($, window) {
 
     var iOS = /iPad|iPhone|iPod/.test(navigator.platform);
