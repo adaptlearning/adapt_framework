@@ -440,7 +440,7 @@ define([
 
             if (findDescendantType) {
                 // move by one less as first found is considered next
-                moveBy-=1;
+                moveBy--;
             }
             var pageDescendants;
             if (searchBackwards) {
