@@ -448,6 +448,11 @@ define([
 
             var findDescendantType = (!findSiblingType && !findAncestorType);
 
+            if (findDescendantType) {
+                // move by one less as first found is considered next
+                moveBy--;
+            }
+
             var pageDescendants;
             if (searchBackwards) {
                 // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
@@ -456,16 +461,7 @@ define([
                 // reverse so that we don't need a forward and a backward iterating loop
                 // reversed [c9,c8,b4,a4,c7,c6,b3,a3,p2,c4,c3,b2,a2,c2,c1,b1,a1,p1]
                 pageDescendants.reverse();
-
-                if (findDescendantType) {
-                    // move by one less as ordering allows
-                    moveBy-=1;
-                }
-
-            } else if (findDescendantType) {
-                // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
-                pageDescendants = rootModel.getAllDescendantModels(true);
-            } else if (findSiblingType || findAncestorType) {
+            } else {
                 // children first [c1,c2,b1,a1,c3,c4,b2,a2,p1,c6,c7,b3,a3,c8,c9,b4,a4,p2]
                 pageDescendants = rootModel.getAllDescendantModels(false);
             }
