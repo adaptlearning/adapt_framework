@@ -203,6 +203,19 @@ define([
         }
       }.bind(this));
       return (document.activeElement = this._focusStack.pop());
+    },
+
+    /**
+     * When a popup is open, this function makes it possible to swap the element
+     * that should receive focus on popup close.
+     *
+     * @param {Object} $focusElement Set a new element to focus on.
+     * @returns {Object} Returns previously set focus element.
+     */
+    setCloseTo: function($focusElement) {
+      var $original = this._focusStack.pop();
+      this._focusStack.push($focusElement);
+      return $original;
     }
 
   });
