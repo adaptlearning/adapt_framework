@@ -1,9 +1,11 @@
 ## [Unreleased][unreleased]
 
-## [4.4.0] - 2019-10-??
+## [4.4.0] - 2019-10-29
 ### Added
 - new accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
 - new Notify API ([#2532](https://github.com/adaptlearning/adapt_framework/issues/2532))
+- Loading enhancements to allow extensions to halt execution until loaded and to stop `inview` from processing until page ready ([#2558](https://github.com/adaptlearning/adapt_framework/issues/2558))
+- Handlebars helper (`a11y_alt_text`) to allow the screenreader to read out a 'screen reader friendly' alternative to the on-screen text ([#2553](https://github.com/adaptlearning/adapt_framework/issues/2553))
 
 ### Changed
 - Re-write and tidy up of Adapt's 'entry point' code ([#2436](https://github.com/adaptlearning/adapt_framework/issues/2436))
@@ -12,6 +14,9 @@
 
 ### Fixed
 - Handlebars npm module v4.3.x update prevented newly-created Adapt courses from running ([#2524](https://github.com/adaptlearning/adapt_framework/issues/2524))
+- Adapt could fail to load if a question component didn't have any items defined ([#2546](https://github.com/adaptlearning/adapt_framework/issues/2546))
+- HTML formatting in titles being read out by screen readers ([#2549](https://github.com/adaptlearning/adapt_framework/issues/2549))
+- `AdaptModel.findRelativeModel` not working correctly when searching for descendants ([#2563](https://github.com/adaptlearning/adapt_framework/issues/2563))
 
 ## [4.3.0] - 2019-08-14
 ### Added
