@@ -206,8 +206,8 @@ define([
         },
 
         /**
-         * When a popup is open, this function make it possible to swap the element
-         * which should receive focus on popup close.
+         * When a popup is open, this function makes it possible to swap the element
+         * that should receive focus on popup close.
          *
          * @param {Object} $focusElement Set a new element to focus on.
          * @returns {Object} Returns previously set focus element.
