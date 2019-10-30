@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [3.5.6] - 2019-10-30
+### Fixed
+- `findRelativeModel` finds in the next parent on descendent type searches instead of finding in parent ([#2565](https://github.com/adaptlearning/adapt_framework/pull/2565))
+
 ## [3.5.5] - 2019-10-17
 ### Fixed
 - Null `_items` property in QuestionModel causing content to fail to load ([#2546](https://github.com/adaptlearning/adapt_framework/issues/2546))
@@ -697,7 +701,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.5...v3-patches
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.6...v3-patches
+[3.5.5]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.5...v3.5.6
 [3.5.5]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.4...v3.5.5
 [3.5.4]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.3...v3.5.4
 [3.5.3]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.2...v3.5.3
