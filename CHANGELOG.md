@@ -2,7 +2,7 @@
 
 ## [3.5.5] - 2019-10-17
 ### Fixed
-- Null `_items` property in QuestionModel causing content to fail to load ([#2480](https://github.com/adaptlearning/adapt_framework/issues/2546))
+- Null `_items` property in QuestionModel causing content to fail to load ([#2546](https://github.com/adaptlearning/adapt_framework/issues/2546))
 
 ## [3.5.4] - 2019-08-02
 ### Fixed
