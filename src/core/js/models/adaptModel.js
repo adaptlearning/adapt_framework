@@ -720,7 +720,9 @@ define([
 
                 child.set("_isLocked", this.shouldLock(child));
 
-                if (child.get('_type') === 'menu') child.setCustomLocking();
+                if (child.get('_type') === 'menu') {
+                    child.checkLocking();
+                }
             }
         },
 
