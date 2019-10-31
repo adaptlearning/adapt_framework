@@ -1,7 +1,7 @@
 {
     "_id": "course",
     "_type": "course",
-    "_htmlClassName": "",
+    "_htmlClasses": "",
     "title": "Adapt v5",
     "displayTitle": "Adapt Version 5",
     "description": "A sample course demonstrating the capabilities of the Adapt Framework",
