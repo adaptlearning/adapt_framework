@@ -69,10 +69,11 @@
     "_htmlClasses": {
       "type": "string",
       "required": false,
+      "title": "HTML Classes",
       "default": "",
       "inputType": "Text",
       "validators": [],
-      "help": "If set, this class will be applied to the <html> element when the top-level menu in the course is displayed"
+      "help": "If set, this class will be applied to the <html> element when the top-level menu in the course is displayed. These are predefined in the theme or added in Custom CSS/Less code."
     },
     "_extensions": {
       "type": "object"
@@ -531,7 +532,8 @@
       "isSetting": true,
       "inputType": "Text",
       "validators": [],
-      "title": "Classes"
+      "title": "Menu Classes",
+      "help": "Used to style or manipulate the look and feel of the top level Menu. These are predefined in the theme or added in Custom CSS/Less code."
     },
     "_isSelected": {
       "type": "boolean",

@@ -1,6 +1,6 @@
 ## [Unreleased][unreleased]
 
-## [4.4.0] - 2019-10-29
+## [4.4.0] - 2019-10-30
 ### Added
 - new accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
 - new Notify API ([#2532](https://github.com/adaptlearning/adapt_framework/issues/2532))
@@ -11,6 +11,7 @@
 - Re-write and tidy up of Adapt's 'entry point' code ([#2436](https://github.com/adaptlearning/adapt_framework/issues/2436))
 - The browser's 'focus outline' is now hidden by default, unless the learner presses a key associated with keyboard/screen reader accessibility (part of [#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
 - Re-organise some core files to align with the structure used by plugins ([#2472](https://github.com/adaptlearning/adapt_framework/issues/2472))
+- Improvements to help text ([#2552](https://github.com/adaptlearning/adapt_framework/pull/2552))
 
 ### Fixed
 - Handlebars npm module v4.3.x update prevented newly-created Adapt courses from running ([#2524](https://github.com/adaptlearning/adapt_framework/issues/2524))

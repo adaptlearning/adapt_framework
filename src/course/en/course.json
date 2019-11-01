@@ -1,6 +1,7 @@
 {
     "_id": "course",
     "_type": "course",
+    "_classes": "",
     "_htmlClasses": "",
     "title": "Adapt v5",
     "displayTitle": "Adapt Version 5",
