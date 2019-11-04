@@ -365,47 +365,6 @@ define([
     },
 
     /**
-     * @deprecated Since v2.2.0 - please use findDescendantModels instead
-     */
-    findDescendants: function (descendants) {
-      Adapt.log.warn("DEPRECATED - Use findDescendantModels() as findDescendants() may be removed in the future");
-
-      // first check if descendant is child and return child
-      if (this._children === descendants) {
-        return this.getChildren();
-      }
-
-      var allDescendants = [];
-      var flattenedDescendants;
-      var children = this.getChildren();
-      var returnedDescendants;
-
-      function searchChildren(children) {
-        var models = children.models;
-        for (var i = 0, len = models.length; i < len; i++) {
-          var model = models[i];
-          var childrensModels = model.getChildren().models;
-          allDescendants.push(childrensModels);
-          flattenedDescendants = _.flatten(allDescendants);
-        }
-
-        returnedDescendants = new Backbone.Collection(flattenedDescendants);
-
-        if (children.models.length === 0 || children.models[0]._children === descendants) {
-          return;
-        } else {
-          allDescendants = [];
-          searchChildren(returnedDescendants);
-        }
-      }
-
-      searchChildren(children);
-
-      // returns a collection of children
-      return returnedDescendants;
-    },
-
-    /**
      * Returns a relative model from the Adapt hierarchy
      *
      * Such that in the tree:
@@ -542,17 +501,6 @@ define([
       });
     },
 
-    /**
-     * @deprecated since v2.2.0 please use getAvailableChildModels instead
-     */
-    getAvailableChildren: function() {
-      Adapt.log.warn("DEPRECATED - Use getAvailableChildModels() as getAvailableChildren() may be removed in the future");
-
-      return new Backbone.Collection(this.getChildren().where({
-        _isAvailable: true
-      }));
-    },
-
     getParent: function () {
       if (this.get("_parent")) return this.get("_parent");
       if (this._parent === "course") {
@@ -577,25 +525,6 @@ define([
       }
 
       return parents.length ? parents : null;
-    },
-
-    /**
-     * @deprecated since v2.2.0 please use getAncestorModels instead
-     */
-    getParents: function(shouldIncludeChild) {
-      Adapt.log.warn("DEPRECATED - Use getAncestorModels() as getParents() may be removed in the future");
-
-      var parents = [];
-      var context = this;
-
-      if (shouldIncludeChild) parents.push(context);
-
-      while (context.has("_parentId")) {
-        context = context.getParent();
-        parents.push(context);
-      }
-
-      return parents.length ? new Backbone.Collection(parents) : null;
     },
 
     getSiblings: function (passSiblingsAndIncludeSelf) {
@@ -651,6 +580,7 @@ define([
      * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
      */
     setOptional: function(value) {
+      Adapt.log.warn("DEPRECATED - Use model.set('_isOptional', value) as setOptional() may be removed in the future");
       this.set({_isOptional: value});
     },
 
