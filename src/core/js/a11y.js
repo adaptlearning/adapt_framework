@@ -740,7 +740,7 @@ define([
          * @param {Object} $focusElement Set a new element to focus on.
          * @returns {Object} Returns previously set focus element.
          */
-        setPopupCloseTo($focusElement) {
+        setPopupCloseTo: function($focusElement) {
             return this._popup.setCloseTo($focusElement);
         }
 
