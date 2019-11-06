@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [4.4.1] - 2019-11-06
+### Fixed
+- Course not loading in IE11 due to missing `function` keyword in accessibility library ([#2570](https://github.com/adaptlearning/adapt_framework/issues/2570))
+
 ## [4.4.0] - 2019-10-30
 ### Added
 - new accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
@@ -749,7 +753,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...HEAD
+[4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.1...v4.2.0
