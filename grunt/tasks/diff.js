@@ -13,7 +13,7 @@ module.exports = function(grunt) {
         'tracking-insert',
         'newer:javascript:dev',
         'newer:less:dev',
-        'replace'
+        'replace',
         'scripts:adaptpostbuild'
     ]);
 };
