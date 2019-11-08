@@ -8,11 +8,10 @@
         "_layout": "left",
         "title": "Introduction",
         "displayTitle": "",
-        "body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br><b>These presentation components can be structured</b> in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.<ul><li>Test item 1</li><li>Test item 2</li></ul><ol><li>Test item 1</li><li>Test item 2</li></ol>",
+        "body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br><b>These presentation components can be structured</b> in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
         "instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the core bundle.",
         "_pageLevelProgress": {
-            "_isEnabled": true,
-            "_isCompletionIndicatorEnabled": true
+            "_isEnabled": true
         }
     },
     {
@@ -22,20 +21,16 @@
         "_component": "graphic",
         "_classes": "",
         "_layout": "right",
+        "_isOptional": true,
         "title": "c-10",
         "displayTitle": "",
         "body": "",
         "instruction": "",
         "_graphic": {
             "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "small": "course/en/images/full-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
-        },
-        "_isOptional": true,
-        "_pageLevelProgress": {
-            "_isEnabled": true,
-            "_isCompletionIndicatorEnabled": true
         }
     },
     {
@@ -50,8 +45,7 @@
         "body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
         "instruction": "",
         "_pageLevelProgress": {
-            "_isEnabled": true,
-            "_isCompletionIndicatorEnabled": true
+            "_isEnabled": true
         }
     },
     {
@@ -62,11 +56,7 @@
         "_classes": "",
         "_layout": "right",
         "title": "c-20",
-        "_isOptional": true,
-        "_pageLevelProgress": {
-            "_isEnabled": false,
-            "_isCompletionIndicatorEnabled": true
-        }
+        "_isOptional": true
     },
     {
         "_id": "c-25",
@@ -80,14 +70,12 @@
         "body": "This is the graphic component body. You can introduce your graphic or you may just want to let the graphics do the talking.<br><br>Component can either be single or spanned.",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/full-width.png",
-            "small": "course/en/images/full-width.png",
+            "src": "course/en/images/full-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true,
-            "_isCompletionIndicatorEnabled": true
+            "_isEnabled": true
         }
     },
     {
@@ -223,7 +211,7 @@
         "instruction": "Select the play button to start the video.",
         "_media": {
             "mp4": "course/en/video/c-40.mp4",
-            "poster": "course/en/video/media.png",
+            "poster": "course/en/video/c-40.jpg",
             "cc": [
                 {
                     "srclang": "en",
@@ -351,13 +339,13 @@
         "_component": "graphic",
         "_classes": "",
         "_layout": "right",
+        "_isOptional": true,
         "title": "c-62",
         "displayTitle": "",
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -473,13 +461,13 @@
         "_component": "graphic",
         "_classes": "",
         "_layout": "right",
+        "_isOptional": true,
         "title": "c-72",
         "displayTitle": "",
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -681,8 +669,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -753,8 +740,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -822,8 +808,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -890,8 +875,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -955,8 +939,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -1023,8 +1006,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single-width.png",
-            "small": "course/en/images/single-width.png",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }

@@ -39,7 +39,7 @@
             "_banks": {
                 "_isEnabled": true,
                 "_split": "2,2",
-                "_randomisation": false
+                "_randomisation": true
             },
             "_questions": {
                 "_resetType": "hard",
@@ -47,31 +47,11 @@
                 "_canShowMarking": false,
                 "_canShowModelAnswer": false
             },
-            "_isResetOnRevisit": false,
+            "_isResetOnRevisit": true,
             "_attempts": "infinite"
         },
         "_trickle": {
-            "_isEnabled": true,
-            "_button": {
-                "_isEnabled": true,
-                "_styleBeforeCompletion": "visible",
-                "_comment1": "hidden | visible",
-                "_styleAfterClick": "disabled",
-                "_comment2": "hidden | disabled | scroll",
-                "_isFullWidth": false,
-                "_autoHide": false,
-                "_className": "",
-                "_hasIcon": true,
-                "text": "Continue",
-                "startText": "Begin",
-                "finalText": "Finish",
-                "_component": "trickle-button"
-            },
-            "_stepLocking": {
-                "_isEnabled": true,
-                "_isCompletionRequired": true,
-                "_isLockedOnRevisit": false
-            }
+            "_isEnabled": true
         }
     },
     {
