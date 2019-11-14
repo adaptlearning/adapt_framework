@@ -1,0 +1,39 @@
+.component {
+  width: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
+    @media (min-width: @device-width-medium) {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: @device-width-medium) {
+    &.is-left {
+      padding-right: 0.5rem;
+      width: 50%;
+
+      .dir-rtl & {
+        padding-right: inherit;
+        padding-left: 0.5rem;
+      }
+    }
+
+    &.is-right {
+      margin-left: auto;
+      padding-left: 0.5rem;
+      width: 50%;
+
+      .dir-rtl & {
+        margin-left: inherit;
+        margin-right: auto;
+        padding-left: inherit;
+        padding-right: 0.5rem;
+      }
+    }
+  }
+}

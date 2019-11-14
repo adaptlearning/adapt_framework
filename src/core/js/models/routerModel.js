@@ -1,21 +1,21 @@
 define([
-    'core/js/adapt'
+  'core/js/adapt'
 ], function (Adapt) {
 
- 	var RouterModel = Backbone.Model.extend({
+  var RouterModel = Backbone.Model.extend({
 
- 		defaults: {
- 			_canNavigate: true,
-			_shouldNavigateFocus: true
- 		},
+    defaults: {
+      _canNavigate: true,
+      _shouldNavigateFocus: true
+    },
 
- 		lockedAttributes: {
- 			_canNavigate: false,
-			_shouldNavigateFocus: false
- 		}
- 		
- 	});
+    lockedAttributes: {
+      _canNavigate: false,
+      _shouldNavigateFocus: false
+    }
 
- 	return RouterModel;
+  });
+
+  return RouterModel;
 
  });

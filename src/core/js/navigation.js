@@ -1,29 +1,27 @@
 define([
-    'core/js/adapt',
-    'core/js/views/navigationView'
+  'core/js/adapt',
+  'core/js/views/navigationView'
 ], function(Adapt, NavigationView) {
 
+  var NavigationController = Backbone.Controller.extend({
 
-    var NavigationController = Backbone.Controller.extend({
+    initialize: function() {
+      this.listenTo(Adapt, 'adapt:preInitialize', this.addNavigationBar);
+    },
 
-        initialize: function() {
-            this.listenTo(Adapt, 'adapt:preInitialize', this.addNavigationBar);
-        },
+    addNavigationBar: function() {
+      var adaptConfig = Adapt.course.get('_navigation');
 
-        addNavigationBar: function() {
+      if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
+        Adapt.trigger('navigation:initialize');
+        return;
+      }
 
-            var adaptConfig = Adapt.course.get('_navigation');
+      Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
+    }
 
-            if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
-                Adapt.trigger('navigation:initialize');
-                return;
-            }
+  });
 
-            Adapt.navigation = new NavigationView();// This should be triggered after 'app:dataReady' as plugins might want to manipulate the navigation
-        }
-
-    });
-
-    return new NavigationController();
+  return new NavigationController();
 
 });

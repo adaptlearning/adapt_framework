@@ -1,0 +1,75 @@
+/*TO ALLOW CHILDREN ELEMENTS TO BE POSITIONED ABSOLUTELY*/
+.component { position: relative; }
+.block { position: relative; }
+
+//jquery.a11y start
+/*INVISIBLE ARIA-LABELS*/
+.aria-label {
+  position: absolute !important;
+  &.relative {
+    position: relative !important;
+  }
+  left: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: auto !important;
+  color: rgba(0,0,0,0) !important;
+  background: rgba(0,0,0,0) !important;
+  font-size: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: normal !important;
+  z-index: 1;
+}
+
+/*FORCE ARIA-LABELS TO HIDE ON HIDDEN*/
+.aria-label.aria-hidden {
+  display: none !important;
+}
+
+/*HIDDEN FOCUS GUARD*/
+.a11y-focusguard {
+  left: 0 !important;
+  bottom: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: auto !important;
+  color: rgba(0,0,0,0) !important;
+  background: rgba(0,0,0,0) !important;
+  font-size: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: normal !important;
+  z-index: 1;
+
+  /*IPAD: Stop accessibility cursor focusing until end of page;*/
+  .touchevents & {
+    position: absolute !important;
+  }
+
+  /*DESKTOP: stop focus making window jump to bottom of page;*/
+  .no-touchevents & {
+    position: fixed !important;
+  }
+}
+
+/*FOCUS DISTRACTION*/
+#a11y-focuser {
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: auto !important;
+  color: rgba(0,0,0,0) !important;
+  background: rgba(0,0,0,0) !important;
+  font-size: 1px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  line-height: normal !important;
+  z-index: 1;
+}
+
+.a11y-disable-focusoutline *:focus {
+  outline: none !important;
+}

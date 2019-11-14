@@ -1,0 +1,43 @@
+.u-clearfix:before,
+.u-clearfix:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
+.u-clearfix:after { clear: both; }
+.u-clearfix { zoom: 1; }
+
+.u-float-left() {
+  float: left;
+
+  .dir-rtl & {
+    float: right;
+  }
+}
+
+.u-float-right() {
+  float: right;
+
+  .dir-rtl & {
+    float: left;
+  }
+}
+
+.u-display-none {
+  display: none !important;
+}
+
+.u-visibility-hidden {
+  visibility: hidden !important;
+}
+
+.u-no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

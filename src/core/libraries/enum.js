@@ -1,78 +1,78 @@
 //2017-03-06 BASIC ENUMERATION SUPPORT https://github.com/cgkineo/enum
 (function() {
 
-    function ENUM(namesArray, lookupModifierFunction) {
+  function ENUM(namesArray, lookupModifierFunction) {
 
-        if (!(namesArray instanceof Array)) throw "First argument of ENUM must be an array";
+    if (!(namesArray instanceof Array)) throw "First argument of ENUM must be an array";
 
-        var lookupHash = {};
+    var lookupHash = {};
 
-        // Create lookup & storage function
-        var ENUMERATION = function(lookupValue){
+    // Create lookup & storage function
+    var ENUMERATION = function(lookupValue){
 
-            if (lookupModifierFunction) {
-                lookupValue = lookupModifierFunction(lookupValue);
-            }
+      if (lookupModifierFunction) {
+        lookupValue = lookupModifierFunction(lookupValue);
+      }
 
-            lookupValue = lookupHash[lookupValue];
-           
-            return ENUMERATION[lookupValue];
+      lookupValue = lookupHash[lookupValue];
 
-        };
+      return ENUMERATION[lookupValue];
 
-        for (var i = 0, l = namesArray.length; i < l; i++) {
+    };
 
-            var names = namesArray[i];
-            if (!(names instanceof Array)) names = [names];
+    for (var i = 0, l = namesArray.length; i < l; i++) {
 
-            // Make each value a power of 2 to allow for bitwise switches
-            var value = Math.pow(2, i);
-            var baseName = names[0];
-            lookupHash[baseName] = baseName;
+      var names = namesArray[i];
+      if (!(names instanceof Array)) names = [names];
 
-            for (var n = 0, m = names.length; n < m; n++) {
+      // Make each value a power of 2 to allow for bitwise switches
+      var value = Math.pow(2, i);
+      var baseName = names[0];
+      lookupHash[baseName] = baseName;
 
-                var name = names[n];
+      for (var n = 0, m = names.length; n < m; n++) {
 
-                // Create Number object to allow for primitive comparisons and JSON stringify
-                var entry = new Number(value);
+        var name = names[n];
 
-                // Assign conversion values to entry
-                entry.asString = name;
-                entry.asLowerCase = name.toLowerCase();
-                entry.asUpperCase = name.toUpperCase();
-                entry.asInteger = value;
+        // Create Number object to allow for primitive comparisons and JSON stringify
+        var entry = new Number(value);
 
-                // Reference lookup & storage function from each entry
-                entry.ENUM = ENUMERATION;
+        // Assign conversion values to entry
+        entry.asString = name;
+        entry.asLowerCase = name.toLowerCase();
+        entry.asUpperCase = name.toUpperCase();
+        entry.asInteger = value;
 
-                // Add entry to lookup & storage function
-                if (n == 0) {
+        // Reference lookup & storage function from each entry
+        entry.ENUM = ENUMERATION;
 
-                    // Add primary name as enumerable property
-                    ENUMERATION[name] = entry;
+        // Add entry to lookup & storage function
+        if (n == 0) {
 
-                    // Add value to lookup hash
-                    lookupHash[value] = baseName;
+          // Add primary name as enumerable property
+          ENUMERATION[name] = entry;
 
-                } else {
+          // Add value to lookup hash
+          lookupHash[value] = baseName;
 
-                    // Add alias to lookup hash
-                    lookupHash[name] = baseName;
+        } else {
 
-                }
-
-            }
+          // Add alias to lookup hash
+          lookupHash[name] = baseName;
 
         }
 
-        // Freeze ENUM object
-        if (Object.freeze) Object.freeze(ENUMERATION);
+      }
 
-        return ENUMERATION;
+    }
 
-    };
-    
-    window.ENUM = ENUM;
-    
+    // Freeze ENUM object
+    if (Object.freeze) Object.freeze(ENUMERATION);
+
+    return ENUMERATION;
+
+  };
+
+  window.ENUM = ENUM;
+
 })();
