@@ -270,14 +270,6 @@
                     "src": "course/en/images/accordion-full.png",
                     "alt": "Placeholder graphic."
                 }
-            },
-            {
-                "title": "Recaps",
-                "body": "This is display text 4 and we’re now talking about using accordions to provide the learner with a summary.<br><br>Each accordion item corresponds to a key piece of learning presented on the page. When this item is selected a short summary of the learning point is provided.",
-                "_graphic": {
-                    "src": "",
-                    "alt": ""
-                }
             }
         ],
         "_pageLevelProgress": {
