@@ -1,5 +1,38 @@
 ## [Unreleased][unreleased]
 
+## [5.0.0] - 2019-11-21
+### Added
+- Added `normalize.css`
+- Added subtitle property to page (and menu) hbs and schema
+- Utilised `_onScreen` property to set up standard animation that can be added to components, blocks, articles, and contentObjects
+- Added instruction field to course schema
+- Added `screenSize` support for rem's and px's - required for conversion to REM when upgrading the Authoring Tool 
+- Added wait queue to `menuView` and `pageView` render 
+- Added `.is-optional` class to all views
+
+### Changed
+- Updated HTML naming convention to adhere to BEM
+- Adopted relative unit measurement (rem) instead of fixed (px)
+- Updated CSS to use a SMACSS approach
+- All components will render their classes in lowercase
+- Articles, blocks, and components all render into their respective containers 
+- Changed how icons are applied to elements
+- `.navigation` class changed to `.nav`
+- Loading changed to CSS animation
+- Split `menuItemView` into new file
+- Split `drawerItemView` into new file
+- Changed LESS folder structure
+- Updated heading aria label to use title property 
+- Changed `_htmlClassName` to `_htmlClasses` (https://github.com/adaptlearning/adapt_framework/issues/2392)
+- Amended viewport meta tag (https://github.com/adaptlearning/adapt_framework/pull/2569)
+- Indentation amended to use 2 spaces instead of 4
+
+### Fixed
+- Drawer no longer renders two `role='list'`
+
+### Removed
+- Deprecated functionality (https://github.com/adaptlearning/adapt_framework/issues/2329)
+
 ## [4.4.1] - 2019-11-06
 ### Fixed
 - Course not loading in IE11 due to missing `function` keyword in accessibility library ([#2570](https://github.com/adaptlearning/adapt_framework/issues/2570))
@@ -753,7 +786,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v5.0.0
 [4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...v4.3.0
