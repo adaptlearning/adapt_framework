@@ -42,7 +42,7 @@ define([
      * for an example. Defaults to `view.setCompletionStatus` if not specified.
      */
     setupInviewCompletion: function(inviewElementSelector, callback) {
-      this.$inviewElement = this.$(inviewElementSelector || '.component-inner');
+      this.$inviewElement = this.$(inviewElementSelector || '.component__inner');
       this.inviewCallback = (callback || this.setCompletionStatus);
 
       this.$inviewElement.on('inview.componentView', this.onInview.bind(this));
