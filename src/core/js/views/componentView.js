@@ -36,7 +36,7 @@ define([
     /**
      * Allows components that want to use inview for completion to set that up
      * @param {string} [inviewElementSelector] Allows to you to specify (via a selector) which DOM element to use for inview.
-     * Defaults to `'.component-inner'` if not supplied.
+     * Defaults to `'.component__inner'` if not supplied.
      * @param {function} [callback] Allows you to specify what function is called when the component has been viewed, should
      * you want to perform additional checks before setting the component to completed - see adapt-contrib-assessmentResults
      * for an example. Defaults to `view.setCompletionStatus` if not specified.
