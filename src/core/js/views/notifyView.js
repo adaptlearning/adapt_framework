@@ -113,7 +113,7 @@ define([
     resetNotifySize: function() {
       if (!this.hasOpened) return;
       
-      $('.notify__popup').removeAttr('style');
+      $('.notify__popup').removeAttr('style').css({ visibility: 'visible', opacity: 1 });
 
       this.resizeNotify();
     },
