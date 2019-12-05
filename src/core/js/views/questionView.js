@@ -20,7 +20,10 @@ define([
         this.setVisibility(),
         'is-' + this.model.get('_layout'),
         (this.model.get('_isComplete') ? 'is-complete' : ''),
-        (this.model.get('_isOptional') ? 'is-optional' : '')
+        (this.model.get('_isOptional') ? 'is-optional' : ''),
+        (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
+        (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
+        (this.model.get('_canShowMarking') ? 'can-show-marking' : '')
       ].join(' ');
     },
 
