@@ -219,6 +219,13 @@
                 }
             ]
         },
+        "_playerOptions": {
+            "alwaysShowControls": true,
+            "toggleCaptionsButtonWhenOnlyOne": true,
+            "iPadUseNativeControls": true,
+            "iPhoneUseNativeControls": true,
+            "AndroidUseNativeControls": true
+        },
         "_transcript": {
             "_inlineTranscript": true,
             "_externalTranscript": false,
