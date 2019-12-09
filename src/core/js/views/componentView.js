@@ -6,18 +6,18 @@ define([
     var ComponentView = AdaptView.extend({
 
         className: function() {
-            return "component " + 
-            this.model.get('_component') + 
-            "-component " + this.model.get('_id') + 
-            " " + this.model.get('_classes') + 
+            return "component " +
+            this.model.get('_component') +
+            "-component " + this.model.get('_id') +
+            " " + this.model.get('_classes') +
             " " + this.setVisibility() +
             " " + this.setHidden() +
-            " component-" + this.model.get('_layout') + 
+            " component-" + this.model.get('_layout') +
             " nth-child-" + this.model.get("_nthChild");
         },
 
         initialize: function(){
-			//standard initialization + renderState function
+            //standard initialization + renderState function
             AdaptView.prototype.initialize.apply(this, arguments);
             this.renderState();
         },
@@ -25,12 +25,15 @@ define([
         renderState: function() {
             if (!Handlebars.partials['state']) return;
 
-			// do not perform if component has .not-accessible class
+            // do not perform if component has .not-accessible class
             if (this.$el.is(".not-accessible")) return;
-			// do not perform if component has .no-state class
+            // do not perform if component has .no-state class
             if (this.$el.is(".no-state")) return;
 
-			//remove pre-exisiting states
+            var hasFocus = document.activeElement === this.$(".accessibility-state")[0] ||
+                document.activeElement === this.$(".accessibility-state .aria-label")[0];
+
+            //remove pre-exisiting states
             var $previousState = this.$(".accessibility-state").remove();
 
             //render and append state partial
@@ -43,6 +46,9 @@ define([
             }
 
             this.$el.append( $rendered );
+            if (hasFocus) {
+                this.$(".accessibility-state").a11y_focus();
+            }
 
             this.listenToOnce(this.model, 'change:_isComplete', this.renderState);
         },
