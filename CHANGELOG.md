@@ -1,13 +1,27 @@
 ## [Unreleased][unreleased]
 
+## [5.1.0] - 2019-12-11
+### Added
+- Classes to question components to indicate when the settings 'show marking', 'show feedback' or 'show marking' are enabled ([#2606](https://github.com/adaptlearning/adapt_framework/issues/2606))
+
+### Changed
+- Framework 'example course' content now set to:
+  * Always show media player controls (for better accessibility)
+  * Toggle captions on/off (rather than show language popup) when the 'cc' button in the media component is selected
+
+### Fixed
+- Media component showing two sets of controls and captions when exiting full-screen mode on iOS ([#2477](https://github.com/adaptlearning/adapt_framework/issues/2477))
+- Hot graphic popup not re-centering vertically when 'paging' between items ([#2580](https://github.com/adaptlearning/adapt_framework/issues/2580))
+- Blank component not triggering `inview` ([#2595](https://github.com/adaptlearning/adapt_framework/issues/2595))
+
 ## [5.0.0] - 2019-11-21
 ### Added
 - Added `normalize.css`
 - Added subtitle property to page (and menu) hbs and schema
 - Utilised `_onScreen` property to set up standard animation that can be added to components, blocks, articles, and contentObjects
 - Added instruction field to course schema
-- Added `screenSize` support for rem's and px's - required for conversion to REM when upgrading the Authoring Tool 
-- Added wait queue to `menuView` and `pageView` render 
+- Added `screenSize` support for rem's and px's - required for conversion to REM when upgrading the Authoring Tool
+- Added wait queue to `menuView` and `pageView` render
 - Added `.is-optional` class to all views
 
 ### Changed
@@ -15,14 +29,14 @@
 - Adopted relative unit measurement (rem) instead of fixed (px)
 - Updated CSS to use a SMACSS approach
 - All components will render their classes in lowercase
-- Articles, blocks, and components all render into their respective containers 
+- Articles, blocks, and components all render into their respective containers
 - Changed how icons are applied to elements
 - `.navigation` class changed to `.nav`
 - Loading changed to CSS animation
 - Split `menuItemView` into new file
 - Split `drawerItemView` into new file
 - Changed LESS folder structure
-- Updated heading aria label to use title property 
+- Updated heading aria label to use title property
 - Changed `_htmlClassName` to `_htmlClasses` (https://github.com/adaptlearning/adapt_framework/issues/2392)
 - Amended viewport meta tag (https://github.com/adaptlearning/adapt_framework/pull/2569)
 - Indentation amended to use 2 spaces instead of 4
@@ -786,7 +800,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...HEAD
+[5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v5.0.0
 [4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...v4.4.0
