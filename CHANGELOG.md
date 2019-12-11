@@ -1,5 +1,3 @@
-## [Unreleased][unreleased]
-
 ## [5.1.0] - 2019-12-11
 ### Added
 - Classes to question components to indicate when the settings 'show model answer', 'show feedback' or 'show marking' are enabled ([#2606](https://github.com/adaptlearning/adapt_framework/issues/2606))
@@ -8,6 +6,7 @@
 - Framework 'example course' content now set to:
   * Always show media player controls (for better accessibility)
   * Toggle captions on/off (rather than show language popup) when the 'cc' button in the media component is selected
+  * show 'native controls' for the media component on iOS/iPadOS/Android ([#2477](https://github.com/adaptlearning/adapt_framework/issues/2477))
 
 ### Fixed
 - Media component showing two sets of controls and captions when exiting full-screen mode on iOS ([#2477](https://github.com/adaptlearning/adapt_framework/issues/2477))
@@ -799,8 +798,6 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
-
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...HEAD
 [5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v5.0.0
 [4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
