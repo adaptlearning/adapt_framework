@@ -2,7 +2,7 @@
 
 ## [5.1.0] - 2019-12-11
 ### Added
-- Classes to question components to indicate when the settings 'show marking', 'show feedback' or 'show marking' are enabled ([#2606](https://github.com/adaptlearning/adapt_framework/issues/2606))
+- Classes to question components to indicate when the settings 'show model answer', 'show feedback' or 'show marking' are enabled ([#2606](https://github.com/adaptlearning/adapt_framework/issues/2606))
 
 ### Changed
 - Framework 'example course' content now set to:
