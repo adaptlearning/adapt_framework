@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [3.5.7] - 2019-12-12
+### Fixed
+- Notify resize fix - listener on the subview container ([#2580](https://github.com/adaptlearning/adapt_framework/pull/2580))
+
 ## [3.5.6] - 2019-10-30
 ### Fixed
 - `findRelativeModel` finds in the next parent on descendent type searches instead of finding in parent ([#2565](https://github.com/adaptlearning/adapt_framework/pull/2565))
@@ -701,8 +705,9 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.6...v3-patches
-[3.5.5]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.5...v3.5.6
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.7...v3-patches
+[3.5.7]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.6...v3.5.7
+[3.5.6]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.5...v3.5.6
 [3.5.5]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.4...v3.5.5
 [3.5.4]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.3...v3.5.4
 [3.5.3]: https://github.com/adaptlearning/adapt_framework/compare/v3.5.2...v3.5.3
