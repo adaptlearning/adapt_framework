@@ -1,0 +1,85 @@
+// --------------------------------------------------
+// Set up the box sizing override
+// --------------------------------------------------
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Always attach scrollbar - bug fix for Windows
+// --------------------------------------------------
+html {
+  overflow-y: scroll;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Set the following tags to scale to their container size
+// --------------------------------------------------
+img,
+object,
+embed {
+  max-width: 100%;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Override the default 'inline' display property for images
+// --------------------------------------------------
+img {
+  display: block;
+  min-width: 100%;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Remove the default border and padding from all button tags
+// --------------------------------------------------
+button {
+  border: 0;
+  padding: 0;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Add a pointer to button tags that are not disabled or locked
+// --------------------------------------------------
+button:not(.is-disabled):not(.is-locked) {
+  cursor: pointer;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Set the text direction to rtl when enabled
+// --------------------------------------------------
+.dir-rtl body {
+  direction: rtl;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Used to wrap content which should have zero-width
+// I<zw>&nbsp;</zw>T   will look like IT but read 'EYE TEA' instead of 'it'
+// --------------------------------------------------
+zw {
+  display: inline-block;
+  width: 0;
+}
+// --------------------------------------------------
+
+// --------------------------------------------------
+// Used to wrap content which should not break across multiple lines
+// <nw>I<zw>&nbsp;</zw>T</nw>   will not split to I
+// T instead it will allways appear as IT
+// --------------------------------------------------
+nb {
+  white-space: nowrap;
+}
+// --------------------------------------------------

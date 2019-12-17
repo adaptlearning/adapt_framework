@@ -6,7 +6,8 @@
         "_classes": "",
         "title": "a-05",
         "displayTitle": "",
-        "body": ""
+        "body": "",
+        "instruction": ""
     },
     {
         "_id": "a-10",
@@ -15,7 +16,8 @@
         "_classes": "",
         "title": "a-10",
         "displayTitle": "",
-        "body": ""
+        "body": "",
+        "instruction": ""
     },
     {
         "_id": "a-15",
@@ -49,13 +51,7 @@
             "_attempts": "infinite"
         },
         "_trickle": {
-            "_isEnabled": true,
-            "_button": {
-                "_isEnabled": true,
-                "text": "Continue",
-                "startText": "Continue",
-                "finalText": "Continue"
-            }
+            "_isEnabled": true
         }
     },
     {

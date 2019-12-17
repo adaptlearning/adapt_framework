@@ -1,10 +1,10 @@
-module.exports = function (grunt) {
-  
+module.exports = function(grunt) {
+
   global.translate = {};
-  
+
   var exports = {};
-  
-  exports.loadSubTasks = function () {
+
+  exports.loadSubTasks = function() {
     require("./loadTranslateConfig.js")(grunt);
     require("./loadCourseData.js")(grunt);
     require("./createLookupTable.js")(grunt);
@@ -16,7 +16,7 @@ module.exports = function (grunt) {
     require("./updateCourseData.js")(grunt);
     require("./saveCourseData.js")(grunt);
   };
-  
+
   exports.modelTypeMap = {
     "config": "config",
     "course": "course",
@@ -25,8 +25,7 @@ module.exports = function (grunt) {
     "blocks": "block",
     "components": "component"
   };
-  
-  
+
   return exports;
 
 };

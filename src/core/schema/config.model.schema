@@ -152,8 +152,27 @@
               "title": "Component Item element ARIA level",
               "inputType": "Number",
               "validators": ["required", "number"]
+            },
+            "_notify": {
+              "type": "number",
+              "required": true,
+              "default": 1,
+              "title": "Notify popup title ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
             }
           }
+        },
+        "_options": {
+          "type": "object",
+          "default": {},
+          "title": "Accessibility Extended Options",
+          "inputType": {
+            "type": "CodeEditor",
+            "mode": "json"
+          },
+          "validators": [],
+          "help": "Optional object that can be used to customize the accessibility behaviour"
         }
       }
     },
@@ -164,7 +183,7 @@
         "small": {
           "type": "number",
           "required": true,
-          "default": 519,
+          "default": 520,
           "title": "Small",
           "inputType": "Number",
           "validators": ["required", "number"],
@@ -173,7 +192,7 @@
         "medium": {
           "type": "number",
           "required": true,
-          "default": 759,
+          "default": 760,
           "title": "Medium",
           "inputType": "Number",
           "validators": ["required", "number"],
@@ -182,7 +201,7 @@
         "large": {
           "type": "number",
           "required": true,
-          "default": 1024,
+          "default": 900,
           "title": "Large",
           "inputType": "Number",
           "validators": ["required", "number"],
