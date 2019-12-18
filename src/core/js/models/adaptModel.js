@@ -640,16 +640,16 @@ define([
 
     setCustomLocking: function() {
       var children = this.getAvailableChildModels();
-      
+
       for (var i = 0, j = children.length; i < j; i++) {
         var child = children[i];
-    
+  
         child.set("_isLocked", this.shouldLock(child));
-        
+
         if (child.get('_type') === 'menu') {
           child.checkLocking();
         }
-    
+
       }
     },
 
