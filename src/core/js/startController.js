@@ -7,12 +7,23 @@ define([
     model: null,
 
     loadCourseData: function() {
-      this.model = new Backbone.Model(Adapt.course.get("_start"));
+      this.model = new Backbone.Model(Adapt.course.get('_start'));
     },
 
     setStartLocation: function() {
       if (!this.isEnabled()) return;
       window.history.replaceState('', '', this.getStartHash());
+    },
+
+    returnToStartLocation: function() {
+      var startIds = this.model.get('_startIds');
+      if (startIds) {
+        // ensure we can return to the start page even if it is completed
+        startIds.forEach(function(startId) {
+          startId._skipIfComplete = false;
+        });
+      }
+      window.location.hash = this.getStartHash(true);
     },
 
     getStartHash: function(alwaysForce) {
@@ -22,14 +33,14 @@ define([
         ? true
         : false;
 
-      var isRouteSpecified = (_.indexOf(window.location.href,"#") > -1);
-      var shouldForceStartId = alwaysForce || this.model.get("_force");
+      var isRouteSpecified = (_.indexOf(window.location.href,'#') > -1);
+      var shouldForceStartId = alwaysForce || this.model.get('_force');
       var shouldNavigateToStartId = hasStartId && (!isRouteSpecified || shouldForceStartId);
 
-      var startHash = "#/";
+      var startHash = '#/';
       if (shouldNavigateToStartId) {
-        if (startId !== Adapt.course.get("_id")) {
-          startHash = "#/id/"+startId;
+        if (startId !== Adapt.course.get('_id')) {
+          startHash = '#/id/'+startId;
         }
       } else {
         //go to specified route or course main menu
@@ -44,14 +55,14 @@ define([
     },
 
     isEnabled: function() {
-      if (!this.model || !this.model.get("_isEnabled")) return false;
+      if (!this.model || !this.model.get('_isEnabled')) return false;
       return true;
     },
 
     getStartId: function() {
-      var startId = this.model.get("_id");
-      var startIds = this.model.get("_startIds");
-      var $html = $("html");
+      var startId = this.model.get('_id');
+      var startIds = this.model.get('_startIds');
+      var $html = $('html');
 
       var hasStartIdsConfiguration = (startIds && startIds.length > 0);
       if (hasStartIdsConfiguration) {
@@ -63,12 +74,12 @@ define([
           var model = Adapt.findById(item._id);
 
           if (!model) {
-            console.log("startController: cannot find id", item._id);
+            console.log('startController: cannot find id', item._id);
             continue;
           }
 
           if (skipIfComplete) {
-            if (model.get("_isComplete")) continue;
+            if (model.get('_isComplete')) continue;
           }
 
           if (!className || $html.is(className) || $html.hasClass(className)) {
@@ -83,9 +94,17 @@ define([
 
   });
 
-  Adapt.once("adapt:start", function() {
+  Adapt.once('adapt:start', function() {
     Adapt.startController.loadCourseData();
     Adapt.startController.setStartLocation();
+  });
+
+  /*
+  * allows you to call returnToStartLocation either by calling `Adapt.trigger('navigation:returnToStart')`
+  * or by including in the top navigation bar a button that has the attribute `data-event="returnToStart"`
+  */
+  Adapt.on('navigation:returnToStart', function() {
+    Adapt.startController.returnToStartLocation();
   });
 
   return Adapt.startController = new StartController();
