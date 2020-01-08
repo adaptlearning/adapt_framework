@@ -54,7 +54,7 @@ define([
       var startId = this.model.get('_id');
       var startIds = this.model.get('_startIds');
 
-      if (!startIds) return startId;
+      if (!startIds || !startIds.length) return startId;
 
       var $html = $('html');
       for (var i = 0, l =  startIds.length; i < l; i++) {
