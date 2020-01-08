@@ -26,32 +26,23 @@ define([
       window.location.hash = this.getStartHash(true);
     },
 
+    /**
+     * Returns a string in URL.hash format representing the route that the course should be sent to
+     * @param {boolean} [alwaysForce] Ignore any route specified in location.hash and force use of the start page instead
+     * @return {string}
+     */
     getStartHash: function(alwaysForce) {
       var startId = this.getStartId();
-
-      var hasStartId = (startId)
-        ? true
-        : false;
-
-      var isRouteSpecified = (_.indexOf(window.location.href,'#') > -1);
+      var isRouteSpecified = window.location.href.indexOf('#') > -1;
       var shouldForceStartId = alwaysForce || this.model.get('_force');
-      var shouldNavigateToStartId = hasStartId && (!isRouteSpecified || shouldForceStartId);
+      var shouldNavigateToStartId = startId && (!isRouteSpecified || shouldForceStartId);
 
-      var startHash = '#/';
-      if (shouldNavigateToStartId) {
-        if (startId !== Adapt.course.get('_id')) {
-          startHash = '#/id/'+startId;
-        }
-      } else {
-        //go to specified route or course main menu
-        var hasLocationHash = (window.location.hash)
-          ? true
-          : false;
-
-        startHash = hasLocationHash ? window.location.hash : startHash;
+      if (shouldNavigateToStartId && startId !== Adapt.course.get('_id')) {
+        return '#/id/' + startId;
       }
 
-      return startHash;
+      //if there's a route specified in location.hash, use that - otherwise go to main menu
+      return window.location.hash || '#/';
     },
 
     isEnabled: function() {
@@ -62,30 +53,29 @@ define([
     getStartId: function() {
       var startId = this.model.get('_id');
       var startIds = this.model.get('_startIds');
+
+      if (!startIds) return startId;
+
       var $html = $('html');
+      for (var i = 0, l =  startIds.length; i < l; i++) {
+        var item = startIds[i];
+        var className =  item._className;
+        var skipIfComplete = item._skipIfComplete;
 
-      var hasStartIdsConfiguration = (startIds && startIds.length > 0);
-      if (hasStartIdsConfiguration) {
-        for (var i = 0, l =  startIds.length; i < l; i++) {
-          var item = startIds[i];
-          var className =  item._className;
-          var skipIfComplete = item._skipIfComplete;
+        var model = Adapt.findById(item._id);
 
-          var model = Adapt.findById(item._id);
+        if (!model) {
+          console.log('startController: cannot find id', item._id);
+          continue;
+        }
 
-          if (!model) {
-            console.log('startController: cannot find id', item._id);
-            continue;
-          }
+        if (skipIfComplete) {
+          if (model.get('_isComplete')) continue;
+        }
 
-          if (skipIfComplete) {
-            if (model.get('_isComplete')) continue;
-          }
-
-          if (!className || $html.is(className) || $html.hasClass(className)) {
-            startId = item._id;
-            break;
-          }
+        if (!className || $html.is(className) || $html.hasClass(className)) {// see https://github.com/adaptlearning/adapt_framework/issues/1843
+          startId = item._id;
+          break;
         }
       }
 
@@ -107,6 +97,6 @@ define([
     Adapt.startController.returnToStartLocation();
   });
 
-  return Adapt.startController = new StartController();
+  return (Adapt.startController = new StartController());
 
 });
