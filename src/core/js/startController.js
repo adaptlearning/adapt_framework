@@ -85,8 +85,8 @@ define([
   });
 
   Adapt.once('adapt:start', function() {
-    var startController = new StartController();
-    startController.setStartLocation();
+    Adapt.startController.initialize();
+    Adapt.startController.setStartLocation();
   });
 
   /*
