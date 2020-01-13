@@ -704,6 +704,10 @@ define([
                 var child = children[i];
 
                 child.set("_isLocked", this.shouldLock(child));
+
+                if (child.get('_type') === 'menu') {
+                  child.checkLocking();
+                }
             }
         },
 
