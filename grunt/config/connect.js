@@ -1,4 +1,4 @@
-module.exports = function (grunt, options) {
+module.exports = function(grunt, options) {
 
   var port = grunt.option('port') || 9001;
   var host = grunt.option('host') || "localhost";
@@ -8,16 +8,16 @@ module.exports = function (grunt, options) {
       options: {
         port: port,
         base: '<%= outputdir %>',
-        keepalive:true,
-        open:true
+        keepalive: true,
+        open: true
       }
     },
     spoorOffline: {
       options: {
         port: port,
         base: '<%= outputdir %>',
-        keepalive:true,
-        open: 'http://'+host+':'+port+'/scorm_test_harness.html'
+        keepalive: true,
+        open: 'http://' + host + ':' + port + '/scorm_test_harness.html'
       }
     }
   }

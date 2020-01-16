@@ -1,0 +1,27 @@
+.restrain-height() {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.adapt-scrolling {
+  .restrain-height;
+
+  body, #app {
+    .restrain-height;
+  }
+
+  .nav {
+    position: relative;
+  }
+
+  #app {
+    position: relative;
+    height: calc(~'100% - @{navigation-height}');
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #wrapper {
+    padding: 0;
+  }
+}

@@ -8,7 +8,7 @@
         "_layout": "left",
         "title": "Introduction",
         "displayTitle": "",
-        "body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br>These presentation components can be structured in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
+        "body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br><b>These presentation components can be structured</b> in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
         "instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the core bundle.",
         "_pageLevelProgress": {
             "_isEnabled": true
@@ -21,13 +21,14 @@
         "_component": "graphic",
         "_classes": "",
         "_layout": "right",
+        "_isOptional": true,
         "title": "c-10",
         "displayTitle": "",
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "large": "course/en/images/single-width.png",
+            "small": "course/en/images/full-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -54,7 +55,8 @@
         "_component": "blank",
         "_classes": "",
         "_layout": "right",
-        "title": "c-20"
+        "title": "c-20",
+        "_isOptional": true
     },
     {
         "_id": "c-25",
@@ -68,8 +70,7 @@
         "body": "This is the graphic component body. You can introduce your graphic or you may just want to let the graphics do the talking.<br><br>Component can either be single or spanned.",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/full_width.jpg",
-            "small": "course/en/images/full_width.jpg",
+            "src": "course/en/images/full-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         },
@@ -97,7 +98,7 @@
                 "title": "Narrative item 1",
                 "body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning to follow, to illustrate real-world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
                 "_graphic": {
-                    "src": "course/en/images/single_width_small.jpg",
+                    "src": "course/en/images/narrative.png",
                     "alt": "Placeholder graphic."
                 },
                 "strapline": "Narrative item 1"
@@ -106,7 +107,7 @@
                 "title": "Narrative item 2",
                 "body": "Narratives can also be used to present case studies, where the different displays are used to set the scene, show the key events and then the outcome.",
                 "_graphic": {
-                    "src": "course/en/images/single_width_small.jpg",
+                    "src": "course/en/images/narrative.png",
                     "alt": "Placeholder graphic."
                 },
                 "strapline": "Narrative item 2"
@@ -115,7 +116,7 @@
                 "title": "Narrative item 3",
                 "body": "The narrative can also be used when you want to illustrate the constituent steps that make up a larger process.",
                 "_graphic": {
-                    "src": "course/en/images/single_width_small.jpg",
+                    "src": "course/en/images/narrative.png",
                     "alt": "Placeholder graphic."
                 },
                 "strapline": "Narrative item 3"
@@ -144,7 +145,7 @@
         "instruction": "Select the icons to find out more.",
         "mobileInstruction": "",
         "_graphic": {
-            "src": "course/en/images/full_width.jpg",
+            "src": "course/en/images/hotgraphic.png",
             "alt": "Placeholder graphic."
         },
         "_items": [
@@ -152,7 +153,7 @@
                 "title": "Hot graphic item 1",
                 "body": "This is display text 1 which we have associated with the tablet image on the desktop.",
                 "_graphic": {
-                    "src": "course/en/images/single_width_small.jpg",
+                    "src": "course/en/images/single-width.png",
                     "alt": "Placeholder graphic.",
                     "_classes": ""
                 },
@@ -165,7 +166,7 @@
                 "title": "Hot graphic item 2",
                 "body": "This is display text 2 which we have linked to the smartphone image.",
                 "_graphic": {
-                    "src": "course/en/images/single_width_small.jpg",
+                    "src": "course/en/images/single-width.png",
                     "alt": "Placeholder graphic.",
                     "_classes": ""
                 },
@@ -178,7 +179,7 @@
                 "title": "Hot graphic item 3",
                 "body": "This is display text 3 which we’ve located over the laptop so you would expect the content to be about PCs.",
                 "_graphic": {
-                    "src": "course/en/images/single_width_small.jpg",
+                    "src": "course/en/images/single-width.png",
                     "alt": "Placeholder graphic.",
                     "_classes": ""
                 },
@@ -218,6 +219,13 @@
                 }
             ]
         },
+        "_playerOptions": {
+            "alwaysShowControls": true,
+            "toggleCaptionsButtonWhenOnlyOne": true,
+            "iPadUseNativeControls": true,
+            "iPhoneUseNativeControls": true,
+            "AndroidUseNativeControls": true
+        },
         "_transcript": {
             "_inlineTranscript": true,
             "_externalTranscript": false,
@@ -247,16 +255,18 @@
             {
                 "title": "Lists",
                 "body": "This is display text 1 and we’re using it to discuss lists.<br><br>If you need to present a list that can stand alone as a piece of content, but which can also be explored in more detail, accordions are a great choice.",
+                "_classes": "align-image-left",
                 "_graphic": {
-                    "src": "course/en/images/accordion_full_width.jpg",
+                    "src": "course/en/images/single-width.png",
                     "alt": "Placeholder graphic."
                 }
             },
             {
                 "title": "Steps in a process",
                 "body": "This is display text 2 and now we’re discussing how accordions can be great at presenting a process.<br><br>The headings can be used to present the high-level stages in the process, which once selected, provide a more extensive explanation of what happens at that specific point.",
+                "_classes": "align-image-right",
                 "_graphic": {
-                    "src": "course/en/images/accordion_full_width.jpg",
+                    "src": "course/en/images/single-width.png",
                     "alt": "Placeholder graphic."
                 }
             },
@@ -264,7 +274,7 @@
                 "title": "Recaps",
                 "body": "This is display text 3 and we’re now talking about using accordions to provide the learner with a summary.<br><br>Each accordion item corresponds to a key piece of learning presented on the page. When this item is selected a short summary of the learning point is provided.",
                 "_graphic": {
-                    "src": "course/en/images/accordion_full_width.jpg",
+                    "src": "course/en/images/accordion-full.png",
                     "alt": "Placeholder graphic."
                 }
             }
@@ -286,7 +296,7 @@
         "_canShowModelAnswer": true,
         "_shouldDisplayAttempts": false,
         "_isRandom": true,
-        "_selectable": 1,
+        "_selectable": 2,
         "title": "Multiple Choice Question",
         "displayTitle": "Multiple Choice Question",
         "body": "In what year was the first recorded instance of a large scale assessment that consists solely of multiple choice questions?",
@@ -328,13 +338,13 @@
         "_component": "graphic",
         "_classes": "",
         "_layout": "right",
+        "_isOptional": true,
         "title": "c-62",
         "displayTitle": "",
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -362,8 +372,8 @@
                 "text": "Option 1",
                 "_shouldBeSelected": false,
                 "_graphic": {
-                    "large": "course/en/images/GMCQ_option.png",
-                    "small": "course/en/images/GMCQ_option.png",
+                    "large": "course/en/images/gmcq.png",
+                    "small": "course/en/images/gmcq.png",
                     "alt": "Placeholder graphic."
                 }
             },
@@ -371,8 +381,8 @@
                 "text": "Option 2",
                 "_shouldBeSelected": true,
                 "_graphic": {
-                    "large": "course/en/images/GMCQ_option.png",
-                    "small": "course/en/images/GMCQ_option.png",
+                    "large": "course/en/images/gmcq.png",
+                    "small": "course/en/images/gmcq.png",
                     "alt": "Placeholder graphic."
                 }
             },
@@ -380,8 +390,8 @@
                 "text": "Option 3",
                 "_shouldBeSelected": false,
                 "_graphic": {
-                    "large": "course/en/images/GMCQ_option.png",
-                    "small": "course/en/images/GMCQ_option.png",
+                    "large": "course/en/images/gmcq.png",
+                    "small": "course/en/images/gmcq.png",
                     "alt": "Placeholder graphic."
                 }
             }
@@ -450,13 +460,13 @@
         "_component": "graphic",
         "_classes": "",
         "_layout": "right",
+        "_isOptional": true,
         "title": "c-72",
         "displayTitle": "",
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -658,8 +668,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -730,8 +739,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -799,8 +807,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -867,8 +874,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -932,8 +938,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }
@@ -1000,8 +1005,7 @@
         "body": "",
         "instruction": "",
         "_graphic": {
-            "large": "course/en/images/single_width.jpg",
-            "small": "course/en/images/single_width.jpg",
+            "src": "course/en/images/single-width.png",
             "alt": "Placeholder graphic.",
             "attribution": ""
         }

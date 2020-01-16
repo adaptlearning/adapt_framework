@@ -7,7 +7,13 @@
         "title": "b-05",
         "displayTitle": "",
         "body": "",
-        "_trackingId": 0
+        "instruction": "",
+        "_trackingId": 0,
+        "_onScreen": {
+            "_isEnabled": true,
+            "_classes": "fade-in-bottom",
+            "_percentInviewVertical": 50
+        }
     },
     {
         "_id": "b-10",
@@ -17,6 +23,7 @@
         "title": "b-10",
         "displayTitle": "",
         "body": "",
+        "instruction": "",
         "_trackingId": 1
     },
     {
@@ -27,6 +34,7 @@
         "title": "b-15",
         "displayTitle": "",
         "body": "",
+        "instruction": "",
         "_trackingId": 2
     },
     {
@@ -37,6 +45,7 @@
         "title": "b-20",
         "displayTitle": "",
         "body": "",
+        "instruction": "",
         "_trackingId": 3
     },
     {
