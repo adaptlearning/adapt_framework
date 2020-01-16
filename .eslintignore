@@ -1,6 +1,2 @@
-# Ignore minified library files.
+# Ignore library files.
 /src/core/libraries/*.js
-
-# Ignore other libraries.
-/src/core/libraries/bowser.js
-/src/core/libraries/modernizr.js
