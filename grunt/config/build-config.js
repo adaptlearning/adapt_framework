@@ -13,25 +13,25 @@ module.exports = function(grunt, options) {
       },
       allowedProperties: {
         bower: [
-          "name",
-          "version",
-          "framework",
-          "displayName",
-          "theme",
-          "component",
-          "extension",
-          "menu",
-          "description",
-          "main",
-          "keywords",
-          "licence"
+          'name',
+          'version',
+          'framework',
+          'displayName',
+          'theme',
+          'component',
+          'extension',
+          'menu',
+          'description',
+          'main',
+          'keywords',
+          'licence'
         ],
         package: [
-          "name",
-          "version",
-          "description",
-          "repository",
-          "license"
+          'name',
+          'version',
+          'description',
+          'repository',
+          'license'
         ]
       }
     }

@@ -26,7 +26,7 @@ define([
     },
 
     canShowPush: function() {
-      var availablePushNotifications = this.where({_isActive:true});
+      var availablePushNotifications = this.where({ _isActive: true });
       if (availablePushNotifications.length >= 2) {
         return false;
       }
@@ -40,7 +40,7 @@ define([
     },
 
     onRemovePush: function(view) {
-      var inactivePushNotifications = this.where({_isActive:false});
+      var inactivePushNotifications = this.where({ _isActive: false });
       if (inactivePushNotifications.length > 0) {
         this.checkPushCanShow(inactivePushNotifications[0]);
       }

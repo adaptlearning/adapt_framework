@@ -120,13 +120,13 @@ module.exports = function(grunt) {
 
       // iterate files, processing partials and templates separately
       f.src.filter(function(filepath) {
-          // Warn on and remove invalid source files (if nonull was set).
-          if (!grunt.file.exists(filepath)) {
-            grunt.log.warn('Source file "' + filepath + '" not found.');
-            return false;
-          }
-          return true;
-        })
+        // Warn on and remove invalid source files (if nonull was set).
+        if (!grunt.file.exists(filepath)) {
+          grunt.log.warn('Source file "' + filepath + '" not found.');
+          return false;
+        }
+        return true;
+      })
         .forEach(function(filepath) {
           var src = processContent(grunt.file.read(filepath), filepath);
 

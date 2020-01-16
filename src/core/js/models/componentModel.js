@@ -10,7 +10,7 @@ define([
       _isA11yComponentDescriptionEnabled: true
     }),
 
-    trackable: AdaptModel.resultExtend("trackable", [
+    trackable: AdaptModel.resultExtend('trackable', [
       '_userAnswer'
     ])
 

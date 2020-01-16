@@ -9,6 +9,8 @@
         "standard"
     ],
     "globals": {
+        "Promise": true,
+        "requirejs": true,
         "Backbone": true,
         "$": true,
         "ENUM": true,

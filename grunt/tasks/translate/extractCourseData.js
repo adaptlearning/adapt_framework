@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
 
-  var Helper = require("./helper.js")(grunt);
+  var Helper = require('./helper.js')(grunt);
 
   global.translate.exportTextData = [];
 
-  grunt.registerTask("_extractCourseData", function(mode) {
+  grunt.registerTask('_extractCourseData', function(mode) {
 
     processCourseData();
 
@@ -24,10 +24,10 @@ module.exports = function(grunt) {
 
     // checks lookUpTable if path exists and if set to true
     function _shouldExportText(file, component, path) {
-      if (Helper.modelTypeMap[file] === "component") {
+      if (Helper.modelTypeMap[file] === 'component') {
 
-        if (_lookupHasKey("models", Helper.modelTypeMap[file], path) || _lookupHasKey("components", component, path)) {
-          if (_lookupValueIsTrue("models", Helper.modelTypeMap[file], path) || _lookupValueIsTrue("components", component, path)) {
+        if (_lookupHasKey('models', Helper.modelTypeMap[file], path) || _lookupHasKey('components', component, path)) {
+          if (_lookupValueIsTrue('models', Helper.modelTypeMap[file], path) || _lookupValueIsTrue('components', component, path)) {
             return true;
           }
         }
@@ -35,8 +35,8 @@ module.exports = function(grunt) {
 
       } else {
 
-        if (_lookupHasKey("models", Helper.modelTypeMap[file], path)) {
-          if (_lookupValueIsTrue("models", Helper.modelTypeMap[file], path)) {
+        if (_lookupHasKey('models', Helper.modelTypeMap[file], path)) {
+          if (_lookupValueIsTrue('models', Helper.modelTypeMap[file], path)) {
             return true;
           }
         }
@@ -48,20 +48,19 @@ module.exports = function(grunt) {
 
       if (level === 0) {
         // at the root
-        id = data.hasOwnProperty("_id") ? data._id : null;
-        component = data.hasOwnProperty("_component") ? data._component : null;
+        id = data.hasOwnProperty('_id') ? data._id : null;
+        component = data.hasOwnProperty('_component') ? data._component : null;
       }
-
 
       if (Array.isArray(data)) {
         for (var i = 0; i < data.length; i++) {
-          _traverseCourse(data[i], level += 1, path + i + "/", lookupPath, id, file, component, cbs);
+          _traverseCourse(data[i], level += 1, path + i + '/', lookupPath, id, file, component, cbs);
         }
 
-      } else if (typeof data === "object") {
+      } else if (typeof data === 'object') {
 
         for (var attribute in data) {
-          _traverseCourse(data[attribute], level += 1, path + attribute + "/", lookupPath + attribute + "/", id, file, component, cbs);
+          _traverseCourse(data[attribute], level += 1, path + attribute + '/', lookupPath + attribute + '/', id, file, component, cbs);
         }
 
       } else {
@@ -87,16 +86,16 @@ module.exports = function(grunt) {
 
     function processCourseData() {
 
-      ["config", "course", "contentObjects", "articles", "blocks", "components"].forEach(function(file) {
+      ['config', 'course', 'contentObjects', 'articles', 'blocks', 'components'].forEach(function(file) {
 
         var cbs = [_collectTexts];
 
         if (Array.isArray(global.translate.courseData[file])) {
           for (var i = 0; i < global.translate.courseData[file].length; i++) {
-            _traverseCourse(global.translate.courseData[file][i], 0, "/", "/", null, file, null, cbs);
+            _traverseCourse(global.translate.courseData[file][i], 0, '/', '/', null, file, null, cbs);
           }
         } else {
-          _traverseCourse(global.translate.courseData[file], 0, "/", "/", null, file, null, cbs);
+          _traverseCourse(global.translate.courseData[file], 0, '/', '/', null, file, null, cbs);
         }
 
       });

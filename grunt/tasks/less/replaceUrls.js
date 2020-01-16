@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var less = require('less');
 
@@ -69,9 +69,9 @@ class ReplaceUrls {
     for (var filename in this._actions) {
       var action = this._actions[filename];
       // Output blank line to separate outputs
-      console.log("");
-      console.log("Take action:", action.replaceObject.action);
-      console.log("In file:", action.URLNode.currentFileInfo.filename);
+      console.log('');
+      console.log('Take action:', action.replaceObject.action);
+      console.log('In file:', action.URLNode.currentFileInfo.filename);
     }
   }
 

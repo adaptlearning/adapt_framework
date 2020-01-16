@@ -6,27 +6,27 @@ define([
 
   var QuestionModel = ComponentModel.extend({
 
-    //////
+    /// ///
     // Setup question types
-    ////
+    /// /
 
     // Used to set model defaults
     defaults: function() {
       // Extend from the ComponentModel defaults
-      return ComponentModel.resultExtend("defaults", {
+      return ComponentModel.resultExtend('defaults', {
         _isQuestionType: true,
         _shouldDisplayAttempts: false,
         _canShowModelAnswer: true,
         _canShowFeedback: true,
         _canShowMarking: true,
         _isSubmitted: false,
-        _questionWeight: Adapt.config.get("_questionWeight"),
-        _items: [],
+        _questionWeight: Adapt.config.get('_questionWeight'),
+        _items: []
       });
     },
 
     // Extend from the ComponentModel trackable
-    trackable: ComponentModel.resultExtend("trackable", [
+    trackable: ComponentModel.resultExtend('trackable', [
       '_isSubmitted',
       '_score',
       '_isCorrect',
@@ -35,7 +35,7 @@ define([
 
     init: function() {
       this.setupDefaultSettings();
-      this.listenToOnce(Adapt, "adapt:initialize", this.onAdaptInitialize);
+      this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
     },
 
     // Calls default methods to setup on questions
@@ -47,15 +47,15 @@ define([
 
     // Used to setup either global or local button text
     setupButtonSettings: function() {
-      var globalButtons = Adapt.course.get("_buttons");
+      var globalButtons = Adapt.course.get('_buttons');
 
       // Check if  '_buttons' attribute exists and if not use the globally defined buttons.
-      if (!this.has("_buttons")) {
-        this.set("_buttons", globalButtons);
+      if (!this.has('_buttons')) {
+        this.set('_buttons', globalButtons);
       } else {
         // Check all the components buttons.
         // If they are empty use the global defaults.
-        var componentButtons = this.get("_buttons");
+        var componentButtons = this.get('_buttons');
 
         for (var key in componentButtons) {
           if (typeof componentButtons[key] === 'object') {
@@ -82,9 +82,9 @@ define([
       // Not needed as handled by model defaults, keeping to maintain API
     },
 
-    //////
+    /// ///
     // Selection restoration process
-    ////
+    /// /
 
     // Used to add post-load changes to the model
     onAdaptInitialize: function() {
@@ -94,9 +94,9 @@ define([
     // Used to restore the user answers
     restoreUserAnswers: function() {},
 
-    //////
+    /// ///
     // Submit process
-    ////
+    /// /
 
     // Use to check if the user is allowed to submit the question
     // Maybe the user has to select an item?
@@ -105,9 +105,9 @@ define([
     // Used to update the amount of attempts the user has left
     updateAttempts: function() {
       if (!this.get('_attemptsLeft')) {
-        this.set("_attemptsLeft", this.get('_attempts'));
+        this.set('_attemptsLeft', this.get('_attempts'));
       }
-      this.set("_attemptsLeft", this.get('_attemptsLeft') - 1);
+      this.set('_attemptsLeft', this.get('_attemptsLeft') - 1);
     },
 
     // Used to set _isEnabled and _isSubmitted on the model
@@ -232,7 +232,7 @@ define([
     },
 
     setAttemptSpecificFeedback: function(feedback) {
-      var body = this.get('_attemptsLeft') && feedback.notFinal || feedback.final;
+      var body = (this.get('_attemptsLeft') && feedback.notFinal) || feedback.final;
 
       this.set({
         feedbackTitle: this.getFeedbackTitle(),
@@ -241,7 +241,7 @@ define([
     },
 
     getFeedbackTitle: function() {
-      return this.get('_feedback').title || this.get('displayTitle') ||  this.get('title') || "";
+      return this.get('_feedback').title || this.get('displayTitle') || this.get('title') || '';
     },
 
     /**
@@ -254,9 +254,9 @@ define([
 
     // Reset the model to let the user have another go (not the same as attempts)
     reset: function(type, force) {
-      if (!this.get("_canReset") && !force) return;
+      if (!this.get('_canReset') && !force) return;
 
-      type = type || true; //hard reset by default, can be "soft", "hard"/true
+      type = type || true; // hard reset by default, can be "soft", "hard"/true
 
       ComponentModel.prototype.reset.call(this, type, force);
 
@@ -290,7 +290,7 @@ define([
       }
 
       if (this.get('_attemptsLeft') === 0) {
-         return this.get('_canShowModelAnswer') ? BUTTON_STATE.SHOW_CORRECT_ANSWER : BUTTON_STATE.INCORRECT;
+        return this.get('_canShowModelAnswer') ? BUTTON_STATE.SHOW_CORRECT_ANSWER : BUTTON_STATE.INCORRECT;
       }
 
       return this.get('_isSubmitted') ? BUTTON_STATE.RESET : BUTTON_STATE.SUBMIT;

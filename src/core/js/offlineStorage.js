@@ -2,8 +2,8 @@ define([
   'core/js/adapt'
 ], function(Adapt) {
 
-  //Basic API for setting and getting name+value pairs
-  //Allows registration of a single handler.
+  // Basic API for setting and getting name+value pairs
+  // Allows registration of a single handler.
 
   var OfflineStorage = Backbone.Controller.extend({
 
@@ -56,7 +56,7 @@ define([
      */
     setReadyStatus: function() {
       this.ready = true;
-      Adapt.trigger("offlineStorage:ready");
+      Adapt.trigger('offlineStorage:ready');
     }
 
   });

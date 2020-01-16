@@ -143,7 +143,7 @@ define([
 
     _onNavigationEnd: function(view) {
       // Prevent sub-menu items provoking behaviour
-      if ((view && view.model && view.model.get('_id') !== Adapt.location._currentId) || !this.isEnabled())  {
+      if ((view && view.model && view.model.get('_id') !== Adapt.location._currentId) || !this.isEnabled()) {
         return;
       }
       // Allow document to be read
@@ -235,7 +235,7 @@ define([
       }
       isEnabled = isEnabled === undefined ? true : isEnabled;
       if (!isEnabled) {
-        $elements.attr('disabled','disabled').addClass('is-disabled');
+        $elements.attr('disabled', 'disabled').addClass('is-disabled');
       } else {
         $elements.removeAttr('disabled').removeClass('is-disabled');
       }
@@ -281,7 +281,6 @@ define([
      * @param {Object|string|Array} $element
      */
     findReadable: function($element) {
-      var config = Adapt.a11y.config;
       return $($element).find('*').filter(function(index, element) {
         return this.isReadable(element);
       }.bind(this));
@@ -312,18 +311,18 @@ define([
     isReadable: function($element, checkParents) {
       var config = Adapt.a11y.config;
       $element = $($element).first();
-      checkParents = checkParents === undefined ? true : false;
+      checkParents = checkParents === undefined;
 
-      var $branch =  checkParents
+      var $branch = checkParents
         ? $element.add($element.parents())
         : $element;
 
       var isNotVisible = _.find($branch.toArray(), function(item) {
         var $item = $(item);
         // make sure item is not explicitly invisible
-        var isNotVisible = $item.css('display') === 'none'
-          || $item.css('visibility') === 'hidden'
-          || $item.attr('aria-hidden') === 'true';
+        var isNotVisible = $item.css('display') === 'none' ||
+          $item.css('visibility') === 'hidden' ||
+          $item.attr('aria-hidden') === 'true';
         if (isNotVisible) {
           return true;
         }
@@ -334,8 +333,8 @@ define([
 
       // check that the component is natively tabbable or
       // will be knowingly read by a screen reader
-      var hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements)
-        || $element.is(config._options._readableElements);
+      var hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements) ||
+        $element.is(config._options._readableElements);
       if (hasNativeFocusOrIsScreenReadable) {
         return true;
       }
@@ -498,7 +497,6 @@ define([
           iterator = Boolean;
       }
 
-
       var $notFound = $element.not('*');
       if ($element.length === 0) {
         return $notFound;
@@ -510,7 +508,7 @@ define([
         value: undefined
       }];
       var stackIndexPosition = 0;
-      var childIndexPosition = stackIndexPosition+1;
+      var childIndexPosition = stackIndexPosition + 1;
       do {
 
         var stackEntry = stack[stackIndexPosition];
@@ -547,7 +545,7 @@ define([
         // move to next stack item
         stackIndexPosition++;
         // keep place to inject children
-        childIndexPosition = stackIndexPosition+1;
+        childIndexPosition = stackIndexPosition + 1;
       } while (stackIndexPosition < stack.length)
 
       return $notFound;
@@ -627,7 +625,7 @@ define([
       if (options.defer) {
         _.defer(function() {
           perform();
-        }.bind(this));
+        });
       } else {
         perform();
       }
@@ -688,7 +686,7 @@ define([
       } while (stackIndex < stack.length)
       var rtnText = '';
       outputs.forEach(function(item) {
-        rtnText+=item.outerHTML||item.textContent;
+        rtnText += item.outerHTML || item.textContent;
       });
       return rtnText;
     },

@@ -102,12 +102,12 @@ define([
         return;
       }
 
-      if (this.model.get('_index') != undefined) {
+      if (typeof this.model.get('_index') !== 'undefined') {
         var elementHeight = this.$el.height();
         var offset = 20;
         var navigationHeight = $('.nav').height();
         var currentIndex = this.model.get('_index');
-        var flippedIndex = (currentIndex == 0) ? 1 : 0;
+        var flippedIndex = (currentIndex === 0) ? 1 : 0;
 
         if (this.model.collection.where({ _isActive: true }).length === 1) {
           flippedIndex = 0;

@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     var chalk = require('chalk'); // for some nice colouring
     var columnify = require('columnify'); // deals with formatting
     var config = grunt.config('help') || {
-      maxConsoleWidth: '80',
+      maxConsoleWidth: '80'
     };
 
     grunt.log.writeln('');
@@ -54,7 +54,7 @@ function getTaskData() {
     var filePath = path.join(__dirname, files[i]);
     var fileStat = fs.statSync(filePath);
 
-    //skip directories
+    // skip directories
     if (fileStat.isDirectory()) continue;
 
     var file = fs.readFileSync(filePath, 'utf8');

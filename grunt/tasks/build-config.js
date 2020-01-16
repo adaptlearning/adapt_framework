@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     var options = this.options({});
 
     var buildConfig = Helpers.generateConfigData();
-    var buildConfigPath = path.join(buildConfig.outputdir, "adapt/js/build.min.js");
+    var buildConfigPath = path.join(buildConfig.outputdir, 'adapt/js/build.min.js');
 
     var allowedProperties = options.allowedProperties || {};
 
