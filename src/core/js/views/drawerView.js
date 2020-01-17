@@ -88,12 +88,12 @@ define([
     },
 
     checkIfDrawerIsAvailable: function() {
-      if (this.collection.length == 0) {
+      if (this.collection.length === 0) {
         $('.js-nav-drawer-btn').addClass('u-display-none');
         Adapt.trigger('drawer:noItems');
-      } else {
-        $('.js-nav-drawer-btn').removeClass('u-display-none');
+        return;
       }
+      $('.js-nav-drawer-btn').removeClass('u-display-none');
     },
 
     onBackButtonClicked: function(event) {
@@ -122,8 +122,8 @@ define([
       this.$el.removeClass('u-display-none').removeAttr('aria-hidden');
       //only trigger popup:opened if drawer is visible, pass popup manager drawer element
       if (!this._isVisible) {
-        Adapt.trigger('popup:opened', this.$el);
-        $('body').scrollDisable();
+        Adapt.a11y.popupOpened(this.$el);
+        Adapt.a11y.scrollDisable('body');
         this._isVisible = true;
       }
 
@@ -185,7 +185,7 @@ define([
         Adapt.trigger('drawer:opened');
 
         //focus on first tabbable element in drawer
-        this.$el.a11y_focus();
+        Adapt.a11y.focusFirst(this.$el, { defer: true });
       }
 
     },
@@ -207,9 +207,9 @@ define([
     hideDrawer: function($toElement) {
       //only trigger popup:closed if drawer is visible
       if (this._isVisible) {
-        Adapt.trigger('popup:closed', $toElement);
+        Adapt.a11y.popupClosed($toElement);
         this._isVisible = false;
-        $('body').scrollEnable();
+        Adapt.a11y.scrollEnable('body');
       } else {
         return;
       }
@@ -223,7 +223,7 @@ define([
             .addClass('u-display-none')
             .attr('aria-hidden', 'true');
 
-        $('.js-shadow').addClass("u-display-none");
+        $('.js-shadow').addClass('u-display-none');
 
         Adapt.trigger('drawer:closed');
 
@@ -254,9 +254,9 @@ define([
     },
 
     addShadowEvent: function() {
-      $('.js-shadow').one('click touchstart', _.bind(function() {
+      $('.js-shadow').one('click touchstart', function() {
         this.onCloseDrawer();
-      }, this));
+      }.bind(this));
     },
 
     removeShadowEvent: function() {

@@ -21,6 +21,7 @@ define([
         _canShowMarking: true,
         _isSubmitted: false,
         _questionWeight: Adapt.config.get("_questionWeight"),
+        _items: [],
       });
     },
 
@@ -132,7 +133,7 @@ define([
 
     },
 
-     // Should return a boolean based upon whether to question is correct or not
+    // Should return a boolean based upon whether to question is correct or not
     isCorrect: function() {},
 
     // Used to set the score based upon the _questionWeight

@@ -66,7 +66,7 @@ define([
 
       this.$el
         .addClass('has-animation')
-        .addClass(onscreen._classesBefore);
+        .addClass(onscreen._classes + '-before');
 
       this.$el.on('onscreen.adaptView', function (e, m) {
 
@@ -76,7 +76,7 @@ define([
 
         if (m.percentInviewVertical < minVerticalInview) return;
 
-        this.$el.addClass( onscreen._classes || 'onscreen' ).off('onscreen.adaptView');
+        this.$el.addClass( onscreen._classes + '-after' || 'onscreen' ).off('onscreen.adaptView');
 
       }.bind(this));
     },
@@ -169,9 +169,9 @@ define([
     },
 
     setVisibility: function() {
-      var visible = "u-visibility-hidden";
+      var visible = 'u-visibility-hidden';
       if (this.model.get('_isVisible')) {
-        visible = "";
+        visible = '';
       }
       return visible;
     },
@@ -184,9 +184,9 @@ define([
     },
 
     setHidden: function() {
-      var hidden = "";
+      var hidden = '';
       if (this.model.get('_isHidden')) {
-        hidden = "u-display-none";
+        hidden = 'u-display-none';
       }
       return hidden;
     },

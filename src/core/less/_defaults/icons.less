@@ -3,30 +3,32 @@
 // --------------------------------------------------
 @font-face {
   font-family: "vanilla";
-  src: url("fonts/vanilla.eot");
-  src: url("fonts/vanilla.eot?#iefix") format("embedded-opentype"),
-       url("fonts/vanilla.woff") format("woff"),
-       url("fonts/vanilla.ttf") format("truetype"),
-       url("fonts/vanilla.svg#vanilla") format("svg");
+  src: url('fonts/vanilla.woff2') format('woff2'),
+       url('fonts/vanilla.woff') format('woff');
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
-.icon:before {
-  display: block;
-  font-family: "vanilla";
-  font-size: @icon-size;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-align: center;
-  text-decoration: none;
-  text-transform: none;
-  line-height: 1;
-  speak: none;
+.icon {
+  &:before {
+    display: block;
+    font-family: "vanilla";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
 
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-size: @icon-size;
+    text-align: center;
+    text-decoration: none;
+
+    // Better font rendering
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 }
 
 // Icons as classes
