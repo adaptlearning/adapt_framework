@@ -19,7 +19,11 @@ define([
         this.model.get('_classes'),
         this.setVisibility(),
         'is-' + this.model.get('_layout'),
-        (this.model.get('_isComplete') ? 'is-complete' : '')
+        (this.model.get('_isComplete') ? 'is-complete' : ''),
+        (this.model.get('_isOptional') ? 'is-optional' : ''),
+        (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
+        (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
+        (this.model.get('_canShowMarking') ? 'can-show-marking' : '')
       ].join(' ');
     },
 
@@ -220,8 +224,8 @@ define([
 
     // Adds a validation error class when the canSubmit returns false
     showInstructionError: function() {
-      this.$(".component__instruction-inner").addClass("validation-error");
-      this.$el.a11y_focus();
+      this.$('.component__instruction-inner').addClass('validation-error');
+      Adapt.a11y.focusFirst(this.$el, { defer: true });
     },
 
     // Blank method for question to fill out when the question cannot be submitted
@@ -234,12 +238,12 @@ define([
     // Also adds a 'submitted' class to the widget
     setQuestionAsSubmitted: function() {
       this.model.setQuestionAsSubmitted();
-      this.$(".component__widget").addClass("is-submitted");
+      this.$('.component__widget').addClass('is-submitted');
     },
 
     // Removes validation error class when the user canSubmit
     removeInstructionError: function() {
-      this.$(".component__instruction-inner").removeClass("validation-error");
+      this.$('.component__instruction-inner').removeClass('validation-error');
     },
 
     // This is important and should give the user feedback on how they answered the question
@@ -293,13 +297,13 @@ define([
       // Make sure the page is ready
       if (!currentModel || !currentModel.get("_isReady")) return;
       // Focus on the first readable item in this element
-      this.$el.focusNext();
+      Adapt.a11y.focusNext(this.$el);
 
     },
 
     setQuestionAsReset: function() {
       this.model.setQuestionAsReset();
-      this.$(".component__widget").removeClass("is-submitted");
+      this.$('.component__widget').removeClass('is-submitted');
     },
 
     // Used by the question view to reset the look and feel of the component.
@@ -329,9 +333,9 @@ define([
     },
 
     setQuestionAsShowCorrect: function() {
-      this.$(".component__widget")
-          .addClass("is-submitted show-correct-answer")
-          .removeClass("show-user-answer");
+      this.$('.component__widget')
+          .addClass('is-submitted show-correct-answer')
+          .removeClass('show-user-answer');
     },
 
     // Used by the question to display the correct answer to the user
@@ -346,9 +350,9 @@ define([
     },
 
     setQuestionAsHideCorrect: function() {
-      this.$(".component__widget")
-          .addClass("is-submitted show-user-answer")
-          .removeClass("show-correct-answer");
+      this.$('.component__widget')
+          .addClass('is-submitted show-user-answer')
+          .removeClass('show-correct-answer');
     },
 
     // Used by the question to display the users answer and

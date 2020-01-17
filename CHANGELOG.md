@@ -1,4 +1,73 @@
-## [Unreleased][unreleased]
+## [5.1.0] - 2019-12-11
+### Added
+- Classes to question components to indicate when the settings 'show model answer', 'show feedback' or 'show marking' are enabled ([#2606](https://github.com/adaptlearning/adapt_framework/issues/2606))
+
+### Changed
+- Framework 'example course' content now set to:
+  * Always show media player controls (for better accessibility)
+  * Toggle captions on/off (rather than show language popup) when the 'cc' button in the media component is selected
+  * show 'native controls' for the media component on iOS/iPadOS/Android ([#2477](https://github.com/adaptlearning/adapt_framework/issues/2477))
+
+### Fixed
+- Media component showing two sets of controls and captions when exiting full-screen mode on iOS ([#2477](https://github.com/adaptlearning/adapt_framework/issues/2477))
+- Hot graphic popup not re-centering vertically when 'paging' between items ([#2580](https://github.com/adaptlearning/adapt_framework/issues/2580))
+- Blank component not triggering `inview` ([#2595](https://github.com/adaptlearning/adapt_framework/issues/2595))
+
+## [5.0.0] - 2019-11-21
+### Added
+- Added `normalize.css`
+- Added subtitle property to page (and menu) hbs and schema
+- Utilised `_onScreen` property to set up standard animation that can be added to components, blocks, articles, and contentObjects
+- Added instruction field to course schema
+- Added `screenSize` support for rem's and px's - required for conversion to REM when upgrading the Authoring Tool
+- Added wait queue to `menuView` and `pageView` render
+- Added `.is-optional` class to all views
+
+### Changed
+- Updated HTML naming convention to adhere to BEM
+- Adopted relative unit measurement (rem) instead of fixed (px)
+- Updated CSS to use a SMACSS approach
+- All components will render their classes in lowercase
+- Articles, blocks, and components all render into their respective containers
+- Changed how icons are applied to elements
+- `.navigation` class changed to `.nav`
+- Loading changed to CSS animation
+- Split `menuItemView` into new file
+- Split `drawerItemView` into new file
+- Changed LESS folder structure
+- Updated heading aria label to use title property
+- Changed `_htmlClassName` to `_htmlClasses` (https://github.com/adaptlearning/adapt_framework/issues/2392)
+- Amended viewport meta tag (https://github.com/adaptlearning/adapt_framework/pull/2569)
+- Indentation amended to use 2 spaces instead of 4
+
+### Fixed
+- Drawer no longer renders two `role='list'`
+
+### Removed
+- Deprecated functionality (https://github.com/adaptlearning/adapt_framework/issues/2329)
+
+## [4.4.1] - 2019-11-06
+### Fixed
+- Course not loading in IE11 due to missing `function` keyword in accessibility library ([#2570](https://github.com/adaptlearning/adapt_framework/issues/2570))
+
+## [4.4.0] - 2019-10-30
+### Added
+- new accessibility API ([#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
+- new Notify API ([#2532](https://github.com/adaptlearning/adapt_framework/issues/2532))
+- Loading enhancements to allow extensions to halt execution until loaded and to stop `inview` from processing until page ready ([#2558](https://github.com/adaptlearning/adapt_framework/issues/2558))
+- Handlebars helper (`a11y_alt_text`) to allow the screenreader to read out a 'screen reader friendly' alternative to the on-screen text ([#2553](https://github.com/adaptlearning/adapt_framework/issues/2553))
+
+### Changed
+- Re-write and tidy up of Adapt's 'entry point' code ([#2436](https://github.com/adaptlearning/adapt_framework/issues/2436))
+- The browser's 'focus outline' is now hidden by default, unless the learner presses a key associated with keyboard/screen reader accessibility (part of [#2449](https://github.com/adaptlearning/adapt_framework/issues/2449))
+- Re-organise some core files to align with the structure used by plugins ([#2472](https://github.com/adaptlearning/adapt_framework/issues/2472))
+- Improvements to help text ([#2552](https://github.com/adaptlearning/adapt_framework/pull/2552))
+
+### Fixed
+- Handlebars npm module v4.3.x update prevented newly-created Adapt courses from running ([#2524](https://github.com/adaptlearning/adapt_framework/issues/2524))
+- Adapt could fail to load if a question component didn't have any items defined ([#2546](https://github.com/adaptlearning/adapt_framework/issues/2546))
+- HTML formatting in titles being read out by screen readers ([#2549](https://github.com/adaptlearning/adapt_framework/issues/2549))
+- `AdaptModel.findRelativeModel` not working correctly when searching for descendants ([#2563](https://github.com/adaptlearning/adapt_framework/issues/2563))
 
 ## [4.3.0] - 2019-08-14
 ### Added
@@ -12,6 +81,7 @@
 - Inheritance bug broke `ItemsComponentModel` chain ([#2415](https://github.com/adaptlearning/adapt_framework/issues/2415))
 - Trickle flicker in IE11 ([#2423](https://github.com/adaptlearning/adapt_framework/issues/2423))
 - Bug in Chrome where the page could still be scrolled whilst a popup or the drawer were open ([#2440](https://github.com/adaptlearning/adapt_framework/issues/2440))
+- Grunt build/dev not picking up on changes to some files & was copying files that hadn't been changed ([#2441](https://github.com/adaptlearning/adapt_framework/issues/2441))
 - Setting `_isResetOnRevisit` to `'soft'` prevented questions from being answered ([#2474](https://github.com/adaptlearning/adapt_framework/issues/2474))
 - JQuery `offset` override wasn't allowing coordinates to be set ([#2484](https://github.com/adaptlearning/adapt_framework/issues/2484))
 - Including an Accordion component with no items prevented the course from rendering ([#2480](https://github.com/adaptlearning/adapt_framework/issues/2480))
@@ -728,8 +798,10 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
-
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...HEAD
+[5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
+[5.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v5.0.0
+[4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
+[4.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.1...v4.2.0
 [4.1.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.1.0...v4.1.1

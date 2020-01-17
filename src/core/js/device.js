@@ -67,7 +67,7 @@ define([
       screenSizeConfig.small / baseFontSize :
       screenSizeConfig.small;
 
-    var fontSize = parseFloat($('body').css('font-size'));
+    var fontSize = parseFloat($('html').css('font-size'));
     var screenSizeEmWidth = (Adapt.device.screenWidth / fontSize);
 
     // Check to see if client screen width is larger than medium em breakpoint

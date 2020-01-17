@@ -46,6 +46,16 @@
     width: 100%;
   }
 
+  .can-show-marking &__action.is-full-width,
+  .can-show-marking &__feedback.is-full-width {
+    margin-right: @icon-size + (@item-margin * 2);
+
+    .dir-rtl & {
+      margin-right: inherit;
+      margin-left: @icon-size + (@item-margin * 2);
+    }
+  }
+
   // --------------------------------------------------
   // Button marking
   // --------------------------------------------------
@@ -64,11 +74,11 @@
 
   &__marking.is-full-width {
     left: inherit;
-    right: 0;
+    right: @item-margin;
     .transform(translate(0, -50%));
 
     .dir-rtl & {
-      left: 0;
+      left: @item-margin;
       right: inherit;
     }
   }

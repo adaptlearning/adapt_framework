@@ -122,7 +122,7 @@ define([
 
     var offsetTop = 0;
     if (Adapt.scrolling.isLegacyScrolling) {
-      offsetTop = -$(".nav").outerHeight();
+      offsetTop = -$('.nav').outerHeight();
       // prevent scroll issue when component description aria-label coincident with top of component
       if ($(selector).hasClass('component')) {
         offsetTop -= $(selector).find('.aria-label').height() || 0;
@@ -143,7 +143,7 @@ define([
     // Trigger an event after animation
     // 300 milliseconds added to make sure queue has finished
     _.delay(function() {
-      $(selector).focusNext();
+      Adapt.a11y.focusNext(selector);
       Adapt.trigger(location+':scrolledTo', selector);
     }, settings.duration+300);
   };

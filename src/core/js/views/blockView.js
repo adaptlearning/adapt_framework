@@ -11,7 +11,8 @@ define([
         this.model.get('_classes'),
         this.setVisibility(),
         this.setHidden(),
-        (this.model.get('_isComplete') ? 'is-complete' : '')
+        (this.model.get('_isComplete') ? 'is-complete' : ''),
+        (this.model.get('_isOptional') ? 'is-optional' : '')
       ].join(' ');
     }
 

@@ -4,10 +4,10 @@
         "_parentId": "course",
         "_type": "page",
         "_classes": "",
-        "_htmlClassName": "",
+        "_htmlClasses": "",
         "title": "Presentation Components",
         "displayTitle": "Presentation Components",
-        "body": "Find out what presentation components are available within the core bundle and how you might consider using them within your courses. ",
+        "body": "Find out what presentation components are available within the core bundle and how you might consider using them within your courses.",
         "pageBody": "",
         "instruction": "Scroll down to see what presentation components are available as part of the v5 core bundle.",
         "_graphic": {
@@ -17,7 +17,10 @@
         "linkText": "View",
         "duration": "2 mins",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_showPageCompletion": false,
+            "_excludeAssessments": false,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -25,7 +28,7 @@
         "_parentId": "course",
         "_type": "page",
         "_classes": "",
-        "_htmlClassName": "",
+        "_htmlClasses": "",
         "title": "Question Components",
         "displayTitle": "Question Components",
         "body": "Discover what question components are available within the framework, along with some tips on how to use them.",
@@ -33,12 +36,15 @@
         "instruction": "Scroll down to see what question components are available as part of the v5 core bundle.",
         "_graphic": {
             "src": "course/en/images/menu-item.png",
-            "alt": "Placeholder graphic."
+            "alt": ""
         },
         "linkText": "View",
         "duration": "2 mins",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_showPageCompletion": false,
+            "_excludeAssessments": false,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -46,7 +52,7 @@
         "_parentId": "course",
         "_type": "page",
         "_classes": "assessment",
-        "_htmlClassName": "",
+        "_htmlClasses": "",
         "title": "Adapt Assessment",
         "displayTitle": "Adapt Assessment",
         "body": "Find out more about the assessment functionality introduced in Adapt v2, including randomised banks and an improved results feature.",
@@ -54,12 +60,15 @@
         "instruction": "Think you can get a perfect score? Scroll down to attempt the first question.",
         "_graphic": {
             "src": "course/en/images/menu-item.png",
-            "alt": "Placeholder graphic."
+            "alt": ""
         },
         "linkText": "View",
         "duration": "2 mins",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_showPageCompletion": false,
+            "_excludeAssessments": false,
+            "_isCompletionIndicatorEnabled": false
         }
     }
 ]

@@ -6,25 +6,25 @@ var iconv = require("iconv-lite");
 var fs = require('fs');
 var _ = require('underscore');
 
-module.exports = function (grunt) {
-  
-  grunt.registerTask("_loadLanguageFiles", function () {
-    
+module.exports = function(grunt) {
+
+  grunt.registerTask("_loadLanguageFiles", function() {
+
     var next = this.async();
     var langFiles;
     var inputFolder;
     global.translate.importData = [];
-    
+
     checkInputFolder();
     autoDetectFormat();
     readLangFiles();
     processLangFiles();
-    
-    function checkInputFolder () {
+
+    function checkInputFolder() {
 
       if (grunt.config("translate.targetLang") === null) {
         throw grunt.util.error('Target language option is missing, please add --targetLang=<languageCode>');
-      } 
+      }
 
       inputFolder = path.join(process.cwd(), "languagefiles", grunt.config("translate.targetLang"));
       if (grunt.option("languagedir")) inputFolder = path.join(grunt.option("languagedir"), grunt.config("translate.targetLang"));
@@ -34,8 +34,8 @@ module.exports = function (grunt) {
       }
 
     }
-    
-    function autoDetectFormat () {
+
+    function autoDetectFormat() {
       if (grunt.option('format')) {
         // ignore autodetect mode if format is set
         return;
@@ -66,46 +66,48 @@ module.exports = function (grunt) {
           grunt.config('translate.format', 'json');
           grunt.log.debug('format autodetected as json');
           break;
-        
+
         default:
-          throw grunt.util.error('Format of the language file is not supported: '+uniqueExtensions[0]);
+          throw grunt.util.error('Format of the language file is not supported: ' + uniqueExtensions[0]);
           break;
       }
     }
 
-    function readLangFiles () {
+    function readLangFiles() {
 
       // check if files exist
-      langFiles = grunt.file.expand(path.join(inputFolder,"*." + grunt.config('translate.format')));
+      langFiles = grunt.file.expand(path.join(inputFolder, "*." + grunt.config('translate.format')));
 
       if (langFiles.length === 0) {
         throw grunt.util.error("No languagefiles found to process in folder " + grunt.config('translate.targetLang'));
       }
     }
-  
-    function _parseCsvFiles () {
+
+    function _parseCsvFiles() {
       var content = "";
       var lines = [];
       var options = {
         delimiter: grunt.config("translate.csvDelimiter")
       };
-      
+
       async.each(langFiles, _parser, _cb);
-      
-      function _parser (filename) {
-        var fileBuffer = grunt.file.read(filename, {encoding: null});
+
+      function _parser(filename) {
+        var fileBuffer = grunt.file.read(filename, {
+          encoding: null
+        });
         var detected = jschardet.detect(fileBuffer);
         var fileContent;
 
         if (iconv.encodingExists(detected.encoding)) {
           fileContent = iconv.decode(fileBuffer, detected.encoding);
-          grunt.log.debug(filename+' - encoding detected: '+detected.encoding);
+          grunt.log.debug(filename + ' - encoding detected: ' + detected.encoding);
         } else {
           fileContent = iconv.decode(fileBuffer, 'utf8');
-          grunt.log.debug(filename+' - encoding not detected, used utf-8 instead');
+          grunt.log.debug(filename + ' - encoding not detected, used utf-8 instead');
         }
 
-        csv.parse(fileContent, options, function (error, output) {
+        csv.parse(fileContent, options, function(error, output) {
           if (error) {
             _cb(error);
           } else {
@@ -114,8 +116,8 @@ module.exports = function (grunt) {
           }
         });
       }
-      
-      function _cb (err) {
+
+      function _cb(err) {
         if (err) {
           throw grunt.util.error("Error processing CSV files:" + err);
         } else {
@@ -126,12 +128,12 @@ module.exports = function (grunt) {
             var file = key[0];
             var id = key[1];
             var path = key.slice(2).join("/");
-            
+
             if (line.length === 2) {
               global.translate.importData.push({
                 file: file,
                 id: id,
-                path: "/"+path,
+                path: "/" + path,
                 value: value
               });
             }
@@ -139,35 +141,35 @@ module.exports = function (grunt) {
         }
         next();
       }
-      
+
     }
-  
-    function _parseJsonFile () {
+
+    function _parseJsonFile() {
       // check if valid raw format
       global.translate.importData = grunt.file.readJSON(langFiles[0]);
       var item = global.translate.importData[0];
       var isValid = item.hasOwnProperty("file") && item.hasOwnProperty("id") && item.hasOwnProperty("path") && item.hasOwnProperty("value");
-      
+
       if (!isValid) {
         throw grunt.util.error("Sorry, the imported File is not valid");
       }
       next();
     }
-    
-    function processLangFiles () {
+
+    function processLangFiles() {
 
       switch (grunt.config('translate.format')) {
         case "json":
           _parseJsonFile();
           break;
-        
+
         case "csv":
         default:
           _parseCsvFiles();
           break;
       }
     }
-    
+
   });
-  
+
 };
