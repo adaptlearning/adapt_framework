@@ -744,6 +744,6 @@ define([
 
   });
 
-  return Adapt.a11y = new A11y();
+  return (Adapt.a11y = new A11y());
 
 });

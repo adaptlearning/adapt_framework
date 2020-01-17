@@ -84,6 +84,6 @@ define([
     Adapt.startController.setStartLocation();
   });
 
-  return Adapt.startController = new StartController();
+  return (Adapt.startController = new StartController());
 
 });

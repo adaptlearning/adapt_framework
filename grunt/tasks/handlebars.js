@@ -56,6 +56,7 @@ module.exports = function(grunt) {
     }
     // We only need to take any declaration to extract the global namespace.
     // Another option might be find the shortest declaration which is the global one.
+    // eslint-disable-next-line no-useless-escape
     var matches = declarations[0].match(/(this\[[^\[]+\])/g);
     return matches[0];
   };

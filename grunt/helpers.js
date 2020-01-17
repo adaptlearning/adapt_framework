@@ -14,20 +14,21 @@ module.exports = function(grunt) {
   grunt.registerTask('_log-vars', 'Logs out user-defined build variables', function() {
     var includes = grunt.config('includes');
     var excludes = grunt.config('excludes');
-    var count = 0
 
     if (includes && excludes) {
       grunt.fail.fatal('Cannot specify includes and excludes. Please check your config.json configuration.');
     }
 
     if (includes) {
+      let count = includes.length;
       grunt.log.writeln('The following will be included in the build:');
-      for (var i = 0, count = includes.length; i < count; i++) { grunt.log.writeln('- ' + includes[i]); }
+      for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + includes[i]); }
       grunt.log.writeln('');
     }
     if (excludes) {
+      let count = excludes.length;
       grunt.log.writeln('The following will be excluded from the build:');
-      for (var j = 0, count = excludes.length; j < count; j++) { grunt.log.writeln('- ' + excludes[j]); }
+      for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + excludes[i]); }
       grunt.log.writeln('');
     }
 
@@ -46,6 +47,7 @@ module.exports = function(grunt) {
     // Return a more specific plugin regExp including src path.
     var re = _.map(includes, function(plugin) {
       return _.map(pluginTypes, function(type) {
+        // eslint-disable-next-line no-useless-escape
         return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
       }).join('|');
     }).join('|');
@@ -58,6 +60,7 @@ module.exports = function(grunt) {
 
     // Return a more specific plugin regExp including src path.
     var re = _.map(includes, function(plugin) {
+      // eslint-disable-next-line no-useless-escape
       return exports.defaults.sourcedir + '([^\/]*)\/([^\/]*)\/' + folderRegEx + '\/' + plugin + '\/';
     }).join('|');
     return new RegExp(re, 'i');
@@ -70,6 +73,7 @@ module.exports = function(grunt) {
     // Return a more specific plugin regExp including src path.
     var re = _.map(excludes, function(plugin) {
       return _.map(pluginTypes, function(type) {
+        // eslint-disable-next-line no-useless-escape
         return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
       }).join('|');
     }).join('|');
@@ -77,9 +81,12 @@ module.exports = function(grunt) {
   };
 
   var generateScriptSafeRegExp = function() {
-    var includes = grunt.config('scriptSafe') || [];
-    var re = '';
-    for (var i = 0, count = includes.length; i < count; i++) {
+    let includes = grunt.config('scriptSafe') || [];
+    let re = '';
+    let count = includes.length;
+
+    for (var i = 0; i < count; i++) {
+      // eslint-disable-next-line no-useless-escape
       re += '\/' + includes[i].toLowerCase() + '\/';
       if (i < includes.length - 1) re += '|';
     }
@@ -93,6 +100,7 @@ module.exports = function(grunt) {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
   var includedProcess = function(content, filepath) {
     if (!exports.isPathIncluded(filepath)) return '';
     else return content;
