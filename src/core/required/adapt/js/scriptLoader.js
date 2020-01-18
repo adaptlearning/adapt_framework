@@ -62,6 +62,7 @@
                 }
             },
             paths: {
+                promise: 'libraries/promise-polyfill.min',
                 jquery: 'libraries/jquery.min',
                 underscore: 'libraries/underscore.min',
                 'underscore.results': 'libraries/underscore.results',
@@ -72,7 +73,6 @@
                 velocity: 'libraries/velocity.min',
                 imageReady: 'libraries/imageReady',
                 inview: 'libraries/inview',
-                a11y: 'libraries/jquery.a11y',
                 scrollTo: 'libraries/scrollTo.min',
                 bowser: 'libraries/bowser',
                 'enum': 'libraries/enum',
@@ -107,26 +107,33 @@
     //6. Load foundation libraries and templates then load Adapt itself
     function loadFoundationLibraries() {
         require([
+            'handlebars',
+            'promise',
             'underscore',
             'underscore.results',
             'backbone',
             'backbone.controller',
             'backbone.controller.results',
-            'handlebars',
             'velocity',
             'imageReady',
             'inview',
             'jqueryMobile',
             'libraries/jquery.resize',
-            'a11y',
             'scrollTo',
             'bowser',
-            'enum',
+            'enum'
+        ], loadTemplates);
+    }
+
+    //7. Load templates after making handlebars context global
+    function loadTemplates(Handlebars) {
+        window.Handlebars = Handlebars;
+        require([
             'templates'
         ], loadAdapt);
     }
 
-    //7. Allow cross-domain AJAX then load Adapt
+    //8. Allow cross-domain AJAX then load Adapt
     function loadAdapt() {
         $.ajaxPrefilter(function( options ) {
             options.crossDomain = true;

@@ -48,10 +48,11 @@
     "_htmlClassName": {
       "type": "string",
       "required": false,
+      "title": "HTML Classes",
       "default": "",
       "inputType": "Text",
       "validators": [],
-      "help": "If set, this class will be applied to the <html> element whenever this is the active page in the course"
+      "help": "If set, this CSS class/es will be applied to the <html> element whenever this is the active page in the course. These are predefined in the theme or added in Project Settings > Custom CSS/Less code."
     },
     "_graphic": {
       "type": "object",
@@ -127,7 +128,8 @@
       "isSetting": true,
       "inputType": "Text",
       "validators": [],
-      "title": "Classes"
+      "title": "Page Classes",
+      "help": "Used to style or manipulate the look and feel of this Page (or submenu). These are predefined in the theme or added in Project Settings > Custom CSS/Less code."
     },
     "_isOptional": {
       "type": "boolean",

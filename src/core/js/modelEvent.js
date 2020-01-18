@@ -7,7 +7,6 @@ define(function() {
         value: null,
         canBubble: true,
         deepPath: null,
-        target: null,
         timeStamp: null,
 
         /**
