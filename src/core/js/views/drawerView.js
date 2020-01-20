@@ -159,6 +159,7 @@ define([
       //delay drawer animation until after background fadeout animation is complete
       if (this.disableAnimation) {
         $('.js-shadow').removeClass("u-display-none");
+        $('.js-drawer-holder').scrollTop(0);
 
         var direction={};
         direction[this.drawerDir]=0;
@@ -169,6 +170,7 @@ define([
 
         $('.js-shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
           $(".js-shadow").removeClass("u-display-none");
+          $('.js-drawer-holder').scrollTop(0);
           complete.call(this);
         }, this)});
 
