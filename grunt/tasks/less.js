@@ -14,7 +14,7 @@ module.exports = function(grunt) {
     var cwd = process.cwd();
 
     var imports = '';
-    var src = ''
+    var src = '';
 
     if (options.src && options.config) {
       var screenSize = {
@@ -50,8 +50,7 @@ module.exports = function(grunt) {
     }
 
     if (options.mandatory) {
-      // eslint-disable-next-line no-redeclare
-      for (var i = 0, l = options.mandatory.length; i < l; i++) {
+      for (let i = 0, l = options.mandatory.length; i < l; i++) {
         src = path.join(cwd, options.mandatory[i]);
         grunt.file.expand({
           follow: true,
@@ -66,8 +65,7 @@ module.exports = function(grunt) {
     }
 
     if (options.src) {
-      // eslint-disable-next-line no-redeclare
-      for (var i = 0, l = options.src.length; i < l; i++) {
+      for (let i = 0, l = options.src.length; i < l; i++) {
         src = path.join(cwd, options.src[i]);
         grunt.file.expand({
           follow: true,
@@ -135,4 +133,4 @@ module.exports = function(grunt) {
       done();
     }
   });
-}
+};

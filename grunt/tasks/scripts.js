@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 
         if (!bowerJSON.scripts) return done();
 
-        var plugindir = path.dirname(bowerJSONPath)
+        var plugindir = path.dirname(bowerJSONPath);
         var script = bowerJSON.scripts[mode];
 
         if (!script) return done();

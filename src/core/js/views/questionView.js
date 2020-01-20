@@ -27,10 +27,6 @@ define([
       ].join(' ');
     },
 
-    /// ///
-    // Setup question types
-    /// /
-
     preRender: function() {
       // Setup listener for _isEnabled
       this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
@@ -152,10 +148,6 @@ define([
 
     // Blank method used just like postRender is for presentational components
     onQuestionRendered: function() {},
-
-    /// ///
-    // Submit process
-    /// /
 
     // Triggered when the submit button is clicked
     onSubmitClicked: function() {

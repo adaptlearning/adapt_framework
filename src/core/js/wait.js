@@ -37,7 +37,7 @@ define(function() {
         if (this._waitCount === 0) {
           this.stopTimer();
         }
-      }.bind(this), this._timeoutInSeconds * 1000)
+      }.bind(this), this._timeoutInSeconds * 1000);
     },
 
     /**

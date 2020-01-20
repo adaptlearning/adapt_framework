@@ -60,7 +60,7 @@ define([
     },
 
     render: function() {
-      var template = Handlebars.templates['drawer']
+      var template = Handlebars.templates['drawer'];
       $(this.el).html(template({ _globals: Adapt.course.get('_globals') })).prependTo('body');
       var shadowTemplate = Handlebars.templates['shadow'];
       $(shadowTemplate()).prependTo('body');

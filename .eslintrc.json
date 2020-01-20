@@ -28,7 +28,7 @@
     ],
     "rules": {
         "indent": ["error", 2, { "SwitchCase": 1 }],
-        "semi": "off",
+        "semi": ["error", "always"],
         "padded-blocks": "off",
         "no-new": "off",
         "space-before-function-paren": "off",

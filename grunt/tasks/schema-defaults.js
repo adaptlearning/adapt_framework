@@ -82,4 +82,4 @@ module.exports = function(grunt) {
       grunt.file.write(outputDirCourseJson, JSON.stringify(currentCourseJson, null, 4));
     });
   });
-}
+};

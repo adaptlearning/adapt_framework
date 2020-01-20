@@ -106,7 +106,7 @@ define([
 
   Adapt.scrollTo = function(selector, settings) {
     if (!settings) {
-      settings = {}
+      settings = {};
     }
     // Get the current location - this is set in the router
     var location = (Adapt.location._contentType)

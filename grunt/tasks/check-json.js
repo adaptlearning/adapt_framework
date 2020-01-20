@@ -110,4 +110,4 @@ module.exports = function(grunt) {
     });
 
   });
-}
+};

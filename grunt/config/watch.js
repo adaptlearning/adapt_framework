@@ -68,4 +68,4 @@ module.exports = {
     files: ['<%= sourcedir %>core/required/**/*', '<%= sourcedir %>*/*/required/**/*'],
     tasks: ['newer:copy:required']
   }
-}
+};

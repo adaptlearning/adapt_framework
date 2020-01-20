@@ -223,7 +223,7 @@ module.exports = function(grunt) {
       if (buildConfig.excludes) data.excludes = buildConfig.excludes;
       if (buildConfig.scriptSafe) {
         data.scriptSafe = buildConfig.scriptSafe.split(',').map(function(item) {
-          return item.trim()
+          return item.trim();
         });
       }
     }

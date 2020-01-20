@@ -20,5 +20,5 @@ module.exports = function(grunt, options) {
         open: 'http://' + host + ':' + port + '/scorm_test_harness.html'
       }
     }
-  }
-}
+  };
+};

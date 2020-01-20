@@ -546,7 +546,7 @@ define([
         stackIndexPosition++;
         // keep place to inject children
         childIndexPosition = stackIndexPosition + 1;
-      } while (stackIndexPosition < stack.length)
+      } while (stackIndexPosition < stack.length);
 
       return $notFound;
     },
@@ -683,7 +683,7 @@ define([
           stack.push.apply(stack, nodes);
         }
         stackIndex++;
-      } while (stackIndex < stack.length)
+      } while (stackIndex < stack.length);
       var rtnText = '';
       outputs.forEach(function(item) {
         rtnText += item.outerHTML || item.textContent;

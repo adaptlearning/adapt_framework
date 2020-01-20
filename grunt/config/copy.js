@@ -21,7 +21,7 @@ module.exports = function(grunt, options) {
     var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
 
     return collatedFilePath;
-  }
+  };
 
   var nonServerTasks = {
     courseAssets: {

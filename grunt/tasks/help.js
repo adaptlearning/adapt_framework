@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     grunt.log.writeln('');
     grunt.log.writeln('For more information, see https://github.com/adaptlearning/adapt_framework/wiki');
   });
-}
+};
 
 // TODO: this only includes tasks in /tasks...might not be good enough
 function getTaskData() {

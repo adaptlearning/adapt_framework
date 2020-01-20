@@ -12,7 +12,7 @@ class ReplaceUrls {
     this._options = options;
     this._visitor = new less.visitors.Visitor(this);
 
-    this._actions = {}
+    this._actions = {};
 
   }
 

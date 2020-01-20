@@ -13,5 +13,5 @@ module.exports = function(grunt, options) {
         return grunt.config('helpers').includedFilter(filepath) && grunt.config('helpers').scriptSafeFilter(filepath);
       }
     }
-  }
+  };
 };
