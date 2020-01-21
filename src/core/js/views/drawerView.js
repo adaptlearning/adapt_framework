@@ -159,16 +159,17 @@ define([
       var direction = {};
       if (this.disableAnimation) {
         $('.js-shadow').removeClass('u-display-none');
+        $('.js-drawer-holder').scrollTop(0);
 
         direction[this.drawerDir] = 0;
         this.$el.css(direction);
         complete.call(this);
       } else {
-        $('.js-shadow').velocity({ opacity: 1 }, { duration: this.drawerDuration,
-          begin: _.bind(function() {
-            $('.js-shadow').removeClass('u-display-none');
-            complete.call(this);
-          }, this) });
+        $('.js-shadow').velocity({ opacity: 1 },{ duration: this.drawerDuration, begin: _.bind(function() {
+          $('.js-shadow').removeClass('u-display-none');
+          $('.js-drawer-holder').scrollTop(0);
+          complete.call(this);
+        }, this)});
 
         var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
         var easing = (showEasingAnimation) || 'easeOutQuart';
