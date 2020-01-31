@@ -38,7 +38,7 @@
       for (var i = 0, len = tags.length; i < len; i++) {
 
         el = tags[i];
-
+        if (!el.currentStyle) continue;
         var hasNoValue = (el.currentStyle[scriptName] == 'none');
         if (hasNoValue) continue;
 
