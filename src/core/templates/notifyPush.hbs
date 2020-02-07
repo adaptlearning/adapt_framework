@@ -1,19 +1,19 @@
 {{! make the _globals object in course.json available to this template}}
 {{import_globals}}
 
-<div id="notify-push-heading" class="notify__push-inner js-notify-push-inner">
+<div id="notify-push-heading" class="notify-push__inner js-notify-push-inner">
 
   {{#if title}}
-  <div class="notify__push-title">
-    <div class="notify__push-title-inner" {{{a11y_attrs_heading 'notify'}}}>
+  <div class="notify-push__title">
+    <div class="notify-push__title-inner" {{{a11y_attrs_heading 'notify'}}}>
       {{{compile title}}}
     </div>
   </div>
   {{/if}}
 
   {{#if body}}
-  <div class="notify__push-body">
-    <div class="notify__push-body-inner">
+  <div class="notify-push__body">
+    <div class="notify-push__body-inner">
       {{{compile body}}}
     </div>
   </div>
@@ -21,6 +21,6 @@
 
 </div>
 
-<button class="btn-icon notify__push-close-btn js-notify-push-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
+<button class="btn-icon notify-push__close-btn js-notify-push-close-btn" aria-label="{{_globals._accessibility._ariaLabels.closePopup}}">
   <div class="icon"></div>
 </button>
