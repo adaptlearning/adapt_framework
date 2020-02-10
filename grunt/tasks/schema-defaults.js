@@ -63,8 +63,9 @@ module.exports = function(grunt) {
     });
 
     var jsonext = grunt.config('jsonext');
+    var buildConfig = Helpers.generateConfigData();
 
-    var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
+    var sourcedir = buildConfig.outputdir;
 
     //iterate through language folders
     var languageFolderGlob = path.join(sourcedir, 'course/*');
@@ -79,7 +80,7 @@ module.exports = function(grunt) {
       var currentCourseJson = _.deepExtend({}, defaultsObject, grunt.file.readJSON(outputDirCourseJson));
 
       // Write modified course json to build
-      grunt.file.write(outputDirCourseJson, JSON.stringify(currentCourseJson, null, 4));
+      grunt.file.write(outputDirCourseJson, JSON.stringify(currentCourseJson, null, 2));
     });
   });
 }

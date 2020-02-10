@@ -16,12 +16,12 @@ module.exports = function(grunt) {
       }
       delete course._latestTrackingId;
       grunt.log.writeln("Tracking IDs removed.");
-      grunt.file.write(coursePath, JSON.stringify(course, null, 4));
-      grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
+      grunt.file.write(coursePath, JSON.stringify(course, null, 2));
+      grunt.file.write(blocksPath, JSON.stringify(blocks, null, 2));
     }
 
-    var isOutputDir = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
-    var sourcedir = isOutputDir ? grunt.option('outputdir') : grunt.config('sourcedir');
+    var buildConfig = Helpers.generateConfigData();
+    var sourcedir = buildConfig.outputdir;
 
     var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
     var courseFiles = grunt.file.expand(path.join(sourcedir, options.courseFile));

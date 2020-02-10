@@ -23,31 +23,7 @@ module.exports = function(grunt, options) {
     return collatedFilePath;
   }
 
-
-  var nonServerTasks = {
-    courseAssets: {
-      files: [
-        {
-          expand: true,
-          src: ['<%= languages %>/**/*', '!**/*.<%= jsonext %>'],
-          cwd: '<%= sourcedir %>course/',
-          dest: '<%= outputdir %>course/'
-        }
-      ]
-    },
-    courseJson: {
-      files: [
-        {
-          expand: true,
-          src: ['<%= languages %>/*.<%= jsonext %>'],
-          cwd: '<%= sourcedir %>course/',
-          dest: '<%= outputdir %>course/'
-        }
-      ]
-    }
-  };
-
-  var mandatoryTasks = {
+  return {
     coreAssets: {
       files: [
         {
@@ -234,9 +210,5 @@ module.exports = function(grunt, options) {
       ]
     }
   };
-
-  if (grunt.option("outputdir")) return mandatoryTasks;
-
-  return _.extend({}, nonServerTasks, mandatoryTasks);
 
 };

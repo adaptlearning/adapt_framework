@@ -6,11 +6,15 @@ var path = require("path");
 
 module.exports = function(grunt) {
 
+  var Helpers = require('../helpers')(grunt);
+
   grunt.registerTask('create-json-config', 'Creating config.json', function() {
+
+    var buildConfig = Helpers.generateConfigData();
 
     var jsonext = grunt.config('jsonext');
 
-    var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
+    var sourcedir = buildConfig.outputdir;
 
     var configJson = grunt.file.readJSON(path.join(sourcedir, 'course/config.' + jsonext));
 
@@ -44,7 +48,7 @@ module.exports = function(grunt) {
 
     });
 
-    grunt.file.write(grunt.config('outputdir') + 'course/config.' + jsonext, JSON.stringify(configJson, null, 4));
+    grunt.file.write(grunt.config('outputdir') + 'course/config.' + jsonext, JSON.stringify(configJson, null, 2));
 
   });
 

@@ -13,7 +13,8 @@ module.exports = {
   },
   output: {
     src: [
-      '<%= outputdir %>'
+      '<%= outputdir %>*',
+      '!<%= outputdir %>course',
     ]
   }
 }

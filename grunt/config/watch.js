@@ -17,12 +17,8 @@ module.exports = {
     tasks: ['handlebars', 'javascript:dev']
   },
   courseJson: {
-    files: ['<%= sourcedir %>course/**/*.<%= jsonext %>'],
-    tasks: ['jsonlint', 'check-json', 'newer:copy:courseJson', 'schema-defaults', 'create-json-config']
-  },
-  courseAssets: {
-    files: ['<%= sourcedir %>course/<%=languages%>/*', '!<%= sourcedir %>course/<%=languages%>/*.<%= jsonext %>'],
-    tasks: ['newer:copy:courseAssets']
+    files: ['<%= outputdir %>course/**/*.<%= jsonext %>'],
+    tasks: ['jsonlint', 'check-json', 'schema-defaults', 'create-json-config', 'copy', 'replace']
   },
   js: {
     files: ['<%= sourcedir %>**/*.js'],

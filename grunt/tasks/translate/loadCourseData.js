@@ -2,10 +2,13 @@ var path = require("path");
 
 module.exports = function(grunt) {
 
+  var Helpers = require('../helpers')(grunt);
+
   grunt.registerTask("_loadCourseData", function() {
 
-    var srcPath = grunt.config("sourcedir");
-    if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
+    var buildConfig = Helpers.generateConfigData();
+
+    var srcPath = buildConfig.outputdir;
 
     var lang = grunt.config("translate.masterLang");
     var jsonext = grunt.config('jsonext');

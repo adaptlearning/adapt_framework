@@ -3,10 +3,12 @@ var path = require("path");
 
 module.exports = function(grunt) {
 
+  var Helpers = require('../helpers')(grunt);
+
   grunt.registerTask("_saveCourseData", function() {
 
-    var srcPath = grunt.config("sourcedir");
-    if (grunt.option("outputdir")) srcPath = grunt.config("outputdir");
+    var buildConfig = Helpers.generateConfigData();
+    var srcPath = buildConfig.outputdir;
 
     var targetLang = grunt.config("translate.targetLang");
     var jsonext = grunt.config("jsonext");
@@ -19,7 +21,7 @@ module.exports = function(grunt) {
       "components"
     ].forEach(function(filename) {
       var src = path.join(srcPath, "course", targetLang, filename + "." + jsonext);
-      grunt.file.write(src, JSON.stringify(global.translate.courseData[filename], null, 4));
+      grunt.file.write(src, JSON.stringify(global.translate.courseData[filename], null, 2));
     });
 
   });
