@@ -1,11 +1,7 @@
-src/components
-src/theme
-src/menu
-src/extensions
-src/less
-src/less/adapt.less
-src/plugins.js
-build
+src/*
+!src/core/
+build/*
+!build/course/
 bower_components
 node_modules
 .DS_Store
