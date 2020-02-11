@@ -7,12 +7,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask("_loadMasterCourse", function() {
 
-    var buildConfig = Helpers.generateConfigData();
-
     global.translate.courseData = {};
 
     var targetLang = grunt.config("translate.targetLang");
     var masterLang = grunt.config("translate.masterLang");
+    var buildConfig = Helpers.generateConfigData();
     var srcPath = buildConfig.outputdir;
     var jsonext = grunt.config('jsonext');
 

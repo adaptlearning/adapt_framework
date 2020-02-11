@@ -4,8 +4,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('check-json', 'Validates the course json, checks for duplicate IDs, and that each element has a parent', function() {
 
-    var buildConfig = Helpers.generateConfigData();
-
     // validates JSON files
     grunt.task.run('jsonlint');
 
@@ -17,8 +15,8 @@ module.exports = function(grunt) {
     var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component'];
 
     var jsonext = grunt.config('jsonext');
+    var buildConfig = Helpers.generateConfigData();
     var sourcedir = buildConfig.outputdir;
-
 
     // Go through each course folder inside the <%= sourcedir %>course directory
     grunt.file.expand({

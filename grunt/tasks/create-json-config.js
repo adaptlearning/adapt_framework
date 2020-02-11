@@ -10,10 +10,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('create-json-config', 'Creating config.json', function() {
 
-    var buildConfig = Helpers.generateConfigData();
-
     var jsonext = grunt.config('jsonext');
 
+    var buildConfig = Helpers.generateConfigData();
     var sourcedir = buildConfig.outputdir;
 
     var configJson = grunt.file.readJSON(path.join(sourcedir, 'course/config.' + jsonext));

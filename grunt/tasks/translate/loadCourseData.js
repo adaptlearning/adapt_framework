@@ -7,7 +7,6 @@ module.exports = function(grunt) {
   grunt.registerTask("_loadCourseData", function() {
 
     var buildConfig = Helpers.generateConfigData();
-
     var srcPath = buildConfig.outputdir;
 
     var lang = grunt.config("translate.masterLang");
