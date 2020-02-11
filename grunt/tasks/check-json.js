@@ -3,7 +3,6 @@ module.exports = function(grunt) {
   var Helpers = require('../helpers')(grunt);
 
   grunt.registerTask('check-json', 'Validates the course json, checks for duplicate IDs, and that each element has a parent', function() {
-
     // validates JSON files
     grunt.task.run('jsonlint');
 
