@@ -8,12 +8,12 @@ module.exports = function(grunt) {
     grunt.task.run([
       'check-json',
       diff?null:'clean:output',
-      'json-minify',
       'schema-defaults',
       'create-json-config',
       'tracking-insert',
       `server-build:compile${diff}`,
       diff?null:'clean:dist',
+      'json-minify',
       `${newer}uglify`
     ].filter(Boolean));
   });
