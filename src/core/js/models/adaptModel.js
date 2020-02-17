@@ -33,7 +33,8 @@ define([
 
     bubblingEvents: [
       'change:_isComplete',
-      'change:_isInteractionComplete'
+      'change:_isInteractionComplete',
+      'change:_isActive'
     ],
 
     initialize: function () {
