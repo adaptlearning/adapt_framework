@@ -26,7 +26,7 @@ module.exports = {
   },
   js: {
     files: ['<%= sourcedir %>**/*.js'],
-    tasks: ['javascript:dev']
+    tasks: ['javascript:dev', 'babel', 'clean:temp']
   },
   componentsAssets: {
     files: ['<%= sourcedir %>components/**/assets/**'],
