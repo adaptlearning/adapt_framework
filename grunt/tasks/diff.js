@@ -12,8 +12,10 @@ module.exports = function(grunt) {
     'create-json-config',
     'tracking-insert',
     'newer:javascript:dev',
+    'babel',
     'newer:less:dev',
     'replace',
-    'scripts:adaptpostbuild'
+    'scripts:adaptpostbuild',
+    'clean:temp'
   ]);
 };

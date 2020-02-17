@@ -13,10 +13,12 @@ module.exports = function(grunt) {
     'create-json-config',
     'tracking-insert',
     'javascript:compile',
+    'babel',
     'clean:dist',
     'less:compile',
     'replace',
     'scripts:adaptpostbuild',
+    'clean:temp',
     'minify'
   ]);
 };

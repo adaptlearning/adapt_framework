@@ -15,5 +15,10 @@ module.exports = {
     src: [
       '<%= outputdir %>'
     ]
+  },
+  temp: {
+    src: [
+      '<%= tempdir %>'
+    ]
   }
 }

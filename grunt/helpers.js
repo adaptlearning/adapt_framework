@@ -121,12 +121,17 @@ module.exports = function(grunt) {
     return configValue || grunt.config('scriptSafeRegExp', generateScriptSafeRegExp());
   };
 
+var getTempFolder = function() {
+  return require('shortid').generate();
+}
+
   // exported
 
   var exports = {};
 
   exports.defaults = {
     sourcedir: 'src' + path.sep,
+    tempdir: '.temp/' + getTempFolder() + path.sep,
     outputdir: 'build' + path.sep,
     jsonext: 'json',
     theme: '**',
@@ -149,6 +154,7 @@ module.exports = function(grunt) {
 
   // Convert the directory paths so that they work cross platform
   exports.defaults.sourcedir = exports.defaults.sourcedir.replace(convertSlashes, "/");
+  exports.defaults.tempdir = exports.defaults.tempdir.replace(convertSlashes, "/");
   exports.defaults.outputdir = exports.defaults.outputdir.replace(convertSlashes, "/");
 
   exports.getIncludes = function(buildIncludes, configData) {
@@ -178,6 +184,7 @@ module.exports = function(grunt) {
 
     var root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
     var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
+    var tempdir = appendSlash(grunt.option('tempdir')) || exports.defaults.tempdir;
     var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
     var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
@@ -204,6 +211,7 @@ module.exports = function(grunt) {
     var data = {
       root: root,
       sourcedir: sourcedir,
+      tempdir: tempdir,
       outputdir: outputdir,
       jsonext: jsonext,
       theme: grunt.option('theme') || exports.defaults.theme,
