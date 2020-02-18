@@ -8,9 +8,9 @@ define([
     _children: 'components',
 
     defaults: function() {
-      return _.extend({
+      return AdaptModel.resultExtend('defaults', {
         _sortComponents: true
-      }, AdaptModel.prototype.defaults);
+      });
     }
   });
 
