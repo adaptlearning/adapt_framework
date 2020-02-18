@@ -121,17 +121,12 @@ module.exports = function(grunt) {
     return configValue || grunt.config('scriptSafeRegExp', generateScriptSafeRegExp());
   };
 
-var getTempFolder = function() {
-  return require('shortid').generate();
-}
-
   // exported
 
   var exports = {};
 
   exports.defaults = {
     sourcedir: 'src' + path.sep,
-    tempdir: '.temp/' + getTempFolder() + path.sep,
     outputdir: 'build' + path.sep,
     jsonext: 'json',
     theme: '**',
@@ -154,7 +149,6 @@ var getTempFolder = function() {
 
   // Convert the directory paths so that they work cross platform
   exports.defaults.sourcedir = exports.defaults.sourcedir.replace(convertSlashes, "/");
-  exports.defaults.tempdir = exports.defaults.tempdir.replace(convertSlashes, "/");
   exports.defaults.outputdir = exports.defaults.outputdir.replace(convertSlashes, "/");
 
   exports.getIncludes = function(buildIncludes, configData) {
@@ -184,8 +178,8 @@ var getTempFolder = function() {
 
     var root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
     var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
-    var tempdir = appendSlash(grunt.option('tempdir')) || exports.defaults.tempdir;
     var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+    var tempdir = outputdir + ".temp/";
     var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
     var languageFolders = "";
@@ -211,8 +205,8 @@ var getTempFolder = function() {
     var data = {
       root: root,
       sourcedir: sourcedir,
-      tempdir: tempdir,
       outputdir: outputdir,
+      tempdir: tempdir,
       jsonext: jsonext,
       theme: grunt.option('theme') || exports.defaults.theme,
       menu: grunt.option('menu') || exports.defaults.menu,
