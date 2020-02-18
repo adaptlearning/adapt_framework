@@ -6,8 +6,8 @@ define([
 
   class AdaptModel extends Backbone.Model {
 
-    preinitialize() {
-      this.defaults = {
+    defaults() {
+      return {
         _canShowFeedback: true,
         _classes: "",
         _canReset: false,
@@ -25,14 +25,18 @@ define([
         _isLocked: false,
         _isHidden: false
       };
+    }
 
-      this.trackable = [
+    trackable() {
+      return [
         '_id',
         '_isComplete',
         '_isInteractionComplete'
       ];
+    }
 
-      this. bubblingEvents = [
+    bubblingEvents() {
+      return [
         'change:_isComplete',
         'change:_isInteractionComplete'
       ];
@@ -692,7 +696,7 @@ define([
      * @param {*} value New property value
      */
     onAll(type, model, value) {
-        if (!this.bubblingEvents.includes(type)) return;
+        if (!_.result(this, 'bubblingEvents').includes(type)) return;
         var event = new ModelEvent(type, model, value);
         this.bubble(event);
     }
