@@ -1,0 +1,21 @@
+{{! make the _globals object in course.json available to this template}}
+{{import_globals}}
+
+{{! All links in the nav bar should have an attribute of data-event, navigationView uses this to fire a global event}}
+<div class="nav__inner u-clearfix">
+
+  {{#if _accessibility._isSkipNavigationEnabled}}
+  <button class="nav__btn nav__skip-btn aria-label a11y-ignore-focus" data-event="skipNavigation" aria-label="{{_globals._accessibility._ariaLabels.skipNavigation}}">
+      {{{_globals._accessibility.skipNavigationText}}}
+  </button>
+  {{/if}}
+
+  <button class="btn-icon nav__btn nav__back-btn js-nav-back-btn" data-event="backButton" aria-label="{{_globals._accessibility._ariaLabels.previous}}" role="link">
+    <div class="icon"></div>
+  </button>
+
+  <button class="btn-icon nav__btn nav__drawer-btn js-nav-drawer-btn" data-event="toggleDrawer" aria-label="{{_globals._accessibility._ariaLabels.navigationDrawer}}">
+    <div class="icon"></div>
+  </button>
+
+</div>

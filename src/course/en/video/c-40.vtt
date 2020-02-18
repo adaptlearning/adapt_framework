@@ -1,21 +1,25 @@
-WEBVTT FILE
+﻿WEBVTT
 
-1
-00:00:00.500 --> 00:00:07.000 D:vertical A:middle T:50%
-Responsive design means you can create a course once 
-but view it on a wide range of browsers, devices or operating systems,
+00:00:01.101 --> 00:00:03.684
+Responsive design means you can create a course once
 
-2
-00:00:07.100 --> 00:00:13.500 A:middle T:50%
-This is achieved by using fluid layouts 
-to ensure the presentation of content is tailored 
-to suit the size of the screen.
+00:00:03.709 --> 00:00:07.024
+but view it on a wide range of browsers, devices or operating systems.
 
-3
-00:00:13.500 --> 00:00:20.000 A:middle T:50%
+00:00:07.100 --> 00:00:08.838
+This is achieved by using fluid layouts
+
+00:00:08.863 --> 00:00:11.166
+to ensure the presentation of content
+
+00:00:11.193 --> 00:00:13.371
+is tailored to suit the size of the screen.
+
+00:00:14.180 --> 00:00:16.314
 This means you can start a course on your laptop
+
+00:00:16.339 --> 00:00:20.000
 and finish it later on your mobile or tablet.
 
-4
-00:00:20.000 --> 00:00:25.000 A:middle T:50%
+00:00:20.210 --> 00:00:25.000
 We call it Adapt

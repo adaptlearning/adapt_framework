@@ -1,34 +1,34 @@
 define([
-    'core/js/adapt',
-    'core/js/models/adaptModel'
+  'core/js/adapt',
+  'core/js/models/adaptModel'
 ], function (Adapt, AdaptModel) {
 
-    var CourseModel = AdaptModel.extend({
+  var CourseModel = AdaptModel.extend({
 
-        initialize: function(attrs, options) {
-            AdaptModel.prototype.initialize.apply(this, arguments);
-            Adapt.trigger('courseModel:dataLoading');
+    initialize: function(attrs, options) {
+      AdaptModel.prototype.initialize.apply(this, arguments);
+      Adapt.trigger('courseModel:dataLoading');
 
-            this.url = options.url;
+      this.url = options.url;
 
-            this.on('sync', this.loadedData, this);
-            if (this.url) {
-                this.fetch({
-                    error: _.bind(function(model, xhr, options) {
-                        console.error("ERROR: unable to load file " + this.url);
-                    }, this)
-                });
-            }
-        },
+      this.on('sync', this.loadedData, this);
+      if (this.url) {
+        this.fetch({
+          error: _.bind(function(model, xhr, options) {
+            console.error("ERROR: unable to load file " + this.url);
+          }, this)
+        });
+      }
+    },
 
-        loadedData: function() {
-            Adapt.trigger('courseModel:dataLoaded');
-        },
+    loadedData: function() {
+      Adapt.trigger('courseModel:dataLoaded');
+    },
 
-        _children: "contentObjects"
+    _children: "contentObjects"
 
-    });
+  });
 
-    return CourseModel;
+  return CourseModel;
 
 });

@@ -1,11 +1,12 @@
 {
     "name": "adapt_framework",
-    "version": "4.1.1",
+    "version": "5.1.0",
     "description": "Adapt Learning output framework",
     "repository": {
         "type": "git",
         "url": "git://github.com/adaptlearning/adapt_framework.git"
     },
+    "authoringTool": ">=0.8",
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/adaptlearning/adapt_framework/issues"
@@ -34,6 +35,8 @@
         "jit-grunt": "^0.10.0",
         "jschardet": "^1.6.0",
         "jshint-stylish": "^2.2.1",
+        "@types/jquery": "^3.3.31",
+        "@types/backbone": "^1.4.1",
         "less": "^3.9.0",
         "load-grunt-config": "^1.0.1",
         "nsdeclare": "^0.1.0",

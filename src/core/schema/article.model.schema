@@ -44,7 +44,7 @@
       "inputType": "Text",
       "validators": [],
       "title": "Classes",
-      "help": "Used to style or manipulate the look and feel of this Article. These are predefined in the theme."
+      "help": "Used to style or manipulate the look and feel of this Article. These are predefined in the theme or added in Project Settings > Custom CSS/Less code."
     },
     "_isOptional": {
       "type": "boolean",
