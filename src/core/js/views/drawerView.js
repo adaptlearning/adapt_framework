@@ -165,11 +165,12 @@ define([
         this.$el.css(direction);
         complete.call(this);
       } else {
-        $('.js-shadow').velocity({ opacity: 1 },{ duration: this.drawerDuration, begin: _.bind(function() {
+        // eslint-disable-next-line object-property-newline
+        $('.js-shadow').velocity({ opacity: 1 }, { duration: this.drawerDuration, begin: _.bind(function() {
           $('.js-shadow').removeClass('u-display-none');
           $('.js-drawer-holder').scrollTop(0);
           complete.call(this);
-        }, this)});
+        }, this) });
 
         var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
         var easing = (showEasingAnimation) || 'easeOutQuart';

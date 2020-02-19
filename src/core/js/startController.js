@@ -41,7 +41,7 @@ define([
         return '#/id/' + startId;
       }
 
-      //if there's a route specified in location.hash, use that - otherwise go to main menu
+      // If there's a route specified in location.hash, use that - otherwise go to main menu
       return window.location.hash || '#/';
     },
 
@@ -57,9 +57,9 @@ define([
       if (!startIds || !startIds.length) return startId;
 
       var $html = $('html');
-      for (var i = 0, l =  startIds.length; i < l; i++) {
+      for (var i = 0, l = startIds.length; i < l; i++) {
         var item = startIds[i];
-        var className =  item._className;
+        var className = item._className;
         var skipIfComplete = item._skipIfComplete;
 
         var model = Adapt.findById(item._id);
@@ -73,7 +73,8 @@ define([
           if (model.get('_isComplete')) continue;
         }
 
-        if (!className || $html.is(className) || $html.hasClass(className)) {// see https://github.com/adaptlearning/adapt_framework/issues/1843
+        if (!className || $html.is(className) || $html.hasClass(className)) {
+          // See https://github.com/adaptlearning/adapt_framework/issues/1843
           startId = item._id;
           break;
         }
