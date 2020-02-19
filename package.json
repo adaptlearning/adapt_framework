@@ -44,7 +44,6 @@
         "load-grunt-config": "^1.0.1",
         "nsdeclare": "^0.1.0",
         "requirejs": "^2.3.6",
-        "shortid": "^2.2.15",
         "time-grunt": "^2.0.0",
         "underscore": "^1.9.1",
         "underscore-deep-extend": "^1.1.5"
