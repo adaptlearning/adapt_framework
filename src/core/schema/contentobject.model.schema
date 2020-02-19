@@ -176,6 +176,14 @@
       "title": "Is this visible?",
       "help": "Equivalent to the CSS visibility property. Unless you have custom code that uses this, it is highly unlikely you would want to change this setting at a page level."
     },
+    "_requireCompletionOf": {
+      "type": "number",
+      "default": -1,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "help": "The number of child models that must be completed to trigger this model's completion. Default -1 requires all child models to be completed."
+    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,
