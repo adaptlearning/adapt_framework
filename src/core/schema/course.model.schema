@@ -535,6 +535,14 @@
       "title": "Menu Classes",
       "help": "Used to style or manipulate the look and feel of the top level Menu. These are predefined in the theme or added in Custom CSS/Less code."
     },
+    "_requireCompletionOf": {
+      "type": "number",
+      "default": -1,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "help": "The number of child models that must be completed to trigger this model's completion. Default -1 requires all child models to be completed."
+    },
     "_isSelected": {
       "type": "boolean",
       "default": false,
