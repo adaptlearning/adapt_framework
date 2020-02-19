@@ -42,7 +42,7 @@ define([
       ];
     }
 
-    initialize () {
+    initialize() {
       // Wait until data is loaded before setting up model
       this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
 
