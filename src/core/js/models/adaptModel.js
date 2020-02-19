@@ -482,8 +482,8 @@ define([
         childrenCollection = new Backbone.Collection(children);
       }
 
-      if (this.get('_type') == 'block' &&
-        childrenCollection.length == 2 &&
+      if (this.get('_type') === 'block' &&
+        childrenCollection.length === 2 &&
         childrenCollection.models[0].get('_layout') !== 'left' &&
         this.get('_sortComponents') !== false) {
         // Components may have a 'left' or 'right' _layout,
