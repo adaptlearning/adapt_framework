@@ -104,7 +104,7 @@ define([
       }
       var classes = this.config._disableTextSelectOnClasses.split(' ');
       var isMatch = false;
-      for (var i = 0, item; item = classes[i++];) {
+      for (var i = 0, item; (item = classes[i++]);) {
         if (this.$html.is(item)) {
           isMatch = true;
           break;

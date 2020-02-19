@@ -59,7 +59,7 @@ function getTaskData() {
 
     var file = fs.readFileSync(filePath, 'utf8');
     var match = '';
-    while (match = re.exec(file)) {
+    while ((match = re.exec(file))) {
       taskData[match[2]] = match[3] || '';
     }
 
