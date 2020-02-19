@@ -34,15 +34,15 @@ module.exports = function(grunt) {
       // Check to see if the screen size value is larger than the em threshold
       // If value is larger than em threshold, convert value (assumed px) to ems
       // Otherwise assume value is in ems
-      var largeEmBreakpoint = screenSize.large > screensizeEmThreshold
-        ? screenSize.large / baseFontSize
-        : screenSize.large;
-      var mediumEmBreakpoint = screenSize.medium > screensizeEmThreshold
-        ? screenSize.medium / baseFontSize
-        : screenSize.medium;
-      var smallEmBreakpoint = screenSize.small > screensizeEmThreshold
-        ? screenSize.small / baseFontSize
-        : screenSize.small;
+      var largeEmBreakpoint = screenSize.large > screensizeEmThreshold ?
+        screenSize.large / baseFontSize :
+        screenSize.large;
+      var mediumEmBreakpoint = screenSize.medium > screensizeEmThreshold ?
+        screenSize.medium / baseFontSize :
+        screenSize.medium;
+      var smallEmBreakpoint = screenSize.small > screensizeEmThreshold ?
+        screenSize.small / baseFontSize :
+        screenSize.small;
 
       imports += `\n@adapt-device-large: ${largeEmBreakpoint}em;`;
       imports += `\n@adapt-device-medium: ${mediumEmBreakpoint}em;`;

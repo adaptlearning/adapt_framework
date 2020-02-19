@@ -109,8 +109,8 @@ define([
       settings = {};
     }
     // Get the current location - this is set in the router
-    var location = (Adapt.location._contentType)
-      ? Adapt.location._contentType : Adapt.location._currentLocation;
+    var location = (Adapt.location._contentType) ?
+      Adapt.location._contentType : Adapt.location._currentLocation;
     // Trigger initial scrollTo event
     Adapt.trigger(location + ':scrollTo', selector);
     // Setup duration variable passed upon argumentsß
