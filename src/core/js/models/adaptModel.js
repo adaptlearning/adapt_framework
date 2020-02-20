@@ -659,8 +659,7 @@ define([
 
           if (!model.get('_isAvailable')) continue;
           if (!model.get('_isComplete')) return true;
-        }
-        catch (e) {
+        } catch (e) {
           console.warn(`AdaptModel.shouldLock: unknown _lockedBy ID '${id}' found on ${child.get('_id')}`);
         }
       }
@@ -683,9 +682,9 @@ define([
      * @param {*} value New property value
      */
     onAll(type, model, value) {
-        if (!_.result(this, 'bubblingEvents').includes(type)) return;
-        const event = new ModelEvent(type, model, value);
-        this.bubble(event);
+      if (!_.result(this, 'bubblingEvents').includes(type)) return;
+      const event = new ModelEvent(type, model, value);
+      this.bubble(event);
     }
 
     /**
@@ -693,9 +692,9 @@ define([
      * @param {ModelEvent} event
      */
     bubble(event) {
-        if (!event.canBubble) return;
-        event.addPath(this);
-        this.trigger(`bubble:${event.type} bubble`, event);
+      if (!event.canBubble) return;
+      event.addPath(this);
+      this.trigger(`bubble:${event.type} bubble`, event);
     }
 
   }
