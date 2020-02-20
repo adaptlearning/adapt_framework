@@ -19,8 +19,8 @@ define([
       this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
       this._isVisible = false;
       this.drawerDir = 'right';
-      if(Adapt.config.get('_defaultDirection')=='rtl'){//on RTL drawer on the left
-          this.drawerDir = 'left';
+      if (Adapt.config.get('_defaultDirection') === 'rtl') { // on RTL drawer on the left
+        this.drawerDir = 'left';
       }
       this.setupEventListeners();
       this.render();
@@ -44,11 +44,11 @@ define([
     },
 
     setupEscapeKey: function() {
-      $(window).on("keyup", this._onKeyUp);
+      $(window).on('keyup', this._onKeyUp);
     },
 
     onKeyUp: function(event) {
-      if (event.which != 27) return;
+      if (event.which !== 27) return;
       event.preventDefault();
 
       this.onCloseDrawer();
@@ -56,12 +56,12 @@ define([
 
     events: {
       'click .drawer__back': 'onBackButtonClicked',
-      'click .drawer__close':'onCloseClicked'
+      'click .drawer__close': 'onCloseClicked'
     },
 
     render: function() {
-      var template = Handlebars.templates['drawer']
-      $(this.el).html(template({_globals: Adapt.course.get("_globals")})).prependTo('body');
+      var template = Handlebars.templates['drawer'];
+      $(this.el).html(template({ _globals: Adapt.course.get('_globals') })).prependTo('body');
       var shadowTemplate = Handlebars.templates['shadow'];
       $(shadowTemplate()).prependTo('body');
       // Set defer on post render
@@ -120,14 +120,13 @@ define([
 
     showDrawer: function(emptyDrawer) {
       this.$el.removeClass('u-display-none').removeAttr('aria-hidden');
-      //only trigger popup:opened if drawer is visible, pass popup manager drawer element
+      // Only trigger popup:opened if drawer is visible, pass popup manager drawer element
       if (!this._isVisible) {
         Adapt.a11y.popupOpened(this.$el);
         Adapt.a11y.scrollDisable('body');
         this._isVisible = true;
       }
 
-      var drawerWidth = this.$el.width();
       // Sets tab index to 0 for all tabbable elements in Drawer
       this.$('a, button, input, select, textarea').attr('tabindex', 0);
 
@@ -156,37 +155,35 @@ define([
         Adapt.trigger('drawer:openedCustomView');
       }
 
-      //delay drawer animation until after background fadeout animation is complete
+      // delay drawer animation until after background fadeout animation is complete
+      var direction = {};
       if (this.disableAnimation) {
-        $('.js-shadow').removeClass("u-display-none");
+        $('.js-shadow').removeClass('u-display-none');
         $('.js-drawer-holder').scrollTop(0);
 
-        var direction={};
-        direction[this.drawerDir]=0;
+        direction[this.drawerDir] = 0;
         this.$el.css(direction);
         complete.call(this);
-
       } else {
-
-        $('.js-shadow').velocity({opacity:1},{duration:this.drawerDuration, begin: _.bind(function() {
-          $(".js-shadow").removeClass("u-display-none");
+        // eslint-disable-next-line object-property-newline
+        $('.js-shadow').velocity({ opacity: 1 }, { duration: this.drawerDuration, begin: _.bind(function() {
+          $('.js-shadow').removeClass('u-display-none');
           $('.js-drawer-holder').scrollTop(0);
           complete.call(this);
-        }, this)});
+        }, this) });
 
         var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
-        var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
-        var direction={};
-        direction[this.drawerDir]=0;
-        this.$el.velocity(direction, this.drawerDuration, easing);
+        var easing = (showEasingAnimation) || 'easeOutQuart';
 
+        direction[this.drawerDir] = 0;
+        this.$el.velocity(direction, this.drawerDuration, easing);
       }
 
       function complete() {
         this.addShadowEvent();
         Adapt.trigger('drawer:opened');
 
-        //focus on first tabbable element in drawer
+        // focus on first tabbable element in drawer
         Adapt.a11y.focusFirst(this.$el, { defer: true });
       }
 
@@ -202,12 +199,13 @@ define([
       var models = this.collection.models;
       for (var i = 0, len = models.length; i < len; i++) {
         var item = models[i];
-        new DrawerItemView({model: item});
+        new DrawerItemView({ model: item });
       }
     },
 
     hideDrawer: function($toElement) {
-      //only trigger popup:closed if drawer is visible
+      var direction = {};
+      // only trigger popup:closed if drawer is visible
       if (this._isVisible) {
         Adapt.a11y.popupClosed($toElement);
         this._isVisible = false;
@@ -218,12 +216,11 @@ define([
 
       if (this.disableAnimation) {
 
-        var direction={};
-        direction[this.drawerDir]=-this.$el.width();
+        direction[this.drawerDir] = -this.$el.width();
         this.$el
-            .css(direction)
-            .addClass('u-display-none')
-            .attr('aria-hidden', 'true');
+          .css(direction)
+          .addClass('u-display-none')
+          .attr('aria-hidden', 'true');
 
         $('.js-shadow').addClass('u-display-none');
 
@@ -232,21 +229,21 @@ define([
       } else {
 
         var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
-        var easing = (showEasingAnimation) ? showEasingAnimation : 'easeOutQuart';
+        var easing = (showEasingAnimation) || 'easeOutQuart';
 
-        var direction={};
-        direction[this.drawerDir]=-this.$el.width();
+        direction[this.drawerDir] = -this.$el.width();
         this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {
           this.$el
-              .addClass('u-display-none')
-              .attr('aria-hidden', 'true');
+            .addClass('u-display-none')
+            .attr('aria-hidden', 'true');
 
           Adapt.trigger('drawer:closed');
         }, this));
 
-        $('.js-shadow').velocity({opacity:0}, {duration:this.drawerDuration, complete:function() {
-          $('.js-shadow').addClass("u-display-none");
-        }});
+        $('.js-shadow').velocity({ opacity: 0 }, { duration: this.drawerDuration,
+          complete: function() {
+            $('.js-shadow').addClass('u-display-none');
+          } });
 
       }
 
@@ -267,7 +264,7 @@ define([
 
     remove: function() {
       Backbone.View.prototype.remove.apply(this, arguments);
-      $(window).off("keyup", this._onKeyUp);
+      $(window).off('keyup', this._onKeyUp);
 
       Adapt.trigger('drawer:empty');
       this.collection.reset();

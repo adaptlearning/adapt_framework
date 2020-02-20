@@ -25,18 +25,18 @@ define([
 
     _deprecated: function(type, notifyObject) {
       if (this._warn && (this._warnFirstOnly && !this._hasWarned)) {
-        Adapt.log.warn('NOTIFY DEPRECATED: Adapt.trigger(\'notify:'+type+'\', notifyObject); is no longer supported, please use Adapt.notify.'+type+'(notifyObject);');
+        Adapt.log.warn('NOTIFY DEPRECATED: Adapt.trigger(\'notify:' + type + '\', notifyObject); is no longer supported, please use Adapt.notify.' + type + '(notifyObject);');
         this._hasWarned = true;
       }
       return this.create(notifyObject, { _type: type });
     },
 
     create: function(notifyObject, defaults) {
-      notifyObject =_.defaults({}, notifyObject, defaults, {
+      notifyObject = _.defaults({}, notifyObject, defaults, {
         _type: 'popup',
         _isCancellable: true,
         _showCloseButton: true,
-        _closeOnShadowClick: true,
+        _closeOnShadowClick: true
       });
 
       if (notifyObject._type === 'push') {

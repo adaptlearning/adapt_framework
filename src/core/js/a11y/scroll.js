@@ -157,7 +157,7 @@ define(function() {
      * @param {Object} $target jQuery element object.
      */
     _getScrollingParent: function(event, $target) {
-      var isTouchEvent = event.type == 'touchmove';
+      var isTouchEvent = event.type === 'touchmove';
       var hasTouchStartEvent = (this._touchStartEventObject && this._touchStartEventObject.originalEvent);
       if (isTouchEvent && !hasTouchStartEvent) {
         return $target;
@@ -253,7 +253,7 @@ define(function() {
      */
     _getScrollDelta: function(event) {
       var deltaY = 0;
-      var isTouchEvent = event.type == 'touchmove';
+      var isTouchEvent = event.type === 'touchmove';
       var originalEvent = event.originalEvent;
       if (isTouchEvent) {
         // Touch events
@@ -261,7 +261,7 @@ define(function() {
         var startOriginalEvent = this._touchStartEventObject.originalEvent;
         var currentY = originalEvent.pageY;
         var previousY = startOriginalEvent.pageY;
-        if (currentY === 0 || currentY == previousY) {
+        if (currentY === 0 || currentY === previousY) {
           // Android chrome current scroll pos
           currentY = originalEvent.touches[0].pageY;
           previousY = startOriginalEvent.touches[0].pageY;

@@ -64,7 +64,7 @@ define([
         _numberOfRequiredAnswers: 0,
         _numberOfIncorrectAnswers: 0,
         _isAtLeastOneCorrectSelection: false,
-        _numberOfCorrectAnswers: 0,
+        _numberOfCorrectAnswers: 0
       };
 
       this.getChildren().each(function(itemModel) {
@@ -128,7 +128,7 @@ define([
     setupIndividualFeedback: function(selectedItem) {
       this.set({
         feedbackTitle: this.getFeedbackTitle(this.get('_feedback')),
-        feedbackMessage: selectedItem.get("feedback")
+        feedbackMessage: selectedItem.get('feedback')
       });
     },
 
@@ -149,9 +149,9 @@ define([
       return (this.get('_selectable') === 1);
     },
 
-    getLastActiveItem: function(){
+    getLastActiveItem: function() {
       var selectedItems = this.getActiveItems();
-      return selectedItems[selectedItems.length-1];
+      return selectedItems[selectedItems.length - 1];
     },
 
     resetItems: function() {
@@ -186,7 +186,7 @@ define([
           // indexes are 0-based, we need them to be 1-based for cmi.interactions
           return String(itemModel.get('_index') + 1);
         })
-        .join('[,]')
+          .join('[,]')
       ];
 
       return interactions;

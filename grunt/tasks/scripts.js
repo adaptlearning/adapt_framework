@@ -4,11 +4,11 @@ module.exports = function(grunt) {
 
     if (!mode) return;
 
-    var path = require("path");
-    var fs = require("fs");
+    var path = require('path');
+    var fs = require('fs');
     var options = this.options({});
-    var chalk = require("chalk");
-    var async = require("async");
+    var chalk = require('chalk');
+    var async = require('async');
     var taskCallback = this.async();
 
     if (options.plugins) {
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 
         if (!bowerJSON.scripts) return done();
 
-        var plugindir = path.dirname(bowerJSONPath)
+        var plugindir = path.dirname(bowerJSONPath);
         var script = bowerJSON.scripts[mode];
 
         if (!script) return done();

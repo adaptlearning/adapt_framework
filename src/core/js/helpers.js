@@ -1,7 +1,7 @@
 define([
   'handlebars',
   'core/js/adapt'
-], function(Handlebars, Adapt){
+], function(Handlebars, Adapt) {
 
   var defaultAriaLevels = {
     '_menu': 1,
@@ -20,20 +20,20 @@ define([
       return text.toLowerCase();
     },
 
-    capitalise:  function(text) {
+    capitalise: function(text) {
       return text.charAt(0).toUpperCase() + text.slice(1);
     },
 
     inc: function(index) {
-      return index+1;
+      return index + 1;
     },
 
     dec: function(index) {
-      return index-1;
+      return index - 1;
     },
 
     odd: function (index) {
-      return (index +1) % 2 === 0  ? 'even' : 'odd';
+      return (index + 1) % 2 === 0 ? 'even' : 'odd';
     },
 
     equals: function(value, text, block) {
@@ -43,24 +43,25 @@ define([
     compare: function(value, operator, text, block) {
       // Comparison operators
       switch (operator) {
-      case '===':
-        if (value === text) return block.fn(this);
-        break;
-      case '=': case '==':
-        if (value == text) return block.fn(this);
-        break;
-      case '>=':
-        if (value >= text) return block.fn(this);
-        break;
-      case '<=':
-        if (value <= text) return block.fn(this);
-        break;
-      case '>':
-        if (value > text) return block.fn(this);
-        break;
-      case '<':
-        if (value < text) return block.fn(this);
-        break;
+        case '===':
+          if (value === text) return block.fn(this);
+          break;
+        case '=': case '==':
+          // eslint-disable-next-line eqeqeq
+          if (value == text) return block.fn(this);
+          break;
+        case '>=':
+          if (value >= text) return block.fn(this);
+          break;
+        case '<=':
+          if (value <= text) return block.fn(this);
+          break;
+        case '>':
+          if (value > text) return block.fn(this);
+          break;
+        case '<':
+          if (value < text) return block.fn(this);
+          break;
       }
       return block.inverse(this);
     },
@@ -176,14 +177,14 @@ define([
 
       var i, l, name;
 
-      var directImport = ['config','course'];
+      var directImport = ['config', 'course'];
       for (i = 0, l = directImport.length; i < l; i++) {
         name = directImport[i];
         // convert the model to a json object and add to the current context
         adapt[name] = Adapt[name].toJSON();
       }
 
-      var indexedImport = ['contentObjects','articles','blocks','components'];
+      var indexedImport = ['contentObjects', 'articles', 'blocks', 'components'];
       for (i = 0, l = indexedImport.length; i < l; i++) {
         name = indexedImport[i];
         // convert the collection of models to an array of json objects
@@ -217,7 +218,7 @@ define([
       if (!this._isA11yComponentDescriptionEnabled) {
         return;
       }
-      var isNotDefined = (!this._globals._components || !this._globals._components['_'+this._component]);
+      var isNotDefined = (!this._globals._components || !this._globals._components['_' + this._component]);
       if (isNotDefined) {
         return;
       }
@@ -227,13 +228,13 @@ define([
         description = override;
         description = helpers.compile(description, context);
       } else {
-        description = this._globals._components['_'+this._component].ariaRegion;
+        description = this._globals._components['_' + this._component].ariaRegion;
         description = helpers.compile(description, override);
       }
       if (!description) {
         return;
       }
-      return new Handlebars.SafeString('<div class="aria-label">'+description+'</div>');
+      return new Handlebars.SafeString('<div class="aria-label">' + description + '</div>');
     },
 
     a11y_text: function(text) {
@@ -270,9 +271,9 @@ define([
      * @returns {string}
      */
     a11y_aria_label: function(htmls) {
-      var values = Array.prototype.slice.call(arguments, 0,-1);
+      var values = Array.prototype.slice.call(arguments, 0, -1);
       values = values.filter(Boolean);
-      return new Handlebars.SafeString('<div class="aria-label">'+values.join(' ')+'</div>');
+      return new Handlebars.SafeString('<div class="aria-label">' + values.join(' ') + '</div>');
     },
 
     /**
@@ -284,9 +285,9 @@ define([
      * @returns {string}
      */
     a11y_aria_label_relative: function(htmls) {
-      var values = Array.prototype.slice.call(arguments, 0,-1);
+      var values = Array.prototype.slice.call(arguments, 0, -1);
       values = values.filter(Boolean);
-      return new Handlebars.SafeString('<div class="aria-label relative">'+values.join(' ')+'</div>');
+      return new Handlebars.SafeString('<div class="aria-label relative">' + values.join(' ') + '</div>');
     },
 
     /**
@@ -301,9 +302,9 @@ define([
      * @returns {string}
      */
     a11y_aria_image: function(texts) {
-      var values = Array.prototype.slice.call(arguments, 0,-1);
+      var values = Array.prototype.slice.call(arguments, 0, -1);
       values = values.filter(Boolean);
-      return new Handlebars.SafeString('<div class="aria-label" role="img" aria-label="'+values.join(' ')+'"></div>');
+      return new Handlebars.SafeString('<div class="aria-label" role="img" aria-label="' + values.join(' ') + '"></div>');
     },
 
     /**
@@ -344,12 +345,12 @@ define([
       } else if (_.isString(levelOrType)) {
         // if a string is passed check if it is defined in global configuration
         cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
-        if (cfg._ariaLevels && cfg._ariaLevels['_'+levelOrType] !== undefined) {
-          level = cfg._ariaLevels['_'+levelOrType];
+        if (cfg._ariaLevels && cfg._ariaLevels['_' + levelOrType] !== undefined) {
+          level = cfg._ariaLevels['_' + levelOrType];
         }
       }
 
-      return new Handlebars.SafeString(' role="heading" aria-level="'+level+'" ');
+      return new Handlebars.SafeString(' role="heading" aria-level="' + level + '" ');
     },
 
     a11y_attrs_tabbable: function() {
@@ -366,7 +367,7 @@ define([
     a11y_alt_text: function(visible, alternatives) {
       var values = Array.prototype.slice.call(arguments, 1, -1);
       values = values.filter(Boolean);
-      return new Handlebars.SafeString('<span aria-hidden="true">'+visible+'</span><span class="aria-label">'+values.join(' ')+'</span>');
+      return new Handlebars.SafeString('<span aria-hidden="true">' + visible + '</span><span class="aria-label">' + values.join(' ') + '</span>');
     }
 
   };
@@ -385,8 +386,8 @@ define([
     },
 
     lowerCase: function() {
-        Adapt.a11y.log.deprecated('lowerCase, use lowercase instead.');
-        return helpers.lowercase.apply(this, arguments);
+      Adapt.a11y.log.deprecated('lowerCase, use lowercase instead.');
+      return helpers.lowercase.apply(this, arguments);
     }
 
   });

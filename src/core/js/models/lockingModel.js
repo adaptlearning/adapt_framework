@@ -5,18 +5,18 @@ define(function() {
   _.extend(Backbone.Model.prototype, {
 
     set: function(attrName, attrVal, options) {
-      var stopProcessing = !this.lockedAttributes || typeof attrName === "object" || typeof attrVal !== "boolean" || !this.isLocking(attrName);
+      var stopProcessing = !this.lockedAttributes || typeof attrName === 'object' || typeof attrVal !== 'boolean' || !this.isLocking(attrName);
       if (stopProcessing) return set.apply(this, arguments);
 
       options = options || {};
 
       var isSettingValueForSpecificPlugin = options && options.pluginName;
       if (!isSettingValueForSpecificPlugin) {
-        console.error("Must supply a pluginName to change a locked attribute");
-        options.pluginName = "compatibility";
+        console.error('Must supply a pluginName to change a locked attribute');
+        options.pluginName = 'compatibility';
       }
 
-      var pluginName  = options.pluginName;
+      var pluginName = options.pluginName;
       if (this.defaults[attrName] !== undefined) {
         this.lockedAttributes[attrName] = !this.defaults[attrName];
       }
@@ -25,19 +25,19 @@ define(function() {
 
       if (isAttemptingToLock) {
 
-        this.setLockState(attrName, true, {pluginName:pluginName, skipcheck: true});
+        this.setLockState(attrName, true, { pluginName: pluginName, skipcheck: true });
 
-        //console.log(options.pluginName, "locking", attrName, "on", this.get("_id"));
+        // console.log(options.pluginName, "locking", attrName, "on", this.get("_id"));
         return set.call(this, attrName, lockingValue);
 
       }
 
-      this.setLockState(attrName, false, {pluginName:pluginName, skipcheck: true});
+      this.setLockState(attrName, false, { pluginName: pluginName, skipcheck: true });
 
-      var totalLockValue = this.getLockCount(attrName, {skipcheck: true});
-      //console.log(options.pluginName, "attempting to unlock", attrName, "on", this.get("_id"), "lockValue", totalLockValue, this._lockedAttributesValues[attrName]);
+      var totalLockValue = this.getLockCount(attrName, { skipcheck: true });
+      // console.log(options.pluginName, "attempting to unlock", attrName, "on", this.get("_id"), "lockValue", totalLockValue, this._lockedAttributesValues[attrName]);
       if (totalLockValue === 0) {
-        //console.log(options.pluginName, "unlocking", attrName, "on", this.get("_id"));
+        // console.log(options.pluginName, "unlocking", attrName, "on", this.get("_id"));
         return set.call(this, attrName, !lockingValue);
       }
 
@@ -89,7 +89,7 @@ define(function() {
     isLocked: function(attrName, options) {
       var shouldSkipCheck = (options && options.skipcheck);
       if (!shouldSkipCheck) {
-        var stopProcessing =  !this.isLocking(attrName);
+        var stopProcessing = !this.isLocking(attrName);
         if (stopProcessing) return;
       }
 
@@ -99,7 +99,7 @@ define(function() {
     getLockCount: function(attrName, options) {
       var shouldSkipCheck = (options && options.skipcheck);
       if (!shouldSkipCheck) {
-        var stopProcessing =  !this.isLocking(attrName);
+        var stopProcessing = !this.isLocking(attrName);
         if (stopProcessing) return;
       }
 
@@ -110,7 +110,7 @@ define(function() {
       }
 
       var lockingAttributeValues = _.values(this._lockedAttributesValues[attrName]);
-      var lockingAttributeValuesSum = _.reduce(lockingAttributeValues, function(sum, value){ return sum + (value ? 1 : 0); }, 0);
+      var lockingAttributeValuesSum = _.reduce(lockingAttributeValues, function(sum, value) { return sum + (value ? 1 : 0); }, 0);
 
       return lockingAttributeValuesSum;
     },
@@ -118,14 +118,14 @@ define(function() {
     setLockState: function(attrName, value, options) {
       var shouldSkipCheck = (options && options.skipcheck);
       if (!shouldSkipCheck) {
-        var stopProcessing =  !this.isLocking(attrName);
+        var stopProcessing = !this.isLocking(attrName);
         if (stopProcessing) return this;
       }
 
       var isSettingValueForSpecificPlugin = options && options.pluginName;
       if (!isSettingValueForSpecificPlugin) {
-        console.error("Must supply a pluginName to set a locked attribute lock value");
-        options.pluginName = "compatibility";
+        console.error('Must supply a pluginName to set a locked attribute lock value');
+        options.pluginName = 'compatibility';
       }
 
       if (value) {

@@ -1,14 +1,13 @@
-var csv = require("csv");
-var path = require("path");
-var async = require("async");
-var jschardet = require("jschardet");
-var iconv = require("iconv-lite");
-var fs = require('fs');
+var csv = require('csv');
+var path = require('path');
+var async = require('async');
+var jschardet = require('jschardet');
+var iconv = require('iconv-lite');
 var _ = require('underscore');
 
 module.exports = function(grunt) {
 
-  grunt.registerTask("_loadLanguageFiles", function() {
+  grunt.registerTask('_loadLanguageFiles', function() {
 
     var next = this.async();
     var langFiles;
@@ -22,15 +21,15 @@ module.exports = function(grunt) {
 
     function checkInputFolder() {
 
-      if (grunt.config("translate.targetLang") === null) {
+      if (grunt.config('translate.targetLang') === null) {
         throw grunt.util.error('Target language option is missing, please add --targetLang=<languageCode>');
       }
 
-      inputFolder = path.join(process.cwd(), "languagefiles", grunt.config("translate.targetLang"));
-      if (grunt.option("languagedir")) inputFolder = path.join(grunt.option("languagedir"), grunt.config("translate.targetLang"));
+      inputFolder = path.join(process.cwd(), 'languagefiles', grunt.config('translate.targetLang'));
+      if (grunt.option('languagedir')) inputFolder = path.join(grunt.option('languagedir'), grunt.config('translate.targetLang'));
 
       if (!grunt.file.isDir(inputFolder)) {
-        throw grunt.util.error(grunt.config("translate.targetLang") + " Folder does not exist. Please create this Folder in the languagefiles directory.");
+        throw grunt.util.error(grunt.config('translate.targetLang') + ' Folder does not exist. Please create this Folder in the languagefiles directory.');
       }
 
     }
@@ -54,10 +53,10 @@ module.exports = function(grunt) {
         return;
       }
 
-      var jsonext = "." + grunt.config('jsonext');
+      var jsonext = '.' + grunt.config('jsonext');
 
       switch (uniqueExtensions[0]) {
-        case ".csv":
+        case '.csv':
           grunt.config('translate.format', 'csv');
           grunt.log.debug('format autodetected as csv');
           break;
@@ -69,25 +68,23 @@ module.exports = function(grunt) {
 
         default:
           throw grunt.util.error('Format of the language file is not supported: ' + uniqueExtensions[0]);
-          break;
       }
     }
 
     function readLangFiles() {
 
       // check if files exist
-      langFiles = grunt.file.expand(path.join(inputFolder, "*." + grunt.config('translate.format')));
+      langFiles = grunt.file.expand(path.join(inputFolder, '*.' + grunt.config('translate.format')));
 
       if (langFiles.length === 0) {
-        throw grunt.util.error("No languagefiles found to process in folder " + grunt.config('translate.targetLang'));
+        throw grunt.util.error('No languagefiles found to process in folder ' + grunt.config('translate.targetLang'));
       }
     }
 
     function _parseCsvFiles() {
-      var content = "";
       var lines = [];
       var options = {
-        delimiter: grunt.config("translate.csvDelimiter")
+        delimiter: grunt.config('translate.csvDelimiter')
       };
 
       async.each(langFiles, _parser, _cb);
@@ -119,21 +116,21 @@ module.exports = function(grunt) {
 
       function _cb(err) {
         if (err) {
-          throw grunt.util.error("Error processing CSV files:" + err);
+          throw grunt.util.error('Error processing CSV files:' + err);
         } else {
           for (var i = 0; i < lines.length; i++) {
             var line = lines[i];
             var value = line[1];
-            var key = line[0].split("/");
+            var key = line[0].split('/');
             var file = key[0];
             var id = key[1];
-            var path = key.slice(2).join("/");
+            var path = key.slice(2).join('/');
 
             if (line.length === 2) {
               global.translate.importData.push({
                 file: file,
                 id: id,
-                path: "/" + path,
+                path: '/' + path,
                 value: value
               });
             }
@@ -148,10 +145,10 @@ module.exports = function(grunt) {
       // check if valid raw format
       global.translate.importData = grunt.file.readJSON(langFiles[0]);
       var item = global.translate.importData[0];
-      var isValid = item.hasOwnProperty("file") && item.hasOwnProperty("id") && item.hasOwnProperty("path") && item.hasOwnProperty("value");
+      var isValid = item.hasOwnProperty('file') && item.hasOwnProperty('id') && item.hasOwnProperty('path') && item.hasOwnProperty('value');
 
       if (!isValid) {
-        throw grunt.util.error("Sorry, the imported File is not valid");
+        throw grunt.util.error('Sorry, the imported File is not valid');
       }
       next();
     }
@@ -159,11 +156,11 @@ module.exports = function(grunt) {
     function processLangFiles() {
 
       switch (grunt.config('translate.format')) {
-        case "json":
+        case 'json':
           _parseJsonFile();
           break;
 
-        case "csv":
+        case 'csv':
         default:
           _parseCsvFiles();
           break;

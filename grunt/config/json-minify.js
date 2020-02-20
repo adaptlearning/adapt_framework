@@ -3,5 +3,5 @@ module.exports = function(grunt, options) {
     minify: {
       files: '<%= outputdir %>/course/**/*.<%= jsonext %>'
     }
-  }
-}
+  };
+};

@@ -10,7 +10,7 @@ module.exports = function(grunt) {
       _trackingIdsSeen: []
     });
 
-    var isOutputDir = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== "build");
+    var isOutputDir = (grunt.option('outputdir') && grunt.option('outputdir').slice(-5) !== 'build');
     var sourcedir = isOutputDir ? grunt.option('outputdir') : grunt.config('sourcedir');
 
     var blocksFiles = grunt.file.expand(path.join(sourcedir, options.blocksFile));
@@ -30,13 +30,13 @@ module.exports = function(grunt) {
 
       for (var i = 0; i < blocks.length; i++) {
         var block = blocks[i];
-        grunt.log.writeln("block: " + block._id + ": " + (block._trackingId !== undefined ? block._trackingId : "not set"));
+        grunt.log.writeln('block: ' + block._id + ': ' + (block._trackingId !== undefined ? block._trackingId : 'not set'));
         if (block._trackingId === undefined) {
           block._trackingId = ++options._latestTrackingId;
-          grunt.log.writeln("Adding tracking ID: " + block._trackingId + " to block " + block._id);
+          grunt.log.writeln('Adding tracking ID: ' + block._trackingId + ' to block ' + block._id);
         } else {
           if (options._trackingIdsSeen.indexOf(block._trackingId) > -1) {
-            grunt.log.writeln("Warning: " + block._id + " has the tracking ID " + block._trackingId + ", but this is already in use. Changing to " + (options._latestTrackingId + 1) + ".");
+            grunt.log.writeln('Warning: ' + block._id + ' has the tracking ID ' + block._trackingId + ', but this is already in use. Changing to ' + (options._latestTrackingId + 1) + '.');
             block._trackingId = ++options._latestTrackingId;
           } else {
             options._trackingIdsSeen.push(block._trackingId);
@@ -48,7 +48,7 @@ module.exports = function(grunt) {
 
       }
       course._latestTrackingId = options._latestTrackingId;
-      grunt.log.writeln("Task complete. The latest tracking ID is " + course._latestTrackingId);
+      grunt.log.writeln('Task complete. The latest tracking ID is ' + course._latestTrackingId);
       grunt.file.write(coursePath, JSON.stringify(course, null, 4));
       grunt.file.write(blocksPath, JSON.stringify(blocks, null, 4));
     }

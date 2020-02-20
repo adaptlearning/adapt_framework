@@ -6,7 +6,7 @@ module.exports = function(grunt, options) {
         baseUrl: '<%= sourcedir %>',
         mainConfigFile: './config.js',
         out: '<%= outputdir %>adapt/js/adapt.min.js',
-        //fetch these bower plugins an add them as dependencies to the app.js
+        // fetch these bower plugins an add them as dependencies to the app.js
         plugins: [
           '<%= sourcedir %>components/*/bower.json',
           '<%= sourcedir %>extensions/*/bower.json',
@@ -20,12 +20,12 @@ module.exports = function(grunt, options) {
         },
         generateSourceMaps: true,
         sourceMaps: {
-          baseUrl: "../../"
+          baseUrl: '../../'
         },
         preserveLicenseComments: false,
         optimize: 'none'
       },
-      //newer configuration
+      // newer configuration
       files: {
         '<%= outputdir %>adapt/js/adapt.min.js': [
           '<%= sourcedir %>/**/*.js'
@@ -38,7 +38,7 @@ module.exports = function(grunt, options) {
         baseUrl: '<%= sourcedir %>',
         mainConfigFile: './config.js',
         out: '<%= outputdir %>adapt/js/adapt.min.js',
-        //fetch these bower plugins an add them as dependencies to the app.js
+        // fetch these bower plugins an add them as dependencies to the app.js
         plugins: [
           '<%= sourcedir %>components/*/bower.json',
           '<%= sourcedir %>extensions/*/bower.json',
@@ -57,5 +57,5 @@ module.exports = function(grunt, options) {
         }
       }
     }
-  }
-}
+  };
+};

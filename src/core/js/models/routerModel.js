@@ -18,4 +18,4 @@ define([
 
   return RouterModel;
 
- });
+});

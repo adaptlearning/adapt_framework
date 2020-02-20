@@ -27,10 +27,6 @@ define([
       ].join(' ');
     },
 
-    //////
-    // Setup question types
-    ////
-
     preRender: function() {
       // Setup listener for _isEnabled
       this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
@@ -40,7 +36,7 @@ define([
       // Checks to see if the question should be reset on revisit
       this.checkIfResetOnRevisit();
       // This method helps setup default settings on the model
-      this._runModelCompatibleFunction("setupDefaultSettings");
+      this._runModelCompatibleFunction('setupDefaultSettings');
       // Blank method for setting up questions before rendering
       this.setupQuestion();
 
@@ -78,7 +74,7 @@ define([
 
         this.model.reset(isResetOnRevisit, true);
 
-         // Defer is added to allow the component to render
+        // Defer is added to allow the component to render
         _.defer(_.bind(function() {
           this.resetQuestionOnRevisit(isResetOnRevisit);
         }, this));
@@ -122,15 +118,15 @@ define([
 
     // Used to setup buttonsView and sets up the internal events for the question
     addButtonsView: function() {
-      this.buttonsView = new ButtonsView({model: this.model, el: this.$('.btn__container')});
+      this.buttonsView = new ButtonsView({ model: this.model, el: this.$('.btn__container') });
 
       this.listenTo(this.buttonsView, 'buttons:stateUpdate', this.onButtonStateUpdate);
 
     },
 
-    onButtonStateUpdate: function(button_state) {
+    onButtonStateUpdate: function(buttonState) {
 
-      switch (button_state) {
+      switch (buttonState) {
         case BUTTON_STATE.SUBMIT:
           this.onSubmitClicked();
           break;
@@ -153,29 +149,25 @@ define([
     // Blank method used just like postRender is for presentational components
     onQuestionRendered: function() {},
 
-    //////
-    // Submit process
-    ////
-
     // Triggered when the submit button is clicked
     onSubmitClicked: function() {
       // canSubmit is setup in questions and should return a boolean
       // If the question stops the user form submitting - show instruction error
       // and give a blank method, onCannotSubmit to the question
-      var canSubmit = this._runModelCompatibleFunction("canSubmit");
+      var canSubmit = this._runModelCompatibleFunction('canSubmit');
 
-      if(!canSubmit) {
+      if (!canSubmit) {
         this.showInstructionError();
         this.onCannotSubmit();
         return;
       }
 
       // Used to update the amount of attempts the question has
-      this._runModelCompatibleFunction("updateAttempts");
+      this._runModelCompatibleFunction('updateAttempts');
 
       // Used to set attributes on the model after being submitted
       // Also adds a class of submitted
-      this._runModelCompatibleFunction("setQuestionAsSubmitted");
+      this._runModelCompatibleFunction('setQuestionAsSubmitted');
 
       // Used to remove instruction error that is set when
       // the user has interacted in the wrong way
@@ -183,28 +175,28 @@ define([
 
       // Used to store the users answer for later
       // This is a blank method given to the question
-      this._runModelCompatibleFunction("storeUserAnswer");
+      this._runModelCompatibleFunction('storeUserAnswer');
 
       // Used to set question as correct:true/false
       // Calls isCorrect which is blank for the question
       // to fill out and return a boolean
-      this._runModelCompatibleFunction("markQuestion", "isCorrect");
+      this._runModelCompatibleFunction('markQuestion', 'isCorrect');
 
       // Used by the question to set the score on the model
-      this._runModelCompatibleFunction("setScore");
+      this._runModelCompatibleFunction('setScore');
 
       // Used by the question to display markings on the component
       this.showMarking();
 
       // Used to check if the question is complete
       // Triggers setCompletionStatus and adds class to widget
-      this._runModelCompatibleFunction("checkQuestionCompletion");
+      this._runModelCompatibleFunction('checkQuestionCompletion');
 
       this.recordInteraction();
 
       // Used to setup the feedback by checking against
       // question isCorrect or isPartlyCorrect
-      this._runModelCompatibleFunction("setupFeedback");
+      this._runModelCompatibleFunction('setupFeedback');
 
       // Used to trigger an event so plugins can display feedback
       // Do this before updating the buttons so that the focus can be
@@ -217,7 +209,7 @@ define([
 
       // Used to update buttonsView based upon question state
       // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
-      this._runModelCompatibleFunction("updateButtons");
+      this._runModelCompatibleFunction('updateButtons');
 
       this.onSubmitted();
     },
@@ -262,7 +254,7 @@ define([
 
     },
 
-    recordInteraction:function() {
+    recordInteraction: function() {
       if (this.model.get('_recordInteraction') === true || !this.model.has('_recordInteraction')) {
         Adapt.trigger('questionView:recordInteraction', this);
       }
@@ -282,20 +274,20 @@ define([
     onResetClicked: function() {
       this.setQuestionAsReset();
 
-      this._runModelCompatibleFunction("updateButtons");
+      this._runModelCompatibleFunction('updateButtons');
 
-      this._runModelCompatibleFunction("resetUserAnswer");
+      this._runModelCompatibleFunction('resetUserAnswer');
 
       this.resetQuestion();
 
       // onResetClicked is called as part of the checkIfResetOnRevisit
       // function and as a button click. if the view is already rendered,
       // then the button was clicked, focus on the first tabbable element
-      if (!this.model.get("_isReady")) return;
+      if (!this.model.get('_isReady')) return;
       // Attempt to get the current page location
       var currentModel = Adapt.findById(Adapt.location._currentId);
       // Make sure the page is ready
-      if (!currentModel || !currentModel.get("_isReady")) return;
+      if (!currentModel || !currentModel.get('_isReady')) return;
       // Focus on the first readable item in this element
       Adapt.a11y.focusNext(this.$el);
 
@@ -327,15 +319,15 @@ define([
     onShowCorrectAnswerClicked: function() {
       this.setQuestionAsShowCorrect();
 
-      this._runModelCompatibleFunction("updateButtons");
+      this._runModelCompatibleFunction('updateButtons');
 
       this.showCorrectAnswer();
     },
 
     setQuestionAsShowCorrect: function() {
       this.$('.component__widget')
-          .addClass('is-submitted show-correct-answer')
-          .removeClass('show-user-answer');
+        .addClass('is-submitted show-correct-answer')
+        .removeClass('show-user-answer');
     },
 
     // Used by the question to display the correct answer to the user
@@ -344,15 +336,15 @@ define([
     onHideCorrectAnswerClicked: function() {
       this.setQuestionAsHideCorrect();
 
-      this._runModelCompatibleFunction("updateButtons");
+      this._runModelCompatibleFunction('updateButtons');
 
       this.hideCorrectAnswer();
     },
 
     setQuestionAsHideCorrect: function() {
       this.$('.component__widget')
-          .addClass('is-submitted show-user-answer')
-          .removeClass('show-correct-answer');
+        .addClass('is-submitted show-user-answer')
+        .removeClass('show-correct-answer');
     },
 
     // Used by the question to display the users answer and
@@ -361,24 +353,23 @@ define([
     hideCorrectAnswer: function() {},
 
     // Time elapsed between the time the interaction was made available to the learner for response and the time of the first response
-    getLatency:function() {
+    getLatency: function() {
       return null;
     },
 
     // This function is overridden if useQuestionModeOnly: false. see below.
     _runModelCompatibleFunction: function(name, lookForViewOnlyFunction) {
-      return this.model[name](); //questionModel Only
+      return this.model[name](); // questionModel Only
     }
 
   }, {
     _isQuestionType: true
   });
 
-
-  //allows us to turn on and off the questionView style and use the separated questionModel+questionView style only
+  // allows us to turn on and off the questionView style and use the separated questionModel+questionView style only
   if (useQuestionModelOnly) return QuestionView;
 
-  /*BACKWARDS COMPATIBILITY SECTION
+  /* BACKWARDS COMPATIBILITY SECTION
   * This section below is only for compatibility between the separated questionView+questionModel and the old questionView
   * Remove this section in when all components use questionModel and there is no need to have model behaviour in the questionView
   */
@@ -449,7 +440,7 @@ define([
     // Sets _isCorrect:true/false based upon isCorrect method below
     markQuestion: function() {
 
-      if (this._isInViewOnlyCompatibleMode("isCorrect")) {
+      if (this._isInViewOnlyCompatibleMode('isCorrect')) {
 
         if (this.isCorrect()) {
           this.model.set('_isCorrect', true);
@@ -481,15 +472,15 @@ define([
     // Used to setup the correct, incorrect and partly correct feedback
     setupFeedback: function() {
 
-      if (this._isInViewOnlyCompatibleMode("isPartlyCorrect")) {
+      if (this._isInViewOnlyCompatibleMode('isPartlyCorrect')) {
 
         // Use view based feedback where necessary
         if (this.model.get('_isCorrect')) {
-          this._runModelCompatibleFunction("setupCorrectFeedback");
+          this._runModelCompatibleFunction('setupCorrectFeedback');
         } else if (this.isPartlyCorrect()) {
-          this._runModelCompatibleFunction("setupPartlyCorrectFeedback");
+          this._runModelCompatibleFunction('setupPartlyCorrectFeedback');
         } else {
-          this._runModelCompatibleFunction("setupIncorrectFeedback");
+          this._runModelCompatibleFunction('setupIncorrectFeedback');
         }
 
       } else {
@@ -517,46 +508,45 @@ define([
       return this.model.setupIncorrectFeedback();
     },
 
-
-    //Helper functions for compatibility layer
+    // Helper functions for compatibility layer
     _runModelCompatibleFunction: function(name, lookForViewOnlyFunction) {
       if (this._isInViewOnlyCompatibleMode(name, lookForViewOnlyFunction)) {
-        return this[name](); //questionView
+        return this[name](); // questionView
       } else {
-        return this.model[name](); //questionModel
+        return this.model[name](); // questionModel
       }
     },
 
     _isInViewOnlyCompatibleMode: function(name, lookForViewOnlyFunction) {
-      //return false uses the model function questionModel
-      //return true uses the view only function questionView
+      // return false uses the model function questionModel
+      // return true uses the view only function questionView
 
       var checkForFunction = (lookForViewOnlyFunction || name);
 
-      //if the function does NOT exist on the view at all, use the model only
-      if (!this.constructor.prototype[checkForFunction]) return false; //questionModel
+      // if the function does NOT exist on the view at all, use the model only
+      if (!this.constructor.prototype[checkForFunction]) return false; // questionModel
 
-      //if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
-      if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction])  {
+      // if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
+      if (this.constructor.prototype[checkForFunction] === viewOnlyCompatibleQuestionView[checkForFunction]) {
         switch (checkForFunction) {
-          case "setupFeedback":
-          case "markQuestion":
-            return true; //questionView
+          case 'setupFeedback':
+          case 'markQuestion':
+            return true; // questionView
         }
-        return false; //questionModel
+        return false; // questionModel
       }
 
-      //if the function DOES exist on the view and does NOT match the compatibility function above, use the view function
-      return true; //questionView
+      // if the function DOES exist on the view and does NOT match the compatibility function above, use the view function
+      return true; // questionView
     }
 
   };
 
-  //return question view class extended with the compatibility layer
+  // return question view class extended with the compatibility layer
   return QuestionView.extend(viewOnlyCompatibleQuestionView, {
     _isQuestionType: true
   });
 
-  /*END OF BACKWARDS COMPATIBILITY SECTION*/
+  /* END OF BACKWARDS COMPATIBILITY SECTION */
 
 });
