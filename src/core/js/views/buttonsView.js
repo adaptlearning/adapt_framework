@@ -3,15 +3,15 @@ define([
   'core/js/enums/buttonStateEnum'
 ], function(Adapt, BUTTON_STATE) {
 
-  //convert BUTTON_STATE to property name
+  // convert BUTTON_STATE to property name
   var textPropertyName = {
-    "SUBMIT": "submit",
-    "CORRECT": "correct",
-    "INCORRECT": "incorrect",
-    "SHOW_CORRECT_ANSWER": "showCorrectAnswer",
-    "HIDE_CORRECT_ANSWER": "hideCorrectAnswer",
-    "SHOW_FEEDBACK": "showFeedback",
-    "RESET": "reset"
+    'SUBMIT': 'submit',
+    'CORRECT': 'correct',
+    'INCORRECT': 'incorrect',
+    'SHOW_CORRECT_ANSWER': 'showCorrectAnswer',
+    'HIDE_CORRECT_ANSWER': 'hideCorrectAnswer',
+    'SHOW_FEEDBACK': 'showFeedback',
+    'RESET': 'reset'
   };
 
   var ButtonsView = Backbone.View.extend({
@@ -70,10 +70,10 @@ define([
 
     onFeedbackMessageChanged: function(model, changedAttribute) {
       if (changedAttribute && this.model.get('_canShowFeedback')) {
-        //enable feedback button
+        // enable feedback button
         Adapt.a11y.toggleAccessibleEnabled(this.$('.js-btn-feedback'), true);
       } else {
-        //disable feedback button
+        // disable feedback button
         Adapt.a11y.toggleAccessibleEnabled(this.$('.js-btn-feedback'), false);
       }
     },
@@ -93,8 +93,8 @@ define([
       } else {
 
         var propertyName = textPropertyName[buttonState.asString];
-        var ariaLabel = this.model.get('_buttons')["_" + propertyName].ariaLabel;
-        var buttonText = this.model.get('_buttons')["_" + propertyName].buttonText;
+        var ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
+        var buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
 
         // Enable the button, make accessible and update aria labels and text
 
@@ -113,7 +113,7 @@ define([
       }
     },
 
-    checkFeedbackState: function(){
+    checkFeedbackState: function() {
       var canShowFeedback = this.model.get('_canShowFeedback');
 
       this.$('.js-btn-action').toggleClass('is-full-width', !canShowFeedback);
@@ -124,17 +124,16 @@ define([
     updateAttemptsCount: function(model, changedAttribute) {
       var isInteractionComplete = this.model.get('_isInteractionComplete');
       var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
-      var isCorrect = this.model.get('_isCorrect');
       var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
       var attemptsString;
 
       this.checkResetSubmittedState();
 
-      if (!isInteractionComplete && attemptsLeft != 0) {
-        attemptsString = attemptsLeft + " ";
+      if (!isInteractionComplete && attemptsLeft !== 0) {
+        attemptsString = attemptsLeft + ' ';
         if (attemptsLeft > 1) {
           attemptsString += this.model.get('_buttons').remainingAttemptsText;
-        } else if (attemptsLeft === 1){
+        } else if (attemptsLeft === 1) {
           attemptsString += this.model.get('_buttons').remainingAttemptText;
         }
 
@@ -156,9 +155,9 @@ define([
       var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
 
       this.$('.js-btn-marking')
-          .removeClass('u-display-none')
-          .addClass(isCorrect ? 'is-correct' : 'is-incorrect')
-          .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
+        .removeClass('u-display-none')
+        .addClass(isCorrect ? 'is-correct' : 'is-incorrect')
+        .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
     },
 
     refresh: function() {

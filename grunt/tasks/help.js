@@ -9,7 +9,7 @@ module.exports = function(grunt) {
     var chalk = require('chalk'); // for some nice colouring
     var columnify = require('columnify'); // deals with formatting
     var config = grunt.config('help') || {
-      maxConsoleWidth: '80',
+      maxConsoleWidth: '80'
     };
 
     grunt.log.writeln('');
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
     grunt.log.writeln('');
     grunt.log.writeln('For more information, see https://github.com/adaptlearning/adapt_framework/wiki');
   });
-}
+};
 
 // TODO: this only includes tasks in /tasks...might not be good enough
 function getTaskData() {
@@ -54,12 +54,12 @@ function getTaskData() {
     var filePath = path.join(__dirname, files[i]);
     var fileStat = fs.statSync(filePath);
 
-    //skip directories
+    // skip directories
     if (fileStat.isDirectory()) continue;
 
     var file = fs.readFileSync(filePath, 'utf8');
     var match = '';
-    while (match = re.exec(file)) {
+    while ((match = re.exec(file))) {
       taskData[match[2]] = match[3] || '';
     }
 

@@ -12,4 +12,4 @@ define(function() {
 
   return BUTTON_STATE;
 
-})
+});

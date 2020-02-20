@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-var ReplaceUrls = require("./replaceUrls");
+var ReplaceUrls = require('./replaceUrls');
 
 class LessPluginPreprocess {
 

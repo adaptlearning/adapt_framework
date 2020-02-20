@@ -8,8 +8,8 @@ define([
 
     attributes: function() {
       return AdaptView.resultExtend('attributes', {
-        "aria-labelledby": this.model.get('_id')+"-heading",
-        "role": "main"
+        'aria-labelledby': this.model.get('_id') + '-heading',
+        'role': 'main'
       }, this);
     },
 

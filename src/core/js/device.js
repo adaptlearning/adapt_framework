@@ -20,12 +20,12 @@ define([
   // Define 'orientation' and 'aspectRatio' here once 'screenWidth' and 'screenHeight' have been set,
   // as both these functions are getters, essentially.
   Object.defineProperties(Adapt.device, {
-    "orientation": {
+    'orientation': {
       get: function () {
         return (this.screenWidth >= this.screenHeight) ? 'landscape' : 'portrait';
       }
     },
-    "aspectRatio": {
+    'aspectRatio': {
       get: function () {
         return this.screenWidth / this.screenHeight;
       }
@@ -60,12 +60,12 @@ define([
     // Check to see if the screen size value is larger than the em threshold
     // If value is larger than em threshold, convert value (assumed px) to ems
     // Otherwise assume value is in ems
-    var mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold ?
-      screenSizeConfig.medium / baseFontSize :
-      screenSizeConfig.medium;
-    var smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold ?
-      screenSizeConfig.small / baseFontSize :
-      screenSizeConfig.small;
+    var mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold
+      ? screenSizeConfig.medium / baseFontSize
+      : screenSizeConfig.medium;
+    var smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold
+      ? screenSizeConfig.small / baseFontSize
+      : screenSizeConfig.small;
 
     var fontSize = parseFloat($('html').css('font-size'));
     var screenSizeEmWidth = (Adapt.device.screenWidth / fontSize);
@@ -114,15 +114,15 @@ define([
       var platforms = ['Win', 'Mac', 'Linux'];
       os = 'PlatformUnknown';
 
-      for (var i = 0; i < platforms.length; i++) {
-        if (platform.indexOf(platforms[i]) != -1) {
-          os = platforms[i].toLowerCase();
+      for (var j = 0; j < platforms.length; j++) {
+        if (platform.indexOf(platforms[j]) !== -1) {
+          os = platforms[j].toLowerCase();
           break;
         }
       }
 
       // Set consistency with the Bowser flags.
-      if (os == 'win') {
+      if (os === 'win') {
         os = 'windows';
       }
     }

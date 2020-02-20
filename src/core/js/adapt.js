@@ -10,9 +10,9 @@ define([
     componentStore: {},
 
     defaults: {
-      _canScroll: true, //to stop scrollTo behaviour,
+      _canScroll: true, // to stop scrollTo behaviour,
       _outstandingCompletionChecks: 0,
-      _pluginWaitCount:0,
+      _pluginWaitCount: 0,
       _isStarted: false
     },
 
@@ -25,14 +25,14 @@ define([
       this.disableAnimation();
       this.trigger('adapt:preInitialize');
 
-      //wait until no more completion checking
+      // wait until no more completion checking
       this.deferUntilCompletionChecked(function() {
 
-        //start adapt in a full restored state
+        // start adapt in a full restored state
         this.trigger('adapt:start');
 
         if (!Backbone.History.started) {
-            Backbone.history.start();
+          Backbone.history.start();
         }
 
         this.set('_isStarted', true);
@@ -121,12 +121,12 @@ define([
     },
 
     isWaitingForPlugins: function() {
-      this.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future");
+      this.log.warn('DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future');
       return this.wait.isWaiting();
     },
 
     checkPluginsReady: function() {
-      this.log.warn("DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future");
+      this.log.warn('DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future');
       if (this.isWaitingForPlugins()) {
         return;
       }
@@ -163,7 +163,7 @@ define([
       var shouldReplaceRoute = settings.replace || false;
 
       this.router.set('_shouldNavigateFocus', false);
-      Backbone.history.navigate('#/id/' + currentPage.get('_id'), {trigger: true, replace: shouldReplaceRoute});
+      Backbone.history.navigate('#/id/' + currentPage.get('_id'), { trigger: true, replace: shouldReplaceRoute });
     },
 
     /**
@@ -197,7 +197,7 @@ define([
     getViewClass: function(name) {
       var object = this.componentStore[name];
       if (!object) {
-          throw Error('The component "' + name + '" doesn\'t exist in your project');
+        throw Error('The component "' + name + '" doesn\'t exist in your project');
       }
       return object.view || object;
     },
@@ -272,7 +272,7 @@ define([
       }
       type = type[0];
 
-      var offset = parseInt(relativeString.substr(type.length).trim()||0);
+      var offset = parseInt(relativeString.substr(type.length).trim() || 0);
       if (isNaN(offset)) {
         this.log.error('Adapt.parseRelativeString() could not parse relative offset', relativeString);
         return;

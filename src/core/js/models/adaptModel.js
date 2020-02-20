@@ -38,14 +38,14 @@ define([
     bubblingEvents() {
       return [
         'change:_isComplete',
-        'change:_isInteractionComplete'
+        'change:_isInteractionComplete',
+        'change:_isActive'
       ];
     }
 
     initialize() {
       // Wait until data is loaded before setting up model
       this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
-
     }
 
     setupModel() {
@@ -176,19 +176,19 @@ define([
       type = type || true;
 
       switch (type) {
-      case 'hard': case true:
-        this.set({
-          _isEnabled: true,
-          _isComplete: false,
-          _isInteractionComplete: false
-        });
-        break;
-      case 'soft':
-        this.set({
-          _isEnabled: true,
-          _isInteractionComplete: false
-        });
-        break;
+        case 'hard': case true:
+          this.set({
+            _isEnabled: true,
+            _isComplete: false,
+            _isInteractionComplete: false
+          });
+          break;
+        case 'soft':
+          this.set({
+            _isEnabled: true,
+            _isInteractionComplete: false
+          });
+          break;
       }
     }
 
@@ -214,13 +214,13 @@ define([
     }
 
     checkCompletionStatus() {
-      //defer to allow other change:_isComplete handlers to fire before cascading to parent
+      // defer to allow other change:_isComplete handlers to fire before cascading to parent
       Adapt.checkingCompletion();
       _.defer(this.checkCompletionStatusFor.bind(this), '_isComplete');
     }
 
     checkInteractionCompletionStatus() {
-      //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
+      // defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
       Adapt.checkingCompletion();
       _.defer(this.checkCompletionStatusFor.bind(this), '_isInteractionComplete');
     }
@@ -232,6 +232,7 @@ define([
      * if not, we set it to false.
      * @param {string} [completionAttribute] Either '_isComplete' or '_isInteractionComplete'. Defaults to '_isComplete' if not supplied.
      */
+
     checkCompletionStatusFor(completionAttribute) {
       if (!completionAttribute) completionAttribute = '_isComplete';
 
@@ -291,7 +292,7 @@ define([
         descendants.slice(0, -1)
       ];
       if (descendants === 'contentObjects') {
-        types.push(...['page', 'menu']);
+        types.push('page', 'menu');
       }
 
       const allDescendantsModels = this.getAllDescendantModels();
@@ -344,6 +345,7 @@ define([
       const children = this.getChildren();
 
       children.models.forEach(child => {
+
         if (child.get('_type') === 'component') {
 
           descendants.push(child);
@@ -478,7 +480,7 @@ define([
       if (!this._children) {
         childrenCollection = new Backbone.Collection();
       } else {
-        const children = Adapt[this._children].where({_parentId: this.get('_id')});
+        const children = Adapt[this._children].where({ _parentId: this.get('_id') });
         childrenCollection = new Backbone.Collection(children);
       }
 
@@ -577,7 +579,7 @@ define([
      */
     setOptional(value) {
       Adapt.log.warn('DEPRECATED - Use model.set(\'_isOptional\', value) as setOptional() may be removed in the future');
-      this.set({_isOptional: value});
+      this.set({ _isOptional: value });
     }
 
     checkLocking() {

@@ -95,7 +95,7 @@ define([
       $elements.each(function(index, item) {
         var $item = $(item);
         var elementUID;
-        if (item.a11y_uid == undefined) {
+        if (typeof item.a11y_uid === 'undefined') {
           item.a11y_uid = 'UID' + ++this._elementUIDIndex;
         }
         elementUID = item.a11y_uid;
@@ -107,8 +107,8 @@ define([
         }
         var tabindex = $item.attr('tabindex');
         var ariaHidden = $item.attr('aria-hidden');
-        this._tabIndexes[elementUID].push( tabindex === undefined ? '' : tabindex );
-        this._ariaHiddens[elementUID].push( ariaHidden === undefined ? '' : ariaHidden);
+        this._tabIndexes[elementUID].push(tabindex === undefined ? '' : tabindex);
+        this._ariaHiddens[elementUID].push(ariaHidden === undefined ? '' : ariaHidden);
         if (config._options._isPopupTabIndexManagementEnabled) {
           $item.attr('tabindex', -1);
         }
@@ -168,18 +168,18 @@ define([
         var previousTabIndex = '';
         var previousAriaHidden = '';
         var elementUID;
-        if (item.a11y_uid == undefined) {
-          //assign element a unique id
+        if (typeof item.a11y_uid === 'undefined') {
+          // assign element a unique id
           item.a11y_uid = 'UID' + ++this._elementUIDIndex;
         }
         elementUID = item.a11y_uid;
         if (this._tabIndexes[elementUID] !== undefined && this._tabIndexes[elementUID].length !== 0) {
-          //get previous tabindex if saved
+          // get previous tabindex if saved
           previousTabIndex = this._tabIndexes[elementUID].pop();
           previousAriaHidden = this._ariaHiddens[elementUID].pop();
         }
         if (this._tabIndexes[elementUID] !== undefined && this._tabIndexes[elementUID].length === 0) {
-          //delete element tabindex store if empty
+          // delete element tabindex store if empty
           delete this._tabIndexes[elementUID];
           delete this._ariaHiddens[elementUID];
         }

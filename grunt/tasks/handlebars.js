@@ -56,6 +56,7 @@ module.exports = function(grunt) {
     }
     // We only need to take any declaration to extract the global namespace.
     // Another option might be find the shortest declaration which is the global one.
+    // eslint-disable-next-line no-useless-escape
     var matches = declarations[0].match(/(this\[[^\[]+\])/g);
     return matches[0];
   };
@@ -120,13 +121,13 @@ module.exports = function(grunt) {
 
       // iterate files, processing partials and templates separately
       f.src.filter(function(filepath) {
-          // Warn on and remove invalid source files (if nonull was set).
-          if (!grunt.file.exists(filepath)) {
-            grunt.log.warn('Source file "' + filepath + '" not found.');
-            return false;
-          }
-          return true;
-        })
+        // Warn on and remove invalid source files (if nonull was set).
+        if (!grunt.file.exists(filepath)) {
+          grunt.log.warn('Source file "' + filepath + '" not found.');
+          return false;
+        }
+        return true;
+      })
         .forEach(function(filepath) {
           var src = processContent(grunt.file.read(filepath), filepath);
 

@@ -1,6 +1,6 @@
 module.exports = function(grunt, options) {
   var convertSlashes = /\\/g;
-  var path = require("path");
+  var path = require('path');
 
   function alphanumericOrder(a, b) {
     return a > b ? 1 : a < b ? -1 : 0;
@@ -37,11 +37,10 @@ module.exports = function(grunt, options) {
   function sortLESSFilePaths(filepaths) {
     // convert windows slashes to unix slashes
     filepaths = filepaths.map(function(path) {
-      return path.replace(convertSlashes, "/");
+      return path.replace(convertSlashes, '/');
     });
     return filepaths.sort(compareFilePaths);
   }
-
 
   function includedFilter(filepath) {
     return grunt.config('helpers').includedFilter(filepath);
@@ -64,19 +63,19 @@ module.exports = function(grunt, options) {
         sourcemaps: true,
         compress: false,
         dest: '<%= outputdir %>',
-        cssFilename: "adapt.css",
-        mapFilename: "adapt.css.map",
+        cssFilename: 'adapt.css',
+        mapFilename: 'adapt.css.map',
         filter: includedFilter,
         order: sortLESSFilePaths,
         replaceUrls: [
           {
-            "action": "Replace url(../../assets/ with url(assets/",
-            "find": /\.\.\/\.\.\/assets\//,
-            "replaceWith": "assets/"
+            'action': 'Replace url(../../assets/ with url(assets/',
+            'find': /\.\.\/\.\.\/assets\//,
+            'replaceWith': 'assets/'
           }
         ]
       },
-      //newer configuration
+      // newer configuration
       files: {
         '<%= outputdir %>adapt.css': [
           '<%= sourcedir %>/**/*.less'
@@ -99,18 +98,18 @@ module.exports = function(grunt, options) {
         sourcemaps: false,
         compress: true,
         dest: '<%= outputdir %>',
-        cssFilename: "adapt.css",
-        mapFilename: "adapt.css.map",
+        cssFilename: 'adapt.css',
+        mapFilename: 'adapt.css.map',
         filter: includedFilter,
         order: sortLESSFilePaths,
         replaceUrls: [
           {
-            "action": "Replace url(../../assets/ with url(assets/",
-            "find": /\.\.\/\.\.\/assets\//,
-            "replaceWith": "assets/"
+            'action': 'Replace url(../../assets/ with url(assets/',
+            'find': /\.\.\/\.\.\/assets\//,
+            'replaceWith': 'assets/'
           }
         ]
       }
     }
-  }
-}
+  };
+};

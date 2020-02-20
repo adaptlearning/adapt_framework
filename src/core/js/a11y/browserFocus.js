@@ -35,7 +35,7 @@ define([
     _onBlur: function(event) {
       var config = Adapt.a11y.config;
       if (!config._isEnabled || !config._options._isFocusNextOnDisabled) {
-          return
+        return;
       }
       var $element = $(event.target);
       if ($element.is('[data-a11y-force-focus]')) {

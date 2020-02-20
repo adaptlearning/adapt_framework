@@ -1,11 +1,11 @@
-var path = require("path");
-var _ = require("underscore");
+var path = require('path');
+var _ = require('underscore');
 
 module.exports = function(grunt) {
 
-  grunt.registerTask("_parseSchemaFiles", function() {
+  grunt.registerTask('_parseSchemaFiles', function() {
 
-    var srcPath = grunt.config("sourcedir");
+    var srcPath = grunt.config('sourcedir');
 
     global.translate.schemaData = {};
 
@@ -16,25 +16,25 @@ module.exports = function(grunt) {
     function getSchemaData() {
       [
         {
-          type: "models",
-          globPattern: "core/schema/*.schema",
+          type: 'models',
+          globPattern: 'core/schema/*.schema',
           bowerAttr: false,
-          schemaLabel: "models"
+          schemaLabel: 'models'
         }, {
-          type: "components",
-          globPattern: "components/*/properties.schema",
-          bowerAttr: "component",
-          schemaLabel: "components"
+          type: 'components',
+          globPattern: 'components/*/properties.schema',
+          bowerAttr: 'component',
+          schemaLabel: 'components'
         }, {
-          type: "extensions",
-          globPattern: "extensions/*/properties.schema",
-          bowerAttr: "targetAttribute",
-          schemaLabel: "extensions"
+          type: 'extensions',
+          globPattern: 'extensions/*/properties.schema',
+          bowerAttr: 'targetAttribute',
+          schemaLabel: 'extensions'
         }, {
-          type: "menu",
-          globPattern: "menu/*/properties.schema",
-          bowerAttr: "targetAttribute",
-          schemaLabel: "menu"
+          type: 'menu',
+          globPattern: 'menu/*/properties.schema',
+          bowerAttr: 'targetAttribute',
+          schemaLabel: 'menu'
         }
       ].forEach(function(item) {
         global.translate.schemaData[item.schemaLabel] = {};
@@ -43,10 +43,10 @@ module.exports = function(grunt) {
           var propertiesSchema = grunt.file.readJSON(filepath);
           var key;
           if (item.bowerAttr) {
-            var bower = grunt.file.readJSON(path.join(dir, "bower.json"));
+            var bower = grunt.file.readJSON(path.join(dir, 'bower.json'));
             key = bower[item.bowerAttr];
           } else {
-            key = path.parse(filepath).name.split(".")[0];
+            key = path.parse(filepath).name.split('.')[0];
           }
 
           global.translate.schemaData[item.schemaLabel][key] = {};
@@ -59,17 +59,17 @@ module.exports = function(grunt) {
     function processGlobals() {
       [
         {
-          type: "components",
-          schemaKey: "components", // key to find in global.translate.schemaData
-          schemaLabel: "_components" // name used to save in global.translate.schemaData.models.course
+          type: 'components',
+          schemaKey: 'components', // key to find in global.translate.schemaData
+          schemaLabel: '_components' // name used to save in global.translate.schemaData.models.course
         }, {
-          type: "extensions",
-          schemaKey: "extensions",
-          schemaLabel: "_extensions"
+          type: 'extensions',
+          schemaKey: 'extensions',
+          schemaLabel: '_extensions'
         }, {
-          type: "menu",
-          schemaKey: "menu",
-          schemaLabel: "_menu"
+          type: 'menu',
+          schemaKey: 'menu',
+          schemaLabel: '_menu'
         }
       ].forEach(function(item) {
         var data = {};
@@ -80,19 +80,19 @@ module.exports = function(grunt) {
           if (globals !== null) {
 
             var name = key;
-            if (item.type === "components") {
-              name = "_" + key;
+            if (item.type === 'components') {
+              name = '_' + key;
             }
 
             data[name] = {
-              type: "object",
+              type: 'object',
               properties: globals
             };
           }
         }
 
         global.translate.schemaData.models.course.properties._globals.properties[item.schemaLabel] = {
-          type: "object",
+          type: 'object',
           properties: data
         };
       });
@@ -101,24 +101,24 @@ module.exports = function(grunt) {
     function processPluginLocations() {
       [
         {
-          type: "components",
-          schemaKey: "components"
+          type: 'components',
+          schemaKey: 'components'
         }, {
-          type: "extensions",
-          schemaKey: "extensions"
+          type: 'extensions',
+          schemaKey: 'extensions'
         }, {
-          type: "menu",
-          schemaKey: "menu"
+          type: 'menu',
+          schemaKey: 'menu'
         }
       ].forEach(function(item) {
         var collection = global.translate.schemaData[item.schemaKey];
 
         for (var key in collection) {
           var properties = collection[key].properties;
-          if (properties.hasOwnProperty("pluginLocations")) {
+          if (properties.hasOwnProperty('pluginLocations')) {
             var pluginLocations = properties.pluginLocations.properties;
             for (var location in pluginLocations) {
-              if (pluginLocations[location].hasOwnProperty("properties")) {
+              if (pluginLocations[location].hasOwnProperty('properties')) {
                 _copyPropertiesToLocation(location, pluginLocations[location].properties);
                 delete global.translate.schemaData[item.schemaKey][key].properties.pluginLocations.properties[location];
               }

@@ -5,9 +5,8 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('javascript', 'Compile JavaScript files', function() {
 
     var requirejs = require('requirejs');
-    var _ = require('underscore');
-    var path = require("path");
-    var fs = require("fs");
+    var path = require('path');
+    var fs = require('fs');
     var done = this.async();
     var options = this.options({});
 
@@ -22,8 +21,8 @@ module.exports = function(grunt) {
       }
 
       if (!doesPluginPathExists) {
-        //make endpoint for plugin attachment
-        //apply client side patch
+        // make endpoint for plugin attachment
+        // apply client side patch
         fs.writeFileSync(options.pluginsPath, pluginsClientSidePatch);
       }
 
@@ -43,13 +42,13 @@ module.exports = function(grunt) {
           var requireJSRootPath = pluginPath.substr(options.baseUrl.length);
           var requireJSMainPath = path.join(requireJSRootPath, bowerJSON.main);
           var ext = path.extname(requireJSMainPath);
-          var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, "/");
+          var requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, '/');
           options.shim[options.pluginsModule].deps.push(requireJSMainPathNoExt);
         });
       }
     }
 
-    var mapPath = options.out + ".map";
+    var mapPath = options.out + '.map';
 
     requirejs.optimize(options, function() {
       if (!options.generateSourceMaps) return done();
@@ -61,7 +60,7 @@ module.exports = function(grunt) {
     function fixSourceMapBaseUrl() {
       if (!fs.existsSync(mapPath)) return done();
       if (!options.sourceMaps || !options.sourceMaps.baseUrl) return done();
-      fs.readFile(mapPath, "utf8", readSourceMap);
+      fs.readFile(mapPath, 'utf8', readSourceMap);
     }
 
     function readSourceMap(error, data) {

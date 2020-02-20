@@ -47,14 +47,14 @@ define([
     },
 
     onKeyUp: function(event) {
-      if (event.which != 27) return;
+      if (event.which !== 27) return;
       event.preventDefault();
 
       this.cancelNotify();
     },
 
     events: {
-      'click .js-notify-btn-alert':'onAlertButtonClicked',
+      'click .js-notify-btn-alert': 'onAlertButtonClicked',
       'click .js-notify-btn-prompt': 'onPromptButtonClicked',
       'click .js-notify-close-btn': 'onCloseButtonClicked',
       'click .js-notify-shadow-click': 'onShadowClicked'
@@ -64,13 +64,13 @@ define([
       var data = this.model.toJSON();
       var template = Handlebars.templates.notify;
 
-      //hide notify container
+      // hide notify container
       this.$el.css('visibility', 'hidden');
-      //attach popup + shadow
+      // attach popup + shadow
       this.$el.html(template(data)).prependTo('body');
-      //hide popup
+      // hide popup
       this.$('.notify__popup').css('visibility', 'hidden');
-      //show notify container
+      // show notify container
       this.$el.css('visibility', 'visible');
 
       this.showNotify();
@@ -79,21 +79,21 @@ define([
 
     onAlertButtonClicked: function(event) {
       event.preventDefault();
-      //tab index preservation, notify must close before subsequent callback is triggered
+      // tab index preservation, notify must close before subsequent callback is triggered
       this.closeNotify();
       Adapt.trigger(this.model.get('_callbackEvent'), this);
     },
 
     onPromptButtonClicked: function(event) {
       event.preventDefault();
-      //tab index preservation, notify must close before subsequent callback is triggered
+      // tab index preservation, notify must close before subsequent callback is triggered
       this.closeNotify();
       Adapt.trigger($(event.currentTarget).attr('data-event'), this);
     },
 
     onCloseButtonClicked: function(event) {
       event.preventDefault();
-      //tab index preservation, notify must close before subsequent callback is triggered
+      // tab index preservation, notify must close before subsequent callback is triggered
       this.cancelNotify();
     },
 
@@ -105,14 +105,14 @@ define([
 
     cancelNotify: function() {
       if (this.model.get('_isCancellable') === false) return;
-      //tab index preservation, notify must close before subsequent callback is triggered
+      // tab index preservation, notify must close before subsequent callback is triggered
       this.closeNotify();
       Adapt.trigger('notify:cancelled', this);
     },
 
     resetNotifySize: function() {
       if (!this.hasOpened) return;
-      
+
       $('.notify__popup').removeAttr('style').css({ visibility: 'visible', opacity: 1 });
 
       this.resizeNotify();
@@ -124,14 +124,14 @@ define([
 
       if (notifyHeight >= windowHeight) {
         this.$('.notify__popup').css({
-          'height':'100%',
-          'top':0,
+          'height': '100%',
+          'top': 0,
           'overflow-y': 'scroll',
           '-webkit-overflow-scrolling': 'touch'
         });
       } else {
         this.$('.notify__popup').css({
-          'margin-top': -(notifyHeight/2)
+          'margin-top': -(notifyHeight / 2)
         });
       }
     },
@@ -152,9 +152,10 @@ define([
       if (this.disableAnimation) {
         this.$('.notify__shadow').css('display', 'block');
       } else {
-        this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, {duration: 400, begin: function() {
-          this.$('.notify__shadow').css('display', 'block');
-        }.bind(this)});
+        this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400,
+          begin: function() {
+            this.$('.notify__shadow').css('display', 'block');
+          }.bind(this) });
       }
 
       this.resizeNotify();
@@ -163,12 +164,13 @@ define([
         this.$('.notify__popup').css('visibility', 'visible');
         this.onOpened();
       } else {
-        this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400, begin: function() {
+        this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400,
+          begin: function() {
           // Make sure to make the notify visible and then set
           // focus, disabled scroll and manage tabs
-          this.$('.notify__popup').css('visibility', 'visible');
-          this.onOpened();
-        }.bind(this)});
+            this.$('.notify__popup').css('visibility', 'visible');
+            this.onOpened();
+          }.bind(this) });
       }
     },
 
@@ -186,7 +188,7 @@ define([
     addSubView: function() {
       this.subView = this.model.get('_view');
       if (!this.subView) return;
-      
+
       this.subView.$el.on('resize', this.resetNotifySize);
 
       this.$('.notify__content-inner').append(this.subView.$el);
@@ -215,14 +217,16 @@ define([
         this.$el.css('visibility', 'hidden');
         this.remove();
       } else {
-        this.$('.notify__popup').velocity({ opacity: 0 }, {duration: 400, complete: function() {
-          this.$('.notify__popup').css('visibility', 'hidden');
-        }.bind(this)});
+        this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 400,
+          complete: function() {
+            this.$('.notify__popup').css('visibility', 'hidden');
+          }.bind(this) });
 
-        this.$('.notify__shadow').velocity({ opacity: 0 }, {duration: 400, complete:function() {
-          this.$el.css('visibility', 'hidden');
-          this.remove();
-        }.bind(this)});
+        this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 400,
+          complete: function() {
+            this.$el.css('visibility', 'hidden');
+            this.remove();
+          }.bind(this) });
       }
 
       Adapt.a11y.scrollEnable('body');

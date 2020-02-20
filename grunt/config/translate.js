@@ -1,10 +1,10 @@
 module.exports = function(grunt) {
   return {
-    masterLang: "en",
+    masterLang: 'en',
     targetLang: null,
-    format: "csv",
-    csvDelimiter: ",",
-    "shouldReplaceExisting": false
+    format: 'csv',
+    csvDelimiter: ',',
+    'shouldReplaceExisting': false
   };
 
 };

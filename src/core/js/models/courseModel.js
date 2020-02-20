@@ -15,7 +15,7 @@ define([
       if (this.url) {
         this.fetch({
           error: _.bind(function(model, xhr, options) {
-            console.error("ERROR: unable to load file " + this.url);
+            console.error('ERROR: unable to load file ' + this.url);
           }, this)
         });
       }
@@ -25,7 +25,7 @@ define([
       Adapt.trigger('courseModel:dataLoaded');
     },
 
-    _children: "contentObjects"
+    _children: 'contentObjects'
 
   });
 
