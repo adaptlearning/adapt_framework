@@ -67,6 +67,23 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the component."
     },
+    "_isResetOnRevisit": {
+      "type": "string",
+      "default": "false",
+      "isSetting": true,
+      "inputType": {
+        "type": "Select",
+        "options": [
+          "hard",
+          "soft",
+          true,
+          false
+        ]
+      },
+      "title": "Reset on revisit",
+      "help": "Causes component to be reset if you leave the page and return to it. Soft will allow the user to do the component again, but will not require them to do. Hard / true will reset but will require the user to complete the component again.",
+      "validators": []
+    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,
