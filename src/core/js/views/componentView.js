@@ -6,12 +6,12 @@ define([
   var ComponentView = AdaptView.extend({
 
     attributes: function() {
-      if (!this.model.get("_isA11yRegionEnabled")) {
+      if (!this.model.get('_isA11yRegionEnabled')) {
         return AdaptView.resultExtend('attributes', {}, this);
       }
       return AdaptView.resultExtend('attributes', {
-        "aria-labelledby": this.model.get('_id')+"-heading",
-        "role": "region"
+        'aria-labelledby': this.model.get('_id') + '-heading',
+        'role': 'region'
       }, this);
     },
 
@@ -30,7 +30,7 @@ define([
     },
 
     renderState: function() {
-      Adapt.log.warn("REMOVED - renderState is removed and moved to item title");
+      Adapt.log.warn('REMOVED - renderState is removed and moved to item title');
     },
 
     /**
@@ -86,7 +86,7 @@ define([
     }
 
   }, {
-    type:'component'
+    type: 'component'
   });
 
   return ComponentView;

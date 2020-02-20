@@ -21,7 +21,7 @@ define([
 
     render: function() {
       var data = this.model.toJSON();
-      var template = Handlebars.templates['drawerItem']
+      var template = Handlebars.templates['drawerItem'];
       $(this.el).html(template(data)).appendTo('.drawer__holder');
       return this;
     },

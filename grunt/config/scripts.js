@@ -1,8 +1,8 @@
 module.exports = function(grunt, options) {
   return {
     options: {
-      outputdir: "<%= outputdir %>",
-      sourcedir: "<%= sourcedir %>",
+      outputdir: '<%= outputdir %>',
+      sourcedir: '<%= sourcedir %>',
       plugins: [
         '<%= sourcedir %>components/*/bower.json',
         '<%= sourcedir %>extensions/*/bower.json',
@@ -13,5 +13,5 @@ module.exports = function(grunt, options) {
         return grunt.config('helpers').includedFilter(filepath) && grunt.config('helpers').scriptSafeFilter(filepath);
       }
     }
-  }
+  };
 };

@@ -5,8 +5,8 @@ define([
   var HeadingView = Backbone.View.extend({
 
     initialize: function() {
-      this.listenTo(Adapt, "remove", this.remove);
-      this.listenTo(this.model, "change:_isComplete", this.render);
+      this.listenTo(Adapt, 'remove', this.remove);
+      this.listenTo(this.model, 'change:_isComplete', this.render);
       this.render();
     },
 
@@ -20,10 +20,10 @@ define([
     },
 
     checkCompletion: function() {
-      var isComplete = this.model.get("_isComplete");
+      var isComplete = this.model.get('_isComplete');
       this.$el
-          .toggleClass("is-complete", isComplete)
-          .toggleClass("is-incomplete", !isComplete);
+        .toggleClass('is-complete', isComplete)
+        .toggleClass('is-incomplete', !isComplete);
     }
 
   }, {

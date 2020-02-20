@@ -5,13 +5,13 @@ module.exports = function(grunt) {
 
     var _ = require('underscore');
     var chalk = require('chalk'); // for some nice colouring
-    var path = require("path");
+    var path = require('path');
 
     var listOfCourseFiles = ['course', 'contentObjects', 'articles', 'blocks', 'components'];
     var listOfObjectTypes = ['course', 'menu', 'page', 'article', 'block', 'component'];
 
     var jsonext = grunt.config('jsonext');
-    var sourcedir = grunt.option("outputdir") || grunt.config('sourcedir');
+    var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
 
     // Go through each course folder inside the <%= sourcedir %>course directory
     grunt.file.expand({
@@ -24,26 +24,26 @@ module.exports = function(grunt) {
       listOfCourseFiles.forEach(function(jsonFileName) {
         var currentJson = grunt.file.readJSON(path + '/' + jsonFileName + '.' + jsonext);
 
-        //collect all course items in a single array
+        // collect all course items in a single array
         switch (jsonFileName) {
-          case "course":
-            //course file is a single courseItemObject
+          case 'course':
+            // course file is a single courseItemObject
             courseItemObjects.push(currentJson);
             break;
           default:
-            //all other files are arrays of courseItemObjects
+            // all other files are arrays of courseItemObjects
             courseItemObjects = courseItemObjects.concat(currentJson);
             break;
         }
 
       });
 
-      //index and group the courseItemObjects
-      var idIndex = _.indexBy(courseItemObjects, "_id");
-      var idGroups = _.groupBy(courseItemObjects, "_id");
-      var parentIdGroups = _.groupBy(courseItemObjects, "_parentId");
+      // index and group the courseItemObjects
+      var idIndex = _.indexBy(courseItemObjects, '_id');
+      var idGroups = _.groupBy(courseItemObjects, '_id');
+      var parentIdGroups = _.groupBy(courseItemObjects, '_parentId');
 
-      //setup error collection arrays
+      // setup error collection arrays
       var orphanedIds = [];
       var emptyIds = [];
       var duplicateIds = [];
@@ -60,25 +60,25 @@ module.exports = function(grunt) {
         var isBranchType = typeIndex < listOfObjectTypes.length - 1;
         var isLeafType = !isRootType && !isBranchType;
 
-        if (!isLeafType) { //(course, contentObjects, articles, blocks)
-          if (parentIdGroups[id] === undefined) emptyIds.push(id); //item has no children
+        if (!isLeafType) { // (course, contentObjects, articles, blocks)
+          if (parentIdGroups[id] === undefined) emptyIds.push(id); // item has no children
         }
 
-        if (!isRootType) { //(contentObjects, articles, blocks, components)
-          if (idGroups[id].length > 1) duplicateIds.push(id); //id has more than one item
-          if (!parentId || idIndex[parentId] === undefined) orphanedIds.push(id); //item has no defined parent id or the parent id doesn't exist
-          if (idIndex[parentId] === undefined) missingIds.push(parentId); //referenced parent item does not exist
+        if (!isRootType) { // (contentObjects, articles, blocks, components)
+          if (idGroups[id].length > 1) duplicateIds.push(id); // id has more than one item
+          if (!parentId || idIndex[parentId] === undefined) orphanedIds.push(id); // item has no defined parent id or the parent id doesn't exist
+          if (idIndex[parentId] === undefined) missingIds.push(parentId); // referenced parent item does not exist
         }
 
       }
 
-      //output only unique entries
+      // output only unique entries
       orphanedIds = _.uniq(orphanedIds);
       emptyIds = _.uniq(emptyIds);
       duplicateIds = _.uniq(duplicateIds);
       missingIds = _.uniq(missingIds);
 
-      //output for each type of error
+      // output for each type of error
       var hasErrored = false;
       if (orphanedIds.length > 0) {
         hasErrored = true;
@@ -100,7 +100,7 @@ module.exports = function(grunt) {
         grunt.log.writeln(chalk.yellow('Duplicate _ids: ' + duplicateIds));
       }
 
-      //if any error has occured, stop processing.
+      // if any error has occured, stop processing.
       if (hasErrored) {
         grunt.fail.fatal('Oops, looks like you have some json errors.');
       } else {
@@ -110,4 +110,4 @@ module.exports = function(grunt) {
     });
 
   });
-}
+};

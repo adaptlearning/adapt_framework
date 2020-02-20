@@ -8,7 +8,7 @@ define([
 
     defaults: {
       _canShowFeedback: true,
-      _classes: "",
+      _classes: '',
       _canReset: false,
       _isComplete: false,
       _isInteractionComplete: false,
@@ -33,7 +33,8 @@ define([
 
     bubblingEvents: [
       'change:_isComplete',
-      'change:_isInteractionComplete'
+      'change:_isInteractionComplete',
+      'change:_isActive'
     ],
 
     initialize: function () {
@@ -93,7 +94,7 @@ define([
       );
 
       // Listen to model changes, trigger trackable state change when appropriate
-      this.listenTo(this, "change", function(model, value) {
+      this.listenTo(this, 'change', function(model, value) {
 
         // Skip if trigger queued or adapt hasn't started yet
         if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
@@ -105,7 +106,7 @@ define([
         var changedPropertyNames = _.keys(model.changed);
         var isTrackable = _.find(changedPropertyNames, function(item, index) {
           return _.contains(trackablePropertyNames, item);
-        }.bind(this));
+        });
 
         if (isTrackable) {
           // Trigger trackable state change
@@ -121,11 +122,11 @@ define([
       }
 
       this.listenTo(children, {
-        "all": this.onAll,
-        "bubble": this.bubble,
-        "change:_isReady": this.checkReadyStatus,
-        "change:_isComplete": this.onIsComplete,
-        "change:_isInteractionComplete": this.checkInteractionCompletionStatus
+        'all': this.onAll,
+        'bubble': this.bubble,
+        'change:_isReady': this.checkReadyStatus,
+        'change:_isComplete': this.onIsComplete,
+        'change:_isInteractionComplete': this.checkInteractionCompletionStatus
       });
     },
 
@@ -133,7 +134,7 @@ define([
 
     getTrackableState: function() {
 
-      var trackable = this.resultExtend("trackable", []);
+      var trackable = this.resultExtend('trackable', []);
       var json = this.toJSON();
 
       var args = trackable;
@@ -145,7 +146,7 @@ define([
 
     setTrackableState: function(state) {
 
-      var trackable = this.resultExtend("trackable", []);
+      var trackable = this.resultExtend('trackable', []);
 
       var args = trackable;
       args.unshift(state);
@@ -160,29 +161,29 @@ define([
 
     triggerTrackableState: function() {
 
-      Adapt.trigger("state:change", this, this.getTrackableState());
+      Adapt.trigger('state:change', this, this.getTrackableState());
 
     },
 
     reset: function(type, force) {
-      if (!this.get("_canReset") && !force) return;
+      if (!this.get('_canReset') && !force) return;
 
       type = type || true;
 
       switch (type) {
-      case "hard": case true:
-        this.set({
-          _isEnabled: true,
-          _isComplete: false,
-          _isInteractionComplete: false
-        });
-        break;
-      case "soft":
-        this.set({
-          _isEnabled: true,
-          _isInteractionComplete: false
-        });
-        break;
+        case 'hard': case true:
+          this.set({
+            _isEnabled: true,
+            _isComplete: false,
+            _isInteractionComplete: false
+          });
+          break;
+        case 'soft':
+          this.set({
+            _isEnabled: true,
+            _isInteractionComplete: false
+          });
+          break;
       }
     },
 
@@ -208,13 +209,13 @@ define([
     },
 
     checkCompletionStatus: function () {
-      //defer to allow other change:_isComplete handlers to fire before cascading to parent
+      // defer to allow other change:_isComplete handlers to fire before cascading to parent
       Adapt.checkingCompletion();
       _.defer(this.checkCompletionStatusFor.bind(this), '_isComplete');
     },
 
     checkInteractionCompletionStatus: function () {
-      //defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
+      // defer to allow other change:_isInteractionComplete handlers to fire before cascading to parent
       Adapt.checkingCompletion();
       _.defer(this.checkCompletionStatusFor.bind(this), '_isInteractionComplete');
     },
@@ -227,11 +228,11 @@ define([
      * @param {string} [completionAttribute] Either "_isComplete" or "_isInteractionComplete". Defaults to "_isComplete" if not supplied.
      */
     checkCompletionStatusFor: function(completionAttribute) {
-      if (!completionAttribute) completionAttribute = "_isComplete";
+      if (!completionAttribute) completionAttribute = '_isComplete';
 
       var completed = false;
       var children = this.getAvailableChildModels();
-      var requireCompletionOf = this.get("_requireCompletionOf");
+      var requireCompletionOf = this.get('_requireCompletionOf');
 
       if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
         completed = (_.find(children, function(child) {
@@ -285,12 +286,12 @@ define([
         descendants.slice(0, -1)
       ];
       if (descendants === 'contentObjects') {
-        types.push.apply(types, ['page', 'menu']);
+        types.push('page', 'menu');
       }
 
       var allDescendantsModels = this.getAllDescendantModels();
       var returnedDescendants = allDescendantsModels.filter(function(model) {
-        return _.contains(types, model.get("_type"));
+        return _.contains(types, model.get('_type'));
       });
 
       if (!options) {
@@ -330,7 +331,7 @@ define([
 
       var descendants = [];
 
-      if (this.get("_type") === "component") {
+      if (this.get('_type') === 'component') {
         descendants.push(this);
         return descendants;
       }
@@ -340,7 +341,7 @@ define([
       for (var i = 0, l = children.models.length; i < l; i++) {
 
         var child = children.models[i];
-        if (child.get("_type") === "component") {
+        if (child.get('_type') === 'component') {
 
           descendants.push(child);
           continue;
@@ -383,12 +384,12 @@ define([
      */
     findRelativeModel: function(relativeString, options) {
 
-      var types = [ "menu", "page", "article", "block", "component" ];
+      var types = [ 'menu', 'page', 'article', 'block', 'component' ];
 
       options = options || {};
 
-      var modelId = this.get("_id");
-      var modelType = this.get("_type");
+      var modelId = this.get('_id');
+      var modelType = this.get('_type');
 
       // return a model relative to the specified one if opinionated
       var rootModel = Adapt.course;
@@ -426,13 +427,13 @@ define([
       }
 
       // filter if opinionated
-      if (typeof options.filter === "function") {
+      if (typeof options.filter === 'function') {
         pageDescendants = _.filter(pageDescendants, options.filter);
       }
 
       // find current index in array
       var modelIndex = _.findIndex(pageDescendants, function(pageDescendant) {
-        if (pageDescendant.get("_id") === modelId) {
+        if (pageDescendant.get('_id') === modelId) {
           return true;
         }
         return false;
@@ -443,7 +444,7 @@ define([
         // normalize offset position to allow for overflow looping
         var typeCounts = {};
         pageDescendants.forEach(function(model) {
-          var type = model.get("_type");
+          var type = model.get('_type');
           typeCounts[type] = typeCounts[type] || 0;
           typeCounts[type]++;
         });
@@ -456,9 +457,9 @@ define([
 
       for (var i = modelIndex, l = pageDescendants.length; i < l; i++) {
         var descendant = pageDescendants[i];
-        if (descendant.get("_type") === relativeDescriptor.type) {
+        if (descendant.get('_type') === relativeDescriptor.type) {
           if (movementCount === moveBy) {
-            return Adapt.findById(descendant.get("_id"));
+            return Adapt.findById(descendant.get('_id'));
           }
           movementCount++;
         }
@@ -468,19 +469,19 @@ define([
     },
 
     getChildren: function () {
-      if (this.get("_children")) return this.get("_children");
+      if (this.get('_children')) return this.get('_children');
 
       var childrenCollection;
 
       if (!this._children) {
         childrenCollection = new Backbone.Collection();
       } else {
-        var children = Adapt[this._children].where({_parentId: this.get("_id")});
+        var children = Adapt[this._children].where({ _parentId: this.get('_id') });
         childrenCollection = new Backbone.Collection(children);
       }
 
-      if (this.get('_type') == 'block' &&
-        childrenCollection.length == 2 &&
+      if (this.get('_type') === 'block' &&
+        childrenCollection.length === 2 &&
         childrenCollection.models[0].get('_layout') !== 'left' &&
         this.get('_sortComponents') !== false) {
         // Components may have a 'left' or 'right' _layout,
@@ -490,7 +491,7 @@ define([
         childrenCollection.sort();
       }
 
-      this.set("_children", childrenCollection);
+      this.set('_children', childrenCollection);
 
       return childrenCollection;
     },
@@ -502,12 +503,12 @@ define([
     },
 
     getParent: function () {
-      if (this.get("_parent")) return this.get("_parent");
-      if (this._parent === "course") {
+      if (this.get('_parent')) return this.get('_parent');
+      if (this._parent === 'course') {
         return Adapt.course;
       }
-      var parent = Adapt.findById(this.get("_parentId"));
-      this.set("_parent", parent);
+      var parent = Adapt.findById(this.get('_parentId'));
+      this.set('_parent', parent);
 
       // returns a parent model
       return parent;
@@ -519,7 +520,7 @@ define([
 
       if (shouldIncludeChild) parents.push(context);
 
-      while (context.has("_parentId")) {
+      while (context.has('_parentId')) {
         context = context.getParent();
         parents.push(context);
       }
@@ -532,12 +533,12 @@ define([
       if (!passSiblingsAndIncludeSelf) {
         // returns a collection of siblings excluding self
         if (this._hasSiblingsAndSelf === false) {
-          return this.get("_siblings");
+          return this.get('_siblings');
         }
         siblings = _.reject(Adapt[this._siblings].where({
           _parentId: this.get('_parentId')
         }), function (model) {
-          return model.get('_id') == this.get('_id');
+          return model.get('_id') === this.get('_id');
         }.bind(this));
 
         this._hasSiblingsAndSelf = false;
@@ -545,17 +546,17 @@ define([
       } else {
         // returns a collection of siblings including self
         if (this._hasSiblingsAndSelf) {
-          return this.get("_siblings");
+          return this.get('_siblings');
         }
 
         siblings = Adapt[this._siblings].where({
-          _parentId: this.get("_parentId")
+          _parentId: this.get('_parentId')
         });
         this._hasSiblingsAndSelf = true;
       }
 
       var siblingsCollection = new Backbone.Collection(siblings);
-      this.set("_siblings", siblingsCollection);
+      this.set('_siblings', siblingsCollection);
       return siblingsCollection;
     },
 
@@ -581,30 +582,30 @@ define([
      */
     setOptional: function(value) {
       Adapt.log.warn("DEPRECATED - Use model.set('_isOptional', value) as setOptional() may be removed in the future");
-      this.set({_isOptional: value});
+      this.set({ _isOptional: value });
     },
 
     checkLocking: function() {
-      var lockType = this.get("_lockType");
+      var lockType = this.get('_lockType');
 
       if (!lockType) return;
 
       switch (lockType) {
-        case "sequential":
+        case 'sequential':
           this.setSequentialLocking();
           break;
-        case "unlockFirst":
+        case 'unlockFirst':
           this.setUnlockFirstLocking();
           break;
-        case "lockLast":
+        case 'lockLast':
           this.setLockLastLocking();
           break;
-        case "custom":
+        case 'custom':
           this.setCustomLocking();
           break;
         default:
-          console.warn("AdaptModel.checkLocking: unknown _lockType \"" +
-            lockType + "\" found on " + this.get("_id"));
+          console.warn('AdaptModel.checkLocking: unknown _lockType "' +
+            lockType + '" found on ' + this.get('_id'));
       }
     },
 
@@ -612,16 +613,16 @@ define([
       var children = this.getAvailableChildModels();
 
       for (var i = 1, j = children.length; i < j; i++) {
-        children[i].set("_isLocked", !children[i - 1].get("_isComplete"));
+        children[i].set('_isLocked', !children[i - 1].get('_isComplete'));
       }
     },
 
     setUnlockFirstLocking: function() {
       var children = this.getAvailableChildModels();
-      var isFirstChildComplete = children[0].get("_isComplete");
+      var isFirstChildComplete = children[0].get('_isComplete');
 
       for (var i = 1, j = children.length; i < j; i++) {
-        children[i].set("_isLocked", !isFirstChildComplete);
+        children[i].set('_isLocked', !isFirstChildComplete);
       }
     },
 
@@ -630,12 +631,12 @@ define([
       var lastIndex = children.length - 1;
 
       for (var i = lastIndex - 1; i >= 0; i--) {
-        if (!children[i].get("_isComplete")) {
-          return children[lastIndex].set("_isLocked", true);
+        if (!children[i].get('_isComplete')) {
+          return children[lastIndex].set('_isLocked', true);
         }
       }
 
-      children[lastIndex].set("_isLocked", false);
+      children[lastIndex].set('_isLocked', false);
     },
 
     setCustomLocking: function() {
@@ -643,7 +644,7 @@ define([
 
       for (var i = 0, j = children.length; i < j; i++) {
         var child = children[i];
-        child.set("_isLocked", this.shouldLock(child));
+        child.set('_isLocked', this.shouldLock(child));
 
         if (child.get('_type') === 'menu') {
           child.checkLocking();
@@ -653,7 +654,7 @@ define([
     },
 
     shouldLock: function(child) {
-      var lockedBy = child.get("_lockedBy");
+      var lockedBy = child.get('_lockedBy');
 
       if (!lockedBy) return false;
 
@@ -663,12 +664,11 @@ define([
         try {
           var model = Adapt.findById(id);
 
-          if (!model.get("_isAvailable")) continue;
-          if (!model.get("_isComplete")) return true;
-        }
-        catch (e) {
-          console.warn("AdaptModel.shouldLock: unknown _lockedBy ID \"" + id +
-            "\" found on " + child.get("_id"));
+          if (!model.get('_isAvailable')) continue;
+          if (!model.get('_isComplete')) return true;
+        } catch (e) {
+          console.warn('AdaptModel.shouldLock: unknown _lockedBy ID "' + id +
+            '" found on ' + child.get('_id'));
         }
       }
 
@@ -690,9 +690,9 @@ define([
      * @param {*} value New property value
      */
     onAll: function(type, model, value) {
-        if (!_.contains(this.bubblingEvents, type)) return;
-        var event = new ModelEvent(type, model, value);
-        this.bubble(event);
+      if (!_.contains(this.bubblingEvents, type)) return;
+      var event = new ModelEvent(type, model, value);
+      this.bubble(event);
     },
 
     /**
@@ -700,9 +700,9 @@ define([
      * @param {ModelEvent} event
      */
     bubble: function(event) {
-        if (!event.canBubble) return;
-        event.addPath(this);
-        this.trigger("bubble:" + event.type + " bubble", event);
+      if (!event.canBubble) return;
+      event.addPath(this);
+      this.trigger('bubble:' + event.type + ' bubble', event);
     }
 
   });

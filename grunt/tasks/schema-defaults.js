@@ -4,28 +4,28 @@ module.exports = function(grunt) {
     var path = require('path');
     var Helpers = require('../helpers')(grunt);
 
-    //import underscore and underscore-deep-extend
+    // import underscore and underscore-deep-extend
     var _ = require('underscore');
     _.mixin({
       deepExtend: require('underscore-deep-extend')(_)
     });
 
-    //list all plugin types
+    // list all plugin types
     var pluginTypes = ['components', 'extensions', 'menu', 'theme'];
-    //list authoring tool plugin categories
+    // list authoring tool plugin categories
     var pluginCategories = ['component', 'extension', 'menu', 'theme'];
 
-    //setup defaults object
+    // setup defaults object
     var defaultsObject = {
       _globals: {}
     };
     var globalsObject = defaultsObject._globals;
 
-    //iterate through plugin types
+    // iterate through plugin types
     _.each(pluginTypes, function(pluginType, pluginTypeIndex) {
       var pluginCategory = pluginCategories[pluginTypeIndex];
 
-      //iterate through plugins in plugin type folder
+      // iterate through plugins in plugin type folder
       var pluginTypeGlob = path.join(grunt.config('sourcedir'), pluginType, '*');
       grunt.file.expand({
         filter: 'isDirectory'
@@ -40,20 +40,20 @@ module.exports = function(grunt) {
 
         if (!fs.existsSync(currentSchemaPath) || !fs.existsSync(currentBowerPath)) return;
 
-        //read bower.json and properties.schema for current plugin
+        // read bower.json and properties.schema for current plugin
         var currentSchemaJson = grunt.file.readJSON(currentSchemaPath);
         var currentBowerJson = grunt.file.readJSON(currentBowerPath);
 
         if (!currentSchemaJson || !currentBowerJson) return;
 
-        //get plugin name from schema
+        // get plugin name from schema
         var currentPluginName = currentBowerJson[pluginCategory];
 
         if (!currentPluginName || !currentSchemaJson.globals) return;
 
-        //iterate through schema globals attributes
+        // iterate through schema globals attributes
         _.each(currentSchemaJson.globals, function(item, attributeName) {
-          //translate schema attribute into globals object
+          // translate schema attribute into globals object
           var pluginTypeDefaults = globalsObject['_' + pluginType] = globalsObject['_' + pluginType] || {};
           var pluginDefaults = pluginTypeDefaults['_' + currentPluginName] = pluginTypeDefaults['_' + currentPluginName] || {};
 
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
 
     var sourcedir = grunt.option('outputdir') || grunt.config('sourcedir');
 
-    //iterate through language folders
+    // iterate through language folders
     var languageFolderGlob = path.join(sourcedir, 'course/*');
     grunt.file.expand({
       filter: 'isDirectory'
@@ -82,4 +82,4 @@ module.exports = function(grunt) {
       grunt.file.write(outputDirCourseJson, JSON.stringify(currentCourseJson, null, 4));
     });
   });
-}
+};

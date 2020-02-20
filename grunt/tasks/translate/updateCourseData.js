@@ -1,19 +1,19 @@
-var _ = require("underscore");
+var _ = require('underscore');
 
 module.exports = function(grunt) {
 
-  grunt.registerTask("_updateCourseData", function() {
+  grunt.registerTask('_updateCourseData', function() {
 
     replaceCourseData();
 
     function replaceCourseData() {
 
-      global.translate.importData = _.sortBy(global.translate.importData, "file");
+      global.translate.importData = _.sortBy(global.translate.importData, 'file');
 
       for (var i = 0; i < global.translate.importData.length; i++) {
         switch (global.translate.importData[i].file) {
-          case "course":
-          case "config":
+          case 'course':
+          case 'config':
             _replaceData(false, global.translate.importData[i]);
             break;
           default:
@@ -35,8 +35,8 @@ module.exports = function(grunt) {
     }
 
     function _setValueByPath(obj, value, path) {
-      path = path.split("/").slice(1, -1);
-      for (i = 0; i < path.length - 1; i++) {
+      path = path.split('/').slice(1, -1);
+      for (var i = 0; i < path.length - 1; i++) {
         // if path doesn't exist, add it, assume object
         obj[path[i]] = obj[path[i]] || {};
         obj = obj[path[i]];

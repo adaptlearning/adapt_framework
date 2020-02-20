@@ -98,7 +98,7 @@ define([
       data && log.push.apply(log, data);
 
       // is there a matching console method we can use e.g. console.error()?
-      if(console[level.asLowerCase]) {
+      if (console[level.asLowerCase]) {
         console[level.asLowerCase].apply(console, log);
       } else {
         console.log.apply(console, log);

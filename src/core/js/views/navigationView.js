@@ -4,14 +4,14 @@ define([
 
   var NavigationView = Backbone.View.extend({
 
-    className: "nav",
+    className: 'nav',
 
     initialize: function() {
       this.listenToOnce(Adapt, {
         'courseModel:dataLoading': this.remove
       });
       this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
-      this.template = "nav";
+      this.template = 'nav';
       this.preRender();
     },
 
@@ -32,8 +32,8 @@ define([
       var template = Handlebars.templates[this.template];
       this.$el.html(template(
         {
-          _globals: Adapt.course.get("_globals"),
-          _accessibility: Adapt.config.get("_accessibility")
+          _globals: Adapt.course.get('_globals'),
+          _accessibility: Adapt.config.get('_accessibility')
         }
       )).insertBefore('#app');
 
@@ -51,7 +51,7 @@ define([
     },
 
     hideNavigationButton: function(model) {
-      if (model.get('_type') === "course") {
+      if (model.get('_type') === 'course') {
         $('.nav__back-btn, .nav__home-btn').addClass('u-display-none');
       } else {
         this.showNavigationButton();

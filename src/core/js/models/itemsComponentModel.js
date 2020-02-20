@@ -16,6 +16,7 @@ define([
       this.setUpItems();
 
       this.listenTo(this.get('_children'), {
+        'all': this.onAll,
         'change:_isVisited': this.checkCompletionStatus
       });
     },

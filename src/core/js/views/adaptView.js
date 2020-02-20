@@ -6,7 +6,7 @@ define([
 
     attributes: function() {
       return {
-        "data-adapt-id": this.model.get('_id')
+        'data-adapt-id': this.model.get('_id')
       };
     },
 
@@ -17,7 +17,7 @@ define([
         'change:_isHidden': this.toggleHidden,
         'change:_isComplete': this.onIsCompleteChange
       });
-      this.model.set( {
+      this.model.set({
         '_globals': Adapt.course.get('_globals'),
         '_isReady': false
       });
@@ -50,7 +50,7 @@ define([
 
       _.defer(function() {
         // don't call postRender after remove
-        if(this._isRemoved) return;
+        if (this._isRemoved) return;
 
         this.postRender();
         Adapt.trigger(this.constructor.type + 'View:postRender', this);
@@ -76,7 +76,7 @@ define([
 
         if (m.percentInviewVertical < minVerticalInview) return;
 
-        this.$el.addClass( onscreen._classes + '-after' || 'onscreen' ).off('onscreen.adaptView');
+        this.$el.addClass(onscreen._classes + '-after' || 'onscreen').off('onscreen.adaptView');
 
       }.bind(this));
     },
@@ -90,16 +90,16 @@ define([
         var model = models[i];
         if (!model.get('_isAvailable')) continue;
 
-        nthChild ++;
-        model.set("_nthChild", nthChild);
+        nthChild++;
+        model.set('_nthChild', nthChild);
 
-        var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get("_component")];
+        var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get('_component')];
         var ChildView = ViewModelObject.view || ViewModelObject;
 
         if (!ChildView) {
-          throw 'The component \'' + models[i].attributes._id + '\'' +
+          throw new Error('The component \'' + models[i].attributes._id + '\'' +
           ' (\'' + models[i].attributes._component + '\')' +
-          ' has not been installed, and so is not available in your project.';
+          ' has not been installed, and so is not available in your project.');
         }
 
         var $parentContainer = this.$(this.constructor.childContainer);
@@ -136,7 +136,7 @@ define([
     },
 
     resetCompletionStatus: function(type) {
-      if (!this.model.get("_canReset")) return;
+      if (!this.model.get('_canReset')) return;
 
       var descendantComponents = this.model.findDescendantModels('components');
       if (descendantComponents.length === 0) {
@@ -198,7 +198,7 @@ define([
       this.$el.addClass('u-display-none');
     },
 
-    onIsCompleteChange: function(model, isComplete){
+    onIsCompleteChange: function(model, isComplete) {
       this.$el.toggleClass('is-complete', isComplete);
     },
 
@@ -206,7 +206,7 @@ define([
       return this.childViews;
     }
 
-  },{
+  }, {
     className: ''
   });
 

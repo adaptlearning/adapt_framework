@@ -4,22 +4,23 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
     var less = require('less');
     var _ = require('underscore');
-    var path = require("path");
+    var path = require('path');
     var Visitors = require('./less/visitors');
     var done = this.async();
     var options = this.options({});
 
-    var rootPath = path.join(path.resolve(options.baseUrl), "../")
-      .replace(convertSlashes, "/");
+    var rootPath = path.join(path.resolve(options.baseUrl), '../')
+      .replace(convertSlashes, '/');
     var cwd = process.cwd();
 
-    var imports = "";
+    var imports = '';
+    var src = '';
 
     if (options.src && options.config) {
       var screenSize = {
-        "small": 520,
-        "medium": 760,
-        "large": 900
+        'small': 520,
+        'medium': 760,
+        'large': 900
       };
       try {
         var configjson = JSON.parse(grunt.file.read(options.config)
@@ -49,12 +50,12 @@ module.exports = function(grunt) {
     }
 
     if (options.mandatory) {
-      for (var i = 0, l = options.mandatory.length; i < l; i++) {
-        var src = path.join(cwd, options.mandatory[i]);
+      for (let i = 0, l = options.mandatory.length; i < l; i++) {
+        src = path.join(cwd, options.mandatory[i]);
         grunt.file.expand({
-            follow: true,
-            order: options.order
-          }, src)
+          follow: true,
+          order: options.order
+        }, src)
           .forEach(function(lessPath) {
             lessPath = path.normalize(lessPath);
             var trimmed = lessPath.substr(rootPath.length);
@@ -64,13 +65,13 @@ module.exports = function(grunt) {
     }
 
     if (options.src) {
-      for (var i = 0, l = options.src.length; i < l; i++) {
-        var src = path.join(cwd, options.src[i]);
+      for (let i = 0, l = options.src.length; i < l; i++) {
+        src = path.join(cwd, options.src[i]);
         grunt.file.expand({
-            follow: true,
-            filter: options.filter,
-            order: options.order
-          }, src)
+          follow: true,
+          filter: options.filter,
+          order: options.order
+        }, src)
           .forEach(function(lessPath) {
             lessPath = path.normalize(lessPath);
             var trimmed = lessPath.substr(rootPath.length);
@@ -82,28 +83,32 @@ module.exports = function(grunt) {
     var sourcemaps;
     if (options.sourcemaps) {
       sourcemaps = {
-        "sourceMap": {
-          "sourceMapFileInline": false,
-          "outputSourceFiles": true,
-          "sourceMapBasepath": "src",
-          "sourceMapURL": options.mapFilename,
+        'sourceMap': {
+          'sourceMapFileInline': false,
+          'outputSourceFiles': true,
+          'sourceMapBasepath': 'src',
+          'sourceMapURL': options.mapFilename
         }
       };
     } else {
       var sourceMapPath = path.join(options.dest, options.mapFilename);
-      if (grunt.file.exists(sourceMapPath)) grunt.file.delete(sourceMapPath, {
-        force: true
-      });
-      if (grunt.file.exists(sourceMapPath + ".imports")) grunt.file.delete(sourceMapPath + ".imports", {
-        force: true
-      });
+      if (grunt.file.exists(sourceMapPath)) {
+        grunt.file.delete(sourceMapPath, {
+          force: true
+        });
+      }
+      if (grunt.file.exists(sourceMapPath + '.imports')) {
+        grunt.file.delete(sourceMapPath + '.imports', {
+          force: true
+        });
+      }
     }
 
     var visitors = new Visitors(options);
 
     var lessOptions = _.extend({
-      "compress": options.compress,
-      "plugins": [
+      'compress': options.compress,
+      'plugins': [
         visitors
       ]
     }, sourcemaps);
@@ -122,10 +127,10 @@ module.exports = function(grunt) {
       grunt.file.write(path.join(options.dest, options.cssFilename), output.css);
 
       if (output.map) {
-        grunt.file.write(path.join(options.dest, options.mapFilename) + ".imports", imports);
+        grunt.file.write(path.join(options.dest, options.mapFilename) + '.imports', imports);
         grunt.file.write(path.join(options.dest, options.mapFilename), output.map);
       }
       done();
     }
   });
-}
+};

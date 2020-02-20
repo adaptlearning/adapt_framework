@@ -1,7 +1,7 @@
 module.exports = function(grunt, options) {
 
   var port = grunt.option('port') || 9001;
-  var host = grunt.option('host') || "localhost";
+  var host = grunt.option('host') || 'localhost';
 
   return {
     server: {
@@ -20,5 +20,5 @@ module.exports = function(grunt, options) {
         open: 'http://' + host + ':' + port + '/scorm_test_harness.html'
       }
     }
-  }
-}
+  };
+};

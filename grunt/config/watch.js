@@ -61,11 +61,11 @@ module.exports = {
     tasks: ['newer:copy:themeFonts']
   },
   libraries: {
-    files: ['<%= sourcedir %>core/libraries/**/*','<%= sourcedir %>*/*/libraries/**/*'],
+    files: ['<%= sourcedir %>core/libraries/**/*', '<%= sourcedir %>*/*/libraries/**/*'],
     tasks: ['newer:copy:libraries']
   },
   required: {
-    files: ['<%= sourcedir %>core/required/**/*','<%= sourcedir %>*/*/required/**/*'],
+    files: ['<%= sourcedir %>core/required/**/*', '<%= sourcedir %>*/*/required/**/*'],
     tasks: ['newer:copy:required']
   }
-}
+};

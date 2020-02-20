@@ -6,7 +6,7 @@ define([
 
     $html: null,
     $app: null,
-    isLegacyScrolling : true,
+    isLegacyScrolling: true,
 
     initialize: function() {
       this._checkApp();
@@ -20,11 +20,11 @@ define([
       this.$app = $('<div id="app">');
       $('body').append(this.$app);
       this.$app.append($('#wrapper'));
-      Adapt.log.warn("UPDATE - Your html file needs to have #app adding. See https://github.com/adaptlearning/adapt_framework/issues/2168");
+      Adapt.log.warn('UPDATE - Your html file needs to have #app adding. See https://github.com/adaptlearning/adapt_framework/issues/2168');
     },
 
     _loadConfig: function() {
-      var config = Adapt.config.get("_scrollingContainer");
+      var config = Adapt.config.get('_scrollingContainer');
       if (!config || !config._isEnabled) return;
       var limitTo = config._limitToSelector;
       var isIncluded = !limitTo || (this.$html.is(limitTo) || this.$html.hasClass(limitTo));
@@ -37,7 +37,7 @@ define([
     },
 
     _addStyling: function() {
-      this.$html.addClass("adapt-scrolling");
+      this.$html.addClass('adapt-scrolling');
     },
 
     _fixJQuery: function() {
@@ -95,7 +95,7 @@ define([
         app.scrollLeft = x || 0;
       };
       var $window = $(window);
-      this.$app.on("scroll", function() {
+      this.$app.on('scroll', function() {
         $window.scroll();
       });
     }
@@ -105,18 +105,19 @@ define([
   Adapt.scrolling = new Scrolling();
 
   Adapt.scrollTo = function(selector, settings) {
+    if (!settings) {
+      settings = {};
+    }
     // Get the current location - this is set in the router
     var location = (Adapt.location._contentType) ?
       Adapt.location._contentType : Adapt.location._currentLocation;
     // Trigger initial scrollTo event
-    Adapt.trigger(location+':scrollTo', selector);
-    //Setup duration variable passed upon arguments
-    var settings = (settings || {});
+    Adapt.trigger(location + ':scrollTo', selector);
+    // Setup duration variable passed upon argumentsß
     var disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
     if (disableScrollToAnimation) {
       settings.duration = 0;
-    }
-    else if (!settings.duration) {
+    } else if (!settings.duration) {
       settings.duration = $.scrollTo.defaults.duration;
     }
 
@@ -133,9 +134,9 @@ define([
     if (settings.offset.top === undefined) settings.offset.top = offsetTop;
     if (settings.offset.left === undefined) settings.offset.left = 0;
 
-    if (settings.offset.left === 0) settings.axis = "y";
+    if (settings.offset.left === 0) settings.axis = 'y';
 
-    if (Adapt.get("_canScroll") !== false) {
+    if (Adapt.get('_canScroll') !== false) {
       // Trigger scrollTo plugin
       $.scrollTo(selector, settings);
     }
@@ -144,8 +145,8 @@ define([
     // 300 milliseconds added to make sure queue has finished
     _.delay(function() {
       Adapt.a11y.focusNext(selector);
-      Adapt.trigger(location+':scrolledTo', selector);
-    }, settings.duration+300);
+      Adapt.trigger(location + ':scrolledTo', selector);
+    }, settings.duration + 300);
   };
 
 });

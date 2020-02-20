@@ -9,7 +9,7 @@ define([
     attributes: function() {
       return AdaptView.resultExtend('attributes', {
         'role': 'main',
-        'aria-labelledby': this.model.get('_id')+'-heading'
+        'aria-labelledby': this.model.get('_id') + '-heading'
       }, this);
     },
 

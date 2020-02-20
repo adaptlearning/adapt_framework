@@ -23,7 +23,7 @@ define([
 
     onBuildDataLoaded: function() {
       $('html').attr('data-adapt-framework-version', Adapt.build.get('package').version);
-      Adapt.config = new ConfigModel(null, {url: 'course/config.' + Adapt.build.get('jsonext'), reset:true});
+      Adapt.config = new ConfigModel(null, { url: 'course/config.' + Adapt.build.get('jsonext'), reset: true });
       Adapt.config.on({
         'change:_activeLanguage': this.onLanguageChange.bind(this),
         'change:_defaultDirection': this.onDirectionChange.bind(this)
@@ -66,49 +66,50 @@ define([
       // All code that needs to run before adapt starts should go here
       var language = Adapt.config.get('_activeLanguage');
       var jsonext = Adapt.build.get('jsonext');
-      var courseFolder = 'course/' + language +'/';
+      var courseFolder = 'course/' + language + '/';
 
       $('html').attr('lang', language);
 
-      Adapt.course = new CourseModel(null, {url:courseFolder + 'course.'+jsonext, reset:true});
+      Adapt.course = new CourseModel(null, { url: courseFolder + 'course.' + jsonext, reset: true });
 
       Adapt.contentObjects = new AdaptCollection(null, {
         model: ContentObjectModel,
-        url: courseFolder +'contentObjects.'+jsonext
+        url: courseFolder + 'contentObjects.' + jsonext
       });
 
       Adapt.articles = new AdaptCollection(null, {
         model: ArticleModel,
-        url: courseFolder + 'articles.'+jsonext
+        url: courseFolder + 'articles.' + jsonext
       });
 
       Adapt.blocks = new AdaptCollection(null, {
         model: BlockModel,
-        url: courseFolder + 'blocks.'+jsonext
+        url: courseFolder + 'blocks.' + jsonext
       });
 
       Adapt.components = new AdaptCollection(null, {
         model: function(json) {
 
-          //use view+model object
+          // use view+model object
           var ViewModelObject = Adapt.componentStore[json._component];
 
           if (!ViewModelObject) {
-            throw new Error('One or more components of type "'+json._component+'" were included in the course - but no component of that type is installed...');
+            throw new Error('One or more components of type "' + json._component + '" were included in the course - but no component of that type is installed...');
           }
 
-          //if model defined for component use component model
+          // if model defined for component use component model
           if (ViewModelObject.model) {
+            // eslint-disable-next-line new-cap
             return new ViewModelObject.model(json);
           }
 
           var View = ViewModelObject.view || ViewModelObject;
-          //if question type use question model
+          // if question type use question model
           if (View._isQuestionType) {
             return new QuestionModel(json);
           }
 
-          //otherwise use component model
+          // otherwise use component model
           return new ComponentModel(json);
         },
         url: courseFolder + 'components.' + jsonext
@@ -128,7 +129,7 @@ define([
 
         try {
           Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
-        } catch(e) {
+        } catch (e) {
           Adapt.log.error('Error during app:dataLoading trigger', e);
         }
 
@@ -185,7 +186,7 @@ define([
 
       try {
         Adapt.trigger('app:dataReady');
-      } catch(e) {
+      } catch (e) {
         Adapt.log.error('Error during app:dataReady trigger', e);
       }
 

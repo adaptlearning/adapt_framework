@@ -102,7 +102,7 @@ define([
       var pluginLocation = pluginName;
 
       if (location) {
-        pluginLocation = pluginLocation + '-' +location;
+        pluginLocation = pluginLocation + '-' + location;
 
         if (action) {
           pluginLocation = pluginLocation + '-' + action;
@@ -122,7 +122,7 @@ define([
         // Do not allow access to the menu when the start controller is enabled.
         var startController = Adapt.course.get('_start');
 
-        if (startController._isEnabled == true && startController._isMenuDisabled == true) {
+        if (startController._isEnabled === true && startController._isMenuDisabled === true) {
           return;
         }
       }
@@ -162,7 +162,7 @@ define([
         case 'menu':
           if (currentModel.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
             Adapt.log.warn('Unable to navigate to locked id: ' + id);
-            Adapt.router.set('_canNavigate', true, {pluginName: 'adapt'});
+            Adapt.router.set('_canNavigate', true, { pluginName: 'adapt' });
             if (Adapt.location._previousId === undefined) {
               return this.navigate('#/', { trigger: true, replace: true });
             } else {
@@ -171,11 +171,11 @@ define([
           } else {
             this.showLoading();
             this.removeViews(_.bind(function() {
-
+              var location;
               this.setContentObjectToVisited(currentModel);
 
-              if (type == 'page') {
-                var location = 'page-' + id;
+              if (type === 'page') {
+                location = 'page-' + id;
                 this.updateLocation(location, 'page', id, _.bind(function() {
                   Adapt.once('pageView:ready', function() {
                     // Allow navigation.
@@ -186,7 +186,7 @@ define([
                   this.$wrapper.append(new PageView({ model: currentModel }).$el);
                 }, this));
               } else {
-                var location = 'menu-' + id;
+                location = 'menu-' + id;
                 this.updateLocation(location, 'menu', id, _.bind(function() {
                   Adapt.once('menuView:ready', function() {
                     // Allow navigation.
@@ -268,7 +268,7 @@ define([
     },
 
     navigateToHomeRoute: function(force) {
-      if (Adapt.router.get('_canNavigate') || force ) {
+      if (Adapt.router.get('_canNavigate') || force) {
         this.navigate('#/', { trigger: true });
       }
     },
@@ -324,13 +324,13 @@ define([
       Adapt.location._currentLocation = currentLocation;
 
       var locationModel = Adapt.findById(id) || Adapt.course;
-      var htmlClasses = locationModel && locationModel.get('_htmlClasses') || '';
+      var htmlClasses = (locationModel && locationModel.get('_htmlClasses')) || '';
 
-      var classes = (Adapt.location._currentId) ? 'location-'
-        + Adapt.location._contentType
-        + ' location-id-'
-        + Adapt.location._currentId :
-        'location-' + Adapt.location._currentLocation;
+      var classes = (Adapt.location._currentId) ? 'location-' +
+        Adapt.location._contentType +
+        ' location-id-' +
+        Adapt.location._currentId
+        : 'location-' + Adapt.location._currentLocation;
 
       var previousClasses = Adapt.location._previousClasses;
       if (previousClasses) {
@@ -340,14 +340,14 @@ define([
       Adapt.location._previousClasses = classes + ' ' + htmlClasses;
 
       this.$html
-          .addClass(classes)
-          .addClass(htmlClasses)
-          .attr('data-location', Adapt.location._currentLocation);
+        .addClass(classes)
+        .addClass(htmlClasses)
+        .attr('data-location', Adapt.location._currentLocation);
 
       this.$wrapper
-          .removeClass()
-          .addClass(classes)
-          .attr('data-location', Adapt.location._currentLocation);
+        .removeClass()
+        .addClass(classes)
+        .attr('data-location', Adapt.location._currentLocation);
 
       this.setDocumentTitle();
 
@@ -380,7 +380,7 @@ define([
     },
 
     handleNavigationFocus: function() {
-      if (!Adapt.router.get("_shouldNavigateFocus")) return;
+      if (!Adapt.router.get('_shouldNavigateFocus')) return;
       // Body will be forced to accept focus to start the
       // screen reader reading the page.
       Adapt.a11y.focus('body');
