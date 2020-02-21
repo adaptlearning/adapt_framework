@@ -90,6 +90,15 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
+    "_sortComponents": {
+      "type": "boolean",
+      "default": true,
+      "isSetting": true,
+      "inputType": "Checkbox",
+      "validators": [],
+      "title": "Sort components",
+      "help": "Setting false will override the left/right sort order of components in this block."
+    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,
