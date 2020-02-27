@@ -10,7 +10,6 @@ module.exports = function(grunt) {
     'copy',
     'schema-defaults',
     'handlebars',
-    'create-json-config',
     'tracking-insert',
     'javascript:compile',
     'clean:dist',
