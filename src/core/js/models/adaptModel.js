@@ -58,6 +58,8 @@ define([
             _.defer(function() {
                 if (this._children) {
                     this.checkCompletionStatus();
+                    
+                    this.setupChildrenAvailability();
 
                     this.checkInteractionCompletionStatus();
 
@@ -68,6 +70,17 @@ define([
 
             }.bind(this));
 
+        },
+        
+        setupChildrenAvailability: function() {
+            if (!this.get('_isAvailable')) {
+                var children = this.getChildren();
+
+                children.models.forEach(function(child) {
+                    child.set('_isAvailable', false);
+                    child.set('_isOptional',true);
+                });
+            }
         },
 
         setupTrackables: function() {
