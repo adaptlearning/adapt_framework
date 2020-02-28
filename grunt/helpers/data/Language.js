@@ -15,6 +15,7 @@ const LanguageFile = require('./LanguageFile');
  * at course/[lang]/*.[jsonext].
  * It is filename agnostic, such that there are no hard references to file names.
  * It has _id and _parentId structure checking and _trackingId management included.
+ * @todo Move tracking ids to components from blocks
  */
 class Language {
 
