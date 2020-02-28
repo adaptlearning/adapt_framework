@@ -15,9 +15,7 @@ class ModelSchemas {
   /**
    * @param {Object} options
    * @param {Framework} options.framework
-   * @param {string} options.sourcePath
-   * @param {string} options.jsonext
-   * @param {function} options.log
+   * @param {[ModelSchema]} options.schemas
    */
   constructor(framework = null, schemas) {
     /** @type {Framework} */

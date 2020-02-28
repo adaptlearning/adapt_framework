@@ -166,6 +166,7 @@ class Schema {
  * @typedef SchemaTraverseIteratorParam0
  * @property {SchemaNodeDescription} description
  * @property {function} next
+ * @property {function} stop
  */
 
 /**
