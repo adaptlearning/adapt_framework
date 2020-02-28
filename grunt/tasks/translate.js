@@ -1,23 +1,52 @@
 module.exports = function(grunt) {
 
-  var Helper = require('./translate/helper.js')(grunt);
-  Helper.loadSubTasks();
+  const Helpers = require('../helpers')(grunt);
 
-  grunt.registerTask('translate:export', 'Export Course Data into Language files ready to be translated', [
-    '_getTranslateConfig',
-    '_loadCourseData',
-    '_parseSchemaFiles',
-    '_createLookupTables',
-    '_extractCourseData',
-    '_exportLangFiles'
-  ]);
+  grunt.registerTask('translate', 'Import/export for translations. For more details, please visit https://github.com/adaptlearning/adapt_framework/wiki/Course-Localisation', function(mode) {
 
-  grunt.registerTask('translate:import', 'Import translated language files. For more details, please visit https://github.com/adaptlearning/adapt_framework/wiki/Course-Localisation', [
-    '_getTranslateConfig',
-    '_loadLanguageFiles',
-    '_loadMasterCourse',
-    '_updateCourseData',
-    '_saveCourseData'
-  ]);
+    const next = this.async();
+
+    const framework = Helpers.getFramework();
+    grunt.log.ok(`Using ${framework.useOutputData ? framework.outputPath : framework.sourcePath} folder for course data...`);
+
+    const translate = framework.getTranslate({
+      masterLang: grunt.option('masterLang') || 'en',
+      targetLang: grunt.option('targetLang') || null,
+      format: grunt.option('format') || 'csv',
+      csvDelimiter: grunt.option('csvDelimiter') || ',',
+      shouldReplaceExisting: grunt.option('replace') || false,
+      languagePath: grunt.option('languagedir') || 'languagefiles',
+      isTest: grunt.option('test') || false,
+      log: grunt.log.ok
+    });
+
+    switch (mode) {
+      case 'export':
+        translate.export().then(next, err => {
+          grunt.log.error(err);
+          next();
+        });
+        break;
+      case 'import':
+        translate.import().then(next, err => {
+          switch (err.number) {
+            case 10001: // Target language option is missing
+              grunt.log.error(err + `\nPlease add --targetLang=<languageCode>`);
+              break;
+            case 10002: // Import source folder does not exist.
+              grunt.log.error(err + `\nPlease create this folder in the languagefiles directory.`);
+              break;
+            case 10003: // Import destination folder already exists.
+              grunt.log.error(err + `\nTo replace the content in this folder, please add a --replace flag to the grunt task.`);
+              break;
+            default:
+              grunt.log.error(err);
+          }
+          next();
+        });
+        break;
+    }
+
+  });
 
 };
