@@ -24,7 +24,7 @@ class Plugin {
     sourcePath = '',
     log = console.log,
     warn = console.warn
-  }) {
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {string} */

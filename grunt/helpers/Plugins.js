@@ -25,7 +25,7 @@ class Plugins {
     sourcePath = process.cwd() + '/src/',
     log = console.log,
     warn = console.warn
-  }) {
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {function} */
