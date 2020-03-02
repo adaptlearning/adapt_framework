@@ -29,9 +29,10 @@ class ModelSchemas {
    * @returns {[string]}
    */
   getTranslatablePaths() {
-    const paths = [];
-    this.schemas.forEach(modelSchema => paths.push(...modelSchema.getTranslatablePaths()));
-    return _.uniq(paths);
+    return _.uniq(this.schemas.reduce((paths, modelSchema) => {
+      paths.push(...modelSchema.getTranslatablePaths());
+      return paths;
+    }, []));
   }
 
 }

@@ -16,8 +16,8 @@ class Plugins {
    * @param {Framework} options.framework
    * @param {function} options.includedFilter
    * @param {string} options.sourcePath
-   * @param {string} options.jsonext
    * @param {function} options.log
+   * @param {function} options.warn
    */
   constructor({ framework = null, includedFilter = function() { return true; }, sourcePath = process.cwd() + '/src/', log = console.log, warn = console.warn }) {
     /** @type {Framework} */
@@ -60,6 +60,7 @@ class Plugins {
       plugin.load();
       return plugin;
     }).filter(Boolean);
+    return this;
   }
 
   /** @returns {JSONFileItem} */
