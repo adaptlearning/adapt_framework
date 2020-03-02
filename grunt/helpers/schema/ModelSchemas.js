@@ -17,7 +17,10 @@ class ModelSchemas {
    * @param {Framework} options.framework
    * @param {[ModelSchema]} options.schemas
    */
-  constructor(framework = null, schemas) {
+  constructor({
+    framework = null,
+    schemas = []
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {[ModelSchema]} */

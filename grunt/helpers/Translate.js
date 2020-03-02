@@ -35,7 +35,23 @@ class Translate {
    * @param {boolean} options.isTest
    * @param {function} options.log
    */
-  constructor({ framework = null, includedFilter = function() { return true; }, masterLang = 'en', targetLang = null, format = 'csv', csvDelimiter = ',', shouldReplaceExisting = false, jsonext = 'json', sourcePath = '', languagePath = path.join(process.cwd(), 'languagefiles'), outputPath = '', useOutputData = false, isTest = false, log = console.log, warn = console.warn } = {}) {
+  constructor({
+    framework = null,
+    includedFilter = function() { return true; },
+    masterLang = 'en',
+    targetLang = null,
+    format = 'csv',
+    csvDelimiter = ',',
+    shouldReplaceExisting = false,
+    jsonext = 'json',
+    sourcePath = '',
+    languagePath = path.join(process.cwd(), 'languagefiles'),
+    outputPath = '',
+    useOutputData = false,
+    isTest = false,
+    log = console.log,
+    warn = console.warn
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {function} */
@@ -150,9 +166,7 @@ class Translate {
 
     // output based upon format options
     const outputFolder = path.join(this.languagePath, this.masterLang);
-    if (!fs.existsSync(outputFolder)) {
-      fs.mkdirpSync(outputFolder);
-    }
+    fs.mkdirpSync(outputFolder);
 
     if (this.format === 'json' || this.format === 'raw') {
       const filePath = path.join(outputFolder, `export.json`);

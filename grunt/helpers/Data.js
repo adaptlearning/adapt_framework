@@ -13,7 +13,7 @@ const Language = require('./data/Language');
  * This class represents the course folder. It contains references to the config.json,
  * all languages, each language file and subsequently each language file item.
  * It is filename agnostic, except for config.[jsonext], such that there are no
- * hard references to th other file names, allowing any filename to be used with the
+ * hard references to the other file names, allowing any filename to be used with the
  * appropriate [jsonext] file extension (usually txt or json).
  * It assumes all language files are located at course/[langName]/*.[jsonext] and
  * the config file is located at course/config.[jsonext].
@@ -28,7 +28,12 @@ class Data {
    * @param {string} options.jsonext
    * @param {function} options.log
    */
-  constructor({ framework = null, sourcePath = null, jsonext = 'json', log = console.log } = {}) {
+  constructor({
+    framework = null,
+    sourcePath = null,
+    jsonext = 'json',
+    log = console.log
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {string} */
@@ -64,9 +69,9 @@ class Data {
     return this;
   }
 
-  /** @type {Boolean} */
+  /** @type {boolean} */
   get hasChanged() {
-    return this.languages.find(language => language.hasChanged);
+    return this.languages.some(language => language.hasChanged);
   }
 
   /** @type {[string]} */
@@ -125,16 +130,12 @@ class Data {
       this.languages.push(toLang);
     }
 
-    if (!fs.existsSync(newPath)) {
-      fs.mkdirpSync(newPath);
-    }
+    fs.mkdirpSync(newPath);
 
     fromLang.files.forEach(file => {
       const pathParsed = path.parse(file.path.replace(/\\/g, '/'));
       const newLocation = `${newPath}${pathParsed.name}${pathParsed.ext}`;
-      if (fs.existsSync(newLocation)) {
-        fs.removeSync(newLocation);
-      }
+      fs.removeSync(newLocation);
       fs.copyFileSync(file.path, newLocation);
     });
 

@@ -26,7 +26,16 @@ class Framework {
    * @param {function} options.log
    * @param {function} options.warn
    */
-  constructor({ rootPath = process.cwd(), outputPath = process.cwd() + '/build/', sourcePath = process.cwd() + '/src/', includedFilter = function() { return true; }, jsonext = 'json', useOutputData = false, log = console.log, warn = console.warn } = {}) {
+  constructor({
+    rootPath = process.cwd(),
+    outputPath = process.cwd() + '/build/',
+    sourcePath = process.cwd() + '/src/',
+    includedFilter = function() { return true; },
+    jsonext = 'json',
+    useOutputData = false,
+    log = console.log,
+    warn = console.warn
+  } = {}) {
     /** @type {string} */
     this.rootPath = rootPath.replace(/\\/g, '/');
     /** @type {string} */
@@ -73,26 +82,23 @@ class Framework {
    * function or the Framework instance.
    * @returns {Data}
    */
-  getData({ useOutputData = this.useOutputData } = {}) {
-    const data = useOutputData
-      ? new Data({
-        framework: this,
-        sourcePath: this.outputPath,
-        jsonext: this.jsonext,
-        log: this.log
-      })
-      : new Data({
-        framework: this,
-        sourcePath: this.sourcePath,
-        jsonext: this.jsonext,
-        log: this.log
-      });
+  getData({
+    useOutputData = this.useOutputData
+  } = {}) {
+    const data = new Data({
+      framework: this,
+      sourcePath: useOutputData ? this.outputPath : this.sourcePath,
+      jsonext: this.jsonext,
+      log: this.log
+    });
     data.load();
     return data;
   }
 
   /** @returns {Plugins} */
-  getPlugins({ includedFilter = this.includedFilter } = {}) {
+  getPlugins({
+    includedFilter = this.includedFilter
+  } = {}) {
     const plugins = new Plugins({
       framework: this.framework,
       includedFilter: includedFilter,
@@ -105,7 +111,9 @@ class Framework {
   }
 
   /** @returns {Schemas} */
-  getSchemas({ includedFilter = this.includedFilter } = {}) {
+  getSchemas({
+    includedFilter = this.includedFilter
+  } = {}) {
     const schemas = new Schemas({
       framework: this,
       includedFilter,
@@ -117,7 +125,16 @@ class Framework {
   }
 
   /** @returns {Translate} */
-  getTranslate({ includedFilter = this.includedFilter, masterLang = 'en', targetLang = null, format = 'csv', csvDelimiter = ',', shouldReplaceExisting = false, languagePath = '', isTest = false } = {}) {
+  getTranslate({
+    includedFilter = this.includedFilter,
+    masterLang = 'en',
+    targetLang = null,
+    format = 'csv',
+    csvDelimiter = ',',
+    shouldReplaceExisting = false,
+    languagePath = '',
+    isTest = false
+  } = {}) {
     const translate = new Translate({
       framework: this,
       includedFilter,
@@ -140,7 +157,10 @@ class Framework {
   }
 
   /** @returns {Framework} */
-  applyGlobalsDefaults({ includedFilter = this.includedFilter, useOutputData = this.useOutputData } = {}) {
+  applyGlobalsDefaults({
+    includedFilter = this.includedFilter,
+    useOutputData = this.useOutputData
+  } = {}) {
     const schemas = this.getSchemas({
       includedFilter
     });

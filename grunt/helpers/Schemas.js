@@ -31,7 +31,14 @@ class Schemas {
    * @param {function} options.log
    * @param {function} options.warn
    */
-  constructor({ framework = null, includedFilter = function() { return true; }, plugins = null, sourcePath = '', log = console.log, warn = console.warn } = {}) {
+  constructor({
+    framework = null,
+    includedFilter = function() { return true; },
+    plugins = null,
+    sourcePath = '',
+    log = console.log,
+    warn = console.warn
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {function} */
@@ -191,7 +198,10 @@ class Schemas {
     if (json._model) {
       schemas.push(this.getModelSchemaByName(json._model));
     }
-    return new ModelSchemas(this.framework, schemas.filter(Boolean));
+    return new ModelSchemas({
+      framework: this.framework,
+      schema: schemas.filter(Boolean)
+    });
   }
 
 }

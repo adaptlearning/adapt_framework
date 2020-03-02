@@ -19,7 +19,12 @@ class Plugin {
    * @param {string} options.jsonext
    * @param {function} options.log
    */
-  constructor({ framework = null, sourcePath = '', log = console.log, warn = console.warn }) {
+  constructor({
+    framework = null,
+    sourcePath = '',
+    log = console.log,
+    warn = console.warn
+  }) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {string} */
@@ -96,17 +101,17 @@ class Plugin {
    * @returns {string}
    */
   get type() {
-    const config = this.packageJSONFile.firstFileItem.item;
-    if (this.name === 'core' || config.hasOwnProperty('component')) {
+    if (this.name === 'core') {
       return 'component';
-    } else if (config.hasOwnProperty('extension')) {
-      return 'extension';
-    } else if (config.hasOwnProperty('menu')) {
-      return 'menu';
-    } else if (config.hasOwnProperty('theme')) {
-      return 'theme';
     }
-    throw new Error('Unknown plugin type');
+    const config = this.packageJSONFile.firstFileItem.item;
+    const configKeys = Object.keys(config);
+    const typeKeyName = ['component', 'extension', 'menu', 'theme'];
+    const foundType = configKeys.find(key => typeKeyName.includes(key));
+    if (!foundType) {
+      throw new Error('Unknown plugin type');
+    }
+    return foundType;
   }
 
   /**

@@ -8,7 +8,12 @@
  */
 class JSONFileItem {
 
-  constructor({ framework = null, file = null, item = null, index = null } = {}) {
+  constructor({
+    framework = null,
+    file = null,
+    item = null,
+    index = null
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {JSONFile} */

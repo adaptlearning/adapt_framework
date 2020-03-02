@@ -18,7 +18,13 @@ class LanguageFile extends JSONFile {
    * @param {Object} options.data
    * @param {boolean} options.hasChanged
    */
-  constructor({ framework = null, language = null, path = null, data = null, hasChanged = false } = {}) {
+  constructor({
+    framework = null,
+    language = null,
+    path = null,
+    data = null,
+    hasChanged = false
+  } = {}) {
     super({ framework, path, data, hasChanged });
     /** @type {Language} */
     this.language = language;

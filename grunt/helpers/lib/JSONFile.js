@@ -19,7 +19,12 @@ class JSONFile {
    * @param {Object|Array} options.data
    * @param {boolean} options.hasChanged
    */
-  constructor({ framework = null, path = null, data = null, hasChanged = false } = {}) {
+  constructor({
+    framework = null,
+    path = null,
+    data = null,
+    hasChanged = false
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {string} */
@@ -64,7 +69,7 @@ class JSONFile {
 
   /**
    * This is useful for files such as config.json or course.json which only have
-   * on item/object per file.
+   * one item/object per file.
    * @returns {JSONFileItem}
    */
   get firstFileItem() {
@@ -72,8 +77,8 @@ class JSONFile {
   }
 
   /**
-   * Marks this file as having changed. This should be called after changing an
-   * of the fileItems contained in this instance.
+   * Marks this file as having changed. This should be called after changing
+   * the fileItems contained in this instance.
    * @returns {JSONFile}
    */
   changed() {

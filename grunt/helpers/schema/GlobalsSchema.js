@@ -20,7 +20,14 @@ class GlobalsSchema extends Schema {
    * @param {string} options.globalsType
    * @param {string} options.targetAttribute Attribute where this sub-schema will be injected into the course.json:_globals._[pluginType] object
    */
-  constructor({ framework = null, name = '', json = {}, filePath = '', globalsType = '', targetAttribute = '' }) {
+  constructor({
+    framework = null,
+    name = '',
+    json = {},
+    filePath = '',
+    globalsType = '',
+    targetAttribute = ''
+  } = {}) {
     super({ framework, name, json, filePath, globalsType });
     // Add an underscore to the front of the targetAttribute if necessary
     this.targetAttribute = (targetAttribute[0] !== '_' ? '_' : '') + targetAttribute;

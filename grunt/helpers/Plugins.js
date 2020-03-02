@@ -19,7 +19,13 @@ class Plugins {
    * @param {function} options.log
    * @param {function} options.warn
    */
-  constructor({ framework = null, includedFilter = function() { return true; }, sourcePath = process.cwd() + '/src/', log = console.log, warn = console.warn }) {
+  constructor({
+    framework = null,
+    includedFilter = function() { return true; },
+    sourcePath = process.cwd() + '/src/',
+    log = console.log,
+    warn = console.warn
+  }) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {function} */

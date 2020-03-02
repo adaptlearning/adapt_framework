@@ -26,7 +26,12 @@ class Language {
    * @param {string} options.jsonext
    * @param {function} options.log
    */
-  constructor({ framework = null, languagePath = '', jsonext = 'json', log = console.log } = {}) {
+  constructor({
+    framework = null,
+    languagePath = '',
+    jsonext = 'json',
+    log = console.log
+  } = {}) {
     /** @type {Framework} */
     this.framework = framework;
     /** @type {string} */
@@ -102,9 +107,9 @@ class Language {
     return this;
   }
 
-  /** @type {Boolean} */
+  /** @type {boolean} */
   get hasChanged() {
-    return this.files.find(file => file.hasChanged);
+    return this.files.some(file => file.hasChanged);
   }
 
   /**
