@@ -99,6 +99,15 @@
       "title": "Sort components?",
       "help": "Controls whether the left/right layout setting of the components in this block should be respected or ignored. Deactivate this setting if you have a component which is right-aligned on desktop but needs to appear first on mobile devices."
     },
+    "_requireCompletionOf": {
+      "type": "number",
+      "default": -1,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "title": "Require completion of",
+      "help": "The number of components within this block the learner must complete in order for this block to be set as completed. A value of -1 requires all of them to be completed."
+    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,

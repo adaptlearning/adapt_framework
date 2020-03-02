@@ -535,6 +535,15 @@
       "title": "Menu Classes",
       "help": "Used to style or manipulate the look and feel of the top level Menu. These are predefined in the theme or added in Custom CSS/Less code."
     },
+    "_requireCompletionOf": {
+      "type": "number",
+      "default": -1,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "title": "Require completion of",
+      "help": "The number of content objects within this course the learner must complete in order for this course to be set as completed. A value of -1 requires all of them to be completed."
+    },
     "_isSelected": {
       "type": "boolean",
       "default": false,
