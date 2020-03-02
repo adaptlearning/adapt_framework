@@ -99,7 +99,7 @@ define([
       );
 
       // Listen to model changes, trigger trackable state change when appropriate
-      this.listenTo(this, 'change', model => {
+      this.listenTo(this, 'change', ({ changed }) => {
 
         // Skip if trigger queued or adapt hasn't started yet
         if (this.triggerTrackableState.isQueued || !Adapt.attributes._isStarted) {
@@ -108,7 +108,7 @@ define([
 
         // Check that property is trackable
         const trackablePropertyNames = _.result(this, 'trackable', []);
-        const changedPropertyNames = Object.keys(model.changed);
+        const changedPropertyNames = Object.keys(changed);
         const isTrackable = changedPropertyNames.find(item => {
           return trackablePropertyNames.includes(item);
         });
@@ -233,17 +233,15 @@ define([
      * @param {string} [completionAttribute] Either '_isComplete' or '_isInteractionComplete'. Defaults to '_isComplete' if not supplied.
      */
 
-    checkCompletionStatusFor(completionAttribute) {
-      if (!completionAttribute) completionAttribute = '_isComplete';
-
+    checkCompletionStatusFor(completionAttribute = '_isComplete') {
       let completed = false;
       const children = this.getAvailableChildModels();
       const requireCompletionOf = this.get('_requireCompletionOf');
 
       if (requireCompletionOf === -1) { // a value of -1 indicates that ALL mandatory children must be completed
-        completed = (children.find(child => {
-          return !child.get(completionAttribute) && !child.get('_isOptional');
-        }) === undefined);
+        completed = children.every(child => {
+          return child.get(completionAttribute) || child.get('_isOptional');
+        });
       } else {
         completed = (children.filter(child => {
           return child.get(completionAttribute) && !child.get('_isOptional');
@@ -563,14 +561,19 @@ define([
       return siblingsCollection;
     }
 
-    setOnChildren(key, value, options) {
+    /**
+     * @param  {string} key
+     * @param  {any} value
+     * @param  {Object} options
+     */
+    setOnChildren(...args) {
 
-      this.set(...arguments);
+      this.set(...args);
 
       if (!this._children) return;
 
       const children = this.getChildren();
-      children.models.forEach(child => child.setOnChildren(...arguments));
+      children.models.forEach(child => child.setOnChildren(...args));
 
     }
 
@@ -578,7 +581,7 @@ define([
      * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
      */
     setOptional(value) {
-      Adapt.log.warn('DEPRECATED - Use model.set(\'_isOptional\', value) as setOptional() may be removed in the future');
+      Adapt.log.warn(`DEPRECATED - Use model.set('_isOptional', value) as setOptional() may be removed in the future`);
       this.set({ _isOptional: value });
     }
 
