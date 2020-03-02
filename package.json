@@ -7,7 +7,7 @@
         "url": "git://github.com/adaptlearning/adapt_framework.git"
     },
     "scripts": {
-      "lint": "node node_modules/eslint/bin/eslint.js ./"
+        "lint": "node node_modules/eslint/bin/eslint.js ./"
     },
     "authoringTool": ">=0.8",
     "license": "GPL-3.0",
@@ -42,6 +42,7 @@
         "jshint-stylish": "^2.2.1",
         "less": "^3.9.0",
         "load-grunt-config": "^1.0.1",
+        "lodash": "^4.17.15",
         "nsdeclare": "^0.1.0",
         "requirejs": "^2.3.6",
         "time-grunt": "^2.0.0",
