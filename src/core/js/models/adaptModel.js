@@ -484,8 +484,7 @@ define([
 
       if (this.get('_type') === 'block' &&
         childrenCollection.length === 2 &&
-        childrenCollection.models[0].get('_layout') !== 'left' &&
-        this.get('_sortComponents') !== false) {
+        childrenCollection.models[0].get('_layout') !== 'left') {
         // Components may have a 'left' or 'right' _layout,
         // so ensure they appear in the correct order
         // Re-order component models to correct it

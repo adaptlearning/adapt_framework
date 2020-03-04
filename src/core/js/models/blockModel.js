@@ -12,6 +12,7 @@ define([
         _sortComponents: true
       });
     }
+
   });
 
   return BlockModel;
