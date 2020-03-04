@@ -1,13 +1,20 @@
 define([
   'core/js/adapt',
-  'core/js/models/adaptModel'
-], function (Adapt, AdaptModel) {
+  'core/js/models/contentObjectModel'
+], function (Adapt, ContentObjectModel) {
 
-  class CourseModel extends AdaptModel {
+  class CourseModel extends ContentObjectModel {
 
-    constructor(...args) {
-      super(...args);
-      this._children = 'contentObjects';
+    get _parent() {
+      return null;
+    }
+
+    get _siblings() {
+      return null;
+    }
+
+    get _children() {
+      return 'contentObjects';
     }
 
     initialize(attrs, options) {

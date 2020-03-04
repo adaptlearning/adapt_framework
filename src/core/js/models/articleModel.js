@@ -4,11 +4,16 @@ define([
 
   class ArticleModel extends AdaptModel {
 
-    constructor(...args) {
-      super(...args);
-      this._parent = 'contentObjects';
-      this._siblings = 'articles';
-      this._children = 'blocks';
+    get _parent() {
+      return 'contentObjects';
+    }
+
+    get _siblings() {
+      return 'articles'
+    }
+
+    get _children() {
+      return 'blocks';
     }
 
   }

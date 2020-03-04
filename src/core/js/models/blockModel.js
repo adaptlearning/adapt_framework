@@ -4,11 +4,16 @@ define([
 
   class BlockModel extends AdaptModel {
 
-    constructor(...args) {
-      super(...args);
-      this._parent = 'articles';
-      this._siblings = 'blocks';
-      this._children = 'components';
+    get _parent() {
+      return 'articles';
+    }
+
+    get _siblings() {
+      return 'blocks'
+    }
+
+    get _children() {
+      return 'components';
     }
 
     defaults() {

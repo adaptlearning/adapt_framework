@@ -4,10 +4,12 @@ define([
 
   class ComponentModel extends AdaptModel {
 
-    constructor(...args) {
-      super(...args);
-      this._parent = 'blocks';
-      this._siblings = 'components';
+    get _parent() {
+      return 'blocks';
+    }
+
+    get _siblings() {
+      return 'components'
     }
 
     defaults() {
