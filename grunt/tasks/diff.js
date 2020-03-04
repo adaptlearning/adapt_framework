@@ -9,7 +9,6 @@ module.exports = function(grunt) {
     'copy',
     'schema-defaults',
     'newer:handlebars:compile',
-    'create-json-config',
     'tracking-insert',
     'newer:javascript:dev',
     'babel',

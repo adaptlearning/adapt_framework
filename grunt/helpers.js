@@ -1,6 +1,8 @@
 var _ = require('underscore');
 var fs = require('fs');
 var path = require('path');
+// extends grunt.file.expand with { order: cb(filePaths) }
+require('grunt-file-order');
 
 module.exports = function(grunt) {
 

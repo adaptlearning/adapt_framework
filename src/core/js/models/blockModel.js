@@ -16,11 +16,6 @@ define([
       return 'components';
     }
 
-    defaults() {
-      return AdaptModel.resultExtend('defaults', {
-        _sortComponents: true
-      });
-    }
   }
 
   return BlockModel;
