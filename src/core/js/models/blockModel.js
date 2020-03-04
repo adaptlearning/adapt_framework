@@ -2,17 +2,21 @@ define([
   'core/js/models/adaptModel'
 ], function (AdaptModel) {
 
-  var BlockModel = AdaptModel.extend({
-    _parent: 'articles',
-    _siblings: 'blocks',
-    _children: 'components',
+  class BlockModel extends AdaptModel {
 
-    defaults: function() {
+    constructor(...args) {
+      super(...args);
+      this._parent = 'articles';
+      this._siblings = 'blocks';
+      this._children = 'components';
+    }
+
+    defaults() {
       return AdaptModel.resultExtend('defaults', {
         _sortComponents: true
       });
     }
-  });
+  }
 
   return BlockModel;
 
