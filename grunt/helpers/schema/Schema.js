@@ -14,7 +14,7 @@ class Schema {
    * @param {string} options.name
    * @param {Object} options.json
    * @param {string} options.filePath
-   * @param {string) options.globalsType
+   * @param {string} options.globalsType
    */
   constructor({
     framework = null,
