@@ -90,15 +90,6 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
-    "_sortComponents": {
-      "type": "boolean",
-      "default": true,
-      "isSetting": true,
-      "inputType": "Checkbox",
-      "validators": [],
-      "title": "Sort components?",
-      "help": "Controls whether the left/right layout setting of the components in this block should be respected or ignored. Deactivate this setting if you have a component which is right-aligned on desktop but needs to appear first on mobile devices."
-    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,
