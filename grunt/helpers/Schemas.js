@@ -200,7 +200,7 @@ class Schemas {
     }
     return new ModelSchemas({
       framework: this.framework,
-      schema: schemas.filter(Boolean)
+      schemas: schemas.filter(Boolean)
     });
   }
 

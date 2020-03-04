@@ -101,7 +101,7 @@ class Framework {
   } = {}) {
     const plugins = new Plugins({
       framework: this.framework,
-      includedFilter: includedFilter,
+      includedFilter,
       sourcePath: this.sourcePath,
       log: this.log,
       warn: this.warn
