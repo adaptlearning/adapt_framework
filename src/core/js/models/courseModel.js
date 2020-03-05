@@ -1,9 +1,9 @@
 define([
   'core/js/adapt',
-  'core/js/models/contentObjectModel'
-], function (Adapt, ContentObjectModel) {
+  'core/js/models/menuModel'
+], function (Adapt, MenuModel) {
 
-  class CourseModel extends ContentObjectModel {
+  class CourseModel extends MenuModel {
 
     get _parent() {
       return null;
@@ -11,10 +11,6 @@ define([
 
     get _siblings() {
       return null;
-    }
-
-    get _children() {
-      return 'contentObjects';
     }
 
     initialize(attrs, options) {
