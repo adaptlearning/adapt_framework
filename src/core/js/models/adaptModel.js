@@ -49,12 +49,6 @@ define([
     }
 
     setupModel() {
-      if (this.get('_type') === 'page') {
-        this._children = 'articles';
-      }
-      if (this._siblings === 'contentObjects' && this.get('_parentId') !== Adapt.course.get('_id')) {
-        this._parent = 'contentObjects';
-      }
       if (this._children) {
         this.setupChildListeners();
       }

@@ -2,11 +2,21 @@ define([
   'core/js/models/adaptModel'
 ], function (AdaptModel) {
 
-  var ArticleModel = AdaptModel.extend({
-    _parent: 'contentObjects',
-    _siblings: 'articles',
-    _children: 'blocks'
-  });
+  class ArticleModel extends AdaptModel {
+
+    get _parent() {
+      return 'contentObjects';
+    }
+
+    get _siblings() {
+      return 'articles'
+    }
+
+    get _children() {
+      return 'blocks';
+    }
+
+  }
 
   return ArticleModel;
 

@@ -2,19 +2,28 @@ define([
   'core/js/models/adaptModel'
 ], function (AdaptModel) {
 
-  var ComponentModel = AdaptModel.extend({
-    _parent: 'blocks',
-    _siblings: 'components',
+  class ComponentModel extends AdaptModel {
 
-    defaults: AdaptModel.resultExtend('defaults', {
-      _isA11yComponentDescriptionEnabled: true
-    }),
+    get _parent() {
+      return 'blocks';
+    }
 
-    trackable: AdaptModel.resultExtend('trackable', [
-      '_userAnswer'
-    ])
+    get _siblings() {
+      return 'components'
+    }
 
-  });
+    defaults() {
+      return AdaptModel.resultExtend('defaults', {
+        _isA11yComponentDescriptionEnabled: true
+      });
+    }
+
+    trackable() {
+      return AdaptModel.resultExtend('trackable', [
+        '_userAnswer'
+      ]);
+    }
+  }
 
   return ComponentModel;
 
