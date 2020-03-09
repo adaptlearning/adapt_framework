@@ -378,6 +378,13 @@
           "inputType": "Checkbox",
           "validators": [],
           "title": "Log to browser console?"
+        },
+        "_warnFirstOnly": {
+          "type": "boolean",
+          "default": true,
+          "inputType": "Checkbox",
+          "validators": [],
+          "title": "Show only first deprecated and removed warnings?"
         }
       }
     },

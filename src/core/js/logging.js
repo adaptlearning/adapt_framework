@@ -3,21 +3,20 @@ define([
   'core/js/enums/logLevelEnum'
 ], function(Adapt, LOG_LEVEL) {
 
-  var Logging = Backbone.Controller.extend({
+  class Logging extends Backbone.Controller {
 
-    _config: {
-      _isEnabled: true,
-      _level: LOG_LEVEL.INFO.asLowerCase, // Default log level
-      _console: true // Log to console
-    },
+    initialize() {
+      this._config = {
+        _isEnabled: true,
+        _level: LOG_LEVEL.INFO.asLowerCase, // Default log level
+        _console: true, // Log to console
+        _warnFirstOnly: true // Show only first of identical removed and deprecated warnings
+      };
+      this._warned = {};
+      this.listenToOnce(Adapt, 'configModel:dataLoaded', this.onLoadConfigData);
+    }
 
-    initialize: function() {
-
-      Adapt.once('configModel:dataLoaded', this.onLoadConfigData.bind(this));
-
-    },
-
-    onLoadConfigData: function() {
+    onLoadConfigData() {
 
       this.loadConfig();
 
@@ -25,9 +24,9 @@ define([
 
       this.trigger('log:ready');
 
-    },
+    }
 
-    loadConfig: function() {
+    loadConfig() {
 
       if (Adapt.config.has('_logging')) {
         this._config = Adapt.config.get('_logging');
@@ -35,50 +34,66 @@ define([
 
       this.checkQueryStringOverride();
 
-    },
+    }
 
-    checkQueryStringOverride: function() {
+    checkQueryStringOverride() {
 
       // Override default log level with level present in query string
-      var matches = window.location.search.match(/[?&]loglevel=([a-z]*)/i);
+      const matches = window.location.search.match(/[?&]loglevel=([a-z]*)/i);
       if (!matches || matches.length < 2) return;
 
-      var override = LOG_LEVEL(matches[1].toUpperCase());
+      const override = LOG_LEVEL(matches[1].toUpperCase());
       if (!override) return;
 
       this._config._level = override.asLowerCase;
       this.debug('Loglevel override in query string:', this._config._level);
 
-    },
+    }
 
-    debug: function() {
-      this._log(LOG_LEVEL.DEBUG, Array.prototype.slice.call(arguments));
-    },
+    debug(...args) {
+      this._log(LOG_LEVEL.DEBUG, args);
+    }
 
-    info: function() {
-      this._log(LOG_LEVEL.INFO, Array.prototype.slice.call(arguments));
-    },
+    info(...args) {
+      this._log(LOG_LEVEL.INFO, args);
+    }
 
-    warn: function() {
-      this._log(LOG_LEVEL.WARN, Array.prototype.slice.call(arguments));
-    },
+    warn(...args) {
+      this._log(LOG_LEVEL.WARN, args);
+    }
 
-    error: function() {
-      this._log(LOG_LEVEL.ERROR, Array.prototype.slice.call(arguments));
-    },
+    error(...args) {
+      this._log(LOG_LEVEL.ERROR, args);
+    }
 
-    fatal: function() {
-      this._log(LOG_LEVEL.FATAL, Array.prototype.slice.call(arguments));
-    },
+    fatal(...args) {
+      this._log(LOG_LEVEL.FATAL, args);
+    }
 
-    _log: function(level, data) {
+    removed(...args) {
+      args = ['REMOVED'].concat(args);
+      if (this._hasWarned(args)) {
+        return;
+      }
+      this._log(LOG_LEVEL.WARN, args);
+    }
 
-      var isEnabled = (this._config._isEnabled);
+    deprecated(...args) {
+      args = ['DEPRECATED'].concat(args);
+      if (this._hasWarned(args)) {
+        return;
+      }
+      this._log(LOG_LEVEL.WARN, args);
+    }
+
+    _log(level, data) {
+
+      const isEnabled = (this._config._isEnabled);
       if (!isEnabled) return;
 
-      var configLevel = LOG_LEVEL(this._config._level.toUpperCase());
+      const configLevel = LOG_LEVEL(this._config._level.toUpperCase());
 
-      var isLogLevelAllowed = (level >= configLevel);
+      const isLogLevelAllowed = (level >= configLevel);
       if (!isLogLevelAllowed) return;
 
       this._logToConsole(level, data);
@@ -87,26 +102,38 @@ define([
       this.trigger('log', level, data);
       this.trigger('log:' + level.asLowerCase, level, data);
 
-    },
+    }
 
-    _logToConsole: function(level, data) {
+    _logToConsole(level, data) {
 
-      var shouldLogToConsole = (this._config._console);
+      const shouldLogToConsole = (this._config._console);
       if (!shouldLogToConsole) return;
 
-      var log = [level.asUpperCase + ':'];
-      data && log.push.apply(log, data);
+      const log = [level.asUpperCase + ':'];
+      data && log.push(...data);
 
       // is there a matching console method we can use e.g. console.error()?
       if (console[level.asLowerCase]) {
-        console[level.asLowerCase].apply(console, log);
+        console[level.asLowerCase](...log);
       } else {
-        console.log.apply(console, log);
+        console.log(...log);
       }
     }
 
-  });
+    _hasWarned(args) {
+      if (!this._config._warnFirstOnly) {
+        return false;
+      }
+      const hash = args.map(String).join(':');
+      if (this._warned[hash]) {
+        return true;
+      }
+      this._warned[hash] = true;
+      return false;
+    }
 
-  Adapt.log = new Logging();
+  }
+
+  return (Adapt.log = new Logging());
 
 });
