@@ -1,3 +1,25 @@
+## [5.2.0] - 2020-03-09
+### Added
+- Code 'linting' support via ESLint ([#2377](https://github.com/adaptlearning/adapt_framework/issues/2377))
+- 'Return to start location' feature to Start Controller ([#2541](https://github.com/adaptlearning/adapt_framework/issues/2541))
+- Event bubbling for the `change:_isActive` event ([#2649](https://github.com/adaptlearning/adapt_framework/issues/2649))
+- Component padding LESS variable ([#2676](https://github.com/adaptlearning/adapt_framework/issues/2676))
+
+### Changed
+- Drawer scrolling behaviour for better support for long lists of items ([#2498](https://github.com/adaptlearning/adapt_framework/issues/2498))
+
+### Fixed
+- Locking checks were not being performed on contentObjects that are descendants of contentObjects ([#2469](https://github.com/adaptlearning/adapt_framework/issues/2469))
+- Page Level Progress indicators disrupting container outlines in Firefox ([#2619](https://github.com/adaptlearning/adapt_framework/issues/2619))
+- `imageReady` error in IE 11 when SVG images used ([#2625](https://github.com/adaptlearning/adapt_framework/issues/2625))
+- visual bug with questions with marking but no feedback ([#2627](https://github.com/adaptlearning/adapt_framework/issues/2627))
+- Notify 'push' styles missing ([#2640](https://github.com/adaptlearning/adapt_framework/issues/2640))
+- Error 'tslib not found' preventing LESS from being compiled ([#2642](https://github.com/adaptlearning/adapt_framework/issues/2642))
+
+### Removed
+- Grunt task `create-json-config` - it isn't needed any more ([#2660](https://github.com/adaptlearning/adapt_framework/issues/2660))
+
+
 ## [5.1.0] - 2019-12-11
 ### Added
 - Classes to question components to indicate when the settings 'show model answer', 'show feedback' or 'show marking' are enabled ([#2606](https://github.com/adaptlearning/adapt_framework/issues/2606))
@@ -798,6 +820,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v5.0.0
 [4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
