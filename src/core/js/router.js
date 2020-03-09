@@ -73,10 +73,10 @@ define([
         switch (args.length) {
           case 1:
             // If only one parameter assume it's the ID.
-            return this.handleId.apply(this, args);
+            return this.handleId(...args);
           case 2:
             // If there are two parameters assume it's a plugin.
-            return this.handlePluginRouter.apply(this, args);
+            return this.handlePluginRouter(...args);
           default:
             // Route to course home page.
             return this.handleCourse();
