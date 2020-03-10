@@ -9,7 +9,7 @@ define([
     }
 
     get _siblings() {
-      return 'components'
+      return 'components';
     }
 
     defaults() {

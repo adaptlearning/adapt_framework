@@ -14,7 +14,7 @@ define([
     }
 
     get _siblings() {
-      return 'contentObjects'
+      return 'contentObjects';
     }
 
     get _children() {
