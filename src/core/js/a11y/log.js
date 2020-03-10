@@ -34,7 +34,7 @@ define([
       if (!this._canWarn) {
         return;
       }
-      args =  ['A11Y'].concat(args);
+      args = ['A11Y'].concat(args);
       if (this._hasWarned(args)) {
         return;
       }
@@ -46,7 +46,7 @@ define([
       if (!this._canWarn) {
         return;
       }
-      args =  ['A11Y'].concat(args);
+      args = ['A11Y'].concat(args);
       if (this._hasWarned(args)) {
         return;
       }
