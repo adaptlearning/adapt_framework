@@ -9,7 +9,7 @@ define([
     }
 
     get _siblings() {
-      return 'blocks'
+      return 'blocks';
     }
 
     get _children() {

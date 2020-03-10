@@ -9,7 +9,7 @@ define([
     }
 
     get _siblings() {
-      return 'articles'
+      return 'articles';
     }
 
     get _children() {
