@@ -15,6 +15,7 @@
 - visual bug with questions with marking but no feedback ([#2627](https://github.com/adaptlearning/adapt_framework/issues/2627))
 - Notify 'push' styles missing ([#2640](https://github.com/adaptlearning/adapt_framework/issues/2640))
 - Error 'tslib not found' preventing LESS from being compiled ([#2642](https://github.com/adaptlearning/adapt_framework/issues/2642))
+- Menu item titles not being read out by assistive technology ([#2680](https://github.com/adaptlearning/adapt_framework/issues/2680))
 
 ### Removed
 - Grunt task `create-json-config` - it isn't needed any more ([#2660](https://github.com/adaptlearning/adapt_framework/issues/2660))
