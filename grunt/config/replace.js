@@ -1,9 +1,8 @@
-var path = require('path');
-var fs = require('fs');
+const path = require('path');
 
 module.exports = function(grunt, options) {
 
-  var courseDir = path.join(options.outputdir, 'course');
+  const Helpers = require('../helpers')(grunt);
 
   var filterNullValues = function(obj) {
     // hack to fix bug https://github.com/adaptlearning/adapt_framework/issues/1867
@@ -34,16 +33,13 @@ module.exports = function(grunt, options) {
   };
 
   var generatePatterns = function() {
-    var jsonext = grunt.config('jsonext');
-    var pathToConfig = path.join(courseDir, 'config.' + jsonext);
+    const framework = Helpers.getFramework({ useOutputData: true });
+    const data = framework.getData();
 
     try {
-      // Verify that the configuration file exists.
-      fs.accessSync(pathToConfig);
-
-      var configJson = grunt.file.readJSON(pathToConfig);
-      var defaultLanguage = configJson._defaultLanguage || 'en';
-      var courseJson = grunt.file.readJSON(path.join(courseDir, defaultLanguage, 'course.' + jsonext));
+      const configJson = data.getConfigFileItem().item;
+      const defaultLanguage = configJson._defaultLanguage || 'en';
+      const courseJson = data.getLanguage(defaultLanguage).getCourseFileItem().item;
 
       // Backwards compatibility for courses missing 'description'
       if (!courseJson.hasOwnProperty('description')) {
