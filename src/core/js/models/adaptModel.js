@@ -58,8 +58,6 @@ define([
             _.defer(function() {
                 if (this._children) {
                     this.checkCompletionStatus();
-                    
-                    this.setupChildrenAvailability();
 
                     this.checkInteractionCompletionStatus();
 
