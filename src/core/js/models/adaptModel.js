@@ -72,15 +72,19 @@ define([
 
         },
         
-        setupChildrenAvailability: function() {
-            if (!this.get('_isAvailable')) {
-                var children = this.getChildren();
-
-                children.models.forEach(function(child) {
-                    child.set('_isAvailable', false);
-                    child.set('_isOptional',true);
-                });
+        getIsAvailable: function() {
+            var isAvailable = this.get('_isAvailable');
+            if (!isAvailable) {
+              return false;
             }
+            var parent = this;
+            while (parent = parent.getParent()) {
+              isAvailable = parent.get('_isAvailable');
+              if (!isAvailable) {
+                return false;
+              }
+            }
+            return true;
         },
 
         setupTrackables: function() {
