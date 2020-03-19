@@ -185,6 +185,7 @@ module.exports = function(grunt) {
       var root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
       var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
       var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+      var tempdir = outputdir + '.temp/';
       var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
       var languageFolders = '';
@@ -211,6 +212,7 @@ module.exports = function(grunt) {
         root: root,
         sourcedir: sourcedir,
         outputdir: outputdir,
+        tempdir: tempdir,
         jsonext: jsonext,
         theme: grunt.option('theme') || exports.defaults.theme,
         menu: grunt.option('menu') || exports.defaults.menu,

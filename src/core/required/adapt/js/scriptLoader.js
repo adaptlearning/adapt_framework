@@ -62,7 +62,7 @@
         }
       },
       paths: {
-        promise: 'libraries/promise-polyfill.min',
+        polyfill: 'libraries/polyfill.min',
         jquery: 'libraries/jquery.min',
         underscore: 'libraries/underscore.min',
         'underscore.results': 'libraries/underscore.results',
@@ -108,7 +108,7 @@
   function loadFoundationLibraries() {
     require([
       'handlebars',
-      'promise',
+      'polyfill',
       'underscore',
       'underscore.results',
       'backbone',

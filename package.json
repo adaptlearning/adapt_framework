@@ -15,6 +15,8 @@
         "url": "https://github.com/adaptlearning/adapt_framework/issues"
     },
     "dependencies": {
+        "@babel/core": "^7.8.4",
+        "@babel/preset-env": "^7.8.4",
         "@types/backbone": "^1.4.1",
         "@types/jquery": "^3.3.31",
         "async": "^3.1.1",
@@ -24,6 +26,7 @@
         "fs-extra": "^8.1.0",
         "globs": "^0.1.4",
         "grunt": "^1.0.3",
+        "grunt-babel": "^8.0.0",
         "grunt-concurrent": "^2.3.1",
         "grunt-contrib-clean": "^2.0.0",
         "grunt-contrib-connect": "^2.0.0",

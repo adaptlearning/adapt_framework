@@ -10,6 +10,7 @@ define("backbone.controller", [
 
   var Controller = Backbone.Controller = function(options) {
     options || (options = {});
+    this.preinitialize.apply(this, arguments);
     _.extend(this, _.pick(options, controllerOptions));
     this.initialize.apply(this, arguments);
   };
@@ -17,6 +18,8 @@ define("backbone.controller", [
   var controllerOptions = ['model', 'collection'];
 
   _.extend(Controller.prototype, Backbone.Events, {
+
+    preinitialize: function() {},
 
     initialize: function() {}
 

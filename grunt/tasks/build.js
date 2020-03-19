@@ -12,10 +12,12 @@ module.exports = function(grunt) {
     'handlebars',
     'tracking-insert',
     'javascript:compile',
+    'babel',
     'clean:dist',
     'less:compile',
     'replace',
     'scripts:adaptpostbuild',
+    'clean:temp',
     'minify'
   ]);
 };

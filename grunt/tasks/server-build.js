@@ -12,8 +12,10 @@ module.exports = function(grunt) {
       'less:' + requireMode,
       'handlebars',
       'javascript:' + requireMode,
+      'babel',
       'replace',
-      'scripts:adaptpostbuild'
+      'scripts:adaptpostbuild',
+      'clean:temp'
     ]);
   });
 };

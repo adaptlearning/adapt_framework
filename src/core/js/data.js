@@ -4,14 +4,15 @@ define([
   'core/js/models/articleModel',
   'core/js/models/blockModel',
   'core/js/models/configModel',
-  'core/js/models/contentObjectModel',
+  'core/js/models/menuModel',
+  'core/js/models/pageModel',
   'core/js/models/componentModel',
   'core/js/models/courseModel',
   'core/js/models/questionModel',
   'core/js/models/lockingModel',
   'core/js/models/buildModel',
   'core/js/startController'
-], function(Adapt, AdaptCollection, ArticleModel, BlockModel, ConfigModel, ContentObjectModel, ComponentModel, CourseModel, QuestionModel) {
+], function(Adapt, AdaptCollection, ArticleModel, BlockModel, ConfigModel, MenuModel, PageModel, ComponentModel, CourseModel, QuestionModel) {
 
   var Data = Backbone.Controller.extend({
 
@@ -73,7 +74,14 @@ define([
       Adapt.course = new CourseModel(null, { url: courseFolder + 'course.' + jsonext, reset: true });
 
       Adapt.contentObjects = new AdaptCollection(null, {
-        model: ContentObjectModel,
+        model: function(json) {
+          switch (json._type) {
+            case 'page':
+              return new PageModel(json);
+            case 'menu':
+              return new MenuModel(json);
+          }
+        },
         url: courseFolder + 'contentObjects.' + jsonext
       });
 

@@ -5,7 +5,8 @@
     "_logging": {
         "_isEnabled": true,
         "_level": "debug",
-        "_console": true
+        "_console": true,
+        "_warnFirstOnly": true
     },
     "_accessibility": {
         "_isEnabled": true,
