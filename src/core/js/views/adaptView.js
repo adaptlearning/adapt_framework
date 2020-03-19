@@ -77,8 +77,7 @@ define([
 
         if (m.percentInviewVertical < minVerticalInview) return;
 
-        const classes = onscreen._classes ? `${onscreen._classes}-after` : 'onscreen';
-        this.$el.addClass(classes).off('onscreen.adaptView');
+        this.$el.addClass(`${onscreen._classes}-after`).off('onscreen.adaptView');
 
       });
     }
