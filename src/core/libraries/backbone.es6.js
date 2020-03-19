@@ -53,7 +53,7 @@ define('backbone.es6', [
   };
 
   classes.forEach(function(Class) {
-    Class.extend = extend
+    Class.extend = extend;
   });
 
 });
