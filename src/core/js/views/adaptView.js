@@ -2,15 +2,15 @@ define([
   'core/js/adapt'
 ], function(Adapt) {
 
-  var AdaptView = Backbone.View.extend({
+  class AdaptView extends Backbone.View {
 
-    attributes: function() {
+    attributes() {
       return {
         'data-adapt-id': this.model.get('_id')
       };
-    },
+    }
 
-    initialize: function() {
+    initialize() {
       this.listenTo(Adapt, 'remove', this.remove);
       this.listenTo(this.model, {
         'change:_isVisible': this.toggleVisibility,
@@ -30,132 +30,126 @@ define([
       this.preRender();
       this.render();
       this.setupOnScreenHandler();
-    },
+    }
 
-    preRender: function() {},
+    preRender() {}
 
-    postRender: function() {
+    postRender() {
       this.addChildren();
-    },
+    }
 
-    render: function() {
-      Adapt.trigger(this.constructor.type + 'View:preRender', this);
+    render() {
+      const type = this.constructor.type;
+      Adapt.trigger(`${type}View:preRender`, this);
 
-      var data = this.model.toJSON();
+      const data = this.model.toJSON();
       data.view = this;
-      var template = Handlebars.templates[this.constructor.template];
+      const template = Handlebars.templates[this.constructor.template];
       this.$el.html(template(data));
 
-      Adapt.trigger(this.constructor.type + 'View:render', this);
+      Adapt.trigger(`${type}View:render`, this);
 
-      _.defer(function() {
+      _.defer(() => {
         // don't call postRender after remove
         if (this._isRemoved) return;
 
         this.postRender();
-        Adapt.trigger(this.constructor.type + 'View:postRender', this);
-      }.bind(this));
+        Adapt.trigger(`${type}View:postRender`, this);
+      });
 
       return this;
-    },
+    }
 
-    setupOnScreenHandler: function() {
-      var onscreen = this.model.get('_onScreen');
+    setupOnScreenHandler() {
+      const onscreen = this.model.get('_onScreen');
 
       if (!onscreen || !onscreen._isEnabled) return;
 
       this.$el
         .addClass('has-animation')
-        .addClass(onscreen._classes + '-before');
+        .addClass(`${onscreen._classes}-before`);
 
-      this.$el.on('onscreen.adaptView', function (e, m) {
+      this.$el.on('onscreen.adaptView', (e, m) => {
 
         if (!m.onscreen) return;
 
-        var minVerticalInview = onscreen._percentInviewVertical || 33;
+        const minVerticalInview = onscreen._percentInviewVertical || 33;
 
         if (m.percentInviewVertical < minVerticalInview) return;
 
-        this.$el.addClass(onscreen._classes + '-after' || 'onscreen').off('onscreen.adaptView');
+        this.$el.addClass(`${onscreen._classes}-after`).off('onscreen.adaptView');
 
-      }.bind(this));
-    },
+      });
+    }
 
-    addChildren: function() {
-      var nthChild = 0;
-      var children = this.model.getChildren();
-      var models = children.models;
+    addChildren() {
+      let nthChild = 0;
+      const { models } = this.model.getChildren();
       this.childViews = {};
-      for (var i = 0, len = models.length; i < len; i++) {
-        var model = models[i];
-        if (!model.get('_isAvailable')) continue;
+      models.forEach(model => {
+        if (!model.get('_isAvailable')) return;
 
         nthChild++;
         model.set('_nthChild', nthChild);
 
-        var ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get('_component')];
-        var ChildView = ViewModelObject.view || ViewModelObject;
+        const ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get('_component')];
+        const ChildView = ViewModelObject.view || ViewModelObject;
 
         if (!ChildView) {
-          throw new Error('The component \'' + models[i].attributes._id + '\'' +
-          ' (\'' + models[i].attributes._component + '\')' +
-          ' has not been installed, and so is not available in your project.');
+          throw new Error(`The component '${model.attributes._id}' ('${model.attributes._component}') has not been installed, and so is not available in your project.`);
         }
 
-        var $parentContainer = this.$(this.constructor.childContainer);
-        var childView = new ChildView({ model: model });
+        const $parentContainer = this.$(this.constructor.childContainer);
+        const childView = new ChildView({ model });
 
         this.childViews[model.get('_id')] = childView;
 
         $parentContainer.append(childView.$el);
-      }
-    },
+      });
+    }
 
-    findDescendantViews: function(isParentFirst) {
-      var descendants = [];
-      this.childViews && _.each(this.childViews, function(view) {
+    findDescendantViews(isParentFirst) {
+      const descendants = [];
+      this.childViews && this.childViews.forEach(view => {
         if (isParentFirst) descendants.push(view);
-        var children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
-        if (children) descendants.push.apply(descendants, children);
+        const children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
+        if (children) descendants.push(...children);
         if (!isParentFirst) descendants.push(view);
       });
       return descendants;
-    },
+    }
 
-    setReadyStatus: function() {
+    setReadyStatus() {
       this.model.set('_isReady', true);
-    },
+    }
 
-    setCompletionStatus: function() {
-      if (this.model.get('_isVisible')) {
-        this.model.set({
-          '_isComplete': true,
-          '_isInteractionComplete': true
-        });
-      }
-    },
+    setCompletionStatus() {
+      if (!this.model.get('_isVisible')) return;
+      this.model.set({
+        '_isComplete': true,
+        '_isInteractionComplete': true
+      });
+    }
 
-    resetCompletionStatus: function(type) {
+    resetCompletionStatus(type) {
       if (!this.model.get('_canReset')) return;
 
-      var descendantComponents = this.model.findDescendantModels('components');
+      const descendantComponents = this.model.findDescendantModels('components');
       if (descendantComponents.length === 0) {
         this.model.reset(type);
       } else {
-        _.each(descendantComponents, function(model) {
-          model.reset(type);
-        });
+        descendantComponents.forEach(model => model.reset(type));
       }
-    },
+    }
 
-    preRemove: function() {},
+    preRemove() {}
 
-    remove: function() {
+    remove() {
 
       this.preRemove();
       this._isRemoved = true;
 
-      Adapt.wait.for(function(end) {
+      Adapt.wait.for(end => {
 
         this.$el.off('onscreen.adaptView');
         this.model.setOnChildren('_isReady', false);
@@ -163,52 +157,38 @@ define([
         Backbone.View.prototype.remove.call(this);
 
         end();
-      }.bind(this));
+      });
 
       return this;
-    },
+    }
 
-    setVisibility: function() {
-      var visible = 'u-visibility-hidden';
-      if (this.model.get('_isVisible')) {
-        visible = '';
-      }
-      return visible;
-    },
+    setVisibility() {
+      return this.model.get('_isVisible') ? '' : 'u-visibility-hidden';
+    }
 
-    toggleVisibility: function() {
-      if (this.model.get('_isVisible')) {
-        return this.$el.removeClass('u-visibility-hidden');
-      }
-      this.$el.addClass('u-visibility-hidden');
-    },
+    toggleVisibility() {
+      this.$el.toggleClass('u-visibility-hidden', !this.model.get('_isVisible'));
+    }
 
-    setHidden: function() {
-      var hidden = '';
-      if (this.model.get('_isHidden')) {
-        hidden = 'u-display-none';
-      }
-      return hidden;
-    },
+    setHidden() {
+      return this.model.get('_isHidden') ? 'u-display-none' : '';
+    }
 
-    toggleHidden: function() {
-      if (!this.model.get('_isHidden')) {
-        return this.$el.removeClass('u-display-none');
-      }
-      this.$el.addClass('u-display-none');
-    },
+    toggleHidden() {
+      this.$el.toggleClass('u-display-none', this.model.get('_isHidden'));
+    }
 
-    onIsCompleteChange: function(model, isComplete) {
+    onIsCompleteChange(model, isComplete) {
       this.$el.toggleClass('is-complete', isComplete);
-    },
+    }
 
-    getChildViews: function() {
+    getChildViews() {
       return this.childViews;
     }
 
-  }, {
-    className: ''
-  });
+  }
+
+  AdaptView.className = '';
 
   return AdaptView;
 
