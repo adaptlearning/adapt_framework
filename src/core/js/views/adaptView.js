@@ -65,10 +65,7 @@ define([
 
       if (!onscreen || !onscreen._isEnabled) return;
 
-      this.$el
-        .addClass('has-animation')
-        .addClass(`${onscreen._classes}-before`);
-
+      this.$el.addClass(`has-animation ${onscreen._classes}-before`);
       this.$el.on('onscreen.adaptView', (e, m) => {
 
         if (!m.onscreen) return;
@@ -110,7 +107,7 @@ define([
 
     findDescendantViews(isParentFirst) {
       const descendants = [];
-      this.childViews && this.childViews.forEach(view => {
+      this.childViews && _.each(this.childViews, view => {
         if (isParentFirst) descendants.push(view);
         const children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
         if (children) descendants.push(...children);
@@ -126,8 +123,8 @@ define([
     setCompletionStatus() {
       if (!this.model.get('_isVisible')) return;
       this.model.set({
-        '_isComplete': true,
-        '_isInteractionComplete': true
+        _isComplete: true,
+        _isInteractionComplete: true
       });
     }
 
