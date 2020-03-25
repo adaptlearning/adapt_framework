@@ -23,10 +23,7 @@ define([
       this.listenToOnce(Adapt, 'app:dataReady', () => {
         document.title = Adapt.course.get('title');
       });
-
-      this.listenTo(Adapt, {
-        'router:navigateTo': this.navigateToArguments
-      });
+      this.listenTo(Adapt, 'router:navigateTo', this.navigateToArguments);
     }
 
     routes() {
