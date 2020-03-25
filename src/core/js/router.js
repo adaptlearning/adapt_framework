@@ -25,10 +25,6 @@ define([
       });
 
       this.listenTo(Adapt, {
-        'navigation:backButton': this.navigateToPreviousRoute,
-        'navigation:homeButton': this.navigateToHomeRoute,
-        'navigation:skipNavigation': this.skipNavigation,
-        'navigation:parentButton': this.navigateToParent,
         'router:navigateTo': this.navigateToArguments
       });
     }
@@ -241,10 +237,6 @@ define([
           Adapt.log.deprecated(`Use Backbone.history.navigate or window.location.href instead of Adapt.trigger('router:navigateTo')`);
           this.handleRoute(...args);
       }
-    }
-
-    skipNavigation() {
-      Adapt.a11y.focusFirst('.' + Adapt.location._contentType);
     }
 
     navigateToPreviousRoute(force) {

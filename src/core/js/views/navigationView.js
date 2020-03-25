@@ -2,67 +2,90 @@ define([
   'core/js/adapt'
 ], function(Adapt) {
 
-  var NavigationView = Backbone.View.extend({
+  class NavigationView extends Backbone.View {
 
-    className: 'nav',
+    className() {
+      return 'nav';
+    }
 
-    initialize: function() {
+    events() {
+      return {
+        'click [data-event]': 'triggerEvent'
+      };
+    }
+
+    attributes() {
+      return {
+        'role': 'navigation'
+      };
+    }
+
+    initialize() {
       this.listenToOnce(Adapt, {
         'courseModel:dataLoading': this.remove
       });
       this.listenTo(Adapt, 'router:menu router:page', this.hideNavigationButton);
-      this.template = 'nav';
       this.preRender();
-    },
+    }
 
-    events: {
-      'click [data-event]': 'triggerEvent'
-    },
-
-    attributes: {
-      'role': 'navigation'
-    },
-
-    preRender: function() {
+    preRender() {
       Adapt.trigger('navigationView:preRender', this);
       this.render();
-    },
+    }
 
-    render: function() {
-      var template = Handlebars.templates[this.template];
-      this.$el.html(template(
-        {
+    render() {
+      var template = Handlebars.templates[this.constructor.template];
+      this.$el.html(template({
           _globals: Adapt.course.get('_globals'),
           _accessibility: Adapt.config.get('_accessibility')
-        }
-      )).insertBefore('#app');
+      })).insertBefore('#app');
 
-      _.defer(_.bind(function() {
+      _.defer(() => {
         Adapt.trigger('navigationView:postRender', this);
-      }, this));
+      });
 
       return this;
-    },
+    }
 
-    triggerEvent: function(event) {
+    triggerEvent(event) {
       event.preventDefault();
       var currentEvent = $(event.currentTarget).attr('data-event');
       Adapt.trigger('navigation:' + currentEvent);
-    },
-
-    hideNavigationButton: function(model) {
-      if (model.get('_type') === 'course') {
-        $('.nav__back-btn, .nav__home-btn').addClass('u-display-none');
-      } else {
-        this.showNavigationButton();
+      switch (currentEvent) {
+        case 'backButton':
+          Adapt.router.navigateToPreviousRoute();
+          break;
+        case 'homeButton':
+          Adapt.router.navigateToHomeRoute();
+          break;
+        case 'parentButton':
+          Adapt.router.navigateToParent();
+          break;
+        case 'skipNavigation':
+          this.skipNavigation();
+          break;
+        case 'returnToStart':
+          Adapt.startController.returnToStartLocation();
+          break;
       }
-    },
-
-    showNavigationButton: function() {
-      $('.nav__back-btn, .nav__home-btn').removeClass('u-display-none');
     }
 
-  });
+    skipNavigation() {
+      Adapt.a11y.focusFirst('.' + Adapt.location._contentType);
+    }
+
+    hideNavigationButton(model) {
+      const shouldHide = (model.get('_type') === 'course');
+      this.$('.nav__back-btn, .nav__home-btn').toggleClass('u-display-none', shouldHide);
+    }
+
+    showNavigationButton() {
+      this.$('.nav__back-btn, .nav__home-btn').removeClass('u-display-none');
+    }
+
+  }
+
+  NavigationView.template = 'nav';
 
   return NavigationView;
 
