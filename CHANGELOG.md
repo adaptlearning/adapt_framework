@@ -1,3 +1,17 @@
+## [5.3.0] - 2020-03-26
+### Added
+- Added Adapt.log.removed and Adapt.log.deprecated ([#2678](https://github.com/adaptlearning/adapt_framework/issues/2678))
+- Added ES6-8 support ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
+- Added ES6 class static inheritance to Backbone ([#2697](https://github.com/adaptlearning/adapt_framework/issues/2697))
+
+### Changed
+- Exposed router controller at Adapt.router ([#2677](https://github.com/adaptlearning/adapt_framework/issues/2677))
+- Moved navigation button event handlers to navigationView ([#2669](https://github.com/adaptlearning/adapt_framework/issues/2669))
+- Converted some models, views and controllers to ES6 ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
+- CourseModel now inherits from MenuModel ([#2647](https://github.com/adaptlearning/adapt_framework/pull/2648#issuecomment-595824424))
+- Formalized plugin, data, schema and translate API ([#2662](https://github.com/adaptlearning/adapt_framework/issues/2662))
+
+
 ## [5.2.0] - 2020-03-09
 ### Added
 - Code 'linting' support via ESLint ([#2377](https://github.com/adaptlearning/adapt_framework/issues/2377))
@@ -821,6 +835,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.2.0...v5.3.0
 [5.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v5.0.0
