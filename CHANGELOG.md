@@ -1,14 +1,14 @@
 ## [5.3.0] - 2020-03-26
 ### Added
-- Added Adapt.log.removed and Adapt.log.deprecated ([#2678](https://github.com/adaptlearning/adapt_framework/issues/2678))
+- Added `Adapt.log.removed` and `Adapt.log.deprecated` ([#2678](https://github.com/adaptlearning/adapt_framework/issues/2678))
 - Added ES6-8 support ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
-- Added ES6 class static inheritance to Backbone ([#2697](https://github.com/adaptlearning/adapt_framework/issues/2697))
+- Added ES6 class static inheritance to `Backbone` ([#2697](https://github.com/adaptlearning/adapt_framework/issues/2697))
 
 ### Changed
-- Exposed router controller at Adapt.router ([#2677](https://github.com/adaptlearning/adapt_framework/issues/2677))
-- Moved navigation button event handlers to navigationView ([#2669](https://github.com/adaptlearning/adapt_framework/issues/2669))
+- Exposed router controller at `Adapt.router` ([#2677](https://github.com/adaptlearning/adapt_framework/issues/2677))
+- Moved navigation button event handlers to `NavigationView` ([#2669](https://github.com/adaptlearning/adapt_framework/issues/2669))
 - Converted some models, views and controllers to ES6 ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
-- CourseModel now inherits from MenuModel ([#2647](https://github.com/adaptlearning/adapt_framework/pull/2648#issuecomment-595824424))
+- `CourseModel` now inherits from `MenuModel` ([#2647](https://github.com/adaptlearning/adapt_framework/pull/2648#issuecomment-595824424))
 - Formalized plugin, data, schema and translate API ([#2662](https://github.com/adaptlearning/adapt_framework/issues/2662))
 
 
