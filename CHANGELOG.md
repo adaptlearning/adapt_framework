@@ -1,8 +1,8 @@
 ## [5.3.0] - 2020-03-26
 ### Added
-- Added `Adapt.log.removed` and `Adapt.log.deprecated` ([#2678](https://github.com/adaptlearning/adapt_framework/issues/2678))
-- Added ES6-8 support ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
-- Added ES6 class static inheritance to `Backbone` ([#2697](https://github.com/adaptlearning/adapt_framework/issues/2697))
+- `Adapt.log.removed` and `Adapt.log.deprecated` ([#2678](https://github.com/adaptlearning/adapt_framework/issues/2678))
+- ES6-8 support ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
+- ES6 class static inheritance to `Backbone` ([#2697](https://github.com/adaptlearning/adapt_framework/issues/2697))
 
 ### Changed
 - Exposed router controller at `Adapt.router` ([#2677](https://github.com/adaptlearning/adapt_framework/issues/2677))
