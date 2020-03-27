@@ -10,6 +10,7 @@
 - Converted some models, views and controllers to ES6 ([#2647](https://github.com/adaptlearning/adapt_framework/issues/2647))
 - `CourseModel` now inherits from `MenuModel` ([#2647](https://github.com/adaptlearning/adapt_framework/pull/2648#issuecomment-595824424))
 - Formalized plugin, data, schema and translate API ([#2662](https://github.com/adaptlearning/adapt_framework/issues/2662))
+- Refreshed existing and added new icons to the vanilla font set ([#2688](https://github.com/adaptlearning/adapt_framework/issues/2688))
 
 
 ## [5.2.0] - 2020-03-09
