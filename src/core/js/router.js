@@ -7,6 +7,13 @@ define([
 
   class Router extends Backbone.Router {
 
+    routes() {
+      return {
+        '': 'handleRoute',
+        'id/:id': 'handleRoute',
+        ':pluginName(/*location)(/*action)': 'handleRoute'
+      };
+    }
     initialize({ model }) {
 
       this.model = model;
@@ -24,14 +31,6 @@ define([
         document.title = Adapt.course.get('title');
       });
       this.listenTo(Adapt, 'router:navigateTo', this.navigateToArguments);
-    }
-
-    routes() {
-      return {
-        '': 'handleRoute',
-        'id/:id': 'handleRoute',
-        ':pluginName(/*location)(/*action)': 'handleRoute'
-      };
     }
 
     pruneArguments(args) {
@@ -93,7 +92,7 @@ define([
     }
 
     handlePluginRouter(pluginName, location, action) {
-      var pluginLocation = pluginName;
+      let pluginLocation = pluginName;
 
       if (location) {
         pluginLocation = pluginLocation + '-' + location;
@@ -114,7 +113,7 @@ define([
     handleCourse() {
       if (Adapt.course.has('_start')) {
         // Do not allow access to the menu when the start controller is enabled.
-        var startController = Adapt.course.get('_start');
+        const startController = Adapt.course.get('_start');
 
         if (startController._isEnabled === true && startController._isMenuDisabled === true) {
           return;
@@ -141,8 +140,8 @@ define([
     }
 
     handleId(id) {
-      var currentModel = Adapt.findById(id);
-      var type = '';
+      const currentModel = Adapt.findById(id);
+      let type = '';
 
       if (!currentModel) {
         this.model.set('_canNavigate', true, { pluginName: 'adapt' });
@@ -165,7 +164,7 @@ define([
           } else {
             this.showLoading();
             this.removeViews(() => {
-              var location;
+              let location;
               this.setContentObjectToVisited(currentModel);
 
               if (type === 'page') {
@@ -213,7 +212,7 @@ define([
     navigateToArguments(args) {
       args = this.pruneArguments(args);
 
-      var options = { trigger: false, replace: false };
+      const options = { trigger: false, replace: false };
 
       switch (args.length) {
         case 0:
@@ -271,8 +270,8 @@ define([
       if (!Adapt.location._currentId) {
         return;
       }
-      var currentId = Adapt.location._currentId;
-      var route = (currentId === Adapt.course.get('_id')) ? '#/' : '#/id/' + currentId;
+      const currentId = Adapt.location._currentId;
+      const route = (currentId === Adapt.course.get('_id')) ? '#/' : '#/id/' + currentId;
       this.navigate(route, { trigger: true, replace: true });
     }
 
@@ -280,8 +279,8 @@ define([
       if (!this.model.get('_canNavigate') && !force) {
         return;
       }
-      var parentId = Adapt.contentObjects.findWhere({ _id: Adapt.location._currentId }).get('_parentId');
-      var route = (parentId === Adapt.course.get('_id')) ? '#/' : '#/id/' + parentId;
+      const parentId = Adapt.contentObjects.findWhere({ _id: Adapt.location._currentId }).get('_parentId');
+      const route = (parentId === Adapt.course.get('_id')) ? '#/' : '#/id/' + parentId;
       this.navigate(route, { trigger: true });
     }
 
@@ -316,16 +315,16 @@ define([
 
       Adapt.location._currentLocation = currentLocation;
 
-      var locationModel = Adapt.findById(id) || Adapt.course;
-      var htmlClasses = (locationModel && locationModel.get('_htmlClasses')) || '';
+      const locationModel = Adapt.findById(id) || Adapt.course;
+      const htmlClasses = (locationModel && locationModel.get('_htmlClasses')) || '';
 
-      var classes = (Adapt.location._currentId) ? 'location-' +
+      const classes = (Adapt.location._currentId) ? 'location-' +
         Adapt.location._contentType +
         ' location-id-' +
         Adapt.location._currentId
         : 'location-' + Adapt.location._currentLocation;
 
-      var previousClasses = Adapt.location._previousClasses;
+      const previousClasses = Adapt.location._previousClasses;
       if (previousClasses) {
         this.$html.removeClass(previousClasses);
       }
@@ -353,19 +352,19 @@ define([
     setDocumentTitle() {
       if (!Adapt.location._currentId) return;
 
-      var currentModel = Adapt.findById(Adapt.location._currentId);
-      var pageTitle = '';
+      const currentModel = Adapt.findById(Adapt.location._currentId);
+      let pageTitle = '';
 
       if (currentModel && currentModel.get('_type') !== 'course') {
-        var currentTitle = currentModel.get('title');
+        const currentTitle = currentModel.get('title');
 
         if (currentTitle) {
           pageTitle = ' | ' + currentTitle;
         }
       }
 
-      var courseTitle = Adapt.course.get('title');
-      var documentTitle = $('<div>' + courseTitle + pageTitle + '</div>').text();
+      const courseTitle = Adapt.course.get('title');
+      const documentTitle = $('<div>' + courseTitle + pageTitle + '</div>').text();
 
       this.listenToOnce(Adapt, 'pageView:ready menuView:ready', () => {
         document.title = documentTitle;

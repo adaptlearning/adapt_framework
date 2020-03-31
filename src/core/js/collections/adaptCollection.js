@@ -2,26 +2,25 @@ define([
   'core/js/adapt'
 ], function(Adapt) {
 
-  var AdaptCollection = Backbone.Collection.extend({
-    initialize: function(models, options) {
+  class AdaptCollection extends Backbone.Collection {
+
+    initialize(models, options) {
       this.url = options.url;
-
       this.once('reset', this.loadedData, this);
-      if (this.url) {
-        this.fetch({
-          reset: true,
-          error: _.bind(function(model, xhr, options) {
-            console.error('ERROR: unable to load file ' + this.url);
-          }, this)
-        });
-      }
-    },
+      if (!this.url) return;
+      this.fetch({
+        reset: true,
+        error: () => {
+          console.error('ERROR: unable to load file ' + this.url);
+        }
+      });
+    }
 
-    loadedData: function() {
+    loadedData() {
       Adapt.trigger('adaptCollection:dataLoaded');
     }
 
-  });
+  }
 
   return AdaptCollection;
 

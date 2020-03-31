@@ -574,7 +574,7 @@ define([
      * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
      */
     setOptional(value) {
-      Adapt.log.warn(`DEPRECATED - Use model.set('_isOptional', value) as setOptional() may be removed in the future`);
+      Adapt.log.deprecated(`Use model.set('_isOptional', value) as setOptional() may be removed in the future`);
       this.set({ _isOptional: value });
     }
 
@@ -635,10 +635,6 @@ define([
       const children = this.getAvailableChildModels();
       children.forEach(child => {
         child.set('_isLocked', this.shouldLock(child));
-
-        if (child.get('_type') === 'menu') {
-          child.checkLocking();
-        }
       });
     }
 

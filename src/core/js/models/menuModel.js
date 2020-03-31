@@ -8,6 +8,15 @@ define([
       return 'contentObjects';
     }
 
+    setCustomLocking() {
+      const children = this.getAvailableChildModels();
+      children.forEach(child => {
+        child.set('_isLocked', this.shouldLock(child));
+        if (!(child instanceof MenuModel)) return;
+        child.checkLocking();
+      });
+    }
+
   }
 
   return MenuModel;

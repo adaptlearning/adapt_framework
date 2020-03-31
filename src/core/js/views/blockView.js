@@ -2,9 +2,9 @@ define([
   'core/js/views/adaptView'
 ], function(AdaptView) {
 
-  var BlockView = AdaptView.extend({
+  class BlockView extends AdaptView {
 
-    className: function() {
+    className() {
       return [
         'block',
         this.model.get('_id'),
@@ -16,7 +16,9 @@ define([
       ].join(' ');
     }
 
-  }, {
+  }
+
+  Object.assign(BlockView, {
     childContainer: '.component__container',
     type: 'block',
     template: 'block'

@@ -3,30 +3,37 @@ define([
   'core/js/models/lockingModel'
 ], function(Wait) {
 
-  var Adapt = Backbone.Model.extend({
+  class Adapt extends Backbone.Model {
 
-    loadScript: window.__loadScript,
-    location: {},
-    componentStore: {},
+    initialize() {
+      this.loadScript = window.__loadScript;
+      this.location = {};
+      this.componentStore = {};
+      this.setupWait();
+    }
 
-    defaults: {
-      _canScroll: true, // to stop scrollTo behaviour,
-      _outstandingCompletionChecks: 0,
-      _pluginWaitCount: 0,
-      _isStarted: false
-    },
+    defaults() {
+      return {
+        _canScroll: true, // to stop scrollTo behaviour,
+        _outstandingCompletionChecks: 0,
+        _pluginWaitCount: 0,
+        _isStarted: false
+      };
+    }
 
-    lockedAttributes: {
-      _canScroll: false
-    },
+    lockedAttributes() {
+      return {
+        _canScroll: false
+      };
+    }
 
-    init: function() {
+    init() {
       this.addDirection();
       this.disableAnimation();
       this.trigger('adapt:preInitialize');
 
       // wait until no more completion checking
-      this.deferUntilCompletionChecked(function() {
+      this.deferUntilCompletionChecked(() => {
 
         // start adapt in a full restored state
         this.trigger('adapt:start');
@@ -39,78 +46,68 @@ define([
 
         this.trigger('adapt:initialize');
 
-      }.bind(this));
-    },
-
-    initialize: function () {
-      this.setupWait();
-    },
+      });
+    }
 
     /**
      * call when entering an asynchronous completion check
      */
-    checkingCompletion: function() {
-      var outstandingChecks = this.get('_outstandingCompletionChecks');
-      this.set('_outstandingCompletionChecks', ++outstandingChecks);
-    },
+    checkingCompletion() {
+      const outstandingChecks = this.get('_outstandingCompletionChecks');
+      this.set('_outstandingCompletionChecks', outstandingChecks + 1);
+    }
 
     /**
      * call when exiting an asynchronous completion check
      */
-    checkedCompletion: function() {
-      var outstandingChecks = this.get('_outstandingCompletionChecks');
-      this.set('_outstandingCompletionChecks', --outstandingChecks);
-    },
+    checkedCompletion() {
+      const outstandingChecks = this.get('_outstandingCompletionChecks');
+      this.set('_outstandingCompletionChecks', outstandingChecks - 1);
+    }
 
     /**
      * wait until there are no outstanding completion checks
      * @param {Function} callback Function to be called after all completion checks have been completed
      */
-    deferUntilCompletionChecked: function(callback) {
+    deferUntilCompletionChecked(callback) {
       if (this.get('_outstandingCompletionChecks') === 0) return callback();
 
-      var checkIfAnyChecksOutstanding = function(model, outstandingChecks) {
+      const checkIfAnyChecksOutstanding = (model, outstandingChecks) => {
         if (outstandingChecks !== 0) return;
-
         this.off('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
-
         callback();
       };
 
       this.on('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
 
-    },
+    }
 
-    setupWait: function() {
+    setupWait() {
 
       this.wait = new Wait();
 
       // Setup legacy events and handlers
-      var beginWait = function () {
-        this.log.warn("DEPRECATED - Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future");
+      const beginWait = () => {
+        this.log.deprecated("Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future");
         this.wait.begin();
-      }.bind(this);
+      };
 
-      var endWait = function() {
-        this.log.warn("DEPRECATED - Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future");
+      const endWait = () => {
+        this.log.deprecated("Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future");
         this.wait.end();
-      }.bind(this);
+      };
 
-      var ready = function() {
-
+      const ready = () => {
         if (this.wait.isWaiting()) {
           return;
         }
-
-        var isEventListening = (this._events['plugins:ready']);
+        const isEventListening = (this._events['plugins:ready']);
         if (!isEventListening) {
           return;
         }
-
-        this.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
+        this.log.deprecated("Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
         this.trigger('plugins:ready');
-
-      }.bind(this);
+      };
 
       this.listenTo(this.wait, 'ready', ready);
       this.listenTo(this, {
@@ -118,20 +115,20 @@ define([
         'plugin:endWait': endWait
       });
 
-    },
+    }
 
-    isWaitingForPlugins: function() {
-      this.log.warn('DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future');
+    isWaitingForPlugins() {
+      this.log.deprecated('Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future');
       return this.wait.isWaiting();
-    },
+    }
 
-    checkPluginsReady: function() {
-      this.log.warn('DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future');
+    checkPluginsReady() {
+      this.log.deprecated('Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future');
       if (this.isWaitingForPlugins()) {
         return;
       }
       this.trigger('plugins:ready');
-    },
+    }
 
     /**
      * Allows a selector to be passed in and Adapt will navigate to this element
@@ -139,14 +136,12 @@ define([
      * @param {object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
      * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
-    navigateToElement: function(selector, settings) {
-      settings = (settings || {});
-
+    navigateToElement(selector, settings = {}) {
       // Removes . symbol from the selector to find the model
-      var currentModelId = selector.replace(/\./g, '');
-      var currentModel = this.data.findById(currentModelId);
+      const currentModelId = selector.replace(/\./g, '');
+      const currentModel = this.data.findById(currentModelId);
       // Get current page to check whether this is the current page
-      var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
+      const currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
 
       // If current page - scrollTo element
       if (currentPage.get('_id') === this.location._currentId) {
@@ -155,23 +150,23 @@ define([
 
       // If the element is on another page navigate and wait until pageView:ready is fired
       // Then scrollTo element
-      this.once('pageView:ready', _.debounce(function() {
+      this.once('pageView:ready', _.debounce(() => {
         this.router.set('_shouldNavigateFocus', true);
         this.scrollTo(selector, settings);
-      }.bind(this), 1));
+      }, 1));
 
-      var shouldReplaceRoute = settings.replace || false;
+      const shouldReplaceRoute = settings.replace || false;
 
       this.router.set('_shouldNavigateFocus', false);
       Backbone.history.navigate('#/id/' + currentPage.get('_id'), { trigger: true, replace: shouldReplaceRoute });
-    },
+    }
 
     /**
      * Used to register components with the Adapt 'component store'
      * @param {string} name The name of the component to be registered
      * @param {object} object Object containing properties `model` and `view` or (legacy) an object representing the view
      */
-    register: function(name, object) {
+    register(name, object) {
       if (this.componentStore[name]) {
         throw Error('The component "' + name + '" already exists in your project');
       }
@@ -187,20 +182,20 @@ define([
       this.componentStore[name] = object;
 
       return object;
-    },
+    }
 
     /**
      * Fetches a component view class from the componentStore. For a usage example, see either HotGraphic or Narrative
      * @param {string} name The name of the componentView you want to fetch e.g. `"hotgraphic"`
      * @returns {ComponentView} Reference to the view class
      */
-    getViewClass: function(name) {
-      var object = this.componentStore[name];
+    getViewClass(name) {
+      const object = this.componentStore[name];
       if (!object) {
         throw Error('The component "' + name + '" doesn\'t exist in your project');
       }
       return object.view || object;
-    },
+    }
 
     /**
      * Looks up which collection a model belongs to
@@ -212,43 +207,43 @@ define([
      * - "articles"
      * - "components"
      */
-    mapById: function(id) {
+    mapById(id) {
       return this.data.mapById(id);
-    },
+    }
 
     /**
      * Looks up a model by its `_id` property
      * @param {string} id The id of the item e.g. "co-05"
      * @return {Backbone.Model}
      */
-    findById: function(id) {
+    findById(id) {
       return this.data.findById(id);
-    },
+    }
 
-    findViewByModelId: function(id) {
-      var model = this.data.findById(id);
+    findViewByModelId(id) {
+      const model = this.data.findById(id);
       if (!model) return;
 
       if (model === this.parentView.model) return this.parentView;
 
-      var idPathToView = [id];
-      var currentLocationId = this.location._currentId;
-      var currentLocationModel = _.find(model.getAncestorModels(), function(model) {
-        var modelId = model.get('_id');
+      const idPathToView = [id];
+      const currentLocationId = this.location._currentId;
+      const currentLocationModel = model.getAncestorModels().find(model => {
+        const modelId = model.get('_id');
         if (modelId === currentLocationId) return true;
         idPathToView.unshift(modelId);
       });
 
       if (!currentLocationModel) {
-        return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id);
+        return console.warn(`Adapt.findViewByModelId() unable to find view for model id: ${id}`);
       }
 
-      var foundView = _.reduce(idPathToView, function(view, currentId) {
+      const foundView = idPathToView.reduce((view, currentId) => {
         return view && view.childViews && view.childViews[currentId];
       }, this.parentView);
 
       return foundView;
-    },
+    }
 
     /**
      * Relative strings describe the number and type of hops in the model hierarchy
@@ -260,19 +255,19 @@ define([
      * }
      * Trickle uses this function to determine where it should scrollTo after it unlocks
      */
-    parseRelativeString: function(relativeString) {
+    parseRelativeString(relativeString) {
       if (relativeString[0] === '@') {
         relativeString = relativeString.substr(1);
       }
 
-      var type = relativeString.match(/(component|block|article|page|menu)/);
+      let type = relativeString.match(/(component|block|article|page|menu)/);
       if (!type) {
         this.log.error('Adapt.parseRelativeString() could not match relative type', relativeString);
         return;
       }
       type = type[0];
 
-      var offset = parseInt(relativeString.substr(type.length).trim() || 0);
+      const offset = parseInt(relativeString.substr(type.length).trim() || 0);
       if (isNaN(offset)) {
         this.log.error('Adapt.parseRelativeString() could not parse relative offset', relativeString);
         return;
@@ -283,43 +278,42 @@ define([
         offset: offset
       };
 
-    },
+    }
 
-    addDirection: function() {
-      var defaultDirection = this.config.get('_defaultDirection');
+    addDirection() {
+      const defaultDirection = this.config.get('_defaultDirection');
 
       $('html')
         .addClass('dir-' + defaultDirection)
         .attr('dir', defaultDirection);
-    },
+    }
 
-    disableAnimation: function() {
-      var disableAnimationArray = this.config.get('_disableAnimationFor');
-      var disableAnimation = this.config.get('_disableAnimation');
+    disableAnimation() {
+      const disableAnimationArray = this.config.get('_disableAnimationFor');
+      const disableAnimation = this.config.get('_disableAnimation');
 
       // Check if animations should be disabled
       if (disableAnimationArray && disableAnimationArray.length > 0) {
-        for (var i = 0; i < disableAnimationArray.length; i++) {
+        for (let i = 0; i < disableAnimationArray.length; i++) {
           if ($('html').is(disableAnimationArray[i])) {
             this.config.set('_disableAnimation', true);
             $('html').addClass('disable-animation');
             console.log('Animation disabled.');
           }
         }
-      } else if (disableAnimation === true) {
-        $('html').addClass('disable-animation');
-      } else {
-        $('html').removeClass('disable-animation');
+        return;
       }
-    },
 
-    remove: function() {
+      $('html').toggleClass('disable-animation', (disableAnimation === true));
+    }
+
+    remove() {
       this.trigger('preRemove');
       this.trigger('remove');
       _.defer(this.trigger.bind(this), 'postRemove');
     }
 
-  });
+  }
 
   return new Adapt();
 });

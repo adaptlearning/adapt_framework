@@ -14,67 +14,69 @@ define([
   'core/js/startController'
 ], function(Adapt, AdaptCollection, ArticleModel, BlockModel, ConfigModel, MenuModel, PageModel, ComponentModel, CourseModel, QuestionModel) {
 
-  var Data = Backbone.Controller.extend({
+  class Data extends Backbone.Controller {
 
-    mappedIds: {},
+    initialize() {
+      this.mappedIds = {};
+    }
 
-    init: function () {
+    init () {
       Adapt.build.whenReady().then(this.onBuildDataLoaded.bind(this));
-    },
+    }
 
-    onBuildDataLoaded: function() {
+    onBuildDataLoaded() {
       $('html').attr('data-adapt-framework-version', Adapt.build.get('package').version);
       Adapt.config = new ConfigModel(null, { url: 'course/config.' + Adapt.build.get('jsonext'), reset: true });
-      Adapt.config.on({
-        'change:_activeLanguage': this.onLanguageChange.bind(this),
-        'change:_defaultDirection': this.onDirectionChange.bind(this)
+      this.listenTo(Adapt.config, {
+        'change:_activeLanguage': this.onLanguageChange,
+        'change:_defaultDirection': this.onDirectionChange
       });
 
       // Events that are triggered by the main Adapt content collections and models
-      Adapt.once('configModel:loadCourseData', this.onLoadCourseData.bind(this));
-    },
+      this.listenToOnce(Adapt, 'configModel:loadCourseData', this.onLoadCourseData);
+    }
 
-    onLanguageChange: function(model, language) {
+    onLanguageChange(model, language) {
       Adapt.offlineStorage.set('lang', language);
       this.loadCourseData(this.triggerDataReady.bind(this), language);
-    },
+    }
 
-    onDirectionChange: function(model, direction) {
+    onDirectionChange(model, direction) {
       if (direction === 'rtl') {
         $('html').removeClass('dir-ltr').addClass('dir-rtl').attr('dir', 'rtl');
       } else {
         $('html').removeClass('dir-rtl').addClass('dir-ltr').attr('dir', 'ltr');
       }
-    },
+    }
 
     /**
      * Before we actually go to load the course data, we first need to check to see if a language has been set
      * If it has we can go ahead and start loading; if it hasn't, apply the defaultLanguage from config.json
      */
-    onLoadCourseData: function() {
+    onLoadCourseData() {
       if (Adapt.config.get('_activeLanguage')) {
         this.loadCourseData(this.triggerDataReady.bind(this));
       } else {
         Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
       }
-    },
+    }
 
-    loadCourseData: function(callback, newLanguage) {
-      Adapt.on('adaptCollection:dataLoaded courseModel:dataLoaded', function() {
+    loadCourseData(callback, newLanguage) {
+      this.listenTo(Adapt, 'adaptCollection:dataLoaded courseModel:dataLoaded', () => {
         this.checkDataIsLoaded(callback, newLanguage);
-      }.bind(this));
+      });
 
       // All code that needs to run before adapt starts should go here
-      var language = Adapt.config.get('_activeLanguage');
-      var jsonext = Adapt.build.get('jsonext');
-      var courseFolder = 'course/' + language + '/';
+      const language = Adapt.config.get('_activeLanguage');
+      const jsonext = Adapt.build.get('jsonext');
+      const courseFolder = 'course/' + language + '/';
 
       $('html').attr('lang', language);
 
       Adapt.course = new CourseModel(null, { url: courseFolder + 'course.' + jsonext, reset: true });
 
       Adapt.contentObjects = new AdaptCollection(null, {
-        model: function(json) {
+        model: json => {
           switch (json._type) {
             case 'page':
               return new PageModel(json);
@@ -96,10 +98,10 @@ define([
       });
 
       Adapt.components = new AdaptCollection(null, {
-        model: function(json) {
+        model: json => {
 
           // use view+model object
-          var ViewModelObject = Adapt.componentStore[json._component];
+          const ViewModelObject = Adapt.componentStore[json._component];
 
           if (!ViewModelObject) {
             throw new Error('One or more components of type "' + json._component + '" were included in the course - but no component of that type is installed...');
@@ -111,7 +113,7 @@ define([
             return new ViewModelObject.model(json);
           }
 
-          var View = ViewModelObject.view || ViewModelObject;
+          const View = ViewModelObject.view || ViewModelObject;
           // if question type use question model
           if (View._isQuestionType) {
             return new QuestionModel(json);
@@ -122,9 +124,9 @@ define([
         },
         url: courseFolder + 'components.' + jsonext
       });
-    },
+    }
 
-    checkDataIsLoaded: function(callback, newLanguage) {
+    checkDataIsLoaded(callback, newLanguage) {
       if (Adapt.contentObjects.models.length > 0 &&
         Adapt.articles.models.length > 0 &&
         Adapt.blocks.models.length > 0 &&
@@ -143,44 +145,44 @@ define([
 
         this.setupMapping();
 
-        Adapt.wait.queue(function() {
+        Adapt.wait.queue(() => {
           callback(newLanguage);
         });
 
       }
-    },
+    }
 
-    mapAdaptIdsToObjects: function () {
+    mapAdaptIdsToObjects() {
       Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy('_id');
       Adapt.articles._byAdaptID = Adapt.articles.groupBy('_id');
       Adapt.blocks._byAdaptID = Adapt.blocks.groupBy('_id');
       Adapt.components._byAdaptID = Adapt.components.groupBy('_id');
-    },
+    }
 
-    setupMapping: function() {
+    setupMapping() {
       this.mappedIds = {};
 
       // Setup course Id
       this.mappedIds[Adapt.course.get('_id')] = 'course';
 
-      var collections = ['contentObjects', 'articles', 'blocks', 'components'];
+      const collections = ['contentObjects', 'articles', 'blocks', 'components'];
 
-      collections.forEach(function(collection) {
-        Adapt[collection].models.forEach(function(model) {
-          var id = model.get('_id');
+      collections.forEach(collection => {
+        Adapt[collection].models.forEach(model => {
+          const id = model.get('_id');
           this.mappedIds[id] = collection;
-        }.bind(this));
-      }.bind(this));
-    },
+        });
+      });
+    }
 
-    triggerDataReady: function(newLanguage) {
+    triggerDataReady(newLanguage) {
       if (newLanguage) {
 
         Adapt.trigger('app:languageChanged', newLanguage);
 
-        _.defer(function() {
+        _.defer(() => {
           Adapt.startController.loadCourseData();
-          var hash = '#/';
+          let hash = '#/';
 
           if (Adapt.startController.isEnabled()) {
             hash = Adapt.startController.getStartHash(true);
@@ -200,20 +202,20 @@ define([
 
       Adapt.wait.queue(this.triggerInit.bind(this));
 
-    },
+    }
 
-    triggerInit: function() {
+    triggerInit() {
       this.isReady = true;
       this.trigger('ready');
-    },
+    }
 
-    whenReady: function() {
+    whenReady() {
       if (this.isReady) return Promise.resolve();
 
-      return new Promise(function (resolve) {
+      return new Promise(resolve => {
         this.once('ready', resolve);
-      }.bind(this));
-    },
+      });
+    }
 
     /**
      * Looks up which collection a model belongs to
@@ -225,21 +227,21 @@ define([
      * - "articles"
      * - "components"
      */
-    mapById: function(id) {
+    mapById(id) {
       return this.mappedIds[id];
-    },
+    }
 
     /**
      * Looks up a model by its `_id` property
      * @param {string} id The id of the item e.g. "co-05"
      * @return {Backbone.Model}
      */
-    findById: function(id) {
+    findById(id) {
       if (id === Adapt.course.get('_id')) {
         return Adapt.course;
       }
 
-      var collectionType = Adapt.mapById(id);
+      const collectionType = Adapt.mapById(id);
 
       if (!collectionType) {
         console.warn('Adapt.findById() unable to find collection type for id: ' + id);
@@ -249,7 +251,7 @@ define([
       return Adapt[collectionType]._byAdaptID[id][0];
     }
 
-  });
+  }
 
   return (Adapt.data = new Data());
 
