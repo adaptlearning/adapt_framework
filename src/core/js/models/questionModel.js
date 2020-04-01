@@ -260,7 +260,7 @@ define([
 
       type = type || true; // hard reset by default, can be "soft", "hard"/true
 
-      ComponentModel.prototype.reset.call(this, type, force);
+      super.reset(type, force);
 
       const attempts = this.get('_attempts');
       this.set({
