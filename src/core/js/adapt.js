@@ -17,7 +17,8 @@ define([
         _canScroll: true, // to stop scrollTo behaviour,
         _outstandingCompletionChecks: 0,
         _pluginWaitCount: 0,
-        _isStarted: false
+        _isStarted: false,
+        _shouldDestroyContentObjects: true
       };
     }
 
@@ -133,33 +134,18 @@ define([
     /**
      * Allows a selector to be passed in and Adapt will navigate to this element
      * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
-     * @param {object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
+     * @param {object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
      * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
-    navigateToElement(selector, settings = {}) {
-      // Removes . symbol from the selector to find the model
-      const currentModelId = selector.replace(/\./g, '');
-      const currentModel = this.data.findById(currentModelId);
-      // Get current page to check whether this is the current page
-      const currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
+    navigateToElement() {}
 
-      // If current page - scrollTo element
-      if (currentPage.get('_id') === this.location._currentId) {
-        return this.scrollTo(selector, settings);
-      }
-
-      // If the element is on another page navigate and wait until pageView:ready is fired
-      // Then scrollTo element
-      this.once('pageView:ready', _.debounce(() => {
-        this.router.set('_shouldNavigateFocus', true);
-        this.scrollTo(selector, settings);
-      }, 1));
-
-      const shouldReplaceRoute = settings.replace || false;
-
-      this.router.set('_shouldNavigateFocus', false);
-      Backbone.history.navigate('#/id/' + currentPage.get('_id'), { trigger: true, replace: shouldReplaceRoute });
-    }
+    /**
+     * Allows a selector to be passed in and Adapt will scroll to this element
+     * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
+     * @param {object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
+     * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
+     */
+    scrollTo() {}
 
     /**
      * Used to register components with the Adapt 'component store'
@@ -306,10 +292,16 @@ define([
       $('html').toggleClass('disable-animation', (disableAnimation === true));
     }
 
-    remove() {
-      this.trigger('preRemove');
-      this.trigger('remove');
-      _.defer(this.trigger.bind(this), 'postRemove');
+    async remove() {
+      const currentView = this.parentView;
+      this.trigger('preRemove', currentView);
+      await this.wait.queue();
+      // Facilitate contentObject transitions
+      if (this.parentView && this.get('_shouldDestroyContentObjects')) {
+        this.parentView.destroy();
+      }
+      this.trigger('remove', currentView);
+      _.defer(this.trigger.bind(this), 'postRemove', currentView);
     }
 
   }

@@ -6,9 +6,7 @@ define([
   var Headings = Backbone.Controller.extend({
 
     initialize: function() {
-      var types = [ 'menu', 'menuItem', 'page', 'article', 'block', 'component' ];
-      var eventNames = types.concat(['']).join('View:render ');
-      this.listenTo(Adapt, eventNames, this.onViewRender);
+      this.listenTo(Adapt, 'view:render', this.onViewRender);
     },
 
     onViewRender: function(view) {
