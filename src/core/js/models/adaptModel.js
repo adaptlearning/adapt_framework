@@ -257,6 +257,10 @@ define([
       const parent = this.getParent();
       if (!parent) return;
 
+      /**
+       * TODO:
+       * look to remove hard coded model types
+       */
       if (ancestorType === 'pages') {
         ancestorType = 'contentObjects';
       }
@@ -284,6 +288,10 @@ define([
         descendants.slice(0, -1)
       ];
       if (descendants === 'contentObjects') {
+        /**
+         * TODO:
+         * look to remove hard coded model types
+         */
         types.push('page', 'menu');
       }
 
@@ -379,7 +387,10 @@ define([
      * @return {array}
      */
     findRelativeModel(relativeString, options) {
-
+      /**
+       * TODO:
+       * look to remove hard coded model types
+       */
       const types = [ 'menu', 'page', 'article', 'block', 'component' ];
 
       options = options || {};
