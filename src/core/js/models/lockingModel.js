@@ -48,7 +48,7 @@ define(function() {
       if (!this._lockedAttributes) return;
       delete this._lockedAttributes[attrName];
       delete this._lockedAttributesValues[attrName];
-      if (_.keys(this._lockedAttributes).length === 0) {
+      if (Object.keys(this._lockedAttributes).length === 0) {
         delete this._lockedAttributes;
         delete this._lockedAttributesValues;
       }
@@ -104,8 +104,8 @@ define(function() {
         return this._lockedAttributesValues[attrName][options.pluginName] ? 1 : 0;
       }
 
-      const lockingAttributeValues = _.values(this._lockedAttributesValues[attrName]);
-      const lockingAttributeValuesSum = _.reduce(lockingAttributeValues, (sum, value) => sum + (value ? 1 : 0), 0);
+      const lockingAttributeValues = Object.values(this._lockedAttributesValues[attrName]);
+      const lockingAttributeValuesSum = lockingAttributeValues.reduce((sum, value) => sum + (value ? 1 : 0), 0);
 
       return lockingAttributeValuesSum;
     },

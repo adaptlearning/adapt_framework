@@ -88,12 +88,12 @@ define([
 
       // Setup legacy events and handlers
       const beginWait = () => {
-        this.log.deprecated("Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future");
+        this.log.deprecated(`Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future`);
         this.wait.begin();
       };
 
       const endWait = () => {
-        this.log.deprecated("Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future");
+        this.log.deprecated(`Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future`);
         this.wait.end();
       };
 
@@ -295,11 +295,10 @@ define([
       // Check if animations should be disabled
       if (disableAnimationArray) {
         for (let i = 0, l = disableAnimationArray.length; i < l; i++) {
-          if ($('html').is(disableAnimationArray[i])) {
-            this.config.set('_disableAnimation', true);
-            $('html').addClass('disable-animation');
-            console.log('Animation disabled.');
-          }
+          if (!$('html').is(disableAnimationArray[i])) continue;
+          this.config.set('_disableAnimation', true);
+          $('html').addClass('disable-animation');
+          console.log('Animation disabled.');
         }
         return;
       }

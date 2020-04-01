@@ -63,13 +63,8 @@ define([
     // This should preserve the state of the users answers
     storeUserAnswer() {
       const items = this.getChildren().slice(0);
-      items.sort((a, b) => {
-        return a.get('_index') - b.get('_index');
-      });
-
-      const userAnswer = items.map(itemModel => {
-        return itemModel.get('_isActive');
-      });
+      items.sort((a, b) => a.get('_index') - b.get('_index'));
+      const userAnswer = items.map(itemModel => itemModel.get('_isActive'));
       this.set('_userAnswer', userAnswer);
     }
 

@@ -22,9 +22,7 @@ define([
     setUpItems() {
       // see https://github.com/adaptlearning/adapt_framework/issues/2480
       const items = this.get('_items') || [];
-      items.forEach(function(item, index) {
-        item._index = index;
-      });
+      items.forEach((item, index) => (item._index = index));
       this.set('_children', new Backbone.Collection(items, { model: ItemModel }));
     }
 

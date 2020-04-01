@@ -10,9 +10,7 @@ define([
       if (!this.url) return;
       this.fetch({
         reset: true,
-        error: () => {
-          console.error('ERROR: unable to load file ' + this.url);
-        }
+        error: () => console.error('ERROR: unable to load file ' + this.url)
       });
     }
 

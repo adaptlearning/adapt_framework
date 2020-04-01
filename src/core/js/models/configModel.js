@@ -31,9 +31,7 @@ define([
             Adapt.trigger('configModel:loadCourseData');
           });
         },
-        error: () => {
-          console.log('Unable to load course/config.json');
-        }
+        error: () => console.log('Unable to load course/config.json')
       });
     }
 

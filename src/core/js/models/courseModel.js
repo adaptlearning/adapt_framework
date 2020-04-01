@@ -20,9 +20,7 @@ define([
       this.on('sync', this.loadedData, this);
       if (!this.url) return;
       this.fetch({
-        error: () => {
-          console.error(`ERROR: unable to load file ${this.url}`);
-        }
+        error: () => console.error(`ERROR: unable to load file ${this.url}`)
       });
     }
 
