@@ -293,7 +293,7 @@ define([
       const disableAnimation = this.config.get('_disableAnimation');
 
       // Check if animations should be disabled
-      if (disableAnimationArray && disableAnimationArray.length > 0) {
+      if (disableAnimationArray) {
         for (let i = 0; i < disableAnimationArray.length; i++) {
           if ($('html').is(disableAnimationArray[i])) {
             this.config.set('_disableAnimation', true);
