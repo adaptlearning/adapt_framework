@@ -297,8 +297,8 @@ define([
       this.trigger('preRemove', currentView);
       await this.wait.queue();
       // Facilitate contentObject transitions
-      if (this.parentView && this.get('_shouldDestroyContentObjects')) {
-        this.parentView.destroy();
+      if (currentView && this.get('_shouldDestroyContentObjects')) {
+        currentView.destroy();
       }
       this.trigger('remove', currentView);
       _.defer(this.trigger.bind(this), 'postRemove', currentView);
