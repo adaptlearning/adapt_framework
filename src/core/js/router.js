@@ -159,7 +159,7 @@ define([
         }
       }
 
-      if (isContentObject && model.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
+      if (model.get('_isLocked') && Adapt.config.get('_forceRouteLocking')) {
         // Locked id
         Adapt.log.warn('Unable to navigate to locked id: ' + id);
         this.model.set('_canNavigate', true, { pluginName: 'adapt' });
