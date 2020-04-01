@@ -11,6 +11,11 @@ define([
       ItemsComponentModel.prototype.init.call(this);
     }
 
+    reset(type, force) {
+      super.reset(type, force);
+      ItemsComponentModel.prototype.reset.call(this, type, force);
+    }
+
   }
   // extend BlendedItemsComponentQuestionModel with ItemsComponentModel
   Object.getOwnPropertyNames(ItemsComponentModel.prototype).forEach(name => {
@@ -167,11 +172,6 @@ define([
     resetItems() {
       this.resetActiveItems();
       this.set('_isAtLeastOneCorrectSelection', false);
-    }
-
-    reset(type, force) {
-      QuestionModel.prototype.reset.apply(this, arguments);
-      ItemsComponentModel.prototype.reset.apply(this, arguments);
     }
 
     getInteractionObject() {

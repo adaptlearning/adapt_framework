@@ -14,6 +14,7 @@ define([
         ':pluginName(/*location)(/*action)': 'handleRoute'
       };
     }
+
     initialize({ model }) {
 
       this.model = model;

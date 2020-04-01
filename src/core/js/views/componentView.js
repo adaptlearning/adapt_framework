@@ -30,7 +30,7 @@ define([
     }
 
     renderState() {
-      Adapt.log.warn('REMOVED - renderState is removed and moved to item title');
+      Adapt.log.removed('renderState is removed and moved to item title');
     }
 
     /**
