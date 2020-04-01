@@ -20,7 +20,7 @@ define([
 
     initialize({ model }) {
       this.model = model;
-      this._navigationRoot = Adapt.course;
+      this._navigationRoot = null;
       // Flag to indicate if the router has tried to redirect to the current location.
       this._isCircularNavigationInProgress = false;
       this.showLoading();
@@ -32,7 +32,7 @@ define([
     }
 
     get rootModel() {
-      return this._navigationRoot;
+      return this._navigationRoot || Adapt.course;
     }
 
     set rootModel(model) {
