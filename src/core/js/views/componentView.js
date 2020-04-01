@@ -81,8 +81,7 @@ define([
 
     remove() {
       this.removeInviewListener();
-
-      AdaptView.prototype.remove.call(this);
+      super.remove();
     }
 
   }
