@@ -149,7 +149,9 @@ define([
         this.model.setOnChildren('_isReady', false);
         this.model.set('_isReady', false);
         super.remove();
-        Adapt.trigger(`${type}View:postRemove view:postRemove`, this);
+        _.defer(() => {
+          Adapt.trigger(`${type}View:postRemove view:postRemove`, this);
+        });
         end();
       });
 

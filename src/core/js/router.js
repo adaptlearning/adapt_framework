@@ -263,7 +263,7 @@ define([
     }
 
     navigateBack() {
-      Backbone.history.history.back()
+      Backbone.history.history.back();
     }
 
     navigateToCurrentRoute(force) {
