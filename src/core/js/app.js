@@ -10,6 +10,7 @@ require([
   'core/js/notify',
   'core/js/router',
   'core/js/models/lockingModel',
+  'core/js/mpabc',
   'core/js/helpers',
   'core/js/scrolling',
   'core/js/headings',

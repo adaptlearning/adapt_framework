@@ -1,18 +1,12 @@
 define([
   'core/js/adapt',
   'core/js/collections/adaptCollection',
-  'core/js/models/articleModel',
-  'core/js/models/blockModel',
   'core/js/models/configModel',
-  'core/js/models/menuModel',
-  'core/js/models/pageModel',
-  'core/js/models/componentModel',
   'core/js/models/courseModel',
-  'core/js/models/questionModel',
   'core/js/models/lockingModel',
   'core/js/models/buildModel',
   'core/js/startController'
-], function(Adapt, AdaptCollection, ArticleModel, BlockModel, ConfigModel, MenuModel, PageModel, ComponentModel, CourseModel, QuestionModel) {
+], function(Adapt, AdaptCollection, ConfigModel, CourseModel) {
 
   class Data extends Backbone.Controller {
 
@@ -69,60 +63,47 @@ define([
       // All code that needs to run before adapt starts should go here
       const language = Adapt.config.get('_activeLanguage');
       const jsonext = Adapt.build.get('jsonext');
-      const courseFolder = 'course/' + language + '/';
 
       $('html').attr('lang', language);
 
-      Adapt.course = new CourseModel(null, { url: courseFolder + 'course.' + jsonext, reset: true });
+      const getContentObjectModel = json => {
+        const ModelClass = Adapt.getModelClass(json) || Adapt.getModelClass('menu');
+        if (!ModelClass) {
+          throw new Error(`Cannot find model for: ${Adapt.getModelName(json)}`);
+        }
+        return new ModelClass(json);
+      };
+
+      const getPath = name => `course/${language}/${name}.${jsonext}`;
+
+      const getModel = json => {
+        const ModelClass = Adapt.getModelClass(json);
+        if (!ModelClass) {
+          throw new Error(`Cannot find model for: ${Adapt.getModelName(json)}`);
+        }
+        return new ModelClass(json);
+      };
+
+      Adapt.course = new CourseModel(null, { url: getPath('course'), reset: true });
 
       Adapt.contentObjects = new AdaptCollection(null, {
-        model: json => {
-          switch (json._type) {
-            case 'page':
-              return new PageModel(json);
-            case 'menu':
-              return new MenuModel(json);
-          }
-        },
-        url: courseFolder + 'contentObjects.' + jsonext
+        model: getContentObjectModel,
+        url: getPath('contentObjects')
       });
 
       Adapt.articles = new AdaptCollection(null, {
-        model: ArticleModel,
-        url: courseFolder + 'articles.' + jsonext
+        model: getModel,
+        url: getPath('articles')
       });
 
       Adapt.blocks = new AdaptCollection(null, {
-        model: BlockModel,
-        url: courseFolder + 'blocks.' + jsonext
+        model: getModel,
+        url: getPath('blocks')
       });
 
       Adapt.components = new AdaptCollection(null, {
-        model: json => {
-
-          // use view+model object
-          const ViewModelObject = Adapt.componentStore[json._component];
-
-          if (!ViewModelObject) {
-            throw new Error('One or more components of type "' + json._component + '" were included in the course - but no component of that type is installed...');
-          }
-
-          // if model defined for component use component model
-          if (ViewModelObject.model) {
-            // eslint-disable-next-line new-cap
-            return new ViewModelObject.model(json);
-          }
-
-          const View = ViewModelObject.view || ViewModelObject;
-          // if question type use question model
-          if (View._isQuestionType) {
-            return new QuestionModel(json);
-          }
-
-          // otherwise use component model
-          return new ComponentModel(json);
-        },
-        url: courseFolder + 'components.' + jsonext
+        model: getModel,
+        url: getPath('components')
       });
     }
 
@@ -249,6 +230,16 @@ define([
       }
 
       return Adapt[collectionType]._byAdaptID[id][0];
+    }
+
+    filter(filter) {
+      const result = [];
+      filter(Adapt.course) && result.push(Adapt.course);
+      result.push(...Adapt.contentObjects.filter(filter));
+      result.push(...Adapt.articles.filter(filter));
+      result.push(...Adapt.blocks.filter(filter));
+      result.push(...Adapt.components.filter(filter));
+      return result;
     }
 
   }

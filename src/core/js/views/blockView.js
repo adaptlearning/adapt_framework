@@ -1,6 +1,7 @@
 define([
+  'core/js/adapt',
   'core/js/views/adaptView'
-], function(AdaptView) {
+], function(Adapt, AdaptView) {
 
   class BlockView extends AdaptView {
 
@@ -23,6 +24,8 @@ define([
     type: 'block',
     template: 'block'
   });
+
+  Adapt.register('block', { view: BlockView });
 
   return BlockView;
 

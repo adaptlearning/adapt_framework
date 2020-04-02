@@ -1,7 +1,7 @@
 define([
-  'core/js/views/adaptView',
-  'core/js/views/blockView'
-], function(AdaptView, BlockView) {
+  'core/js/adapt',
+  'core/js/views/adaptView'
+], function(Adapt, AdaptView) {
 
   class ArticleView extends AdaptView {
 
@@ -21,10 +21,11 @@ define([
 
   Object.assign(ArticleView, {
     childContainer: '.block__container',
-    childView: BlockView,
     type: 'article',
     template: 'article'
   });
+
+  Adapt.register('article', { view: ArticleView });
 
   return ArticleView;
 

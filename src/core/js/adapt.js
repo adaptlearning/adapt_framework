@@ -8,7 +8,7 @@ define([
     initialize() {
       this.loadScript = window.__loadScript;
       this.location = {};
-      this.componentStore = {};
+      this.store = {};
       this.setupWait();
     }
 
@@ -26,6 +26,14 @@ define([
       return {
         _canScroll: false
       };
+    }
+
+    /**
+     * @deprecated since v6.0.0 - please use `Adapt.store` instead
+     */
+    get componentStore() {
+        this.log && this.log.deprecated('Adapt.componentStore, please use Adapt.store instead');
+        return this.store;
     }
 
     init() {
@@ -148,39 +156,133 @@ define([
     scrollTo() {}
 
     /**
-     * Used to register components with the Adapt 'component store'
-     * @param {string} name The name of the component to be registered
+     * Used to register models and views with `Adapt.store`
+     * @param {string|Array} name The name(s) of the model/view to be registered
      * @param {object} object Object containing properties `model` and `view` or (legacy) an object representing the view
      */
     register(name, object) {
-      if (this.componentStore[name]) {
-        throw Error('The component "' + name + '" already exists in your project');
+      if (name instanceof Array) {
+        // if an array is passed, iterate by recursive call
+        name.forEach(name => this.register(name, object));
+        return object;
+      } else if (name.split(' ').length > 1) {
+        // if name with spaces is passed, split and pass as array
+        this.register(name.split(' '), object);
+        return object;
       }
 
-      if (object.view) {
-        // use view+model object
-        if (!object.view.template) object.view.template = name;
-      } else {
-        // use view object
-        if (!object.template) object.template = name;
+      if (!object.view && !object.model || object instanceof Backbone.View) {
+        this.log && this.log.deprecated('View-only registrations are no longer supported');
+        object = { view: object };
       }
 
-      this.componentStore[name] = object;
+      if (object.view && !object.view.template) {
+        object.view.template = name;
+      }
+
+      const isModelSetAndInvalid = (object.model &&
+        (!object.model.prototype instanceof Backbone.Model) &&
+        !(object.model instanceof Function));
+      if (isModelSetAndInvalid) {
+        throw new Error('The registered model is not a Backbone.Model or Function');
+      }
+
+      const isViewSetAndInvalid = (object.view &&
+        (!object.view.prototype instanceof Backbone.View) &&
+        !(object.view instanceof Function));
+      if (isViewSetAndInvalid) {
+        throw new Error('The registered view is not a Backbone.View or Function');
+      }
+
+      this.store[name] = Object.assign({}, this.store[name], object);
 
       return object;
     }
 
     /**
-     * Fetches a component view class from the componentStore. For a usage example, see either HotGraphic or Narrative
-     * @param {string} name The name of the componentView you want to fetch e.g. `"hotgraphic"`
-     * @returns {ComponentView} Reference to the view class
+     * Parses a view class name.
+     * @param {string|Backbone.Model|Backbone.View|object} nameModelViewOrData The name of the view class you want to fetch e.g. `"hotgraphic"` or its model or its json data
      */
-    getViewClass(name) {
-      const object = this.componentStore[name];
-      if (!object) {
-        throw Error('The component "' + name + '" doesn\'t exist in your project');
+    getViewName(nameModelViewOrData) {
+      if (typeof nameModelViewOrData === "string") {
+        return nameModelViewOrData;
       }
-      return object.view || object;
+      if (nameModelViewOrData instanceof Backbone.Model) {
+        nameModelViewOrData = nameModelViewOrData.toJSON();
+      }
+      if (nameModelViewOrData instanceof Backbone.View) {
+        let foundName = null;
+        _.find(this.store, (entry, name) => {
+          if (!entry || !entry.view) return;
+          if (!(nameModelViewOrData instanceof entry.view)) return;
+          foundName = name;
+          return true;
+        });
+        return foundName;
+      }
+      if (nameModelViewOrData instanceof Object) {
+        return typeof nameModelViewOrData._view === 'string' && nameModelViewOrData._view ||
+          typeof nameModelViewOrData._component === 'string' && nameModelViewOrData._component ||
+          typeof nameModelViewOrData._type === 'string' && nameModelViewOrData._type;
+      }
+      throw new Error('Cannot derive view class name from input');
+    }
+
+    /**
+     * Fetches a view class from the store. For a usage example, see either HotGraphic or Narrative
+     * @param {string|Backbone.Model|Backbone.View|object} nameModelViewOrData The name of the view class you want to fetch e.g. `"hotgraphic"` or its model or its json data
+     * @returns {Backbone.View} Reference to the view class
+     */
+    getViewClass(nameModelViewOrData) {
+      const name = this.getViewName(nameModelViewOrData);
+      const object = this.store[name];
+      if (!object) {
+        this.log.warn(`A view for '${name}' isn't registered in your project`);
+        return;
+      }
+      const isBackboneView = (object.view && object.view.prototype instanceof Backbone.View);
+      if (!isBackboneView && object.view instanceof Function) {
+        return object.view();
+      }
+      return object.view;
+    }
+
+    /**
+     * Parses a model class name.
+     * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"`, the model to process or its json data
+     */
+    getModelName(nameModelOrData) {
+      if (typeof nameModelOrData === "string") {
+        return nameModelOrData;
+      }
+      if (nameModelOrData instanceof Backbone.Model) {
+        nameModelOrData = nameModelOrData.toJSON();
+      }
+      if (nameModelOrData instanceof Object) {
+        return typeof nameModelOrData._model === 'string' && nameModelOrData._model ||
+          typeof nameModelOrData._component === 'string' && nameModelOrData._component ||
+          typeof nameModelOrData._type === 'string' && nameModelOrData._type;
+      }
+      throw new Error('Cannot derive model class name from input');
+    }
+
+    /**
+     * Fetches a model class from the store. For a usage example, see either HotGraphic or Narrative
+     * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"` or its json data
+     * @returns {Backbone.Model} Reference to the view class
+     */
+    getModelClass(nameModelOrData) {
+      const name = this.getModelName(nameModelOrData);
+      const object = this.store[name];
+      if (!object) {
+        this.log.warn(`A model for '${name}' isn't registered in your project`);
+        return;
+      }
+      const isBackboneModel = (object.model && object.model.prototype instanceof Backbone.Model);
+      if (!isBackboneModel && object.model instanceof Function) {
+        return object.model();
+      }
+      return object.model;
     }
 
     /**
@@ -242,28 +344,13 @@ define([
      * Trickle uses this function to determine where it should scrollTo after it unlocks
      */
     parseRelativeString(relativeString) {
-      if (relativeString[0] === '@') {
-        relativeString = relativeString.substr(1);
-      }
-
-      let type = relativeString.match(/(component|block|article|page|menu)/);
-      if (!type) {
-        this.log.error('Adapt.parseRelativeString() could not match relative type', relativeString);
-        return;
-      }
-      type = type[0];
-
-      const offset = parseInt(relativeString.substr(type.length).trim() || 0);
-      if (isNaN(offset)) {
-        this.log.error('Adapt.parseRelativeString() could not parse relative offset', relativeString);
-        return;
-      }
-
+      const splitIndex = relativeString.search(/[ \+\-\d]{1}/);
+      const type = relativeString.slice(0, splitIndex).replace(/^\@/, '');
+      const offset = parseInt(relativeString.slice(splitIndex).trim() || 0);
       return {
         type: type,
         offset: offset
       };
-
     }
 
     addDirection() {
