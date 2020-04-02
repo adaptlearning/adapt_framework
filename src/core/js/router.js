@@ -51,8 +51,8 @@ define([
       const currentModel = Adapt.location._currentModel;
       const hasSubTitle = (currentModel && currentModel !== Adapt.router.rootModel && currentModel.get('title'));
       const title = [
-        this.rootModel.get('title') || null,
-        hasSubTitle ? currentModel.get('title') : null
+        this.rootModel.get('title'),
+        hasSubTitle && currentModel.get('title')
       ].filter(Boolean).join(' | ');
       this.listenToOnce(Adapt, 'contentObjectView:preRender', () => {
         const escapedTitle = $(`<div>${title}</div>`).text();
