@@ -176,6 +176,15 @@
       "title": "Is this visible?",
       "help": "Equivalent to the CSS visibility property. Unless you have custom code that uses this, it is highly unlikely you would want to change this setting at a page level."
     },
+    "_requireCompletionOf": {
+      "type": "number",
+      "default": -1,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "title": "Require completion of",
+      "help": "The number of articles within this page the learner must complete in order for this page to be set as completed. A value of -1 requires all of them to be completed."
+    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,
