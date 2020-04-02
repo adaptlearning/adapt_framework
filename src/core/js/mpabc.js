@@ -6,4 +6,4 @@ define([
   'core/js/views/pageView',
   'core/js/views/articleView',
   'core/js/views/blockView'
-], function(menuModel, PageModel, ArticleModel, BlockModel, PageView, ArticleView, BlockView) {});
+], function(MenuModel, PageModel, ArticleModel, BlockModel, PageView, ArticleView, BlockView) {});
