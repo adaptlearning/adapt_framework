@@ -235,16 +235,16 @@ define([
 
     setGlobalClasses() {
       const currentModel = Adapt.location._currentModel;
+      
       const htmlClasses = (currentModel && currentModel.get('_htmlClasses')) || '';
-
       const classes = (Adapt.location._currentId) ?
         `location-${Adapt.location._contentType} location-id-${Adapt.location._currentId}` :
         `location-${Adapt.location._currentLocation}`;
+      const currentClasses = `${classes} ${htmlClasses}`;
 
       this.$html
         .removeClass(Adapt.location._previousClasses)
-        .addClass(classes)
-        .addClass(htmlClasses)
+        .addClass(currentClasses)
         .attr('data-location', Adapt.location._currentLocation);
 
       this.$wrapper
@@ -252,7 +252,7 @@ define([
         .addClass(classes)
         .attr('data-location', Adapt.location._currentLocation);
 
-      Adapt.location._previousClasses = `${classes} ${htmlClasses}`;
+      Adapt.location._previousClasses = currentClasses;
     }
 
     handleNavigationFocus() {
