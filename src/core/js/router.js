@@ -119,8 +119,8 @@ define([
     async handlePluginRouter(pluginName, location, action) {
       const pluginLocation = [
         pluginName,
-        location ? `-${location}` : null,
-        action ? `-${action}` : null
+        location && `-${location}`,
+        action && `-${action}`
       ].filter(Boolean).join('');
       await this.updateLocation(pluginLocation, null, null, null);
 
