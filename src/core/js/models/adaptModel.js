@@ -259,16 +259,28 @@ define([
     /**
      * Returns true if this model is of the type group described.
      * Automatically manages pluralization typeGroup and matches lowercase only.
-     * Pluralized typeGroups is discouraged.
+     * Pluralized typeGroups and uppercase characters in typeGroups are discouraged.
      * @param {string} type Type group name i.e. course, contentobject, article, block, component
      * @returns {boolean}
      */
     isTypeGroup(typeGroup) {
+      const hasUpperCase = /[A-Z]+/.test(typeGroup);
+      const isPluralized = typeGroup.slice(-1) === 's';
+      const lowerCased = typeGroup.toLowerCase();
+      const singular = isPluralized && lowerCased.slice(0, -1); // remove pluralization if ending in s
+      const singularLowerCased = (singular || lowerCased).toLowerCase();
+      if (isPluralized || hasUpperCase) {
+        const message = (isPluralized && hasUpperCase) ?
+          `'${typeGroup}' appears pluralized and contains uppercase characters, suggest using the singular, lowercase type group '${singularLowerCased}'.` :
+          isPluralized ?
+          `'${typeGroup}' appears pluralized, suggest using the singular type group '${singularLowerCased}'.` :
+          `'${typeGroup}' contains uppercase characters, suggest using lowercase type group '${singularLowerCased}'.`;
+        Adapt.log.deprecated(message);
+      }
       const pluralizedLowerCaseTypes = [
-        typeGroup,
-        (typeGroup.slice(-1) === 's') && typeGroup.slice(0, -1), // remove pluralization if ending in s
-        (typeGroup.slice(-1) !== 's') && `${typeGroup}s` // pluralize if not ending in s
-      ].filter(Boolean).map(s => s.toLowerCase());
+        singularLowerCased,
+        !isPluralized && `${lowerCased}s` // pluralize if not ending in s
+      ].filter(Boolean);
       const typeGroups = this.getTypeGroups();
       if (_.intersection(pluralizedLowerCaseTypes, typeGroups).length) {
         return true;

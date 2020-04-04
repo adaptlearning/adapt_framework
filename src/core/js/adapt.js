@@ -165,7 +165,9 @@ define([
         // if an array is passed, iterate by recursive call
         name.forEach(name => this.register(name, object));
         return object;
-      } else if (name.split(' ').length > 1) {
+      }
+
+      if (name.split(' ').length > 1) {
         // if name with spaces is passed, split and pass as array
         this.register(name.split(' '), object);
         return object;
@@ -181,14 +183,14 @@ define([
       }
 
       const isModelSetAndInvalid = (object.model &&
-        (!object.model.prototype instanceof Backbone.Model) &&
+        !(object.model.prototype instanceof Backbone.Model) &&
         !(object.model instanceof Function));
       if (isModelSetAndInvalid) {
         throw new Error('The registered model is not a Backbone.Model or Function');
       }
 
       const isViewSetAndInvalid = (object.view &&
-        (!object.view.prototype instanceof Backbone.View) &&
+        !(object.view.prototype instanceof Backbone.View) &&
         !(object.view instanceof Function));
       if (isViewSetAndInvalid) {
         throw new Error('The registered view is not a Backbone.View or Function');
@@ -211,7 +213,7 @@ define([
         nameModelViewOrData = nameModelViewOrData.toJSON();
       }
       if (nameModelViewOrData instanceof Backbone.View) {
-        let foundName = null;
+        let foundName;
         _.find(this.store, (entry, name) => {
           if (!entry || !entry.view) return;
           if (!(nameModelViewOrData instanceof entry.view)) return;
@@ -221,9 +223,16 @@ define([
         return foundName;
       }
       if (nameModelViewOrData instanceof Object) {
-        return typeof nameModelViewOrData._view === 'string' && nameModelViewOrData._view ||
-          typeof nameModelViewOrData._component === 'string' && nameModelViewOrData._component ||
-          typeof nameModelViewOrData._type === 'string' && nameModelViewOrData._type;
+        const names = [
+          typeof nameModelViewOrData._view === 'string' && nameModelViewOrData._view,
+          typeof nameModelViewOrData._component === 'string' && nameModelViewOrData._component,
+          typeof nameModelViewOrData._type === 'string' && nameModelViewOrData._type
+        ].filter(Boolean);
+        if (names.length) {
+          // find first fitting view name
+          const name = names.find(name => this.store[name] && this.store[name].view);
+          return name;
+        }
       }
       throw new Error('Cannot derive view class name from input');
     }
@@ -259,9 +268,16 @@ define([
         nameModelOrData = nameModelOrData.toJSON();
       }
       if (nameModelOrData instanceof Object) {
-        return typeof nameModelOrData._model === 'string' && nameModelOrData._model ||
-          typeof nameModelOrData._component === 'string' && nameModelOrData._component ||
-          typeof nameModelOrData._type === 'string' && nameModelOrData._type;
+        const names = [
+          typeof nameModelOrData._model === 'string' && nameModelOrData._model,
+          typeof nameModelOrData._component === 'string' && nameModelOrData._component,
+          typeof nameModelOrData._type === 'string' && nameModelOrData._type
+        ].filter(Boolean);
+        if (names.length) {
+          // find first fitting model name
+          const name = names.find(name => this.store[name] && this.store[name].model);
+          return name;
+        }
       }
       throw new Error('Cannot derive model class name from input');
     }

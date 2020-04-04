@@ -232,6 +232,11 @@ define([
       return Adapt[collectionType]._byAdaptID[id][0];
     }
 
+    /**
+     * Filter all models.
+     * @param {Function} filter
+     * @returns {Array}
+     */
     filter(filter) {
       const result = [];
       filter(Adapt.course) && result.push(Adapt.course);
