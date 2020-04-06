@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     'build-config',
     'copy',
     'schema-defaults',
+    'language-data-manifests',
     'handlebars',
     'tracking-insert',
     'javascript:dev',
