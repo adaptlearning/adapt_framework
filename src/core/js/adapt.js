@@ -231,7 +231,7 @@ define([
         if (names.length) {
           // find first fitting view name
           const name = names.find(name => this.store[name] && this.store[name].view);
-          return name;
+          return name || names.pop(); // return last available if none found
         }
       }
       throw new Error('Cannot derive view class name from input');
@@ -276,7 +276,7 @@ define([
         if (names.length) {
           // find first fitting model name
           const name = names.find(name => this.store[name] && this.store[name].model);
-          return name;
+          return name || names.pop(); // return last available if none found
         }
       }
       throw new Error('Cannot derive model class name from input');
