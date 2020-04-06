@@ -1,6 +1,7 @@
 define([
+  'core/js/adapt',
   'core/js/models/adaptModel'
-], function (AdaptModel) {
+], function (Adapt, AdaptModel) {
 
   class ComponentModel extends AdaptModel {
 
