@@ -273,8 +273,8 @@ define([
         const message = (isPluralized && hasUpperCase) ?
           `'${typeGroup}' appears pluralized and contains uppercase characters, suggest using the singular, lowercase type group '${singularLowerCased}'.` :
           isPluralized ?
-          `'${typeGroup}' appears pluralized, suggest using the singular type group '${singularLowerCased}'.` :
-          `'${typeGroup}' contains uppercase characters, suggest using lowercase type group '${singularLowerCased}'.`;
+            `'${typeGroup}' appears pluralized, suggest using the singular type group '${singularLowerCased}'.` :
+            `'${typeGroup}' contains uppercase characters, suggest using lowercase type group '${singularLowerCased}'.`;
         Adapt.log.deprecated(message);
       }
       const pluralizedLowerCaseTypes = [
@@ -298,11 +298,11 @@ define([
       if (this._typeGroups) return this._typeGroups;
       const typeGroups = [ this.get('_type') ];
       let parentClass = this;
-      while (parentClass = Object.getPrototypeOf(parentClass)) {
+      while ((parentClass = Object.getPrototypeOf(parentClass))) {
         if (!parentClass.hasOwnProperty('getTypeGroup')) continue;
-        typeGroups.push( parentClass.getTypeGroup.call(this) );
+        typeGroups.push(parentClass.getTypeGroup.call(this));
       }
-      return (this._typeGroups =  _.uniq(typeGroups.filter(Boolean).map(s => s.toLowerCase())));
+      return (this._typeGroups = _.uniq(typeGroups.filter(Boolean).map(s => s.toLowerCase())));
     }
 
     /**

@@ -32,8 +32,8 @@ define([
      * @deprecated since v6.0.0 - please use `Adapt.store` instead
      */
     get componentStore() {
-        this.log && this.log.deprecated('Adapt.componentStore, please use Adapt.store instead');
-        return this.store;
+      this.log && this.log.deprecated('Adapt.componentStore, please use Adapt.store instead');
+      return this.store;
     }
 
     init() {
@@ -173,7 +173,7 @@ define([
         return object;
       }
 
-      if (!object.view && !object.model || object instanceof Backbone.View) {
+      if ((!object.view && !object.model) || object instanceof Backbone.View) {
         this.log && this.log.deprecated('View-only registrations are no longer supported');
         object = { view: object };
       }
@@ -206,7 +206,7 @@ define([
      * @param {string|Backbone.Model|Backbone.View|object} nameModelViewOrData The name of the view class you want to fetch e.g. `"hotgraphic"` or its model or its json data
      */
     getViewName(nameModelViewOrData) {
-      if (typeof nameModelViewOrData === "string") {
+      if (typeof nameModelViewOrData === 'string') {
         return nameModelViewOrData;
       }
       if (nameModelViewOrData instanceof Backbone.Model) {
@@ -261,7 +261,7 @@ define([
      * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"`, the model to process or its json data
      */
     getModelName(nameModelOrData) {
-      if (typeof nameModelOrData === "string") {
+      if (typeof nameModelOrData === 'string') {
         return nameModelOrData;
       }
       if (nameModelOrData instanceof Backbone.Model) {
@@ -360,8 +360,8 @@ define([
      * Trickle uses this function to determine where it should scrollTo after it unlocks
      */
     parseRelativeString(relativeString) {
-      const splitIndex = relativeString.search(/[ \+\-\d]{1}/);
-      const type = relativeString.slice(0, splitIndex).replace(/^\@/, '');
+      const splitIndex = relativeString.search(/[ +\-\d]{1}/);
+      const type = relativeString.slice(0, splitIndex).replace(/^@/, '');
       const offset = parseInt(relativeString.slice(splitIndex).trim() || 0);
       return {
         type: type,
