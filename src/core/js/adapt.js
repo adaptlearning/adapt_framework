@@ -246,7 +246,7 @@ define([
       const name = this.getViewName(nameModelViewOrData);
       const object = this.store[name];
       if (!object) {
-        this.log.warn(`A view for '${name}' isn't registered in your project`);
+        this.log.warnOnce(`A view for '${name}' isn't registered in your project`);
         return;
       }
       const isBackboneView = (object.view && object.view.prototype instanceof Backbone.View);
@@ -291,7 +291,7 @@ define([
       const name = this.getModelName(nameModelOrData);
       const object = this.store[name];
       if (!object) {
-        this.log.warn(`A model for '${name}' isn't registered in your project`);
+        this.log.warnOnce(`A model for '${name}' isn't registered in your project`);
         return;
       }
       const isBackboneModel = (object.model && object.model.prototype instanceof Backbone.Model);
