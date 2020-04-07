@@ -543,7 +543,9 @@ define([
       if (!this.constructor.prototype[checkForFunction]) return false; // questionModel
 
       // if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
-      if (this.constructor.prototype[checkForFunction] === ViewOnlyQuestionViewCompatibilityLayer.prototype[checkForFunction]) {
+      const hasCompatibleVersion = (ViewOnlyQuestionViewCompatibilityLayer.prototype.hasOwnProperty(checkForFunction));
+      const usingCompatibleVersion = (this.constructor.prototype[checkForFunction] === ViewOnlyQuestionViewCompatibilityLayer.prototype[checkForFunction]);
+      if (hasCompatibleVersion && usingCompatibleVersion) {
         switch (checkForFunction) {
           case 'setupFeedback':
           case 'markQuestion':
@@ -553,7 +555,6 @@ define([
       }
 
       // if the function DOES exist on the view and does NOT match the compatibility function above, use the view function
-      Adapt.log.deprecated(`QuestionView.${name}, please use QuestionModel.${name}`);
       return true; // questionView
     }
 
