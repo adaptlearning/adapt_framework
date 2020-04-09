@@ -105,6 +105,14 @@
               "inputType": "Number",
               "validators": ["required", "number"]
             },
+            "_menuGroup": {
+              "type": "number",
+              "required": true,
+              "default": 2,
+              "title": "Menu Group element ARIA level",
+              "inputType": "Number",
+              "validators": ["required", "number"]
+            },
             "_menuItem": {
               "type": "number",
               "required": true,

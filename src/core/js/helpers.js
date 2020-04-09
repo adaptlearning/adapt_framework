@@ -5,6 +5,7 @@ define([
 
   var defaultAriaLevels = {
     '_menu': 1,
+    '_menuGroup': 2,
     '_menuItem': 2,
     '_page': 1,
     '_article': 2,
