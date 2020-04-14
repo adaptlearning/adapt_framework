@@ -2,6 +2,7 @@ module.exports = {
   compile: {
     options: {
       inputSourceMap: false,
+      sourceType: 'script',
       minified: true,
       comments: false,
       presets: [
