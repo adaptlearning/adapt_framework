@@ -19,8 +19,8 @@ define([
     initialize() {
       // Example of how to cause the data loader to wait for another module to setup
       this.listenTo(Data, {
-        'loading': this.waitForDataLoaded,
-        'loaded': this.onDataLoaded
+        loading: this.waitForDataLoaded,
+        loaded: this.onDataLoaded
       });
       this.setupDeprecatedSubsetCollections();
     }
@@ -41,40 +41,32 @@ define([
       let blocks = new AdaptSubsetCollection(null, { parent: Data, model: BlockModel });
       let components = new AdaptSubsetCollection(null, { parent: Data, model: ComponentModel });
       Object.defineProperty(Adapt, 'contentObjects', {
-        get: function() {
+        get: () => {
           Adapt.log.deprecated('Adapt.contentObjects, please use Adapt.data instead');
           return contentObjects;
         },
-        set: function(value) {
-          contentObjects = value;
-        }
+        set: value => contentObjects = value
       });
       Object.defineProperty(Adapt, 'articles', {
-        get: function() {
+        get: () => {
           Adapt.log.deprecated('Adapt.articles, please use Adapt.data instead');
           return articles;
         },
-        set: function(value) {
-          articles = value;
-        }
+        set: value => articles = value
       });
       Object.defineProperty(Adapt, 'blocks', {
-        get: function() {
+        get: () => {
           Adapt.log.deprecated('Adapt.blocks, please use Adapt.data instead');
           return blocks;
         },
-        set: function(value) {
-          blocks = value;
-        }
+        set: value => blocks = value
       });
       Object.defineProperty(Adapt, 'components', {
-        get: function() {
+        get: () => {
           Adapt.log.deprecated('Adapt.components, please use Adapt.data instead');
           return components;
         },
-        set: function(value) {
-          components = value;
-        }
+        set: value => components = value
       });
     }
 
