@@ -13,7 +13,7 @@ module.exports = function(grunt) {
     'handlebars',
     'tracking-insert',
     'javascript:compile',
-    'babel',
+    'babel:compile',
     'clean:dist',
     'less:compile',
     'replace',

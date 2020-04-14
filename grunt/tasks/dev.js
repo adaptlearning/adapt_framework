@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     'handlebars',
     'tracking-insert',
     'javascript:dev',
-    'babel',
+    'babel:dev',
     'less:dev',
     'replace',
     'scripts:adaptpostbuild',

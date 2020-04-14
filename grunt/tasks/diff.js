@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     'newer:handlebars:compile',
     'tracking-insert',
     'newer:javascript:dev',
-    'babel',
+    'babel:dev',
     'newer:less:dev',
     'replace',
     'scripts:adaptpostbuild',
