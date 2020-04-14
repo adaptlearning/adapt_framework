@@ -23,22 +23,20 @@ define([
       return 'course';
     }
 
-    initialize(attrs, options) {
-      super.initialize(arguments);
+    initialize(...args) {
       Adapt.trigger('courseModel:dataLoading');
-      this.url = options.url;
-      this.on('sync', this.loadedData, this);
-      if (!this.url) return;
-      this.fetch({
-        error: () => console.error(`ERROR: unable to load file ${this.url}`)
-      });
+      super.initialize(...args);
+      this.loadedData();
     }
 
     loadedData() {
+      Adapt.course = this;
       Adapt.trigger('courseModel:dataLoaded');
     }
 
   }
+
+  Adapt.register('course', { model: CourseModel });
 
   return CourseModel;
 

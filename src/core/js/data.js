@@ -1,38 +1,37 @@
 define([
   'core/js/adapt',
   'core/js/collections/adaptCollection',
+  'core/js/models/buildModel',
   'core/js/models/configModel',
   'core/js/models/courseModel',
   'core/js/models/lockingModel',
-  'core/js/models/buildModel',
   'core/js/startController'
-], function(Adapt, AdaptCollection, ConfigModel, CourseModel) {
+], function(Adapt, AdaptCollection, BuildModel, ConfigModel, CourseModel) {
 
-  class Data extends Backbone.Controller {
+  class Data extends AdaptCollection {
 
-    initialize() {
-      this.mappedIds = {};
+    model(json) {
+      const ModelClass = Adapt.getModelClass(json);
+      if (!ModelClass) {
+        return new Backbone.Model(json);
+      }
+      return new ModelClass(json);
     }
 
-    init () {
-      Adapt.build.whenReady().then(this.onBuildDataLoaded.bind(this));
-    }
-
-    onBuildDataLoaded() {
+    async init () {
+      Adapt.build = new BuildModel(null, { url: 'adapt/js/build.min.js', reset: true });
+      await Adapt.build.whenReady();
       $('html').attr('data-adapt-framework-version', Adapt.build.get('package').version);
+      this.loadConfigData();
+    }
+
+    loadConfigData() {
       Adapt.config = new ConfigModel(null, { url: 'course/config.' + Adapt.build.get('jsonext'), reset: true });
+      this.listenToOnce(Adapt, 'configModel:loadCourseData', this.onLoadCourseData);
       this.listenTo(Adapt.config, {
         'change:_activeLanguage': this.onLanguageChange,
         'change:_defaultDirection': this.onDirectionChange
       });
-
-      // Events that are triggered by the main Adapt content collections and models
-      this.listenToOnce(Adapt, 'configModel:loadCourseData', this.onLoadCourseData);
-    }
-
-    onLanguageChange(model, language) {
-      Adapt.offlineStorage.set('lang', language);
-      this.loadCourseData(this.triggerDataReady.bind(this), language);
     }
 
     onDirectionChange(model, direction) {
@@ -48,141 +47,116 @@ define([
      * If it has we can go ahead and start loading; if it hasn't, apply the defaultLanguage from config.json
      */
     onLoadCourseData() {
-      if (Adapt.config.get('_activeLanguage')) {
-        this.loadCourseData(this.triggerDataReady.bind(this));
-      } else {
+      if (!Adapt.config.get('_activeLanguage')) {
         Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
+        return;
       }
+      this.loadCourseData();
     }
 
-    loadCourseData(callback, newLanguage) {
-      this.listenTo(Adapt, 'adaptCollection:dataLoaded courseModel:dataLoaded', () => {
-        this.checkDataIsLoaded(callback, newLanguage);
-      });
+    onLanguageChange(model, language) {
+      Adapt.offlineStorage.set('lang', language);
+      this.loadCourseData(language);
+    }
+
+    async loadCourseData(newLanguage) {
 
       // All code that needs to run before adapt starts should go here
       const language = Adapt.config.get('_activeLanguage');
-      const jsonext = Adapt.build.get('jsonext');
+      const courseFolder = 'course/' + language + '/';
 
       $('html').attr('lang', language);
 
-      const getContentObjectModel = json => {
-        const ModelClass = Adapt.getModelClass(json) || Adapt.getModelClass('menu');
-        if (!ModelClass) {
-          throw new Error(`Cannot find model for: ${Adapt.getModelName(json)}`);
-        }
-        return new ModelClass(json);
-      };
+      await this.loadManifestFiles(courseFolder);
+      await this.triggerDataLoaded();
+      await this.triggerDataReady(newLanguage);
+      this.triggerInit();
 
-      const getPath = name => `course/${language}/${name}.${jsonext}`;
+    }
 
-      const getModel = json => {
-        const ModelClass = Adapt.getModelClass(json);
-        if (!ModelClass) {
-          throw new Error(`Cannot find model for: ${Adapt.getModelName(json)}`);
-        }
-        return new ModelClass(json);
-      };
-
-      Adapt.course = new CourseModel(null, { url: getPath('course'), reset: true });
-
-      Adapt.contentObjects = new AdaptCollection(null, {
-        model: getContentObjectModel,
-        url: getPath('contentObjects')
-      });
-
-      Adapt.articles = new AdaptCollection(null, {
-        model: getModel,
-        url: getPath('articles')
-      });
-
-      Adapt.blocks = new AdaptCollection(null, {
-        model: getModel,
-        url: getPath('blocks')
-      });
-
-      Adapt.components = new AdaptCollection(null, {
-        model: getModel,
-        url: getPath('components')
+    getJSON(path) {
+      return new Promise((resolve, reject) => {
+        $.getJSON(path, data => {
+          // Add path to data incase it's necessary later
+          data.__path__ = path;
+          resolve(data);
+        }).fail(reject);
       });
     }
 
-    checkDataIsLoaded(callback, newLanguage) {
-      if (Adapt.contentObjects.models.length > 0 &&
-        Adapt.articles.models.length > 0 &&
-        Adapt.blocks.models.length > 0 &&
-        Adapt.components.models.length > 0 &&
-        Adapt.course.get('_id')) {
-
-        this.mapAdaptIdsToObjects();
-
-        Adapt.log.debug('Firing app:dataLoaded');
-
-        try {
-          Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
-        } catch (e) {
-          Adapt.log.error('Error during app:dataLoading trigger', e);
-        }
-
-        this.setupMapping();
-
-        Adapt.wait.queue(() => {
-          callback(newLanguage);
-        });
-
+    async loadManifestFiles(languagePath) {
+      this.trigger('loading');
+      this.reset();
+      const manifestPath = languagePath + 'language_data_manifest.js';
+      let manifest;
+      try {
+        manifest = await this.getJSON(manifestPath);
+      } catch (err) {
+        manifest = ['course.json', 'contentObjects.json', 'articles.json', 'blocks.json', 'components.json'];
+        Adapt.log.warnOnce(`Manifest path '${manifestPath} not found. Using traditional files: ${manifest.join(', ')}`);
       }
-    }
-
-    mapAdaptIdsToObjects() {
-      Adapt.contentObjects._byAdaptID = Adapt.contentObjects.groupBy('_id');
-      Adapt.articles._byAdaptID = Adapt.articles.groupBy('_id');
-      Adapt.blocks._byAdaptID = Adapt.blocks.groupBy('_id');
-      Adapt.components._byAdaptID = Adapt.components.groupBy('_id');
-    }
-
-    setupMapping() {
-      this.mappedIds = {};
-
-      // Setup course Id
-      this.mappedIds[Adapt.course.get('_id')] = 'course';
-
-      const collections = ['contentObjects', 'articles', 'blocks', 'components'];
-
-      collections.forEach(collection => {
-        Adapt[collection].models.forEach(model => {
-          const id = model.get('_id');
-          this.mappedIds[id] = collection;
-        });
+      const allFileData = await Promise.all(manifest.map(filePath => {
+        return this.getJSON(`${languagePath}${filePath}`);
+      }));
+      // Flatten all file data into a single array of model data
+      const allModelData = allFileData.reduce((result, fileData) => {
+        if (fileData instanceof Array) {
+          result.push(...fileData);
+        } else if (fileData instanceof Object) {
+          result.push(fileData);
+        } else {
+          Adapt.log.warnOnce(`File data isn't an array or object: ${fileData.__path__}`);
+        }
+        return result;
+      }, []);
+      // Add course model first to allow other model/views to utilize its settings
+      const course = allModelData.find(modelData => modelData._type === 'course');
+      if (!course) {
+        throw new Error(`Expected a model data with "_type": "course", none found.`);
+      }
+      this.push(course);
+      // Add other models
+      allModelData.forEach(modelData => {
+        if (modelData._type === 'course') {
+          return;
+        }
+        this.push(modelData);
       });
+      // index by id
+      this._byAdaptID = this.indexBy('_id');
+      this.trigger('reset');
+      this.trigger('loaded');
+      await Adapt.wait.queue();
     }
 
-    triggerDataReady(newLanguage) {
+    async triggerDataLoaded() {
+      Adapt.log.debug('Firing app:dataLoaded');
+      try {
+        Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
+      } catch (e) {
+        Adapt.log.error('Error during app:dataLoading trigger', e);
+      }
+      await Adapt.wait.queue();
+    }
+
+    async triggerDataReady(newLanguage) {
       if (newLanguage) {
-
         Adapt.trigger('app:languageChanged', newLanguage);
-
         _.defer(() => {
           Adapt.startController.loadCourseData();
-          let hash = '#/';
-
-          if (Adapt.startController.isEnabled()) {
-            hash = Adapt.startController.getStartHash(true);
-          }
-
-          Backbone.history.navigate(hash, { trigger: true, replace: true });
+          const hash = Adapt.startController.isEnabled() ?
+            '#/' :
+            Adapt.startController.getStartHash(true);
+          Adapt.router.navigate(hash, { trigger: true, replace: true });
         });
       }
-
       Adapt.log.debug('Firing app:dataReady');
-
       try {
         Adapt.trigger('app:dataReady');
       } catch (e) {
         Adapt.log.error('Error during app:dataReady trigger', e);
       }
-
-      Adapt.wait.queue(this.triggerInit.bind(this));
-
+      await Adapt.wait.queue();
     }
 
     triggerInit() {
@@ -192,24 +166,9 @@ define([
 
     whenReady() {
       if (this.isReady) return Promise.resolve();
-
       return new Promise(resolve => {
         this.once('ready', resolve);
       });
-    }
-
-    /**
-     * Looks up which collection a model belongs to
-     * @param {string} id The id of the item you want to look up e.g. `"co-05"`
-     * @return {string} One of the following (or `undefined` if not found):
-     * - "course"
-     * - "contentObjects"
-     * - "blocks"
-     * - "articles"
-     * - "components"
-     */
-    mapById(id) {
-      return this.mappedIds[id];
     }
 
     /**
@@ -218,33 +177,12 @@ define([
      * @return {Backbone.Model}
      */
     findById(id) {
-      if (id === Adapt.course.get('_id')) {
-        return Adapt.course;
-      }
-
-      const collectionType = Adapt.mapById(id);
-
-      if (!collectionType) {
-        console.warn('Adapt.findById() unable to find collection type for id: ' + id);
+      const model = this._byAdaptID[id];
+      if (!model) {
+        console.warn(`Adapt.findById() unable to find collection type for id: ${id}`);
         return;
       }
-
-      return Adapt[collectionType]._byAdaptID[id][0];
-    }
-
-    /**
-     * Filter all models.
-     * @param {Function} filter
-     * @returns {Array}
-     */
-    filter(filter) {
-      const result = [];
-      filter(Adapt.course) && result.push(Adapt.course);
-      result.push(...Adapt.contentObjects.filter(filter));
-      result.push(...Adapt.articles.filter(filter));
-      result.push(...Adapt.blocks.filter(filter));
-      result.push(...Adapt.components.filter(filter));
-      return result;
+      return model;
     }
 
   }
