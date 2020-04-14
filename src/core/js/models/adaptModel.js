@@ -270,12 +270,7 @@ define([
       const singular = isPluralized && lowerCased.slice(0, -1); // remove pluralization if ending in s
       const singularLowerCased = (singular || lowerCased).toLowerCase();
       if (isPluralized || hasUpperCase) {
-        const message = (isPluralized && hasUpperCase) ?
-          `'${typeGroup}' appears pluralized and contains uppercase characters, suggest using the singular, lowercase type group '${singularLowerCased}'.` :
-          isPluralized ?
-            `'${typeGroup}' appears pluralized, suggest using the singular type group '${singularLowerCased}'.` :
-            `'${typeGroup}' contains uppercase characters, suggest using lowercase type group '${singularLowerCased}'.`;
-        Adapt.log.deprecated(message);
+        Adapt.log.deprecated(`'${typeGroup}' appears pluralized or contains uppercase characters, suggest using the singular, lowercase type group '${singularLowerCased}'.`);
       }
       const pluralizedLowerCaseTypes = [
         singularLowerCased,
