@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const fs = require('fs-extra');
-const Plugin = require('../Plugins/Plugin');
 
 /**
  * @typedef {import('./Framework')} Framework
  * @typedef {import('./JSONFileItem')} JSONFileItem
+ * @typedef {import('../plugins/Plugin')} Plugin
  */
 
 class Schema {
@@ -13,6 +13,7 @@ class Schema {
    * @param {Object} options
    * @param {Framework} options.framework
    * @param {string} options.name
+   * @param {Plugin} options.plugin
    * @param {Object} options.json
    * @param {string} options.filePath
    * @param {string} options.globalsType

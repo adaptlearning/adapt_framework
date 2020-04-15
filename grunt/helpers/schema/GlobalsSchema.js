@@ -2,6 +2,7 @@ const Schema = require('./Schema');
 
 /**
  * @typedef {import('./Framework')} Framework
+ * @typedef {import('../plugins/Plugin')} Plugin
  */
 
 /**
@@ -15,6 +16,7 @@ class GlobalsSchema extends Schema {
    * @param {Object} options
    * @param {Framework} options.framework
    * @param {string} options.name
+   * @param {Plugin} options.plugin
    * @param {Object} options.json
    * @param {string} options.filePath
    * @param {string} options.globalsType
