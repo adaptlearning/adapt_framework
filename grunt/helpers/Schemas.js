@@ -63,15 +63,17 @@ class Schemas {
      * @param {string} filePath
      */
     const createSchema = (plugin, filePath) => {
-      const inferredSchemaName = (plugin.name === 'core') ?
-        path.parse(filePath).name.split('.')[0] : // if core, get schema name from file name
-        plugin.name; // assume schema name is plugin name
-
       const json = fs.readJSONSync(filePath);
       const isExtensionSchema = Boolean(json.properties.pluginLocations);
       const InferredSchemaClass = (isExtensionSchema ? ExtensionSchema : ModelSchema);
+      const inferredSchemaName = (plugin.name === 'core') ?
+        path.parse(filePath).name.split('.')[0] : // if core, get schema name from file name
+        isExtensionSchema ?
+          plugin.name : // assume schema name is plugin name
+          plugin.targetAttribute; // assume schema name is plugin._[type] value
       return new InferredSchemaClass({
         name: inferredSchemaName,
+        plugin,
         framework: this.framework,
         filePath,
         globalsType: plugin.type,

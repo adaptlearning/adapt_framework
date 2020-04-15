@@ -23,14 +23,15 @@ class GlobalsSchema extends Schema {
   constructor({
     framework = null,
     name = '',
+    plugin = null,
     json = {},
     filePath = '',
     globalsType = '',
     targetAttribute = ''
   } = {}) {
-    super({ framework, name, json, filePath, globalsType });
+    super({ framework, name, plugin, json, filePath, globalsType });
     // Add an underscore to the front of the targetAttribute if necessary
-    this.targetAttribute = (targetAttribute[0] !== '_' ? '_' : '') + targetAttribute;
+    this.targetAttribute = (targetAttribute && targetAttribute[0] !== '_' ? '_' : '') + targetAttribute;
   }
 
   /**
