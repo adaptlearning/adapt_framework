@@ -112,10 +112,18 @@ define(function() {
     /**
        * Queue this function until all open waits have been ended.
        *
-       * @param  {Function} callback
-       * @return {Object}
+       * @param  {Function} [callback]
+       * @return {Object|Promise}
        */
     queue: function(callback) {
+
+      if (!callback) {
+        this.begin();
+        return new Promise(resolve => {
+          this.once('ready', resolve);
+          this.end();
+        });
+      }
 
       this.begin();
       this.once('ready', callback);

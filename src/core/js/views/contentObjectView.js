@@ -34,74 +34,78 @@ define([
 
     render() {
       const type = this.constructor.type;
-      Adapt.trigger(`${type}View:preRender`, this);
+      Adapt.trigger(`${type}View:preRender contentObjectView:preRender view:preRender`, this);
 
       const data = this.model.toJSON();
       data.view = this;
       const template = Handlebars.templates[this.constructor.template];
       this.$el.html(template(data));
 
-      Adapt.trigger(`${type}View:render`, this);
+      Adapt.trigger(`${type}View:render contentObjectView:render view:render`, this);
 
       _.defer(() => {
         // don't call postRender after remove
         if (this._isRemoved) return;
 
         this.postRender();
-        Adapt.trigger(`${type}View:postRender`, this);
+        Adapt.trigger(`${type}View:postRender contentObjectView:postRender view:postRender`, this);
       });
 
       return this;
     }
 
-    isReady() {
+    async isReady() {
       if (!this.model.get('_isReady')) return;
 
+      const type = this.constructor.type;
       const performIsReady = () => {
         $('.js-loading').hide();
         $(window).scrollTop(0);
-        const type = this.constructor.type;
-        Adapt.trigger(`${type}View:ready`, this);
+        Adapt.trigger(`${type}View:ready contentObjectView:ready view:ready`, this);
         $.inview.unlock(`${type}View`);
         const styleOptions = { opacity: 1 };
         if (this.disableAnimation) {
           this.$el.css(styleOptions);
           $.inview();
+          _.defer(() => {
+            Adapt.trigger(`${type}View:postReady contentObjectView:postReady view:postReady`, this);
+          });
         } else {
           this.$el.velocity(styleOptions, {
             duration: 'fast',
             complete: () => {
               $.inview();
+              Adapt.trigger(`${type}View:postReady contentObjectView:postReady view:postReady`, this);
             }
           });
         }
         $(window).scroll();
       };
 
-      Adapt.wait.queue(() => {
-        _.defer(performIsReady);
-      });
+      Adapt.trigger(`${type}View:preReady contentObjectView:preReady view:preReady`, this);
+      await Adapt.wait.queue();
+      _.defer(performIsReady);
     }
 
     preRemove() {
-      Adapt.trigger(`${this.constructor.type}View:preRemove`, this);
+      const type = this.constructor.type;
+      Adapt.trigger(`${type}View:preRemove contentObjectView:preRemove view:preRemove`, this);
     }
 
     remove() {
       const type = this.constructor.type;
       this.preRemove();
-      Adapt.trigger(`${type}View:remove`, this);
+      Adapt.trigger(`${type}View:remove contentObjectView:preRemove view:preRemove`, this);
       this._isRemoved = true;
 
       Adapt.wait.for(end => {
-
         this.$el.off('onscreen.adaptView');
         this.model.setOnChildren('_isReady', false);
         this.model.set('_isReady', false);
         super.remove();
-
-        Adapt.trigger(`${type}View:postRemove`, this);
-
+        _.defer(() => {
+          Adapt.trigger(`${type}View:postRemove contentObjectView:preRemove view:preRemove`, this);
+        });
         end();
       });
 

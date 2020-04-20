@@ -99,54 +99,53 @@ define([
       });
     }
 
+    scrollTo(selector, settings = {}) {
+      // Get the current location - this is set in the router
+      const location = (Adapt.location._contentType) ?
+        Adapt.location._contentType : Adapt.location._currentLocation;
+      // Trigger initial scrollTo event
+      Adapt.trigger(`${location}:scrollTo`, selector);
+      // Setup duration variable passed upon argumentsß
+      const disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
+      if (disableScrollToAnimation) {
+        settings.duration = 0;
+      } else if (!settings.duration) {
+        settings.duration = $.scrollTo.defaults.duration;
+      }
+
+      let offsetTop = 0;
+      if (Adapt.scrolling.isLegacyScrolling) {
+        offsetTop = -$('.nav').outerHeight();
+        // prevent scroll issue when component description aria-label coincident with top of component
+        if ($(selector).hasClass('component')) {
+          offsetTop -= $(selector).find('.aria-label').height() || 0;
+        }
+      }
+
+      if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
+      if (settings.offset.top === undefined) settings.offset.top = offsetTop;
+      if (settings.offset.left === undefined) settings.offset.left = 0;
+
+      if (settings.offset.left === 0) settings.axis = 'y';
+
+      if (Adapt.get('_canScroll') !== false) {
+        // Trigger scrollTo plugin
+        $.scrollTo(selector, settings);
+      }
+
+      // Trigger an event after animation
+      // 300 milliseconds added to make sure queue has finished
+      _.delay(() => {
+        Adapt.a11y.focusNext(selector);
+        Adapt.trigger(`${location}:scrolledTo`, selector);
+      }, settings.duration + 300);
+    }
+
   }
 
   Adapt.scrolling = new Scrolling();
 
-  Adapt.scrollTo = function(selector, settings) {
-    if (!settings) {
-      settings = {};
-    }
-    // Get the current location - this is set in the router
-    const location = (Adapt.location._contentType) ?
-      Adapt.location._contentType : Adapt.location._currentLocation;
-    // Trigger initial scrollTo event
-    Adapt.trigger(location + ':scrollTo', selector);
-    // Setup duration variable passed upon argumentsß
-    const disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
-    if (disableScrollToAnimation) {
-      settings.duration = 0;
-    } else if (!settings.duration) {
-      settings.duration = $.scrollTo.defaults.duration;
-    }
-
-    let offsetTop = 0;
-    if (Adapt.scrolling.isLegacyScrolling) {
-      offsetTop = -$('.nav').outerHeight();
-      // prevent scroll issue when component description aria-label coincident with top of component
-      if ($(selector).hasClass('component')) {
-        offsetTop -= $(selector).find('.aria-label').height() || 0;
-      }
-    }
-
-    if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
-    if (settings.offset.top === undefined) settings.offset.top = offsetTop;
-    if (settings.offset.left === undefined) settings.offset.left = 0;
-
-    if (settings.offset.left === 0) settings.axis = 'y';
-
-    if (Adapt.get('_canScroll') !== false) {
-      // Trigger scrollTo plugin
-      $.scrollTo(selector, settings);
-    }
-
-    // Trigger an event after animation
-    // 300 milliseconds added to make sure queue has finished
-    _.delay(() => {
-      Adapt.a11y.focusNext(selector);
-      Adapt.trigger(location + ':scrolledTo', selector);
-    }, settings.duration + 300);
-  };
+  Adapt.scrollTo = Adapt.scrolling.scrollTo.bind(Adapt.scrolling);
 
   return Adapt.scrolling;
 

@@ -19,6 +19,14 @@ define([
       });
     }
 
+    /**
+     * Returns a string of the model type group.
+     * @returns {string}
+     */
+    getTypeGroup() {
+      return 'itemscomponent';
+    }
+
     setUpItems() {
       // see https://github.com/adaptlearning/adapt_framework/issues/2480
       const items = this.get('_items') || [];

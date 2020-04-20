@@ -35,6 +35,14 @@ define([
       ]);
     }
 
+    /**
+     * Returns a string of the model type group.
+     * @returns {string}
+     */
+    getTypeGroup() {
+      return 'question';
+    }
+
     init() {
       this.setupDefaultSettings();
       this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
