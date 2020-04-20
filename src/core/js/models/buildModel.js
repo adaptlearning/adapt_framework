@@ -37,6 +37,6 @@ define([
 
   }
 
-  return (Adapt.build = new BuildModel(null, { url: 'adapt/js/build.min.js', reset: true }));
+  return BuildModel;
 
 });

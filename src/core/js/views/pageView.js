@@ -1,8 +1,7 @@
 define([
   'core/js/adapt',
-  'core/js/views/contentObjectView',
-  'core/js/views/articleView'
-], function(Adapt, ContentObjectView, ArticleView) {
+  'core/js/views/contentObjectView'
+], function(Adapt, ContentObjectView) {
 
   class PageView extends ContentObjectView {
 
@@ -17,10 +16,11 @@ define([
 
   Object.assign(PageView, {
     childContainer: '.article__container',
-    childView: ArticleView,
     type: 'page',
     template: 'page'
   });
+
+  Adapt.register('page', { view: PageView });
 
   return PageView;
 

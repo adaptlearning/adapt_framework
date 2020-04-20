@@ -1,0 +1,23 @@
+define([
+  'core/js/adapt',
+  './adaptCollection'
+], function(Adapt, AdaptCollection) {
+
+  class AdaptSubsetCollection extends AdaptCollection {
+
+    initialize(models, options) {
+      super.initialize(models, options);
+      this.parent = options.parent;
+      this.listenTo(this.parent, 'reset', this.loadSubset);
+    }
+
+    loadSubset() {
+      this.set(this.parent.filter(model => model instanceof this.model));
+      this._byAdaptID = this.groupBy('_id');
+    }
+
+  }
+
+  return AdaptSubsetCollection;
+
+});

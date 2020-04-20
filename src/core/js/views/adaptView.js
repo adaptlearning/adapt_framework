@@ -83,8 +83,7 @@ define([
         nthChild++;
         model.set('_nthChild', nthChild);
 
-        const ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get('_component')];
-        const ChildView = ViewModelObject.view || ViewModelObject;
+        const ChildView = this.constructor.childView || Adapt.getViewClass(model);
 
         if (!ChildView) {
           throw new Error(`The component '${model.attributes._id}' ('${model.attributes._component}') has not been installed, and so is not available in your project.`);

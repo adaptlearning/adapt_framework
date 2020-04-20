@@ -32,6 +32,14 @@ define([
       this.set('_isRadio', this.isSingleSelect());
     }
 
+    /**
+     * Returns a string of the model type group.
+     * @returns {string}
+     */
+    getTypeGroup() {
+      return 'itemsquestion';
+    }
+
     restoreUserAnswers() {
       if (!this.get('_isSubmitted')) return;
 

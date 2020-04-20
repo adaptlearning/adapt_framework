@@ -4,9 +4,8 @@ define([
   'core/js/models/courseModel',
   'core/js/models/contentObjectModel',
   'core/js/models/menuModel',
-  'core/js/views/pageView',
   'core/js/startController'
-], function(Adapt, RouterModel, CourseModel, ContentObjectModel, MenuModel, PageView) {
+], function(Adapt, RouterModel, CourseModel, ContentObjectModel, MenuModel) {
 
   class Router extends Backbone.Router {
 
@@ -193,11 +192,13 @@ define([
       });
       Adapt.trigger(`router:${type} router:contentObject`, model);
 
+      const ViewClass = Adapt.getViewClass(model);
       const isMenu = (model instanceof MenuModel);
-      if (isMenu) {
+      if (!ViewClass && isMenu) {
+        Adapt.log.deprecated(`Using event based menu view instantiation for '${Adapt.getViewName(model)}'`);
         return;
       }
-      this.$wrapper.append(new PageView({ model }).$el);
+      this.$wrapper.append(new ViewClass({ model }).$el);
     }
 
     async updateLocation(currentLocation, type, id, currentModel) {
@@ -235,7 +236,7 @@ define([
 
     setGlobalClasses() {
       const currentModel = Adapt.location._currentModel;
-      
+
       const htmlClasses = (currentModel && currentModel.get('_htmlClasses')) || '';
       const classes = (Adapt.location._currentId) ?
         `location-${Adapt.location._contentType} location-id-${Adapt.location._currentId}` :

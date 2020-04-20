@@ -9,10 +9,11 @@ module.exports = function(grunt) {
       '_log-vars',
       'build-config',
       'copy',
+      'language-data-manifests',
       'less:' + requireMode,
       'handlebars',
       'javascript:' + requireMode,
-      'babel',
+      'babel:' + requireMode,
       'replace',
       'scripts:adaptpostbuild',
       'clean:temp'
