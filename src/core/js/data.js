@@ -100,7 +100,7 @@ define([
       }));
       // Flatten all file data into a single array of model data
       const allModelData = allFileData.reduce((result, fileData) => {
-        if (fileData instanceof Array) {
+        if (Array.isArray(fileData)) {
           result.push(...fileData);
         } else if (fileData instanceof Object) {
           result.push(fileData);

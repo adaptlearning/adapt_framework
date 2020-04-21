@@ -161,7 +161,7 @@ define([
      * @param {object} object Object containing properties `model` and `view` or (legacy) an object representing the view
      */
     register(name, object) {
-      if (name instanceof Array) {
+      if (Array.isArray(name)) {
         // if an array is passed, iterate by recursive call
         name.forEach(name => this.register(name, object));
         return object;
