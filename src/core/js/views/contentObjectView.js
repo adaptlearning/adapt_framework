@@ -56,9 +56,12 @@ define([
 
     async isReady() {
       if (!this.model.get('_isReady')) return;
+      if (this.model !== Adapt.location._currentModel) return;
 
       const type = this.constructor.type;
-      const performIsReady = () => {
+      const performIsReady = async () => {
+        Adapt.trigger(`${type}View:preReady contentObjectView:preReady view:preReady`, this);
+        await Adapt.wait.queue();
         $('.js-loading').hide();
         $(window).scrollTop(0);
         Adapt.trigger(`${type}View:ready contentObjectView:ready view:ready`, this);
@@ -104,7 +107,8 @@ define([
         this.model.set('_isReady', false);
         super.remove();
         _.defer(() => {
-          Adapt.trigger(`${type}View:postRemove contentObjectView:preRemove view:preRemove`, this);
+          Adapt.trigger(`${type}View:postRemove contentObjectView:postRemove view:postRemove`, this);
+          this.trigger('postRemove');
         });
         end();
       });
