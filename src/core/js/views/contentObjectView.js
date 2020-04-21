@@ -13,7 +13,7 @@ define([
     }
 
     className() {
-      return _.filter([
+      return [
         this.constructor.type,
         'contentobject',
         this.constructor.className,
@@ -22,7 +22,7 @@ define([
         this.setVisibility(),
         (this.model.get('_isComplete') ? 'is-complete' : ''),
         (this.model.get('_isOptional') ? 'is-optional' : '')
-      ], Boolean).join(' ');
+      ].filter(Boolean).join(' ');
     }
 
     preRender() {
