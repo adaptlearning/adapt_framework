@@ -66,8 +66,10 @@ class Language {
       const relativePath = dataFilePath.slice(this.path.length);
       return relativePath;
     }).filter((dataFilePath) => {
-      const isNotManifest = (dataFilePath !== this.manifestPath);
-      return isNotManifest;
+      const isManifest = (dataFilePath === this.manifestPath);
+      // Skip file if it is the Authoring Tool import/export asset manifest
+      const isAATAssetJSON = (dataFilePath === 'assets.json');
+      return !isManifest && !isAATAssetJSON;
     });
 
     dataFiles.forEach(jsonFileName => {
@@ -80,10 +82,6 @@ class Language {
         hasChanged: false
       });
       file.load();
-      if (jsonFileName === 'assets.json' && typeof file.data === 'object' && !(file.data instanceof Array) && !file.data._type && !file.data._component && !file.data._model) {
-        // Skipping as file is the Authoring Tool import/export asset manifest
-        return;
-      }
       this.files.push(file);
     });
 
@@ -125,8 +123,10 @@ class Language {
       const relativePath = dataFilePath.slice(this.path.length);
       return relativePath;
     }).filter((dataFilePath) => {
-      const isNotManifest = (dataFilePath !== this.manifestPath);
-      return isNotManifest;
+      const isManifest = (dataFilePath === this.manifestPath);
+      // Skip file if it is the Authoring Tool import/export asset manifest
+      const isAATAssetJSON = (dataFilePath === 'assets.json');
+      return !isManifest && !isAATAssetJSON;
     });
     const hasNoDataFiles = !dataFiles.length;
     if (hasNoDataFiles) {
