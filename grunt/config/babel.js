@@ -9,21 +9,21 @@ module.exports = {
         [
           '@babel/preset-env',
           {
-            "targets": {
-              "ie": "11"
+            targets: {
+              ie: '11'
             }
           }
         ]
       ]
     },
     files: [{
-      "expand": true,
-      "cwd": "<%= tempdir %>",
-      "src": [
-        "adapt.min.js"
+      expand: true,
+      cwd: '<%= tempdir %>',
+      src: [
+        'adapt.min.js'
       ],
-      "dest": "<%= outputdir %>adapt/js/",
-      "ext": ".min.js"
+      dest: '<%= outputdir %>adapt/js/',
+      ext: '.min.js'
     }]
   },
   dev: {
@@ -39,21 +39,21 @@ module.exports = {
         [
           '@babel/preset-env',
           {
-            "targets": {
-              "ie": "11"
+            targets: {
+              ie: '11'
             }
           }
         ]
       ]
     },
     files: [{
-      "expand": true,
-      "cwd": "<%= tempdir %>",
-      "src": [
-        "adapt.min.js"
+      expand: true,
+      cwd: '<%= tempdir %>',
+      src: [
+        'adapt.min.js'
       ],
-      "dest": "<%= outputdir %>adapt/js/",
-      "ext": ".min.js"
+      dest: '<%= outputdir %>adapt/js/',
+      ext: '.min.js'
     }]
   }
 };

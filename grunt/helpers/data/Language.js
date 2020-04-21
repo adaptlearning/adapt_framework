@@ -80,7 +80,7 @@ class Language {
         hasChanged: false
       });
       file.load();
-      if (jsonFileName === 'assets.json'&& typeof file.data === 'object' && !(file.data instanceof Array) && !file.data._type && !file.data._component && !file.data._model ) {
+      if (jsonFileName === 'assets.json' && typeof file.data === 'object' && !(file.data instanceof Array) && !file.data._type && !file.data._component && !file.data._model) {
         // Skipping as file is the Authoring Tool import/export asset manifest
         return;
       }
