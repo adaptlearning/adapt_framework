@@ -55,8 +55,8 @@ define([
     }
 
     async isReady() {
-      if (!this.model.get('_isReady')) return;
-      if (this.model !== Adapt.location._currentModel) return;
+      if (!this.model.get('_isReady') || this._isTriggeredReady) return;
+      this._isTriggeredReady = true;
 
       const type = this.constructor.type;
       const performIsReady = async () => {
@@ -85,8 +85,6 @@ define([
         $(window).scroll();
       };
 
-      Adapt.trigger(`${type}View:preReady contentObjectView:preReady view:preReady`, this);
-      await Adapt.wait.queue();
       _.defer(performIsReady);
     }
 
