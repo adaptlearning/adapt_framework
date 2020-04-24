@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 /**
  * @typedef {import('./Framework')} Framework
  * @typedef {import('./JSONFileItem')} JSONFileItem
+ * @typedef {import('../plugins/Plugin')} Plugin
  */
 
 class Schema {
@@ -12,6 +13,7 @@ class Schema {
    * @param {Object} options
    * @param {Framework} options.framework
    * @param {string} options.name
+   * @param {Plugin} options.plugin
    * @param {Object} options.json
    * @param {string} options.filePath
    * @param {string} options.globalsType
@@ -19,12 +21,15 @@ class Schema {
   constructor({
     framework = null,
     name = '',
+    plugin = null,
     json = null,
     filePath = '',
     globalsType = ''
   } = {}) {
     /** @type {Framework} */
     this.framework = framework;
+    /** @type {Plugin} */
+    this.plugin = plugin;
     /** @type {string} */
     this.name = name;
     /** @type {Object} */
