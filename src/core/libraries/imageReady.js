@@ -96,6 +96,7 @@
 
         // stripCSSQuotes
         var url = matches[1].replace(/[\"\']/g, "");
+        $image.attr('loading', 'eager');
         $image.attr("src", url);
         $images = $images.add($image);
 
