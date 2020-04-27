@@ -397,6 +397,10 @@ define([
 
     async remove() {
       const currentView = this.parentView;
+      if (currentView) {
+        currentView.model.setOnChildren('_isReady', false);
+        currentView.model.set('_isReady', false);
+      }
       this.trigger('preRemove', currentView);
       await this.wait.queue();
       // Facilitate contentObject transitions

@@ -145,8 +145,6 @@ define([
 
       Adapt.wait.for(end => {
         this.$el.off('onscreen.adaptView');
-        this.model.setOnChildren('_isReady', false);
-        this.model.set('_isReady', false);
         super.remove();
         _.defer(() => {
           Adapt.trigger(`${type}View:postRemove view:postRemove`, this);

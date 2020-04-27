@@ -63,7 +63,9 @@ define([
         Adapt.trigger(`${type}View:preReady contentObjectView:preReady view:preReady`, this);
         await Adapt.wait.queue();
         $('.js-loading').hide();
-        $(window).scrollTop(0);
+        if (Adapt.get('_shouldContentObjectScrollTop') !== false) {
+          $(window).scrollTop(0);
+        }
         Adapt.trigger(`${type}View:ready contentObjectView:ready view:ready`, this);
         $.inview.unlock(`${type}View`);
         const styleOptions = { opacity: 1 };
@@ -101,8 +103,10 @@ define([
 
       Adapt.wait.for(end => {
         this.$el.off('onscreen.adaptView');
-        this.model.setOnChildren('_isReady', false);
-        this.model.set('_isReady', false);
+        this.findDescendantViews().reverse().forEach(view => {
+          view.remove();
+        });
+        this.childViews = [];
         super.remove();
         _.defer(() => {
           Adapt.trigger(`${type}View:postRemove contentObjectView:postRemove view:postRemove`, this);
@@ -115,10 +119,6 @@ define([
     }
 
     destroy() {
-      this.findDescendantViews().reverse().forEach(view => {
-        view.remove();
-      });
-      this.childViews = [];
       this.remove();
       if (Adapt.parentView === this) {
         Adapt.parentView = null;
