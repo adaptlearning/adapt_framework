@@ -10,7 +10,7 @@ define([
 
   function onRender(cb) {
     const intercept = (object, name, mode, cb) => {
-      return object[name] = cb.bind(object, object[name], name, mode);
+      return (object[name] = cb.bind(object, object[name], name, mode));
     };
     Object.keys(Handlebars.templates).forEach(name => {
       intercept(Handlebars.templates, name, 'template', cb);

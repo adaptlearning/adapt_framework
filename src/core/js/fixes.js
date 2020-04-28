@@ -1,3 +1,3 @@
 define([
   './fixes/img.lazyload'
-], function() {})
+], function() {});
