@@ -8,19 +8,19 @@ define([
    * Adds template and partial, preRender and postRender events to Adapt
    */
 
-  function handlebarsInject(cb) {
-    const duckPunch = function(object, name, mode, cb) {
+  function onRender(cb) {
+    const intercept = (object, name, mode, cb) => {
       return object[name] = cb.bind(object, object[name], name, mode);
     };
     Object.keys(Handlebars.templates).forEach(name => {
-      duckPunch(Handlebars.templates, name, 'template', cb);
+      intercept(Handlebars.templates, name, 'template', cb);
     });
     Object.keys(Handlebars.partials).forEach(name => {
-      duckPunch(Handlebars.partials, name, 'partial', cb);
+      intercept(Handlebars.partials, name, 'partial', cb);
     });
   }
 
-  handlebarsInject(function(template, name, mode, ...args) {
+  onRender((template, name, mode, ...args) => {
     // Send preRender event to allow modification of args
     const preRenderEvent = new TemplateRenderEvent(`${mode}:preRender`, name, mode, null, args);
     Adapt.trigger(preRenderEvent.type, preRenderEvent);
