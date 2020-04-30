@@ -280,9 +280,6 @@ class Translate {
       default:
         importData = [];
         const lines = [];
-        const options = {
-          delimiter: this.csvDelimiter
-        };
         await async.each(langFiles, (filename, done) => {
           const fileBuffer = fs.readFileSync(filename, {
             encoding: null
@@ -296,18 +293,38 @@ class Translate {
             fileContent = iconv.decode(fileBuffer, 'utf8');
             this.log(`Encoding not detected used utf-8 ${filename}`);
           }
-          csv.parse(fileContent, options, function(error, output) {
+          let csvDelimiter = this.csvDelimiter;
+          const firstLineMatches = fileContent.match(/.+\/"{0,1}.{1}/);
+          if (firstLineMatches && firstLineMatches.length) {
+            const detectedDelimiter = firstLineMatches[0].slice(-1);
+            if (detectedDelimiter !== this.csvDelimiter) {
+              this.log(`Delimiter detected as ${detectedDelimiter} in ${filename}`);
+              csvDelimiter = detectedDelimiter;
+            }
+          }
+          const options = {
+            delimiter: csvDelimiter
+          };
+          csv.parse(fileContent, options, (error, output) => {
             if (error) {
               return done(error);
             }
+            let hasWarnedTruncated = false;
+            output.forEach(line => {
+              if (line.length < 2) {
+                throw new Error(`Too few columns detected, expected 2 found ${line.length} ${filename}`);
+              }
+              if (line.length !== 2 && !hasWarnedTruncated) {
+                this.log(`Truncating extra columns ${line.length} ${filename}`);
+                hasWarnedTruncated = true;
+              }
+              line.length = 2;
+            });
             lines.push(...output);
             done(null);
           });
         }).then(() => {
           lines.forEach(line => {
-            if (line.length !== 2) {
-              return;
-            }
             const [ file, id, ...path ] = line[0].split('/');
             importData.push({
               file: file,
