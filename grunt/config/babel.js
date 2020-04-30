@@ -9,12 +9,13 @@ module.exports = {
       [
         '@babel/preset-env',
         {
-          "targets": {
-            "ie": "11"
-          }
+          targets: {
+            ie: 11
+          },
+          spec: true
         }
       ]
-    ]
+    ],
   },
   dist: {
     files: [{
