@@ -1,5 +1,9 @@
 ## [Unreleased][unreleased]
 
+## [4.4.2] - 2020-05-01
+### Fixed
+- Hot graphic popup not re-centering vertically when 'paging' between items ([#2580](https://github.com/adaptlearning/adapt_framework/issues/2580))
+
 ## [4.4.1] - 2019-11-06
 ### Fixed
 - Course not loading in IE11 due to missing `function` keyword in accessibility library ([#2570](https://github.com/adaptlearning/adapt_framework/issues/2570))
@@ -753,7 +757,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.2...HEAD
+[4.4.2]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v4.4.2
 [4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.2.0...v4.3.0

@@ -16,7 +16,7 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + HTML5 and CSS3
 + Responsive across multiple devices and platforms
 + Deliver courses through SCORM compliant LMS or stand-alone
-+ 22 bundled plug-ins, [more available](https://www.adaptlearning.org/index.php/plugin-browser/) through the community 
++ 23 bundled plug-ins, [more available](https://www.adaptlearning.org/index.php/plugin-browser/) through the community 
 + [Meets WAI AA accessibility standards](https://github.com/adaptlearning/adapt_framework/wiki/Accessibility)
 + Right-To-Left compatibility
 + Assessments with support for question banks, randomisation, and customisable feedback
