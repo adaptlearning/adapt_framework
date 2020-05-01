@@ -19,7 +19,7 @@ define([
   }
   // extend BlendedItemsComponentQuestionModel with ItemsComponentModel
   Object.getOwnPropertyNames(ItemsComponentModel.prototype).forEach(name => {
-    if (name === 'constructor') return;
+    if (name === 'constructor' || name === 'init' || name === 'reset') return;
     Object.defineProperty(BlendedItemsComponentQuestionModel.prototype, name, {
       value: ItemsComponentModel.prototype[name]
     });
