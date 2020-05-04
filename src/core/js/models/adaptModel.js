@@ -69,6 +69,26 @@ define([
             }.bind(this));
 
         },
+        
+        getIsAvailableInPage: function() {
+            var isAvailable = this.get('_isAvailable');
+            if (!isAvailable) {
+              return false;
+            }
+            var parent = this;
+            while (parent = parent.getParent()) {
+              var type = parent.get('_type');
+              if (type === 'menu' || type === 'page') {
+                 // do not check beyond page / menu parents
+                 return true;
+              }
+              isAvailable = parent.get('_isAvailable');
+              if (!isAvailable) {
+                return false;
+              }
+            }
+            return true;
+        },
 
         setupTrackables: function() {
 
