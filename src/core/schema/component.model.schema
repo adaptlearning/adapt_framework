@@ -81,7 +81,7 @@
         ]
       },
       "title": "Reset on revisit",
-      "help": "Causes component to be reset if you leave the page and return to it. Soft will allow the user to do the component again, but will not require them to do. Hard / true will reset but will require the user to complete the component again.",
+      "help": "Controls whether this component will be reset when the learner leaves the page then returns to it. The 'soft' setting will reset the component to allow the learner to attempt it again, but will not require them to do so; whereas the 'hard' setting will require them to do so. The default (false) will not cause the component to be reset.",
       "validators": []
     },
     "_ariaLevel": {
