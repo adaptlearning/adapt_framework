@@ -74,10 +74,9 @@
       "inputType": {
         "type": "Select",
         "options": [
-          "hard",
+          "false",
           "soft",
-          true,
-          false
+          "hard"
         ]
       },
       "title": "Reset when revisited?",
