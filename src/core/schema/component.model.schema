@@ -80,7 +80,7 @@
           false
         ]
       },
-      "title": "Reset on revisit",
+      "title": "Reset when revisited?",
       "help": "Controls whether this component will be reset when the learner leaves the page then returns to it. The 'soft' setting will reset the component to allow the learner to attempt it again, but will not require them to do so; whereas the 'hard' setting will require them to do so. The default (false) will not cause the component to be reset.",
       "validators": []
     },
