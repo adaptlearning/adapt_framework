@@ -90,6 +90,15 @@
       "title": "Is this visible?",
       "help": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the block."
     },
+    "_requireCompletionOf": {
+      "type": "number",
+      "default": -1,
+      "isSetting": true,
+      "inputType": "Number",
+      "validators": ["number"],
+      "title": "Require completion of",
+      "help": "The number of components within this block the learner must complete in order for this block to be set as completed. A value of -1 requires all of them to be completed."
+    },
     "_ariaLevel": {
       "type": "number",
       "default": 0,
