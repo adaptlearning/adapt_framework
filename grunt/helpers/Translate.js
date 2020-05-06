@@ -312,7 +312,7 @@ class Translate {
             let hasWarnedTruncated = false;
             output.forEach(line => {
               if (line.length < 2) {
-                throw new Error(`Too few columns detected, expected 2 found ${line.length} ${filename}`);
+                throw new Error(`Too few columns detected: expected 2, found ${line.length} in ${filename}`);
               }
               if (line.length !== 2 && !hasWarnedTruncated) {
                 this.log(`Truncating extra columns ${line.length} ${filename}`);
