@@ -51,6 +51,7 @@
         "_tracking": {
             "_shouldSubmitScore": true,
             "_shouldStoreResponses": false,
+            "_shouldStoreAttempts": false,
             "_shouldRecordInteractions": true
         },
         "_reporting": {

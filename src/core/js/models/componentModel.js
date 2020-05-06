@@ -23,6 +23,13 @@ define([
         '_userAnswer'
       ]);
     }
+
+    trackableType() {
+      return AdaptModel.resultExtend('trackableType', [
+        Array
+      ]);
+    }
+
   }
 
   return ComponentModel;
