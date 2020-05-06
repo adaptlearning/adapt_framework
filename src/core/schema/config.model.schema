@@ -178,7 +178,9 @@
     },
     "_fixes": {
       "type": "object",
-      "default": {},
+      "default": {
+        "_imgLazyLoad": true
+      },
       "title": "Fixes Extended Options",
       "inputType": {
         "type": "CodeEditor",
