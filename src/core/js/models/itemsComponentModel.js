@@ -68,7 +68,9 @@ define([
       this.get('_children').each(item => item.toggleActive(false));
     }
 
-    setActiveItem(index) {
+    setActiveItem(index = 1) {
+      if (index < 0 || index >= this.get('_children').length) return;
+
       const activeItem = this.getActiveItem();
       if (activeItem) activeItem.toggleActive(false);
       this.getItem(index).toggleActive(true);
