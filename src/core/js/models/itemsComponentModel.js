@@ -66,6 +66,8 @@ define([
         },
 
         setActiveItem: function(index) {
+            if (index === null || index === undefined || index < 0 || index >= this.get('_children').length) return;
+
             var activeItem = this.getActiveItem();
             if (activeItem) activeItem.toggleActive(false);
             this.getItem(index).toggleActive(true);
