@@ -136,7 +136,7 @@ define([
           break;
         case 'inner-append':
         default:
-        $parentContainer.append(childView.$el);
+          $parentContainer.append(childView.$el);
           break;
       }
       // Signify that a child has been added to the view to enable updates to status bars
