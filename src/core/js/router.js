@@ -145,7 +145,7 @@ define([
         // Allow navigation.
         this.model.set('_canNavigate', true, { pluginName: 'adapt' });
         // Scroll to element
-        Adapt.navigateToElement('.' + id, { replace: true });
+        Adapt.navigateToElement('.' + id, { replace: true, duration: 400 });
         return;
       }
 
@@ -324,7 +324,7 @@ define([
      * @param {object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
      * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
-    navigateToElement(selector, settings = {}) {
+    async navigateToElement(selector, settings = {}) {
       // Removes . symbol from the selector to find the model
       const currentModelId = selector.replace(/\./g, '');
       const currentModel = Adapt.findById(currentModelId);
@@ -335,20 +335,23 @@ define([
       const pageId = currentPage.get('_id');
       // If current page - scrollTo element
       if (pageId === Adapt.location._currentId) {
-        return Adapt.scrollTo(selector, settings);
+        return await Adapt.scrollTo(selector, settings);
       }
-
-      // If the element is on another page navigate and wait until pageView:ready is fired
-      // Then scrollTo element
-      Adapt.once('contentObjectView:ready', _.debounce(() => {
-        this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
-        Adapt.scrollTo(selector, settings);
-      }, 1));
 
       const shouldReplaceRoute = settings.replace || false;
 
-      this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
-      this.navigate('#/id/' + pageId, { trigger: true, replace: shouldReplaceRoute });
+      await new Promise(resolve => {
+        // If the element is on another page navigate and wait until pageView:ready is fired
+        // Then scrollTo element
+        Adapt.once('contentObjectView:ready', _.debounce(async () => {
+        this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
+          await Adapt.scrollTo(selector, settings);
+          resolve();
+        }, 1));
+
+        this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
+        this.navigate('#/id/' + pageId, { trigger: true, replace: shouldReplaceRoute });
+      });
     }
 
     get(...args) {

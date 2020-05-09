@@ -343,7 +343,9 @@ define([
       }
 
       const foundView = idPathToView.reduce((view, currentId) => {
-        return view && view.childViews && view.childViews[currentId];
+        if (!view) return;
+        const childViews = view.getChildViews();
+        return childViews && childViews.find(view => view.model.get('_id') === currentId);
       }, this.parentView);
 
       return foundView;
@@ -398,8 +400,14 @@ define([
     async remove() {
       const currentView = this.parentView;
       if (currentView) {
-        currentView.model.setOnChildren('_isReady', false);
-        currentView.model.set('_isReady', false);
+        currentView.model.setOnChildren({
+          '_isReady': false,
+          '_isRendered': false
+        });
+        currentView.model.set({
+          '_isReady': false,
+          '_isRendered': false
+        });
       }
       this.trigger('preRemove', currentView);
       await this.wait.queue();

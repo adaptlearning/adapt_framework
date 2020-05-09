@@ -99,7 +99,16 @@ define([
       });
     }
 
-    scrollTo(selector, settings = {}) {
+    async scrollTo(selector, settings = {}) {
+
+      const currentModelId = selector.replace(/\./g, '');
+      const currentModel = Adapt.findById(currentModelId);
+      if (!currentModel) return;
+
+      if (!currentModel.get('_isRendered') || !currentModel.get('_isRendered')) {
+        await Adapt.parentView.renderTo(currentModelId);
+      }
+
       // Get the current location - this is set in the router
       const location = (Adapt.location._contentType) ?
         Adapt.location._contentType : Adapt.location._currentLocation;
@@ -135,10 +144,13 @@ define([
 
       // Trigger an event after animation
       // 300 milliseconds added to make sure queue has finished
-      _.delay(() => {
-        Adapt.a11y.focusNext(selector);
-        Adapt.trigger(`${location}:scrolledTo`, selector);
-      }, settings.duration + 300);
+      await new Promise(resolve => {
+        _.delay(() => {
+          Adapt.a11y.focusNext(selector);
+          Adapt.trigger(`${location}:scrolledTo`, selector);
+            resolve();
+        }, settings.duration + 300);
+      });
     }
 
   }
