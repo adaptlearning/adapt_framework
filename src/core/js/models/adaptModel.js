@@ -43,11 +43,6 @@ define([
       ];
     }
 
-    initialize() {
-      // Wait until data is loaded before setting up model
-      this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
-    }
-
     setupModel() {
       if (this.hasManagedChildren) {
         this.setupChildListeners();
@@ -693,6 +688,54 @@ define([
       this.checkCompletionStatus();
 
       this.checkLocking();
+    }
+
+    /**
+     * Clones this model and all managed children returning a new branch.
+     * Assign new unique ids to each cloned model.
+     * Adds clone to Adapt.data and to their _parentId child lists.
+     * @param {Object} ?set Attributes to be set on the root clone
+     * @param {Object} ?setOnChildren Attributes to be set on the children clones.
+     * @returns {AdaptModel}
+     */
+    deepClone(set = {}, setOnChildren = {}, modifier = null) {
+      // Shallow clone the JSON and set overrides
+      const json = Object.assign({}, this.toJSON(), set);
+      // Fetch the class
+      const ModelClass = this.constructor;
+      const hasId = Boolean(json._id);
+      if (hasId) {
+        // Create a unique id if needed
+        const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
+        json._id = `${cid}_${json._id}`;
+      }
+      // Clone the model
+      const clonedModel = new ModelClass(json);
+      // Add cloned model to Adapt.data for Adapt.findById resolution
+      hasId && Adapt.data.add(clonedModel);
+      // Clone any children
+      this.hasManagedChildren && this.getChildren().each(child => {
+        if (!child.deepClone) {
+          throw new Error('Cannot deepClone child.');
+        }
+        let set = setOnChildren;
+        if (hasId) {
+          // Pass through the new cloned parent id
+          set = Object.assign({}, setOnChildren, {
+            _parentId: json._id
+          });
+        }
+        return child.deepClone(set, setOnChildren, modifier);
+      });
+      if (hasId) {
+        // Add cloned model to its parent for findDescendants resolution
+        const parentModel = clonedModel.getParent();
+        parentModel && parentModel.getChildren().add(clonedModel);
+      }
+      // Setup the model after all the children have been added
+      modifier && modifier(this, clonedModel);
+      clonedModel.setupModel();
+      return clonedModel;
     }
 
     /**
