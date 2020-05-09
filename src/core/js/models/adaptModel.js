@@ -708,7 +708,6 @@ define([
       // If reset is enabled set defaults
       this.reset(isResetOnRevisit);
     }
-    }
 
     /**
      * Internal event handler for all module events. Triggers event bubbling
