@@ -90,6 +90,10 @@ define([
       _.defer(performIsReady);
     }
 
+    /**
+     * Force render up to specified id. Resolves when views are ready.
+     * @param {string} id
+     */
     async renderTo(id) {
       let models = this.model.getAllDescendantModels(true).filter(model => model.get('_isAvailable'));
       const index = models.findIndex(model => model.get('_id') === id);
