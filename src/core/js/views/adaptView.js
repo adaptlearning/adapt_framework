@@ -74,6 +74,13 @@ define([
       });
     }
 
+    /**
+     * Add children and descendant views, first-child-first. Wait until all possible
+     * views are added before resolving asynchronously.
+     * Will trigger 'view:addChild'(ChildEvent), 'view:requestChild'(ChildEvent)
+     * and 'view:childAdded'(ParentView, ChildView) accordingly.
+     * @returns {number} Count of views added
+     */
     async addChildren() {
       this.nthChild = this.nthChild || 0;
       // Check descendants first
@@ -124,6 +131,14 @@ define([
       return addedCount;
     }
 
+    /**
+     * Child views can be added with '_renderPosition': 'outer-append' or
+     * 'inner-append' (default). Each child view will trigger a
+     * 'view:childAdded'(ParentView, ChildView) event and be added to the
+     * this.getChildViews() array on this parent.
+     * @param {AdaptView} childView
+     * @returns {AdaptView} Returns this childView
+     */
     addChildView(childView) {
       const childViews = this.getChildViews() || [];
       childViews.push(childView);
@@ -144,6 +159,11 @@ define([
       return childView;
     }
 
+    /**
+     * Iterates through existing childViews and runs addChildren on them, resolving
+     * the total count of views added asynchronously.
+     * @returns {number} Count of views added
+     */
     async addDescendants() {
       let addedDescendantCount = 0;
       const childViews = this.getChildViews();
@@ -166,6 +186,10 @@ define([
       return addedDescendantCount;
     }
 
+    /**
+     * Resolves after outstanding asynchronous view additions are finished
+     * and ready.
+     */
     async whenReady() {
       if (this.model.get('_isReady')) return;
       return await new Promise(resolve => {
@@ -179,6 +203,12 @@ define([
       });
     }
 
+    /**
+     * Triggers and returns a new ChildEvent object for render control.
+     * This function is used by addChildren to manage event triggering.
+     * @param {AdaptModel} model
+     * @returns {ChildEvent}
+     */
     getAddChildEvent(model) {
       const isRequestChild = !Boolean(model);
       let event = new ChildEvent(null, this, model);
@@ -206,6 +236,11 @@ define([
       return event;
     }
 
+    /**
+     * Return an array of all child and descendant views.
+     * @param {boolean} [isParentFirst=false] Array returns with parents before children
+     * @returns {[AdaptView]}
+     */
     findDescendantViews(isParentFirst) {
       const descendants = [];
       const childViews = this.getChildViews();
@@ -284,14 +319,25 @@ define([
       this.$el.toggleClass('is-complete', isComplete);
     }
 
+    /**
+     * @returns {[AdaptViews]}
+     */
     getChildViews() {
       return this._childViews;
     }
 
+    /**
+     * @param {[AdaptView]} value
+     */
     setChildViews(value) {
       this._childViews = value;
     }
 
+    /**
+     * Returns an indexed by id list of child views.
+     * @deprecated since 0.5.5
+     * @returns {{<string, AdaptView}}
+     */
     get childViews() {
       Adapt.log.deprecated(`view.childViews use view.getChildViews()`);
       return _.indexBy(this.getChildViews(), view => view.model.get('_id'));

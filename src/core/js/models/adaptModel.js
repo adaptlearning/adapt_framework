@@ -186,21 +186,30 @@ define([
       }
     }
 
+    /**
+     * Checks if any child models which have been _isRendered are not _isReady.
+     * If all rendered child models are marked ready then this model will be
+     * marked _isReady: true as well.
+     * @param {AdaptModel} [model]
+     * @param {boolean} [value]
+     * @returns {boolean}
+     */
     checkReadyStatus(model, value) {
       if (value === false) {
         // Do not respond to _isReady: false as _isReady is unset throughout
         // the rendering process
-        return;
+        return false;
       }
       // Filter children based upon whether they are available
       // Check if any _isRendered: true children return _isReady: false
       // If not - set this model to _isReady: true
       const children = this.getAvailableChildModels();
       if (children.find(child => child.get('_isReady') === false && child.get('_isRendered'))) {
-        return;
+        return false;
       }
 
       this.set('_isReady', true);
+      return true;
     }
 
     setCompletionStatus() {
@@ -700,6 +709,10 @@ define([
       this.checkLocking();
     }
 
+    /**
+     * Used before a model is rendered to determine if it should be reset to its
+     * default values.
+     */
     checkIfResetOnRevisit() {
       var isResetOnRevisit = this.get('_isResetOnRevisit');
       if (!isResetOnRevisit) {
