@@ -694,8 +694,9 @@ define([
      * Clones this model and all managed children returning a new branch.
      * Assign new unique ids to each cloned model.
      * Adds clone to Adapt.data and to their _parentId child lists.
-     * @param {Object} ?set Attributes to be set on the root clone
-     * @param {Object} ?setOnChildren Attributes to be set on the children clones.
+     * @param {Object} [set] Attributes to be set on the root clone
+     * @param {Object} [setOnChildren] Attributes to be set on the children clones.
+     * @param {Function} [modifier] A callback function for each child to allow further modifications
      * @returns {AdaptModel}
      */
     deepClone(set = {}, setOnChildren = {}, modifier = null) {
