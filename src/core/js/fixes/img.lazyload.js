@@ -21,13 +21,11 @@ define([
     const findImgTag = /<img([^>]*)>/gi;
     const hasLoadingAttr = / loading=/gi;
     Adapt.on('template:postRender partial:postRender', function(event) {
-      const imgs = event.value.match(findImgTag);
-      if (!imgs) {
-        // No img tags found
+      const imgTagsFound = event.value.match(findImgTag);
+      if (!imgTagsFound) {
         return;
       }
-      event.value = imgs.reduce((value, img) => {
-        // Check if the img tag has a loading attribute
+      event.value = imgTagsFound.reduce((value, img) => {
         if (hasLoadingAttr.test(img)) {
           return value;
         }
