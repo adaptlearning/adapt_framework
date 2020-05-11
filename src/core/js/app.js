@@ -1,5 +1,7 @@
 require([
   'core/js/adapt',
+  'core/js/templates',
+  'core/js/fixes',
   'core/js/accessibility',
   'core/js/data',
   'core/js/offlineStorage',
