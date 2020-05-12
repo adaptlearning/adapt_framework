@@ -49,14 +49,14 @@ define([
     }
 
     setupModel() {
-      if (this._children) {
+      if (this.hasManagedChildren) {
         this.setupChildListeners();
       }
 
       this.init();
 
       _.defer(() => {
-        if (this._children) {
+        if (this.hasManagedChildren) {
           this.checkCompletionStatus();
 
           this.checkInteractionCompletionStatus();
@@ -248,6 +248,59 @@ define([
     }
 
     /**
+     * Returns a string describing the type group of this model.
+     * Strings should be lowercase and not plurlaized.
+     * i.e. 'page', 'menu', 'contentobject', 'component', 'article', 'block'
+     * Override in inheritance chain.
+     * @returns {string}
+     */
+    getTypeGroup() {}
+
+    /**
+     * Returns true if this model is of the type group described.
+     * Automatically manages pluralization typeGroup and matches lowercase only.
+     * Pluralized typeGroups and uppercase characters in typeGroups are discouraged.
+     * @param {string} type Type group name i.e. course, contentobject, article, block, component
+     * @returns {boolean}
+     */
+    isTypeGroup(typeGroup) {
+      const hasUpperCase = /[A-Z]+/.test(typeGroup);
+      const isPluralized = typeGroup.slice(-1) === 's';
+      const lowerCased = typeGroup.toLowerCase();
+      const singular = isPluralized && lowerCased.slice(0, -1); // remove pluralization if ending in s
+      const singularLowerCased = (singular || lowerCased).toLowerCase();
+      if (isPluralized || hasUpperCase) {
+        Adapt.log.deprecated(`'${typeGroup}' appears pluralized or contains uppercase characters, suggest using the singular, lowercase type group '${singularLowerCased}'.`);
+      }
+      const pluralizedLowerCaseTypes = [
+        singularLowerCased,
+        !isPluralized && `${lowerCased}s` // pluralize if not ending in s
+      ].filter(Boolean);
+      const typeGroups = this.getTypeGroups();
+      if (_.intersection(pluralizedLowerCaseTypes, typeGroups).length) {
+        return true;
+      }
+      return false;
+    }
+
+    /**
+     * Returns an array of strings describing the model type groups.
+     * All strings are lowercase and should not be pluralized.
+     * i.e. ['course', 'menu', 'contentobject'], ['page', 'contentobject'], ['component']
+     * @returns {[string]}
+     */
+    getTypeGroups() {
+      if (this._typeGroups) return this._typeGroups;
+      const typeGroups = [ this.get('_type') ];
+      let parentClass = this;
+      while ((parentClass = Object.getPrototypeOf(parentClass))) {
+        if (!parentClass.hasOwnProperty('getTypeGroup')) continue;
+        typeGroups.push(parentClass.getTypeGroup.call(this));
+      }
+      return (this._typeGroups = _.uniq(typeGroups.filter(Boolean).map(s => s.toLowerCase())));
+    }
+
+    /**
      * Searches the model's ancestors to find the first instance of the specified ancestor type
      * @param {string} [ancestorType] Valid values are 'course', 'pages', 'contentObjects', 'articles' or 'blocks'.
      * If left blank, the immediate ancestor (if there is one) is returned
@@ -256,15 +309,9 @@ define([
     findAncestor(ancestorType) {
       const parent = this.getParent();
       if (!parent) return;
-
-      if (ancestorType === 'pages') {
-        ancestorType = 'contentObjects';
-      }
-
-      if (!ancestorType || this._parent === ancestorType) {
+      if (!ancestorType || parent.isTypeGroup(ancestorType)) {
         return parent;
       }
-
       return parent.findAncestor(ancestorType);
     }
 
@@ -279,17 +326,9 @@ define([
      * this.findDescendantModels('components', { where: { _isAvailable: true, _isOptional: false }});
      */
     findDescendantModels(descendants, options) {
-
-      const types = [
-        descendants.slice(0, -1)
-      ];
-      if (descendants === 'contentObjects') {
-        types.push('page', 'menu');
-      }
-
       const allDescendantsModels = this.getAllDescendantModels();
       const returnedDescendants = allDescendantsModels.filter(model => {
-        return types.includes(model.get('_type'));
+        return model.isTypeGroup(descendants);
       });
 
       if (!options) {
@@ -329,8 +368,7 @@ define([
 
       const descendants = [];
 
-      if (this.get('_type') === 'component') {
-        descendants.push(this);
+      if (!this.hasManagedChildren) {
         return descendants;
       }
 
@@ -338,11 +376,9 @@ define([
 
       children.models.forEach(child => {
 
-        if (child.get('_type') === 'component') {
-
+        if (!child.hasManagedChildren) {
           descendants.push(child);
           return;
-
         }
 
         const subDescendants = child.getAllDescendantModels(isParentFirst);
@@ -378,41 +414,29 @@ define([
      * @param {boolean} options.loop
      * @return {array}
      */
-    findRelativeModel(relativeString, options) {
-
-      const types = [ 'menu', 'page', 'article', 'block', 'component' ];
-
-      options = options || {};
-
-      const modelId = this.get('_id');
-      const modelType = this.get('_type');
-
+    findRelativeModel(relativeString, options = {}) {
       // return a model relative to the specified one if opinionated
-      let rootModel = Adapt.course;
-      if (options.limitParentId) {
-        rootModel = Adapt.findById(options.limitParentId);
-      }
+      const rootModel = options.limitParentId ?
+        Adapt.findById(options.limitParentId) :
+        Adapt.course;
 
       const relativeDescriptor = Adapt.parseRelativeString(relativeString);
-
-      const findAncestorType = (types.indexOf(modelType) > types.indexOf(relativeDescriptor.type));
-      const findSiblingType = (modelType === relativeDescriptor.type);
-
       const searchBackwards = (relativeDescriptor.offset < 0);
       let moveBy = Math.abs(relativeDescriptor.offset);
       let movementCount = 0;
 
-      const findDescendantType = (!findSiblingType && !findAncestorType);
-
-      if (findDescendantType) {
+      const hasDescendantsOfType = Boolean(this.findDescendantModels(relativeDescriptor.type).length);
+      if (hasDescendantsOfType) {
         // move by one less as first found is considered next
+        // will find descendants on either side but not inside
         moveBy--;
       }
 
       let pageDescendants;
       if (searchBackwards) {
         // parents first [p1,a1,b1,c1,c2,a2,b2,c3,c4,p2,a3,b3,c6,c7,a4,b4,c8,c9]
-        pageDescendants = rootModel.getAllDescendantModels(true);
+        pageDescendants = [rootModel];
+        pageDescendants.push(...rootModel.getAllDescendantModels(true));
 
         // reverse so that we don't need a forward and a backward iterating loop
         // reversed [c9,c8,b4,a4,c7,c6,b3,a3,p2,c4,c3,b2,a2,c2,c1,b1,a1,p1]
@@ -420,6 +444,7 @@ define([
       } else {
         // children first [c1,c2,b1,a1,c3,c4,b2,a2,p1,c6,c7,b3,a3,c8,c9,b4,a4,p2]
         pageDescendants = rootModel.getAllDescendantModels(false);
+        pageDescendants.push(rootModel);
       }
 
       // filter if opinionated
@@ -428,6 +453,7 @@ define([
       }
 
       // find current index in array
+      const modelId = this.get('_id');
       const modelIndex = pageDescendants.findIndex(pageDescendant => {
         if (pageDescendant.get('_id') === modelId) {
           return true;
@@ -436,24 +462,25 @@ define([
       });
 
       if (options.loop) {
-
         // normalize offset position to allow for overflow looping
-        const typeCounts = {};
-        pageDescendants.forEach(model => {
-          const type = model.get('_type');
-          typeCounts[type] = typeCounts[type] || 0;
-          typeCounts[type]++;
-        });
-        moveBy = moveBy % typeCounts[relativeDescriptor.type];
-
+        const totalOfType = pageDescendants.reduce((count, model) => {
+          if (!model.isTypeGroup(relativeDescriptor.type)) return count;
+          return ++count;
+        }, 0);
+        // take the remainder after removing whole units of the type count
+        moveBy = moveBy % totalOfType;
         // double up entries to allow for overflow looping
         pageDescendants = pageDescendants.concat(pageDescendants.slice(0));
-
       }
 
       for (let i = modelIndex, l = pageDescendants.length; i < l; i++) {
         const descendant = pageDescendants[i];
-        if (descendant.get('_type') === relativeDescriptor.type) {
+        if (descendant.isTypeGroup(relativeDescriptor.type)) {
+          if (movementCount > moveBy) {
+            // there is no descendant which matches this relativeString
+            // probably looking for the descendant 0 in a parent
+            break;
+          }
           if (movementCount === moveBy) {
             return Adapt.findById(descendant.get('_id'));
           }
@@ -461,7 +488,10 @@ define([
         }
       }
 
-      return undefined;
+    }
+
+    get hasManagedChildren() {
+      return true;
     }
 
     getChildren() {
@@ -469,10 +499,11 @@ define([
 
       let childrenCollection;
 
-      if (!this._children) {
+      if (!this.hasManagedChildren) {
         childrenCollection = new Backbone.Collection();
       } else {
-        const children = Adapt[this._children].where({ _parentId: this.get('_id') });
+        const id = this.get('_id');
+        const children = Adapt.data.filter(model => model.get('_parentId') === id);
         childrenCollection = new Backbone.Collection(children);
       }
 
@@ -499,13 +530,10 @@ define([
 
     getParent() {
       if (this.get('_parent')) return this.get('_parent');
-      if (this._parent === 'course') {
-        return Adapt.course;
-      }
-      const parent = Adapt.findById(this.get('_parentId'));
+      const parentId = this.get('_parentId');
+      if (!parentId) return;
+      const parent = Adapt.findById(parentId);
       this.set('_parent', parent);
-
-      // returns a parent model
       return parent;
     }
 
@@ -524,15 +552,17 @@ define([
     }
 
     getSiblings(passSiblingsAndIncludeSelf) {
+      const id = this.get('_id');
+      const parentId = this.get('_parentId');
       let siblings;
       if (!passSiblingsAndIncludeSelf) {
         // returns a collection of siblings excluding self
         if (this._hasSiblingsAndSelf === false) {
           return this.get('_siblings');
         }
-        siblings = Adapt[this._siblings].filter(model => {
-          return model.get('_parentId') === this.get('_parentId') &&
-            model.get('_id') !== this.get('_id');
+        siblings = Adapt.data.filter(model => {
+          return model.get('_parentId') === parentId &&
+            model.get('_id') !== id;
         });
 
         this._hasSiblingsAndSelf = false;
@@ -543,8 +573,8 @@ define([
           return this.get('_siblings');
         }
 
-        siblings = Adapt[this._siblings].where({
-          _parentId: this.get('_parentId')
+        siblings = Adapt.data.filter(model => {
+          return model.get('_parentId') === parentId;
         });
         this._hasSiblingsAndSelf = true;
       }
@@ -563,7 +593,7 @@ define([
 
       this.set(...args);
 
-      if (!this._children) return;
+      if (!this.hasManagedChildren) return;
 
       const children = this.getChildren();
       children.models.forEach(child => child.setOnChildren(...args));
@@ -574,7 +604,7 @@ define([
      * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
      */
     setOptional(value) {
-      Adapt.log.warn(`DEPRECATED - Use model.set('_isOptional', value) as setOptional() may be removed in the future`);
+      Adapt.log.deprecated(`Use model.set('_isOptional', value) as setOptional() may be removed in the future`);
       this.set({ _isOptional: value });
     }
 
@@ -635,10 +665,6 @@ define([
       const children = this.getAvailableChildModels();
       children.forEach(child => {
         child.set('_isLocked', this.shouldLock(child));
-
-        if (child.get('_type') === 'menu') {
-          child.checkLocking();
-        }
       });
     }
 

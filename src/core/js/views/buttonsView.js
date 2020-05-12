@@ -18,8 +18,7 @@ define([
 
     initialize: function(options) {
       this.parent = options.parent;
-
-      this.listenTo(Adapt, 'remove', this.remove);
+      this.listenTo(Adapt.parentView, 'postRemove', this.remove);
       this.listenTo(this.model, 'change:_buttonState', this.onButtonStateChanged);
       this.listenTo(this.model, 'change:feedbackMessage', this.onFeedbackMessageChanged);
       this.listenTo(this.model, 'change:_attemptsLeft', this.onAttemptsChanged);

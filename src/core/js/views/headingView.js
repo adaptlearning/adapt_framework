@@ -5,7 +5,7 @@ define([
   var HeadingView = Backbone.View.extend({
 
     initialize: function() {
-      this.listenTo(Adapt, 'remove', this.remove);
+      this.listenTo(Adapt.parentView, 'postRemove', this.remove);
       this.listenTo(this.model, 'change:_isComplete', this.render);
       this.render();
     },

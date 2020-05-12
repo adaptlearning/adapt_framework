@@ -79,7 +79,7 @@ define([
       Adapt.on('device:changed', this._setupNoSelect);
       this.listenTo(Adapt, {
         'router:location': this._onNavigationStart,
-        'pageView:ready menuView:ready router:plugin': this._onNavigationEnd
+        'contentObjectView:ready router:plugin': this._onNavigationEnd
       });
     },
 
@@ -137,7 +137,7 @@ define([
       }
       // Stop document reading
       _.defer(function() {
-        Adapt.a11y.toggleHidden('.page, .menu', true);
+        Adapt.a11y.toggleHidden('.contentobject', true);
       });
     },
 
@@ -147,7 +147,7 @@ define([
         return;
       }
       // Allow document to be read
-      Adapt.a11y.toggleHidden('.page, .menu', false);
+      Adapt.a11y.toggleHidden('.contentobject', false);
     },
 
     isActive: function() {
