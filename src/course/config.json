@@ -53,7 +53,7 @@
         "_isEnabled": true,
         "_tracking": {
             "_shouldSubmitScore": true,
-            "_shouldStoreResponses": false,
+            "_shouldStoreResponses": true,
             "_shouldRecordInteractions": true
         },
         "_reporting": {
