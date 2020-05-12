@@ -1,15 +1,16 @@
-## [5.3.1] - 2020-05-12
+## [5.4.0] - 2020-05-12
 ### Added
 - Adapt events `template:preRender`, `template:postRender`, `partial:preRender`, `partial:postRender` ([#2734](https://github.com/adaptlearning/adapt_framework/issues/2734))
 - Img tag loading fix ([#2734](https://github.com/adaptlearning/adapt_framework/issues/2734))
 
 ### Changed
-- Fixed `grunt translate` tasks ([#2721](https://github.com/adaptlearning/adapt_framework/issues/2721))
 - Updated jQuery to v3.5.0 ([#2725](https://github.com/adaptlearning/adapt_framework/issues/2725))
-- Exposed `_isResetOnRevisit` to AAT ([#1912](https://github.com/adaptlearning/adapt_framework/issues/1912))
-- Exposed `_requiredCopmletionOf` to AAT ([#2639](https://github.com/adaptlearning/adapt_framework/issues/2639))
 - Improved `grunt translate:import` task ([#2736](https://github.com/adaptlearning/adapt_framework/issues/2736))
-- Fixed arrow function and async/await debugging  ([#2733](https://github.com/adaptlearning/adapt_framework/issues/2733))
+
+### Fixed
+- The settings `_isResetOnRevisit` and `_requiredCopmletionOf` were not available in the AAT ([#1912](https://github.com/adaptlearning/adapt_framework/issues/1912) & [#2639](https://github.com/adaptlearning/adapt_framework/issues/2639))
+- Arrow function and async/await debugging ([#2733](https://github.com/adaptlearning/adapt_framework/issues/2733))
+- Not all course content being exported by the `grunt translate` task ([#2721](https://github.com/adaptlearning/adapt_framework/issues/2721))
 
 
 ## [5.3.0] - 2020-03-26
@@ -850,7 +851,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
-[5.3.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.3.0...v5.3.1
+[5.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.3.0...v5.4.0
 [5.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.2.0...v5.3.0
 [5.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
