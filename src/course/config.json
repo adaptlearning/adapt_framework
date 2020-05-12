@@ -37,6 +37,9 @@
             "_warnFirstOnly": true
         }
     },
+    "_fixes": {
+        "_imgLazyLoad": true
+    },
     "_drawer": {
         "_showEasing": "easeOutQuart",
         "_hideEasing": "easeInQuart",

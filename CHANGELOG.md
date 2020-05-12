@@ -1,3 +1,18 @@
+## [5.4.0] - 2020-05-12
+### Added
+- Adapt events `template:preRender`, `template:postRender`, `partial:preRender`, `partial:postRender` ([#2734](https://github.com/adaptlearning/adapt_framework/issues/2734))
+- Img tag loading fix ([#2734](https://github.com/adaptlearning/adapt_framework/issues/2734))
+
+### Changed
+- Updated jQuery to v3.5.0 ([#2725](https://github.com/adaptlearning/adapt_framework/issues/2725))
+- Improved `grunt translate:import` task ([#2736](https://github.com/adaptlearning/adapt_framework/issues/2736))
+
+### Fixed
+- The settings `_isResetOnRevisit` and `_requireCompletionOf` were not available in the AAT ([#1912](https://github.com/adaptlearning/adapt_framework/issues/1912) & [#2639](https://github.com/adaptlearning/adapt_framework/issues/2639))
+- Arrow function and async/await debugging ([#2733](https://github.com/adaptlearning/adapt_framework/issues/2733))
+- Not all course content being exported by the `grunt translate` task ([#2721](https://github.com/adaptlearning/adapt_framework/issues/2721))
+
+
 ## [5.3.0] - 2020-03-26
 ### Added
 - `Adapt.log.removed` and `Adapt.log.deprecated` ([#2678](https://github.com/adaptlearning/adapt_framework/issues/2678))
@@ -343,7 +358,7 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
   - fixes cache issues in Firefox and Chrome
   - stops it from waiting for missing images
   - now correctly reports timed-out images
-  - fetches background images when no `<img>` tags are present 
+  - fetches background images when no `<img>` tags are present
 
 ### Fixed
 - `adapt:initialize` being called before plugins have chance to complete aysnc ops during `app:dataReady` ([#1536](https://github.com/adaptlearning/adapt_framework/issues/1536))
@@ -358,9 +373,9 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
 
 ### Changed
 - Moved navigation bar outside of the `.wrapper` div in preparation for improvements to behaviour of Adapt inside iframes/framesets on iOS ([#1521](https://github.com/adaptlearning/adapt_framework/issues/1521))
-- Link in course body so that it reads 'Find out more here' instead of showing the underlying URL ([#1477](https://github.com/adaptlearning/adapt_framework/issues/1477)) 
+- Link in course body so that it reads 'Find out more here' instead of showing the underlying URL ([#1477](https://github.com/adaptlearning/adapt_framework/issues/1477))
 - Amended `adaptModel.setupChildListeners` to listen only to immediate children ([#695](https://github.com/adaptlearning/adapt_framework/issues/695))
-- Set accessibility to be disabled on 'touch' devices by default; added a new config setting - `_accessibility._isEnabledOnTouchDevices` - to allow it to be enabled when required ([#1519](https://github.com/adaptlearning/adapt_framework/issues/1519)) 
+- Set accessibility to be disabled on 'touch' devices by default; added a new config setting - `_accessibility._isEnabledOnTouchDevices` - to allow it to be enabled when required ([#1519](https://github.com/adaptlearning/adapt_framework/issues/1519))
 
 ## [2.0.19] - 2017-04-10
 
@@ -503,7 +518,7 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
 
 ### Changed
 - enhancement-967: questionView model code > questionModel ([#981](https://github.com/adaptlearning/adapt_framework/pull/981))
-- change issues link from Jira to Github 
+- change issues link from Jira to Github
 
 ### Fixed
 - issue-1047: downgrade less library ([#1047](https://github.com/adaptlearning/adapt_framework/pull/1047))
@@ -512,7 +527,7 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
 ## [2.0.9] - 2016-03-27
 
 ### Added
-- new 'locking' feature enables course authors to lock parts of the course until other parts have been completed ([#905](https://github.com/adaptlearning/adapt_framework/issues/905)). Documentation for this feature can be found [here](https://github.com/adaptlearning/adapt_framework/wiki/Locking-objects-with-'_isLocked'-and-'_lockType'). Note that locking needs to be supported in the menu plugin you are using - support for this has been added to adapt-contrib-boxmenu in [v2.0.4](https://github.com/adaptlearning/adapt-contrib-boxmenu/releases/tag/v2.0.4) 
+- new 'locking' feature enables course authors to lock parts of the course until other parts have been completed ([#905](https://github.com/adaptlearning/adapt_framework/issues/905)). Documentation for this feature can be found [here](https://github.com/adaptlearning/adapt_framework/wiki/Locking-objects-with-'_isLocked'-and-'_lockType'). Note that locking needs to be supported in the menu plugin you are using - support for this has been added to adapt-contrib-boxmenu in [v2.0.4](https://github.com/adaptlearning/adapt-contrib-boxmenu/releases/tag/v2.0.4)
 - new 'notify:cancelled' event added ([#1009](https://github.com/adaptlearning/adapt_framework/issues/1009))
 
 ### Changed
@@ -525,7 +540,7 @@ Last version to include new features for legacy browsers, i.e. Internet Explorer
 ### Fixed
 - Leaving out the `_classes` property would cause a class of "undefined" to be added to the class list ([#804](https://github.com/adaptlearning/adapt_framework/issues/804))
 - Intermittent error in the Grunt 'replace' tasks for authoring tool users ([#1021](https://github.com/adaptlearning/adapt_framework/issues/1021))
-- Temporary workaround for some LESS variables not being defined in the core theme ([#1006](https://github.com/adaptlearning/adapt_framework/issues/1006)) 
+- Temporary workaround for some LESS variables not being defined in the core theme ([#1006](https://github.com/adaptlearning/adapt_framework/issues/1006))
 
 ## [2.0.8] - 2016-03-21
 
@@ -836,6 +851,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.3.0...v5.4.0
 [5.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.2.0...v5.3.0
 [5.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...v5.2.0
 [5.1.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.0.0...v5.1.0
