@@ -8,7 +8,7 @@
 - Improved `grunt translate:import` task ([#2736](https://github.com/adaptlearning/adapt_framework/issues/2736))
 
 ### Fixed
-- The settings `_isResetOnRevisit` and `_requiredCompletionOf` were not available in the AAT ([#1912](https://github.com/adaptlearning/adapt_framework/issues/1912) & [#2639](https://github.com/adaptlearning/adapt_framework/issues/2639))
+- The settings `_isResetOnRevisit` and `_requireCompletionOf` were not available in the AAT ([#1912](https://github.com/adaptlearning/adapt_framework/issues/1912) & [#2639](https://github.com/adaptlearning/adapt_framework/issues/2639))
 - Arrow function and async/await debugging ([#2733](https://github.com/adaptlearning/adapt_framework/issues/2733))
 - Not all course content being exported by the `grunt translate` task ([#2721](https://github.com/adaptlearning/adapt_framework/issues/2721))
 
