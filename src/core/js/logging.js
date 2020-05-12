@@ -72,14 +72,15 @@ define([
 
     removed(...args) {
       args = ['REMOVED'].concat(args);
-      if (this._hasWarned(args)) {
-        return;
-      }
-      this._log(LOG_LEVEL.WARN, args);
+      this.warnOnce(...args);
     }
 
     deprecated(...args) {
       args = ['DEPRECATED'].concat(args);
+      this.warnOnce(...args);
+    }
+
+    warnOnce(...args) {
       if (this._hasWarned(args)) {
         return;
       }

@@ -4,25 +4,48 @@ define([
   'core/js/models/itemsComponentModel'
 ], function(Adapt, QuestionModel, ItemsComponentModel) {
 
-  var ItemsComponentModelFunctions = _.extendOwn({}, ItemsComponentModel.prototype);
-  delete ItemsComponentModelFunctions.constructor;
-  var BlendedModel = QuestionModel.extend(ItemsComponentModelFunctions);
+  class BlendedItemsComponentQuestionModel extends QuestionModel {
 
-  var ItemsQuestionModel = BlendedModel.extend({
-
-    init: function() {
-      QuestionModel.prototype.init.call(this);
+    init() {
+      super.init();
       ItemsComponentModel.prototype.init.call(this);
+    }
 
+    reset(type, force) {
+      super.reset(type, force);
+      ItemsComponentModel.prototype.reset.call(this, type, force);
+    }
+
+  }
+  // extend BlendedItemsComponentQuestionModel with ItemsComponentModel
+  Object.getOwnPropertyNames(ItemsComponentModel.prototype).forEach(name => {
+    if (name === 'constructor' || name === 'init' || name === 'reset') return;
+    Object.defineProperty(BlendedItemsComponentQuestionModel.prototype, name, {
+      value: ItemsComponentModel.prototype[name]
+    });
+  });
+
+  class ItemsQuestionModel extends BlendedItemsComponentQuestionModel {
+
+    init() {
+      super.init();
       this.set('_isRadio', this.isSingleSelect());
-    },
+    }
 
-    restoreUserAnswers: function() {
+    /**
+     * Returns a string of the model type group.
+     * @returns {string}
+     */
+    getTypeGroup() {
+      return 'itemsquestion';
+    }
+
+    restoreUserAnswers() {
       if (!this.get('_isSubmitted')) return;
 
-      var itemModels = this.getChildren();
-      var userAnswer = this.get('_userAnswer');
-      itemModels.each(function(item, index) {
+      const itemModels = this.getChildren();
+      const userAnswer = this.get('_userAnswer');
+      itemModels.each(item => {
         item.toggleActive(userAnswer[item.get('_index')]);
       });
 
@@ -30,45 +53,40 @@ define([
       this.markQuestion();
       this.setScore();
       this.setupFeedback();
-    },
+    }
 
-    setupRandomisation: function() {
+    setupRandomisation() {
       if (!this.get('_isRandom') || !this.get('_isEnabled')) return;
-      var children = this.getChildren();
+      const children = this.getChildren();
       children.set(children.shuffle());
-    },
+    }
 
     // check if the user is allowed to submit the question
-    canSubmit: function() {
-      var activeItems = this.getActiveItems();
+    canSubmit() {
+      const activeItems = this.getActiveItems();
       return activeItems.length > 0;
-    },
+    }
 
     // This is important for returning or showing the users answer
     // This should preserve the state of the users answers
-    storeUserAnswer: function() {
-      var items = this.getChildren().slice(0);
-      items.sort(function(a, b) {
-        return a.get('_index') - b.get('_index');
-      });
-
-      var userAnswer = items.map(function(itemModel) {
-        return itemModel.get('_isActive');
-      });
+    storeUserAnswer() {
+      const items = this.getChildren().slice(0);
+      items.sort((a, b) => a.get('_index') - b.get('_index'));
+      const userAnswer = items.map(itemModel => itemModel.get('_isActive'));
       this.set('_userAnswer', userAnswer);
-    },
+    }
 
-    isCorrect: function() {
+    isCorrect() {
 
-      var props = {
+      const props = {
         _numberOfRequiredAnswers: 0,
         _numberOfIncorrectAnswers: 0,
         _isAtLeastOneCorrectSelection: false,
         _numberOfCorrectAnswers: 0
       };
 
-      this.getChildren().each(function(itemModel) {
-        var itemShouldBeActive = itemModel.get('_shouldBeSelected');
+      this.getChildren().each(itemModel => {
+        const itemShouldBeActive = itemModel.get('_shouldBeSelected');
         if (itemShouldBeActive) {
           props._numberOfRequiredAnswers++;
         }
@@ -87,22 +105,22 @@ define([
 
       this.set(props);
 
-      var hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
-      var hasNoIncorrectAnswers = !props._numberOfIncorrectAnswers;
+      const hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
+      const hasNoIncorrectAnswers = !props._numberOfIncorrectAnswers;
 
       return hasRightNumberOfCorrectAnswers && hasNoIncorrectAnswers;
-    },
+    }
 
     // Sets the score based upon the questionWeight
     // Can be overwritten if the question needs to set the score in a different way
-    setScore: function() {
-      var questionWeight = this.get('_questionWeight');
-      var answeredCorrectly = this.get('_isCorrect');
-      var score = answeredCorrectly ? questionWeight : 0;
+    setScore() {
+      const questionWeight = this.get('_questionWeight');
+      const answeredCorrectly = this.get('_isCorrect');
+      const score = answeredCorrectly ? questionWeight : 0;
       this.set('_score', score);
-    },
+    }
 
-    setupFeedback: function() {
+    setupFeedback() {
       if (!this.has('_feedback')) return;
 
       if (this.get('_isCorrect')) {
@@ -116,103 +134,97 @@ define([
       }
 
       // apply individual item feedback
-      var activeItem = this.getActiveItem();
+      const activeItem = this.getActiveItem();
       if (this.isSingleSelect() && activeItem.get('feedback')) {
         this.setupIndividualFeedback(activeItem);
         return;
       }
 
       this.setupIncorrectFeedback();
-    },
+    }
 
-    setupIndividualFeedback: function(selectedItem) {
+    setupIndividualFeedback(selectedItem) {
       this.set({
         feedbackTitle: this.getFeedbackTitle(this.get('_feedback')),
         feedbackMessage: selectedItem.get('feedback')
       });
-    },
+    }
 
-    isPartlyCorrect: function() {
+    isPartlyCorrect() {
       return this.get('_isAtLeastOneCorrectSelection');
-    },
+    }
 
-    resetUserAnswer: function() {
+    resetUserAnswer() {
       this.set('_userAnswer', []);
-    },
+    }
 
-    isAtActiveLimit: function() {
-      var selectedItems = this.getActiveItems();
+    isAtActiveLimit() {
+      const selectedItems = this.getActiveItems();
       return (selectedItems.length === this.get('_selectable'));
-    },
+    }
 
-    isSingleSelect: function() {
+    isSingleSelect() {
       return (this.get('_selectable') === 1);
-    },
+    }
 
-    getLastActiveItem: function() {
-      var selectedItems = this.getActiveItems();
+    getLastActiveItem() {
+      const selectedItems = this.getActiveItems();
       return selectedItems[selectedItems.length - 1];
-    },
+    }
 
-    resetItems: function() {
+    resetItems() {
       this.resetActiveItems();
       this.set('_isAtLeastOneCorrectSelection', false);
-    },
+    }
 
-    reset: function(type, force) {
-      QuestionModel.prototype.reset.apply(this, arguments);
-      ItemsComponentModel.prototype.reset.apply(this, arguments);
-    },
-
-    getInteractionObject: function() {
-      var interactions = {
+    getInteractionObject() {
+      const interactions = {
         correctResponsesPattern: [],
         choices: []
       };
 
-      interactions.choices = this.getChildren().map(function(itemModel) {
+      interactions.choices = this.getChildren().map(itemModel => {
         return {
           id: (itemModel.get('_index') + 1).toString(),
           description: itemModel.get('text')
         };
       });
 
-      var correctItems = this.getChildren().filter(function(itemModel) {
+      const correctItems = this.getChildren().filter(itemModel => {
         return itemModel.get('_shouldBeSelected');
       });
 
       interactions.correctResponsesPattern = [
-        correctItems.map(function(itemModel) {
+        correctItems.map(itemModel => {
           // indexes are 0-based, we need them to be 1-based for cmi.interactions
           return String(itemModel.get('_index') + 1);
-        })
-          .join('[,]')
+        }).join('[,]')
       ];
 
       return interactions;
-    },
+    }
 
     /**
     * used by adapt-contrib-spoor to get the user's answers in the format required by the cmi.interactions.n.student_response data field
     * returns the user's answers as a string in the format '1,5,2'
     */
-    getResponse: function() {
-      var activeItems = this.getActiveItems();
-      var activeIndexes = activeItems.map(function(itemModel) {
+    getResponse() {
+      const activeItems = this.getActiveItems();
+      const activeIndexes = activeItems.map(itemModel => {
         // indexes are 0-based, we need them to be 1-based for cmi.interactions
         return itemModel.get('_index') + 1;
       });
       return activeIndexes.join(',');
-    },
+    }
 
     /**
     * used by adapt-contrib-spoor to get the type of this question in the format required by the cmi.interactions.n.type data field
     */
-    getResponseType: function() {
+    getResponseType() {
       return 'choice';
     }
 
-  });
+  }
 
   return ItemsQuestionModel;
 

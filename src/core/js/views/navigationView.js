@@ -34,10 +34,10 @@ define([
     }
 
     render() {
-      var template = Handlebars.templates[this.constructor.template];
+      const template = Handlebars.templates[this.constructor.template];
       this.$el.html(template({
-          _globals: Adapt.course.get('_globals'),
-          _accessibility: Adapt.config.get('_accessibility')
+        _globals: Adapt.course.get('_globals'),
+        _accessibility: Adapt.config.get('_accessibility')
       })).insertBefore('#app');
 
       _.defer(() => {
@@ -49,7 +49,7 @@ define([
 
     triggerEvent(event) {
       event.preventDefault();
-      var currentEvent = $(event.currentTarget).attr('data-event');
+      const currentEvent = $(event.currentTarget).attr('data-event');
       Adapt.trigger('navigation:' + currentEvent);
       switch (currentEvent) {
         case 'backButton':

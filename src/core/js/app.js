@@ -1,5 +1,7 @@
 require([
   'core/js/adapt',
+  'core/js/templates',
+  'core/js/fixes',
   'core/js/accessibility',
   'core/js/data',
   'core/js/offlineStorage',
@@ -10,6 +12,7 @@ require([
   'core/js/notify',
   'core/js/router',
   'core/js/models/lockingModel',
+  'core/js/mpabc',
   'core/js/helpers',
   'core/js/scrolling',
   'core/js/headings',

@@ -2,16 +2,16 @@ define([
   'core/js/views/adaptView'
 ], function(AdaptView) {
 
-  var MenuItemView = AdaptView.extend({
+  class MenuItemView extends AdaptView {
 
-    attributes: function() {
+    attributes() {
       return AdaptView.resultExtend('attributes', {
         'role': 'listitem',
         'aria-labelledby': this.model.get('_id') + '-heading'
       }, this);
-    },
+    }
 
-    className: function() {
+    className() {
       return [
         'menu-item',
         this.constructor.className,
@@ -24,20 +24,20 @@ define([
         (this.model.get('_isLocked') ? 'is-locked' : ''),
         (this.model.get('_isOptional') ? 'is-optional' : '')
       ].join(' ');
-    },
+    }
 
-    preRender: function() {
+    preRender() {
       this.model.checkCompletionStatus();
       this.model.checkInteractionCompletionStatus();
-    },
+    }
 
-    postRender: function() {
+    postRender() {
       this.$el.imageready(this.setReadyStatus.bind(this));
     }
 
-  }, {
-    type: 'menuItem'
-  });
+  }
+
+  MenuItemView.type = 'menuItem';
 
   return MenuItemView;
 
