@@ -1,5 +1,13 @@
 ## [Unreleased][unreleased]
 
+## [4.5.0] - 2020-05-18
+
+### Added
+- function `getIsAvailable` to `AdaptModel` (part of [#2623](https://github.com/adaptlearning/adapt_framework/issues/2623))
+
+### Fixed
+- `setActiveItem` in `ItemsComponentModel` was allowing invalid values to be set ([#2749](https://github.com/adaptlearning/adapt_framework/issues/2749))
+
 ## [4.4.2] - 2020-05-01
 ### Fixed
 - Hot graphic popup not re-centering vertically when 'paging' between items ([#2580](https://github.com/adaptlearning/adapt_framework/issues/2580))
@@ -757,7 +765,8 @@ The initial version of the Adapt framework.
 - Everything!
 
 
-[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.2...HEAD
+[unreleased]: https://github.com/adaptlearning/adapt_framework/compare/v4.5.0...HEAD
+[4.5.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.2...v4.5.0
 [4.4.2]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.1...v4.4.2
 [4.4.1]: https://github.com/adaptlearning/adapt_framework/compare/v4.4.0...v4.4.1
 [4.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v4.3.0...v4.4.0
