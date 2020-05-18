@@ -1,5 +1,6 @@
 ## [5.5.0] - 2020-05-18
 #### Added
+* `none` helper ([#2764](https://github.com/adaptlearning/adapt_framework/issues/2764))
 * Data manifests ([#2645](https://github.com/adaptlearning/adapt_framework/issues/2645))
 * `Adapt.store` to decouple the core models and views ([#2714](https://github.com/adaptlearning/adapt_framework/issues/2714))
 
