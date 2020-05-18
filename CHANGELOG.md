@@ -1,3 +1,15 @@
+## [5.5.0] - 2020-05-18
+#### Added
+* Data manifests ([#2645](https://github.com/adaptlearning/adapt_framework/issues/2645))
+* `Adapt.store` to decouple the core models and views ([#2714](https://github.com/adaptlearning/adapt_framework/issues/2714))
+
+#### Changed
+* Simplified router ([#2712](https://github.com/adaptlearning/adapt_framework/issues/2712))
+* Converted a lot more of the core to ES6-8 ([#2709](https://github.com/adaptlearning/adapt_framework/issues/2709))
+
+For a more detailed overview of the changes see ([#2711](https://github.com/adaptlearning/adapt_framework/pull/2711))
+
+
 ## [5.4.0] - 2020-05-12
 ### Added
 - Adapt events `template:preRender`, `template:postRender`, `partial:preRender`, `partial:postRender` ([#2734](https://github.com/adaptlearning/adapt_framework/issues/2734))
@@ -851,6 +863,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.5.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.4.0...v5.5.0
 [5.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.3.0...v5.4.0
 [5.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.2.0...v5.3.0
 [5.2.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.1.0...v5.2.0
