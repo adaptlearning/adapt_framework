@@ -8,6 +8,7 @@
 
     var img = $img[0];
     var hasNoSrc = !$img.attr("src");
+    var isLazyLoading = ($img.attr('loading') === 'lazy');
     var isMarkedComplete = img.complete;
     var hasCorrectReadyState = img.readyState === 4;
 
@@ -18,7 +19,7 @@
 
     var hasValidHeight = has$Height && hasNaturalHeight;
 
-    return hasNoSrc || isMarkedComplete || hasCorrectReadyState || hasValidHeight;
+    return hasNoSrc || isLazyLoading || isMarkedComplete || hasCorrectReadyState || hasValidHeight;
 
   }
 
@@ -96,6 +97,7 @@
 
         // stripCSSQuotes
         var url = matches[1].replace(/[\"\']/g, "");
+        $image.attr('loading', 'eager');
         $image.attr("src", url);
         $images = $images.add($image);
 

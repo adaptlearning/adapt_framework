@@ -176,6 +176,19 @@
         }
       }
     },
+    "_fixes": {
+      "type": "object",
+      "default": {
+        "_imgLazyLoad": true
+      },
+      "title": "Fixes Extended Options",
+      "inputType": {
+        "type": "CodeEditor",
+        "mode": "json"
+      },
+      "validators": [],
+      "help": "Optional object that can be used to customize the application of fixes"
+    },
     "screenSize": {
       "type": "object",
       "title": "Screen Size",
