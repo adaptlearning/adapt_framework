@@ -11,7 +11,20 @@ module.exports = {
           {
             targets: {
               ie: '11'
-            }
+            },
+            spec: true,
+            exclude: [
+              'transform-regenerator',
+              'transform-async-to-generator'
+            ]
+          }
+        ]
+      ],
+      plugins: [
+        [
+          'module:fast-async',
+          {
+            spec: true
           }
         ]
       ]
@@ -41,7 +54,20 @@ module.exports = {
           {
             targets: {
               ie: '11'
-            }
+            },
+            spec: true,
+            exclude: [
+              'transform-regenerator',
+              'transform-async-to-generator'
+            ]
+          }
+        ]
+      ],
+      plugins: [
+        [
+          'module:fast-async',
+          {
+            spec: true
           }
         ]
       ]
