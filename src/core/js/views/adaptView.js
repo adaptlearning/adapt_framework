@@ -87,11 +87,9 @@ define([
       let addedCount = await this.addDescendants(false);
       // Iterate through existing available children and/or request new children
       // if required and allowed
-      let models;
-      let event;
       while (true) {
-        models = this.model.getAvailableChildModels();
-        event = this._getAddChildEvent(models[this.nthChild]);
+        const models = this.model.getAvailableChildModels();
+        const event = this._getAddChildEvent(models[this.nthChild]);
         if (!event) {
           break;
         }
