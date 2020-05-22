@@ -561,7 +561,7 @@ define([
       }
       const parentId = this.get('_parentId');
       if (!parentId) return;
-      // Lookup parent by id from Adapt.data
+      // Look up parent by id from Adapt.data
       this.setParent(Adapt.findById(parentId));
       return this._parentModel;
     }
