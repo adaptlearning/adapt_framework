@@ -569,7 +569,7 @@ define([
     setParent(parent) {
       this._parentModel = parent;
       this.set('_parentId', this._parentModel.get('_id'));
-      // Setup deprecated reference
+      // Set up deprecated reference
       this.set('_parent', this._parentModel);
     }
 
