@@ -6,6 +6,25 @@ define([
 
   class AdaptModel extends Backbone.Model {
 
+    toJSON() {
+      // Perform shallow clone
+      const json = _.clone(this.attributes);
+      // Remove deprecated values as they are not true json
+      delete json._children;
+      delete json._parent;
+      // Perform deep clone
+      return $.extend(true, {}, json);
+    }
+
+    get(name) {
+      switch (name) {
+        case '_parent':
+        case '_children':
+          Adapt.log.deprecated(`Use model.getChildren() or model.getParent() instead of model.get('_children') or model.get('_parent')`);
+      }
+      return super.get(name);
+    }
+
     defaults() {
       return {
         _canShowFeedback: true,
@@ -495,7 +514,9 @@ define([
     }
 
     getChildren() {
-      if (this.get('_children')) return this.get('_children');
+      if (this._childrenCollection) {
+        return this._childrenCollection;
+      }
 
       let childrenCollection;
 
@@ -503,6 +524,7 @@ define([
         childrenCollection = new Backbone.Collection();
       } else {
         const id = this.get('_id');
+        // Look up child by _parentId from Adapt.data
         const children = Adapt.data.filter(model => model.get('_parentId') === id);
         childrenCollection = new Backbone.Collection(children);
       }
@@ -517,9 +539,14 @@ define([
         childrenCollection.sort();
       }
 
-      this.set('_children', childrenCollection);
+      this.setChildren(childrenCollection);
+      return this._childrenCollection;
+    }
 
-      return childrenCollection;
+    setChildren(children) {
+      this._childrenCollection = children;
+      // Setup deprecated reference
+      this.set('_children', children);
     }
 
     getAvailableChildModels() {
@@ -529,12 +556,21 @@ define([
     }
 
     getParent() {
-      if (this.get('_parent')) return this.get('_parent');
+      if (this._parentModel) {
+        return this._parentModel;
+      }
       const parentId = this.get('_parentId');
       if (!parentId) return;
-      const parent = Adapt.findById(parentId);
-      this.set('_parent', parent);
-      return parent;
+      // Look up parent by id from Adapt.data
+      this.setParent(Adapt.findById(parentId));
+      return this._parentModel;
+    }
+
+    setParent(parent) {
+      this._parentModel = parent;
+      this.set('_parentId', this._parentModel.get('_id'));
+      // Set up deprecated reference
+      this.set('_parent', this._parentModel);
     }
 
     getAncestorModels(shouldIncludeChild) {
