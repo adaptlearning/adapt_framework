@@ -98,7 +98,7 @@ define([
     remove() {
       const type = this.constructor.type;
       this.preRemove();
-      Adapt.trigger(`${type}View:remove contentObjectView:preRemove view:preRemove`, this);
+      Adapt.trigger(`${type}View:remove contentObjectView:remove view:remove`, this);
       this._isRemoved = true;
 
       Adapt.wait.for(end => {
