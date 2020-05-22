@@ -3,30 +3,46 @@ define([
   'core/js/models/lockingModel'
 ], function(Wait) {
 
-  var Adapt = Backbone.Model.extend({
+  class Adapt extends Backbone.Model {
 
-    loadScript: window.__loadScript,
-    location: {},
-    componentStore: {},
+    initialize() {
+      this.loadScript = window.__loadScript;
+      this.location = {};
+      this.store = {};
+      this.setupWait();
+    }
 
-    defaults: {
-      _canScroll: true, // to stop scrollTo behaviour,
-      _outstandingCompletionChecks: 0,
-      _pluginWaitCount: 0,
-      _isStarted: false
-    },
+    defaults() {
+      return {
+        _canScroll: true, // to stop scrollTo behaviour,
+        _outstandingCompletionChecks: 0,
+        _pluginWaitCount: 0,
+        _isStarted: false,
+        _shouldDestroyContentObjects: true
+      };
+    }
 
-    lockedAttributes: {
-      _canScroll: false
-    },
+    lockedAttributes() {
+      return {
+        _canScroll: false
+      };
+    }
 
-    init: function() {
+    /**
+     * @deprecated since v6.0.0 - please use `Adapt.store` instead
+     */
+    get componentStore() {
+      this.log && this.log.deprecated('Adapt.componentStore, please use Adapt.store instead');
+      return this.store;
+    }
+
+    init() {
       this.addDirection();
       this.disableAnimation();
       this.trigger('adapt:preInitialize');
 
       // wait until no more completion checking
-      this.deferUntilCompletionChecked(function() {
+      this.deferUntilCompletionChecked(() => {
 
         // start adapt in a full restored state
         this.trigger('adapt:start');
@@ -39,78 +55,68 @@ define([
 
         this.trigger('adapt:initialize');
 
-      }.bind(this));
-    },
-
-    initialize: function () {
-      this.setupWait();
-    },
+      });
+    }
 
     /**
      * call when entering an asynchronous completion check
      */
-    checkingCompletion: function() {
-      var outstandingChecks = this.get('_outstandingCompletionChecks');
-      this.set('_outstandingCompletionChecks', ++outstandingChecks);
-    },
+    checkingCompletion() {
+      const outstandingChecks = this.get('_outstandingCompletionChecks');
+      this.set('_outstandingCompletionChecks', outstandingChecks + 1);
+    }
 
     /**
      * call when exiting an asynchronous completion check
      */
-    checkedCompletion: function() {
-      var outstandingChecks = this.get('_outstandingCompletionChecks');
-      this.set('_outstandingCompletionChecks', --outstandingChecks);
-    },
+    checkedCompletion() {
+      const outstandingChecks = this.get('_outstandingCompletionChecks');
+      this.set('_outstandingCompletionChecks', outstandingChecks - 1);
+    }
 
     /**
      * wait until there are no outstanding completion checks
      * @param {Function} callback Function to be called after all completion checks have been completed
      */
-    deferUntilCompletionChecked: function(callback) {
+    deferUntilCompletionChecked(callback) {
       if (this.get('_outstandingCompletionChecks') === 0) return callback();
 
-      var checkIfAnyChecksOutstanding = function(model, outstandingChecks) {
+      const checkIfAnyChecksOutstanding = (model, outstandingChecks) => {
         if (outstandingChecks !== 0) return;
-
         this.off('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
-
         callback();
       };
 
       this.on('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
 
-    },
+    }
 
-    setupWait: function() {
+    setupWait() {
 
       this.wait = new Wait();
 
       // Setup legacy events and handlers
-      var beginWait = function () {
-        this.log.warn("DEPRECATED - Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future");
+      const beginWait = () => {
+        this.log.deprecated(`Use Adapt.wait.begin() as Adapt.trigger('plugin:beginWait') may be removed in the future`);
         this.wait.begin();
-      }.bind(this);
+      };
 
-      var endWait = function() {
-        this.log.warn("DEPRECATED - Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future");
+      const endWait = () => {
+        this.log.deprecated(`Use Adapt.wait.end() as Adapt.trigger('plugin:endWait') may be removed in the future`);
         this.wait.end();
-      }.bind(this);
+      };
 
-      var ready = function() {
-
+      const ready = () => {
         if (this.wait.isWaiting()) {
           return;
         }
-
-        var isEventListening = (this._events['plugins:ready']);
+        const isEventListening = (this._events['plugins:ready']);
         if (!isEventListening) {
           return;
         }
-
-        this.log.warn("DEPRECATED - Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
+        this.log.deprecated("Use Adapt.wait.queue(callback) as Adapt.on('plugins:ready', callback) may be removed in the future");
         this.trigger('plugins:ready');
-
-      }.bind(this);
+      };
 
       this.listenTo(this.wait, 'ready', ready);
       this.listenTo(this, {
@@ -118,89 +124,182 @@ define([
         'plugin:endWait': endWait
       });
 
-    },
+    }
 
-    isWaitingForPlugins: function() {
-      this.log.warn('DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future');
+    isWaitingForPlugins() {
+      this.log.deprecated('Use Adapt.wait.isWaiting() as Adapt.isWaitingForPlugins() may be removed in the future');
       return this.wait.isWaiting();
-    },
+    }
 
-    checkPluginsReady: function() {
-      this.log.warn('DEPRECATED - Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future');
+    checkPluginsReady() {
+      this.log.deprecated('Use Adapt.wait.isWaiting() as Adapt.checkPluginsReady() may be removed in the future');
       if (this.isWaitingForPlugins()) {
         return;
       }
       this.trigger('plugins:ready');
-    },
+    }
 
     /**
      * Allows a selector to be passed in and Adapt will navigate to this element
      * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
-     * @param {object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
+     * @param {object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
      * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
-    navigateToElement: function(selector, settings) {
-      settings = (settings || {});
-
-      // Removes . symbol from the selector to find the model
-      var currentModelId = selector.replace(/\./g, '');
-      var currentModel = this.data.findById(currentModelId);
-      // Get current page to check whether this is the current page
-      var currentPage = (currentModel._siblings === 'contentObjects') ? currentModel : currentModel.findAncestor('contentObjects');
-
-      // If current page - scrollTo element
-      if (currentPage.get('_id') === this.location._currentId) {
-        return this.scrollTo(selector, settings);
-      }
-
-      // If the element is on another page navigate and wait until pageView:ready is fired
-      // Then scrollTo element
-      this.once('pageView:ready', _.debounce(function() {
-        this.router.set('_shouldNavigateFocus', true);
-        this.scrollTo(selector, settings);
-      }.bind(this), 1));
-
-      var shouldReplaceRoute = settings.replace || false;
-
-      this.router.set('_shouldNavigateFocus', false);
-      Backbone.history.navigate('#/id/' + currentPage.get('_id'), { trigger: true, replace: shouldReplaceRoute });
-    },
+    navigateToElement() {}
 
     /**
-     * Used to register components with the Adapt 'component store'
-     * @param {string} name The name of the component to be registered
+     * Allows a selector to be passed in and Adapt will scroll to this element
+     * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
+     * @param {object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
+     * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
+     */
+    scrollTo() {}
+
+    /**
+     * Used to register models and views with `Adapt.store`
+     * @param {string|Array} name The name(s) of the model/view to be registered
      * @param {object} object Object containing properties `model` and `view` or (legacy) an object representing the view
      */
-    register: function(name, object) {
-      if (this.componentStore[name]) {
-        throw Error('The component "' + name + '" already exists in your project');
+    register(name, object) {
+      if (Array.isArray(name)) {
+        // if an array is passed, iterate by recursive call
+        name.forEach(name => this.register(name, object));
+        return object;
       }
 
-      if (object.view) {
-        // use view+model object
-        if (!object.view.template) object.view.template = name;
-      } else {
-        // use view object
-        if (!object.template) object.template = name;
+      if (name.split(' ').length > 1) {
+        // if name with spaces is passed, split and pass as array
+        this.register(name.split(' '), object);
+        return object;
       }
 
-      this.componentStore[name] = object;
+      if ((!object.view && !object.model) || object instanceof Backbone.View) {
+        this.log && this.log.deprecated('View-only registrations are no longer supported');
+        object = { view: object };
+      }
+
+      if (object.view && !object.view.template) {
+        object.view.template = name;
+      }
+
+      const isModelSetAndInvalid = (object.model &&
+        !(object.model.prototype instanceof Backbone.Model) &&
+        !(object.model instanceof Function));
+      if (isModelSetAndInvalid) {
+        throw new Error('The registered model is not a Backbone.Model or Function');
+      }
+
+      const isViewSetAndInvalid = (object.view &&
+        !(object.view.prototype instanceof Backbone.View) &&
+        !(object.view instanceof Function));
+      if (isViewSetAndInvalid) {
+        throw new Error('The registered view is not a Backbone.View or Function');
+      }
+
+      this.store[name] = Object.assign({}, this.store[name], object);
 
       return object;
-    },
+    }
 
     /**
-     * Fetches a component view class from the componentStore. For a usage example, see either HotGraphic or Narrative
-     * @param {string} name The name of the componentView you want to fetch e.g. `"hotgraphic"`
-     * @returns {ComponentView} Reference to the view class
+     * Parses a view class name.
+     * @param {string|Backbone.Model|Backbone.View|object} nameModelViewOrData The name of the view class you want to fetch e.g. `"hotgraphic"` or its model or its json data
      */
-    getViewClass: function(name) {
-      var object = this.componentStore[name];
-      if (!object) {
-        throw Error('The component "' + name + '" doesn\'t exist in your project');
+    getViewName(nameModelViewOrData) {
+      if (typeof nameModelViewOrData === 'string') {
+        return nameModelViewOrData;
       }
-      return object.view || object;
-    },
+      if (nameModelViewOrData instanceof Backbone.Model) {
+        nameModelViewOrData = nameModelViewOrData.toJSON();
+      }
+      if (nameModelViewOrData instanceof Backbone.View) {
+        let foundName;
+        _.find(this.store, (entry, name) => {
+          if (!entry || !entry.view) return;
+          if (!(nameModelViewOrData instanceof entry.view)) return;
+          foundName = name;
+          return true;
+        });
+        return foundName;
+      }
+      if (nameModelViewOrData instanceof Object) {
+        const names = [
+          typeof nameModelViewOrData._view === 'string' && nameModelViewOrData._view,
+          typeof nameModelViewOrData._component === 'string' && nameModelViewOrData._component,
+          typeof nameModelViewOrData._type === 'string' && nameModelViewOrData._type
+        ].filter(Boolean);
+        if (names.length) {
+          // find first fitting view name
+          const name = names.find(name => this.store[name] && this.store[name].view);
+          return name || names.pop(); // return last available if none found
+        }
+      }
+      throw new Error('Cannot derive view class name from input');
+    }
+
+    /**
+     * Fetches a view class from the store. For a usage example, see either HotGraphic or Narrative
+     * @param {string|Backbone.Model|Backbone.View|object} nameModelViewOrData The name of the view class you want to fetch e.g. `"hotgraphic"` or its model or its json data
+     * @returns {Backbone.View} Reference to the view class
+     */
+    getViewClass(nameModelViewOrData) {
+      const name = this.getViewName(nameModelViewOrData);
+      const object = this.store[name];
+      if (!object) {
+        this.log.warnOnce(`A view for '${name}' isn't registered in your project`);
+        return;
+      }
+      const isBackboneView = (object.view && object.view.prototype instanceof Backbone.View);
+      if (!isBackboneView && object.view instanceof Function) {
+        return object.view();
+      }
+      return object.view;
+    }
+
+    /**
+     * Parses a model class name.
+     * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"`, the model to process or its json data
+     */
+    getModelName(nameModelOrData) {
+      if (typeof nameModelOrData === 'string') {
+        return nameModelOrData;
+      }
+      if (nameModelOrData instanceof Backbone.Model) {
+        nameModelOrData = nameModelOrData.toJSON();
+      }
+      if (nameModelOrData instanceof Object) {
+        const names = [
+          typeof nameModelOrData._model === 'string' && nameModelOrData._model,
+          typeof nameModelOrData._component === 'string' && nameModelOrData._component,
+          typeof nameModelOrData._type === 'string' && nameModelOrData._type
+        ].filter(Boolean);
+        if (names.length) {
+          // find first fitting model name
+          const name = names.find(name => this.store[name] && this.store[name].model);
+          return name || names.pop(); // return last available if none found
+        }
+      }
+      throw new Error('Cannot derive model class name from input');
+    }
+
+    /**
+     * Fetches a model class from the store. For a usage example, see either HotGraphic or Narrative
+     * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"` or its json data
+     * @returns {Backbone.Model} Reference to the view class
+     */
+    getModelClass(nameModelOrData) {
+      const name = this.getModelName(nameModelOrData);
+      const object = this.store[name];
+      if (!object) {
+        this.log.warnOnce(`A model for '${name}' isn't registered in your project`);
+        return;
+      }
+      const isBackboneModel = (object.model && object.model.prototype instanceof Backbone.Model);
+      if (!isBackboneModel && object.model instanceof Function) {
+        return object.model();
+      }
+      return object.model;
+    }
 
     /**
      * Looks up which collection a model belongs to
@@ -212,43 +311,43 @@ define([
      * - "articles"
      * - "components"
      */
-    mapById: function(id) {
+    mapById(id) {
       return this.data.mapById(id);
-    },
+    }
 
     /**
      * Looks up a model by its `_id` property
      * @param {string} id The id of the item e.g. "co-05"
      * @return {Backbone.Model}
      */
-    findById: function(id) {
+    findById(id) {
       return this.data.findById(id);
-    },
+    }
 
-    findViewByModelId: function(id) {
-      var model = this.data.findById(id);
+    findViewByModelId(id) {
+      const model = this.data.findById(id);
       if (!model) return;
 
       if (model === this.parentView.model) return this.parentView;
 
-      var idPathToView = [id];
-      var currentLocationId = this.location._currentId;
-      var currentLocationModel = _.find(model.getAncestorModels(), function(model) {
-        var modelId = model.get('_id');
+      const idPathToView = [id];
+      const currentLocationId = this.location._currentId;
+      const currentLocationModel = model.getAncestorModels().find(model => {
+        const modelId = model.get('_id');
         if (modelId === currentLocationId) return true;
         idPathToView.unshift(modelId);
       });
 
       if (!currentLocationModel) {
-        return console.warn('Adapt.findViewByModelId() unable to find view for model id: ' + id);
+        return console.warn(`Adapt.findViewByModelId() unable to find view for model id: ${id}`);
       }
 
-      var foundView = _.reduce(idPathToView, function(view, currentId) {
+      const foundView = idPathToView.reduce((view, currentId) => {
         return view && view.childViews && view.childViews[currentId];
       }, this.parentView);
 
       return foundView;
-    },
+    }
 
     /**
      * Relative strings describe the number and type of hops in the model hierarchy
@@ -260,66 +359,59 @@ define([
      * }
      * Trickle uses this function to determine where it should scrollTo after it unlocks
      */
-    parseRelativeString: function(relativeString) {
-      if (relativeString[0] === '@') {
-        relativeString = relativeString.substr(1);
-      }
-
-      var type = relativeString.match(/(component|block|article|page|menu)/);
-      if (!type) {
-        this.log.error('Adapt.parseRelativeString() could not match relative type', relativeString);
-        return;
-      }
-      type = type[0];
-
-      var offset = parseInt(relativeString.substr(type.length).trim() || 0);
-      if (isNaN(offset)) {
-        this.log.error('Adapt.parseRelativeString() could not parse relative offset', relativeString);
-        return;
-      }
-
+    parseRelativeString(relativeString) {
+      const splitIndex = relativeString.search(/[ +\-\d]{1}/);
+      const type = relativeString.slice(0, splitIndex).replace(/^@/, '');
+      const offset = parseInt(relativeString.slice(splitIndex).trim() || 0);
       return {
         type: type,
         offset: offset
       };
+    }
 
-    },
-
-    addDirection: function() {
-      var defaultDirection = this.config.get('_defaultDirection');
+    addDirection() {
+      const defaultDirection = this.config.get('_defaultDirection');
 
       $('html')
         .addClass('dir-' + defaultDirection)
         .attr('dir', defaultDirection);
-    },
-
-    disableAnimation: function() {
-      var disableAnimationArray = this.config.get('_disableAnimationFor');
-      var disableAnimation = this.config.get('_disableAnimation');
-
-      // Check if animations should be disabled
-      if (disableAnimationArray && disableAnimationArray.length > 0) {
-        for (var i = 0; i < disableAnimationArray.length; i++) {
-          if ($('html').is(disableAnimationArray[i])) {
-            this.config.set('_disableAnimation', true);
-            $('html').addClass('disable-animation');
-            console.log('Animation disabled.');
-          }
-        }
-      } else if (disableAnimation === true) {
-        $('html').addClass('disable-animation');
-      } else {
-        $('html').removeClass('disable-animation');
-      }
-    },
-
-    remove: function() {
-      this.trigger('preRemove');
-      this.trigger('remove');
-      _.defer(this.trigger.bind(this), 'postRemove');
     }
 
-  });
+    disableAnimation() {
+      const disableAnimationArray = this.config.get('_disableAnimationFor');
+      const disableAnimation = this.config.get('_disableAnimation');
+
+      // Check if animations should be disabled
+      if (disableAnimationArray) {
+        for (let i = 0, l = disableAnimationArray.length; i < l; i++) {
+          if (!$('html').is(disableAnimationArray[i])) continue;
+          this.config.set('_disableAnimation', true);
+          $('html').addClass('disable-animation');
+          console.log('Animation disabled.');
+        }
+        return;
+      }
+
+      $('html').toggleClass('disable-animation', (disableAnimation === true));
+    }
+
+    async remove() {
+      const currentView = this.parentView;
+      if (currentView) {
+        currentView.model.setOnChildren('_isReady', false);
+        currentView.model.set('_isReady', false);
+      }
+      this.trigger('preRemove', currentView);
+      await this.wait.queue();
+      // Facilitate contentObject transitions
+      if (currentView && this.get('_shouldDestroyContentObjects')) {
+        currentView.destroy();
+      }
+      this.trigger('remove', currentView);
+      _.defer(this.trigger.bind(this), 'postRemove', currentView);
+    }
+
+  }
 
   return new Adapt();
 });

@@ -3,9 +3,9 @@ define([
   'core/js/views/adaptView'
 ], function(Adapt, AdaptView) {
 
-  var ComponentView = AdaptView.extend({
+  class ComponentView extends AdaptView {
 
-    attributes: function() {
+    attributes() {
       if (!this.model.get('_isA11yRegionEnabled')) {
         return AdaptView.resultExtend('attributes', {}, this);
       }
@@ -13,9 +13,9 @@ define([
         'aria-labelledby': this.model.get('_id') + '-heading',
         'role': 'region'
       }, this);
-    },
+    }
 
-    className: function() {
+    className() {
       return [
         'component',
         this.model.get('_component').toLowerCase(),
@@ -27,11 +27,11 @@ define([
         (this.model.get('_isComplete') ? 'is-complete' : ''),
         (this.model.get('_isOptional') ? 'is-optional' : '')
       ].join(' ');
-    },
+    }
 
-    renderState: function() {
-      Adapt.log.warn('REMOVED - renderState is removed and moved to item title');
-    },
+    renderState() {
+      Adapt.log.removed('renderState is removed and moved to item title');
+    }
 
     /**
      * Allows components that want to use inview for completion to set that up
@@ -41,20 +41,20 @@ define([
      * you want to perform additional checks before setting the component to completed - see adapt-contrib-assessmentResults
      * for an example. Defaults to `view.setCompletionStatus` if not specified.
      */
-    setupInviewCompletion: function(inviewElementSelector, callback) {
+    setupInviewCompletion(inviewElementSelector, callback) {
       this.$inviewElement = this.$(inviewElementSelector || '.component__inner');
       this.inviewCallback = (callback || this.setCompletionStatus);
 
       this.$inviewElement.on('inview.componentView', this.onInview.bind(this));
-    },
+    }
 
-    removeInviewListener: function() {
+    removeInviewListener() {
       if (!this.$inviewElement) return;
       this.$inviewElement.off('inview.componentView');
       this.$inviewElement = null;
-    },
+    }
 
-    onInview: function(event, visible, visiblePartX, visiblePartY) {
+    onInview(event, visible, visiblePartX, visiblePartY) {
       if (!visible) return;
 
       switch (visiblePartY) {
@@ -75,19 +75,18 @@ define([
       if (this.model.get('_isComplete')) {
         this.removeInviewListener();
       }
-    },
-
-    postRender: function() {},
-
-    remove: function() {
-      this.removeInviewListener();
-
-      AdaptView.prototype.remove.call(this);
     }
 
-  }, {
-    type: 'component'
-  });
+    postRender() {}
+
+    remove() {
+      this.removeInviewListener();
+      super.remove();
+    }
+
+  }
+
+  ComponentView.type = 'component';
 
   return ComponentView;
 

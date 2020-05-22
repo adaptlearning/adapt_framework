@@ -1,11 +1,11 @@
 define([
-  'core/js/views/adaptView',
-  'core/js/views/blockView'
-], function(AdaptView, BlockView) {
+  'core/js/adapt',
+  'core/js/views/adaptView'
+], function(Adapt, AdaptView) {
 
-  var ArticleView = AdaptView.extend({
+  class ArticleView extends AdaptView {
 
-    className: function() {
+    className() {
       return [
         'article',
         this.model.get('_id'),
@@ -17,12 +17,15 @@ define([
       ].join(' ');
     }
 
-  }, {
+  }
+
+  Object.assign(ArticleView, {
     childContainer: '.block__container',
-    childView: BlockView,
     type: 'article',
     template: 'article'
   });
+
+  Adapt.register('article', { view: ArticleView });
 
   return ArticleView;
 

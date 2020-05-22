@@ -11,7 +11,6 @@ define([
     }
 
     initialize() {
-      this.listenTo(Adapt, 'remove', this.remove);
       this.listenTo(this.model, {
         'change:_isVisible': this.toggleVisibility,
         'change:_isHidden': this.toggleHidden,
@@ -40,21 +39,21 @@ define([
 
     render() {
       const type = this.constructor.type;
-      Adapt.trigger(`${type}View:preRender`, this);
+      Adapt.trigger(`${type}View:preRender view:preRender`, this);
 
       const data = this.model.toJSON();
       data.view = this;
       const template = Handlebars.templates[this.constructor.template];
       this.$el.html(template(data));
 
-      Adapt.trigger(`${type}View:render`, this);
+      Adapt.trigger(`${type}View:render view:render`, this);
 
       _.defer(() => {
         // don't call postRender after remove
         if (this._isRemoved) return;
 
         this.postRender();
-        Adapt.trigger(`${type}View:postRender`, this);
+        Adapt.trigger(`${type}View:postRender view:postRender`, this);
       });
 
       return this;
@@ -67,15 +66,10 @@ define([
 
       this.$el.addClass(`has-animation ${onscreen._classes}-before`);
       this.$el.on('onscreen.adaptView', (e, m) => {
-
         if (!m.onscreen) return;
-
         const minVerticalInview = onscreen._percentInviewVertical || 33;
-
         if (m.percentInviewVertical < minVerticalInview) return;
-
         this.$el.addClass(`${onscreen._classes}-after`).off('onscreen.adaptView');
-
       });
     }
 
@@ -89,8 +83,7 @@ define([
         nthChild++;
         model.set('_nthChild', nthChild);
 
-        const ViewModelObject = this.constructor.childView || Adapt.componentStore[model.get('_component')];
-        const ChildView = ViewModelObject.view || ViewModelObject;
+        const ChildView = this.constructor.childView || Adapt.getViewClass(model);
 
         if (!ChildView) {
           throw new Error(`The component '${model.attributes._id}' ('${model.attributes._component}') has not been installed, and so is not available in your project.`);
@@ -139,20 +132,23 @@ define([
       }
     }
 
-    preRemove() {}
+    preRemove() {
+      const type = this.constructor.type;
+      Adapt.trigger(`${type}View:preRemove view:preRemove`, this);
+    }
 
     remove() {
-
+      const type = this.constructor.type;
       this.preRemove();
+      Adapt.trigger(`${type}View:remove view:remove`, this);
       this._isRemoved = true;
 
       Adapt.wait.for(end => {
-
         this.$el.off('onscreen.adaptView');
-        this.model.setOnChildren('_isReady', false);
-        this.model.set('_isReady', false);
-        Backbone.View.prototype.remove.call(this);
-
+        super.remove();
+        _.defer(() => {
+          Adapt.trigger(`${type}View:postRemove view:postRemove`, this);
+        });
         end();
       });
 

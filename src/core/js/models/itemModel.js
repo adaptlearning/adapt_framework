@@ -1,33 +1,27 @@
 define(function() {
 
-  var ItemModel = Backbone.Model.extend({
+  class ItemModel extends Backbone.Model {
 
-    defaults: {
-      _isActive: false,
-      _isVisited: false
-    },
+    defaults() {
+      return {
+        _isActive: false,
+        _isVisited: false
+      };
+    }
 
-    reset: function() {
+    reset() {
       this.set({ _isActive: false, _isVisited: false });
-    },
+    }
 
-    toggleActive: function(isActive) {
-      if (isActive === undefined) {
-        isActive = !this.get('_isActive');
-      }
-
+    toggleActive(isActive = !this.get('_isActive')) {
       this.set('_isActive', isActive);
-    },
+    }
 
-    toggleVisited: function(isVisited) {
-      if (isVisited === undefined) {
-        isVisited = !this.get('_isVisited');
-      }
-
+    toggleVisited(isVisited = !this.get('_isVisited')) {
       this.set('_isVisited', isVisited);
     }
 
-  });
+  }
 
   return ItemModel;
 

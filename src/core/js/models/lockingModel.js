@@ -1,43 +1,35 @@
 define(function() {
 
-  var set = Backbone.Model.prototype.set;
+  const set = Backbone.Model.prototype.set;
 
-  _.extend(Backbone.Model.prototype, {
+  Object.assign(Backbone.Model.prototype, {
 
-    set: function(attrName, attrVal, options) {
-      var stopProcessing = !this.lockedAttributes || typeof attrName === 'object' || typeof attrVal !== 'boolean' || !this.isLocking(attrName);
+    set: function(attrName, attrVal, options = {}) {
+      const stopProcessing = (typeof attrName === 'object' || typeof attrVal !== 'boolean' || !this.isLocking(attrName));
       if (stopProcessing) return set.apply(this, arguments);
 
-      options = options || {};
-
-      var isSettingValueForSpecificPlugin = options && options.pluginName;
+      const isSettingValueForSpecificPlugin = options && options.pluginName;
       if (!isSettingValueForSpecificPlugin) {
         console.error('Must supply a pluginName to change a locked attribute');
         options.pluginName = 'compatibility';
       }
 
-      var pluginName = options.pluginName;
+      const pluginName = options.pluginName;
       if (this.defaults[attrName] !== undefined) {
-        this.lockedAttributes[attrName] = !this.defaults[attrName];
+        this._lockedAttributes[attrName] = !this.defaults[attrName];
       }
-      var lockingValue = this.lockedAttributes[attrName];
-      var isAttemptingToLock = (lockingValue === attrVal);
+      const lockingValue = this._lockedAttributes[attrName];
+      const isAttemptingToLock = (lockingValue === attrVal);
 
       if (isAttemptingToLock) {
-
         this.setLockState(attrName, true, { pluginName: pluginName, skipcheck: true });
-
-        // console.log(options.pluginName, "locking", attrName, "on", this.get("_id"));
         return set.call(this, attrName, lockingValue);
-
       }
 
       this.setLockState(attrName, false, { pluginName: pluginName, skipcheck: true });
 
-      var totalLockValue = this.getLockCount(attrName, { skipcheck: true });
-      // console.log(options.pluginName, "attempting to unlock", attrName, "on", this.get("_id"), "lockValue", totalLockValue, this._lockedAttributesValues[attrName]);
+      const totalLockValue = this.getLockCount(attrName, { skipcheck: true });
       if (totalLockValue === 0) {
-        // console.log(options.pluginName, "unlocking", attrName, "on", this.get("_id"));
         return set.call(this, attrName, !lockingValue);
       }
 
@@ -47,24 +39,24 @@ define(function() {
 
     setLocking: function(attrName, defaultLockValue) {
       if (this.isLocking(attrName)) return;
-      if (!this.lockedAttributes) this.lockedAttributes = {};
-      this.lockedAttributes[attrName] = defaultLockValue;
+      if (!this._lockedAttributes) this._lockedAttributes = {};
+      this._lockedAttributes[attrName] = defaultLockValue;
     },
 
     unsetLocking: function(attrName) {
       if (!this.isLocking(attrName)) return;
-      if (!this.lockedAttributes) return;
-      delete this.lockedAttributes[attrName];
+      if (!this._lockedAttributes) return;
+      delete this._lockedAttributes[attrName];
       delete this._lockedAttributesValues[attrName];
-      if (_.keys(this.lockedAttributes).length === 0) {
-        delete this.lockedAttributes;
+      if (Object.keys(this._lockedAttributes).length === 0) {
+        delete this._lockedAttributes;
         delete this._lockedAttributesValues;
       }
     },
 
     isLocking: function(attrName) {
-      var isCheckingGeneralLockingState = (attrName === undefined);
-      var isUsingLockedAttributes = (this.lockedAttributes !== undefined);
+      const isCheckingGeneralLockingState = (attrName === undefined);
+      const isUsingLockedAttributes = Boolean(this.lockedAttributes || this._lockedAttributes);
 
       if (isCheckingGeneralLockingState) {
         return isUsingLockedAttributes;
@@ -72,14 +64,18 @@ define(function() {
 
       if (!isUsingLockedAttributes) return false;
 
-      var isAttributeALockingAttribute = this.lockedAttributes[attrName] !== undefined;
+      if (!this._lockedAttributes) {
+        this._lockedAttributes = _.result(this, 'lockedAttributes');
+      }
+
+      const isAttributeALockingAttribute = this._lockedAttributes.hasOwnProperty(attrName);
       if (!isAttributeALockingAttribute) return false;
 
-      if (this._lockedAttributesValues === undefined) {
+      if (!this._lockedAttributesValues) {
         this._lockedAttributesValues = {};
       }
 
-      if (this._lockedAttributesValues[attrName] === undefined) {
+      if (!this._lockedAttributesValues[attrName]) {
         this._lockedAttributesValues[attrName] = {};
       }
 
@@ -87,9 +83,9 @@ define(function() {
     },
 
     isLocked: function(attrName, options) {
-      var shouldSkipCheck = (options && options.skipcheck);
+      const shouldSkipCheck = (options && options.skipcheck);
       if (!shouldSkipCheck) {
-        var stopProcessing = !this.isLocking(attrName);
+        const stopProcessing = !this.isLocking(attrName);
         if (stopProcessing) return;
       }
 
@@ -97,32 +93,31 @@ define(function() {
     },
 
     getLockCount: function(attrName, options) {
-      var shouldSkipCheck = (options && options.skipcheck);
+      const shouldSkipCheck = (options && options.skipcheck);
       if (!shouldSkipCheck) {
-        var stopProcessing = !this.isLocking(attrName);
+        const stopProcessing = !this.isLocking(attrName);
         if (stopProcessing) return;
       }
 
-      var isGettingValueForSpecificPlugin = options && options.pluginName;
+      const isGettingValueForSpecificPlugin = options && options.pluginName;
       if (isGettingValueForSpecificPlugin) {
-
         return this._lockedAttributesValues[attrName][options.pluginName] ? 1 : 0;
       }
 
-      var lockingAttributeValues = _.values(this._lockedAttributesValues[attrName]);
-      var lockingAttributeValuesSum = _.reduce(lockingAttributeValues, function(sum, value) { return sum + (value ? 1 : 0); }, 0);
+      const lockingAttributeValues = Object.values(this._lockedAttributesValues[attrName]);
+      const lockingAttributeValuesSum = lockingAttributeValues.reduce((sum, value) => sum + (value ? 1 : 0), 0);
 
       return lockingAttributeValuesSum;
     },
 
     setLockState: function(attrName, value, options) {
-      var shouldSkipCheck = (options && options.skipcheck);
+      const shouldSkipCheck = (options && options.skipcheck);
       if (!shouldSkipCheck) {
-        var stopProcessing = !this.isLocking(attrName);
+        const stopProcessing = !this.isLocking(attrName);
         if (stopProcessing) return this;
       }
 
-      var isSettingValueForSpecificPlugin = options && options.pluginName;
+      const isSettingValueForSpecificPlugin = options && options.pluginName;
       if (!isSettingValueForSpecificPlugin) {
         console.error('Must supply a pluginName to set a locked attribute lock value');
         options.pluginName = 'compatibility';
