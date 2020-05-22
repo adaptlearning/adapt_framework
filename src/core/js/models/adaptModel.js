@@ -524,7 +524,7 @@ define([
         childrenCollection = new Backbone.Collection();
       } else {
         const id = this.get('_id');
-        // Lookup child by _parentId from Adapt.data
+        // Look up child by _parentId from Adapt.data
         const children = Adapt.data.filter(model => model.get('_parentId') === id);
         childrenCollection = new Backbone.Collection(children);
       }
