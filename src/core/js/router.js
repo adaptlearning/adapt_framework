@@ -337,7 +337,7 @@ define([
       const pageId = currentPage.get('_id');
       // If current page - scrollTo element
       if (pageId === Adapt.location._currentId) {
-        return await Adapt.scrollTo(selector, settings);
+        return Adapt.scrollTo(selector, settings);
       }
 
       const shouldReplaceRoute = settings.replace || false;
@@ -346,7 +346,7 @@ define([
         // If the element is on another page navigate and wait until pageView:ready is fired
         // Then scrollTo element
         Adapt.once('contentObjectView:ready', _.debounce(async () => {
-        this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
+          this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
           await Adapt.scrollTo(selector, settings);
           resolve();
         }, 1));

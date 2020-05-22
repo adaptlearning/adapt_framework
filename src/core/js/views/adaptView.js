@@ -89,17 +89,19 @@ define([
       // if required and allowed
       let models;
       let event;
-      while (
-        models = this.model.getAvailableChildModels(),
-        event = this._getAddChildEvent(models[this.nthChild])
-      ) {
+      while (true) {
+        models = this.model.getAvailableChildModels();
+        event = this._getAddChildEvent(models[this.nthChild]);
+        if (!event) {
+          break;
+        }
         if (event.isForced) {
           event.reset();
         }
         if (event.isStoppedImmediate || !event.model) {
           // If addChild has been stopped before it is added then
           // set all subsequent models and their children as not rendered
-          const subsequentModels = models.slice(this.nthChild)
+          const subsequentModels = models.slice(this.nthChild);
           subsequentModels.forEach(model => model.setOnChildren('_isRendered', false));
           break;
         }
@@ -192,7 +194,7 @@ define([
      */
     async whenReady() {
       if (this.model.get('_isReady')) return;
-      return await new Promise(resolve => {
+      return new Promise(resolve => {
         const onReadyChange = (model, value) => {
           if (!value) return;
           this.stopListening(this.model, 'change:_isReady', onReadyChange);
@@ -210,7 +212,7 @@ define([
      * @returns {ChildEvent}
      */
     _getAddChildEvent(model) {
-      const isRequestChild = !Boolean(model);
+      const isRequestChild = (!model);
       let event = new ChildEvent(null, this, model);
       if (isRequestChild) {
         // No model has been supplied, we are at the end of the available child list

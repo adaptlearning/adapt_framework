@@ -156,7 +156,7 @@ define([
         _.delay(() => {
           Adapt.a11y.focusNext(selector);
           Adapt.trigger(`${location}:scrolledTo`, selector);
-            resolve();
+          resolve();
         }, settings.duration + 300);
       });
     }

@@ -1,4 +1,6 @@
-define(function() {
+define([
+  'core/js/adapt'
+], function(Adapt) {
 
   /**
    * Event object triggered for controlling child view rendering.
@@ -42,7 +44,7 @@ define(function() {
      * Set the model to render in response to a 'view:requestChild' event.
      * @param {AdaptModel}
      */
-    set model(value) {
+    set model(model) {
       if (this.type !== 'requestChild') {
         Adapt.log.warn(`Cannot change model in ${this.type} event.`);
         return;
@@ -51,7 +53,7 @@ define(function() {
         Adapt.log.warn(`Cannot inject two models in one sitting. ${model.get('_id')} attempts to overwrite ${this._model.get('_id')}`);
         return;
       }
-      this._model = value;
+      this._model = model;
       this.hasRequestChild = true;
     }
 

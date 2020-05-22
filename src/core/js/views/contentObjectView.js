@@ -106,7 +106,7 @@ define([
         return;
       }
       // Force all models up until the id to render
-      models = models.slice(0, index+1);
+      models = models.slice(0, index + 1);
       const ids = _.indexBy(models, (model) => model.get('_id'));
       const forceUntilId = (event) => {
         const addingId = event.model.get('_id');
