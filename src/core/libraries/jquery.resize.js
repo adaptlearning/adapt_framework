@@ -168,14 +168,14 @@
 
     main: function(force) {
 
-      if (!force && loop.isThrottled()) {
+      if (force !== true && loop.isThrottled()) {
         loop.repeat();
         return;
       }
 
       loop.lastMain = (new Date()).getTime();
 
-      if (!force && loop.hasExpired()) {
+      if (force !== true && loop.hasExpired()) {
         loop.stop();
         return;
       }
