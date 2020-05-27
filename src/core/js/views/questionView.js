@@ -211,6 +211,7 @@ define([
       // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
       this._runModelCompatibleFunction('updateButtons');
 
+      this.model.onSubmitted();
       this.onSubmitted();
     }
 

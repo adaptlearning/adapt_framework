@@ -48,13 +48,6 @@ define([
 
     setupModel(...args) {
       super.setupModel(...args);
-      this.on('change:_isInteractionComplete', (model, isInteractionComplete) => {
-        if (!isInteractionComplete) {
-          return;
-        }
-        // Stores the current attempt state
-        this.addAttemptObject();
-      });
     }
 
     /**
@@ -341,6 +334,12 @@ define([
 
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
+
+    // Called at the end of the onSubmitClicked view function
+    onSubmitted() {
+      // Stores the current attempt state
+      this.addAttemptObject();
+    }
 
     /**
      * Returns the current attempt state raw data or the raw data from the supplied attempt state object.
