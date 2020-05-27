@@ -409,7 +409,7 @@ define([
      * @param {Object} object JSON object representing the component state.
      */
     setAttemptObject(object) {
-      this.set(object, { silent: true});
+      this.set(object, { silent: true });
     }
 
     /**
