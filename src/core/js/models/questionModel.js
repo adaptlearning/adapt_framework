@@ -34,7 +34,7 @@ define([
         '_attemptsLeft',
         '_attemptStates'
       ]);
-    },
+    }
 
     trackableType() {
       return ComponentModel.resultExtend('trackableType', [
@@ -44,12 +44,12 @@ define([
         Number,
         Array
       ]);
-    },
+    }
 
     setupModel(...args) {
       super.setupModel(...args);
-      this.on('change:_isInteractionComplete', (model, value) => {
-        if (!value) {
+      this.on('change:_isInteractionComplete', (model, isInteractionComplete) => {
+        if (!isInteractionComplete) {
           return;
         }
         // Stores the current attempt state
@@ -351,8 +351,8 @@ define([
       const trackables = this.trackable();
       const types = this.trackableType();
       trackables.find((name, index) => {
-        if (name !== '_attemptStates') return;
         // Exclude _attemptStates as it's trackable but isn't needed here
+        if (name !== '_attemptStates') return;
         trackables.splice(index, 1);
         types.splice(index, 1);
         return true;
@@ -377,8 +377,8 @@ define([
       const trackables = this.trackable();
       const types = this.trackableType();
       trackables.find((name, index) => {
-        if (name !== '_attemptStates') return;
         // Exclude _attemptStates as it's trackable but isn't needed here
+        if (name !== '_attemptStates') return;
         trackables.splice(index, 1);
         types.splice(index, 1);
         return true;
@@ -429,9 +429,7 @@ define([
      */
     getAttemptObjects() {
       const states = this.get('_attemptStates') || [];
-      return states.map(state => {
-        return this.getAttemptObject(state);
-      })
+      return states.map(state => this.getAttemptObject(state));
     }
 
   }
