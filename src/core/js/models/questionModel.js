@@ -335,7 +335,9 @@ define([
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
 
-    // Called at the end of the onSubmitClicked view function
+    /**
+     * Called at the end of the onSubmitClicked view function.
+     */
     onSubmitted() {
       // Stores the current attempt state
       this.addAttemptObject();
