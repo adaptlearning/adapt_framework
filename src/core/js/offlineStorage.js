@@ -51,7 +51,7 @@ define([
      * @returns {string}
      */
     serialize: function(value) {
-      if (this._handler && this._handler.deserialize) {
+      if (this._handler && this._handler.serialize) {
         return this._handler.serialize.apply(this._handler, arguments);
       }
       return JSON.stringify(value);
