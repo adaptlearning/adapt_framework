@@ -46,10 +46,6 @@ define([
       ]);
     }
 
-    setupModel(...args) {
-      super.setupModel(...args);
-    }
-
     /**
      * Returns a string of the model type group.
      * @returns {string}
