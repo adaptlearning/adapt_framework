@@ -10,10 +10,12 @@ define([
       return classes;
     },
 
-    attributes: {
-      'role': 'dialog',
-      'aria-labelledby': 'notify-heading',
-      'aria-modal': 'true'
+    attributes: function () {
+      return Object.assign({
+        'role': 'dialog',
+        'aria-labelledby': 'notify-heading',
+        'aria-modal': 'true'
+      }, this.model.get('_attributes'));
     },
 
     disableAnimation: false,
