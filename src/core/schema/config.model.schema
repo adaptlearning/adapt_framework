@@ -119,7 +119,8 @@
               "default": 2,
               "title": "Menu Item element ARIA level",
               "inputType": "Number",
-              "validators": ["required", "number"]
+              "validators": ["required", "number"],
+              "help": "The Menu Item element ARIA level will need to be changed to 3 if Menu Groups are being used and A11Y support is required."
             },
             "_page": {
               "type": "number",
