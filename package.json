@@ -7,7 +7,8 @@
         "url": "git://github.com/adaptlearning/adapt_framework.git"
     },
     "scripts": {
-        "lint": "node node_modules/eslint/bin/eslint.js ./"
+        "lint": "node node_modules/eslint/bin/eslint.js ./",
+        "deploy": "gh-pages -d build"
     },
     "authoringTool": ">=0.8",
     "license": "GPL-3.0",
@@ -60,6 +61,7 @@
         "eslint-plugin-node": "^9.1.0",
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-requirejs": "^4.0.0",
-        "eslint-plugin-standard": "^4.0.0"
+        "eslint-plugin-standard": "^4.0.0",
+        "gh-pages": "^1.2.0"
     }
 }

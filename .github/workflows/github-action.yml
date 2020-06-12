@@ -1,0 +1,38 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Adapt Framework deployment 
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies   
+      run: npm install
+    - name: Install cli tools   
+      run: npm install -g grunt-cli adapt-cli
+    - name: Install adapt plugins 
+      run: adapt install
+    - name: Generate build 
+      run: grunt build
+    - name: Deploy build 
+      run: |
+        git config --global user.name ${{secrets.USERNAME}}
+        git config --global user.email ${{secrets.EMAIL}}
+        git remote set-url origin https://${{secrets.ACCESS_TOKEN}}@github.com/${{secrets.USERNAME}}/adapt_framework.git
+        npm run deploy 
