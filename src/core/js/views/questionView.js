@@ -23,7 +23,7 @@ define([
         (this.model.get('_isOptional') ? 'is-optional' : ''),
         (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
         (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
-        (this.model.get('_canShowMarking') ? 'can-show-marking' : '')
+        (this.getCanShowMarking() ? 'can-show-marking' : '')
       ].join(' ');
     }
 
@@ -39,7 +39,15 @@ define([
       this._runModelCompatibleFunction('setupDefaultSettings');
       // Blank method for setting up questions before rendering
       this.setupQuestion();
+    }
 
+    getCanShowMarking() {
+      if (this.model.get('_onlyShowFinalMarking')) {
+        var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
+        return attemptsLeft !== 0;
+      }
+
+      return this.model.get('_canShowMarking');
     }
 
     // Used in the question view to disabled the question when _isEnabled has been set to false
@@ -307,7 +315,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.getCanShowMarking() && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 
