@@ -15,25 +15,6 @@ define([
       return null;
     }
 
-    /**
-     * Returns a string of the model type group.
-     * @returns {string}
-     */
-    getTypeGroup() {
-      return 'course';
-    }
-
-    initialize(...args) {
-      Adapt.trigger('courseModel:dataLoading');
-      super.initialize(...args);
-      this.loadedData();
-    }
-
-    loadedData() {
-      Adapt.course = this;
-      Adapt.trigger('courseModel:dataLoaded');
-    }
-
   }
 
   Adapt.register('course', { model: CourseModel });
