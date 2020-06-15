@@ -19,6 +19,7 @@ define([
         _canShowModelAnswer: true,
         _canShowFeedback: true,
         _canShowMarking: true,
+        _onlyShowFinalMarking: false,
         _isSubmitted: false,
         _questionWeight: Adapt.config.get('_questionWeight'),
         _items: []
