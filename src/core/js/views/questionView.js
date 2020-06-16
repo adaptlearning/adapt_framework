@@ -43,12 +43,15 @@ define([
 
     /** @type {boolean} */
     get canShowMarking() {
-      if (this.model.get('_onlyShowFinalMarking')) {
-        var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
-        return attemptsLeft !== 0;
+      if (!this.model.get('_onlyShowFinalMarking')) {
+        return this.model.get('_canShowMarking');
       }
 
-      return this.model.get('_canShowMarking');
+      const attemptsLeft = this.model.get('_attemptsLeft');
+      const hasMultipleAttempts = Boolean(this.model.get('_attempts') > 1);
+      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
+
+      return isFinalAttempt;
     }
 
     // Used in the question view to disabled the question when _isEnabled has been set to false
