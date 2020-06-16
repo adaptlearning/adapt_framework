@@ -70,10 +70,10 @@ define([
     }
 
     // Used by the question to disable the question during submit and complete stages
-    disableQuestion() { }
+    disableQuestion() {}
 
     // Used by the question to enable the question during interactions
-    enableQuestion() { }
+    enableQuestion() {}
 
     // Used to check if the question should reset on revisit
     checkIfResetOnRevisit() {
@@ -117,10 +117,10 @@ define([
     }
 
     // Used by the question to reset the question when revisiting the component
-    resetQuestionOnRevisit(type) { }
+    resetQuestionOnRevisit(type) {}
 
     // Left blank for question setup - should be used instead of preRender
-    setupQuestion() { }
+    setupQuestion() {}
 
     // Calls default methods to setup after the question is rendered
     postRender() {
@@ -159,7 +159,7 @@ define([
     }
 
     // Blank method used just like postRender is for presentational components
-    onQuestionRendered() { }
+    onQuestionRendered() {}
 
     // Triggered when the submit button is clicked
     onSubmitClicked() {
@@ -233,10 +233,10 @@ define([
     }
 
     // Blank method for question to fill out when the question cannot be submitted
-    onCannotSubmit() { }
+    onCannotSubmit() {}
 
     // Blank method for question to fill out when the question was successfully submitted
-    onSubmitted() { }
+    onSubmitted() {}
 
     // Used to set _isEnabled and _isSubmitted on the model
     // Also adds a 'submitted' class to the widget
@@ -252,7 +252,7 @@ define([
 
     // This is important and should give the user feedback on how they answered the question
     // Normally done through ticks and crosses by adding classes
-    showMarking() { }
+    showMarking() {}
 
     // Checks if the question should be set to complete
     // Calls setCompletionStatus and adds complete classes
@@ -314,7 +314,7 @@ define([
     // This could also include resetting item data
     // This is triggered when the reset button is clicked so it shouldn't
     // be a full reset
-    resetQuestion() { }
+    resetQuestion() {}
 
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
@@ -343,7 +343,7 @@ define([
     }
 
     // Used by the question to display the correct answer to the user
-    showCorrectAnswer() { }
+    showCorrectAnswer() {}
 
     onHideCorrectAnswerClicked() {
       this.setQuestionAsHideCorrect();
@@ -362,7 +362,7 @@ define([
     // Used by the question to display the users answer and
     // hide the correct answer
     // Should use the values stored in storeUserAnswer
-    hideCorrectAnswer() { }
+    hideCorrectAnswer() {}
 
     // Time elapsed between the time the interaction was made available to the learner for response and the time of the first response
     getLatency() {
