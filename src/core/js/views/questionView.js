@@ -23,7 +23,7 @@ define([
         (this.model.get('_isOptional') ? 'is-optional' : ''),
         (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
         (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
-        (this.getCanShowMarking() ? 'can-show-marking' : '')
+        (this.canShowMarking ? 'can-show-marking' : '')
       ].join(' ');
     }
 
@@ -41,7 +41,8 @@ define([
       this.setupQuestion();
     }
 
-    getCanShowMarking() {
+    /** @type {boolean} */
+    get canShowMarking() {
       if (this.model.get('_onlyShowFinalMarking')) {
         var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
         return attemptsLeft !== 0;
@@ -315,7 +316,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.getCanShowMarking() && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.canShowMarking() && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 
