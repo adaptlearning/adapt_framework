@@ -321,6 +321,18 @@ define([
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
 
+    /** @type {boolean} */
+    get canShowMarking() {
+      if (!this.get('_onlyShowFinalMarking')) {
+        return this.get('_canShowMarking');
+      }
+
+      const attemptsLeft = this.get('_attemptsLeft');
+      const hasMultipleAttempts = this.get('_attempts') > 1;
+      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
+
+      return isFinalAttempt;
+    }
   }
 
   return QuestionModel;

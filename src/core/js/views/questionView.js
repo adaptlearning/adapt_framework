@@ -23,7 +23,7 @@ define([
         (this.model.get('_isOptional') ? 'is-optional' : ''),
         (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
         (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
-        (this.canShowMarking ? 'can-show-marking' : '')
+        (this.model.canShowMarking ? 'can-show-marking' : '')
       ].join(' ');
     }
 
@@ -39,19 +39,6 @@ define([
       this._runModelCompatibleFunction('setupDefaultSettings');
       // Blank method for setting up questions before rendering
       this.setupQuestion();
-    }
-
-    /** @type {boolean} */
-    get canShowMarking() {
-      if (!this.model.get('_onlyShowFinalMarking')) {
-        return this.model.get('_canShowMarking');
-      }
-
-      const attemptsLeft = this.model.get('_attemptsLeft');
-      const hasMultipleAttempts = this.model.get('_attempts') > 1;
-      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
-
-      return isFinalAttempt;
     }
 
     // Used in the question view to disabled the question when _isEnabled has been set to false

@@ -148,7 +148,7 @@ define([
     },
 
     showMarking: function() {
-      if (!this.canShowMarking) return;
+      if (!this.model.canShowMarking) return;
 
       var isCorrect = this.model.get('_isCorrect');
       var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
