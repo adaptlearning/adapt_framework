@@ -19,7 +19,6 @@ define([
         _canShowModelAnswer: true,
         _canShowFeedback: true,
         _canShowMarking: true,
-        _showMarkingForAllAttempts: false,
         _isSubmitted: false,
         _questionWeight: Adapt.config.get('_questionWeight'),
         _items: []
@@ -323,8 +322,8 @@ define([
 
     /** @type {boolean} */
     get canShowMarking() {
-      if (this.get('_showMarkingForAllAttempts')) {
-        return this.get('_canShowMarking');
+      if (!this.get('_canShowMarking')) {
+        return false;
       }
 
       const attemptsLeft = this.get('_attemptsLeft');
