@@ -319,7 +319,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.canShowMarking() && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.canShowMarking && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 
