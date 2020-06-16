@@ -148,11 +148,7 @@ define([
     },
 
     showMarking: function() {
-      if (!this.model.get('_canShowMarking')) return;
-
-      var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
-
-      if (this.model.get('_onlyShowFinalMarking') && attemptsLeft !== 0) return;
+      if (!this.canShowMarking) return;
 
       var isCorrect = this.model.get('_isCorrect');
       var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
