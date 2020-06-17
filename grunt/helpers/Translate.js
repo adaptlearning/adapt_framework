@@ -93,6 +93,7 @@ class Translate {
       framework: this.framework,
       sourcePath: this.useOutputData ? this.outputPath : this.sourcePath,
       jsonext: this.jsonext,
+      trackingIdType: this.framework.trackingIdType,
       log: this.log
     });
     this.data.load();

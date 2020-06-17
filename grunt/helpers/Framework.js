@@ -22,6 +22,7 @@ class Framework {
    * @param {string} options.sourcePath
    * @param {function} options.includedFilter
    * @param {string} options.jsonext
+   * @param {string} options.trackingIdType,
    * @param {boolean} options.useOutputData
    * @param {function} options.log
    * @param {function} options.warn
@@ -32,6 +33,7 @@ class Framework {
     sourcePath = process.cwd() + '/src/',
     includedFilter = function() { return true; },
     jsonext = 'json',
+    trackingIdType = 'block',
     useOutputData = false,
     log = console.log,
     warn = console.warn
@@ -46,6 +48,8 @@ class Framework {
     this.includedFilter = includedFilter;
     /** @type {string} */
     this.jsonext = jsonext;
+    /** @type {string} */
+    this.trackingIdType = trackingIdType;
     /** @type {boolean} */
     this.useOutputData = useOutputData;
     /** @type {function} */
@@ -89,6 +93,7 @@ class Framework {
       framework: this,
       sourcePath: useOutputData ? this.outputPath : this.sourcePath,
       jsonext: this.jsonext,
+      trackingIdType: this.trackingIdType,
       log: this.log
     });
     data.load();

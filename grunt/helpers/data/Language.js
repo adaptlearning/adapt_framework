@@ -15,7 +15,6 @@ const LanguageFile = require('./LanguageFile');
  * at course/[lang]/*.[jsonext].
  * It is filename agnostic, such that there are no hard references to file names.
  * It has _id and _parentId structure checking and _trackingId management included.
- * @todo Move tracking ids to components from blocks
  */
 class Language {
 
@@ -24,12 +23,14 @@ class Language {
    * @param {Framework} options.framework
    * @param {string} options.languagePath
    * @param {string} options.jsonext
+   * @param {string} options.trackingIdType,
    * @param {function} options.log
    */
   constructor({
     framework = null,
     languagePath = '',
     jsonext = 'json',
+    trackingIdType = 'block',
     log = console.log
   } = {}) {
     /** @type {Framework} */
@@ -46,6 +47,8 @@ class Language {
     this.manifestFileName = 'language_data_manifest.js';
     /** @type {string} */
     this.manifestPath = this.path + this.manifestFileName;
+    /** @type {string} */
+    this.trackingIdType = trackingIdType;
     /** @type {[LanguageFile]} */
     this.files = null;
     /** @type {Object.<string, JSONFileItem>} */
@@ -229,36 +232,41 @@ class Language {
   /** @returns {Language} */
   addTrackingIds() {
     const { file, item: course } = this.getCourseFileItem();
-    course._latestTrackingId = course._latestTrackingId || -1;
+
+    const latestTrackingIdName = this.trackingIdType === 'block' ?
+      '_latestTrackingId' :
+      `_${this.trackingIdType}LatestTrackingId`;
+
+    course[latestTrackingIdName] = course[latestTrackingIdName] || -1;
     file.changed();
 
     let wasAdded = false;
     const trackingIdsSeen = [];
-    const blockFileItems = this.getAllFileItems().filter(fileItem => fileItem.item._type === 'block');
-    blockFileItems.forEach(({ file, item: block }) => {
-      this.log(`block: ${block._id}: ${block._trackingId !== undefined ? block._trackingId : 'not set'}`);
-      if (block._trackingId === undefined) {
-        block._trackingId = ++course._latestTrackingId;
+    const fileItems = this.getAllFileItems().filter(fileItem => fileItem.item._type === this.trackingIdType);
+    fileItems.forEach(({ file, item }) => {
+      this.log(`${this.trackingIdType}: ${item._id}: ${item._trackingId !== undefined ? item._trackingId : 'not set'}`);
+      if (item._trackingId === undefined) {
+        item._trackingId = ++course[latestTrackingIdName];
         file.changed();
         wasAdded = true;
-        this.log(`Adding tracking ID: ${block._trackingId} to block ${block._id}`);
+        this.log(`Adding tracking ID: ${item._trackingId} to ${this.trackingIdType} ${item._id}`);
       } else {
-        if (trackingIdsSeen.indexOf(block._trackingId) > -1) {
-          block._trackingId = ++course._latestTrackingId;
+        if (trackingIdsSeen.indexOf(item._trackingId) > -1) {
+          item._trackingId = ++course[latestTrackingIdName];
           file.changed();
           wasAdded = true;
-          this.log(`Warning: ${block._id} has the tracking ID ${block._trackingId} but this is already in use. Changing to ${course._latestTrackingId + 1}.`);
+          this.log(`Warning: ${item._id} has the tracking ID ${item._trackingId} but this is already in use. Changing to ${course[latestTrackingIdName] + 1}.`);
         } else {
-          trackingIdsSeen.push(block._trackingId);
+          trackingIdsSeen.push(item._trackingId);
         }
       }
-      if (course._latestTrackingId < block._trackingId) {
-        course._latestTrackingId = block._trackingId;
+      if (course[latestTrackingIdName] < item._trackingId) {
+        course[latestTrackingIdName] = item._trackingId;
       }
     });
 
     this.save();
-    this.log(`Tracking IDs ${wasAdded ? `were added to` : `are ok for`} course/${this.name}. The latest tracking ID is ${course._latestTrackingId}\n`);
+    this.log(`Tracking IDs ${wasAdded ? `were added to` : `are ok for`} course/${this.name}. The latest tracking ID is ${course[latestTrackingIdName]}\n`);
 
     return this;
   }
@@ -266,12 +274,17 @@ class Language {
   /** @returns {Language} */
   removeTrackingIds() {
     const { file, item: course } = this.getCourseFileItem();
-    course._latestTrackingId = -1;
+
+    const latestTrackingIdName = this.trackingIdType === 'block' ?
+      '_latestTrackingId' :
+      `_${this.trackingIdType}LatestTrackingId`;
+
+    course[latestTrackingIdName] = -1;
     file.changed();
 
-    const blockFileItems = this.getAllFileItems().filter(({ item }) => item._type === 'block');
-    blockFileItems.forEach(({ file, item: block }) => {
-      delete block._trackingId;
+    const fileItems = this.getAllFileItems().filter(fileItem => fileItem.item._type === this.trackingIdType);
+    fileItems.forEach(({ file, item }) => {
+      delete item._trackingId;
       file.changed();
     });
 

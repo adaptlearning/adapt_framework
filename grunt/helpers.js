@@ -214,6 +214,7 @@ module.exports = function(grunt) {
         outputdir: outputdir,
         tempdir: tempdir,
         jsonext: jsonext,
+        trackingIdType: grunt.option('trackingidtype') || 'block',
         theme: grunt.option('theme') || exports.defaults.theme,
         menu: grunt.option('menu') || exports.defaults.menu,
         languages: languageFolders || exports.defaults.languages,
@@ -324,6 +325,7 @@ module.exports = function(grunt) {
         sourcePath: buildConfig.sourcedir,
         includedFilter: exports.includedFilter,
         jsonext: buildConfig.jsonext,
+        trackingIdType: buildConfig.trackingIdType,
         useOutputData,
         log: grunt.log.ok,
         warn: grunt.log.error
