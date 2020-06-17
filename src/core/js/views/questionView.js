@@ -185,7 +185,9 @@ define([
       this._runModelCompatibleFunction('setScore');
 
       // Used by the question to display markings on the component
-      this.showMarking();
+      if (this.model.canShowMarking) {
+        this.showMarking();
+      }
 
       // Used to check if the question is complete
       // Triggers setCompletionStatus and adds class to widget
