@@ -138,7 +138,7 @@ define(function() {
      * @param {JQuery.Event} event
      */
     _preventScroll: function(event) {
-      var isGesture = (event.touches.length > 1);
+      var isGesture = (event.touches && event.touches.length > 1);
       if (isGesture) {
         // allow multiple finger gestures through
         // this will unfortunately allow two finger background scrolling on mobile devices
