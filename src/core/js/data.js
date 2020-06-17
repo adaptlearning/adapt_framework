@@ -114,7 +114,9 @@ define([
       if (!course) {
         throw new Error(`Expected a model data with "_type": "course", none found.`);
       }
-      this.push(course);
+      Adapt.trigger('courseModel:dataLoading');
+      Adapt.course = this.push(course);
+      Adapt.trigger('courseModel:dataLoaded');
       // Add other models
       allModelData.forEach(modelData => {
         if (modelData._type === 'course') {

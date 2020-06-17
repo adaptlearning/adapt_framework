@@ -1,3 +1,20 @@
+## [5.6.0] - 2020-06-17
+#### Fixed
+* Decontaminated toJSON functions  ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
+* Display marking only on final question attempts  ([#2796](https://github.com/adaptlearning/adapt_framework/issues/2796))
+* Allow notify view to accept DOM attributes ([#2785](https://github.com/adaptlearning/adapt_framework/issues/2785))
+* jQuery resize timeout bug ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
+
+#### Added
+* Menu group aria level ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
+* AdaptModel `setChildren` and `setParent` functions
+
+
+## [5.5.1] - 2020-06-08
+### Fixed
+* Backward compatibility for view-only components ([#2787](https://github.com/adaptlearning/adapt_framework/issues/2787))
+
+
 ## [5.5.0] - 2020-05-18
 #### Added
 * `none` helper ([#2764](https://github.com/adaptlearning/adapt_framework/issues/2764))
@@ -864,6 +881,8 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.6.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.1...v5.6.0
+[5.5.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.0...v5.5.1
 [5.5.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.4.0...v5.5.0
 [5.4.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.3.0...v5.4.0
 [5.3.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.2.0...v5.3.0

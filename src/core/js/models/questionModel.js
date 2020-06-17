@@ -339,6 +339,19 @@ define([
       this.addAttemptObject();
     }
 
+    /** @type {boolean} */
+    get canShowMarking() {
+      if (!this.get('_canShowMarking')) {
+        return false;
+      }
+
+      const attemptsLeft = this.get('_attemptsLeft');
+      const hasMultipleAttempts = this.get('_attempts') > 1;
+      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
+
+      return isFinalAttempt;
+    }
+
     /**
      * Returns the current attempt state raw data or the raw data from the supplied attempt state object.
      * @param {Object} [object] JSON object representing the component state. Defaults to current JSON.
