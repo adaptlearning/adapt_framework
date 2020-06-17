@@ -23,7 +23,7 @@ define([
         (this.model.get('_isOptional') ? 'is-optional' : ''),
         (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
         (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
-        (this.model.get('_canShowMarking') ? 'can-show-marking' : '')
+        (this.model.canShowMarking ? 'can-show-marking' : '')
       ].join(' ');
     }
 
@@ -39,7 +39,6 @@ define([
       this._runModelCompatibleFunction('setupDefaultSettings');
       // Blank method for setting up questions before rendering
       this.setupQuestion();
-
     }
 
     // Used in the question view to disabled the question when _isEnabled has been set to false
@@ -186,7 +185,9 @@ define([
       this._runModelCompatibleFunction('setScore');
 
       // Used by the question to display markings on the component
-      this.showMarking();
+      if (this.model.canShowMarking) {
+        this.showMarking();
+      }
 
       // Used to check if the question is complete
       // Triggers setCompletionStatus and adds class to widget
@@ -307,7 +308,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.model.canShowMarking && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 
