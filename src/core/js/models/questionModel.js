@@ -417,9 +417,10 @@ define([
     /**
      * Sets the current attempt state from the supplied attempt state object.
      * @param {Object} object JSON object representing the component state.
+     * @param {boolean} silent Stops change events from triggering
      */
-    setAttemptObject(object) {
-      this.set(object, { silent: true });
+    setAttemptObject(object, silent = true) {
+      this.set(object, { silent });
     }
 
     /**
