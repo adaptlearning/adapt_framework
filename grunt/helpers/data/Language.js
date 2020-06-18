@@ -232,12 +232,7 @@ class Language {
   /** @returns {Language} */
   addTrackingIds() {
     const { file, item: course } = this.getCourseFileItem();
-
-    const latestTrackingIdName = this.trackingIdType === 'block' ?
-      '_latestTrackingId' :
-      `_${this.trackingIdType}LatestTrackingId`;
-
-    course[latestTrackingIdName] = course[latestTrackingIdName] || -1;
+    course._latestTrackingId = course._latestTrackingId || -1;
     file.changed();
 
     let wasAdded = false;
@@ -246,27 +241,27 @@ class Language {
     fileItems.forEach(({ file, item }) => {
       this.log(`${this.trackingIdType}: ${item._id}: ${item._trackingId !== undefined ? item._trackingId : 'not set'}`);
       if (item._trackingId === undefined) {
-        item._trackingId = ++course[latestTrackingIdName];
+        item._trackingId = ++course._latestTrackingId;
         file.changed();
         wasAdded = true;
         this.log(`Adding tracking ID: ${item._trackingId} to ${this.trackingIdType} ${item._id}`);
       } else {
         if (trackingIdsSeen.indexOf(item._trackingId) > -1) {
-          item._trackingId = ++course[latestTrackingIdName];
+          item._trackingId = ++course._latestTrackingId;
           file.changed();
           wasAdded = true;
-          this.log(`Warning: ${item._id} has the tracking ID ${item._trackingId} but this is already in use. Changing to ${course[latestTrackingIdName] + 1}.`);
+          this.log(`Warning: ${item._id} has the tracking ID ${item._trackingId} but this is already in use. Changing to ${course._latestTrackingId + 1}.`);
         } else {
           trackingIdsSeen.push(item._trackingId);
         }
       }
-      if (course[latestTrackingIdName] < item._trackingId) {
-        course[latestTrackingIdName] = item._trackingId;
+      if (course._latestTrackingId < item._trackingId) {
+        course._latestTrackingId = item._trackingId;
       }
     });
 
     this.save();
-    this.log(`Tracking IDs ${wasAdded ? `were added to` : `are ok for`} course/${this.name}. The latest tracking ID is ${course[latestTrackingIdName]}\n`);
+    this.log(`Tracking IDs ${wasAdded ? `were added to` : `are ok for`} course/${this.name}. The latest tracking ID is ${course._latestTrackingId}\n`);
 
     return this;
   }
@@ -274,12 +269,7 @@ class Language {
   /** @returns {Language} */
   removeTrackingIds() {
     const { file, item: course } = this.getCourseFileItem();
-
-    const latestTrackingIdName = this.trackingIdType === 'block' ?
-      '_latestTrackingId' :
-      `_${this.trackingIdType}LatestTrackingId`;
-
-    course[latestTrackingIdName] = -1;
+    course._latestTrackingId = -1;
     file.changed();
 
     const fileItems = this.getAllFileItems().filter(fileItem => fileItem.item._type === this.trackingIdType);
