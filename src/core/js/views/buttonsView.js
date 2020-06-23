@@ -19,9 +19,13 @@ define([
     initialize: function(options) {
       this.parent = options.parent;
       this.listenTo(Adapt.parentView, 'postRemove', this.remove);
-      this.listenTo(this.model, 'change:_buttonState', this.onButtonStateChanged);
-      this.listenTo(this.model, 'change:feedbackMessage', this.onFeedbackMessageChanged);
-      this.listenTo(this.model, 'change:_attemptsLeft', this.onAttemptsChanged);
+      this.listenTo(this.model, {
+        'change:_buttonState': this.onButtonStateChanged,
+        'change:feedbackMessage': this.onFeedbackMessageChanged,
+        'change:_attemptsLeft': this.onAttemptsChanged,
+        'change:_canSubmit': this.onCanSubmitChange
+      });
+      this.model.checkCanSubmit();
       this.render();
     },
 
@@ -77,6 +81,10 @@ define([
       }
     },
 
+    onCanSubmitChange: function() {
+      this.onButtonStateChanged(this.model, this.model.get('_buttonState'));
+    },
+
     onButtonStateChanged: function(model, changedAttribute) {
 
       this.updateAttemptsCount();
@@ -97,7 +105,7 @@ define([
 
         // Enable the button, make accessible and update aria labels and text
 
-        Adapt.a11y.toggleAccessibleEnabled($buttonsAction, true);
+        Adapt.a11y.toggleAccessibleEnabled($buttonsAction, this.model.get('_canSubmit'));
         $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
 
         // Make model answer button inaccessible (but still enabled) for visual users due to
