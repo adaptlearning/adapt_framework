@@ -30,9 +30,7 @@ define([
     init() {
       super.init();
       this.set('_isRadio', this.isSingleSelect());
-      this.listenTo(this.getChildren(), {
-       'change:_isActive': this.checkCanSubmit
-      });
+      this.listenTo(this.getChildren(), 'change:_isActive': this.checkCanSubmit);
       this.checkCanSubmit();
     }
 

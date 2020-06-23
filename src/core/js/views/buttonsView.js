@@ -25,7 +25,7 @@ define([
         'change:_attemptsLeft': this.onAttemptsChanged,
         'change:_canSubmit': this.onCanSubmitChange
       });
-      this.model.checkCanSubmit();
+      //this.model.checkCanSubmit();
       this.render();
     },
 
