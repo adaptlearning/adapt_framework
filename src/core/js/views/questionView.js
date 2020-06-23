@@ -217,6 +217,17 @@ define([
 
     // Adds a validation error class when the canSubmit returns false
     showInstructionError() {
+      const incompleteWarningConfig = Adapt.course.get('_buttons')._incompleteWarning;
+      const hasIncompleteWarning = incompleteWarningConfig && incompleteWarningConfig._isEnabled;
+      if (hasIncompleteWarning) {
+        const data = this.model.toJSON();
+        const notifyObject = Object.assign({}, incompleteWarningConfig, {
+          title: Handlebars.compile(incompleteWarningConfig.title)(data),
+          body: Handlebars.compile(incompleteWarningConfig.body)(data)
+        });
+        Adapt.notify.popup(notifyObject);
+        return;
+      }
       this.$('.component__instruction-inner').addClass('validation-error');
       Adapt.a11y.focusFirst(this.$el, { defer: true });
     }

@@ -103,8 +103,10 @@ define([
         var buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
 
         // Enable the button, make accessible and update aria labels and text
+        const incompleteWarningConfig = Adapt.course.get('_buttons')._incompleteWarning;
+        const hasIncompleteWarning = incompleteWarningConfig && incompleteWarningConfig._isEnabled;
 
-        Adapt.a11y.toggleAccessibleEnabled($buttonsAction, this.model.get('_canSubmit'));
+        Adapt.a11y.toggleAccessibleEnabled($buttonsAction, hasIncompleteWarning ? true : this.model.get('_canSubmit'));
         $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
 
         // Make model answer button inaccessible (but still enabled) for visual users due to

@@ -29,6 +29,11 @@
             "buttonText": "Show feedback",
             "ariaLabel": "Show feedback"
         },
+        "_incompleteWarning": {
+          "_isEnabled": false,
+          "title": "Instructions",
+          "body": "{{#if instruction}}{{instruction}}{{else}}Please complete the question and then click Submit.{{/if}}"
+        },
         "remainingAttemptsText": "attempts remaining",
         "remainingAttemptText": "final attempt",
         "disabledAriaLabel": "This button is disabled at the moment"
