@@ -326,7 +326,7 @@ define([
         return false;
       }
 
-      if (this.get('_isComplete')) return true;
+      if (this.get('_isInteractionComplete')) return true;
 
       const attemptsLeft = this.get('_attemptsLeft');
       const hasMultipleAttempts = this.get('_attempts') > 1;
