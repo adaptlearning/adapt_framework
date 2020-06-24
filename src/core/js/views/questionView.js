@@ -185,7 +185,7 @@ define([
       this._runModelCompatibleFunction('setScore');
 
       // Used by the question to display markings on the component
-      if (this.model.canShowMarking) {
+      if (this.model.shouldShowMarking) {
         this.showMarking();
       }
 
@@ -308,7 +308,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.model.canShowMarking && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.model.shouldShowMarking && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 

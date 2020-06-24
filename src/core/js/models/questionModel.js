@@ -321,7 +321,7 @@ define([
     getResponseType() {}
 
     /** @type {boolean} */
-    get canShowMarking() {
+    get shouldShowMarking() {
       if (!this.get('_canShowMarking')) {
         return false;
       }
