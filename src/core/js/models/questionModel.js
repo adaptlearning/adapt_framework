@@ -326,6 +326,8 @@ define([
         return false;
       }
 
+      if (this.get('_isComplete')) return true;
+
       const attemptsLeft = this.get('_attemptsLeft');
       const hasMultipleAttempts = this.get('_attempts') > 1;
       const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
