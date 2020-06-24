@@ -326,13 +326,7 @@ define([
         return false;
       }
 
-      if (this.get('_isInteractionComplete')) return true;
-
-      const attemptsLeft = this.get('_attemptsLeft');
-      const hasMultipleAttempts = this.get('_attempts') > 1;
-      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
-
-      return isFinalAttempt;
+      return this.get('_isInteractionComplete');
     }
   }
 
