@@ -188,7 +188,6 @@ define([
       // Triggers setCompletionStatus and adds class to widget
       this._runModelCompatibleFunction('checkQuestionCompletion');
 
-
       // Used by the question to display markings on the component
       if (this.model.shouldShowMarking) {
         this.showMarking();
