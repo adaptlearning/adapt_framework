@@ -643,7 +643,7 @@ define([
       values = values.filter(Boolean);
       values = values.filter(_.isString);
       htmls = values.join(' ');
-      var text = $('<div>' + htmls + '</div>').html();
+      var text = $('<div>' + htmls + '</div>').text();
       // Remove all html encoded characters, such as &apos;
       return text.replace(this._htmlCharRegex, '');
     },
