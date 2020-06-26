@@ -321,16 +321,12 @@ define([
     getResponseType() {}
 
     /** @type {boolean} */
-    get canShowMarking() {
+    get shouldShowMarking() {
       if (!this.get('_canShowMarking')) {
         return false;
       }
 
-      const attemptsLeft = this.get('_attemptsLeft');
-      const hasMultipleAttempts = this.get('_attempts') > 1;
-      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
-
-      return isFinalAttempt;
+      return this.get('_isInteractionComplete');
     }
   }
 
