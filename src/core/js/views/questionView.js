@@ -184,14 +184,15 @@ define([
       // Used by the question to set the score on the model
       this._runModelCompatibleFunction('setScore');
 
+      // Used to check if the question is complete
+      // Triggers setCompletionStatus and adds class to widget
+      this._runModelCompatibleFunction('checkQuestionCompletion');
+
+
       // Used by the question to display markings on the component
       if (this.model.shouldShowMarking) {
         this.showMarking();
       }
-
-      // Used to check if the question is complete
-      // Triggers setCompletionStatus and adds class to widget
-      this._runModelCompatibleFunction('checkQuestionCompletion');
 
       this.recordInteraction();
 
