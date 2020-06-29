@@ -19,6 +19,7 @@ define([
         _canShowModelAnswer: true,
         _canShowFeedback: true,
         _canShowMarking: true,
+        _canSubmit: true,
         _isSubmitted: false,
         _questionWeight: Adapt.config.get('_questionWeight'),
         _items: []
@@ -46,6 +47,7 @@ define([
     init() {
       this.setupDefaultSettings();
       this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
+      this.setLocking('_canSubmit', true);
     }
 
     // Calls default methods to setup on questions
@@ -111,6 +113,10 @@ define([
     // Use to check if the user is allowed to submit the question
     // Maybe the user has to select an item?
     canSubmit() {}
+
+    checkCanSubmit() {
+      this.set('_canSubmit', this.canSubmit(), { pluginName: 'adapt' });
+    }
 
     // Used to update the amount of attempts the user has left
     updateAttempts() {

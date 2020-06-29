@@ -217,8 +217,7 @@ define([
 
     // Adds a validation error class when the canSubmit returns false
     showInstructionError() {
-      this.$('.component__instruction-inner').addClass('validation-error');
-      Adapt.a11y.focusFirst(this.$el, { defer: true });
+      Adapt.trigger('questionView:showInstructionError', this);
     }
 
     // Blank method for question to fill out when the question cannot be submitted
