@@ -215,7 +215,6 @@ define([
       this.onSubmitted();
     }
 
-    // Adds a validation error class when the canSubmit returns false
     showInstructionError() {
       Adapt.trigger('questionView:showInstructionError', this);
     }
