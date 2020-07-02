@@ -65,8 +65,13 @@ define([
     // Used to check if the question should reset on revisit
     checkIfResetOnRevisit() {
 
-      const isResetOnRevisit = this.model.get('_isResetOnRevisit');
-
+      let isResetOnRevisit = this.model.get('_isResetOnRevisit');
+      
+      // Convert AAT "false" string to boolean
+      isResetOnRevisit = (isResetOnRevisit === "false") ? 
+        false :
+        isResetOnRevisit;
+      
       // If reset is enabled set defaults
       // Call blank method for question to handle
       if (isResetOnRevisit) {
