@@ -160,15 +160,22 @@ module.exports = function(grunt) {
               return `"${filename}"`;
             }).join(',')}], function() {});`;
           }
-          if (!hasDefineOrRequire.test(code)) {
-            return null;
-          }
           // Rework require/define into import
           // Rework ES export default directives to register as amd modules client-side
-          code = code.replace(/^require/,'define');
+          const isAmdModule = hasDefineOrRequire.test(code);
+          if (isAmdModule) {
+            code = code.replace(/^require/,'define');
+          }
           const module = new Module(code);
-          module.convert({});
+          if (isAmdModule) {
+            // Convert require/define/return to import/export directives
+            module.convert({});
+          }
           const node = module._tree.body.find(node => node.type === 'ExportDefaultDeclaration');
+          if (!node && !isAmdModule) {
+            // If no default export and is not an amd module then return early
+            return null;
+          }
           if (node) {
             const shortId = moduleId.replace(convertSlashes,'/').replace(basePath, '').replace('\.js', '');
             // Wrap default export with call to __AMD to define the module client-side
