@@ -90,6 +90,15 @@ module.exports = function(grunt) {
     const mapParts = Object.keys(options.map);
     const externalParts = Object.keys(options.external);
 
+    const findFile = function(filename) {
+      const endsWithJS = filename.endsWith('.js');
+      filename = filename.replace(convertSlashes,'/');
+      if (!endsWithJS) {
+        if (fs.existsSync(filename + ".js" )) filename += ".js";
+      }
+      return filename;
+    };
+
     // Rework modules names and inject plugins
     const adaptLoader = function() {
       return {
@@ -108,18 +117,17 @@ module.exports = function(grunt) {
             moduleId = moduleId.replace(mapPart, options.map[mapPart]);
           }
           const isRelative = (moduleId[0] === '.');
-          const endsWithJS = moduleId.endsWith('.js');
           if (isRelative) {
             if (!parentId) {
               // Rework app.js path so that it can be made basePath agnostic in the cache
-              const filename = path.resolve(moduleId + (endsWithJS ? '' : '.js')).replace(convertSlashes,'/');
+              const filename = findFile(path.resolve(moduleId));
               return {
                 id: filename,
                 external: false
               };
             }
             // Rework relative paths into absolute ones
-            const filename = path.resolve(parentId + '/../' + moduleId + (endsWithJS ? '' : '.js')).replace(convertSlashes,'/');
+            const filename = findFile(path.resolve(parentId + '/../' + moduleId));
             return {
               id: filename,
               external: false
@@ -137,21 +145,29 @@ module.exports = function(grunt) {
           const isES6Import = !fs.existsSync(moduleId);
           if (isES6Import) {
             // ES6 imports start inside ./src so need correcting
-            const filename = path.resolve(process.cwd() + '/' + options.baseUrl + moduleId + (endsWithJS ? '' : '.js')).replace(convertSlashes,'/');
+            const filename = findFile(path.resolve(process.cwd() + '/' + options.baseUrl + moduleId));
             return {
               id: filename,
               external: false
             };
           }
           // Normalize all other absolute paths as conflicting slashes will load twice
-          moduleId = moduleId.replace(convertSlashes, '/');
+          const filename = findFile(moduleId);
           return {
-            id: moduleId + (endsWithJS ? '' : '.js'),
+            id: filename,
             external: false
           };
-        },
+        }
 
-        load(moduleId) {
+      };
+    };
+
+    const adaptInjectPlugins = function() {
+      return {
+
+        name: 'adaptInjectPlugins',
+
+        transform(code, moduleId) {
           const isRollupHelper = (moduleId[0] === "\u0000");
           if (isRollupHelper) {
             return null;
@@ -161,7 +177,7 @@ module.exports = function(grunt) {
             return null;
           }
           // Dynamically construct plugins.js with plugin dependencies
-          const code = `define([${pluginPaths.map(filename => {
+          code = `define([${pluginPaths.map(filename => {
             return `"${filename}"`;
           }).join(',')}], function() {});`;
           return code;
@@ -174,7 +190,8 @@ module.exports = function(grunt) {
       input: './' + options.baseUrl +  options.name,
       shimMissingExports: true,
       plugins: [
-        adaptLoader(),
+        adaptLoader({}),
+        adaptInjectPlugins({}),
         babel({
           babelHelpers: 'bundled',
           minified: false,
