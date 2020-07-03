@@ -1,5 +1,7 @@
 module.exports = function(grunt) {
 
+  const convertSlashes = /\\/g;
+
   function escapeRegExp(string) {
     return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
   }
@@ -8,16 +10,13 @@ module.exports = function(grunt) {
   const fs = require('fs-extra');
   const rollup = require('rollup');
   const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
-  const Module = require('./amd-to-es6/class/Module');
-  const { deflate, unzip, gunzip, gzip, constants } = require('zlib');
+  const { deflate, unzip, constants } = require('zlib');
 
-  const convertSlashes = /\\/g;
-  const hasDefineOrRequire = /\b(?:define)|(?:require)\b/;
-
+  const disableCache = process.argv.includes('--disable-cache');
   let cache;
 
   const restoreCache = async (basePath) => {
-    if (cache || !fs.existsSync('./build/.cache')) return;
+    if (disableCache || cache || !fs.existsSync('./build/.cache')) return;
     await new Promise((resolve, reject) => {
       const buffer = fs.readFileSync('./build/.cache');
       unzip(buffer, (err, buffer) => {
@@ -28,7 +27,7 @@ module.exports = function(grunt) {
           return;
         }
         let str = buffer.toString();
-        // restore cache to current basePath
+        // Restore cache to current basePath
         str = str.replace(/%%basePath%%/g, basePath);
         cache = JSON.parse(str);
         resolve();
@@ -37,10 +36,11 @@ module.exports = function(grunt) {
   };
 
   const saveCache = async (basePath, bundleCache) => {
+    if (disableCache) return;
     cache = bundleCache;
     await new Promise((resolve, reject) => {
       let str = JSON.stringify(cache);
-      // make cache location agnostic
+      // Make cache location agnostic by stripping current basePath
       str = str.replace(new RegExp(escapeRegExp(basePath), 'g'), '%%basePath%%');
       deflate(str, { level: constants.Z_BEST_COMPRESSION }, (err, buffer) => {
         if (err) {
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
     const basePath = path.resolve(process.cwd() + '/' + options.baseUrl).replace(convertSlashes,'/')  + '/';
     await restoreCache(basePath);
 
-    // Make src/plugins.js to attach the plugins to
+    // Make src/plugins.js to attach the plugins dynamically
     if (!fs.existsSync(options.pluginsPath)) {
       fs.writeFileSync(options.pluginsPath, '');
     }
@@ -89,12 +89,13 @@ module.exports = function(grunt) {
     const mapParts = Object.keys(options.map);
     const externalParts = Object.keys(options.external);
 
-    // Rework amd define and require statements into ES import directives
-    const amd = function(config = {}) {
+    // Rework modules names and inject plugins
+    const adaptLoader = function() {
       return {
-        name: 'amd',
+
+        name: 'adaptLoader',
+
         resolveId(moduleId, parentId) {
-          //console.log(moduleId);
           const isRollupHelper = (moduleId[0] === "\u0000");
           if (isRollupHelper) {
             // Ignore as injected rollup module
@@ -109,7 +110,7 @@ module.exports = function(grunt) {
           const endsWithJS = moduleId.endsWith('.js');
           if (isRelative) {
             if (!parentId) {
-              // Rework app.js path
+              // Rework app.js path so that it can be made basePath agnostic in the cache
               const filename = path.resolve(moduleId + (endsWithJS ? '' : '.js')).replace(convertSlashes,'/');
               return {
                 id: filename,
@@ -126,7 +127,7 @@ module.exports = function(grunt) {
           const externalPart = externalParts.find(part => moduleId.startsWith(part));
           const isEmpty = (options.external[externalPart] === 'empty:');
           if (isEmpty) {
-            // External module as defined 'empty:', libraries/ bower handlebars etc
+            // External module as is defined as 'empty:', libraries/ bower handlebars etc
             return {
               id: moduleId,
               external: true
@@ -141,60 +142,30 @@ module.exports = function(grunt) {
               external: false
             };
           }
-          // Normalize all absolute paths as conflicting slashes will load twice
+          // Normalize all other absolute paths as conflicting slashes will load twice
           moduleId = moduleId.replace(convertSlashes, '/');
           return {
             id: moduleId + (endsWithJS ? '' : '.js'),
             external: false
           };
         },
-        transform(code, moduleId) {
+
+        load(moduleId) {
           const isRollupHelper = (moduleId[0] === "\u0000");
           if (isRollupHelper) {
             return null;
           }
           const isPlugins = (moduleId.includes('/'+options.pluginsModule+'.js'));
-          if (isPlugins) {
-            // Dynamically construct plugins.js with plugin dependencies
-            code = `define([${pluginPaths.map(filename => {
-              return `"${filename}"`;
-            }).join(',')}], function() {});`;
-          }
-          // Rework require/define into import
-          // Rework ES export default directives to register as amd modules client-side
-          const isAmdModule = hasDefineOrRequire.test(code);
-          if (isAmdModule) {
-            code = code.replace(/^require/,'define');
-          }
-          const module = new Module(code);
-          if (isAmdModule) {
-            // Convert require/define/return to import/export directives
-            module.convert({});
-          }
-          const node = module._tree.body.find(node => node.type === 'ExportDefaultDeclaration');
-          if (!node && !isAmdModule) {
-            // If no default export and is not an amd module then return early
+          if (!isPlugins) {
             return null;
           }
-          if (node) {
-            const shortId = moduleId.replace(convertSlashes,'/').replace(basePath, '').replace('\.js', '');
-            // Wrap default export with call to __AMD to define the module client-side
-            const arg = { ...node.declaration };
-            node.declaration.replacement = {
-              parent: 'declaration',
-              child: {
-                arguments: [{ type: "Literal", value: shortId }, arg],
-                callee: { name: "__AMD", type: "Identifier" },
-                type: "CallExpression"
-              }
-            };
-            module.transformTree();
-          }
-          return {
-            code: module.source,
-            map: module.map
-          };
+          // Dynamically construct plugins.js with plugin dependencies
+          const code = `define([${pluginPaths.map(filename => {
+            return `"${filename}"`;
+          }).join(',')}], function() {});`;
+          return code;
         }
+
       };
     };
 
@@ -202,9 +173,7 @@ module.exports = function(grunt) {
       input: './' + options.baseUrl +  options.name,
       shimMissingExports: true,
       plugins: [
-        amd({
-          sourceMap: isSourceMapped
-        }),
+        adaptLoader(),
         babel({
           babelHelpers: 'bundled',
           minified: false,
@@ -216,7 +185,22 @@ module.exports = function(grunt) {
               {
                 targets: {
                   ie: '11'
-                }
+                },
+                exclude: [
+                  // Breaks lockingModel.js, set function vs set variable
+                  "transform-function-name"
+                ],
+              }
+            ]
+          ],
+          plugins: [
+            [
+              'transform-amd-to-es6',
+              {
+                amdToES6Modules: true,
+                amdDefineES6Modules: true,
+                defineFunctionName: '__AMD',
+                defineModuleId: (moduleId) => moduleId.replace(convertSlashes,'/').replace(basePath, '').replace('\.js', '')
               }
             ]
           ]
