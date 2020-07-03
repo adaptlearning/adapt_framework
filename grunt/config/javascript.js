@@ -5,6 +5,7 @@ module.exports = function(grunt, options) {
         name: 'core/js/app',
         baseUrl: '<%= sourcedir %>',
         out: '<%= outputdir %>adapt/js/adapt.min.js',
+        cachePath: '<%= outputdir %>.cache',
         // fetch these bower plugins an add them as dependencies to the app.js
         plugins: [
           '<%= sourcedir %>components/*/bower.json',
@@ -57,6 +58,7 @@ module.exports = function(grunt, options) {
         name: 'core/js/app',
         baseUrl: '<%= sourcedir %>',
         out: '<%= outputdir %>adapt/js/adapt.min.js',
+        cachePath: '<%= outputdir %>.cache',
         // fetch these bower plugins an add them as dependencies to the app.js
         plugins: [
           '<%= sourcedir %>components/*/bower.json',

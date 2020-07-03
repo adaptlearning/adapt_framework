@@ -15,10 +15,10 @@ module.exports = function(grunt) {
   const disableCache = process.argv.includes('--disable-cache');
   let cache;
 
-  const restoreCache = async (basePath) => {
-    if (disableCache || cache || !fs.existsSync('./build/.cache')) return;
+  const restoreCache = async (cachePath, basePath) => {
+    if (disableCache || cache || !fs.existsSync(cachePath)) return;
     await new Promise((resolve, reject) => {
-      const buffer = fs.readFileSync('./build/.cache');
+      const buffer = fs.readFileSync(cachePath);
       unzip(buffer, (err, buffer) => {
         if (err) {
           console.error('An error occurred restoring rollup cache:', err);
@@ -35,7 +35,7 @@ module.exports = function(grunt) {
     });
   };
 
-  const saveCache = async (basePath, bundleCache) => {
+  const saveCache = async (cachePath, basePath, bundleCache) => {
     if (disableCache) return;
     cache = bundleCache;
     await new Promise((resolve, reject) => {
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
           reject();
           return;
         }
-        fs.writeFileSync('./build/.cache', buffer);
+        fs.writeFileSync(cachePath, buffer);
         resolve();
       });
     });
@@ -60,7 +60,7 @@ module.exports = function(grunt) {
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(process.cwd() + '/' + options.baseUrl).replace(convertSlashes,'/')  + '/';
-    await restoreCache(basePath);
+    await restoreCache(options.cachePath, basePath);
 
     // Make src/plugins.js to attach the plugins dynamically
     if (!fs.existsSync(options.pluginsPath)) {
@@ -238,7 +238,7 @@ window.__AMD = function(id, value) {
 
     try {
       const bundle = await rollup.rollup(inputOptions);
-      await saveCache(basePath, bundle.cache);
+      await saveCache(options.cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
     } catch (err) {
       console.log(err);
