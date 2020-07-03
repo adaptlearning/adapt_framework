@@ -1,10 +1,10 @@
 {
   "include": [
-		"src/core/js/**/*.js",
-		"src/*/*/js/**/*.js"
+    "src/core/js/**/*.js",
+    "src/*/*/js/**/*.js"
   ],
   "compilerOptions": {
-  "module": "amd",
+    "module": "amd",
     "target": "es2015",
     "baseUrl": "src/"
   },
