@@ -12,11 +12,11 @@ module.exports = function(grunt) {
   const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
   const { deflate, unzip, constants } = require('zlib');
 
-  const disableCache = process.argv.includes('--disable-cache');
+  const isDisableCache = process.argv.includes('--disable-cache');
   let cache;
 
   const restoreCache = async (cachePath, basePath) => {
-    if (disableCache || cache || !fs.existsSync(cachePath)) return;
+    if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
     await new Promise((resolve, reject) => {
       const buffer = fs.readFileSync(cachePath);
       unzip(buffer, (err, buffer) => {
@@ -36,7 +36,7 @@ module.exports = function(grunt) {
   };
 
   const saveCache = async (cachePath, basePath, bundleCache) => {
-    if (!disableCache) {
+    if (!isDisableCache) {
       cache = bundleCache;
     }
     await new Promise((resolve, reject) => {
@@ -56,7 +56,36 @@ module.exports = function(grunt) {
     });
   };
 
+  const logPrettyError = (err) => {
+    let hasOutput = false;
+    if (err.loc) {
+      // Code error
+      const cwd = process.cwd().replace(convertSlashes, '/') + '/';
+      switch (err.plugin) {
+        case 'babel':
+          err.frame = err.message.substr(err.message.indexOf('\n')+1);
+          err.message = err.message.substr(0, err.message.indexOf('\n')).slice(2).replace(/^([^:]*): /, '');
+          break;
+        default:
+          hasOutput = true;
+          console.log('error', err);
+      }
+      if (!hasOutput) {
+        grunt.log.error(err.message);
+        grunt.log.error(`Line: ${err.loc.line}, Col: ${err.loc.column}, File: ${err.id.replace(cwd, '')}`);
+        console.log(err.frame);
+        hasOutput = true;
+      }
+    }
+    if (!hasOutput) {
+      cache = null;
+      saveCache(options.cachePath, basePath, cache);
+      console.log(err);
+    }
+  };
+
   grunt.registerMultiTask('javascript', 'Compile JavaScript files', async function() {
+    grunt.log.ok(`Cache disabled (--disable-cache): ${isDisableCache}`);
     const done = this.async();
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
@@ -259,7 +288,7 @@ window.__AMD = function(id, value) {
       await saveCache(options.cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
     } catch (err) {
-      console.log(err);
+      logPrettyError(err);
     }
 
     // Remove old sourcemap if no longer required
