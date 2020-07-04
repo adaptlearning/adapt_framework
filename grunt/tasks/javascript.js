@@ -56,7 +56,7 @@ module.exports = function(grunt) {
     });
   };
 
-  const logPrettyError = (err) => {
+  const logPrettyError = (err, cachePath, basePath) => {
     let hasOutput = false;
     if (err.loc) {
       // Code error
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
     }
     if (!hasOutput) {
       cache = null;
-      saveCache(options.cachePath, basePath, cache);
+      saveCache(cachePath, basePath, cache);
       console.log(err);
     }
   };
@@ -288,7 +288,7 @@ window.__AMD = function(id, value) {
       await saveCache(options.cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
     } catch (err) {
-      logPrettyError(err);
+      logPrettyError(err, options.cachePath, basePath);
     }
 
     // Remove old sourcemap if no longer required
