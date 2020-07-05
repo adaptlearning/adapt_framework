@@ -22,7 +22,7 @@ define([
   Object.assign(BlockView, {
     childContainer: '.component__container',
     type: 'block',
-    template: 'block'
+    template: 'block.jsx'
   });
 
   Adapt.register('block', { view: BlockView });

@@ -17,7 +17,7 @@ define([
   Object.assign(PageView, {
     childContainer: '.article__container',
     type: 'page',
-    template: 'page'
+    template: 'page.jsx'
   });
 
   Adapt.register('page', { view: PageView });

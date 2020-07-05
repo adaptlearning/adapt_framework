@@ -22,7 +22,7 @@ define([
   Object.assign(ArticleView, {
     childContainer: '.block__container',
     type: 'article',
-    template: 'article'
+    template: 'article.jsx'
   });
 
   Adapt.register('article', { view: ArticleView });

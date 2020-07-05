@@ -12,8 +12,11 @@ module.exports = function(grunt) {
   const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
   const { deflate, unzip, constants } = require('zlib');
 
+  const cwd = process.cwd().replace(convertSlashes, '/') + '/';
   const isDisableCache = process.argv.includes('--disable-cache');
   let cache;
+
+  const extensions = ['.js', '.jsx'];
 
   const restoreCache = async (cachePath, basePath) => {
     if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
@@ -33,6 +36,44 @@ module.exports = function(grunt) {
         resolve();
       });
     });
+  };
+
+  const checkCache = function(invalidate) {
+    if (!cache) return;
+    const idHash = {};
+    const dependents = {};
+    const missing = {};
+    cache.modules.forEach(mod => {
+      const moduleId = mod.id;
+      const isRollupHelper = (moduleId[0] === "\u0000");
+      if (isRollupHelper) {
+        // Ignore as injected rollup module
+        return null;
+      }
+      mod.dependencies.forEach(depId => {
+        dependents[depId] = dependents[depId] || [];
+        dependents[depId].push(moduleId);
+      });
+      if (!fs.existsSync(moduleId)) {
+        grunt.log.error(`Cache missing file: ${moduleId.replace(cwd, '')}`);
+        missing[moduleId] = true;
+        return false;
+      }
+      if (invalidate && invalidate.includes(moduleId)) {
+        grunt.log.ok(`Cache skipping file: ${moduleId.replace(cwd, '')}`);
+        return false;
+      }
+      idHash[moduleId] = mod;
+      return true;
+    });
+    Object.keys(missing).forEach(moduleId => {
+      if (!dependents[moduleId]) return;
+      dependents[moduleId].forEach(depId => {
+        grunt.log.ok(`Cache invalidating file: ${depId.replace(cwd, '')}`);
+        delete idHash[depId];
+      });
+    });
+    cache.modules = Object.values(idHash);
   };
 
   const saveCache = async (cachePath, basePath, bundleCache) => {
@@ -60,7 +101,6 @@ module.exports = function(grunt) {
     let hasOutput = false;
     if (err.loc) {
       // Code error
-      const cwd = process.cwd().replace(convertSlashes, '/') + '/';
       switch (err.plugin) {
         case 'babel':
           err.frame = err.message.substr(err.message.indexOf('\n')+1);
@@ -89,12 +129,13 @@ module.exports = function(grunt) {
     const done = this.async();
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
-    const basePath = path.resolve(process.cwd() + '/' + options.baseUrl).replace(convertSlashes,'/')  + '/';
+    const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/')  + '/';
     await restoreCache(options.cachePath, basePath);
+    const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
     // Make src/plugins.js to attach the plugins dynamically
-    if (!fs.existsSync(options.pluginsPath)) {
-      fs.writeFileSync(options.pluginsPath, '');
+    if (!fs.existsSync(pluginsPath)) {
+      fs.writeFileSync(pluginsPath, '');
     }
 
     // Collect all plugin entry points for injection
@@ -115,18 +156,31 @@ module.exports = function(grunt) {
       });
     }
 
+    // Collect react templates
+    const reactTemplatePaths = [];
+    options.reactTemplates.forEach(pattern => {
+      grunt.file.expand({
+        filter: options.pluginsFilter
+      }, pattern).forEach(function(templatePath) {
+        reactTemplatePaths.push(templatePath.replace(convertSlashes, '/'));
+      });
+    });
+
     // Process remapping and external model configurations
     const mapParts = Object.keys(options.map);
     const externalParts = Object.keys(options.external);
 
     const findFile = function(filename) {
-      const endsWithJS = filename.endsWith('.js');
-      filename = filename.replace(convertSlashes,'/');
-      if (!endsWithJS) {
-        if (fs.existsSync(filename + ".js" )) filename += ".js";
+      filename = filename.replace(convertSlashes, '/');
+      const hasValidExtension = extensions.includes(path.parse(filename).ext);
+      if (!hasValidExtension) {
+        const ext = extensions.find(ext => fs.existsSync(filename + ext)) || '';
+        filename += ext;
       }
       return filename;
     };
+
+    const umdImports = options.umdImports.map(filename => findFile(path.resolve(basePath, filename)));
 
     // Rework modules names and inject plugins
     const adaptLoader = function() {
@@ -174,14 +228,14 @@ module.exports = function(grunt) {
           const isES6Import = !fs.existsSync(moduleId);
           if (isES6Import) {
             // ES6 imports start inside ./src so need correcting
-            const filename = findFile(path.resolve(process.cwd() + '/' + options.baseUrl + moduleId));
+            const filename = findFile(path.resolve(cwd, options.baseUrl, moduleId));
             return {
               id: filename,
               external: false
             };
           }
           // Normalize all other absolute paths as conflicting slashes will load twice
-          const filename = findFile(moduleId);
+          const filename = findFile(path.resolve(cwd, moduleId));
           return {
             id: filename,
             external: false
@@ -208,6 +262,8 @@ module.exports = function(grunt) {
           // Dynamically construct plugins.js with plugin dependencies
           code = `define([${pluginPaths.map(filename => {
             return `"${filename}"`;
+          }).join(',')}, ${reactTemplatePaths.map(filename => {
+            return `"${filename}"`;
           }).join(',')}], function() {});`;
           return code;
         }
@@ -223,10 +279,20 @@ module.exports = function(grunt) {
         adaptInjectPlugins({}),
         babel({
           babelHelpers: 'bundled',
+          extensions,
           minified: false,
           compact: false,
           comments: false,
+          exclude: [
+            "**/node_modules/**"
+          ],
           presets: [
+            [
+              '@babel/preset-react',
+              {
+                runtime: 'classic'
+              }
+            ],
             [
               '@babel/preset-env',
               {
@@ -247,7 +313,21 @@ module.exports = function(grunt) {
                 amdToES6Modules: true,
                 amdDefineES6Modules: true,
                 defineFunctionName: '__AMD',
-                defineModuleId: (moduleId) => moduleId.replace(convertSlashes,'/').replace(basePath, '').replace('\.js', '')
+                defineModuleId: (moduleId) => moduleId.replace(convertSlashes,'/').replace(basePath, '').replace('\.js', ''),
+                excludes: [
+                  '**/templates/**/*.jsx'
+                ]
+              }
+            ],
+            [
+              'transform-react-templates',
+              {
+                includes: [
+                  '**/templates/**/*.jsx'
+                ],
+                importRegisterFunctionFromModule: path.resolve(basePath, 'core/js/reactHelpers.js').replace(convertSlashes, '/'),
+                registerFunctionName: 'register',
+                registerTemplateName: (moduleId) => path.parse(moduleId).name
               }
             ]
           ]
@@ -255,6 +335,16 @@ module.exports = function(grunt) {
       ],
       cache
     };
+
+    const umdImport = () => {
+      return umdImports.map(filename => {
+        let code = fs.readFileSync(filename).toString();
+        code = code
+          .replace(`require("object-assign")`, 'Object.assign')
+          .replace(`define.amd`, 'define.noop');
+        return code;
+      }).join('\n');
+    }
 
     const outputOptions = {
       file: options.out,
@@ -267,6 +357,7 @@ module.exports = function(grunt) {
           allowAllFormats: true
         })
       ].filter(Boolean),
+      intro: umdImport(),
       footer: `// Allow ES export default to be exported as amd modules
 window.__AMD = function(id, value) {
   window.define(id, function() { return value; }); // define for external use
@@ -284,6 +375,7 @@ window.__AMD = function(id, value) {
     };
 
     try {
+      checkCache([pluginsPath]);
       const bundle = await rollup.rollup(inputOptions);
       await saveCache(options.cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
