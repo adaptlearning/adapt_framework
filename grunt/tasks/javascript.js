@@ -12,8 +12,11 @@ module.exports = function(grunt) {
   const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
   const { deflate, unzip, constants } = require('zlib');
 
+  const cwd = process.cwd().replace(convertSlashes, '/') + '/';
   const isDisableCache = process.argv.includes('--disable-cache');
   let cache;
+
+  const extensions = ['.js'];
 
   const restoreCache = async (cachePath, basePath) => {
     if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
@@ -33,6 +36,44 @@ module.exports = function(grunt) {
         resolve();
       });
     });
+  };
+
+  const checkCache = function(invalidate) {
+    if (!cache) return;
+    const idHash = {};
+    const dependents = {};
+    const missing = {};
+    cache.modules.forEach(mod => {
+      const moduleId = mod.id;
+      const isRollupHelper = (moduleId[0] === "\u0000");
+      if (isRollupHelper) {
+        // Ignore as injected rollup module
+        return null;
+      }
+      mod.dependencies.forEach(depId => {
+        dependents[depId] = dependents[depId] || [];
+        dependents[depId].push(moduleId);
+      });
+      if (!fs.existsSync(moduleId)) {
+        grunt.log.error(`Cache missing file: ${moduleId.replace(cwd, '')}`);
+        missing[moduleId] = true;
+        return false;
+      }
+      if (invalidate && invalidate.includes(moduleId)) {
+        grunt.log.ok(`Cache skipping file: ${moduleId.replace(cwd, '')}`);
+        return false;
+      }
+      idHash[moduleId] = mod;
+      return true;
+    });
+    Object.keys(missing).forEach(moduleId => {
+      if (!dependents[moduleId]) return;
+      dependents[moduleId].forEach(depId => {
+        grunt.log.ok(`Cache invalidating file: ${depId.replace(cwd, '')}`);
+        delete idHash[depId];
+      });
+    });
+    cache.modules = Object.values(idHash);
   };
 
   const saveCache = async (cachePath, basePath, bundleCache) => {
@@ -60,7 +101,6 @@ module.exports = function(grunt) {
     let hasOutput = false;
     if (err.loc) {
       // Code error
-      const cwd = process.cwd().replace(convertSlashes, '/') + '/';
       switch (err.plugin) {
         case 'babel':
           err.frame = err.message.substr(err.message.indexOf('\n')+1);
@@ -89,12 +129,13 @@ module.exports = function(grunt) {
     const done = this.async();
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
-    const basePath = path.resolve(process.cwd() + '/' + options.baseUrl).replace(convertSlashes,'/')  + '/';
+    const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/')  + '/';
     await restoreCache(options.cachePath, basePath);
+    const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
     // Make src/plugins.js to attach the plugins dynamically
-    if (!fs.existsSync(options.pluginsPath)) {
-      fs.writeFileSync(options.pluginsPath, '');
+    if (!fs.existsSync(pluginsPath)) {
+      fs.writeFileSync(pluginsPath, '');
     }
 
     // Collect all plugin entry points for injection
@@ -120,10 +161,11 @@ module.exports = function(grunt) {
     const externalParts = Object.keys(options.external);
 
     const findFile = function(filename) {
-      const endsWithJS = filename.endsWith('.js');
-      filename = filename.replace(convertSlashes,'/');
-      if (!endsWithJS) {
-        if (fs.existsSync(filename + ".js" )) filename += ".js";
+      filename = filename.replace(convertSlashes, '/');
+      const hasValidExtension = extensions.includes(path.parse(filename).ext);
+      if (!hasValidExtension) {
+        const ext = extensions.find(ext => fs.existsSync(filename + ext)) || '';
+        filename += ext;
       }
       return filename;
     };
@@ -174,14 +216,14 @@ module.exports = function(grunt) {
           const isES6Import = !fs.existsSync(moduleId);
           if (isES6Import) {
             // ES6 imports start inside ./src so need correcting
-            const filename = findFile(path.resolve(process.cwd() + '/' + options.baseUrl + moduleId));
+            const filename = findFile(path.resolve(cwd, options.baseUrl, moduleId));
             return {
               id: filename,
               external: false
             };
           }
           // Normalize all other absolute paths as conflicting slashes will load twice
-          const filename = findFile(moduleId);
+          const filename = findFile(path.resolve(cwd, moduleId));
           return {
             id: filename,
             external: false
@@ -223,9 +265,13 @@ module.exports = function(grunt) {
         adaptInjectPlugins({}),
         babel({
           babelHelpers: 'bundled',
+          extensions,
           minified: false,
           compact: false,
           comments: false,
+          exclude: [
+            "**/node_modules/**"
+          ],
           presets: [
             [
               '@babel/preset-env',
@@ -284,6 +330,7 @@ window.__AMD = function(id, value) {
     };
 
     try {
+      checkCache([pluginsPath]);
       const bundle = await rollup.rollup(inputOptions);
       await saveCache(options.cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
