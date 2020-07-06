@@ -69,6 +69,7 @@ module.exports = function(grunt) {
     Object.keys(missing).forEach(moduleId => {
       if (!dependents[moduleId]) return;
       dependents[moduleId].forEach(depId => {
+        if (!idHash[depId]) return;
         grunt.log.ok(`Cache invalidating file: ${depId.replace(cwd, '')}`);
         delete idHash[depId];
       });
