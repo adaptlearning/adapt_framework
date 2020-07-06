@@ -2,7 +2,8 @@ import { compile, classes, helper, html } from 'core/js/reactHelpers';
 
 export default function(view, data) {
   // Create a reference to an un-controller view container
-  view.jsHeading = view.jsHeading || React.createRef();
+  view.jsxHeading = view.jsxHeading || React.createRef();
+  view.jsxComponentDescription = view.jsxComponentDescription || React.createRef();
   const {
     displayTitle,
     body,
@@ -18,7 +19,7 @@ export default function(view, data) {
         <div className={classes('component__title', `${type}__title`)}>
 
           {!_disableAccessibilityState &&
-          <div className="js-heading" ref={view.jsHeading}></div>
+          <div className="js-heading" ref={view.jsxHeading}></div>
           }
 
           <div className={classes('component__title-inner', `${type}__title-inner`)} aria-hidden={!_disableAccessibilityState}>
@@ -28,7 +29,7 @@ export default function(view, data) {
         </div>
         }
 
-        {html(helper('component_description', data))}
+        {html(helper('component_description', data), view.jsxComponentDescription)}
 
         {body &&
         <div className={classes('component__body', `${type}__body`)}>
