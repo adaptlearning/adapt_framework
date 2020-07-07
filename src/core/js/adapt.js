@@ -406,10 +406,6 @@ define([
           '_isReady': false,
           '_isRendered': false
         });
-        currentView.model.set({
-          '_isReady': false,
-          '_isRendered': false
-        });
       }
       this.trigger('preRemove', currentView);
       await this.wait.queue();
