@@ -23,7 +23,7 @@
     "displayTitle": {
       "type": "string",
       "required": false,
-      "default": "New Block Title",
+      "default": "",
       "inputType": "DisplayTitle",
       "validators": [],
       "help": "When viewing a block - this is the title that will be displayed on the page",
