@@ -693,48 +693,52 @@ define([
     /**
      * Clones this model and all managed children returning a new branch.
      * Assign new unique ids to each cloned model.
-     * Adds clone to Adapt.data and to their _parentId child lists.
-     * @param {Object} [set] Attributes to be set on the root clone
-     * @param {Object} [setOnChildren] Attributes to be set on the children clones.
-     * @param {Function} [modifier] A callback function for each child to allow further modifications
+     * @param {Function} [modifier] A callback function for each child to allow for custom modifications
      * @returns {AdaptModel}
      */
-    deepClone(set = {}, setOnChildren = {}, modifier = null) {
-      // Shallow clone the JSON and set overrides
-      const json = Object.assign({}, this.toJSON(), set);
+    deepClone(modifier = null) {
       // Fetch the class
       const ModelClass = this.constructor;
-      const hasId = Boolean(json._id);
-      if (hasId) {
-        // Create a unique id if needed
-        const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
-        json._id = `${cid}_${json._id}`;
-      }
       // Clone the model
-      const clonedModel = new ModelClass(json);
-      // Add cloned model to Adapt.data for Adapt.findById resolution
-      hasId && Adapt.data.add(clonedModel);
-      // Clone any children
-      this.hasManagedChildren && this.getChildren().each(child => {
-        if (!child.deepClone) {
-          throw new Error('Cannot deepClone child.');
-        }
-        let set = setOnChildren;
-        if (hasId) {
-          // Pass through the new cloned parent id
-          set = Object.assign({}, setOnChildren, {
-            _parentId: json._id
-          });
-        }
-        return child.deepClone(set, setOnChildren, modifier);
-      });
-      if (hasId) {
-        // Add cloned model to its parent for findDescendants resolution
-        const parentModel = clonedModel.getParent();
-        parentModel && parentModel.getChildren().add(clonedModel);
+      const clonedModel = new ModelClass(this.toJSON());
+      // Run the custom modifier on the clone
+      if (modifier) {
+        modifier(clonedModel, this);
       }
-      // Setup the model after all the children have been added
-      modifier && modifier(this, clonedModel);
+      let id = this.get('_id');
+      const hasId = Boolean(id);
+      const shouldAssignUniqueId = (clonedModel.get('_id') === id);
+      if (hasId && shouldAssignUniqueId) {
+        // Create a unique id if none was set by the modifier
+        const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
+        id = `${id}_${cid}`;
+        clonedModel.set('_id', id);
+      }
+      // Add the cloned model to Adapt.data for Adapt.findById resolution
+      if (hasId) {
+        Adapt.data.add(clonedModel);
+      }
+      // Clone any children
+      if (this.hasManagedChildren) {
+        this.getChildren().each(child => {
+          if (!child.deepClone) {
+            throw new Error('Cannot deepClone child.');
+          }
+          child.deepClone((clone, child) => {
+            if (hasId) {
+              // Set the cloned child parent id
+              clone.set('_parentId', id);
+              // Add the cloned child to its parent for model.findDescendants resolution
+              clone.getParent().getChildren().add(clone);
+            }
+            if (modifier) {
+              // Run the custom modifier function on the cloned child
+              modifier(clone, child);
+            }
+          });
+        });
+      }
+      // Setup the cloned model after setting the id, the parent and adding any children
       clonedModel.setupModel();
       return clonedModel;
     }
