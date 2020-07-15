@@ -15,8 +15,9 @@ export const templates = {};
  * @param {string} html
  */
 export function html(html, ref = null) {
-  const node = html ? HTMLReactParser(html) : '';
+  let node = html ? HTMLReactParser(html) : '';
   if (ref) {
+    node = Object.assign({}, node);
     node.ref = ref;
   }
   return node;

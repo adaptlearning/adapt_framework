@@ -23,7 +23,7 @@ export default function(view, data) {
           }
 
           <div className={classes('component__title-inner', `${type}__title-inner`)} aria-hidden={!_disableAccessibilityState}>
-            {html(compile(displayTitle, data))}
+            {`\n${html(compile(displayTitle, data))}\n`}
           </div>
 
         </div>
