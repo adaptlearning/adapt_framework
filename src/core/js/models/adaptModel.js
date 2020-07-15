@@ -728,8 +728,6 @@ define([
             if (hasId) {
               // Set the cloned child parent id
               clone.set('_parentId', id);
-              // Add the cloned child to its parent for model.findDescendants resolution
-              clone.getParent().getChildren().add(clone);
             }
             if (modifier) {
               // Run the custom modifier function on the cloned child
@@ -738,6 +736,8 @@ define([
           });
         });
       }
+      // Add the cloned child to its parent for model.findDescendants resolution
+      clonedModel.getParent().getChildren().add(clonedModel);
       // Setup the cloned model after setting the id, the parent and adding any children
       clonedModel.setupModel();
       return clonedModel;
