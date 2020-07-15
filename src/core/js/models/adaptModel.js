@@ -736,7 +736,7 @@ define([
           });
         });
       }
-      // Add the cloned child to its parent for model.findDescendants resolution
+      // Add the cloned model to its parent for model.findDescendants resolution
       clonedModel.getParent().getChildren().add(clonedModel);
       // Setup the cloned model after setting the id, the parent and adding any children
       clonedModel.setupModel();
