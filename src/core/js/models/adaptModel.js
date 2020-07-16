@@ -741,14 +741,14 @@ define([
       if (modifier) {
         modifier(clonedModel, this);
       }
-      let id = this.get('_id');
-      const hasId = Boolean(id);
-      const shouldAssignUniqueId = (clonedModel.get('_id') === id);
+      let clonedId = clonedModel.get('_id');
+      const hasId = Boolean(clonedId);
+      const shouldAssignUniqueId = (this.get('_id') === clonedId);
       if (hasId && shouldAssignUniqueId) {
         // Create a unique id if none was set by the modifier
         const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
-        id = `${id}_${cid}`;
-        clonedModel.set('_id', id);
+        clonedId = `${id}_${cid}`;
+        clonedModel.set('_id', clonedId);
       }
       // Add the cloned model to Adapt.data for Adapt.findById resolution
       if (hasId) {
@@ -763,7 +763,7 @@ define([
           child.deepClone((clone, child) => {
             if (hasId) {
               // Set the cloned child parent id
-              clone.set('_parentId', id);
+              clone.set('_parentId', clonedId);
             }
             if (modifier) {
               // Run the custom modifier function on the cloned child
