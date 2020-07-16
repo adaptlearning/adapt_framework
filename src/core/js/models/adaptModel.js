@@ -62,11 +62,6 @@ define([
       ];
     }
 
-    initialize() {
-      // Wait until data is loaded before setting up model
-      this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
-    }
-
     setupModel() {
       if (this.hasManagedChildren) {
         this.setupChildListeners();
@@ -729,6 +724,59 @@ define([
       this.checkCompletionStatus();
 
       this.checkLocking();
+    }
+
+    /**
+     * Clones this model and all managed children returning a new branch.
+     * Assign new unique ids to each cloned model.
+     * @param {Function} [modifier] A callback function for each child to allow for custom modifications
+     * @returns {AdaptModel}
+     */
+    deepClone(modifier = null) {
+      // Fetch the class
+      const ModelClass = this.constructor;
+      // Clone the model
+      const clonedModel = new ModelClass(this.toJSON());
+      // Run the custom modifier on the clone
+      if (modifier) {
+        modifier(clonedModel, this);
+      }
+      let clonedId = clonedModel.get('_id');
+      const hasId = Boolean(clonedId);
+      const shouldAssignUniqueId = (this.get('_id') === clonedId);
+      if (hasId && shouldAssignUniqueId) {
+        // Create a unique id if none was set by the modifier
+        const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
+        clonedId = `${clonedId}_${cid}`;
+        clonedModel.set('_id', clonedId);
+      }
+      // Add the cloned model to Adapt.data for Adapt.findById resolution
+      if (hasId) {
+        Adapt.data.add(clonedModel);
+      }
+      // Clone any children
+      if (this.hasManagedChildren) {
+        this.getChildren().each(child => {
+          if (!child.deepClone) {
+            throw new Error('Cannot deepClone child.');
+          }
+          child.deepClone((clone, child) => {
+            if (hasId) {
+              // Set the cloned child parent id
+              clone.set('_parentId', clonedId);
+            }
+            if (modifier) {
+              // Run the custom modifier function on the cloned child
+              modifier(clone, child);
+            }
+          });
+        });
+      }
+      // Add the cloned model to its parent for model.findDescendants resolution
+      clonedModel.getParent().getChildren().add(clonedModel);
+      // Setup the cloned model after setting the id, the parent and adding any children
+      clonedModel.setupModel();
+      return clonedModel;
     }
 
     /**
