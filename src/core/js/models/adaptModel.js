@@ -747,7 +747,7 @@ define([
       if (hasId && shouldAssignUniqueId) {
         // Create a unique id if none was set by the modifier
         const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
-        clonedId = `${id}_${cid}`;
+        clonedId = `${clonedId}_${cid}`;
         clonedModel.set('_id', clonedId);
       }
       // Add the cloned model to Adapt.data for Adapt.findById resolution
