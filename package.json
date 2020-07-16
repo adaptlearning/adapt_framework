@@ -1,6 +1,6 @@
 {
     "name": "adapt_framework",
-    "version": "5.5.0",
+    "version": "5.6.1",
     "description": "Adapt Learning output framework",
     "repository": {
         "type": "git",
@@ -23,7 +23,6 @@
         "chalk": "^2.4.1",
         "columnify": "^1.5.4",
         "csv": "^5.0.0",
-        "fast-async": "^7.0.6",
         "fs-extra": "^8.1.0",
         "globs": "^0.1.4",
         "grunt": "^1.0.3",

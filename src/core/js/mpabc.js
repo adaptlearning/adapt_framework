@@ -45,28 +45,28 @@ define([
           Adapt.log.deprecated('Adapt.contentObjects, please use Adapt.data instead');
           return contentObjects;
         },
-        set: value => contentObjects = value
+        set: value => (contentObjects = value)
       });
       Object.defineProperty(Adapt, 'articles', {
         get: () => {
           Adapt.log.deprecated('Adapt.articles, please use Adapt.data instead');
           return articles;
         },
-        set: value => articles = value
+        set: value => (articles = value)
       });
       Object.defineProperty(Adapt, 'blocks', {
         get: () => {
           Adapt.log.deprecated('Adapt.blocks, please use Adapt.data instead');
           return blocks;
         },
-        set: value => blocks = value
+        set: value => (blocks = value)
       });
       Object.defineProperty(Adapt, 'components', {
         get: () => {
           Adapt.log.deprecated('Adapt.components, please use Adapt.data instead');
           return components;
         },
-        set: value => components = value
+        set: value => (components = value)
       });
     }
 

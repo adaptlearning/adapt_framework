@@ -218,9 +218,7 @@
             "_isEnabled": true,
             "_button": {
                 "_isEnabled": true,
-                "text": "Continue",
-                "startText": "Continue",
-                "finalText": "Continue"
+                "text": "Show results"
             }
         },
         "_trackingId": 18

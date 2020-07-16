@@ -324,6 +324,14 @@ define([
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
 
+    /** @type {boolean} */
+    get shouldShowMarking() {
+      if (!this.get('_canShowMarking')) {
+        return false;
+      }
+
+      return this.get('_isInteractionComplete');
+    }
   }
 
   return QuestionModel;
