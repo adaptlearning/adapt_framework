@@ -208,7 +208,10 @@ module.exports = function(grunt) {
         process.exit();
       }
 
+      const isDevelopmentBuild = (process.argv.includes('dev') || process.argv.includes('server-build:dev'));
+
       var data = {
+        type: isDevelopmentBuild ? 'development' : 'production',
         root: root,
         sourcedir: sourcedir,
         outputdir: outputdir,
