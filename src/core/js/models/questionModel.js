@@ -47,9 +47,9 @@ define([
       this.setupDefaultSettings();
       if (Adapt.get('_isStarted')) {
         this.onAdaptInitialize();
-      } else {
-        this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
+        return;
       }
+      this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
     }
 
     // Calls default methods to setup on questions
