@@ -36,7 +36,7 @@ module.exports = function(grunt) {
       grunt.log.writeln('');
     }
     if (productionExcludes) {
-      let count = productionExcludes.length;
+      const count = productionExcludes.length;
       grunt.log.writeln('The following will be excluded from the build in production:');
       for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + productionExcludes[i]); }
       grunt.log.writeln('');
