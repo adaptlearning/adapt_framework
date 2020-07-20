@@ -45,6 +45,10 @@ define([
 
     init() {
       this.setupDefaultSettings();
+      if (Adapt.get('_isStarted')) {
+        this.onAdaptInitialize();
+        return;
+      }
       this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
     }
 
@@ -320,6 +324,14 @@ define([
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
 
+    /** @type {boolean} */
+    get shouldShowMarking() {
+      if (!this.get('_canShowMarking')) {
+        return false;
+      }
+
+      return this.get('_isInteractionComplete');
+    }
   }
 
   return QuestionModel;

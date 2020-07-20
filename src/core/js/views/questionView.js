@@ -39,7 +39,6 @@ define([
       this._runModelCompatibleFunction('setupDefaultSettings');
       // Blank method for setting up questions before rendering
       this.setupQuestion();
-
     }
 
     // Used in the question view to disabled the question when _isEnabled has been set to false
@@ -66,8 +65,13 @@ define([
     // Used to check if the question should reset on revisit
     checkIfResetOnRevisit() {
 
-      const isResetOnRevisit = this.model.get('_isResetOnRevisit');
-
+      let isResetOnRevisit = this.model.get('_isResetOnRevisit');
+      
+      // Convert AAT "false" string to boolean
+      isResetOnRevisit = (isResetOnRevisit === "false") ? 
+        false :
+        isResetOnRevisit;
+      
       // If reset is enabled set defaults
       // Call blank method for question to handle
       if (isResetOnRevisit) {
@@ -185,12 +189,14 @@ define([
       // Used by the question to set the score on the model
       this._runModelCompatibleFunction('setScore');
 
-      // Used by the question to display markings on the component
-      this.showMarking();
-
       // Used to check if the question is complete
       // Triggers setCompletionStatus and adds class to widget
       this._runModelCompatibleFunction('checkQuestionCompletion');
+
+      // Used by the question to display markings on the component
+      if (this.model.shouldShowMarking) {
+        this.showMarking();
+      }
 
       this.recordInteraction();
 
@@ -307,7 +313,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.model.get('_canShowMarking') && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.model.shouldShowMarking && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 

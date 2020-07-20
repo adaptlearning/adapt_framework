@@ -6,6 +6,25 @@ define([
 
   class AdaptModel extends Backbone.Model {
 
+    toJSON() {
+      // Perform shallow clone
+      const json = _.clone(this.attributes);
+      // Remove deprecated values as they are not true json
+      delete json._children;
+      delete json._parent;
+      // Perform deep clone
+      return $.extend(true, {}, json);
+    }
+
+    get(name) {
+      switch (name) {
+        case '_parent':
+        case '_children':
+          Adapt.log.deprecated(`Use model.getChildren() or model.getParent() instead of model.get('_children') or model.get('_parent')`);
+      }
+      return super.get(name);
+    }
+
     defaults() {
       return {
         _canShowFeedback: true,
@@ -43,11 +62,6 @@ define([
         'change:_isInteractionComplete',
         'change:_isActive'
       ];
-    }
-
-    initialize() {
-      // Wait until data is loaded before setting up model
-      this.listenToOnce(Adapt, 'app:dataLoaded', this.setupModel);
     }
 
     setupModel() {
@@ -511,7 +525,9 @@ define([
     }
 
     getChildren() {
-      if (this.get('_children')) return this.get('_children');
+      if (this._childrenCollection) {
+        return this._childrenCollection;
+      }
 
       let childrenCollection;
 
@@ -519,6 +535,7 @@ define([
         childrenCollection = new Backbone.Collection();
       } else {
         const id = this.get('_id');
+        // Look up child by _parentId from Adapt.data
         const children = Adapt.data.filter(model => model.get('_parentId') === id);
         childrenCollection = new Backbone.Collection(children);
       }
@@ -533,9 +550,14 @@ define([
         childrenCollection.sort();
       }
 
-      this.set('_children', childrenCollection);
+      this.setChildren(childrenCollection);
+      return this._childrenCollection;
+    }
 
-      return childrenCollection;
+    setChildren(children) {
+      this._childrenCollection = children;
+      // Setup deprecated reference
+      this.set('_children', children);
     }
 
     getAvailableChildModels() {
@@ -545,12 +567,21 @@ define([
     }
 
     getParent() {
-      if (this.get('_parent')) return this.get('_parent');
+      if (this._parentModel) {
+        return this._parentModel;
+      }
       const parentId = this.get('_parentId');
       if (!parentId) return;
-      const parent = Adapt.findById(parentId);
-      this.set('_parent', parent);
-      return parent;
+      // Look up parent by id from Adapt.data
+      this.setParent(Adapt.findById(parentId));
+      return this._parentModel;
+    }
+
+    setParent(parent) {
+      this._parentModel = parent;
+      this.set('_parentId', this._parentModel.get('_id'));
+      // Set up deprecated reference
+      this.set('_parent', this._parentModel);
     }
 
     getAncestorModels(shouldIncludeChild) {
@@ -722,6 +753,59 @@ define([
       }
       // If reset is enabled set defaults
       this.reset(isResetOnRevisit);
+    }
+
+    /**
+     * Clones this model and all managed children returning a new branch.
+     * Assign new unique ids to each cloned model.
+     * @param {Function} [modifier] A callback function for each child to allow for custom modifications
+     * @returns {AdaptModel}
+     */
+    deepClone(modifier = null) {
+      // Fetch the class
+      const ModelClass = this.constructor;
+      // Clone the model
+      const clonedModel = new ModelClass(this.toJSON());
+      // Run the custom modifier on the clone
+      if (modifier) {
+        modifier(clonedModel, this);
+      }
+      let clonedId = clonedModel.get('_id');
+      const hasId = Boolean(clonedId);
+      const shouldAssignUniqueId = (this.get('_id') === clonedId);
+      if (hasId && shouldAssignUniqueId) {
+        // Create a unique id if none was set by the modifier
+        const cid = _.uniqueId(ModelClass.prototype.cidPrefix || 'c');
+        clonedId = `${clonedId}_${cid}`;
+        clonedModel.set('_id', clonedId);
+      }
+      // Add the cloned model to Adapt.data for Adapt.findById resolution
+      if (hasId) {
+        Adapt.data.add(clonedModel);
+      }
+      // Clone any children
+      if (this.hasManagedChildren) {
+        this.getChildren().each(child => {
+          if (!child.deepClone) {
+            throw new Error('Cannot deepClone child.');
+          }
+          child.deepClone((clone, child) => {
+            if (hasId) {
+              // Set the cloned child parent id
+              clone.set('_parentId', clonedId);
+            }
+            if (modifier) {
+              // Run the custom modifier function on the cloned child
+              modifier(clone, child);
+            }
+          });
+        });
+      }
+      // Add the cloned model to its parent for model.findDescendants resolution
+      clonedModel.getParent().getChildren().add(clonedModel);
+      // Setup the cloned model after setting the id, the parent and adding any children
+      clonedModel.setupModel();
+      return clonedModel;
     }
 
     /**

@@ -41,6 +41,9 @@ define([
 
   }
 
+  // This abstract model needs to registered to support deprecated view-only components
+  Adapt.register('component', { model: ComponentModel });
+
   return ComponentModel;
 
 });

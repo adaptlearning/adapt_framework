@@ -1,5 +1,5 @@
 'use strict';
-// jquery.resize 2017-11-28 https://github.com/adaptlearning/jquery.resize
+// jquery.resize 2020-05-27
 
 (function() {
 
@@ -168,14 +168,14 @@
 
     main: function(force) {
 
-      if (!force && loop.isThrottled()) {
+      if (force !== true && loop.isThrottled()) {
         loop.repeat();
         return;
       }
 
       loop.lastMain = (new Date()).getTime();
 
-      if (!force && loop.hasExpired()) {
+      if (force !== true && loop.hasExpired()) {
         loop.stop();
         return;
       }

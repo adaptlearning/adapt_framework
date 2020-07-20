@@ -6,14 +6,15 @@ define([
   class ItemsComponentModel extends ComponentModel {
 
     toJSON() {
-      const json = _.clone(this.attributes);
-      json._items = this.get('_children').toJSON();
+      const json = super.toJSON();
+      // Make sure _items is updated from child collection
+      json._items = this.getChildren().toJSON();
       return json;
     }
 
     init() {
       this.setUpItems();
-      this.listenTo(this.get('_children'), {
+      this.listenTo(this.getChildren(), {
         'all': this.onAll,
         'change:_isVisited': this.checkCompletionStatus
       });
@@ -31,27 +32,27 @@ define([
       // see https://github.com/adaptlearning/adapt_framework/issues/2480
       const items = this.get('_items') || [];
       items.forEach((item, index) => (item._index = index));
-      this.set('_children', new Backbone.Collection(items, { model: ItemModel }));
+      this.setChildren(new Backbone.Collection(items, { model: ItemModel }));
     }
 
     getItem(index) {
-      return this.get('_children').findWhere({ _index: index });
+      return this.getChildren().findWhere({ _index: index });
     }
 
     getVisitedItems() {
-      return this.get('_children').where({ _isVisited: true });
+      return this.getChildren().where({ _isVisited: true });
     }
 
     getActiveItems() {
-      return this.get('_children').where({ _isActive: true });
+      return this.getChildren().where({ _isActive: true });
     }
 
     getActiveItem() {
-      return this.get('_children').findWhere({ _isActive: true });
+      return this.getChildren().findWhere({ _isActive: true });
     }
 
     areAllItemsCompleted() {
-      return this.getVisitedItems().length === this.get('_children').length;
+      return this.getVisitedItems().length === this.getChildren().length;
     }
 
     checkCompletionStatus() {
@@ -60,12 +61,12 @@ define([
     }
 
     reset(type, force) {
-      this.get('_children').each(item => item.reset());
+      this.getChildren().each(item => item.reset());
       super.reset(type, force);
     }
 
     resetActiveItems() {
-      this.get('_children').each(item => item.toggleActive(false));
+      this.getChildren().each(item => item.toggleActive(false));
     }
 
     setActiveItem(index) {
