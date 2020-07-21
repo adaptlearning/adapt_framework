@@ -35,6 +35,12 @@ define([
       ]);
     }
 
+    trackableType() {
+      return AdaptModel.resultExtend('trackableType', [
+        Array
+      ]);
+    }
+
     get hasManagedChildren() {
       return false;
     }

@@ -31,7 +31,18 @@ define([
         '_isSubmitted',
         '_score',
         '_isCorrect',
-        '_attemptsLeft'
+        '_attemptsLeft',
+        '_attemptStates'
+      ]);
+    }
+
+    trackableType() {
+      return ComponentModel.resultExtend('trackableType', [
+        Boolean,
+        Number,
+        Boolean,
+        Number,
+        Array
       ]);
     }
 
@@ -324,6 +335,14 @@ define([
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
 
+    /**
+     * Called at the end of the onSubmitClicked view function.
+     */
+    onSubmitted() {
+      // Stores the current attempt state
+      this.addAttemptObject();
+    }
+
     /** @type {boolean} */
     get shouldShowMarking() {
       if (!this.get('_canShowMarking')) {
@@ -332,6 +351,98 @@ define([
 
       return this.get('_isInteractionComplete');
     }
+
+    /**
+     * Returns the current attempt state raw data or the raw data from the supplied attempt state object.
+     * @param {Object} [object] JSON object representing the component state. Defaults to current JSON.
+     * @returns {Array}
+     */
+    getAttemptState(object = this.toJSON()) {
+      const trackables = this.trackable();
+      const types = this.trackableType();
+      trackables.find((name, index) => {
+        // Exclude _attemptStates as it's trackable but isn't needed here
+        if (name !== '_attemptStates') return;
+        trackables.splice(index, 1);
+        types.splice(index, 1);
+        return true;
+      });
+      const values = trackables.map(n => object[n]);
+      const booleans = values.filter((v, i) => types[i] === Boolean).map(Boolean);
+      const numbers = values.filter((v, i) => types[i] === Number).map(v => Number(v) || 0);
+      const arrays = values.filter((v, i) => types[i] === Array);
+      return [
+        numbers,
+        booleans,
+        arrays
+      ];
+    }
+
+    /**
+     * Returns an attempt object representing the current state or a formatted version of the raw state object supplied.
+     * @param {Array} [state] JSON object representing the component state, defaults to current state returned from getAttemptState().
+     * @returns {Object}
+     */
+    getAttemptObject(state = this.getAttemptState()) {
+      const trackables = this.trackable();
+      const types = this.trackableType();
+      trackables.find((name, index) => {
+        // Exclude _attemptStates as it's trackable but isn't needed here
+        if (name !== '_attemptStates') return;
+        trackables.splice(index, 1);
+        types.splice(index, 1);
+        return true;
+      });
+      const numbers = (state[0] || []).slice(0);
+      const booleans = (state[1] || []).slice(0);
+      const arrays = (state[2] || []).slice(0);
+      const object = {};
+      trackables.forEach((n, i) => {
+        if (n === '_id') return;
+        switch (types[i]) {
+          case Number:
+            object[n] = numbers.shift();
+            break;
+          case Boolean:
+            object[n] = booleans.shift();
+            break;
+          case Array:
+            object[n] = arrays.shift();
+            break;
+        }
+      });
+      return object;
+    }
+
+    /**
+     * Sets the current attempt state from the supplied attempt state object.
+     * @param {Object} object JSON object representing the component state.
+     * @param {boolean} silent Stops change events from triggering
+     */
+    setAttemptObject(object, silent = true) {
+      this.set(object, { silent });
+    }
+
+    /**
+     * Adds the current attempt state object or the supplied state object to the attempts store.
+     * @param {Object} [object] JSON object representing the component state. Defaults to current JSON.
+     */
+    addAttemptObject(object = this.getAttemptObject()) {
+      const attemptStates = this.get('_attemptStates') || [];
+      const state = this.getAttemptState(object);
+      attemptStates.push(state);
+      this.set('_attemptStates', attemptStates);
+    }
+
+    /**
+     * Returns an array of the previous state objects. The most recent state is last in the list.
+     * @returns {Array}
+     */
+    getAttemptObjects() {
+      const states = this.get('_attemptStates') || [];
+      return states.map(state => this.getAttemptObject(state));
+    }
+
   }
 
   return QuestionModel;
