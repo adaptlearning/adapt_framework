@@ -272,8 +272,8 @@ class Language {
     course._latestTrackingId = -1;
     file.changed();
 
-    const fileItems = this.getAllFileItems().filter(fileItem => fileItem.item._type === this.trackingIdType);
-    fileItems.forEach(({ file, item }) => {
+    this.getAllFileItems().forEach(({ file, item }) => {
+      if (item._type !== this.trackingIdType) return;
       delete item._trackingId;
       file.changed();
     });
