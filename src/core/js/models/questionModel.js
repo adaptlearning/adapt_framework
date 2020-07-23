@@ -55,11 +55,6 @@ define([
 
     init() {
       this.setupDefaultSettings();
-      if (Adapt.get('_isStarted')) {
-        this.onAdaptInitialize();
-        return;
-      }
-      this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
       this.setLocking('_canSubmit', true);
     }
 
