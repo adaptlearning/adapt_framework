@@ -18,6 +18,17 @@ define([
         'all': this.onAll,
         'change:_isVisited': this.checkCompletionStatus
       });
+      super.init();
+    }
+
+    restoreUserAnswers() {
+      const userAnswer = this.get('_userAnswer');
+      if (!userAnswer) return;
+      this.getChildren().forEach((child, index) => child.set('_isVisited', userAnswer[index]));
+    }
+
+    storeUserAnswer() {
+      this.set('_userAnswer', this.getChildren().map(child => child.get('_isVisited')));
     }
 
     /**
@@ -56,6 +67,7 @@ define([
     }
 
     checkCompletionStatus() {
+      this.storeUserAnswer();
       if (!this.areAllItemsCompleted()) return;
       this.setCompletionStatus();
     }
