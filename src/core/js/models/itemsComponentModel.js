@@ -22,13 +22,14 @@ define([
     }
 
     restoreUserAnswers() {
-      const userAnswer = this.get('_userAnswer');
-      if (!userAnswer) return;
-      this.getChildren().forEach((child, index) => child.set('_isVisited', userAnswer[index]));
+      const booleanArray = this.get('_userAnswer');
+      if (!booleanArray) return;
+      this.getChildren().forEach((child, index) => child.set('_isVisited', booleanArray[index]));
     }
 
     storeUserAnswer() {
-      this.set('_userAnswer', this.getChildren().map(child => child.get('_isVisited')));
+      const booleanArray = this.getChildren().map(child => child.get('_isVisited'));
+      this.set('_userAnswer', booleanArray);
     }
 
     /**
