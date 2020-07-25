@@ -56,6 +56,7 @@ define([
     init() {
       this.setupDefaultSettings();
       this.setLocking('_canSubmit', true);
+      super.init();
     }
 
     // Calls default methods to setup on questions
