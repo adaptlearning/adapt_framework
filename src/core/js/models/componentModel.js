@@ -63,15 +63,15 @@ define([
 
     /**
      * Restore the user's answer from the _userAnswer property.
-     * The _userAnswer value must be in the form of an array containing
-     * arrays of numbers, booleans or arrays only.
+     * The _userAnswer value must be in the form of arrays containing
+     * numbers, booleans or arrays only.
      */
     restoreUserAnswers() {}
 
     /**
      * Store the user's answer in the _userAnswer property.
-     * The _userAnswer value must be in the form of an array containing
-     * arrays of numbers, booleans or arrays only.
+     * The _userAnswer value must be in the form of arrays containing
+     * numbers, booleans or arrays only.
      */
     storeUserAnswer() {}
 
