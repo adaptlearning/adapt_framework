@@ -35,7 +35,7 @@ define([
         'navigation:toggleDrawer': this.toggleDrawer,
         'drawer:triggerCustomView': this.openCustomView,
         'drawer:closeDrawer': this.onCloseDrawer,
-        'remove': this.onCloseDrawer,
+        'remove': this.onRemove,
         'drawer:remove': this.remove
       });
 
@@ -108,6 +108,10 @@ define([
 
     onCloseDrawer: function($toElement) {
       this.hideDrawer($toElement);
+    },
+
+    onRemove: function() {
+      this.hideDrawer();
     },
 
     toggleDrawer: function() {
