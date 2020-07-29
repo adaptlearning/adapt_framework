@@ -185,10 +185,9 @@ define([
       // Wait for the AdaptView subview to be ready
       return new Promise(resolve => {
         const check = (model, value) => {
-          if (value) {
-            this.subView.model.off('change:_isReady', check);
-            resolve();
-          }
+          if (!value) return;
+          this.subView.model.off('change:_isReady', check);
+          resolve();
         }
         this.subView.model.on('change:_isReady', check);
       });
