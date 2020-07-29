@@ -160,6 +160,7 @@ define([
     }
 
     onOpened() {
+      $.inview();
       this.hasOpened = true;
       // Allows popup manager to control focus
       Adapt.a11y.popupOpened(this.$('.notify__popup'));
