@@ -66,12 +66,12 @@ define([
     checkIfResetOnRevisit() {
 
       let isResetOnRevisit = this.model.get('_isResetOnRevisit');
-      
+
       // Convert AAT "false" string to boolean
-      isResetOnRevisit = (isResetOnRevisit === "false") ? 
+      isResetOnRevisit = (isResetOnRevisit === "false") ?
         false :
         isResetOnRevisit;
-      
+
       // If reset is enabled set defaults
       // Call blank method for question to handle
       if (isResetOnRevisit) {
@@ -279,11 +279,13 @@ define([
     onResetClicked() {
       this.setQuestionAsReset();
 
-      this._runModelCompatibleFunction('updateButtons');
-
       this._runModelCompatibleFunction('resetUserAnswer');
 
       this.resetQuestion();
+
+      this.model.checkCanSubmit();
+
+      this._runModelCompatibleFunction('updateButtons');
 
       // onResetClicked is called as part of the checkIfResetOnRevisit
       // function and as a button click. if the view is already rendered,
