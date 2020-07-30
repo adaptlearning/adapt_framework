@@ -15,7 +15,7 @@
     "displayTitle": {
       "type": "string",
       "required": false,
-      "default": "New Article Title",
+      "default": "",
       "inputType": "DisplayTitle",
       "validators": [],
       "help": "When viewing an article - this is the title that will be displayed on the page",
