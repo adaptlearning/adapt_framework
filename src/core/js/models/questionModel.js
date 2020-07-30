@@ -19,6 +19,7 @@ define([
         _canShowModelAnswer: true,
         _canShowFeedback: true,
         _canShowMarking: true,
+        _canSubmit: true,
         _isSubmitted: false,
         _questionWeight: Adapt.config.get('_questionWeight'),
         _items: []
@@ -35,6 +36,15 @@ define([
       ]);
     }
 
+    trackableType() {
+      return ComponentModel.resultExtend('trackableType', [
+        Boolean,
+        Number,
+        Boolean,
+        Number
+      ]);
+    }
+
     /**
      * Returns a string of the model type group.
      * @returns {string}
@@ -45,7 +55,8 @@ define([
 
     init() {
       this.setupDefaultSettings();
-      this.listenToOnce(Adapt, 'adapt:initialize', this.onAdaptInitialize);
+      this.setLocking('_canSubmit', true);
+      super.init();
     }
 
     // Calls default methods to setup on questions
@@ -93,24 +104,16 @@ define([
     }
 
     /// ///
-    // Selection restoration process
-    /// /
-
-    // Used to add post-load changes to the model
-    onAdaptInitialize() {
-      this.restoreUserAnswers();
-    }
-
-    // Used to restore the user answers
-    restoreUserAnswers() {}
-
-    /// ///
     // Submit process
     /// /
 
     // Use to check if the user is allowed to submit the question
     // Maybe the user has to select an item?
     canSubmit() {}
+
+    checkCanSubmit() {
+      this.set('_canSubmit', this.canSubmit(), { pluginName: 'adapt' });
+    }
 
     // Used to update the amount of attempts the user has left
     updateAttempts() {
@@ -127,10 +130,6 @@ define([
         _isSubmitted: true
       });
     }
-
-    // This is important for returning or showing the users answer
-    // This should preserve the state of the users answers
-    storeUserAnswer() {}
 
     // Sets _isCorrect:true/false based upon isCorrect method below
     markQuestion() {
@@ -287,9 +286,6 @@ define([
       });
     }
 
-    // Used by the question view to reset the stored user answer
-    resetUserAnswer() {}
-
     refresh() {
       this.trigger('question:refresh');
     }
@@ -320,18 +316,23 @@ define([
     // Returns a string describing the type of interaction: "choice" and "matching" supported (see scorm wrapper)
     getResponseType() {}
 
+    /**
+     * Called at the end of the onSubmitClicked view function.
+     */
+    onSubmitted() {
+      // Stores the current attempt state
+      this.addAttemptObject();
+    }
+
     /** @type {boolean} */
-    get canShowMarking() {
+    get shouldShowMarking() {
       if (!this.get('_canShowMarking')) {
         return false;
       }
 
-      const attemptsLeft = this.get('_attemptsLeft');
-      const hasMultipleAttempts = this.get('_attempts') > 1;
-      const isFinalAttempt = !hasMultipleAttempts || (attemptsLeft === 0);
-
-      return isFinalAttempt;
+      return this.get('_isInteractionComplete');
     }
+
   }
 
   return QuestionModel;

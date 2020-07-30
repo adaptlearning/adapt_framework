@@ -23,7 +23,7 @@ define([
         (this.model.get('_isOptional') ? 'is-optional' : ''),
         (this.model.get('_canShowModelAnswer') ? 'can-show-model-answer' : ''),
         (this.model.get('_canShowFeedback') ? 'can-show-feedback' : ''),
-        (this.model.canShowMarking ? 'can-show-marking' : '')
+        (this.model.get('_canShowMarking') ? 'can-show-marking' : '')
       ].join(' ');
     }
 
@@ -65,7 +65,12 @@ define([
     // Used to check if the question should reset on revisit
     checkIfResetOnRevisit() {
 
-      const isResetOnRevisit = this.model.get('_isResetOnRevisit');
+      let isResetOnRevisit = this.model.get('_isResetOnRevisit');
+
+      // Convert AAT "false" string to boolean
+      isResetOnRevisit = (isResetOnRevisit === "false") ?
+        false :
+        isResetOnRevisit;
 
       // If reset is enabled set defaults
       // Call blank method for question to handle
@@ -184,14 +189,14 @@ define([
       // Used by the question to set the score on the model
       this._runModelCompatibleFunction('setScore');
 
-      // Used by the question to display markings on the component
-      if (this.model.canShowMarking) {
-        this.showMarking();
-      }
-
       // Used to check if the question is complete
       // Triggers setCompletionStatus and adds class to widget
       this._runModelCompatibleFunction('checkQuestionCompletion');
+
+      // Used by the question to display markings on the component
+      if (this.model.shouldShowMarking) {
+        this.showMarking();
+      }
 
       this.recordInteraction();
 
@@ -212,13 +217,12 @@ define([
       // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
       this._runModelCompatibleFunction('updateButtons');
 
+      this.model.onSubmitted();
       this.onSubmitted();
     }
 
-    // Adds a validation error class when the canSubmit returns false
     showInstructionError() {
-      this.$('.component__instruction-inner').addClass('validation-error');
-      Adapt.a11y.focusFirst(this.$el, { defer: true });
+      Adapt.trigger('questionView:showInstructionError', this);
     }
 
     // Blank method for question to fill out when the question cannot be submitted
@@ -275,11 +279,13 @@ define([
     onResetClicked() {
       this.setQuestionAsReset();
 
-      this._runModelCompatibleFunction('updateButtons');
-
       this._runModelCompatibleFunction('resetUserAnswer');
 
       this.resetQuestion();
+
+      this.model.checkCanSubmit();
+
+      this._runModelCompatibleFunction('updateButtons');
 
       // onResetClicked is called as part of the checkIfResetOnRevisit
       // function and as a button click. if the view is already rendered,
@@ -308,7 +314,7 @@ define([
     refresh() {
       this.model.set('_buttonState', this.model.getButtonState());
 
-      if (this.model.canShowMarking && this.model.get('_isInteractionComplete') && this.model.get('_isSubmitted')) {
+      if (this.model.shouldShowMarking && this.model.get('_isSubmitted')) {
         this.showMarking();
       }
 

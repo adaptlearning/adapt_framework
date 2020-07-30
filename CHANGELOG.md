@@ -1,3 +1,12 @@
+## [5.6.1] - 2020-07-07
+#### Fixed
+* Further issues found on [#2796](https://github.com/adaptlearning/adapt_framework/issues/2796)
+* Zoom not working on Chrome for Android ([#2800](https://github.com/adaptlearning/adapt_framework/issues/2800))
+* Default course assessment page trickle button labels not well labelled ([#2803](https://github.com/adaptlearning/adapt_framework/issues/2803))
+* Graphic and pageLevelProgress templates not allowing for HTML entities in `aria-label` attribute ([#2807](https://github.com/adaptlearning/adapt_framework/issues/2807))
+* Babel fast-async causing very slow compilation ([#2816](https://github.com/adaptlearning/adapt_framework/issues/2816))
+* Value of `_isResetOnRevisit` not being converted from `String` to `Boolean` ([#2825](https://github.com/adaptlearning/adapt_framework/issues/2825))
+
 ## [5.6.0] - 2020-06-17
 #### Fixed
 * Decontaminated toJSON functions  ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
@@ -881,6 +890,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.6.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.0...v5.6.1
 [5.6.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.1...v5.6.0
 [5.5.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.0...v5.5.1
 [5.5.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.4.0...v5.5.0

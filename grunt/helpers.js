@@ -17,6 +17,7 @@ module.exports = function(grunt) {
   grunt.registerTask('_log-vars', 'Logs out user-defined build variables', function() {
     var includes = grunt.config('includes');
     var excludes = grunt.config('excludes');
+    var productionExcludes = grunt.config('productionExcludes');
 
     if (includes && excludes) {
       grunt.fail.fatal('Cannot specify includes and excludes. Please check your config.json configuration.');
@@ -32,6 +33,12 @@ module.exports = function(grunt) {
       let count = excludes.length;
       grunt.log.writeln('The following will be excluded from the build:');
       for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + excludes[i]); }
+      grunt.log.writeln('');
+    }
+    if (productionExcludes) {
+      const count = productionExcludes.length;
+      grunt.log.writeln('The following will be excluded from the build in production:');
+      for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + productionExcludes[i]); }
       grunt.log.writeln('');
     }
 
@@ -73,6 +80,10 @@ module.exports = function(grunt) {
 
   var generateExcludedRegExp = function() {
     var excludes = grunt.config('excludes') || [];
+    if (grunt.config('type') === 'production') {
+      const productionExcludes = grunt.config('productionExcludes') || [];
+      excludes.push(...productionExcludes);
+    }
     var pluginTypes = exports.defaults.pluginTypes;
 
     // Return a more specific plugin regExp including src path.
@@ -208,7 +219,10 @@ module.exports = function(grunt) {
         process.exit();
       }
 
+      const isDevelopmentBuild = (process.argv.includes('dev') || process.argv.includes('server-build:dev'));
+
       var data = {
+        type: isDevelopmentBuild ? 'development' : 'production',
         root: root,
         sourcedir: sourcedir,
         outputdir: outputdir,
@@ -225,6 +239,7 @@ module.exports = function(grunt) {
         if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
         if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
         if (buildConfig.excludes) data.excludes = buildConfig.excludes;
+        if (buildConfig.productionExcludes) data.productionExcludes = buildConfig.productionExcludes;
         if (buildConfig.scriptSafe) {
           data.scriptSafe = buildConfig.scriptSafe.split(',').map(function(item) {
             return item.trim();
@@ -263,7 +278,7 @@ module.exports = function(grunt) {
       pluginPath = pluginPath.replace(convertSlashes, '/');
 
       var includes = grunt.config('includes');
-      var excludes = grunt.config('excludes');
+      var excludes = grunt.config('excludes') || (grunt.config('type') === 'production' && grunt.config('productionExcludes'));
 
       // carry on as normal if no includes/excludes
       if (!includes && !excludes) return true;
