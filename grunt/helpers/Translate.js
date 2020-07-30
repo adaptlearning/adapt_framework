@@ -294,7 +294,7 @@ class Translate {
             this.log(`Encoding not detected used utf-8 ${filename}`);
           }
           let csvDelimiter = this.csvDelimiter;
-          const firstLineMatches = fileContent.match(/.+\/"{0,1}.{1}/);
+          const firstLineMatches = fileContent.match(/.+\/"{0,1}[,;\t]{1}/);
           if (firstLineMatches && firstLineMatches.length) {
             const detectedDelimiter = firstLineMatches[0].slice(-1);
             if (detectedDelimiter !== this.csvDelimiter) {
