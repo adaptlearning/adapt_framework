@@ -15,6 +15,7 @@ export const templates = {};
  * @param {string} html
  */
 export function html(html, ref = null) {
+  if (!html) return;
   let node = html ? HTMLReactParser(html) : '';
   if (ref) {
     node = Object.assign({}, node);
@@ -64,8 +65,8 @@ export function helper(name, ...args) {
 
 /**
  * Helper for a list of classes, filtering out falsies and joining with spaces
- * @param  {...any} args List of classes
+ * @param  {...any} args List or arrays of classes
  */
 export function classes(...args) {
-  return args.filter(Boolean).join(' ');
+  return _.flatten(args).filter(Boolean).join(' ');
 };
