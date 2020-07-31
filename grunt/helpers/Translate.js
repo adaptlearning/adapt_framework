@@ -295,7 +295,7 @@ class Translate {
           }
           let csvDelimiter = this.csvDelimiter;
           if (!csvDelimiter) {
-            const firstLineMatches = fileContent.match(/[,;\t| ]{1}/);
+            const firstLineMatches = fileContent.match(/^[^,;\t| \n\r]+\/"{0,1}[,;\t| ]{1}/);
             if (firstLineMatches && firstLineMatches.length) {
               const detectedDelimiter = firstLineMatches[0].slice(-1);
               if (detectedDelimiter !== this.csvDelimiter) {

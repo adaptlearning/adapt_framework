@@ -13,7 +13,7 @@ module.exports = function(grunt) {
       masterLang: grunt.option('masterLang') || 'en',
       targetLang: grunt.option('targetLang') || null,
       format: grunt.option('format') || 'csv',
-      csvDelimiter: grunt.option('csvDelimiter') || ',',
+      csvDelimiter: grunt.option('csvDelimiter') || null,
       shouldReplaceExisting: grunt.option('replace') || false,
       languagePath: grunt.option('languagedir') || 'languagefiles',
       isTest: grunt.option('test') || false,
@@ -38,6 +38,9 @@ module.exports = function(grunt) {
               break;
             case 10003: // Import destination folder already exists.
               grunt.log.error(err + `\nTo replace the content in this folder, please add a --replace flag to the grunt task.`);
+              break;
+            case 10014: // Import destination folder already exists.
+              grunt.log.error(err + `\nTo specify a delimiter, please add a --csvDelimiter=',' flag to the grunt task. Only , ; | tab and space are supported.`);
               break;
             default:
               grunt.log.error(err);
