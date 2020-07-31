@@ -13,16 +13,16 @@ export default function(view, data) {
   } = data;
   const type = _component.toLowerCase();
   return (displayTitle || body || instruction) &&
-    <div className={classes('component__header', `${type}__header`)}>
-      <div className={classes('component__header-inner', `${type}__header-inner`)}>
+    <div className={classes(['component__header', `${type}__header`])}>
+      <div className={classes(['component__header-inner', `${type}__header-inner`])}>
         {displayTitle &&
-        <div className={classes('component__title', `${type}__title`)}>
+        <div className={classes(['component__title', `${type}__title`])}>
 
           {!_disableAccessibilityState &&
           <div className="js-heading" ref={view.jsxHeading}></div>
           }
 
-          <div className={classes('component__title-inner', `${type}__title-inner`)} aria-hidden={!_disableAccessibilityState}>
+          <div className={classes(['component__title-inner', `${type}__title-inner`])} aria-hidden={!_disableAccessibilityState}>
             {`\n${html(compile(displayTitle, data))}\n`}
           </div>
 
@@ -32,16 +32,16 @@ export default function(view, data) {
         {html(helper('component_description', data), view.jsxComponentDescription)}
 
         {body &&
-        <div className={classes('component__body', `${type}__body`)}>
-          <div className={classes('component__body-inner', `${type}__body-inner`)}>
+        <div className={classes(['component__body', `${type}__body`])}>
+          <div className={classes(['component__body-inner', `${type}__body-inner`])}>
             {html(compile(body, data))}
           </div>
         </div>
         }
 
         {(instruction || mobileInstruction) &&
-        <div className={classes('component__instruction', `${type}__instruction`)}>
-          <div className={classes('component__instruction-inner', `${type}__instruction-inner`)}>
+        <div className={classes(['component__instruction', `${type}__instruction`])}>
+          <div className={classes(['component__instruction-inner', `${type}__instruction-inner`])}>
             {html(compile(instruction, data))}
           </div>
         </div>
