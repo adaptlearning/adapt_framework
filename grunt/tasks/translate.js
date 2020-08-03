@@ -39,7 +39,7 @@ module.exports = function(grunt) {
             case 10003: // Import destination folder already exists.
               grunt.log.error(err + `\nTo replace the content in this folder, please add a --replace flag to the grunt task.`);
               break;
-            case 10014: // Import destination folder already exists.
+            case 10014: // Could not detect delimiter
               grunt.log.error(err + `\nTo specify a delimiter, please add a --csvDelimiter=',' flag to the grunt task. Only , ; | tab and space are supported.`);
               break;
             default:
