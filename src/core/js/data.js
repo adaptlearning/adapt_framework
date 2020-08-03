@@ -18,11 +18,29 @@ define([
       return new ModelClass(json);
     }
 
+    initialize() {
+      super.initialize();
+      this.on({
+        'add': this.onAdded,
+        'remove': this.onRemoved
+      });
+    }
+
     async init () {
+      this.reset();
+      this._byAdaptID = {};
       Adapt.build = new BuildModel(null, { url: 'adapt/js/build.min.js', reset: true });
       await Adapt.build.whenReady();
       $('html').attr('data-adapt-framework-version', Adapt.build.get('package').version);
       this.loadConfigData();
+    }
+
+    onAdded(model) {
+      this._byAdaptID[model.get('_id')] = model;
+    }
+
+    onRemoved(model) {
+      delete this._byAdaptID[model.get('_id')];
     }
 
     loadConfigData() {
@@ -124,8 +142,6 @@ define([
         }
         this.push(modelData);
       });
-      // index by id
-      this._byAdaptID = this.indexBy('_id');
       this.trigger('reset');
       this.trigger('loaded');
       await Adapt.wait.queue();
@@ -134,7 +150,9 @@ define([
     async triggerDataLoaded() {
       Adapt.log.debug('Firing app:dataLoaded');
       try {
-        Adapt.trigger('app:dataLoaded');// Triggered to setup model connections in AdaptModel.js
+        // Setup the newly added models
+        this.forEach(model => model.setupModel && model.setupModel());
+        Adapt.trigger('app:dataLoaded');
       } catch (e) {
         Adapt.log.error('Error during app:dataLoading trigger', e);
       }

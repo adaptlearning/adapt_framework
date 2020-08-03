@@ -5,15 +5,10 @@ define([
   'core/js/models/notifyModel'
 ], function(Adapt, NotifyPushCollection, NotifyView, NotifyModel) {
 
-  var Notify = Backbone.Controller.extend({
+  class Notify extends Backbone.Controller {
 
-    notifyPushes: null,
-
-    _warnFirstOnly: true,
-    _warn: true,
-    _hasWarned: false,
-
-    initialize: function() {
+    initialize() {
+      this._stack = [];
       this.notifyPushes = new NotifyPushCollection();
       this.listenTo(Adapt, {
         'notify:popup': this._deprecated.bind(this, 'popup'),
@@ -21,17 +16,18 @@ define([
         'notify:prompt': this._deprecated.bind(this, 'prompt'),
         'notify:push': this._deprecated.bind(this, 'push')
       });
-    },
+    }
 
-    _deprecated: function(type, notifyObject) {
-      if (this._warn && (this._warnFirstOnly && !this._hasWarned)) {
-        Adapt.log.warn('NOTIFY DEPRECATED: Adapt.trigger(\'notify:' + type + '\', notifyObject); is no longer supported, please use Adapt.notify.' + type + '(notifyObject);');
-        this._hasWarned = true;
-      }
+    get stack() {
+      return this._stack;
+    }
+
+    _deprecated(type, notifyObject) {
+      Adapt.log.deprecated(`NOTIFY DEPRECATED: Adapt.trigger('notify:${type}', notifyObject); is no longer supported, please use Adapt.notify.${type}(notifyObject);`);
       return this.create(notifyObject, { _type: type });
-    },
+    }
 
-    create: function(notifyObject, defaults) {
+    create(notifyObject, defaults) {
       notifyObject = _.defaults({}, notifyObject, defaults, {
         _type: 'popup',
         _isCancellable: true,
@@ -47,7 +43,7 @@ define([
       return new NotifyView({
         model: new NotifyModel(notifyObject)
       });
-    },
+    }
 
     /**
      * Creates a 'popup' notify
@@ -59,9 +55,9 @@ define([
      * @param {string} [notifyObject._classes] A class name or (space separated) list of class names you'd like to be applied to the popup's `<div>`
      * @param {Backbone.View} [notifyObject._view] Subview to display in the popup instead of the standard view
      */
-    popup: function(notifyObject) {
+    popup(notifyObject) {
       return this.create(notifyObject, { _type: 'popup' });
-    },
+    }
 
     /**
      * Creates an 'alert' notify popup
@@ -75,9 +71,9 @@ define([
      * @param {string} [notifyObject._classes] A class name or (space separated) list of class names you'd like to be applied to the popup's `<div>`
      * @param {Backbone.View} [notifyObject._view] Subview to display in the popup instead of the standard view
      */
-    alert: function(notifyObject) {
+    alert(notifyObject) {
       return this.create(notifyObject, { _type: 'alert' });
-    },
+    }
 
     /**
      * Creates a 'prompt dialog' notify popup
@@ -93,9 +89,9 @@ define([
      * @param {string} [notifyObject._classes] A class name or (space separated) list of class names you'd like to be applied to the popup's `<div>`
      * @param {Backbone.View} [notifyObject._view] Subview to display in the popup instead of the standard view
      */
-    prompt: function(notifyObject) {
+    prompt(notifyObject) {
       return this.create(notifyObject, { _type: 'prompt' });
-    },
+    }
 
     /**
      * Creates a 'push notification'
@@ -106,11 +102,11 @@ define([
      * @param {string} notifyObject._callbackEvent Event to be triggered if the learner clicks on the push notification (not triggered if they use the close button)
      * @param {string} [notifyObject._classes] A class name or (space separated) list of class names you'd like to be applied to the popup's `<div>`
      */
-    push: function(notifyObject) {
+    push(notifyObject) {
       return this.create(notifyObject, { _type: 'push' });
     }
 
-  });
+  }
 
   return (Adapt.notify = new Notify());
 

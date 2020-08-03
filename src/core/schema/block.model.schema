@@ -5,12 +5,12 @@
   "$ref": "http://localhost/system/content.schema",
   "properties": {
     "_trackingId" : {
-        "type" : "number",
-        "default" : 0
+      "type" : "number",
+      "default" : 0
     },
     "layoutOptions": {
-        "type": "array",
-        "editorOnly": true
+      "type": "array",
+      "editorOnly": true
     },
     "title": {
       "type": "string",
@@ -23,7 +23,7 @@
     "displayTitle": {
       "type": "string",
       "required": false,
-      "default": "New Block Title",
+      "default": "",
       "inputType": "DisplayTitle",
       "validators": [],
       "help": "When viewing a block - this is the title that will be displayed on the page",

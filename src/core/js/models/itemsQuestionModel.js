@@ -7,13 +7,13 @@ define([
   class BlendedItemsComponentQuestionModel extends QuestionModel {
 
     init() {
-      super.init();
       ItemsComponentModel.prototype.init.call(this);
+      super.init();
     }
 
     reset(type, force) {
-      super.reset(type, force);
       ItemsComponentModel.prototype.reset.call(this, type, force);
+      super.reset(type, force);
     }
 
   }
@@ -30,6 +30,8 @@ define([
     init() {
       super.init();
       this.set('_isRadio', this.isSingleSelect());
+      this.listenTo(this.getChildren(), 'change:_isActive', this.checkCanSubmit);
+      this.checkCanSubmit();
     }
 
     /**
