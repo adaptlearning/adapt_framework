@@ -22,7 +22,7 @@ define([
         loading: this.waitForDataLoaded,
         loaded: this.onDataLoaded
       });
-      this.setupDeprecatedSubsetCollections();
+      this.setupSubsetCollections();
     }
 
     waitForDataLoaded() {
@@ -35,39 +35,11 @@ define([
       Adapt.wait.end();
     }
 
-    setupDeprecatedSubsetCollections() {
-      let contentObjects = new AdaptSubsetCollection(null, { parent: Data, model: ContentObjectModel });
-      let articles = new AdaptSubsetCollection(null, { parent: Data, model: ArticleModel });
-      let blocks = new AdaptSubsetCollection(null, { parent: Data, model: BlockModel });
-      let components = new AdaptSubsetCollection(null, { parent: Data, model: ComponentModel });
-      Object.defineProperty(Adapt, 'contentObjects', {
-        get: () => {
-          Adapt.log.deprecated('Adapt.contentObjects, please use Adapt.data instead');
-          return contentObjects;
-        },
-        set: value => (contentObjects = value)
-      });
-      Object.defineProperty(Adapt, 'articles', {
-        get: () => {
-          Adapt.log.deprecated('Adapt.articles, please use Adapt.data instead');
-          return articles;
-        },
-        set: value => (articles = value)
-      });
-      Object.defineProperty(Adapt, 'blocks', {
-        get: () => {
-          Adapt.log.deprecated('Adapt.blocks, please use Adapt.data instead');
-          return blocks;
-        },
-        set: value => (blocks = value)
-      });
-      Object.defineProperty(Adapt, 'components', {
-        get: () => {
-          Adapt.log.deprecated('Adapt.components, please use Adapt.data instead');
-          return components;
-        },
-        set: value => (components = value)
-      });
+    setupSubsetCollections() {
+      Adapt.contentObjects = new AdaptSubsetCollection(null, { parent: Data, model: ContentObjectModel });
+      Adapt.articles = new AdaptSubsetCollection(null, { parent: Data, model: ArticleModel });
+      Adapt.blocks = new AdaptSubsetCollection(null, { parent: Data, model: BlockModel });
+      Adapt.components = new AdaptSubsetCollection(null, { parent: Data, model: ComponentModel });
     }
 
   }

@@ -1,7 +1,6 @@
 define([
-  'core/js/adapt',
   './adaptCollection'
-], function(Adapt, AdaptCollection) {
+], function(AdaptCollection) {
 
   class AdaptSubsetCollection extends AdaptCollection {
 
