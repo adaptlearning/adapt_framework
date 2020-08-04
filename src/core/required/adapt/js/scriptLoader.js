@@ -134,7 +134,7 @@
     loadTemplates();
   }
 
-  // 8. Load templates after making handlebars context global
+  // 8. Load templates
   function loadTemplates() {
     require([
       'templates'
