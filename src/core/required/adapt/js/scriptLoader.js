@@ -127,7 +127,7 @@
     ], loadGlobals);
   }
 
-  // 7. Load global context libraries
+  // 7. Expose global context libraries
   function loadGlobals(Handlebars, _) {
     window._ = _;
     window.Handlebars = Handlebars;
