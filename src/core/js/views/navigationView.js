@@ -1,17 +1,13 @@
 define([
-  'core/js/adapt'
-], function(Adapt) {
+  'core/js/adapt',
+  './navigationItemView',
+  'core/js/models/navigationItemModel'
+], function(Adapt, NavigationItemView, NavigationItemModel) {
 
   class NavigationView extends Backbone.View {
 
     className() {
       return 'nav';
-    }
-
-    events() {
-      return {
-        'click [data-event]': 'triggerEvent'
-      };
     }
 
     attributes() {
@@ -21,6 +17,7 @@ define([
     }
 
     initialize() {
+      this.items = [];
       this.listenToOnce(Adapt, {
         'courseModel:dataLoading': this.remove
       });
@@ -35,10 +32,9 @@ define([
 
     render() {
       const template = Handlebars.templates[this.constructor.template];
-      this.$el.html(template({
-        _globals: Adapt.course.get('_globals'),
-        _accessibility: Adapt.config.get('_accessibility')
-      })).insertBefore('#app');
+      this.$el.html(template({})).insertBefore('#app');
+
+      this.addDefaultButtons();
 
       _.defer(() => {
         Adapt.trigger('navigationView:postRender', this);
@@ -47,31 +43,64 @@ define([
       return this;
     }
 
-    triggerEvent(event) {
-      event.preventDefault();
-      const currentEvent = $(event.currentTarget).attr('data-event');
-      Adapt.trigger('navigation:' + currentEvent);
-      switch (currentEvent) {
-        case 'backButton':
-          Adapt.router.navigateToPreviousRoute();
-          break;
-        case 'homeButton':
-          Adapt.router.navigateToHomeRoute();
-          break;
-        case 'parentButton':
-          Adapt.router.navigateToParent();
-          break;
-        case 'skipNavigation':
-          this.skipNavigation();
-          break;
-        case 'returnToStart':
-          Adapt.startController.returnToStartLocation();
-          break;
+    addDefaultButtons() {
+      const accessibility = Adapt.config.get('_accessibility');
+      if (accessibility && accessibility._isSkipNavigationEnabled) {
+        this.add(new NavigationItemView({
+          model: new NavigationItemModel({
+            _name: 'skip',
+            _order: -2000,
+            _layout: 'left',
+            _event: 'skipNavigation',
+            _template: 'navSkip'
+          })
+        }));
       }
+      this.add(new NavigationItemView({
+        model: new NavigationItemModel({
+          _name: 'back',
+          _order: -1000,
+          _layout: 'left',
+          _event: 'backButton',
+          _template: 'navBack'
+        })
+      }));
+      this.add(new NavigationItemView({
+        model: new NavigationItemModel({
+          _name: 'drawer',
+          _order: 1000,
+          _layout: 'right',
+          _eventName: 'toggleDrawer',
+          _template: 'navDrawer'
+        })
+      }));
     }
 
-    skipNavigation() {
-      Adapt.a11y.focusFirst('.' + Adapt.location._contentType);
+    add(navigationItemView) {
+      const name = navigationItemView.model.get('_name');
+      const index = this.items.findIndex(view => view.model.get('_name') === name);
+      const replaceExisting = (index !== -1);
+      if (replaceExisting) {
+        this.items.splice(index, 1);
+      }
+      this.items.push(navigationItemView);
+      this.listenTo(navigationItemView.model, 'change:_order change:_layout', this.sort);
+      this.sort();
+    }
+
+    sort() {
+      const layoutGroups = this.items.reduce((layoutGroups, view) => {
+        const viewLayoutType = view.model.get('_layout') || '';
+        layoutGroups[viewLayoutType] = layoutGroups[viewLayoutType] || [];
+        layoutGroups[viewLayoutType].push(view);
+        return layoutGroups;
+      }, {});
+      for (let layoutGroupName in layoutGroups) {
+        const layoutGroup = layoutGroups[layoutGroupName];
+        layoutGroup.sort((groupA, groupB) => groupA.model.get('_order') - groupB.model.get('_order'));
+        const $target = this.$(`.js-nav-item-container${layoutGroupName ? `-${layoutGroupName}` : ''}`);
+        layoutGroup.forEach(view => $target.append(view.$el));
+      }
     }
 
     hideNavigationButton(model) {

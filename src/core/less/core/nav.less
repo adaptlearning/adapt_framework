@@ -14,19 +14,28 @@
   background-color: red;
 
   &__inner {
+    display: flex;
+    justify-content: space-between;
     .l-container-responsive(@max-width);
   }
 
-  &__back-btn {
-    .u-float-left;
+  &__inner-right {
+    justify-content: flex-end;
+  }
+
+  &__inner-left,
+  &__inner-middle,
+  &__inner-right {
+    display: flex;
+  }
+
+  &__inner-left,
+  &__inner-right {
+    flex: auto;
   }
 
   &__back-btn .icon {
     .icon-controls-small-left;
-  }
-
-  &__drawer-btn {
-    .u-float-right;
   }
 
   &__drawer-btn .icon {
