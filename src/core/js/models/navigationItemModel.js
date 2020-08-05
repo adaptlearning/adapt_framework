@@ -5,7 +5,8 @@ define(function () {
     defaults() {
       return {
         _name: '',
-        _order: -1,
+        _layout: 'right',
+        _order: 1000,
         _template: null
       };
     }
