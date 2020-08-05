@@ -51,7 +51,7 @@ define([
             _name: 'skip',
             _order: -2000,
             _layout: 'left',
-            _event: 'skipNavigation',
+            _eventName: 'skipNavigation',
             _template: 'navSkip'
           })
         }));
@@ -61,7 +61,7 @@ define([
           _name: 'back',
           _order: -1000,
           _layout: 'left',
-          _event: 'backButton',
+          _eventName: 'backButton',
           _template: 'navBack'
         })
       }));
