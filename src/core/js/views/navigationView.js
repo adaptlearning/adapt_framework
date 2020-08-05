@@ -77,15 +77,20 @@ define([
     }
 
     add(navigationItemView) {
-      const name = navigationItemView.model.get('_name');
-      const index = this.items.findIndex(view => view.model.get('_name') === name);
-      const replaceExisting = (index !== -1);
-      if (replaceExisting) {
-        this.items.splice(index, 1);
-      }
+      this.remove(navigationItemView);
       this.items.push(navigationItemView);
       this.listenTo(navigationItemView.model, 'change:_order change:_layout', this.sort);
       this.sort();
+    }
+
+    remove(navigationItemView) {
+      const name = navigationItemView.model.get('_name');
+      const index = this.items.findIndex(view => view.model.get('_name') === name);
+      const wasFound = (index !== -1);
+      if (!wasFound) return;
+      this.stopListening(navigationItemView.model, 'change:_order change:_layout', this.sort);
+      navigationItemView.remove();
+      this.items.splice(index, 1);
     }
 
     sort() {
