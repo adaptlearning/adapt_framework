@@ -35,6 +35,40 @@ define([
       return this._handler !== undefined;
     },
 
+    /**
+     * Causes state to be serialized and saved.
+     */
+    save: function() {
+      Adapt.trigger('tracking:save');
+      if (this._handler && this._handler.save) {
+        return this._handler.save.apply(this._handler, arguments);
+      }
+    },
+
+    /**
+     * Serializes nested arrays, booleans and numbers into an encoded string.
+     * @param {Array|boolean|number} value
+     * @returns {string}
+     */
+    serialize: function(value) {
+      if (this._handler && this._handler.serialize) {
+        return this._handler.serialize.apply(this._handler, arguments);
+      }
+      return JSON.stringify(value);
+    },
+
+    /**
+     * Deserializes encoded strings back into nested arrays, booleans and numbers.
+     * @param {string} value
+     * @returns {Array|boolean|number}
+     */
+    deserialize: function(value) {
+      if (this._handler && this._handler.deserialize) {
+        return this._handler.deserialize.apply(this._handler, arguments);
+      }
+      return JSON.parse(value);
+    },
+
     set: function(name, value) {
       if (this._handler && this._handler.set) {
         return this._handler.set.apply(this._handler, arguments);

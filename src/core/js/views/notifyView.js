@@ -1,37 +1,41 @@
 define([
-  'core/js/adapt'
-], function(Adapt) {
+  'core/js/adapt',
+  "core/js/views/adaptView"
+], function(Adapt, AdaptView) {
 
-  var NotifyView = Backbone.View.extend({
+  class NotifyView extends Backbone.View {
 
-    className: function() {
-      var classes = 'notify ';
-      classes += (this.model.get('_classes') || '');
-      return classes;
-    },
+    className() {
+      return `notify ${this.model.get('_classes') || ''}`;
+    }
 
-    attributes: function () {
+    attributes () {
       return Object.assign({
-        'role': 'dialog',
+        role: 'dialog',
         'aria-labelledby': 'notify-heading',
         'aria-modal': 'true'
       }, this.model.get('_attributes'));
-    },
+    }
 
-    disableAnimation: false,
-    isOpen: false,
-    hasOpened: false,
+    events() {
+      return {
+        'click .js-notify-btn-alert': 'onAlertButtonClicked',
+        'click .js-notify-btn-prompt': 'onPromptButtonClicked',
+        'click .js-notify-close-btn': 'onCloseButtonClicked',
+        'click .js-notify-shadow-click': 'onShadowClicked'
+      };
+    }
 
-    initialize: function() {
-      _.bindAll(this, 'resetNotifySize');
-      this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
-
+    initialize() {
+      _.bindAll(this, 'resetNotifySize', 'onKeyUp');
+      this.disableAnimation = Adapt.config.get('_disableAnimation') || false;
+      this.isOpen = false;
+      this.hasOpened = false;
       this.setupEventListeners();
-
       this.render();
-    },
+    }
 
-    setupEventListeners: function() {
+    setupEventListeners() {
       this.listenTo(Adapt, {
         'remove page:scrollTo': this.closeNotify,
         'notify:resize': this.resetNotifySize,
@@ -39,221 +43,225 @@ define([
         'notify:close': this.closeNotify,
         'device:resize': this.resetNotifySize
       });
-
-      this._onKeyUp = this.onKeyUp.bind(this);
       this.setupEscapeKey();
-    },
+    }
 
-    setupEscapeKey: function() {
-      $(window).on('keyup', this._onKeyUp);
-    },
+    setupEscapeKey() {
+      $(window).on('keyup', this.onKeyUp);
+    }
 
-    onKeyUp: function(event) {
+    onKeyUp(event) {
       if (event.which !== 27) return;
       event.preventDefault();
-
       this.cancelNotify();
-    },
+    }
 
-    events: {
-      'click .js-notify-btn-alert': 'onAlertButtonClicked',
-      'click .js-notify-btn-prompt': 'onPromptButtonClicked',
-      'click .js-notify-close-btn': 'onCloseButtonClicked',
-      'click .js-notify-shadow-click': 'onShadowClicked'
-    },
-
-    render: function() {
-      var data = this.model.toJSON();
-      var template = Handlebars.templates.notify;
-
+    render() {
+      const data = this.model.toJSON();
+      const template = Handlebars.templates.notify;
       // hide notify container
       this.$el.css('visibility', 'hidden');
       // attach popup + shadow
-      this.$el.html(template(data)).prependTo('body');
+      this.$el.html(template(data)).appendTo('body');
       // hide popup
       this.$('.notify__popup').css('visibility', 'hidden');
       // show notify container
       this.$el.css('visibility', 'visible');
-
       this.showNotify();
       return this;
-    },
+    }
 
-    onAlertButtonClicked: function(event) {
+    onAlertButtonClicked(event) {
       event.preventDefault();
       // tab index preservation, notify must close before subsequent callback is triggered
       this.closeNotify();
       Adapt.trigger(this.model.get('_callbackEvent'), this);
-    },
+    }
 
-    onPromptButtonClicked: function(event) {
+    onPromptButtonClicked(event) {
       event.preventDefault();
       // tab index preservation, notify must close before subsequent callback is triggered
       this.closeNotify();
       Adapt.trigger($(event.currentTarget).attr('data-event'), this);
-    },
+    }
 
-    onCloseButtonClicked: function(event) {
+    onCloseButtonClicked(event) {
       event.preventDefault();
       // tab index preservation, notify must close before subsequent callback is triggered
       this.cancelNotify();
-    },
+    }
 
-    onShadowClicked: function(event) {
+    onShadowClicked(event) {
       event.preventDefault();
       if (this.model.get('_closeOnShadowClick') === false) return;
       this.cancelNotify();
-    },
+    }
 
-    cancelNotify: function() {
+    cancelNotify() {
       if (this.model.get('_isCancellable') === false) return;
       // tab index preservation, notify must close before subsequent callback is triggered
       this.closeNotify();
       Adapt.trigger('notify:cancelled', this);
-    },
+    }
 
-    resetNotifySize: function() {
+    resetNotifySize() {
       if (!this.hasOpened) return;
-
-      $('.notify__popup').removeAttr('style').css({ visibility: 'visible', opacity: 1 });
-
       this.resizeNotify();
-    },
+    }
 
-    resizeNotify: function() {
-      var windowHeight = $(window).height();
-      var notifyHeight = this.$('.notify__popup').outerHeight();
+    resizeNotify() {
+      const windowHeight = $(window).height();
+      const notifyHeight = this.$('.notify__popup-inner').outerHeight();
+      const isFullWindow = (notifyHeight >= windowHeight);
+      this.$('.notify__popup').css({
+        'height': isFullWindow ? '100%' : 'auto',
+        'top': isFullWindow ? 0 : '',
+        'margin-top': isFullWindow ? '' : -(notifyHeight / 2),
+        'overflow-y': isFullWindow ? 'scroll' : '',
+        '-webkit-overflow-scrolling': isFullWindow ? 'touch' : ''
+      });
+    }
 
-      if (notifyHeight >= windowHeight) {
-        this.$('.notify__popup').css({
-          'height': '100%',
-          'top': 0,
-          'overflow-y': 'scroll',
-          '-webkit-overflow-scrolling': 'touch'
-        });
-      } else {
-        this.$('.notify__popup').css({
-          'margin-top': -(notifyHeight / 2)
-        });
-      }
-    },
-
-    showNotify: function() {
+    async showNotify() {
       this.isOpen = true;
-      this.addSubView();
-
+      await this.addSubView();
+      // Add to the list of open popups
+      Adapt.notify.stack.push(this);
       // Keep focus from previous action
       this.$previousActiveElement = $(document.activeElement);
-
       Adapt.trigger('notify:opened', this);
-
       this.$el.imageready(this.onLoaded.bind(this));
-    },
+    }
 
-    onLoaded: function() {
+    onLoaded() {
       if (this.disableAnimation) {
         this.$('.notify__shadow').css('display', 'block');
       } else {
         this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400,
-          begin: function() {
+          begin: () => {
             this.$('.notify__shadow').css('display', 'block');
-          }.bind(this) });
+          }
+        });
       }
-
       this.resizeNotify();
-
       if (this.disableAnimation) {
         this.$('.notify__popup').css('visibility', 'visible');
         this.onOpened();
       } else {
         this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 0 }).velocity({ opacity: 1 }, { duration: 400,
-          begin: function() {
-          // Make sure to make the notify visible and then set
-          // focus, disabled scroll and manage tabs
+          begin: () => {
+            // Make sure to make the notify visible and then set
+            // focus, disabled scroll and manage tabs
             this.$('.notify__popup').css('visibility', 'visible');
             this.onOpened();
-          }.bind(this) });
+          }
+        });
       }
-    },
+    }
 
-    onOpened: function() {
+    onOpened() {
+      $.inview();
       this.hasOpened = true;
       // Allows popup manager to control focus
       Adapt.a11y.popupOpened(this.$('.notify__popup'));
       Adapt.a11y.scrollDisable('body');
       $('html').addClass('notify');
-
       // Set focus to first accessible element
       Adapt.a11y.focusFirst(this.$('.notify__popup'), { defer: false });
-    },
+    }
 
-    addSubView: function() {
+    async addSubView() {
       this.subView = this.model.get('_view');
+      if (this.model.get('_id')) {
+        // Automatically render the specified id
+        const model = Adapt.findById(this.model.get('_id'));
+        const View = Adapt.getViewClass(model);
+        this.subView = new View({ model });
+      }
       if (!this.subView) return;
-
       this.subView.$el.on('resize', this.resetNotifySize);
+      this.$('.notify__content-inner').prepend(this.subView.$el);
+      if (!(this.subView instanceof AdaptView) || this.subView.model.get('_isReady')) return;
+      // Wait for the AdaptView subview to be ready
+      return new Promise(resolve => {
+        const check = (model, value) => {
+          if (!value) return;
+          this.subView.model.off('change:_isReady', check);
+          resolve();
+        }
+        this.subView.model.on('change:_isReady', check);
+      });
+    }
 
-      this.$('.notify__content-inner').append(this.subView.$el);
-    },
-
-    closeNotify: function (event) {
+    closeNotify() {
+      // Make sure that only the top most notify is closed
+      const stackItem = Adapt.notify.stack[Adapt.notify.stack.length-1];
+      if (this !== stackItem) return;
+      Adapt.notify.stack.pop();
       // Prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
       if (!this.isOpen) return;
       this.isOpen = false;
-
       // If closeNotify is called before showNotify has finished then wait
       // until it's open.
-      if (!this.hasOpened) {
-        this.listenToOnce(Adapt, 'popup:opened', function() {
-          // Wait for popup:opened to finish processing
-          _.defer(this.onCloseReady.bind(this));
-        });
-      } else {
+      if (this.hasOpened) {
         this.onCloseReady();
+        return;
       }
-    },
+      this.listenToOnce(Adapt, 'popup:opened', () => {
+        // Wait for popup:opened to finish processing
+        _.defer(this.onCloseReady.bind(this));
+      });
+    }
 
-    onCloseReady: function() {
+    onCloseReady() {
       if (this.disableAnimation) {
         this.$('.notify__popup').css('visibility', 'hidden');
         this.$el.css('visibility', 'hidden');
         this.remove();
       } else {
         this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 400,
-          complete: function() {
+          complete: () => {
             this.$('.notify__popup').css('visibility', 'hidden');
-          }.bind(this) });
-
+          }
+        });
         this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 400,
-          complete: function() {
+          complete: () => {
             this.$el.css('visibility', 'hidden');
             this.remove();
-          }.bind(this) });
+          }
+        });
       }
-
       Adapt.a11y.scrollEnable('body');
       $('html').removeClass('notify');
-
       // Return focus to previous active element
       Adapt.a11y.popupClosed(this.$previousActiveElement);
       // Return reference to the notify view
       Adapt.trigger('notify:closed', this);
-    },
+    }
 
-    remove: function() {
+    remove(...args) {
       this.removeSubView();
-      $(window).off('keyup', this._onKeyUp);
-      Backbone.View.prototype.remove.apply(this, arguments);
-    },
+      $(window).off('keyup', this.onKeyUp);
+      super.remove(...args);
+    }
 
-    removeSubView: function() {
+    removeSubView() {
       if (!this.subView) return;
       this.subView.$el.off('resize', this.resetNotifySize);
-      this.subView.remove();
+      if (this.subView instanceof AdaptView) {
+        // Clear up nested views and models
+        const views = [...this.subView.findDescendantViews(), this.subView];
+        views.forEach(view => {
+          view.model.set('_isReady', false);
+          view.remove();
+        });
+      } else {
+        this.subView.remove();
+      }
       this.subView = null;
     }
 
-  });
+  }
 
   return NotifyView;
 

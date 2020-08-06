@@ -66,12 +66,12 @@ define([
     checkIfResetOnRevisit() {
 
       let isResetOnRevisit = this.model.get('_isResetOnRevisit');
-      
+
       // Convert AAT "false" string to boolean
-      isResetOnRevisit = (isResetOnRevisit === "false") ? 
+      isResetOnRevisit = (isResetOnRevisit === "false") ?
         false :
         isResetOnRevisit;
-      
+
       // If reset is enabled set defaults
       // Call blank method for question to handle
       if (isResetOnRevisit) {
@@ -217,13 +217,12 @@ define([
       // Update buttons happens before showFeedback to preserve tabindexes and after setupFeedback to allow buttons to use feedback attribute
       this._runModelCompatibleFunction('updateButtons');
 
+      this.model.onSubmitted();
       this.onSubmitted();
     }
 
-    // Adds a validation error class when the canSubmit returns false
     showInstructionError() {
-      this.$('.component__instruction-inner').addClass('validation-error');
-      Adapt.a11y.focusFirst(this.$el, { defer: true });
+      Adapt.trigger('questionView:showInstructionError', this);
     }
 
     // Blank method for question to fill out when the question cannot be submitted
@@ -280,11 +279,13 @@ define([
     onResetClicked() {
       this.setQuestionAsReset();
 
-      this._runModelCompatibleFunction('updateButtons');
-
       this._runModelCompatibleFunction('resetUserAnswer');
 
       this.resetQuestion();
+
+      this.model.checkCanSubmit();
+
+      this._runModelCompatibleFunction('updateButtons');
 
       // onResetClicked is called as part of the checkIfResetOnRevisit
       // function and as a button click. if the view is already rendered,

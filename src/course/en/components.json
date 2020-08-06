@@ -11,7 +11,8 @@
         "body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br><b>These presentation components can be structured</b> in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
         "instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the core bundle.",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -45,7 +46,8 @@
         "body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
         "instruction": "",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -75,7 +77,8 @@
             "attribution": ""
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -652,7 +655,8 @@
             }
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -723,7 +727,8 @@
             }
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -791,7 +796,8 @@
             }
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -858,7 +864,8 @@
             }
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -922,7 +929,8 @@
             }
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -989,7 +997,8 @@
             }
         },
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -1023,7 +1032,8 @@
         "_canReset": true,
         "_isResetOnRevisit": "hard",
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     },
     {
@@ -1069,7 +1079,8 @@
             }
         ],
         "_pageLevelProgress": {
-            "_isEnabled": true
+            "_isEnabled": true,
+            "_isCompletionIndicatorEnabled": false
         }
     }
 ]

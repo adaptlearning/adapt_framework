@@ -109,8 +109,8 @@
   function loadFoundationLibraries() {
     require([
       'handlebars',
-      'polyfill',
       'underscore',
+      'polyfill',
       'underscore.results',
       'backbone',
       'backbone.controller',
@@ -124,18 +124,24 @@
       'scrollTo',
       'bowser',
       'enum'
-    ], loadTemplates);
+    ], loadGlobals);
   }
 
-  // 7. Load templates after making handlebars context global
-  function loadTemplates(Handlebars) {
+  // 7. Expose global context libraries
+  function loadGlobals(Handlebars, _) {
+    window._ = _;
     window.Handlebars = Handlebars;
+    loadTemplates();
+  }
+
+  // 8. Load templates
+  function loadTemplates() {
     require([
       'templates'
     ], loadAdapt);
   }
 
-  // 8. Allow cross-domain AJAX then load Adapt
+  // 9. Allow cross-domain AJAX then load Adapt
   function loadAdapt() {
     $.ajaxPrefilter(function(options) {
       options.crossDomain = true;

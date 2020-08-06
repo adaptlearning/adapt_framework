@@ -41,9 +41,9 @@ define([
      * you want to perform additional checks before setting the component to completed - see adapt-contrib-assessmentResults
      * for an example. Defaults to `view.setCompletionStatus` if not specified.
      */
-    setupInviewCompletion(inviewElementSelector, callback) {
-      this.$inviewElement = this.$(inviewElementSelector || '.component__inner');
-      this.inviewCallback = (callback || this.setCompletionStatus);
+    setupInviewCompletion(inviewElementSelector = '.component__inner', callback = this.setCompletionStatus) {
+      this.$inviewElement = this.$(inviewElementSelector);
+      this.inviewCallback = callback;
 
       this.$inviewElement.on('inview.componentView', this.onInview.bind(this));
     }

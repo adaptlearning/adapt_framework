@@ -56,6 +56,14 @@ define([
       ];
     }
 
+    trackableType() {
+      return [
+        String,
+        Boolean,
+        Boolean
+      ];
+    }
+
     bubblingEvents() {
       return [
         'change:_isComplete',
