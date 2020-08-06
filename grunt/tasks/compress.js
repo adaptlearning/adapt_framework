@@ -35,12 +35,12 @@ module.exports = function(grunt) {
     switch (mode) {
       case 'images':
         await compressImages();
-        done();
         break;
       default:
         await compressImages();
-        done();
     }
+
+    done();
 
   });
 
