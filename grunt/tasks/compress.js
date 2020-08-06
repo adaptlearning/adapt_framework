@@ -1,16 +1,17 @@
 module.exports = function(grunt) {
 
   grunt.registerTask('compress', 'Compress output folder assets', async function(mode) {
-    if (!mode || mode === "images") {
+    const done = this.async();
+    const options = this.options({});
+    const fs = require('fs-extra');
+    const globs = require('globs');
+
+    async function compressImages() {
       grunt.log.ok(`Compressing images...`);
-      const globs = require('globs');
-      const fs = require('fs-extra');
       const imagemin = require('imagemin');
       const imageminJpegtran = require('imagemin-jpegtran');
       const imageminPngquant = require('imagemin-pngquant');
       const imageminSvgo = require('imagemin-svgo');
-      const done = this.async();
-      const options = this.options({});
       const sourceFiles = globs.sync(options.images.src);
       const destFiles = await imagemin(sourceFiles, {
         plugins: [
@@ -29,8 +30,22 @@ module.exports = function(grunt) {
         grunt.log.ok(file.sourcePath);
         fs.writeFileSync(file.sourcePath, file.data);
       });
-      done();
     }
+
+    switch (mode) {
+      case 'images':
+        await compressImages();
+        done();
+        break;
+      default:
+        await compressImages();
+        done();
+    }
+
   });
+
+
+
+
 
 };
