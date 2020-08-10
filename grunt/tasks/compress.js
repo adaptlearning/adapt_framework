@@ -1,11 +1,9 @@
 module.exports = function(grunt) {
-
   grunt.registerTask('compress', 'Compress output folder assets', async function(mode) {
     const done = this.async();
     const options = this.options({});
     const fs = require('fs-extra');
     const globs = require('globs');
-
     async function compressImages() {
       grunt.log.ok(`Compressing images...`);
       const imagemin = require('imagemin');
@@ -31,7 +29,6 @@ module.exports = function(grunt) {
         fs.writeFileSync(file.sourcePath, file.data);
       });
     }
-
     switch (mode) {
       case 'images':
         await compressImages();
@@ -39,13 +36,6 @@ module.exports = function(grunt) {
       default:
         await compressImages();
     }
-
     done();
-
   });
-
-
-
-
-
 };
