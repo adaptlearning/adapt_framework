@@ -56,7 +56,7 @@ define([
         const $app = Adapt.scrolling.$app;
         const $element = this;
         const elementOffset = selectorOffset.call($element);
-        const isCorrectedContainer = $element.is('html', 'body', '#app') ||
+        const isCorrectedContainer = $element.is('html, body, #app') ||
           $element.parents().is('#app');
         if (!isCorrectedContainer) {
           // Do not adjust the offset measurement as not in $app container and isn't html or body
