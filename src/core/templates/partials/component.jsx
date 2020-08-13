@@ -8,6 +8,7 @@ export default function(view, data) {
     displayTitle,
     body,
     instruction,
+    mobileInstruction,
     _component,
     _disableAccessibilityState
   } = data;
