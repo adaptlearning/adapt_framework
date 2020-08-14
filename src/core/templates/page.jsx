@@ -20,7 +20,7 @@ export default function(model, view) {
     mobileInstruction :
     instruction;
   return <div className="page__inner">
-    {(displayTitle || subtitle || body || instruction) &&
+    {(displayTitle || subtitle || body || sizedInstruction) &&
     <div className="page__header">
       <div className="page__header-inner">
 

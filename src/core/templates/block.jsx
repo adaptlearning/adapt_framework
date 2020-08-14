@@ -18,7 +18,7 @@ export default function(model, view) {
     mobileInstruction :
     instruction;
   return <div className="block__inner">
-    {(displayTitle || body || instruction) &&
+    {(displayTitle || body || sizedInstruction) &&
     <div className="block__header">
       <div className="block__header-inner">
 
