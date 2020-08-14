@@ -1,15 +1,22 @@
+import Adapt from 'core/js/adapt';
 import { compile, html } from 'core/js/reactHelpers';
 
-export default function(view, data) {
-  // Create a reference to an un-controller view container
+export default function(model, view) {
+  const data = model.toJSON();
+  data._globals = Adapt.course.get('_globals');
+  // Create references to un-controlled view containers
   view.jsxHeading = view.jsxHeading || React.createRef();
   view.jsxChildContainer = view.jsxChildContainer || React.createRef();
   const {
     displayTitle,
     body,
     instruction,
+    mobileInstruction,
     _disableAccessibilityState
   } = data;
+  const sizedInstruction = (mobileInstruction && Adapt.device.screenSize !== 'large') ?
+    mobileInstruction :
+    instruction;
   return <div className="article__inner">
     {(displayTitle || body || instruction) &&
     <div className="article__header">
@@ -37,10 +44,10 @@ export default function(view, data) {
         </div>
         }
 
-        {instruction &&
+        {sizedInstruction &&
         <div className="article__instruction">
           <div className="article__instruction-inner">
-            {html(compile(instruction, data))}
+            {html(compile(sizedInstruction, data))}
           </div>
         </div>
         }

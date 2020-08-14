@@ -18,6 +18,8 @@ class AdaptView extends Backbone.View {
     this.isReact = (this.constructor.template || '').includes('.jsx');
     if (this.isReact) {
       this.listenTo(this.model, 'all', this.changed);
+      // Facilitate adaptive react views
+      this.listenTo(Adapt, 'device:changed', this.changed);
     }
     this.model.set({
       '_globals': Adapt.course.get('_globals'),
@@ -66,13 +68,19 @@ class AdaptView extends Backbone.View {
     return this;
   }
 
-  changed() {
+  /**
+   * Re-render a react template
+   * @param {string} eventName=null Backbone change event name
+   */
+  changed(eventName = null) {
     if (!this.isReact) {
-      throw new Error(`Cannot call changed on non-react component`);
+      throw new Error('Cannot call changed on a non-react view');
     }
-    const data = this.model.toJSON();
-    data._globals = Adapt.course.get('_globals');
-    const element = render(this.constructor.template.replace('.jsx', ''), this, data);
+    if (typeof eventName === 'string' && eventName.startsWith('bubble')) {
+      // Ignore bubbling events as they are outside of this view's scope
+      return;
+    }
+    const element = render(this.constructor.template.replace('.jsx', ''), this.model, this);
     ReactDOM.render(element, this.el);
   }
 
