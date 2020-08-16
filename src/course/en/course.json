@@ -116,6 +116,18 @@
             }
         ]
     },
+    "_start": {
+        "_isEnabled": false,
+        "_startIds": [
+            {
+                "_id": "co-05",
+                "_skipIfComplete": false,
+                "_className": ""
+            }
+        ],
+        "_force": false,
+        "_isMenuDisabled": false
+    },
     "_assessment": {
         "_isPercentageBased": true,
         "_scoreToPass": 75
