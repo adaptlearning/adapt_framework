@@ -121,7 +121,7 @@
         "_startIds": [
             {
                 "_id": "co-05",
-                "_skipIfComplete": false,
+                "_skipIfComplete": true,
                 "_className": ""
             }
         ],
