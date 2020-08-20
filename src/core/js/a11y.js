@@ -617,7 +617,10 @@ define([
             // Drop focus errors as only happens when the element
             // isn't attached to the DOM.
           }
-          window.scrollTo(null, y);
+          if (Adapt.device.browser === 'internet explorer') {
+            // ie 11 doesn't support preventScroll but this breaks firefox 79.0
+            window.scrollTo(null, y);
+          }
         } else {
           $element[0].focus();
         }
