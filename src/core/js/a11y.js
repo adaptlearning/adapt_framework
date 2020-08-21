@@ -618,7 +618,7 @@ define([
             // isn't attached to the DOM.
           }
           if (Adapt.device.browser !== 'firefox') {
-            // ie 11 and safari doesn't support preventScroll but this breaks firefox 79.0
+            // ie 11 and safari do not support preventScroll but this fix breaks firefox 79.0
             window.scrollTo(null, y);
           }
         } else {
