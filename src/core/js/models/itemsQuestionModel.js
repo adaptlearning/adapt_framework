@@ -34,14 +34,6 @@ define([
       this.checkCanSubmit();
     }
 
-    /**
-     * Returns a string of the model type group.
-     * @returns {string}
-     */
-    getTypeGroup() {
-      return 'itemsquestion';
-    }
-
     restoreUserAnswers() {
       if (!this.get('_isSubmitted')) return;
 
