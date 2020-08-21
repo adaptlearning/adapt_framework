@@ -1,6 +1,7 @@
 define([
-  'core/js/adapt'
-], function(Adapt) {
+  'core/js/adapt',
+  '../childEvent'
+], function(Adapt, ChildEvent) {
 
   class AdaptView extends Backbone.View {
 
@@ -73,34 +74,177 @@ define([
       });
     }
 
-    addChildren() {
-      let nthChild = 0;
-      const { models } = this.model.getChildren();
-      this.childViews = {};
-      models.forEach(model => {
-        if (!model.get('_isAvailable')) return;
-
-        nthChild++;
-        model.set('_nthChild', nthChild);
-
+    /**
+     * Add children and descendant views, first-child-first. Wait until all possible
+     * views are added before resolving asynchronously.
+     * Will trigger 'view:addChild'(ChildEvent), 'view:requestChild'(ChildEvent)
+     * and 'view:childAdded'(ParentView, ChildView) accordingly.
+     * @returns {number} Count of views added
+     */
+    async addChildren() {
+      this.nthChild = this.nthChild || 0;
+      // Check descendants first
+      let addedCount = await this.addDescendants(false);
+      // Iterate through existing available children and/or request new children
+      // if required and allowed
+      while (true) {
+        const models = this.model.getAvailableChildModels();
+        const event = this._getAddChildEvent(models[this.nthChild]);
+        if (!event) {
+          break;
+        }
+        if (event.isForced) {
+          event.reset();
+        }
+        if (event.isStoppedImmediate || !event.model) {
+          // If addChild has been stopped before it is added then
+          // set all subsequent models and their children as not rendered
+          const subsequentModels = models.slice(this.nthChild);
+          subsequentModels.forEach(model => model.setOnChildren('_isRendered', false));
+          break;
+        }
+        // Set model state
+        const model = event.model;
+        model.set({
+          '_isRendered': true,
+          '_nthChild': ++this.nthChild
+        });
+        // Create child view
         const ChildView = this.constructor.childView || Adapt.getViewClass(model);
-
         if (!ChildView) {
           throw new Error(`The component '${model.attributes._id}' ('${model.attributes._component}') has not been installed, and so is not available in your project.`);
         }
-
-        const $parentContainer = this.$(this.constructor.childContainer);
         const childView = new ChildView({ model });
+        this.addChildView(childView);
+        addedCount++;
+        if (event.isStoppedNext) {
+          break;
+        }
+      }
 
-        this.childViews[model.get('_id')] = childView;
+      if (!addedCount) {
+        return addedCount;
+      }
 
-        $parentContainer.append(childView.$el);
+      // Children were added, unset _isReady
+      this.model.set('_isReady', false);
+      return addedCount;
+    }
+
+    /**
+     * Child views can be added with '_renderPosition': 'outer-append' or
+     * 'inner-append' (default). Each child view will trigger a
+     * 'view:childAdded'(ParentView, ChildView) event and be added to the
+     * this.getChildViews() array on this parent.
+     * @param {AdaptView} childView
+     * @returns {AdaptView} Returns this childView
+     */
+    addChildView(childView) {
+      const childViews = this.getChildViews() || [];
+      childViews.push(childView);
+      this.setChildViews(childViews);
+      const $parentContainer = this.$(this.constructor.childContainer);
+      switch (childView.model.get('_renderPosition')) {
+        case 'outer-append':
+          // Useful for trickle buttons, inline feedback etc
+          this.$el.append(childView.$el);
+          break;
+        case 'inner-append':
+        default:
+          $parentContainer.append(childView.$el);
+          break;
+      }
+      // Signify that a child has been added to the view to enable updates to status bars
+      Adapt.trigger('view:childAdded', this, childView);
+      return childView;
+    }
+
+    /**
+     * Iterates through existing childViews and runs addChildren on them, resolving
+     * the total count of views added asynchronously.
+     * @returns {number} Count of views added
+     */
+    async addDescendants() {
+      let addedDescendantCount = 0;
+      const childViews = this.getChildViews();
+      if (!childViews) {
+        return addedDescendantCount;
+      }
+      for (let i = 0, l = childViews.length; i < l; i++) {
+        const view = childViews[i];
+        addedDescendantCount = view.addChildren ? await view.addChildren() : 0;
+        if (addedDescendantCount) {
+          break;
+        }
+      }
+      if (!addedDescendantCount) {
+        this.model.checkReadyStatus();
+        return addedDescendantCount;
+      }
+      // Descendants were added, unset _isReady
+      this.model.set('_isReady', false);
+      return addedDescendantCount;
+    }
+
+    /**
+     * Resolves after outstanding asynchronous view additions are finished
+     * and ready.
+     */
+    async whenReady() {
+      if (this.model.get('_isReady')) return;
+      return new Promise(resolve => {
+        const onReadyChange = (model, value) => {
+          if (!value) return;
+          this.stopListening(this.model, 'change:_isReady', onReadyChange);
+          resolve();
+        };
+        this.listenTo(this.model, 'change:_isReady', onReadyChange);
+        this.model.checkReadyStatus();
       });
     }
 
+    /**
+     * Triggers and returns a new ChildEvent object for render control.
+     * This function is used by addChildren to manage event triggering.
+     * @param {AdaptModel} model
+     * @returns {ChildEvent}
+     */
+    _getAddChildEvent(model) {
+      const isRequestChild = (!model);
+      let event = new ChildEvent(null, this, model);
+      if (isRequestChild) {
+        // No model has been supplied, we are at the end of the available child list
+        const canRequestChild = this.model.get('_canRequestChild');
+        if (!canRequestChild) {
+          // This model cannot request children
+          return;
+        }
+        event.type = 'requestChild';
+        // Send a request asking for a new model
+        Adapt.trigger('view:requestChild', event);
+        if (!event.hasRequestChild) {
+          // No new model was supplied
+          return;
+        }
+        // A new model has been supplied for the end of the list.
+      }
+      // Trigger an event to signify that a new model is to be added
+      event.type = 'addChild';
+      Adapt.trigger('view:addChild', event);
+      // Close the event so that the final state can be scrutinized
+      event.close();
+      return event;
+    }
+
+    /**
+     * Return an array of all child and descendant views.
+     * @param {boolean} [isParentFirst=false] Array returns with parents before children
+     * @returns {[AdaptView]}
+     */
     findDescendantViews(isParentFirst) {
       const descendants = [];
-      this.childViews && _.each(this.childViews, view => {
+      const childViews = this.getChildViews();
+      childViews && childViews.forEach(view => {
         if (isParentFirst) descendants.push(view);
         const children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
         if (children) descendants.push(...children);
@@ -175,8 +319,28 @@ define([
       this.$el.toggleClass('is-complete', isComplete);
     }
 
+    /**
+     * @returns {[AdaptViews]}
+     */
     getChildViews() {
-      return this.childViews;
+      return this._childViews;
+    }
+
+    /**
+     * @param {[AdaptView]} value
+     */
+    setChildViews(value) {
+      this._childViews = value;
+    }
+
+    /**
+     * Returns an indexed by id list of child views.
+     * @deprecated since 0.5.5
+     * @returns {{<string, AdaptView}}
+     */
+    get childViews() {
+      Adapt.log.deprecated(`view.childViews use view.getChildViews()`);
+      return _.indexBy(this.getChildViews(), view => view.model.get('_id'));
     }
 
   }

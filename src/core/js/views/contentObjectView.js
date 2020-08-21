@@ -90,6 +90,41 @@ define([
       _.defer(performIsReady);
     }
 
+    /**
+     * Force render up to specified id. Resolves when views are ready.
+     * @param {string} id
+     */
+    async renderTo(id) {
+      let models = this.model.getAllDescendantModels(true).filter(model => model.get('_isAvailable'));
+      const index = models.findIndex(model => model.get('_id') === id);
+      if (index === -1) {
+        throw new Error(`Cannot renderTo "${id}" as it isn't a descendant.`);
+      }
+      // Return early if the model is already rendered and ready
+      const model = models[index];
+      if (model.get('_isRendered') && model.get('_isReady')) {
+        return;
+      }
+      // Force all models up until the id to render
+      models = models.slice(0, index + 1);
+      const ids = _.indexBy(models, (model) => model.get('_id'));
+      const forceUntilId = (event) => {
+        const addingId = event.model.get('_id');
+        if (!ids[addingId]) return;
+        event.force();
+        if (addingId !== id) return;
+        Adapt.off('view:addChild', forceUntilId);
+      };
+      Adapt.on('view:addChild', forceUntilId);
+      // Trigger addChildren cascade
+      await this.addChildren();
+      await this.whenReady();
+      // Error if model isn't rendered and ready
+      if (!model.get('_isRendered') || !model.get('_isReady')) {
+        throw new Error(`Cannot renderTo "${id}".`);
+      }
+    }
+
     preRemove() {
       const type = this.constructor.type;
       Adapt.trigger(`${type}View:preRemove contentObjectView:preRemove view:preRemove`, this);
@@ -106,7 +141,7 @@ define([
         this.findDescendantViews().reverse().forEach(view => {
           view.remove();
         });
-        this.childViews = [];
+        this.setChildViews(null);
         super.remove();
         _.defer(() => {
           Adapt.trigger(`${type}View:postRemove contentObjectView:postRemove view:postRemove`, this);
