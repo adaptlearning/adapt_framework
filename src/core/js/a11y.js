@@ -618,11 +618,11 @@ define([
             // isn't attached to the DOM.
           }
           switch (Adapt.device.browser) {
-          case 'internet explorer':
-          case 'microsoft edge':
-          case 'safari':
-            // return to previous scroll position due to no support for preventScroll
-            window.scrollTo(null, y);
+            case 'internet explorer':
+            case 'microsoft edge':
+            case 'safari':
+              // return to previous scroll position due to no support for preventScroll
+              window.scrollTo(null, y);
           }
         } else {
           $element[0].focus();
