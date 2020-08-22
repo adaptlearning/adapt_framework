@@ -138,20 +138,22 @@ class AdaptSingleton extends Backbone.Model {
   }
 
   /**
-   * Allows a selector to be passed in and Adapt will navigate to this element
+   * Allows a selector to be passed in and Adapt will navigate to this element. Resolves
+   * asynchronously when the element has been navigated to.
    * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
-   * @param {object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
-   * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
+   * @param {Object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
+   * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
    */
-  navigateToElement() {}
+  async navigateToElement() {}
 
   /**
-   * Allows a selector to be passed in and Adapt will scroll to this element
+   * Allows a selector to be passed in and Adapt will scroll to this element. Resolves
+   * asynchronously when the element has been navigated/scrolled to.
    * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
-   * @param {object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
-   * You may also include a `replace` property that you can set to `true` if you want to update the URL without creating an entry in the browser's history.
+   * @param {Object} [settings={}] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
+   * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
    */
-  scrollTo() {}
+  async scrollTo() {}
 
   /**
    * Used to register models and views with `Adapt.store`
@@ -328,6 +330,7 @@ class AdaptSingleton extends Backbone.Model {
 
     if (model === this.parentView.model) return this.parentView;
 
+
     const idPathToView = [id];
     const currentLocationId = this.location._currentId;
     const currentLocationModel = model.getAncestorModels().find(model => {
@@ -341,7 +344,9 @@ class AdaptSingleton extends Backbone.Model {
     }
 
     const foundView = idPathToView.reduce((view, currentId) => {
-      return view && view.childViews && view.childViews[currentId];
+      if (!view) return;
+      const childViews = view.getChildViews();
+      return childViews && childViews.find(view => view.model.get('_id') === currentId);
     }, this.parentView);
 
     return foundView;
@@ -396,8 +401,10 @@ class AdaptSingleton extends Backbone.Model {
   async remove() {
     const currentView = this.parentView;
     if (currentView) {
-      currentView.model.setOnChildren('_isReady', false);
-      currentView.model.set('_isReady', false);
+      currentView.model.setOnChildren({
+        '_isReady': false,
+        '_isRendered': false
+      });
     }
     this.trigger('preRemove', currentView);
     await this.wait.queue();

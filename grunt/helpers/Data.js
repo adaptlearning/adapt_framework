@@ -26,12 +26,14 @@ class Data {
    * @param {Framework} options.framework
    * @param {string} options.sourcePath
    * @param {string} options.jsonext
+   * @param {string} options.trackingIdType
    * @param {function} options.log
    */
   constructor({
     framework = null,
     sourcePath = null,
     jsonext = 'json',
+    trackingIdType = 'block',
     log = console.log
   } = {}) {
     /** @type {Framework} */
@@ -40,6 +42,8 @@ class Data {
     this.sourcePath = sourcePath;
     /** @type {string} */
     this.jsonext = jsonext;
+    /** @type {string} */
+    this.trackingIdType = trackingIdType;
     /** @type {function} */
     this.log = log;
     /** @type {JSONFile} */
@@ -56,6 +60,7 @@ class Data {
         framework: this.framework,
         languagePath,
         jsonext: this.jsonext,
+        trackingIdType: this.trackingIdType,
         log: this.log
       });
       language.load();
@@ -125,7 +130,8 @@ class Data {
       toLang = new Language({
         framework: this.framework,
         languagePath: newPath,
-        jsonext: this.jsonext
+        jsonext: this.jsonext,
+        trackingIdType: this.trackingIdType
       });
       this.languages.push(toLang);
     }

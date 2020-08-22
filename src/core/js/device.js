@@ -73,9 +73,9 @@ define([
     // Check to see if client screen width is larger than medium em breakpoint
     // If so apply large, otherwise check to see if client screen width is
     // larger than small em breakpoint. If so apply medium, otherwise apply small
-    if (screenSizeEmWidth > mediumEmBreakpoint) {
+    if (screenSizeEmWidth >= mediumEmBreakpoint) {
       screenSize = 'large';
-    } else if (screenSizeEmWidth > smallEmBreakpoint) {
+    } else if (screenSizeEmWidth >= smallEmBreakpoint) {
       screenSize = 'medium';
     } else {
       screenSize = 'small';
