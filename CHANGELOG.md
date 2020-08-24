@@ -1,3 +1,11 @@
+## [5.7.0] - 2020-08-24
+### Added
+
+### Changed
+
+### Fixed
+
+
 ## [5.6.1] - 2020-07-07
 #### Fixed
 * Further issues found on [#2796](https://github.com/adaptlearning/adapt_framework/issues/2796)
@@ -890,6 +898,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.7.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.1...v5.7.0
 [5.6.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.0...v5.6.1
 [5.6.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.1...v5.6.0
 [5.5.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.0...v5.5.1
