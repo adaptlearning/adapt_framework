@@ -617,7 +617,13 @@ define([
             // Drop focus errors as only happens when the element
             // isn't attached to the DOM.
           }
-          window.scrollTo(null, y);
+          switch (Adapt.device.browser) {
+            case 'internet explorer':
+            case 'microsoft edge':
+            case 'safari':
+              // return to previous scroll position due to no support for preventScroll
+              window.scrollTo(null, y);
+          }
         } else {
           $element[0].focus();
         }
