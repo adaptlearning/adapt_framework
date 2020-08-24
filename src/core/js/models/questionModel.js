@@ -335,6 +335,9 @@ define([
 
   }
 
+  // This abstract model needs to registered to support deprecated view-only questions
+  Adapt.register('question', { model: QuestionModel });
+
   return QuestionModel;
 
 });

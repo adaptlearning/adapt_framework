@@ -270,6 +270,14 @@ define([
         nameModelOrData = nameModelOrData.toJSON();
       }
       if (nameModelOrData instanceof Object) {
+        const name = nameModelOrData._component;
+        const entry = this.store[name];
+        const isViewOnlyQuestion = entry && !entry.model && entry.view && entry.view._isQuestionType;
+        if (isViewOnlyQuestion) {
+          // Use question model by default
+          this.log && this.log.deprecated(`Assuming a question model for a view-only question: ${name}`);
+          return 'question';
+        }
         const names = [
           typeof nameModelOrData._model === 'string' && nameModelOrData._model,
           typeof nameModelOrData._component === 'string' && nameModelOrData._component,
