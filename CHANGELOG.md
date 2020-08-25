@@ -11,7 +11,7 @@
 
 ### Changed
 * Underscore library updated to v1.10.2 ([#2773](https://github.com/adaptlearning/adapt_framework/issues/2773))
-* Submit button is now disabled until the learner makes a selection ([#2812](https://github.com/adaptlearning/adapt_framework/issues/2812)). Note: If you prefer the old behaviour, you can use the [adapt-contrib-instructionError](https://github.com/adaptlearning/adapt-contrib-instructionError) plugin to restore it.
+* Submit button is now disabled until the learner makes a selection ([#2812](https://github.com/adaptlearning/adapt_framework/issues/2812)). Note: If you prefer the old behaviour, you can use the [instructionError plugin](https://github.com/adaptlearning/adapt-contrib-instructionError) to restore it.
 * Amended authoring tool schema defaults so that articles and blocks have no display title set automatically ([#2833](https://github.com/adaptlearning/adapt_framework/issues/2833))
 * Lodash dependency changed to v4.17.19 ([#2838](https://github.com/adaptlearning/adapt_framework/pull/2838))
 * Amended `setupInviewCompletion` to use default parameter ([2839](https://github.com/adaptlearning/adapt_framework/issues/2839))
