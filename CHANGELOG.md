@@ -16,7 +16,7 @@
 * Lodash dependency changed to v4.17.19 ([#2838](https://github.com/adaptlearning/adapt_framework/pull/2838))
 * Amended `setupInviewCompletion` to use default parameter ([2839](https://github.com/adaptlearning/adapt_framework/issues/2839))
 * Improvements to Notify's `subview` handling ([#2847](https://github.com/adaptlearning/adapt_framework/issues/2847))
-* Load underscore as a UMD module ([#2861](https://github.com/adaptlearning/adapt_framework/issues/2861))
+* Load Underscore as a UMD module ([#2861](https://github.com/adaptlearning/adapt_framework/issues/2861))
 * Turn off deprecation for the `contentObjects`, `articles`, `blocks` and `components` collections ([#2859](https://github.com/adaptlearning/adapt_framework/issues/2859))
 
 ### Fixed
