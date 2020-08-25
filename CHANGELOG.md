@@ -4,10 +4,10 @@
 * A `save` method to the `offlineStorage` API ([#2754](https://github.com/adaptlearning/adapt_framework/issues/2754))
 * New `DeepClone` API ([#2758](https://github.com/adaptlearning/adapt_framework/issues/2758))
 * New `ChildViews` API for rendering control ([#2760](https://github.com/adaptlearning/adapt_framework/issues/2760))
-* Option to track content at component level instead of block level ([#2805](https://github.com/adaptlearning/adapt_framework/issues/2805))
+* Option to track content at component level instead of block level ([#2805](https://github.com/adaptlearning/adapt_framework/issues/2805)). Note: requires [v3.5.0 of the spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor/releases/tag/v3.5.0).
 * Ability to exclude plugins from a 'production' build ([#2836](https://github.com/adaptlearning/adapt_framework/issues/2836))
 * Image compression via new `grunt compress` command ([#2866](https://github.com/adaptlearning/adapt_framework/issues/2866))
-* Ability to have the state of presentation components saved between sessions ([#2845](https://github.com/adaptlearning/adapt_framework/issues/2845)). Note: requires v3.5.0 of the spoor plugin.
+* Ability to have the state of presentation components saved between sessions ([#2845](https://github.com/adaptlearning/adapt_framework/issues/2845)). Note: requires [v3.5.0 of the spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor/releases/tag/v3.5.0).
 
 ### Changed
 * Underscore library updated to v1.10.2 ([#2773](https://github.com/adaptlearning/adapt_framework/issues/2773))
