@@ -163,7 +163,7 @@ For a more detailed overview of the changes see ([#2711](https://github.com/adap
 - Indentation amended to use 2 spaces instead of 4
 
 ### Fixed
-- Drawer no longer renders two `role='list'`
+- Drawer no longer renders two `role='list'` attributes
 
 ### Removed
 - Deprecated functionality ([#2329](https://github.com/adaptlearning/adapt_framework/issues/2329))
