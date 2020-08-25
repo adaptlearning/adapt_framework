@@ -158,7 +158,7 @@ For a more detailed overview of the changes see ([#2711](https://github.com/adap
 - Split `drawerItemView` into new file
 - Changed LESS folder structure
 - Updated heading aria label to use title property
-- Changed `_htmlClassName` to `_htmlClasses` (https://github.com/adaptlearning/adapt_framework/issues/2392)
+- Changed `_htmlClassName` to `_htmlClasses` ([#2392](https://github.com/adaptlearning/adapt_framework/issues/2392))
 - Amended viewport meta tag (https://github.com/adaptlearning/adapt_framework/pull/2569)
 - Indentation amended to use 2 spaces instead of 4
 
@@ -166,7 +166,7 @@ For a more detailed overview of the changes see ([#2711](https://github.com/adap
 - Drawer no longer renders two `role='list'`
 
 ### Removed
-- Deprecated functionality (https://github.com/adaptlearning/adapt_framework/issues/2329)
+- Deprecated functionality ([#2329](https://github.com/adaptlearning/adapt_framework/issues/2329))
 
 ## [4.4.1] - 2019-11-06
 ### Fixed
