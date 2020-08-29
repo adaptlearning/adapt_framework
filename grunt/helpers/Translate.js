@@ -41,7 +41,7 @@ class Translate {
     masterLang = 'en',
     targetLang = null,
     format = 'csv',
-    csvDelimiter = ',',
+    csvDelimiter = null,
     shouldReplaceExisting = false,
     jsonext = 'json',
     sourcePath = '',
@@ -187,7 +187,7 @@ class Translate {
 
     const csvOptions = {
       quotedString: true,
-      delimiter: this.csvDelimiter
+      delimiter: this.csvDelimiter || ','
     };
 
     const fileNames = Object.keys(outputGroupedByFile);
@@ -295,13 +295,20 @@ class Translate {
             this.log(`Encoding not detected used utf-8 ${filename}`);
           }
           let csvDelimiter = this.csvDelimiter;
-          const firstLineMatches = fileContent.match(/.+\/"{0,1}.{1}/);
-          if (firstLineMatches && firstLineMatches.length) {
-            const detectedDelimiter = firstLineMatches[0].slice(-1);
-            if (detectedDelimiter !== this.csvDelimiter) {
-              this.log(`Delimiter detected as ${detectedDelimiter} in ${filename}`);
-              csvDelimiter = detectedDelimiter;
+          if (!csvDelimiter) {
+            const firstLineMatches = fileContent.match(/^[^,;\t| \n\r]+\/"{0,1}[,;\t| ]{1}/);
+            if (firstLineMatches && firstLineMatches.length) {
+              const detectedDelimiter = firstLineMatches[0].slice(-1);
+              if (detectedDelimiter !== this.csvDelimiter) {
+                this.log(`Delimiter detected as ${detectedDelimiter} in ${filename}`);
+                csvDelimiter = detectedDelimiter;
+              }
             }
+          }
+          if (!csvDelimiter) {
+            const err = new Error(`Could not detect csv delimiter ${targetLanguage.path}`);
+            err.number = 10014;
+            throw err;
           }
           const options = {
             delimiter: csvDelimiter

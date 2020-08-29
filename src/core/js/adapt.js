@@ -255,7 +255,7 @@ class AdaptSingleton extends Backbone.Model {
     }
     return object.view;
   }
-
+  
   /**
    * Parses a model class name.
    * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"`, the model to process or its json data
@@ -268,6 +268,14 @@ class AdaptSingleton extends Backbone.Model {
       nameModelOrData = nameModelOrData.toJSON();
     }
     if (nameModelOrData instanceof Object) {
+      const name = nameModelOrData._component;
+      const entry = this.store[name];
+      const isViewOnlyQuestion = entry && !entry.model && entry.view && entry.view._isQuestionType;
+      if (isViewOnlyQuestion) {
+        // Use question model by default
+        this.log && this.log.deprecated(`Assuming a question model for a view-only question: ${name}`);
+        return 'question';
+      }
       const names = [
         typeof nameModelOrData._model === 'string' && nameModelOrData._model,
         typeof nameModelOrData._component === 'string' && nameModelOrData._component,
@@ -280,7 +288,6 @@ class AdaptSingleton extends Backbone.Model {
       }
     }
     throw new Error('Cannot derive model class name from input');
-  }
 
   /**
    * Fetches a model class from the store. For a usage example, see either HotGraphic or Narrative
