@@ -574,6 +574,17 @@ define([
       });
     }
 
+    /**
+     * Checks the 'availability' of all the model's ancestors and returns `true` only if
+     * all of them have `_isAvailable: true`
+     * Useful for checking to see if (for example) a component is contained within
+     * an 'unavailable' article, and should therefore also be considered 'unavailable'
+     * @return `true` if all ancestors have `_isAvailable: true`; `false` if any of them are not
+     */
+    getIsAvailableInPage() {
+      return this.getAncestorModels(true).every(model => model.get('_isAvailable'));
+    }
+
     getParent() {
       if (this._parentModel) {
         return this._parentModel;
