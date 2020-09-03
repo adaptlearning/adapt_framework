@@ -114,7 +114,7 @@ define([
       const currentModel = Adapt.findById(currentModelId);
       if (!currentModel) return;
 
-      if (!currentModel.get('_isRendered') || !currentModel.get('_isRendered')) {
+      if (!currentModel.get('_isRendered') || !currentModel.get('_isReady')) {
         await Adapt.parentView.renderTo(currentModelId);
       }
 

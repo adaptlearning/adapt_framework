@@ -95,6 +95,8 @@ define([
      * @param {string} id
      */
     async renderTo(id) {
+      const isRenderToSelf = (id === this.model.get('_id'));
+      if (isRenderToSelf) return;
       let models = this.model.getAllDescendantModels(true).filter(model => model.get('_isAvailable'));
       const index = models.findIndex(model => model.get('_id') === id);
       if (index === -1) {
