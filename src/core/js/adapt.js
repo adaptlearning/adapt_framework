@@ -288,6 +288,7 @@ class AdaptSingleton extends Backbone.Model {
       }
     }
     throw new Error('Cannot derive model class name from input');
+  }
 
   /**
    * Fetches a model class from the store. For a usage example, see either HotGraphic or Narrative
