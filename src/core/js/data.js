@@ -164,9 +164,7 @@ define([
         Adapt.trigger('app:languageChanged', newLanguage);
         _.defer(() => {
           Adapt.startController.loadCourseData();
-          const hash = Adapt.startController.isEnabled() ?
-            '#/' :
-            Adapt.startController.getStartHash(true);
+          const hash = Adapt.startController.isEnabled() ? Adapt.startController.getStartHash(true) : '#/';
           Adapt.router.navigate(hash, { trigger: true, replace: true });
         });
       }
