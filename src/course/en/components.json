@@ -299,11 +299,11 @@
         "_canShowModelAnswer": true,
         "_shouldDisplayAttempts": false,
         "_isRandom": true,
-        "_selectable": 2,
+        "_selectable": 1,
         "title": "Multiple Choice Question",
         "displayTitle": "Multiple Choice Question",
         "body": "In what year was the first recorded instance of a large scale assessment that consists solely of multiple choice questions?",
-        "instruction": "Choose one or more options and select Submit.",
+        "instruction": "Choose one option and select Submit.",
         "_items": [
             {
                 "text": "1917",
