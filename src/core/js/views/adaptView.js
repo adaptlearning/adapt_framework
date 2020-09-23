@@ -82,6 +82,7 @@ class AdaptView extends Backbone.View {
       return;
     }
     const element = render(this.constructor.template.replace('.jsx', ''), this.model, this);
+    // eslint-disable-next-line no-undef
     ReactDOM.render(element, this.el);
   }
 
@@ -316,6 +317,7 @@ class AdaptView extends Backbone.View {
 
     Adapt.wait.for(end => {
       if (this.isReact) {
+        // eslint-disable-next-line no-undef
         ReactDOM.unmountComponentAtNode(this.el);
       }
       this.$el.off('onscreen.adaptView');
