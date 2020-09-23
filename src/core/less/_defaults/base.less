@@ -31,6 +31,15 @@ img {
   min-width: 100%;
 }
 
+// Fix for ie11 display of .svg in <img>
+// https://github.com/adaptlearning/adapt_framework/issues/2916
+// --------------------------------------------------
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  img[src$=".svg"] {
+    width: 100%;
+  }
+}
+
 // Remove the default border and padding from all button tags
 // --------------------------------------------------
 button {
