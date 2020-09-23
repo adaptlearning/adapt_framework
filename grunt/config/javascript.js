@@ -20,13 +20,6 @@ module.exports = function(grunt, options) {
         },
         umdImports: [
         ],
-        reactTemplates: [
-          '<%= sourcedir %>core/templates/**/*.jsx',
-          '<%= sourcedir %>components/*/templates/**/*.jsx',
-          '<%= sourcedir %>extensions/*/templates/**/*.jsx',
-          '<%= sourcedir %>menu/*/templates/**/*.jsx',
-          '<%= sourcedir %>theme/*/templates/**/*.jsx'
-        ],
         external: {
           jquery: 'empty:',
           underscore: 'empty:',
@@ -81,13 +74,6 @@ module.exports = function(grunt, options) {
           return grunt.config('helpers').includedFilter(filepath);
         },
         umdImports: [
-        ],
-        reactTemplates: [
-          '<%= sourcedir %>core/templates/**/*.jsx',
-          '<%= sourcedir %>components/*/templates/**/*.jsx',
-          '<%= sourcedir %>extensions/*/templates/**/*.jsx',
-          '<%= sourcedir %>menu/*/templates/**/*.jsx',
-          '<%= sourcedir %>theme/*/templates/**/*.jsx'
         ],
         external: {
           jquery: 'empty:',

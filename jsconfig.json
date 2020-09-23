@@ -1,0 +1,15 @@
+{
+  "include": [
+    "src/core/js/**/*.js",
+    "src/*/*/js/**/*.js"
+  ],
+  "compilerOptions": {
+    "module": "amd",
+    "target": "es2015",
+    "baseUrl": "src/"
+  },
+  "exclude": [
+    "node_modules",
+    "**/node_modules/*"
+  ]
+}
