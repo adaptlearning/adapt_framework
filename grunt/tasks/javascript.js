@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         if (err) {
           console.error('An error occurred restoring rollup cache:', err);
           process.exitCode = 1;
-          reject();
+          reject(err);
           return;
         }
         let str = buffer.toString();
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
     const missing = {};
     cache.modules.forEach(mod => {
       const moduleId = mod.id;
-      const isRollupHelper = (moduleId[0] === "\u0000");
+      const isRollupHelper = (moduleId[0] === '\u0000');
       if (isRollupHelper) {
         // Ignore as injected rollup module
         return null;
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
         if (err) {
           console.error('An error occurred saving rollup cache:', err);
           process.exitCode = 1;
-          reject();
+          reject(err);
           return;
         }
         fs.writeFileSync(cachePath, buffer);
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
       // Code error
       switch (err.plugin) {
         case 'babel':
-          err.frame = err.message.substr(err.message.indexOf('\n')+1);
+          err.frame = err.message.substr(err.message.indexOf('\n') + 1);
           err.message = err.message.substr(0, err.message.indexOf('\n')).slice(2).replace(/^([^:]*): /, '');
           break;
         default:
@@ -130,7 +130,7 @@ module.exports = function(grunt) {
     const done = this.async();
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
-    const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/')  + '/';
+    const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
     await restoreCache(options.cachePath, basePath);
     const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
@@ -190,7 +190,7 @@ module.exports = function(grunt) {
         name: 'adaptLoader',
 
         resolveId(moduleId, parentId) {
-          const isRollupHelper = (moduleId[0] === "\u0000");
+          const isRollupHelper = (moduleId[0] === '\u0000');
           if (isRollupHelper) {
             // Ignore as injected rollup module
             return null;
@@ -252,11 +252,11 @@ module.exports = function(grunt) {
         name: 'adaptInjectPlugins',
 
         transform(code, moduleId) {
-          const isRollupHelper = (moduleId[0] === "\u0000");
+          const isRollupHelper = (moduleId[0] === '\u0000');
           if (isRollupHelper) {
             return null;
           }
-          const isPlugins = (moduleId.includes('/'+options.pluginsModule+'.js'));
+          const isPlugins = (moduleId.includes('/' + options.pluginsModule + '.js'));
           if (!isPlugins) {
             return null;
           }
@@ -273,7 +273,7 @@ module.exports = function(grunt) {
     };
 
     const inputOptions = {
-      input: './' + options.baseUrl +  options.name,
+      input: './' + options.baseUrl + options.name,
       shimMissingExports: true,
       plugins: [
         adaptLoader({}),
@@ -285,7 +285,7 @@ module.exports = function(grunt) {
           compact: false,
           comments: false,
           exclude: [
-            "**/node_modules/**"
+            '**/node_modules/**'
           ],
           presets: [
             [
@@ -302,8 +302,8 @@ module.exports = function(grunt) {
                 },
                 exclude: [
                   // Breaks lockingModel.js, set function vs set variable
-                  "transform-function-name"
-                ],
+                  'transform-function-name'
+                ]
               }
             ]
           ],
@@ -314,7 +314,7 @@ module.exports = function(grunt) {
                 amdToES6Modules: true,
                 amdDefineES6Modules: true,
                 defineFunctionName: '__AMD',
-                defineModuleId: (moduleId) => moduleId.replace(convertSlashes,'/').replace(basePath, '').replace('\.js', ''),
+                defineModuleId: (moduleId) => moduleId.replace(convertSlashes, '/').replace(basePath, '').replace('.js', ''),
                 excludes: [
                   '**/templates/**/*.jsx'
                 ]
@@ -345,7 +345,7 @@ module.exports = function(grunt) {
           .replace(`define.amd`, 'define.noop');
         return code;
       }).join('\n');
-    }
+    };
 
     const outputOptions = {
       file: options.out,
@@ -385,8 +385,8 @@ window.__AMD = function(id, value) {
     }
 
     // Remove old sourcemap if no longer required
-    if (!isSourceMapped && fs.existsSync(options.out + ".map")) {
-      fs.unlinkSync(options.out + ".map");
+    if (!isSourceMapped && fs.existsSync(options.out + '.map')) {
+      fs.unlinkSync(options.out + '.map');
     }
 
     done();
