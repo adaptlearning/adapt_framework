@@ -12,7 +12,6 @@ module.exports = function(grunt) {
     'language-data-manifests',
     'handlebars',
     'javascript:dev',
-    'babel:dev',
     'less:dev',
     'replace',
     'scripts:adaptpostbuild',

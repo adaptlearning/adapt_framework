@@ -12,7 +12,6 @@ module.exports = function(grunt) {
     'language-data-manifests',
     'newer:handlebars:compile',
     'newer:javascript:dev',
-    'babel:dev',
     'newer:less:dev',
     'replace',
     'scripts:adaptpostbuild',

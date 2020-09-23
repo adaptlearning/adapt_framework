@@ -6,8 +6,6 @@ define([
   'core/js/enums/buttonStateEnum'
 ], function(Adapt, ComponentView, ButtonsView, QuestionModel, BUTTON_STATE) {
 
-  const useQuestionModelOnly = false;
-
   class QuestionView extends ComponentView {
 
     className() {
@@ -371,9 +369,6 @@ define([
   }
 
   QuestionView._isQuestionType = true;
-
-  // allows us to turn on and off the questionView style and use the separated questionModel+questionView style only
-  if (useQuestionModelOnly) return QuestionView;
 
   /* BACKWARDS COMPATIBILITY SECTION
   * This section below is only for compatibility between the separated questionView+questionModel and the old questionView
