@@ -13,7 +13,7 @@ Compiles all files in `src` to create a production-ready minified/compressed ver
 `--menu` If more than one menu is present in the */src/menu* folder, specifies the name of the menu to include in the build.  
 `--theme` If more than one theme is present in the */src/theme* folder, specifies the name of the theme to include in the build.  
 `--sourcedir` Specifies the absolute path to parent folder of the code to be processed. Defaults to the path to */src*.  
-`--outputdir`  Specifies the absolute path to parent folder where the build will be written. Defaults to the path to */build*. 
+`--outputdir`  Specifies the absolute path to parent folder where the build will be written. Defaults to the path to */build*.  
 `--jsonext` Specifies the file extension your JSON files use. Defaults to *json*. If the server your content is hosted on doesn't support the JSON mime-type you can use *txt* here to use the .txt file extension instead. You will need to manually amend the extension of all your JSON files to .txt initially.
 
 **dev**  

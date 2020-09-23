@@ -249,6 +249,8 @@ class AdaptView extends Backbone.View {
       Adapt.trigger('view:requestChild', event);
       if (!event.hasRequestChild) {
         // No new model was supplied
+        // Close the event so that the final state can be scrutinized
+        event.close();
         return;
       }
       // A new model has been supplied for the end of the list.
@@ -390,4 +392,3 @@ class AdaptView extends Backbone.View {
 AdaptView.className = '';
 
 export default AdaptView;
-

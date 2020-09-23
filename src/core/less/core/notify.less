@@ -15,7 +15,6 @@
     .l-container-responsive(@device-width-large);
   }
 
-  // --------------------------------------------------
   // Notify icons
   // --------------------------------------------------
   &__close-btn .icon {
@@ -29,42 +28,31 @@
   &__icon .icon.is-alert {
     .icon-warning;
   }
-  // --------------------------------------------------
 
-
-  // --------------------------------------------------
   // Sets up full width title and 50/50 text/image split below
   // --------------------------------------------------
   @media (min-width: @device-width-medium) {
-    &__content.has-image {
-      .notify__content-inner {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
+    &__content.has-image &__content-inner {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
 
-      .notify__title {
-        width: 100%;
-      }
+    &__content.has-image &__title {
+      width: 100%;
+    }
 
-      .notify__body,
-      .notify__image-container {
-        width: 50%;
-      }
+    &__content.has-image &__body,
+    &__content.has-image &__image-container {
+      width: 50%;
     }
   }
-  // --------------------------------------------------
 
-
-  // --------------------------------------------------
   // Left aligns image in notify pop up
   // --------------------------------------------------
   @media (min-width: @device-width-medium) {
-    &__content.align-image-left {
-      .notify__content-inner {
-        flex-direction: row-reverse;
-      }
+    &__content.align-image-left &__content-inner {
+      flex-direction: row-reverse;
     }
   }
-  // --------------------------------------------------
 }
