@@ -25,7 +25,7 @@ module.exports = {
     tasks: ['newer:copy:courseAssets']
   },
   js: {
-    files: ['<%= sourcedir %>**/*.js', '<%= sourcedir %>**/*.jsx'],
+    files: ['<%= sourcedir %>**/*.js'],
     options: {
       spawn: false
     },

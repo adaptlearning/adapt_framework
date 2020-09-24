@@ -16,7 +16,7 @@ module.exports = function(grunt) {
   const isDisableCache = process.argv.includes('--disable-cache');
   let cache;
 
-  const extensions = ['.js', '.jsx'];
+  const extensions = ['.js'];
 
   const restoreCache = async (cachePath, basePath) => {
     if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
@@ -297,9 +297,7 @@ module.exports = function(grunt) {
                 amdDefineES6Modules: true,
                 defineFunctionName: '__AMD',
                 defineModuleId: (moduleId) => moduleId.replace(convertSlashes, '/').replace(basePath, '').replace('.js', ''),
-                excludes: [
-                  '**/templates/**/*.jsx'
-                ]
+                excludes: []
               }
             ]
           ]
