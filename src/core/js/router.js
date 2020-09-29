@@ -350,8 +350,56 @@ define([
      * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
     async navigateToElement(selector, settings = {}) {
-      Adapt.log.deprecated('Adapt.navigateToElement and Adapt.router.navigateToElement, use Adapt.scrollTo instead.');
-      return Adapt.scrolling.scrollTo(selector, settings);
+      const currentModelId = selector.replace(/\./g, '').split(' ')[0];
+      const currentModel = Adapt.findById(currentModelId);
+
+      if (currentModel && (!currentModel.get('_isRendered') || !currentModel.get('_isReady'))) {
+        await this.navigateToContentObject(currentModelId);
+        await Adapt.parentView.renderTo(currentModelId);
+      }
+
+      // Get the current location - this is set in the router
+      const location = (Adapt.location._contentType) ?
+        Adapt.location._contentType : Adapt.location._currentLocation;
+      // Trigger initial scrollTo event
+      Adapt.trigger(`${location}:scrollTo`, selector);
+      // Setup duration variable passed upon argumentsß
+      const disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
+      if (disableScrollToAnimation) {
+        settings.duration = 0;
+      } else if (!settings.duration) {
+        settings.duration = $.scrollTo.defaults.duration;
+      }
+
+      let offsetTop = 0;
+      if (Adapt.scrolling.isLegacyScrolling) {
+        offsetTop = -$('.nav').outerHeight();
+        // prevent scroll issue when component description aria-label coincident with top of component
+        if ($(selector).hasClass('component')) {
+          offsetTop -= $(selector).find('.aria-label').height() || 0;
+        }
+      }
+
+      if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
+      if (settings.offset.top === undefined) settings.offset.top = offsetTop;
+      if (settings.offset.left === undefined) settings.offset.left = 0;
+
+      if (settings.offset.left === 0) settings.axis = 'y';
+
+      if (Adapt.get('_canScroll') !== false) {
+        // Trigger scrollTo plugin
+        $.scrollTo(selector, settings);
+      }
+
+      // Trigger an event after animation
+      // 300 milliseconds added to make sure queue has finished
+      await new Promise(resolve => {
+        _.delay(() => {
+          Adapt.a11y.focusNext(selector);
+          Adapt.trigger(`${location}:scrolledTo`, selector);
+          resolve();
+        }, settings.duration + 300);
+      });
     }
 
     get(...args) {
