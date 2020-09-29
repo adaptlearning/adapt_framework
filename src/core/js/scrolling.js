@@ -1,7 +1,6 @@
 define([
-  'core/js/adapt',
-  'core/js/models/contentObjectModel'
-], function(Adapt, ContentObjectModel) {
+  'core/js/adapt'
+], function(Adapt) {
 
   class Scrolling extends Backbone.Controller {
 
