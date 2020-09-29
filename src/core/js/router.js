@@ -318,6 +318,29 @@ define([
       this.navigate('#/', { trigger: true });
     }
 
+    async navigateToContentObject(id, settings = {}) {
+      if (id === Adapt.location._currentId) return;
+
+      const model = Adapt.findById(id);
+      if (!model) return;
+
+      const contentObject = model instanceof ContentObjectModel ? model : model.findAncestor('contentObjects');
+      const contentObjectId = contentObject.get('_id');
+
+      const shouldReplaceRoute = settings.replace || false;
+
+      await new Promise(resolve => {
+        // If the element is on another page navigate and wait until pageView:ready is fired
+        // Then scrollTo element
+        Adapt.once('contentObjectView:ready', _.debounce(async () => {
+          this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
+          resolve();
+        }, 1));
+        this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
+        this.navigate('#/id/' + contentObjectId, { trigger: true, replace: shouldReplaceRoute });
+      });
+    }
+
     /**
      * Allows a selector to be passed in and Adapt will navigate to this element. Resolves
      * asynchronously when the element has been navigated to.
@@ -327,33 +350,8 @@ define([
      * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
     async navigateToElement(selector, settings = {}) {
-      // Removes . symbol from the selector to find the model
-      const currentModelId = selector.replace(/\./g, '');
-      const currentModel = Adapt.findById(currentModelId);
-      if (!currentModel) return;
-
-      // Get current page to check whether this is the current page
-      const currentPage = currentModel instanceof ContentObjectModel ? currentModel : currentModel.findAncestor('contentObjects');
-      const pageId = currentPage.get('_id');
-      // If current page - scrollTo element
-      if (pageId === Adapt.location._currentId) {
-        return Adapt.scrollTo(selector, settings);
-      }
-
-      const shouldReplaceRoute = settings.replace || false;
-
-      await new Promise(resolve => {
-        // If the element is on another page navigate and wait until pageView:ready is fired
-        // Then scrollTo element
-        Adapt.once('contentObjectView:ready', _.debounce(async () => {
-          this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
-          await Adapt.scrollTo(selector, settings);
-          resolve();
-        }, 1));
-
-        this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
-        this.navigate('#/id/' + pageId, { trigger: true, replace: shouldReplaceRoute });
-      });
+      Adapt.log.deprecated('Adapt.navigateToElement and Adapt.router.navigateToElement, use Adapt.scrollTo instead.');
+      return Adapt.scrolling.scrollTo(selector, settings);
     }
 
     get(...args) {

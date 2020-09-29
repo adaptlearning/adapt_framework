@@ -1,6 +1,7 @@
 define([
-  'core/js/adapt'
-], function(Adapt) {
+  'core/js/adapt',
+  'core/js/models/contentObjectModel'
+], function(Adapt, ContentObjectModel) {
 
   class Scrolling extends Backbone.Controller {
 
@@ -109,12 +110,11 @@ define([
      * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
     async scrollTo(selector, settings = {}) {
-
-      const currentModelId = selector.replace(/\./g, '');
+      const currentModelId = selector.replace(/\./g, '').split(' ')[0];
       const currentModel = Adapt.findById(currentModelId);
-      if (!currentModel) return;
 
-      if (!currentModel.get('_isRendered') || !currentModel.get('_isReady')) {
+      if (currentModel && (!currentModel.get('_isRendered') || !currentModel.get('_isReady'))) {
+        await Adapt.router.navigateToContentObject(currentModelId);
         await Adapt.parentView.renderTo(currentModelId);
       }
 
