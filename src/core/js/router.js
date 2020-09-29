@@ -318,29 +318,6 @@ define([
       this.navigate('#/', { trigger: true });
     }
 
-    async navigateToContentObject(id, settings = {}) {
-      if (id === Adapt.location._currentId) return;
-
-      const model = Adapt.findById(id);
-      if (!model) return;
-
-      const contentObject = model instanceof ContentObjectModel ? model : model.findAncestor('contentObjects');
-      const contentObjectId = contentObject.get('_id');
-
-      const shouldReplaceRoute = settings.replace || false;
-
-      await new Promise(resolve => {
-        // If the element is on another page navigate and wait until pageView:ready is fired
-        // Then scrollTo element
-        Adapt.once('contentObjectView:ready', _.debounce(async () => {
-          this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
-          resolve();
-        }, 1));
-        this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
-        this.navigate('#/id/' + contentObjectId, { trigger: true, replace: shouldReplaceRoute });
-      });
-    }
-
     /**
      * Allows a selector to be passed in and Adapt will navigate to this element. Resolves
      * asynchronously when the element has been navigated to.
@@ -354,8 +331,24 @@ define([
       const currentModel = Adapt.findById(currentModelId);
 
       if (currentModel && (!currentModel.get('_isRendered') || !currentModel.get('_isReady'))) {
-        await this.navigateToContentObject(currentModelId);
+        const shouldReplace = settings.replace || false;
+        const contentObject = (currentModel instanceof ContentObjectModel) ? currentModel : currentModel.findAncestor('contentobject');
+        const contentObjectId = contentObject.get('_id');
+        const isInCurrentContentObject = (contentObjectId !== Adapt.location._currentId);
+        if (isInCurrentContentObject) {
+          this.navigate(`#/id/${contentObjectId}`, { trigger: true, replace: shouldReplace });
+          this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
+          await new Promise(resolve => Adapt.once('contentObjectView:preRender', () => {
+            this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
+            resolve();
+          }));
+        }
         await Adapt.parentView.renderTo(currentModelId);
+      }
+
+      // Correct selector when passed a pure id
+      if (currentModel && selector === currentModel.get('_id')) {
+        selector = `.${selector}`;
       }
 
       // Get the current location - this is set in the router
