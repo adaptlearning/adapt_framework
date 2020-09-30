@@ -255,7 +255,7 @@ class AdaptSingleton extends Backbone.Model {
     }
     return object.view;
   }
-  
+
   /**
    * Parses a model class name.
    * @param {string|Backbone.Model|object} name The name of the model you want to fetch e.g. `"hotgraphic"`, the model to process or its json data
@@ -307,20 +307,6 @@ class AdaptSingleton extends Backbone.Model {
       return object.model();
     }
     return object.model;
-  }
-
-  /**
-   * Looks up which collection a model belongs to
-   * @param {string} id The id of the item you want to look up e.g. `"co-05"`
-   * @return {string} One of the following (or `undefined` if not found):
-   * - "course"
-   * - "contentObjects"
-   * - "blocks"
-   * - "articles"
-   * - "components"
-   */
-  mapById(id) {
-    return this.data.mapById(id);
   }
 
   /**
