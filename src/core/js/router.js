@@ -130,7 +130,7 @@ define([
 
     async handleId(id) {
       const rootModel = Adapt.router.rootModel;
-      const model = (!id) ? rootModel : Adapt.findById(id);
+      let model = (!id) ? rootModel : Adapt.findById(id);
 
       if (!model) {
         // Bad id
@@ -138,16 +138,13 @@ define([
         return;
       }
 
-      id = model.get('_id');
-
+      // Keep the routed id incase it needs to be scrolled to later
       const isContentObject = (model instanceof ContentObjectModel);
-      if (!isContentObject) {
-        // Allow navigation.
-        this.model.set('_canNavigate', true, { pluginName: 'adapt' });
-        // Scroll to element
-        Adapt.navigateToElement('.' + id, { replace: true, duration: 400 });
-        return;
-      }
+      const navigateToId = model.get('_id');
+
+      // Ensure that the router is rendering a contentobject
+      model = isContentObject ? model : model.findAncestor('contentobject');
+      id = model.get('_id');
 
       const isRoot = (model === rootModel);
       if (isRoot && Adapt.course.has('_start')) {
@@ -199,6 +196,12 @@ define([
         return;
       }
       this.$wrapper.append(new ViewClass({ model }).$el);
+
+      if (!isContentObject && !this.isScrolling) {
+        // Scroll to element if not a content object or not already trying to
+        await Adapt.navigateToElement('.' + navigateToId, { replace: true, duration: 400 });
+      }
+
     }
 
     async updateLocation(currentLocation, type, id, currentModel) {
@@ -336,12 +339,14 @@ define([
         const contentObjectId = contentObject.get('_id');
         const isInCurrentContentObject = (contentObjectId !== Adapt.location._currentId);
         if (isInCurrentContentObject) {
-          this.navigate(`#/id/${contentObjectId}`, { trigger: true, replace: shouldReplace });
+          this.isScrolling = true;
+          this.navigate(`#/id/${currentModelId}`, { trigger: true, replace: shouldReplace });
           this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
           await new Promise(resolve => Adapt.once('contentObjectView:preRender', () => {
             this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
             resolve();
           }));
+          this.isScrolling = false;
         }
         await Adapt.parentView.renderTo(currentModelId);
       }
