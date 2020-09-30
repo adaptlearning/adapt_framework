@@ -322,10 +322,10 @@ define([
     }
 
     /**
-     * Allows a selector to be passed in and Adapt will navigate to this element. Resolves
+     * Allows a selector or id to be passed in and Adapt will navigate to this element. Resolves
      * asynchronously when the element has been navigated to.
      * Backend for Adapt.navigateToElement
-     * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
+     * @param {string} selector CSS selector or id of the Adapt element you want to navigate to e.g. `".co-05"` or `"co-05"`
      * @param {Object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
      * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
