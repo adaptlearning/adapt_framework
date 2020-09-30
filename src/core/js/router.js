@@ -342,10 +342,10 @@ define([
           this.isScrolling = true;
           this.navigate(`#/id/${currentModelId}`, { trigger: true, replace: shouldReplace });
           this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
-          await new Promise(resolve => Adapt.once('contentObjectView:preRender', () => {
+          await new Promise(resolve => Adapt.once('contentObjectView:ready', _.debounce(() => {
             this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
             resolve();
-          }));
+          }, 1)));
           this.isScrolling = false;
         }
         await Adapt.parentView.renderTo(currentModelId);
