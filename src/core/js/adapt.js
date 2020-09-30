@@ -324,7 +324,6 @@ class AdaptSingleton extends Backbone.Model {
 
     if (model === this.parentView.model) return this.parentView;
 
-
     const idPathToView = [id];
     const currentLocationId = this.location._currentId;
     const currentLocationModel = model.getAncestorModels().find(model => {
