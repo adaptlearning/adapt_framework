@@ -361,7 +361,7 @@ define([
         Adapt.location._contentType : Adapt.location._currentLocation;
       // Trigger initial scrollTo event
       Adapt.trigger(`${location}:scrollTo`, selector);
-      // Setup duration variable passed upon argumentsß
+      // Setup duration variable
       const disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
       if (disableScrollToAnimation) {
         settings.duration = 0;
