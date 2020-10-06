@@ -130,7 +130,7 @@ define([
 
     async handleId(id) {
       const rootModel = Adapt.router.rootModel;
-      const model = (!id) ? rootModel : Adapt.findById(id);
+      let model = (!id) ? rootModel : Adapt.findById(id);
 
       if (!model) {
         // Bad id
@@ -138,16 +138,13 @@ define([
         return;
       }
 
-      id = model.get('_id');
-
+      // Keep the routed id incase it needs to be scrolled to later
       const isContentObject = (model instanceof ContentObjectModel);
-      if (!isContentObject) {
-        // Allow navigation.
-        this.model.set('_canNavigate', true, { pluginName: 'adapt' });
-        // Scroll to element
-        Adapt.navigateToElement('.' + id, { replace: true, duration: 400 });
-        return;
-      }
+      const navigateToId = model.get('_id');
+
+      // Ensure that the router is rendering a contentobject
+      model = isContentObject ? model : model.findAncestor('contentobject');
+      id = model.get('_id');
 
       const isRoot = (model === rootModel);
       if (isRoot && Adapt.course.has('_start')) {
@@ -199,6 +196,12 @@ define([
         return;
       }
       this.$wrapper.append(new ViewClass({ model }).$el);
+
+      if (!isContentObject && !this.isScrolling) {
+        // Scroll to element if not a content object or not already trying to
+        await Adapt.navigateToElement('.' + navigateToId, { replace: true, duration: 400 });
+      }
+
     }
 
     async updateLocation(currentLocation, type, id, currentModel) {
@@ -319,40 +322,81 @@ define([
     }
 
     /**
-     * Allows a selector to be passed in and Adapt will navigate to this element. Resolves
+     * Allows a selector or id to be passed in and Adapt will navigate to this element. Resolves
      * asynchronously when the element has been navigated to.
      * Backend for Adapt.navigateToElement
-     * @param {string} selector CSS selector of the Adapt element you want to navigate to e.g. `".co-05"`
+     * @param {string} selector CSS selector or id of the Adapt element you want to navigate to e.g. `".co-05"` or `"co-05"`
      * @param {Object} [settings] The settings for the `$.scrollTo` function (See https://github.com/flesler/jquery.scrollTo#settings).
      * @param {Object} [settings.replace=false] Set to `true` if you want to update the URL without creating an entry in the browser's history.
      */
     async navigateToElement(selector, settings = {}) {
-      // Removes . symbol from the selector to find the model
-      const currentModelId = selector.replace(/\./g, '');
+      const currentModelId = selector.replace(/\./g, '').split(' ')[0];
       const currentModel = Adapt.findById(currentModelId);
-      if (!currentModel) return;
 
-      // Get current page to check whether this is the current page
-      const currentPage = currentModel instanceof ContentObjectModel ? currentModel : currentModel.findAncestor('contentObjects');
-      const pageId = currentPage.get('_id');
-      // If current page - scrollTo element
-      if (pageId === Adapt.location._currentId) {
-        return Adapt.scrollTo(selector, settings);
+      if (currentModel && (!currentModel.get('_isRendered') || !currentModel.get('_isReady'))) {
+        const shouldReplace = settings.replace || false;
+        const contentObject = (currentModel instanceof ContentObjectModel) ? currentModel : currentModel.findAncestor('contentobject');
+        const contentObjectId = contentObject.get('_id');
+        const isInCurrentContentObject = (contentObjectId !== Adapt.location._currentId);
+        if (isInCurrentContentObject) {
+          this.isScrolling = true;
+          this.navigate(`#/id/${currentModelId}`, { trigger: true, replace: shouldReplace });
+          this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
+          await new Promise(resolve => Adapt.once('contentObjectView:ready', _.debounce(() => {
+            this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
+            resolve();
+          }, 1)));
+          this.isScrolling = false;
+        }
+        await Adapt.parentView.renderTo(currentModelId);
       }
 
-      const shouldReplaceRoute = settings.replace || false;
+      // Correct selector when passed a pure id
+      if (currentModel && selector === currentModel.get('_id')) {
+        selector = `.${selector}`;
+      }
 
+      // Get the current location - this is set in the router
+      const location = (Adapt.location._contentType) ?
+        Adapt.location._contentType : Adapt.location._currentLocation;
+      // Trigger initial scrollTo event
+      Adapt.trigger(`${location}:scrollTo`, selector);
+      // Setup duration variable
+      const disableScrollToAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
+      if (disableScrollToAnimation) {
+        settings.duration = 0;
+      } else if (!settings.duration) {
+        settings.duration = $.scrollTo.defaults.duration;
+      }
+
+      let offsetTop = 0;
+      if (Adapt.scrolling.isLegacyScrolling) {
+        offsetTop = -$('.nav').outerHeight();
+        // prevent scroll issue when component description aria-label coincident with top of component
+        if ($(selector).hasClass('component')) {
+          offsetTop -= $(selector).find('.aria-label').height() || 0;
+        }
+      }
+
+      if (!settings.offset) settings.offset = { top: offsetTop, left: 0 };
+      if (settings.offset.top === undefined) settings.offset.top = offsetTop;
+      if (settings.offset.left === undefined) settings.offset.left = 0;
+
+      if (settings.offset.left === 0) settings.axis = 'y';
+
+      if (Adapt.get('_canScroll') !== false) {
+        // Trigger scrollTo plugin
+        $.scrollTo(selector, settings);
+      }
+
+      // Trigger an event after animation
+      // 300 milliseconds added to make sure queue has finished
       await new Promise(resolve => {
-        // If the element is on another page navigate and wait until pageView:ready is fired
-        // Then scrollTo element
-        Adapt.once('contentObjectView:ready', _.debounce(async () => {
-          this.model.set('_shouldNavigateFocus', true, { pluginName: 'adapt' });
-          await Adapt.scrollTo(selector, settings);
+        _.delay(() => {
+          Adapt.a11y.focusNext(selector);
+          Adapt.trigger(`${location}:scrolledTo`, selector);
           resolve();
-        }, 1));
-
-        this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });
-        this.navigate('#/id/' + pageId, { trigger: true, replace: shouldReplaceRoute });
+        }, settings.duration + 300);
       });
     }
 
