@@ -1,3 +1,17 @@
+## [5.7.1] - 2020-10-09
+
+### Fixed
+* Page Level Progress indicators disrupting container outlines in Firefox - now fixed for article/block/page level indicators as well ([#2619](https://github.com/adaptlearning/adapt_framework/issues/2619))
+* `Adapt.navigateToElement('.pageId')` errors ([#2901](https://github.com/adaptlearning/adapt_framework/issues/2901))
+* `"view:requestChild"` event life-cycle never closes ([#2903](https://github.com/adaptlearning/adapt_framework/issues/2903))
+* Switching language forces the 'start page' config to be enabled ([#2907](https://github.com/adaptlearning/adapt_framework/issues/2907))
+* Firefox display of `*-title-inner` elements when using outline ([#2912](https://github.com/adaptlearning/adapt_framework/issues/2912))
+* IE11 broken display of .svg in `<img>` ([#2916](https://github.com/adaptlearning/adapt_framework/issues/2916))
+* `Adapt.scrollTo` assumes the selector parameter will always refer to an 'Adapt Element' ([#2928](https://github.com/adaptlearning/adapt_framework/issues/2928))
+
+### Changed
+* General clean up of Less code ([#2891](https://github.com/adaptlearning/adapt_framework/issues/2891))
+
 ## [5.7.0] - 2020-08-25
 ### Added
 * New `AttemptStates` API ([#2747](https://github.com/adaptlearning/adapt_framework/issues/2747))
@@ -920,6 +934,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.7.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.0...v5.7.1
 [5.7.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.1...v5.7.0
 [5.6.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.0...v5.6.1
 [5.6.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.5.1...v5.6.0
