@@ -13,7 +13,6 @@ module.exports = function(grunt) {
     'language-data-manifests',
     'handlebars',
     'javascript:compile',
-    'babel:compile',
     'clean:dist',
     'less:compile',
     'replace',

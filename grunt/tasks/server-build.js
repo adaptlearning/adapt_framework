@@ -13,7 +13,6 @@ module.exports = function(grunt) {
       'less:' + requireMode,
       'handlebars',
       'javascript:' + requireMode,
-      'babel:' + requireMode,
       'replace',
       'scripts:adaptpostbuild',
       'clean:temp'
