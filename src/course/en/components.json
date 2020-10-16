@@ -30,7 +30,7 @@
         "_graphic": {
             "large": "course/en/images/single-width.png",
             "small": "course/en/images/full-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -73,7 +73,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/full-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         },
         "_pageLevelProgress": {
@@ -102,7 +102,7 @@
                 "body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning to follow, to illustrate real-world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 },
                 "strapline": "Narrative item 1"
             },
@@ -111,7 +111,7 @@
                 "body": "Narratives can also be used to present case studies, where the different displays are used to set the scene, show the key events and then the outcome.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 },
                 "strapline": "Narrative item 2"
             },
@@ -120,7 +120,7 @@
                 "body": "The narrative can also be used when you want to illustrate the constituent steps that make up a larger process.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 },
                 "strapline": "Narrative item 3"
             }
@@ -149,7 +149,7 @@
         "mobileInstruction": "",
         "_graphic": {
             "src": "course/en/images/hotgraphic.png",
-            "alt": "Placeholder graphic."
+            "alt": ""
         },
         "_items": [
             {
@@ -157,7 +157,7 @@
                 "body": "This is display text 1 which we have associated with the tablet image on the desktop.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
-                    "alt": "Placeholder graphic.",
+                    "alt": "",
                     "_classes": ""
                 },
                 "strapline": "Hot graphic item 1",
@@ -170,7 +170,7 @@
                 "body": "This is display text 2 which we have linked to the smartphone image.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
-                    "alt": "Placeholder graphic.",
+                    "alt": "",
                     "_classes": ""
                 },
                 "strapline": "Hot graphic item 2",
@@ -183,7 +183,7 @@
                 "body": "This is display text 3 which we’ve located over the laptop so you would expect the content to be about PCs.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
-                    "alt": "Placeholder graphic.",
+                    "alt": "",
                     "_classes": ""
                 },
                 "strapline": "Hot graphic item 3",
@@ -261,7 +261,7 @@
                 "_classes": "align-image-left",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 }
             },
             {
@@ -270,7 +270,7 @@
                 "_classes": "align-image-right",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 }
             },
             {
@@ -278,7 +278,7 @@
                 "body": "This is display text 3 and we’re now talking about using accordions to provide the learner with a summary.<br><br>Each accordion item corresponds to a key piece of learning presented on the page. When this item is selected a short summary of the learning point is provided.",
                 "_graphic": {
                     "src": "course/en/images/accordion-full.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 }
             }
         ],
@@ -348,7 +348,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -377,7 +377,7 @@
                 "_graphic": {
                     "large": "course/en/images/gmcq.png",
                     "small": "course/en/images/gmcq.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 }
             },
             {
@@ -386,7 +386,7 @@
                 "_graphic": {
                     "large": "course/en/images/gmcq.png",
                     "small": "course/en/images/gmcq.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 }
             },
             {
@@ -395,7 +395,7 @@
                 "_graphic": {
                     "large": "course/en/images/gmcq.png",
                     "small": "course/en/images/gmcq.png",
-                    "alt": "Placeholder graphic."
+                    "alt": ""
                 }
             }
         ],
@@ -470,7 +470,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -673,7 +673,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -745,7 +745,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -814,7 +814,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -882,7 +882,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -947,7 +947,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
@@ -1015,7 +1015,7 @@
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/single-width.png",
-            "alt": "Placeholder graphic.",
+            "alt": "",
             "attribution": ""
         }
     },
