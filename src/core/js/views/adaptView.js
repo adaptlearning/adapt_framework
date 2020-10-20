@@ -288,6 +288,7 @@ define([
       this.preRemove();
       Adapt.trigger(`${type}View:remove view:remove`, this);
       this._isRemoved = true;
+      this.stopListening();
 
       Adapt.wait.for(end => {
         this.$el.off('onscreen.adaptView');
