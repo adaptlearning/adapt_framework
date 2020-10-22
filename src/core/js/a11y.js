@@ -235,9 +235,9 @@ define([
       }
       isEnabled = isEnabled === undefined ? true : isEnabled;
       if (!isEnabled) {
-        $elements.attr('disabled', 'disabled').addClass('is-disabled');
+        $elements.attr('aria-disabled', 'true').addClass('is-disabled');
       } else {
-        $elements.removeAttr('disabled').removeClass('is-disabled');
+        $elements.removeAttr('aria-disabled').removeClass('is-disabled');
       }
       return this;
     },
