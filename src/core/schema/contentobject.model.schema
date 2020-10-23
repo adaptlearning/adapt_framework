@@ -70,6 +70,7 @@
         "alt": {
           "type": "string",
           "required": false,
+          "title": "Alternative text",
           "default": "",
           "inputType": "Text",
           "validators": [],
