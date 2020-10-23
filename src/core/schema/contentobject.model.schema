@@ -73,7 +73,7 @@
           "default": "",
           "inputType": "Text",
           "validators": [],
-          "help": "This is the alternative text that is displayed when the image is not visible. This is also used by screen readers.",
+          "help": "A description of the image; required when it has meaning that must be conveyed to the learner. For 'decorative' images, leave this blank.",
           "translatable": true
         },
         "src": {
