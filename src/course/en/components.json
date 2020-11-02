@@ -141,6 +141,8 @@
         "_setCompletionOn": "allItems",
         "_canCycleThroughPagination": false,
         "_hidePagination": false,
+        "_isNarrativeOnMobile": true,
+        "_useNumberedPins": false,
         "_useGraphicsAsPins": false,
         "title": "Hot Graphic",
         "displayTitle": "Hot Graphic",
