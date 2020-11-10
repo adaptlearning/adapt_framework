@@ -1,6 +1,6 @@
 module.exports = function(grunt, options) {
 
-  var port = grunt.option('port') || 9001;
+  var port = parseInt(grunt.option('port')) || 9001;
   var host = grunt.option('host') || 'localhost';
 
   return {
