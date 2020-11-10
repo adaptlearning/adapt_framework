@@ -370,7 +370,7 @@ class AdaptView extends Backbone.View {
 
   /**
    * Returns an indexed by id list of child views.
-   * @deprecated since 0.5.5
+   * @deprecated since 5.7.0
    * @returns {{<string, AdaptView}}
    */
   get childViews() {
@@ -383,7 +383,7 @@ class AdaptView extends Backbone.View {
 
   /**
    * Sets an indexed by id list of child views.
-   * @deprecated since 0.5.5
+   * @deprecated since 5.7.0
    */
   set childViews(value) {
     Adapt.log.deprecated(`view.childViews use view.getChildViews() and view.setChildViews([])`);

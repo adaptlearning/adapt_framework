@@ -162,9 +162,7 @@ module.exports = function(grunt) {
     options.reactTemplates.forEach(pattern => {
       grunt.file.expand({
         filter: options.pluginsFilter
-      }, pattern).forEach(function(templatePath) {
-        reactTemplatePaths.push(templatePath.replace(convertSlashes, '/'));
-      });
+      }, pattern).forEach(templatePath => reactTemplatePaths.push(templatePath.replace(convertSlashes, '/')));
     });
 
     // Process remapping and external model configurations

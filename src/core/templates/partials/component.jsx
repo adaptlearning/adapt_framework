@@ -19,7 +19,7 @@ export default function(model, view) {
   const sizedInstruction = (mobileInstruction && Adapt.device.screenSize !== 'large') ?
     mobileInstruction :
     instruction;
-  return (displayTitle || body || sizedInstruction) &&
+  return (displayTitle || body || sizedInstruction) && (
     <div className={classes(['component__header', `${type}__header`])}>
       <div className={classes(['component__header-inner', `${type}__header-inner`])}>
         {displayTitle &&
@@ -56,4 +56,5 @@ export default function(model, view) {
 
       </div>
     </div>
+  )
 }
