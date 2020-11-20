@@ -755,7 +755,12 @@ define([
      * default values.
      */
     checkIfResetOnRevisit() {
-      var isResetOnRevisit = this.get('_isResetOnRevisit');
+      const isResetOnRevisit = this.get('_isResetOnRevisit');
+      if (isResetOnRevisit === 'false') { // Convert AAT "false" value to Boolean - see #2825
+        this.set('_isResetOnRevisit', false);
+        return;
+      }
+
       if (!isResetOnRevisit) {
         return;
       }
