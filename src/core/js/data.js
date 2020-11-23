@@ -13,9 +13,9 @@ define([
     model(json) {
       const ModelClass = Adapt.getModelClass(json);
       if (!ModelClass) {
-        return new Backbone.Model(json);
+        return new Backbone.Model(json, { parse: true });
       }
-      return new ModelClass(json);
+      return new ModelClass(json, { parse: true });
     }
 
     initialize() {
