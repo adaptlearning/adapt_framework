@@ -74,6 +74,12 @@ define([
 
     onLanguageChange(model, language) {
       Adapt.offlineStorage.set('lang', language);
+      // set `_isStarted` back to `false` when changing language so that the learner's answers
+      // to questions get restored in the new language when `_restoreStateOnLanguageChange: true`
+      // see https://github.com/adaptlearning/adapt_framework/issues/2977
+      if (Adapt.get('_isStarted')) {
+        Adapt.set('_isStarted', false);
+      }
       this.loadCourseData(language);
     }
 
