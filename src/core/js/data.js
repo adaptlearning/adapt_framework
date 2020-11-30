@@ -15,7 +15,7 @@ define([
       if (!ModelClass) {
         return new Backbone.Model(json);
       }
-      return new ModelClass(json);
+      return new ModelClass(json, { parse: true });
     }
 
     initialize() {

@@ -48,6 +48,18 @@ define([
       };
     }
 
+    /**
+     * The AAT always sets the value of `_isResetOnRevisit` to a String
+     * which is fine for the 'soft' and 'hard' values - but 'false' needs
+     * converting to Boolean - see #2825
+     */
+    parse(data) {
+      if (data._isResetOnRevisit === 'false') {
+        data._isResetOnRevisit = false;
+      }
+      return data;
+    }
+
     trackable() {
       return [
         '_id',
@@ -755,7 +767,7 @@ define([
      * default values.
      */
     checkIfResetOnRevisit() {
-      var isResetOnRevisit = this.get('_isResetOnRevisit');
+      const isResetOnRevisit = this.get('_isResetOnRevisit');
       if (!isResetOnRevisit) {
         return;
       }

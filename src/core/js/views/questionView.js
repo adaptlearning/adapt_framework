@@ -62,18 +62,10 @@ define([
 
     // Used to check if the question should reset on revisit
     checkIfResetOnRevisit() {
-
-      let isResetOnRevisit = this.model.get('_isResetOnRevisit');
-
-      // Convert AAT "false" string to boolean
-      isResetOnRevisit = (isResetOnRevisit === "false") ?
-        false :
-        isResetOnRevisit;
-
+      const isResetOnRevisit = this.model.get('_isResetOnRevisit');
       // If reset is enabled set defaults
       // Call blank method for question to handle
       if (isResetOnRevisit) {
-
         this.model.reset(isResetOnRevisit, true);
 
         // Defer is added to allow the component to render
@@ -81,29 +73,27 @@ define([
           this.resetQuestionOnRevisit(isResetOnRevisit);
         });
 
-      } else {
-
-        // If complete - display users answer
-        // or reset the question if not complete
-        const isInteractionComplete = this.model.get('_isInteractionComplete');
-
-        if (isInteractionComplete) {
-          this.model.set('_buttonState', BUTTON_STATE.HIDE_CORRECT_ANSWER);
-          // Defer is added to allow the component to render
-          _.defer(() => {
-            this.onHideCorrectAnswerClicked();
-          });
-
-        } else {
-          this.model.set('_buttonState', BUTTON_STATE.SUBMIT);
-          // Defer is added to allow the component to render
-          _.defer(() => {
-            this.onResetClicked();
-          });
-        }
-
+        return;
       }
 
+      // If complete - display learner's answer
+      // or reset the question if not complete
+      const isInteractionComplete = this.model.get('_isInteractionComplete');
+      if (isInteractionComplete) {
+        this.model.set('_buttonState', BUTTON_STATE.HIDE_CORRECT_ANSWER);
+        // Defer is added to allow the component to render
+        _.defer(() => {
+          this.onHideCorrectAnswerClicked();
+        });
+
+        return;
+      }
+
+      this.model.set('_buttonState', BUTTON_STATE.SUBMIT);
+      // Defer is added to allow the component to render
+      _.defer(() => {
+        this.onResetClicked();
+      });
     }
 
     // Used by the question to reset the question when revisiting the component
