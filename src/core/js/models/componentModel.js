@@ -27,7 +27,7 @@ define([
       return AdaptModel.resultExtend('defaults', {
         _isA11yComponentDescriptionEnabled: true,
         _userAnswer: null,
-        _attemptStates: null,
+        _attemptStates: null
       });
     }
 
