@@ -1,3 +1,23 @@
+## [5.8.0] - 2020-12-08
+### Added
+* Rollup as the module bundler (replacing requirejs) ([#2824](https://github.com/adaptlearning/adapt_framework/issues/2824) & [#2923](https://github.com/adaptlearning/adapt_framework/pull/2923))
+
+### Changed
+* The `grunt build` command now deletes the `.cache` file from the build folder ([#2975](https://github.com/adaptlearning/adapt_framework/issues/2975))
+
+### Fixed
+* Value of `_isResetOnRevisit` not being converted from `String` to `Boolean` ([#2825](https://github.com/adaptlearning/adapt_framework/issues/2825) - originally thought fixed in release [5.6.1] but turns out it wasn't)
+* HotGraphic component duplicated after window resize ([#2938](https://github.com/adaptlearning/adapt_framework/issues/2938))
+* Disabled submit button not visible to assistive technology ([#2950](https://github.com/adaptlearning/adapt_framework/issues/2950))
+* The `--port` switch for the `grunt server` command not working ([#2954](https://github.com/adaptlearning/adapt_framework/issues/2954))
+* Typo in icons.less ([#2959](https://github.com/adaptlearning/adapt_framework/issues/2959))
+* Adapt not restoring learners' answers to questions following a change of language ([#2977](https://github.com/adaptlearning/adapt_framework/issues/2977))
+
+### Removed
+* `Adapt.mapById` ([#2908](https://github.com/adaptlearning/adapt_framework/issues/2908))
+* The `Adapt.wait` flush that was added in [#2439](https://github.com/adaptlearning/adapt_framework/issues/2439) ([#2743](https://github.com/adaptlearning/adapt_framework/issues/2743))
+* Entry for `_isTextProcessorEnabled` from config.model.schema ([#2952](https://github.com/adaptlearning/adapt_framework/issues/2952))
+
 ## [5.7.1] - 2020-10-09
 
 ### Fixed
@@ -934,6 +954,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.8.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.1...v5.8.0
 [5.7.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.0...v5.7.1
 [5.7.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.1...v5.7.0
 [5.6.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.0...v5.6.1

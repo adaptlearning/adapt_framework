@@ -54,7 +54,7 @@ define([
         this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
         this.$el.removeClass('is-submitted');
         this.model.set('feedbackMessage', undefined);
-        Adapt.a11y.toggleAccessibleEnabled(this.$('.js-btn-feedback'), false);
+        Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
       } else {
         this.$el.addClass('is-submitted');
       }
@@ -73,10 +73,10 @@ define([
     onFeedbackMessageChanged: function(model, changedAttribute) {
       if (changedAttribute && this.model.get('_canShowFeedback')) {
         // enable feedback button
-        Adapt.a11y.toggleAccessibleEnabled(this.$('.js-btn-feedback'), true);
+        Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), true);
       } else {
         // disable feedback button
-        Adapt.a11y.toggleAccessibleEnabled(this.$('.js-btn-feedback'), false);
+        Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
       }
     },
 
@@ -94,7 +94,7 @@ define([
       if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
         // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
 
-        Adapt.a11y.toggleAccessibleEnabled($buttonsAction, false);
+        Adapt.a11y.toggleEnabled($buttonsAction, false);
 
       } else {
 
@@ -104,7 +104,7 @@ define([
 
         // Enable the button, make accessible and update aria labels and text
 
-        Adapt.a11y.toggleAccessibleEnabled($buttonsAction, this.model.get('_canSubmit'));
+        Adapt.a11y.toggleEnabled($buttonsAction, this.model.get('_canSubmit'));
         $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
 
         // Make model answer button inaccessible (but still enabled) for visual users due to
