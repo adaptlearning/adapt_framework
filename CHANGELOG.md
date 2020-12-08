@@ -4,6 +4,7 @@
 
 ### Changed
 * The `grunt build` command now deletes the `.cache` file from the build folder ([#2975](https://github.com/adaptlearning/adapt_framework/issues/2975))
+* Improved Authoring Tool 'help text' for content object graphic alt text ([#2939](https://github.com/adaptlearning/adapt_framework/issues/2939))
 
 ### Fixed
 * Value of `_isResetOnRevisit` not being converted from `String` to `Boolean` ([#2825](https://github.com/adaptlearning/adapt_framework/issues/2825) - originally thought fixed in release [5.6.1] but turns out it wasn't)
@@ -17,6 +18,7 @@
 * `Adapt.mapById` ([#2908](https://github.com/adaptlearning/adapt_framework/issues/2908))
 * The `Adapt.wait` flush that was added in [#2439](https://github.com/adaptlearning/adapt_framework/issues/2439) ([#2743](https://github.com/adaptlearning/adapt_framework/issues/2743))
 * Entry for `_isTextProcessorEnabled` from config.model.schema ([#2952](https://github.com/adaptlearning/adapt_framework/issues/2952))
+* All instances of "Placeholder graphic" alt text from the 'out of the box' course content ([#2939](https://github.com/adaptlearning/adapt_framework/issues/2939))
 
 ## [5.7.1] - 2020-10-09
 
