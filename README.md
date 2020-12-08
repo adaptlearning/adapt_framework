@@ -15,7 +15,7 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + Open source, published under the GNU General Public License, and FREE
 + HTML5 and CSS3 - now with support for JavaScript ES6-8
 + Responsive across multiple devices and platforms
-+ Deliver courses through SCORM compliant LMS or stand-alone
++ Delivery of courses via SCORM compliant LMS or via web server
 + 23 bundled plug-ins, [more available](https://www.adaptlearning.org/index.php/plugin-browser/) through the community
 + [Meets WAI AA accessibility standards](https://github.com/adaptlearning/adapt_framework/wiki/Accessibility)
 + Right-To-Left compatibility
