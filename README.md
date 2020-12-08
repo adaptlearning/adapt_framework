@@ -24,6 +24,7 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + [Multi language and localisation support](https://github.com/adaptlearning/adapt_framework/wiki/Course-Localisation)
 + Customisable theme
 + Built-in animation effects
++ [Experience API (xAPI)](https://xapi.com/) support via the [adapt-contrib-xapi plugin](https://github.com/adaptlearning/adapt-contrib-xapi)
 
 Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/adaptlearning/adapt_framework/wiki/Framework-in-five-minutes) of the framework to find out more.
 
