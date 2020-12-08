@@ -44,7 +44,7 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 
 ## Troubleshooting, Bugs, and Feedback
 + For help with troubleshooting, visit the [Technical Discussion Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4).
-+ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new?title=please%20enter%20a%20brief%20summary%20of%20the%20issue%20here&body=please%20provide%20a%20full%20description%20of%20the%20problem,%20including%20steps%20on%20how%20to%20replicate,%20what%20browser(s)/device(s)%20the%20problem%20occurs%20on%20and,%20where%20helpful,%20screenshots.).
++ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 + To provide feedback, please use [GitHub Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 
 ## License
