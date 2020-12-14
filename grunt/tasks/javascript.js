@@ -295,6 +295,7 @@ module.exports = function(grunt) {
               {
                 amdToES6Modules: true,
                 amdDefineES6Modules: true,
+                ignoreNestedRequires: true,
                 defineFunctionName: '__AMD',
                 defineModuleId: (moduleId) => moduleId.replace(convertSlashes, '/').replace(basePath, '').replace('.js', ''),
                 excludes: []
