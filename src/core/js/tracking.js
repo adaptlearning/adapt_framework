@@ -51,7 +51,7 @@ class Tracking extends Backbone.Controller {
    * Evaluate the course and assessment completion.
    */
   checkCompletion() {
-    var completionData = this.getCompletionData();
+    const completionData = this.getCompletionData();
 
     if (completionData.status === COMPLETION_STATE.INCOMPLETE) {
       return;
@@ -66,7 +66,7 @@ class Tracking extends Backbone.Controller {
    * @returns An object representing the user's course completion.
    */
   getCompletionData() {
-    var completionData = {
+    const completionData = {
       status: COMPLETION_STATE.INCOMPLETE,
       assessment: null
     };

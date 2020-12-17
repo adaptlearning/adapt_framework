@@ -147,7 +147,7 @@ class Router extends Backbone.Router {
     const isRoot = (model === rootModel);
     if (isRoot && Adapt.course.has('_start')) {
       // Do not allow access to the menu when the start controller is enabled.
-      var startController = Adapt.course.get('_start');
+      const startController = Adapt.course.get('_start');
       if (startController._isEnabled === true && startController._isMenuDisabled === true) {
         return;
       }

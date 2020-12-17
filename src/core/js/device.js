@@ -51,24 +51,24 @@ class Device extends Backbone.Controller {
    * @returns {string} 'large', 'medium' or 'small'
    */
   checkScreenSize() {
-    var screenSizeConfig = Adapt.config.get('screenSize');
-    var screenSize;
+    const screenSizeConfig = Adapt.config.get('screenSize');
+    let screenSize;
 
-    var screensizeEmThreshold = 300;
-    var baseFontSize = 16;
+    const screensizeEmThreshold = 300;
+    const baseFontSize = 16;
 
     // Check to see if the screen size value is larger than the em threshold
     // If value is larger than em threshold, convert value (assumed px) to ems
     // Otherwise assume value is in ems
-    var mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold
+    const mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold
       ? screenSizeConfig.medium / baseFontSize
       : screenSizeConfig.medium;
-    var smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold
+    const smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold
       ? screenSizeConfig.small / baseFontSize
       : screenSizeConfig.small;
 
-    var fontSize = parseFloat($('html').css('font-size'));
-    var screenSizeEmWidth = (this.screenWidth / fontSize);
+    const fontSize = parseFloat($('html').css('font-size'));
+    const screenSizeEmWidth = (this.screenWidth / fontSize);
 
     // Check to see if client screen width is larger than medium em breakpoint
     // If so apply large, otherwise check to see if client screen width is
@@ -97,11 +97,11 @@ class Device extends Backbone.Controller {
   }
 
   getOperatingSystem() {
-    var os = '';
-    var flags = ['windows', 'mac', 'linux', 'windowsphone', 'chromeos', 'android',
+    let os = '';
+    const flags = ['windows', 'mac', 'linux', 'windowsphone', 'chromeos', 'android',
       'ios', 'blackberry', 'firefoxos', 'webos', 'bada', 'tizen', 'sailfish'];
 
-    for (var i = 0; i < flags.length; i++) {
+    for (let i = 0; i < flags.length; i++) {
       if (Bowser[flags[i]]) {
         os = flags[i];
         break;
@@ -110,11 +110,11 @@ class Device extends Backbone.Controller {
 
     if (os === '') {
       // Fall back to using navigator.platform in case Bowser can't detect the OS.
-      var platform = navigator.platform;
-      var platforms = ['Win', 'Mac', 'Linux'];
+      const platform = navigator.platform;
+      const platforms = ['Win', 'Mac', 'Linux'];
       os = 'PlatformUnknown';
 
-      for (var j = 0; j < platforms.length; j++) {
+      for (let j = 0; j < platforms.length; j++) {
         if (platform.indexOf(platforms[j]) !== -1) {
           os = platforms[j].toLowerCase();
           break;
@@ -131,10 +131,10 @@ class Device extends Backbone.Controller {
   }
 
   getRenderingEngine() {
-    var engine = '';
-    var flags = ['webkit', 'blink', 'gecko', 'msie', 'msedge'];
+    let engine = '';
+    const flags = ['webkit', 'blink', 'gecko', 'msie', 'msedge'];
 
-    for (var i = 0; i < flags.length; i++) {
+    for (let i = 0; i < flags.length; i++) {
       if (Bowser[flags[i]]) {
         engine = flags[i];
         break;
@@ -146,8 +146,8 @@ class Device extends Backbone.Controller {
 
   onWindowResize() {
     // Calculate the screen properties.
-    var previousWidth = this.screenWidth;
-    var previousHeight = this.screenHeight;
+    const previousWidth = this.screenWidth;
+    const previousHeight = this.screenHeight;
 
     this.screenWidth = this.getScreenWidth();
     this.screenHeight = this.getScreenHeight();
@@ -157,7 +157,7 @@ class Device extends Backbone.Controller {
       return;
     }
 
-    var newScreenSize = this.checkScreenSize();
+    const newScreenSize = this.checkScreenSize();
 
     if (newScreenSize !== this.screenSize) {
       this.screenSize = newScreenSize;
@@ -188,11 +188,11 @@ class Device extends Backbone.Controller {
   }
 
   getAppleDeviceType() {
-    var type = '';
+    let type = '';
 
-    var flags = ['iphone', 'ipad', 'ipod'];
+    const flags = ['iphone', 'ipad', 'ipod'];
 
-    for (var i = 0; i < flags.length; i++) {
+    for (let i = 0; i < flags.length; i++) {
       if (Bowser[flags[i]]) {
         type = flags[i];
         break;
@@ -203,7 +203,7 @@ class Device extends Backbone.Controller {
   }
 
   pixelDensity() {
-    var pixelDensity = (window.devicePixelRatio || 1);
+    const pixelDensity = (window.devicePixelRatio || 1);
 
     if (pixelDensity >= 3) {
       return 'ultra-high';

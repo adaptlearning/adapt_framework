@@ -63,9 +63,9 @@ class DrawerView extends Backbone.View {
   }
 
   render() {
-    var template = Handlebars.templates['drawer'];
+    const template = Handlebars.templates['drawer'];
     $(this.el).html(template({ _globals: Adapt.course.get('_globals') })).prependTo('body');
-    var shadowTemplate = Handlebars.templates['shadow'];
+    const shadowTemplate = Handlebars.templates['shadow'];
     $(shadowTemplate()).prependTo('body');
     // Set defer on post render
     _.defer(_.bind(function() {
@@ -159,7 +159,7 @@ class DrawerView extends Backbone.View {
     }
 
     // delay drawer animation until after background fadeout animation is complete
-    var direction = {};
+    const direction = {};
     if (this.disableAnimation) {
       $('.js-shadow').removeClass('u-display-none');
       $('.js-drawer-holder').scrollTop(0);
@@ -175,8 +175,8 @@ class DrawerView extends Backbone.View {
         complete.call(this);
       }, this) });
 
-      var showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
-      var easing = (showEasingAnimation) || 'easeOutQuart';
+      const showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
+      const easing = (showEasingAnimation) || 'easeOutQuart';
 
       direction[this.drawerDir] = 0;
       this.$el.velocity(direction, this.drawerDuration, easing);
@@ -199,15 +199,15 @@ class DrawerView extends Backbone.View {
   renderItems() {
     Adapt.trigger('drawer:empty');
     this.emptyDrawer();
-    var models = this.collection.models;
-    for (var i = 0, len = models.length; i < len; i++) {
-      var item = models[i];
+    const models = this.collection.models;
+    for (let i = 0, len = models.length; i < len; i++) {
+      const item = models[i];
       new DrawerItemView({ model: item });
     }
   }
 
   hideDrawer($toElement) {
-    var direction = {};
+    const direction = {};
     // only trigger popup:closed if drawer is visible
     if (this._isVisible) {
       Adapt.a11y.popupClosed($toElement);
@@ -231,8 +231,8 @@ class DrawerView extends Backbone.View {
 
     } else {
 
-      var showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
-      var easing = (showEasingAnimation) || 'easeOutQuart';
+      const showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
+      const easing = (showEasingAnimation) || 'easeOutQuart';
 
       direction[this.drawerDir] = -this.$el.width();
       this.$el.velocity(direction, this.drawerDuration, easing, _.bind(function() {

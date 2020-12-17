@@ -79,19 +79,19 @@ export default class Popup extends Backbone.Controller {
    */
   _addPopupLayer($popupElement) {
     $popupElement = $($popupElement);
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isPopupManagementEnabled || $popupElement.length === 0) {
       return $popupElement;
     }
     this._floorStack.push($popupElement);
     this._focusStack.push($(document.activeElement));
-    var $elements = $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
-    var $branch = $popupElement.add($popupElement.parents());
-    var $siblings = $branch.siblings().filter(config._options._tabbableElementsExcludes);
+    let $elements = $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
+    const $branch = $popupElement.add($popupElement.parents());
+    const $siblings = $branch.siblings().filter(config._options._tabbableElementsExcludes);
     $elements = $elements.add($siblings);
     $elements.each(function(index, item) {
-      var $item = $(item);
-      var elementUID;
+      const $item = $(item);
+      let elementUID;
       if (typeof item.a11y_uid === 'undefined') {
         item.a11y_uid = 'UID' + ++this._elementUIDIndex;
       }
@@ -102,8 +102,8 @@ export default class Popup extends Backbone.Controller {
       if (this._ariaHiddens[elementUID] === undefined) {
         this._ariaHiddens[elementUID] = [];
       }
-      var tabindex = $item.attr('tabindex');
-      var ariaHidden = $item.attr('aria-hidden');
+      const tabindex = $item.attr('tabindex');
+      const ariaHidden = $item.attr('aria-hidden');
       this._tabIndexes[elementUID].push(tabindex === undefined ? '' : tabindex);
       this._ariaHiddens[elementUID].push(ariaHidden === undefined ? '' : ariaHidden);
       if (config._options._isPopupTabIndexManagementEnabled) {
@@ -113,7 +113,7 @@ export default class Popup extends Backbone.Controller {
         $item.attr('aria-hidden', true);
       }
     }.bind(this));
-    var $items = $popupElement.find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
+    const $items = $popupElement.find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
     if (config._options._isPopupTabIndexManagementEnabled) {
       $items.attr('tabindex', 0);
     }
@@ -135,7 +135,7 @@ export default class Popup extends Backbone.Controller {
    * @returns {Object} Returns `Adapt.a11y._popup`.
    */
   closed($focusElement, silent) {
-    var $previousFocusElement = this._removeLastPopupLayer();
+    const $previousFocusElement = this._removeLastPopupLayer();
     $focusElement = $focusElement || $previousFocusElement || $('body');
     if (!silent) {
       Adapt.trigger('popup:closed', $focusElement, true);
@@ -151,7 +151,7 @@ export default class Popup extends Backbone.Controller {
    * @returns {Object} Returns previously active element.
    */
   _removeLastPopupLayer() {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isPopupManagementEnabled) {
       return $(document.activeElement);
     }
@@ -161,10 +161,10 @@ export default class Popup extends Backbone.Controller {
     }
     this._floorStack.pop();
     $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes).each(function(index, item) {
-      var $item = $(item);
-      var previousTabIndex = '';
-      var previousAriaHidden = '';
-      var elementUID;
+      const $item = $(item);
+      let previousTabIndex = '';
+      let previousAriaHidden = '';
+      let elementUID;
       if (typeof item.a11y_uid === 'undefined') {
         // assign element a unique id
         item.a11y_uid = 'UID' + ++this._elementUIDIndex;
@@ -210,7 +210,7 @@ export default class Popup extends Backbone.Controller {
    * @returns {Object} Returns previously set focus element.
    */
   setCloseTo($focusElement) {
-    var $original = this._focusStack.pop();
+    const $original = this._focusStack.pop();
     this._focusStack.push($focusElement);
     return $original;
   }

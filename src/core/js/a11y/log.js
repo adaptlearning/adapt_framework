@@ -11,11 +11,11 @@ export default class Log extends Backbone.Controller {
   }
 
   _hasWarned(args) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._options._warnFirstOnly) {
       return false;
     }
-    var hash = args.map(String).join(':');
+    const hash = args.map(String).join(':');
     if (this._warned[hash]) {
       return true;
     }
@@ -24,7 +24,7 @@ export default class Log extends Backbone.Controller {
   }
 
   _canWarn() {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     return Boolean(config._options._warn);
   }
 

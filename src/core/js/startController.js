@@ -17,7 +17,7 @@ class StartController extends Backbone.Controller {
   }
 
   returnToStartLocation() {
-    var startIds = this.model.get('_startIds');
+    const startIds = this.model.get('_startIds');
     if (startIds) {
       // ensure we can return to the start page even if it is completed
       startIds.forEach(function(startId) {
@@ -33,10 +33,10 @@ class StartController extends Backbone.Controller {
    * @return {string}
    */
   getStartHash(alwaysForce) {
-    var startId = this.getStartId();
-    var isRouteSpecified = window.location.href.indexOf('#') > -1;
-    var shouldForceStartId = alwaysForce || this.model.get('_force');
-    var shouldNavigateToStartId = startId && (!isRouteSpecified || shouldForceStartId);
+    const startId = this.getStartId();
+    const isRouteSpecified = window.location.href.indexOf('#') > -1;
+    const shouldForceStartId = alwaysForce || this.model.get('_force');
+    const shouldNavigateToStartId = startId && (!isRouteSpecified || shouldForceStartId);
 
     if (shouldNavigateToStartId && startId !== Adapt.course.get('_id')) {
       return '#/id/' + startId;
@@ -52,18 +52,18 @@ class StartController extends Backbone.Controller {
   }
 
   getStartId() {
-    var startId = this.model.get('_id');
-    var startIds = this.model.get('_startIds');
+    let startId = this.model.get('_id');
+    const startIds = this.model.get('_startIds');
 
     if (!startIds || !startIds.length) return startId;
 
-    var $html = $('html');
-    for (var i = 0, l = startIds.length; i < l; i++) {
-      var item = startIds[i];
-      var className = item._className;
-      var skipIfComplete = item._skipIfComplete;
+    const $html = $('html');
+    for (let i = 0, l = startIds.length; i < l; i++) {
+      const item = startIds[i];
+      const className = item._className;
+      const skipIfComplete = item._skipIfComplete;
 
-      var model = Adapt.findById(item._id);
+      const model = Adapt.findById(item._id);
 
       if (!model) {
         console.log('startController: cannot find id', item._id);

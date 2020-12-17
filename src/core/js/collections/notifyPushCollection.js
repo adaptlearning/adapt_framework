@@ -25,7 +25,7 @@ export default class NotifyPushCollection extends Backbone.Collection {
   }
 
   canShowPush() {
-    var availablePushNotifications = this.where({ _isActive: true });
+    const availablePushNotifications = this.where({ _isActive: true });
     return (availablePushNotifications.length < 2);
   }
 
@@ -36,7 +36,7 @@ export default class NotifyPushCollection extends Backbone.Collection {
   }
 
   onRemovePush(view) {
-    var inactivePushNotifications = this.where({ _isActive: false });
+    const inactivePushNotifications = this.where({ _isActive: false });
     if (inactivePushNotifications.length > 0) {
       this.checkPushCanShow(inactivePushNotifications[0]);
     }

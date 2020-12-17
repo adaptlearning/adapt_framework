@@ -31,11 +31,11 @@ export default class BrowserFocus extends Backbone.Controller {
    * @param {JQuery.Event} event
    */
   _onBlur(event) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isFocusNextOnDisabled) {
       return;
     }
-    var $element = $(event.target);
+    const $element = $(event.target);
     if ($element.is('[data-a11y-force-focus]')) {
       _.defer(function() {
         $element.removeAttr('tabindex data-a11y-force-focus');
@@ -62,14 +62,14 @@ export default class BrowserFocus extends Backbone.Controller {
    * @param {JQuery.Event} event
    */
   _onClick(event) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled) {
       return;
     }
-    var $element = $(event.target);
+    const $element = $(event.target);
     if (config._options._isFocusOnClickEnabled) {
-      var $stack = $().add($element).add($element.parents());
-      var $focusable = $stack.filter(config._options._tabbableElements);
+      const $stack = $().add($element).add($element.parents());
+      const $focusable = $stack.filter(config._options._tabbableElements);
       if (!$focusable.length) {
         return;
       }

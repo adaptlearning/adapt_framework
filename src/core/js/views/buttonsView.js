@@ -34,8 +34,8 @@ export default class ButtonsView extends Backbone.View {
   }
 
   render() {
-    var data = this.model.toJSON();
-    var template = Handlebars.templates['buttons'];
+    const data = this.model.toJSON();
+    const template = Handlebars.templates['buttons'];
     _.defer(_.bind(function() {
       this.postRender();
       Adapt.trigger('buttonsView:postRender', this);
@@ -48,7 +48,7 @@ export default class ButtonsView extends Backbone.View {
   }
 
   checkResetSubmittedState() {
-    var isSubmitted = this.model.get('_isSubmitted');
+    const isSubmitted = this.model.get('_isSubmitted');
 
     if (!isSubmitted) {
       this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
@@ -61,7 +61,7 @@ export default class ButtonsView extends Backbone.View {
   }
 
   onActionClicked() {
-    var buttonState = this.model.get('_buttonState');
+    const buttonState = this.model.get('_buttonState');
     this.trigger('buttons:stateUpdate', BUTTON_STATE(buttonState));
     this.checkResetSubmittedState();
   }
@@ -89,8 +89,8 @@ export default class ButtonsView extends Backbone.View {
     this.updateAttemptsCount();
 
     // Use 'correct' instead of 'complete' to signify button state
-    var $buttonsAction = this.$('.js-btn-action');
-    var buttonState = BUTTON_STATE(changedAttribute);
+    const $buttonsAction = this.$('.js-btn-action');
+    const buttonState = BUTTON_STATE(changedAttribute);
     if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
       // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
 
@@ -98,9 +98,9 @@ export default class ButtonsView extends Backbone.View {
 
     } else {
 
-      var propertyName = textPropertyName[buttonState.asString];
-      var ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
-      var buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
+      const propertyName = textPropertyName[buttonState.asString];
+      const ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
+      const buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
 
       // Enable the button, make accessible and update aria labels and text
 
@@ -120,7 +120,7 @@ export default class ButtonsView extends Backbone.View {
   }
 
   checkFeedbackState() {
-    var canShowFeedback = this.model.get('_canShowFeedback');
+    const canShowFeedback = this.model.get('_canShowFeedback');
 
     this.$('.js-btn-action').toggleClass('is-full-width', !canShowFeedback);
     this.$('.js-btn-feedback').toggleClass('u-display-none', !canShowFeedback);
@@ -128,10 +128,10 @@ export default class ButtonsView extends Backbone.View {
   }
 
   updateAttemptsCount(model, changedAttribute) {
-    var isInteractionComplete = this.model.get('_isInteractionComplete');
-    var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
-    var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
-    var attemptsString;
+    const isInteractionComplete = this.model.get('_isInteractionComplete');
+    const attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
+    const shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
+    let attemptsString;
 
     this.checkResetSubmittedState();
 
@@ -157,8 +157,8 @@ export default class ButtonsView extends Backbone.View {
   showMarking() {
     if (!this.model.shouldShowMarking) return;
 
-    var isCorrect = this.model.get('_isCorrect');
-    var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
+    const isCorrect = this.model.get('_isCorrect');
+    const ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
 
     this.$('.js-btn-marking')
       .removeClass('u-display-none')

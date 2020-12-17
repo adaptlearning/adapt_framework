@@ -24,15 +24,15 @@ class DrawerItemView extends Backbone.View {
   }
 
   render() {
-    var data = this.model.toJSON();
-    var template = Handlebars.templates['drawerItem'];
+    const data = this.model.toJSON();
+    const template = Handlebars.templates['drawerItem'];
     $(this.el).html(template(data)).appendTo('.drawer__holder');
     return this;
   }
 
   onDrawerItemClicked(event) {
     event.preventDefault();
-    var eventCallback = this.model.get('eventCallback');
+    const eventCallback = this.model.get('eventCallback');
     Adapt.trigger(eventCallback);
   }
 

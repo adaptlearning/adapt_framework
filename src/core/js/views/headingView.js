@@ -9,16 +9,16 @@ class HeadingView extends Backbone.View {
   }
 
   render() {
-    var template = Handlebars.templates[this.constructor.template];
-    var data = this.model.toJSON();
-    var customHeadingType = this.$el.attr('data-a11y-heading-type');
+    const template = Handlebars.templates[this.constructor.template];
+    const data = this.model.toJSON();
+    const customHeadingType = this.$el.attr('data-a11y-heading-type');
     if (customHeadingType) data._type = customHeadingType;
     this.$el.html(template(data));
     this.checkCompletion();
   }
 
   checkCompletion() {
-    var isComplete = this.model.get('_isComplete');
+    const isComplete = this.model.get('_isComplete');
     this.$el
       .toggleClass('is-complete', isComplete)
       .toggleClass('is-incomplete', !isComplete);

@@ -8,7 +8,7 @@ class NavigationController extends Backbone.Controller {
   }
 
   addNavigationBar() {
-    var adaptConfig = Adapt.course.get('_navigation');
+    const adaptConfig = Adapt.course.get('_navigation');
 
     if (adaptConfig && adaptConfig._isDefaultNavigationDisabled) {
       Adapt.trigger('navigation:initialize');

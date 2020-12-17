@@ -99,9 +99,9 @@ class A11y extends Backbone.Controller {
     if (!this.config || !this.config._disableTextSelectOnClasses) {
       return;
     }
-    var classes = this.config._disableTextSelectOnClasses.split(' ');
-    var isMatch = false;
-    for (var i = 0, item; (item = classes[i++]);) {
+    const classes = this.config._disableTextSelectOnClasses.split(' ');
+    let isMatch = false;
+    for (let i = 0, item; (item = classes[i++]);) {
       if (this.$html.is(item)) {
         isMatch = true;
         break;
@@ -118,8 +118,8 @@ class A11y extends Backbone.Controller {
   }
 
   _removeLegacyElements() {
-    var $legacyElements = $('body').children('#accessibility-toggle, #accessibility-instructions');
-    var $navigationElements = $('.nav').find('#accessibility-toggle, #accessibility-instructions');
+    const $legacyElements = $('body').children('#accessibility-toggle, #accessibility-instructions');
+    const $navigationElements = $('.nav').find('#accessibility-toggle, #accessibility-instructions');
     if (!$legacyElements.length && !$navigationElements.length) {
       return;
     }
@@ -165,7 +165,7 @@ class A11y extends Backbone.Controller {
    */
   toggleHidden($elements, isHidden) {
     $elements = $($elements);
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isAriaHiddenManagementEnabled) {
       return this;
     }
@@ -201,7 +201,7 @@ class A11y extends Backbone.Controller {
    */
   toggleAccessible($elements, isReadable) {
     $elements = $($elements);
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isAriaHiddenManagementEnabled || $elements.length === 0) {
       return this;
     }
@@ -271,7 +271,7 @@ class A11y extends Backbone.Controller {
    * @returns {Object}
    */
   findTabbable($element) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     return $($element).find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
   }
 
@@ -293,8 +293,8 @@ class A11y extends Backbone.Controller {
    * @returns {boolean|undefined}
    */
   isTabbable($element) {
-    var config = Adapt.a11y.config;
-    var value = $($element).is(config._options._tabbableElements).is(config._options._tabbableElementsExcludes);
+    const config = Adapt.a11y.config;
+    const value = $($element).is(config._options._tabbableElements).is(config._options._tabbableElementsExcludes);
     if (!value) {
       return undefined; // Allow _findForward to descend
     }
@@ -309,18 +309,18 @@ class A11y extends Backbone.Controller {
    * @returns {boolean}
    */
   isReadable($element, checkParents) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     $element = $($element).first();
     checkParents = checkParents === undefined;
 
-    var $branch = checkParents
+    const $branch = checkParents
       ? $element.add($element.parents())
       : $element;
 
-    var isNotVisible = _.find($branch.toArray(), function(item) {
-      var $item = $(item);
+    const isNotVisible = _.find($branch.toArray(), function(item) {
+      const $item = $(item);
       // make sure item is not explicitly invisible
-      var isNotVisible = $item.css('display') === 'none' ||
+      const isNotVisible = $item.css('display') === 'none' ||
         $item.css('visibility') === 'hidden' ||
         $item.attr('aria-hidden') === 'true';
       if (isNotVisible) {
@@ -333,19 +333,19 @@ class A11y extends Backbone.Controller {
 
     // check that the component is natively tabbable or
     // will be knowingly read by a screen reader
-    var hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements) ||
+    const hasNativeFocusOrIsScreenReadable = $element.is(config._options._focusableElements) ||
       $element.is(config._options._readableElements);
     if (hasNativeFocusOrIsScreenReadable) {
       return true;
     }
-    var childNodes = $element[0].childNodes;
-    for (var c = 0, cl = childNodes.length; c < cl; c++) {
-      var childNode = childNodes[c];
-      var isTextNode = (childNode.nodeType === 3);
+    const childNodes = $element[0].childNodes;
+    for (let c = 0, cl = childNodes.length; c < cl; c++) {
+      const childNode = childNodes[c];
+      const isTextNode = (childNode.nodeType === 3);
       if (!isTextNode) {
         continue;
       }
-      var isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
+      const isOnlyWhiteSpace = /^\s*$/.test(childNode.nodeValue);
       if (isOnlyWhiteSpace) {
         continue;
       }
@@ -372,7 +372,7 @@ class A11y extends Backbone.Controller {
 
     // make sure iterator is correct, use boolean or selector comparison
     // appropriately
-    var iterator;
+    let iterator;
     switch (typeof selector) {
       case 'string':
         // make selector iterator
@@ -393,16 +393,16 @@ class A11y extends Backbone.Controller {
     }
 
     // check children by walking the tree
-    var $found = this._findFirstForwardDescendant($element, iterator);
+    let $found = this._findFirstForwardDescendant($element, iterator);
     if ($found && $found.length) {
       return $found;
     }
 
     // check subsequent siblings
-    var $nextSiblings = $element.nextAll().toArray();
+    const $nextSiblings = $element.nextAll().toArray();
     _.find($nextSiblings, function(sibling) {
-      var $sibling = $(sibling);
-      var value = iterator($sibling);
+      const $sibling = $(sibling);
+      const value = iterator($sibling);
 
       // skip this sibling if explicitly instructed
       if (value === false) {
@@ -424,19 +424,19 @@ class A11y extends Backbone.Controller {
     }
 
     // move through parents towards the body element
-    var $branch = $element.add($element.parents()).toArray().reverse();
+    const $branch = $element.add($element.parents()).toArray().reverse();
     _.find($branch, function(parent) {
-      var $parent = $(parent);
+      const $parent = $(parent);
       if (iterator($parent) === false) {
         // skip this parent if explicitly instructed
         return false;
       }
 
       // move through parents nextAll siblings
-      var $siblings = $parent.nextAll().toArray();
+      const $siblings = $parent.nextAll().toArray();
       return _.find($siblings, function(sibling) {
-        var $sibling = $(sibling);
-        var value = iterator($sibling);
+        const $sibling = $(sibling);
+        const value = iterator($sibling);
 
         // skip this sibling if explicitly instructed
         if (value === false) {
@@ -481,7 +481,7 @@ class A11y extends Backbone.Controller {
 
     // make sure iterator is correct, use boolean or selector comparison
     // appropriately
-    var iterator;
+    let iterator;
     switch (typeof selector) {
       case 'string':
         // make selector iterator
@@ -497,22 +497,22 @@ class A11y extends Backbone.Controller {
         iterator = Boolean;
     }
 
-    var $notFound = $element.not('*');
+    const $notFound = $element.not('*');
     if ($element.length === 0) {
       return $notFound;
     }
 
     // keep walked+passed children in a stack
-    var stack = [{
+    const stack = [{
       item: $element[0],
       value: undefined
     }];
-    var stackIndexPosition = 0;
-    var childIndexPosition = stackIndexPosition + 1;
+    let stackIndexPosition = 0;
+    let childIndexPosition = stackIndexPosition + 1;
     do {
 
-      var stackEntry = stack[stackIndexPosition];
-      var $stackItem = $(stackEntry.item);
+      const stackEntry = stack[stackIndexPosition];
+      const $stackItem = $(stackEntry.item);
 
       // check current item
       switch (stackEntry.value) {
@@ -523,10 +523,10 @@ class A11y extends Backbone.Controller {
       }
 
       // get i stack children
-      var $children = $stackItem.children().toArray();
+      const $children = $stackItem.children().toArray();
       _.find($children, function(item) {
-        var $item = $(item);
-        var value = iterator($item);
+        const $item = $(item);
+        const value = iterator($item);
 
         // item explicitly not allowed, don't add to stack,
         // skip children
@@ -596,13 +596,13 @@ class A11y extends Backbone.Controller {
   focus($element, options) {
     options = new FocusOptions(options);
     $element = $($element).first();
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isFocusAssignmentEnabled || $element.length === 0) {
       return this;
     }
     function perform() {
       if (options.preventScroll) {
-        var y = $(window).scrollTop();
+        const y = $(window).scrollTop();
         try {
           if ($element.attr('tabindex') === undefined) {
             $element.attr({
@@ -645,11 +645,11 @@ class A11y extends Backbone.Controller {
    * @returns {string} Returns text without markup or html encoded characters.
    */
   normalize(htmls) {
-    var values = Array.prototype.slice.call(arguments, 0);
+    let values = Array.prototype.slice.call(arguments, 0);
     values = values.filter(Boolean);
     values = values.filter(_.isString);
     htmls = values.join(' ');
-    var text = $('<div>' + htmls + '</div>').text();
+    const text = $('<div>' + htmls + '</div>').text();
     // Remove all html encoded characters, such as &apos;
     return text.replace(this._htmlCharRegex, '');
   }
@@ -663,23 +663,23 @@ class A11y extends Backbone.Controller {
    * @return {string} Returns html string without markup which would cause screen reader to pause.
    */
   removeBreaks(htmls) {
-    var values = Array.prototype.slice.call(arguments, 0);
+    let values = Array.prototype.slice.call(arguments, 0);
     values = values.filter(Boolean);
     values = values.filter(_.isString);
     htmls = values.join(' ');
-    var $div = $('<div>' + htmls + '</div>');
-    var stack = [ $div[0] ];
-    var stackIndex = 0;
-    var outputs = [];
+    const $div = $('<div>' + htmls + '</div>');
+    const stack = [ $div[0] ];
+    let stackIndex = 0;
+    const outputs = [];
     do {
       if (stack[stackIndex].childNodes.length) {
-        var nodes = stack[stackIndex].childNodes;
-        var usable = _.filter(nodes, function(node) {
-          var isTextNode = (node.nodeType === 3);
+        const nodes = stack[stackIndex].childNodes;
+        const usable = _.filter(nodes, function(node) {
+          const isTextNode = (node.nodeType === 3);
           if (isTextNode) {
             return true;
           }
-          var isStyleElement = $(node).is(Adapt.a11y.config._options._wrapStyleElements);
+          const isStyleElement = $(node).is(Adapt.a11y.config._options._wrapStyleElements);
           if (isStyleElement) {
             return true;
           }
@@ -690,7 +690,7 @@ class A11y extends Backbone.Controller {
       }
       stackIndex++;
     } while (stackIndex < stack.length);
-    var rtnText = '';
+    let rtnText = '';
     outputs.forEach(function(item) {
       rtnText += item.outerHTML || item.textContent;
     });

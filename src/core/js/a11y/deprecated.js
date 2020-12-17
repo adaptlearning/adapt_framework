@@ -33,7 +33,7 @@ _.extend($.fn, {
 
   a11y_on: function(isOn) {
     Adapt.a11y.log.deprecated('$("..").a11y_on, use Adapt.a11y.findTabbable($element); and Adapt.a11y.toggleAccessible($elements, isAccessible); instead.');
-    var $tabbable = Adapt.a11y.findTabbable(this);
+    const $tabbable = Adapt.a11y.findTabbable(this);
     Adapt.a11y.toggleAccessible($tabbable, isOn);
     return this;
   },

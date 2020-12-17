@@ -123,7 +123,7 @@ export default class Scroll extends Backbone.Controller {
     if (!this._preventScrollOnKeys[event.keyCode]) {
       return;
     }
-    var $target = $(event.target);
+    const $target = $(event.target);
     if ($target.is(this._ignoreKeysOnElementsMatching)) {
       return;
     }
@@ -136,16 +136,16 @@ export default class Scroll extends Backbone.Controller {
    * @param {JQuery.Event} event
    */
   _preventScroll(event) {
-    var isGesture = (event.touches && event.touches.length > 1);
+    const isGesture = (event.touches && event.touches.length > 1);
     if (isGesture) {
       // allow multiple finger gestures through
       // this will unfortunately allow two finger background scrolling on mobile devices
       // one finger background scrolling will still be disabled
       return;
     }
-    var $target = $(event.target);
+    const $target = $(event.target);
     if (this._scrollDisabledElements.length) {
-      var scrollingParent = this._getScrollingParent(event, $target);
+      const scrollingParent = this._getScrollingParent(event, $target);
       if (scrollingParent.filter(this._scrollDisabledElements).length === 0) {
         this.$window.scroll();
         return;
@@ -162,18 +162,18 @@ export default class Scroll extends Backbone.Controller {
    * @param {Object} $target jQuery element object.
    */
   _getScrollingParent(event, $target) {
-    var isTouchEvent = event.type === 'touchmove';
-    var hasTouchStartEvent = (this._touchStartEventObject && this._touchStartEventObject.originalEvent);
+    const isTouchEvent = event.type === 'touchmove';
+    const hasTouchStartEvent = (this._touchStartEventObject && this._touchStartEventObject.originalEvent);
     if (isTouchEvent && !hasTouchStartEvent) {
       return $target;
     }
-    var directionY = this._getScrollDirection(event);
+    const directionY = this._getScrollDirection(event);
     if (directionY === 'none') {
       return this.$body;
     }
-    var parents = $target.parents();
-    for (var i = 0, l = parents.length; i < l; i++) {
-      var $parent = $(parents[i]);
+    const parents = $target.parents();
+    for (let i = 0, l = parents.length; i < l; i++) {
+      const $parent = $(parents[i]);
       if ($parent.is('body')) {
         return this.$body;
       }
@@ -195,11 +195,11 @@ export default class Scroll extends Backbone.Controller {
    * @returns {boolean}
    */
   _isScrollable($target) {
-    var scrollType = $target.css('overflow-y');
+    const scrollType = $target.css('overflow-y');
     if (scrollType !== 'auto' && scrollType !== 'scroll') {
       return false;
     }
-    var pointerEvents = $target.css('pointer-events');
+    const pointerEvents = $target.css('pointer-events');
     if (pointerEvents === 'none') {
       return false;
     }
@@ -215,10 +215,10 @@ export default class Scroll extends Backbone.Controller {
    * @returns {boolean}
    */
   _isScrolling($target, directionY) {
-    var scrollTop = Math.ceil($target.scrollTop());
-    var innerHeight = $target.outerHeight();
-    var scrollHeight = $target[0].scrollHeight;
-    var hasScrollingSpace = false;
+    const scrollTop = Math.ceil($target.scrollTop());
+    const innerHeight = $target.outerHeight();
+    const scrollHeight = $target[0].scrollHeight;
+    let hasScrollingSpace = false;
     switch (directionY) {
       case 'down':
         hasScrollingSpace = scrollTop + innerHeight < scrollHeight;
@@ -243,7 +243,7 @@ export default class Scroll extends Backbone.Controller {
    * @returns {string} 'none' | 'up' | 'down'
    */
   _getScrollDirection(event) {
-    var deltaY = this._getScrollDelta(event);
+    const deltaY = this._getScrollDelta(event);
     if (deltaY === 0) {
       return 'none';
     }
@@ -257,15 +257,15 @@ export default class Scroll extends Backbone.Controller {
    * @returns {number}
    */
   _getScrollDelta(event) {
-    var deltaY = 0;
-    var isTouchEvent = event.type === 'touchmove';
-    var originalEvent = event.originalEvent;
+    let deltaY = 0;
+    const isTouchEvent = event.type === 'touchmove';
+    const originalEvent = event.originalEvent;
     if (isTouchEvent) {
       // Touch events
       // iOS previous + current scroll pos
-      var startOriginalEvent = this._touchStartEventObject.originalEvent;
-      var currentY = originalEvent.pageY;
-      var previousY = startOriginalEvent.pageY;
+      const startOriginalEvent = this._touchStartEventObject.originalEvent;
+      let currentY = originalEvent.pageY;
+      let previousY = startOriginalEvent.pageY;
       if (currentY === 0 || currentY === previousY) {
         // Android chrome current scroll pos
         currentY = originalEvent.touches[0].pageY;
@@ -275,7 +275,7 @@ export default class Scroll extends Backbone.Controller {
       deltaY = currentY - previousY;
     } else {
       // Mouse events
-      var hasDeltaY = (originalEvent.wheelDeltaY || originalEvent.deltaY !== undefined);
+      const hasDeltaY = (originalEvent.wheelDeltaY || originalEvent.deltaY !== undefined);
       if (hasDeltaY) {
         // Desktop: Firefox & IE delta inverted
         deltaY = -originalEvent.deltaY;

@@ -14,7 +14,7 @@ export default class WrapFocus extends Backbone.Controller {
   }
 
   _attachEventListeners() {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     $('body').on('click focus', config._options._focusguard, this._onWrapAround);
   }
 
@@ -25,7 +25,7 @@ export default class WrapFocus extends Backbone.Controller {
    * @param {JQuery.Event} event
    */
   _onWrapAround(event) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (!config._isEnabled || !config._options._isPopupWrapFocusEnabled) {
       return;
     }

@@ -3,7 +3,7 @@ import Adapt from 'core/js/adapt';
 export default class NotifyPushView extends Backbone.View {
 
   className() {
-    var classes = 'notify-push ';
+    let classes = 'notify-push ';
     classes += (this.model.get('_classes') || '');
     return classes;
   }
@@ -43,8 +43,8 @@ export default class NotifyPushView extends Backbone.View {
   }
 
   render() {
-    var data = this.model.toJSON();
-    var template = Handlebars.templates['notifyPush'];
+    const data = this.model.toJSON();
+    const template = Handlebars.templates['notifyPush'];
     this.$el.html(template(data)).appendTo('#wrapper');
 
     _.defer(this.postRender.bind(this));
@@ -87,10 +87,10 @@ export default class NotifyPushView extends Backbone.View {
 
   updateIndexPosition() {
     if (!this.hasBeenRemoved) {
-      var models = this.model.collection.models;
-      for (var i = 0, len = models.length; i < len; i++) {
-        var index = i;
-        var model = models[i];
+      const models = this.model.collection.models;
+      for (let i = 0, len = models.length; i < len; i++) {
+        const index = i;
+        const model = models[i];
         if (model.get('_isActive') === true) {
           model.set('_index', index);
           this.updatePushPosition();
@@ -105,17 +105,17 @@ export default class NotifyPushView extends Backbone.View {
     }
 
     if (typeof this.model.get('_index') !== 'undefined') {
-      var elementHeight = this.$el.height();
-      var offset = 20;
-      var navigationHeight = $('.nav').height();
-      var currentIndex = this.model.get('_index');
-      var flippedIndex = (currentIndex === 0) ? 1 : 0;
+      const elementHeight = this.$el.height();
+      const offset = 20;
+      const navigationHeight = $('.nav').height();
+      const currentIndex = this.model.get('_index');
+      let flippedIndex = (currentIndex === 0) ? 1 : 0;
 
       if (this.model.collection.where({ _isActive: true }).length === 1) {
         flippedIndex = 0;
       }
 
-      var positionLowerPush = (elementHeight + offset) * flippedIndex + navigationHeight + offset;
+      const positionLowerPush = (elementHeight + offset) * flippedIndex + navigationHeight + offset;
       this.$el.css('top', positionLowerPush);
     }
   }

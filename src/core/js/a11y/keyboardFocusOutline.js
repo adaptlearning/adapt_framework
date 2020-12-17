@@ -33,7 +33,7 @@ export default class KeyboardFocusOutline extends Backbone.Controller {
    * Add styling classes if required.
    */
   _start() {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (config._options._isFocusOutlineDisabled) {
       this.$html.addClass('a11y-disable-focusoutline');
       return;
@@ -50,7 +50,7 @@ export default class KeyboardFocusOutline extends Backbone.Controller {
    * @param {JQuery.Event} event
    */
   _onKeyDown(event) {
-    var config = Adapt.a11y.config;
+    const config = Adapt.a11y.config;
     if (config._options._isFocusOutlineDisabled) {
       this.$html.addClass('a11y-disable-focusoutline');
       return;
@@ -58,7 +58,7 @@ export default class KeyboardFocusOutline extends Backbone.Controller {
     if (!config._isEnabled || !config._options._isFocusOutlineKeyboardOnlyEnabled || !this.showOnKeys[event.keyCode]) {
       return;
     }
-    var $element = $(event.target);
+    const $element = $(event.target);
     if (!$element.is(config._options._tabbableElements) || $element.is(config._options._focusOutlineKeyboardOnlyIgnore)) {
       return;
     }
