@@ -4,7 +4,7 @@ import Adapt from 'core/js/adapt';
  * Tabindex and aria-hidden manager for popups.
  * @class
  */
-export default class Popupe extends Backbone.Controller {
+export default class Popup extends Backbone.Controller {
 
   initialize() {
     /**
