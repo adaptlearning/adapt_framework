@@ -6,7 +6,7 @@ export default class AdaptModel extends Backbone.Model {
 
   toJSON() {
     // Perform shallow clone
-    const json = _.clone(this.attributes);
+    const json = { ...this.attributes };
     // Remove deprecated values as they are not true json
     delete json._children;
     delete json._parent;

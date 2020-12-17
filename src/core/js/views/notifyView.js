@@ -193,7 +193,7 @@ export default class NotifyView extends Backbone.View {
 
   closeNotify() {
     // Make sure that only the top most notify is closed
-    const stackItem = Adapt.notify.stack[Adapt.notify.stack.length-1];
+    const stackItem = Adapt.notify.stack[Adapt.notify.stack.length - 1];
     if (this !== stackItem) return;
     Adapt.notify.stack.pop();
     // Prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659

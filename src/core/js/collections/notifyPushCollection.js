@@ -19,18 +19,14 @@ export default class NotifyPushCollection extends Backbone.Collection {
   }
 
   checkPushCanShow(model) {
-    if (this.canShowPush()) {
-      model.set('_isActive', true);
-      this.showPush(model);
-    }
+    if (!this.canShowPush()) return;
+    model.set('_isActive', true);
+    this.showPush(model);
   }
 
   canShowPush() {
     var availablePushNotifications = this.where({ _isActive: true });
-    if (availablePushNotifications.length >= 2) {
-      return false;
-    }
-    return true;
+    return (availablePushNotifications.length < 2);
   }
 
   showPush(model) {

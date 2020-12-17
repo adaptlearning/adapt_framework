@@ -91,12 +91,11 @@ class DrawerView extends Backbone.View {
   }
 
   checkIfDrawerIsAvailable() {
-    if (this.collection.length === 0) {
-      $('.js-nav-drawer-btn').addClass('u-display-none');
+    const isEmptyDrawer = (this.collection.length === 0);
+    $('.js-nav-drawer-btn').toggleClass('u-display-none', isEmptyDrawer);
+    if (isEmptyDrawer) {
       Adapt.trigger('drawer:noItems');
-      return;
     }
-    $('.js-nav-drawer-btn').removeClass('u-display-none');
   }
 
   onBackButtonClicked(event) {
@@ -154,11 +153,8 @@ class DrawerView extends Backbone.View {
         Adapt.trigger('drawer:openedItemView');
       }
     } else {
-      if (this._hasBackButton && this.collection.models.length > 1) {
-        this.$('.drawer__back').removeClass('u-display-none');
-      } else {
-        this.$('.drawer__back').addClass('u-display-none');
-      }
+      const hideDrawerBackButton = (!this._hasBackButton || this.collection.models.length <= 1);
+      this.$('.drawer__back').toggleClass('u-display-none', hideDrawerBackButton);
       Adapt.trigger('drawer:openedCustomView');
     }
 
