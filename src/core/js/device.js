@@ -1,226 +1,223 @@
-define([
-  'core/js/adapt',
-  'bowser'
-], function(Adapt, Bowser) {
+import Adapt from 'core/js/adapt';
+import Bowser from 'bowser';
 
-  var $html = $('html');
-  var $window = $(window);
+const $html = $('html');
+const $window = $(window);
 
-  Adapt.device = {
-    touch: Modernizr.touchevents,
-    screenWidth: getScreenWidth(),
-    screenHeight: getScreenHeight(),
-    browser: (Bowser.name || '').toLowerCase(),
-    version: (Bowser.version || '').toLowerCase(),
-    OS: getOperatingSystem().toLowerCase(),
-    osVersion: Bowser.osversion || '',
-    renderingEngine: getRenderingEngine()
-  };
+Adapt.device = {
+  touch: Modernizr.touchevents,
+  screenWidth: getScreenWidth(),
+  screenHeight: getScreenHeight(),
+  browser: (Bowser.name || '').toLowerCase(),
+  version: (Bowser.version || '').toLowerCase(),
+  OS: getOperatingSystem().toLowerCase(),
+  osVersion: Bowser.osversion || '',
+  renderingEngine: getRenderingEngine()
+};
 
-  // Define 'orientation' and 'aspectRatio' here once 'screenWidth' and 'screenHeight' have been set,
-  // as both these functions are getters, essentially.
-  Object.defineProperties(Adapt.device, {
-    'orientation': {
-      get: function () {
-        return (this.screenWidth >= this.screenHeight) ? 'landscape' : 'portrait';
-      }
-    },
-    'aspectRatio': {
-      get: function () {
-        return this.screenWidth / this.screenHeight;
+// Define 'orientation' and 'aspectRatio' here once 'screenWidth' and 'screenHeight' have been set,
+// as both these functions are getters, essentially.
+Object.defineProperties(Adapt.device, {
+  'orientation': {
+    get: function () {
+      return (this.screenWidth >= this.screenHeight) ? 'landscape' : 'portrait';
+    }
+  },
+  'aspectRatio': {
+    get: function () {
+      return this.screenWidth / this.screenHeight;
+    }
+  }
+});
+
+Adapt.once('app:dataReady', function() {
+  Adapt.device.screenSize = checkScreenSize();
+
+  $html.addClass('size-' + Adapt.device.screenSize);
+
+  if (Adapt.device.orientation) {
+    $html.addClass('orientation-' + Adapt.device.orientation);
+  }
+
+  // As Adapt.config is available it's ok to bind the 'resize'.
+  $window.on('resize orientationchange', onWindowResize);
+});
+
+/**
+ * Compares the calculated screen width to the breakpoints defined in config.json.
+ *
+ * @returns {string} 'large', 'medium' or 'small'
+ */
+function checkScreenSize() {
+  var screenSizeConfig = Adapt.config.get('screenSize');
+  var screenSize;
+
+  var screensizeEmThreshold = 300;
+  var baseFontSize = 16;
+
+  // Check to see if the screen size value is larger than the em threshold
+  // If value is larger than em threshold, convert value (assumed px) to ems
+  // Otherwise assume value is in ems
+  var mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold
+    ? screenSizeConfig.medium / baseFontSize
+    : screenSizeConfig.medium;
+  var smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold
+    ? screenSizeConfig.small / baseFontSize
+    : screenSizeConfig.small;
+
+  var fontSize = parseFloat($('html').css('font-size'));
+  var screenSizeEmWidth = (Adapt.device.screenWidth / fontSize);
+
+  // Check to see if client screen width is larger than medium em breakpoint
+  // If so apply large, otherwise check to see if client screen width is
+  // larger than small em breakpoint. If so apply medium, otherwise apply small
+  if (screenSizeEmWidth >= mediumEmBreakpoint) {
+    screenSize = 'large';
+  } else if (screenSizeEmWidth >= smallEmBreakpoint) {
+    screenSize = 'medium';
+  } else {
+    screenSize = 'small';
+  }
+
+  return screenSize;
+}
+
+function getScreenWidth() {
+  return isAppleDevice()
+    ? getAppleScreenWidth()
+    : window.innerWidth || $window.width();
+}
+
+function getScreenHeight() {
+  return isAppleDevice()
+    ? getAppleScreenHeight()
+    : window.innerHeight || $window.height();
+}
+
+function getOperatingSystem() {
+  var os = '';
+  var flags = ['windows', 'mac', 'linux', 'windowsphone', 'chromeos', 'android',
+    'ios', 'blackberry', 'firefoxos', 'webos', 'bada', 'tizen', 'sailfish'];
+
+  for (var i = 0; i < flags.length; i++) {
+    if (Bowser[flags[i]]) {
+      os = flags[i];
+      break;
+    }
+  }
+
+  if (os === '') {
+    // Fall back to using navigator.platform in case Bowser can't detect the OS.
+    var platform = navigator.platform;
+    var platforms = ['Win', 'Mac', 'Linux'];
+    os = 'PlatformUnknown';
+
+    for (var j = 0; j < platforms.length; j++) {
+      if (platform.indexOf(platforms[j]) !== -1) {
+        os = platforms[j].toLowerCase();
+        break;
       }
     }
-  });
 
-  Adapt.once('app:dataReady', function() {
-    Adapt.device.screenSize = checkScreenSize();
+    // Set consistency with the Bowser flags.
+    if (os === 'win') {
+      os = 'windows';
+    }
+  }
 
-    $html.addClass('size-' + Adapt.device.screenSize);
+  return os;
+}
+
+function getRenderingEngine() {
+  var engine = '';
+  var flags = ['webkit', 'blink', 'gecko', 'msie', 'msedge'];
+
+  for (var i = 0; i < flags.length; i++) {
+    if (Bowser[flags[i]]) {
+      engine = flags[i];
+      break;
+    }
+  }
+
+  return engine;
+}
+
+const onWindowResize = _.debounce(function onScreenSizeChanged() {
+  // Calculate the screen properties.
+  var previousWidth = Adapt.device.screenWidth;
+  var previousHeight = Adapt.device.screenHeight;
+
+  Adapt.device.screenWidth = getScreenWidth();
+  Adapt.device.screenHeight = getScreenHeight();
+
+  if (previousWidth === Adapt.device.screenWidth && previousHeight === Adapt.device.screenHeight) {
+    // Do not trigger a change if the viewport hasn't actually changed.  Scrolling on iOS will trigger a resize.
+    return;
+  }
+
+  var newScreenSize = checkScreenSize();
+
+  if (newScreenSize !== Adapt.device.screenSize) {
+    Adapt.device.screenSize = newScreenSize;
+
+    $html.removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
 
     if (Adapt.device.orientation) {
-      $html.addClass('orientation-' + Adapt.device.orientation);
+      $html.removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
     }
 
-    // As Adapt.config is available it's ok to bind the 'resize'.
-    $window.on('resize orientationchange', onWindowResize);
-  });
-
-  /**
-   * Compares the calculated screen width to the breakpoints defined in config.json.
-   *
-   * @returns {string} 'large', 'medium' or 'small'
-   */
-  function checkScreenSize() {
-    var screenSizeConfig = Adapt.config.get('screenSize');
-    var screenSize;
-
-    var screensizeEmThreshold = 300;
-    var baseFontSize = 16;
-
-    // Check to see if the screen size value is larger than the em threshold
-    // If value is larger than em threshold, convert value (assumed px) to ems
-    // Otherwise assume value is in ems
-    var mediumEmBreakpoint = screenSizeConfig.medium > screensizeEmThreshold
-      ? screenSizeConfig.medium / baseFontSize
-      : screenSizeConfig.medium;
-    var smallEmBreakpoint = screenSizeConfig.small > screensizeEmThreshold
-      ? screenSizeConfig.small / baseFontSize
-      : screenSizeConfig.small;
-
-    var fontSize = parseFloat($('html').css('font-size'));
-    var screenSizeEmWidth = (Adapt.device.screenWidth / fontSize);
-
-    // Check to see if client screen width is larger than medium em breakpoint
-    // If so apply large, otherwise check to see if client screen width is
-    // larger than small em breakpoint. If so apply medium, otherwise apply small
-    if (screenSizeEmWidth >= mediumEmBreakpoint) {
-      screenSize = 'large';
-    } else if (screenSizeEmWidth >= smallEmBreakpoint) {
-      screenSize = 'medium';
-    } else {
-      screenSize = 'small';
-    }
-
-    return screenSize;
+    Adapt.trigger('device:changed', Adapt.device.screenSize);
   }
 
-  function getScreenWidth() {
-    return isAppleDevice()
-      ? getAppleScreenWidth()
-      : window.innerWidth || $window.width();
-  }
+  Adapt.trigger('device:preResize device:resize device:postResize', Adapt.device.screenWidth);
 
-  function getScreenHeight() {
-    return isAppleDevice()
-      ? getAppleScreenHeight()
-      : window.innerHeight || $window.height();
-  }
+}, 100);
 
-  function getOperatingSystem() {
-    var os = '';
-    var flags = ['windows', 'mac', 'linux', 'windowsphone', 'chromeos', 'android',
-      'ios', 'blackberry', 'firefoxos', 'webos', 'bada', 'tizen', 'sailfish'];
+function isAppleDevice() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
 
-    for (var i = 0; i < flags.length; i++) {
-      if (Bowser[flags[i]]) {
-        os = flags[i];
-        break;
-      }
-    }
+function getAppleScreenWidth() {
+  return (Math.abs(window.orientation) === 90) ? screen.height : screen.width;
+}
 
-    if (os === '') {
-      // Fall back to using navigator.platform in case Bowser can't detect the OS.
-      var platform = navigator.platform;
-      var platforms = ['Win', 'Mac', 'Linux'];
-      os = 'PlatformUnknown';
+function getAppleScreenHeight() {
+  return (Math.abs(window.orientation) === 90) ? screen.width : screen.height;
+}
 
-      for (var j = 0; j < platforms.length; j++) {
-        if (platform.indexOf(platforms[j]) !== -1) {
-          os = platforms[j].toLowerCase();
-          break;
-        }
-      }
+function getAppleDeviceType() {
+  var type = '';
 
-      // Set consistency with the Bowser flags.
-      if (os === 'win') {
-        os = 'windows';
-      }
-    }
+  var flags = ['iphone', 'ipad', 'ipod'];
 
-    return os;
-  }
-
-  function getRenderingEngine() {
-    var engine = '';
-    var flags = ['webkit', 'blink', 'gecko', 'msie', 'msedge'];
-
-    for (var i = 0; i < flags.length; i++) {
-      if (Bowser[flags[i]]) {
-        engine = flags[i];
-        break;
-      }
-    }
-
-    return engine;
-  }
-
-  var onWindowResize = _.debounce(function onScreenSizeChanged() {
-    // Calculate the screen properties.
-    var previousWidth = Adapt.device.screenWidth;
-    var previousHeight = Adapt.device.screenHeight;
-
-    Adapt.device.screenWidth = getScreenWidth();
-    Adapt.device.screenHeight = getScreenHeight();
-
-    if (previousWidth === Adapt.device.screenWidth && previousHeight === Adapt.device.screenHeight) {
-      // Do not trigger a change if the viewport hasn't actually changed.  Scrolling on iOS will trigger a resize.
-      return;
-    }
-
-    var newScreenSize = checkScreenSize();
-
-    if (newScreenSize !== Adapt.device.screenSize) {
-      Adapt.device.screenSize = newScreenSize;
-
-      $html.removeClass('size-small size-medium size-large').addClass('size-' + Adapt.device.screenSize);
-
-      if (Adapt.device.orientation) {
-        $html.removeClass('orientation-landscape orientation-portrait').addClass('orientation-' + Adapt.device.orientation);
-      }
-
-      Adapt.trigger('device:changed', Adapt.device.screenSize);
-    }
-
-    Adapt.trigger('device:preResize device:resize device:postResize', Adapt.device.screenWidth);
-
-  }, 100);
-
-  function isAppleDevice() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  }
-
-  function getAppleScreenWidth() {
-    return (Math.abs(window.orientation) === 90) ? screen.height : screen.width;
-  }
-
-  function getAppleScreenHeight() {
-    return (Math.abs(window.orientation) === 90) ? screen.width : screen.height;
-  }
-
-  function getAppleDeviceType() {
-    var type = '';
-
-    var flags = ['iphone', 'ipad', 'ipod'];
-
-    for (var i = 0; i < flags.length; i++) {
-      if (Bowser[flags[i]]) {
-        type = flags[i];
-        break;
-      }
-    }
-
-    return type;
-  }
-
-  function pixelDensity() {
-    var pixelDensity = (window.devicePixelRatio || 1);
-
-    if (pixelDensity >= 3) {
-      return 'ultra-high';
-    } else if (pixelDensity >= 2) {
-      return 'high';
-    } else if (pixelDensity >= 1.5) {
-      return 'medium';
-    } else {
-      return 'low';
+  for (var i = 0; i < flags.length; i++) {
+    if (Bowser[flags[i]]) {
+      type = flags[i];
+      break;
     }
   }
 
-  var browser = Adapt.device.browser.toLowerCase();
-  // Convert 'msie' and 'internet explorer' to 'ie'.
-  var browserString = browser.replace(/msie|internet explorer/, 'ie');
-  browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
-  browserString += browserString.replace('.', '-').toLowerCase();
+  return type;
+}
 
-  $html.addClass(browserString + ' pixel-density-' + pixelDensity());
-});
+function pixelDensity() {
+  var pixelDensity = (window.devicePixelRatio || 1);
+
+  if (pixelDensity >= 3) {
+    return 'ultra-high';
+  } else if (pixelDensity >= 2) {
+    return 'high';
+  } else if (pixelDensity >= 1.5) {
+    return 'medium';
+  } else {
+    return 'low';
+  }
+}
+
+const browser = Adapt.device.browser.toLowerCase();
+// Convert 'msie' and 'internet explorer' to 'ie'.
+let browserString = browser.replace(/msie|internet explorer/, 'ie');
+browserString = browserString + ' version-' + Adapt.device.version + ' OS-' + Adapt.device.OS + ' ' + getAppleDeviceType();
+browserString += browserString.replace('.', '-').toLowerCase();
+
+$html.addClass(browserString + ' pixel-density-' + pixelDensity());

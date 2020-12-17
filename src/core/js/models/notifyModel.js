@@ -1,13 +1,11 @@
-define(function() {
+export default class NotifyModel extends Backbone.Model {
 
-  var NotifyModel = Backbone.Model.extend({
-    defaults: {
+  defaults() {
+    return {
       _isActive: false,
       _showIcon: false,
       _timeout: 3000
-    }
-  });
+    };
+  }
 
-  return NotifyModel;
-
-});
+}

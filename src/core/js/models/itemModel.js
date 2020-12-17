@@ -1,28 +1,22 @@
-define(function() {
+export default class ItemModel extends Backbone.Model {
 
-  class ItemModel extends Backbone.Model {
-
-    defaults() {
-      return {
-        _isActive: false,
-        _isVisited: false
-      };
-    }
-
-    reset() {
-      this.set({ _isActive: false, _isVisited: false });
-    }
-
-    toggleActive(isActive = !this.get('_isActive')) {
-      this.set('_isActive', isActive);
-    }
-
-    toggleVisited(isVisited = !this.get('_isVisited')) {
-      this.set('_isVisited', isVisited);
-    }
-
+  defaults() {
+    return {
+      _isActive: false,
+      _isVisited: false
+    };
   }
 
-  return ItemModel;
+  reset() {
+    this.set({ _isActive: false, _isVisited: false });
+  }
 
-});
+  toggleActive(isActive = !this.get('_isActive')) {
+    this.set('_isActive', isActive);
+  }
+
+  toggleVisited(isVisited = !this.get('_isVisited')) {
+    this.set('_isVisited', isVisited);
+  }
+
+}

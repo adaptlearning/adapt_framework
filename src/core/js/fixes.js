@@ -1,3 +1,1 @@
-define([
-  './fixes/img.lazyload'
-], function() {});
+import 'core/js/fixes/img.lazyload';

@@ -1,26 +1,22 @@
-define([
-  './adapt',
-  './views/headingView'
-], function(Adapt, HeadingView) {
+import Adapt from './adapt';
+import HeadingView from './views/headingView';
 
-  var Headings = Backbone.Controller.extend({
+class Headings extends Backbone.Controller {
 
-    initialize: function() {
-      this.listenTo(Adapt, 'view:render', this.onViewRender);
-    },
+  initialize() {
+    this.listenTo(Adapt, 'view:render', this.onViewRender);
+  }
 
-    onViewRender: function(view) {
-      var $headingSeats = view.$('.js-heading');
-      $headingSeats.each(function(index, el) {
-        new HeadingView({
-          el: el,
-          model: view.model
-        });
+  onViewRender(view) {
+    var $headingSeats = view.$('.js-heading');
+    $headingSeats.each(function(index, el) {
+      new HeadingView({
+        el: el,
+        model: view.model
       });
-    }
+    });
+  }
 
-  });
+}
 
-  return new Headings();
-
-});
+export default new Headings();
