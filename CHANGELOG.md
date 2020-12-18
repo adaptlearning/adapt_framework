@@ -1,3 +1,7 @@
+## [5.8.1] - 2020-12-18
+### Fixed
+* CommonJS `require` calls not working ([#2997](https://github.com/adaptlearning/adapt_framework/issues/2997))
+
 ## [5.8.0] - 2020-12-08
 ### Added
 * Rollup as the module bundler (replacing requirejs) ([#2824](https://github.com/adaptlearning/adapt_framework/issues/2824) & [#2923](https://github.com/adaptlearning/adapt_framework/pull/2923))
@@ -956,6 +960,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.8.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.0...v5.8.1
 [5.8.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.1...v5.8.0
 [5.7.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.0...v5.7.1
 [5.7.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.1...v5.7.0
