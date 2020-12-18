@@ -79,14 +79,14 @@
 
 ## [5.6.0] - 2020-06-17
 #### Fixed
-* Decontaminated toJSON functions  ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
+* Decontaminated `toJSON` functions  ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
 * Display marking only on final question attempts  ([#2796](https://github.com/adaptlearning/adapt_framework/issues/2796))
 * Allow notify view to accept DOM attributes ([#2785](https://github.com/adaptlearning/adapt_framework/issues/2785))
-* jQuery resize timeout bug ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
+* jQuery `resize` timeout bug ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
 
 #### Added
-* Menu group aria level ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
-* AdaptModel `setChildren` and `setParent` functions
+* Menu group ARIA level (Part of [#2702](https://github.com/adaptlearning/adapt_framework/issues/2702))
+* AdaptModel `setChildren` and `setParent` functions ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
 
 
 ## [5.5.1] - 2020-06-08
