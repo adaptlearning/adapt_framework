@@ -9,6 +9,7 @@
         "standard"
     ],
     "globals": {
+        "React": true,
         "Promise": true,
         "requirejs": true,
         "Backbone": true,

@@ -30,7 +30,7 @@ export default function(model, view) {
           }
 
           <div className={classes(['component__title-inner', `${type}__title-inner`])} aria-hidden={!_disableAccessibilityState}>
-            {`\n${html(compile(displayTitle, data))}\n`}
+            {html(compile(displayTitle, data))}
           </div>
 
         </div>
@@ -56,5 +56,5 @@ export default function(model, view) {
 
       </div>
     </div>
-  )
+  );
 }

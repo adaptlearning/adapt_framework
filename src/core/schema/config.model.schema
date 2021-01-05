@@ -76,14 +76,6 @@
           "validators": [],
           "title": "Enabled?"
         },
-        "_isTextProcessorEnabled": {
-          "type": "boolean",
-          "default": false,
-          "inputType": "Checkbox",
-          "validators": [],
-          "title": "Enable text reader support?",
-          "help": "Adds focusing to assist text reader software"
-        },
         "_isSkipNavigationEnabled": {
           "type": "boolean",
           "default": true,

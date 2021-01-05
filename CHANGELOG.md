@@ -1,3 +1,29 @@
+## [5.8.1] - 2020-12-18
+### Fixed
+* CommonJS `require` calls not working ([#2997](https://github.com/adaptlearning/adapt_framework/issues/2997))
+
+## [5.8.0] - 2020-12-08
+### Added
+* Rollup as the module bundler (replacing requirejs) ([#2824](https://github.com/adaptlearning/adapt_framework/issues/2824) & [#2923](https://github.com/adaptlearning/adapt_framework/pull/2923))
+
+### Changed
+* The `grunt build` command now deletes the `.cache` file from the build folder ([#2975](https://github.com/adaptlearning/adapt_framework/issues/2975))
+* Improved Authoring Tool 'help text' for content object graphic alt text ([#2939](https://github.com/adaptlearning/adapt_framework/issues/2939))
+
+### Fixed
+* Value of `_isResetOnRevisit` not being converted from `String` to `Boolean` ([#2825](https://github.com/adaptlearning/adapt_framework/issues/2825) - originally thought fixed in release [5.6.1] but turns out it wasn't)
+* HotGraphic component duplicated after window resize ([#2938](https://github.com/adaptlearning/adapt_framework/issues/2938))
+* Disabled submit button not visible to assistive technology ([#2950](https://github.com/adaptlearning/adapt_framework/issues/2950))
+* The `--port` switch for the `grunt server` command not working ([#2954](https://github.com/adaptlearning/adapt_framework/issues/2954))
+* Typo in icons.less ([#2959](https://github.com/adaptlearning/adapt_framework/issues/2959))
+* Adapt not restoring learners' answers to questions following a change of language ([#2977](https://github.com/adaptlearning/adapt_framework/issues/2977))
+
+### Removed
+* `Adapt.mapById` ([#2908](https://github.com/adaptlearning/adapt_framework/issues/2908))
+* The `Adapt.wait` flush that was added in [#2439](https://github.com/adaptlearning/adapt_framework/issues/2439) ([#2743](https://github.com/adaptlearning/adapt_framework/issues/2743))
+* Entry for `_isTextProcessorEnabled` from config.model.schema ([#2952](https://github.com/adaptlearning/adapt_framework/issues/2952))
+* All instances of "Placeholder graphic" alt text from the 'out of the box' course content ([#2939](https://github.com/adaptlearning/adapt_framework/issues/2939))
+
 ## [5.7.1] - 2020-10-09
 
 ### Fixed
@@ -53,14 +79,14 @@
 
 ## [5.6.0] - 2020-06-17
 #### Fixed
-* Decontaminated toJSON functions  ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
+* Decontaminated `toJSON` functions  ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
 * Display marking only on final question attempts  ([#2796](https://github.com/adaptlearning/adapt_framework/issues/2796))
 * Allow notify view to accept DOM attributes ([#2785](https://github.com/adaptlearning/adapt_framework/issues/2785))
-* jQuery resize timeout bug ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
+* jQuery `resize` timeout bug ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
 
 #### Added
-* Menu group aria level ([#2782](https://github.com/adaptlearning/adapt_framework/issues/2782))
-* AdaptModel `setChildren` and `setParent` functions
+* Menu group ARIA level (Part of [#2702](https://github.com/adaptlearning/adapt_framework/issues/2702))
+* AdaptModel `setChildren` and `setParent` functions ([#2745](https://github.com/adaptlearning/adapt_framework/issues/2745))
 
 
 ## [5.5.1] - 2020-06-08
@@ -934,6 +960,8 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.8.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.0...v5.8.1
+[5.8.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.1...v5.8.0
 [5.7.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.0...v5.7.1
 [5.7.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.1...v5.7.0
 [5.6.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.6.0...v5.6.1

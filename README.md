@@ -15,7 +15,7 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + Open source, published under the GNU General Public License, and FREE
 + HTML5 and CSS3 - now with support for JavaScript ES6-8
 + Responsive across multiple devices and platforms
-+ Deliver courses through SCORM compliant LMS or stand-alone
++ Delivery of courses via SCORM compliant LMS or via web server
 + 23 bundled plug-ins, [more available](https://www.adaptlearning.org/index.php/plugin-browser/) through the community
 + [Meets WAI AA accessibility standards](https://github.com/adaptlearning/adapt_framework/wiki/Accessibility)
 + Right-To-Left compatibility
@@ -24,6 +24,7 @@ Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/i
 + [Multi language and localisation support](https://github.com/adaptlearning/adapt_framework/wiki/Course-Localisation)
 + Customisable theme
 + Built-in animation effects
++ [Experience API (xAPI)](https://xapi.com/) support via the [adapt-contrib-xapi plugin](https://github.com/adaptlearning/adapt-contrib-xapi)
 
 Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/adaptlearning/adapt_framework/wiki/Framework-in-five-minutes) of the framework to find out more.
 
@@ -43,7 +44,7 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 
 ## Troubleshooting, Bugs, and Feedback
 + For help with troubleshooting, visit the [Technical Discussion Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4).
-+ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new?title=please%20enter%20a%20brief%20summary%20of%20the%20issue%20here&body=please%20provide%20a%20full%20description%20of%20the%20problem,%20including%20steps%20on%20how%20to%20replicate,%20what%20browser(s)/device(s)%20the%20problem%20occurs%20on%20and,%20where%20helpful,%20screenshots.).
++ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 + To provide feedback, please use [GitHub Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 
 ## License
