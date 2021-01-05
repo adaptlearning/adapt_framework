@@ -1,4 +1,4 @@
-class LockingModel extends Backbone.Model {
+export default class LockingModel extends Backbone.Model {
 
   set(attrName, attrVal, options = {}) {
     const stopProcessing = (typeof attrName === 'object' || typeof attrVal !== 'boolean' || !this.isLocking(attrName));
@@ -130,5 +130,3 @@ class LockingModel extends Backbone.Model {
   }
 
 }
-
-export default LockingModel;
