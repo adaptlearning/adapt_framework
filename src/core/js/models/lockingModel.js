@@ -1,10 +1,8 @@
-const set = Backbone.Model.prototype.set;
+class LockingModel extends Backbone.Model {
 
-Object.assign(Backbone.Model.prototype, {
-
-  set: function(attrName, attrVal, options = {}) {
+  set(attrName, attrVal, options = {}) {
     const stopProcessing = (typeof attrName === 'object' || typeof attrVal !== 'boolean' || !this.isLocking(attrName));
-    if (stopProcessing) return set.apply(this, arguments);
+    if (stopProcessing) return super.set(...arguments);
 
     const isSettingValueForSpecificPlugin = options && options.pluginName;
     if (!isSettingValueForSpecificPlugin) {
@@ -21,27 +19,27 @@ Object.assign(Backbone.Model.prototype, {
 
     if (isAttemptingToLock) {
       this.setLockState(attrName, true, { pluginName: pluginName, skipcheck: true });
-      return set.call(this, attrName, lockingValue);
+      return super.set(attrName, lockingValue);
     }
 
     this.setLockState(attrName, false, { pluginName: pluginName, skipcheck: true });
 
     const totalLockValue = this.getLockCount(attrName, { skipcheck: true });
     if (totalLockValue === 0) {
-      return set.call(this, attrName, !lockingValue);
+      return super.set(attrName, !lockingValue);
     }
 
     return this;
 
-  },
+  }
 
-  setLocking: function(attrName, defaultLockValue) {
+  setLocking(attrName, defaultLockValue) {
     if (this.isLocking(attrName)) return;
     if (!this._lockedAttributes) this._lockedAttributes = {};
     this._lockedAttributes[attrName] = defaultLockValue;
-  },
+  }
 
-  unsetLocking: function(attrName) {
+  unsetLocking(attrName) {
     if (!this.isLocking(attrName)) return;
     if (!this._lockedAttributes) return;
     delete this._lockedAttributes[attrName];
@@ -50,9 +48,9 @@ Object.assign(Backbone.Model.prototype, {
       delete this._lockedAttributes;
       delete this._lockedAttributesValues;
     }
-  },
+  }
 
-  isLocking: function(attrName) {
+  isLocking(attrName) {
     const isCheckingGeneralLockingState = (attrName === undefined);
     const isUsingLockedAttributes = Boolean(this.lockedAttributes || this._lockedAttributes);
 
@@ -78,9 +76,9 @@ Object.assign(Backbone.Model.prototype, {
     }
 
     return true;
-  },
+  }
 
-  isLocked: function(attrName, options) {
+  isLocked(attrName, options) {
     const shouldSkipCheck = (options && options.skipcheck);
     if (!shouldSkipCheck) {
       const stopProcessing = !this.isLocking(attrName);
@@ -88,9 +86,9 @@ Object.assign(Backbone.Model.prototype, {
     }
 
     return this.getLockCount(attrName) > 0;
-  },
+  }
 
-  getLockCount: function(attrName, options) {
+  getLockCount(attrName, options) {
     const shouldSkipCheck = (options && options.skipcheck);
     if (!shouldSkipCheck) {
       const stopProcessing = !this.isLocking(attrName);
@@ -106,9 +104,9 @@ Object.assign(Backbone.Model.prototype, {
     const lockingAttributeValuesSum = lockingAttributeValues.reduce((sum, value) => sum + (value ? 1 : 0), 0);
 
     return lockingAttributeValuesSum;
-  },
+  }
 
-  setLockState: function(attrName, value, options) {
+  setLockState(attrName, value, options) {
     const shouldSkipCheck = (options && options.skipcheck);
     if (!shouldSkipCheck) {
       const stopProcessing = !this.isLocking(attrName);
@@ -131,4 +129,6 @@ Object.assign(Backbone.Model.prototype, {
 
   }
 
-});
+}
+
+export default LockingModel;

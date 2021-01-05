@@ -1,4 +1,6 @@
-export default class ItemModel extends Backbone.Model {
+import LockingModel from 'core/js/models/lockingModel';
+
+export default class ItemModel extends LockingModel {
 
   defaults() {
     return {

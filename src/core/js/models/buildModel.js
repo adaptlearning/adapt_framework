@@ -1,7 +1,8 @@
 import Adapt from 'core/js/adapt';
+import LockingModel from 'core/js/models/lockingModel';
 import 'core/js/logging';
 
-export default class BuildModel extends Backbone.Model {
+export default class BuildModel extends LockingModel {
 
   defaults() {
     return {

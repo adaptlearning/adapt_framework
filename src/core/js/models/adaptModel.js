@@ -1,8 +1,9 @@
 import Adapt from 'core/js/adapt';
 import ModelEvent from 'core/js/modelEvent';
+import LockingModel from 'core/js/models/lockingModel';
 import 'core/js/logging';
 
-export default class AdaptModel extends Backbone.Model {
+export default class AdaptModel extends LockingModel {
 
   toJSON() {
     // Perform shallow clone

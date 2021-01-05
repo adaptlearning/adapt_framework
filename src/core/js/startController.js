@@ -1,4 +1,5 @@
 import Adapt from 'core/js/adapt';
+import LockingModel from 'core/js/models/lockingModel';
 
 class StartController extends Backbone.Controller {
 
@@ -8,7 +9,7 @@ class StartController extends Backbone.Controller {
   }
 
   loadCourseData() {
-    this.model = new Backbone.Model(Adapt.course.get('_start'));
+    this.model = new LockingModel(Adapt.course.get('_start'));
   }
 
   setStartLocation() {

@@ -1,7 +1,7 @@
 import Wait from 'core/js/wait';
-import 'core/js/models/lockingModel';
+import LockingModel from 'core/js/models/lockingModel';
 
-class AdaptSingleton extends Backbone.Model {
+class AdaptSingleton extends LockingModel {
 
   initialize() {
     this.loadScript = window.__loadScript;

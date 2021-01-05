@@ -1,4 +1,6 @@
-export default class NotifyModel extends Backbone.Model {
+import LockingModel from 'core/js/models/lockingModel';
+
+export default class NotifyModel extends LockingModel {
 
   defaults() {
     return {

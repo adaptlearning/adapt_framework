@@ -2,9 +2,9 @@ import Adapt from 'core/js/adapt';
 import AdaptCollection from 'core/js/collections/adaptCollection';
 import BuildModel from 'core/js/models/buildModel';
 import ConfigModel from 'core/js/models/configModel';
+import LockingModel from 'core/js/models/lockingModel';
 
 import 'core/js/models/courseModel';
-import 'core/js/models/lockingModel';
 import 'core/js/startController';
 
 class Data extends AdaptCollection {
@@ -12,7 +12,7 @@ class Data extends AdaptCollection {
   model(json) {
     const ModelClass = Adapt.getModelClass(json);
     if (!ModelClass) {
-      return new Backbone.Model(json);
+      return new LockingModel(json);
     }
     return new ModelClass(json, { parse: true });
   }
