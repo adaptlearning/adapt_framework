@@ -64,6 +64,10 @@ define([
      * @param {JQuery.Event} event
      */
     _onClick: function(event) {
+      if ($element.is('[aria-disabled=true]')) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }
       var config = Adapt.a11y.config;
       if (!config._isEnabled) {
         return;
@@ -77,10 +81,6 @@ define([
         }
         // Force focus for screen reader enter / space press
         $focusable[0].focus();
-      }
-      if ($element.is('[aria-disabled=true]')) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
       }
     }
 
