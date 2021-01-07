@@ -64,24 +64,22 @@ define([
      * @param {JQuery.Event} event
      */
     _onClick: function(event) {
-      var config = Adapt.a11y.config;
-      if (!config._isEnabled) {
-        return;
-      }
       var $element = $(event.target);
-      if (config._options._isFocusOnClickEnabled) {
-        var $stack = $().add($element).add($element.parents());
-        var $focusable = $stack.filter(config._options._tabbableElements);
-        if (!$focusable.length) {
-          return;
-        }
-        // Force focus for screen reader enter / space press
-        $focusable[0].focus();
-      }
       if ($element.is('[aria-disabled=true]')) {
         event.preventDefault();
         event.stopImmediatePropagation();
       }
+      var config = Adapt.a11y.config;
+      if (!config._isEnabled || !config._options._isFocusOnClickEnabled) {
+        return;
+      }
+      var $stack = $().add($element).add($element.parents());
+      var $focusable = $stack.filter(config._options._tabbableElements);
+      if (!$focusable.length) {
+        return;
+      }
+      // Force focus for screen reader enter / space press
+      $focusable[0].focus();
     }
 
   });
