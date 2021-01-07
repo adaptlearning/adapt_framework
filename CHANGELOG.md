@@ -1,3 +1,11 @@
+## [5.9.0] - 2021-01-07
+### Changed
+* The `grunt compress` command now operates on images in `src/course/` by default ([#3004](https://github.com/adaptlearning/adapt_framework/issues/3004))
+
+### Fixed
+* Disabled buttons were still clickable if accessibility support had been switched off ([#3007](https://github.com/adaptlearning/adapt_framework/issues/3007))
+* Failure to install dependencies of `imagemin-jpegtran` / `imagemin-pngquant` on some platforms was causing the entire `npm install` process to halt ([#3002](https://github.com/adaptlearning/adapt_framework/issues/3002))
+
 ## [5.8.1] - 2020-12-18
 ### Fixed
 * CommonJS `require` calls not working ([#2997](https://github.com/adaptlearning/adapt_framework/issues/2997))
@@ -960,6 +968,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.9.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.1...v5.9.0
 [5.8.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.0...v5.8.1
 [5.8.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.1...v5.8.0
 [5.7.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.0...v5.7.1
