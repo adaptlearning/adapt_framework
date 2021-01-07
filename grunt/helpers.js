@@ -226,6 +226,7 @@ module.exports = function(grunt) {
         root: root,
         sourcedir: sourcedir,
         outputdir: outputdir,
+        configdir: configDir,
         tempdir: tempdir,
         jsonext: jsonext,
         trackingIdType: grunt.option('trackingidtype') || 'block',
