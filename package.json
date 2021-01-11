@@ -1,6 +1,6 @@
 {
     "name": "adapt_framework",
-    "version": "5.8.0",
+    "version": "5.9.0",
     "description": "Adapt Learning output framework",
     "repository": {
         "type": "git",
@@ -41,10 +41,6 @@
         "grunt-replace": "^1.0.1",
         "handlebars": "^4.0.12",
         "iconv-lite": "^0.4.24",
-        "imagemin": "^7.0.1",
-        "imagemin-jpegtran": "^7.0.0",
-        "imagemin-pngquant": "^9.0.0",
-        "imagemin-svgo": "^8.0.0",
         "jit-grunt": "^0.10.0",
         "jschardet": "^1.6.0",
         "jshint-stylish": "^2.2.1",
@@ -65,5 +61,11 @@
         "eslint-plugin-promise": "^4.2.1",
         "eslint-plugin-requirejs": "^4.0.0",
         "eslint-plugin-standard": "^4.0.0"
+    },
+    "optionalDependencies": {
+        "imagemin": "^7.0.1",
+        "imagemin-jpegtran": "^7.0.0",
+        "imagemin-pngquant": "^9.0.0",
+        "imagemin-svgo": "^8.0.0"
     }
 }
