@@ -60,7 +60,7 @@ export default class BrowserFocus extends Backbone.Controller {
    *
    * @param {JQuery.Event} event
    */
-  _onClick: function(event) {
+  _onClick(event) {
     const $element = $(event.target);
     if ($element.is('[aria-disabled=true]')) {
       event.preventDefault();
