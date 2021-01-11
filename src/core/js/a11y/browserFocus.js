@@ -7,7 +7,8 @@ import Adapt from 'core/js/adapt';
 export default class BrowserFocus extends Backbone.Controller {
 
   initialize() {
-    _.bindAll(this, '_onBlur', '_onClick');
+    this._onBlur = this._onBlur.bind(this);
+    this._onClick = this._onClick.bind(this);
     this.$body = $('body');
     this.listenTo(Adapt, {
       'accessibility:ready': this._attachEventListeners
@@ -37,9 +38,7 @@ export default class BrowserFocus extends Backbone.Controller {
     }
     const $element = $(event.target);
     if ($element.is('[data-a11y-force-focus]')) {
-      _.defer(function() {
-        $element.removeAttr('tabindex data-a11y-force-focus');
-      });
+      _.defer(() => $element.removeAttr('tabindex data-a11y-force-focus'));
     }
     // From here, only check source elements
     if (event.target !== event.currentTarget) {

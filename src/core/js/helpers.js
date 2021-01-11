@@ -14,31 +14,31 @@ const defaultAriaLevels = {
 
 const helpers = {
 
-  lowercase: function(text) {
+  lowercase(text) {
     return text.toLowerCase();
   },
 
-  capitalise: function(text) {
+  capitalise(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
   },
 
-  inc: function(index) {
+  inc(index) {
     return index + 1;
   },
 
-  dec: function(index) {
+  dec(index) {
     return index - 1;
   },
 
-  odd: function (index) {
+  odd (index) {
     return (index + 1) % 2 === 0 ? 'even' : 'odd';
   },
 
-  equals: function(value, text, block) {
+  equals(value, text, block) {
     return helpers.compare.call(this, value, '==', text, block);
   },
 
-  compare: function(value, operator, text, block) {
+  compare(value, operator, text, block) {
     // Comparison operators
     switch (operator) {
       case '===':
@@ -64,7 +64,7 @@ const helpers = {
     return block.inverse(this);
   },
 
-  math: function(lvalue, operator, rvalue, options) {
+  math(lvalue, operator, rvalue, options) {
     // Mathematical operators
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
@@ -85,10 +85,10 @@ const helpers = {
    * <div class='component__header {{_component}}__header'></div>
    * {{/any}}
    */
-  any: function() {
-    const args = Array.prototype.slice.call(arguments, 0, -1);
-    const block = Array.prototype.slice.call(arguments, -1)[0];
-    return _.any(args) ? (block.fn ? block.fn(this) : true) : (block.inverse ? block.inverse(this) : false);
+  any(...args) {
+    const specified = args.slice(0, -1);
+    const block = args.slice(-1)[0];
+    return specified.some(Boolean) ? (block.fn ? block.fn(this) : true) : (block.inverse ? block.inverse(this) : false);
   },
 
   /**
@@ -99,10 +99,10 @@ const helpers = {
    * <div class='component__header {{_component}}__header'></div>
    * {{/all}}
    */
-  all: function() {
-    const args = Array.prototype.slice.call(arguments, 0, -1);
-    const block = Array.prototype.slice.call(arguments, -1)[0];
-    return _.all(args) ? (block.fn ? block.fn(this) : true) : (block.inverse ? block.inverse(this) : false);
+  all(...args) {
+    const specified = args.slice(0, -1);
+    const block = args.slice(-1)[0];
+    return specified.every(Boolean) ? (block.fn ? block.fn(this) : true) : (block.inverse ? block.inverse(this) : false);
   },
 
   /**
@@ -113,17 +113,16 @@ const helpers = {
    * <div class='component__header {{_component}}__header'></div>
    * {{/none}}
    */
-  none: function() {
-    const args = Array.prototype.slice.call(arguments, 0, -1);
-    const block = Array.prototype.slice.call(arguments, -1)[0];
-
-    return !_.any(args) ? (block.fn ? block.fn(this) : true) : (block.inverse ? block.inverse(this) : false);
+  none(...args) {
+    const specified = args.slice(0, -1);
+    const block = args.slice(-1)[0];
+    return !specified.some(Boolean) ? (block.fn ? block.fn(this) : true) : (block.inverse ? block.inverse(this) : false);
   },
 
   /**
    * Allow JSON to be a template i.e. you can use handlebars {{expressions}} within your JSON
    */
-  compile: function(template, context) {
+  compile(template, context) {
     if (!template) {
       return '';
     }
@@ -139,7 +138,7 @@ const helpers = {
   /**
    * Allow JSON to be a template and accessible text
    */
-  compile_a11y_text: function(template, context) {
+  compile_a11y_text(template, context) {
     Adapt.a11y.log.deprecated('a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/');
     return helpers.compile.call(this, template, context);
   },
@@ -147,7 +146,7 @@ const helpers = {
   /**
    * Allow JSON to be a template and normalized text
    */
-  compile_a11y_normalize: function(template, context) {
+  compile_a11y_normalize(template, context) {
     if (!template) {
       return '';
     }
@@ -158,7 +157,7 @@ const helpers = {
   /**
    * Remove all html tags except styling tags
    */
-  compile_a11y_remove_breaks: function(template, context) {
+  compile_a11y_remove_breaks(template, context) {
     if (!template) {
       return '';
     }
@@ -168,7 +167,7 @@ const helpers = {
   /**
    * makes the _globals object in course.json available to a template
    */
-  import_globals: function(context) {
+  import_globals(context) {
     if (context.data.root._globals) {
       return '';
     }
@@ -179,7 +178,7 @@ const helpers = {
   /**
    * makes the Adapt module data available to a template
    */
-  import_adapt: function(context) {
+  import_adapt(context) {
 
     if (context.data.root.Adapt) {
       return;
@@ -225,7 +224,7 @@ const helpers = {
    * @param {string} [override]
    * @returns {string}
    */
-  component_description: function(override, context) {
+  component_description(override, context) {
     if (!this._isA11yComponentDescriptionEnabled) {
       return;
     }
@@ -248,7 +247,7 @@ const helpers = {
     return new Handlebars.SafeString('<div class="aria-label">' + description + '</div>');
   },
 
-  a11y_text: function(text) {
+  a11y_text(text) {
     Adapt.a11y.log.deprecated('a11y_text is no longer required. https://tink.uk/understanding-screen-reader-interaction-modes/');
     return text;
   },
@@ -259,7 +258,7 @@ const helpers = {
    * @param {string} htmls Any htmls.
    * @returns {string}
    */
-  a11y_normalize: function(htmls) {
+  a11y_normalize(htmls) {
     return Adapt.a11y.normalize.apply(Adapt.a11y, arguments);
   },
 
@@ -269,7 +268,7 @@ const helpers = {
    * @param {string} htmls Any htmls.
    * @returns {string}
    */
-  a11y_remove_breaks: function(htmls) {
+  a11y_remove_breaks(htmls) {
     return Adapt.a11y.removeBreaks.apply(Adapt.a11y, arguments);
   },
 
@@ -281,7 +280,7 @@ const helpers = {
    * @param {string} htmls
    * @returns {string}
    */
-  a11y_aria_label: function(htmls) {
+  a11y_aria_label(htmls) {
     let values = Array.prototype.slice.call(arguments, 0, -1);
     values = values.filter(Boolean);
     return new Handlebars.SafeString('<div class="aria-label">' + values.join(' ') + '</div>');
@@ -295,7 +294,7 @@ const helpers = {
    * @param {string} htmls Aria label texts.
    * @returns {string}
    */
-  a11y_aria_label_relative: function(htmls) {
+  a11y_aria_label_relative(htmls) {
     let values = Array.prototype.slice.call(arguments, 0, -1);
     values = values.filter(Boolean);
     return new Handlebars.SafeString('<div class="aria-label relative">' + values.join(' ') + '</div>');
@@ -312,7 +311,7 @@ const helpers = {
    * @param {string} texts Aria label texts.
    * @returns {string}
    */
-  a11y_aria_image: function(texts) {
+  a11y_aria_image(texts) {
     let values = Array.prototype.slice.call(arguments, 0, -1);
     values = values.filter(Boolean);
     return new Handlebars.SafeString('<div class="aria-label" role="img" aria-label="' + values.join(' ') + '"></div>');
@@ -324,7 +323,7 @@ const helpers = {
    *
    * @returns {string}
    */
-  a11y_wrap_focus: function() {
+  a11y_wrap_focus() {
     const cfg = Adapt.config.get('_accessibility');
     if (cfg._isPopupWrapFocusEnabled === false) return '';
     return new Handlebars.SafeString('<a class="a11y-focusguard a11y-ignore a11y-ignore-focus" role="presentation">&nbsp;</a>');
@@ -339,7 +338,7 @@ const helpers = {
    * @param {number|string} levelOrType
    * @returns {string}
    */
-  a11y_attrs_heading: function(levelOrType) {
+  a11y_attrs_heading(levelOrType) {
     // get the global configuration from config.json
     const cfg = Adapt.config.get('_accessibility');
     // default level to use if nothing overrides it
@@ -364,7 +363,7 @@ const helpers = {
     return new Handlebars.SafeString(' role="heading" aria-level="' + level + '" ');
   },
 
-  a11y_attrs_tabbable: function() {
+  a11y_attrs_tabbable() {
     Adapt.a11y.log.deprecated('a11y_attrs_tabbable should not be used. tabbable elements should be natively tabbable.');
     return new Handlebars.SafeString(' role="region" tabindex="0" ');
   },
@@ -375,7 +374,7 @@ const helpers = {
    * @param {string} alternatives Text that will be read by the screen reader (instead of what's displayed on screen)
    * @example {{a11y_alt_text '$5bn' 'five billion dollars'}} or {{a11y_alt_text 'Here are some bits to read' 'There are' _items.length 'items to read'}}
    */
-  a11y_alt_text: function(visible, alternatives) {
+  a11y_alt_text(visible, alternatives) {
     let values = Array.prototype.slice.call(arguments, 1, -1);
     values = values.filter(Boolean);
     return new Handlebars.SafeString('<span aria-hidden="true">' + visible + '</span><span class="aria-label">' + values.join(' ') + '</span>');
@@ -384,19 +383,19 @@ const helpers = {
 };
 
 // Compatibility references
-_.extend(helpers, {
+Object.assign(helpers, {
 
-  if_value_equals: function() {
+  if_value_equals() {
     Adapt.a11y.log.deprecated('if_value_equals, use equals instead.');
     return helpers.equals.apply(this, arguments);
   },
 
-  numbers: function() {
+  numbers() {
     Adapt.a11y.log.deprecated('numbers, use inc instead.');
     return helpers.inc.apply(this, arguments);
   },
 
-  lowerCase: function() {
+  lowerCase() {
     Adapt.a11y.log.deprecated('lowerCase, use lowercase instead.');
     return helpers.lowercase.apply(this, arguments);
   }

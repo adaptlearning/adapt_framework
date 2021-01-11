@@ -9,7 +9,7 @@ class Headings extends Backbone.Controller {
 
   onViewRender(view) {
     const $headingSeats = view.$('.js-heading');
-    $headingSeats.each(function(index, el) {
+    $headingSeats.each((index, el) => {
       new HeadingView({
         el: el,
         model: view.model

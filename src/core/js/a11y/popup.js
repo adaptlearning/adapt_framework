@@ -89,7 +89,7 @@ export default class Popup extends Backbone.Controller {
     const $branch = $popupElement.add($popupElement.parents());
     const $siblings = $branch.siblings().filter(config._options._tabbableElementsExcludes);
     $elements = $elements.add($siblings);
-    $elements.each(function(index, item) {
+    $elements.each((index, item) => {
       const $item = $(item);
       let elementUID;
       if (typeof item.a11y_uid === 'undefined') {
@@ -112,7 +112,7 @@ export default class Popup extends Backbone.Controller {
       if (config._options._isPopupAriaHiddenManagementEnabled) {
         $item.attr('aria-hidden', true);
       }
-    }.bind(this));
+    });
     const $items = $popupElement.find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
     if (config._options._isPopupTabIndexManagementEnabled) {
       $items.attr('tabindex', 0);
@@ -160,7 +160,7 @@ export default class Popup extends Backbone.Controller {
       return;
     }
     this._floorStack.pop();
-    $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes).each(function(index, item) {
+    $(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes).each((index, item) => {
       const $item = $(item);
       let previousTabIndex = '';
       let previousAriaHidden = '';
@@ -198,7 +198,7 @@ export default class Popup extends Backbone.Controller {
           });
         }
       }
-    }.bind(this));
+    });
     return this._focusStack.pop();
   }
 

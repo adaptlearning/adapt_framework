@@ -3,8 +3,8 @@ export default class Wait extends Backbone.Controller {
   initialize() {
     this._waitCount = 0;
     this._callbackHandle = null;
-
-    _.bindAll(this, 'begin', 'end');
+    this.being = this.begin.bind(this);
+    this.end = this.end.bind(this);
   }
 
   /**
@@ -85,11 +85,7 @@ export default class Wait extends Backbone.Controller {
    */
   for(callback) {
     this.begin();
-
-    _.defer(function() {
-      callback(_.once(this.end));
-    }.bind(this));
-
+    _.defer(() => callback(_.once(this.end)));
     return this;
   }
 

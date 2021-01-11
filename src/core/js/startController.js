@@ -21,9 +21,7 @@ class StartController extends Backbone.Controller {
     const startIds = this.model.get('_startIds');
     if (startIds) {
       // ensure we can return to the start page even if it is completed
-      startIds.forEach(function(startId) {
-        startId._skipIfComplete = false;
-      });
+      startIds.forEach(startId => (startId._skipIfComplete = false));
     }
     window.location.hash = this.getStartHash(true);
   }
@@ -87,7 +85,7 @@ class StartController extends Backbone.Controller {
 
 }
 
-Adapt.once('adapt:start', function() {
+Adapt.once('adapt:start', () => {
   Adapt.startController.loadCourseData();
   Adapt.startController.setStartLocation();
 });
@@ -96,7 +94,7 @@ Adapt.once('adapt:start', function() {
 * allows you to call returnToStartLocation either by calling `Adapt.trigger('navigation:returnToStart')`
 * or by including in the top navigation bar a button that has the attribute `data-event="returnToStart"`
 */
-Adapt.on('navigation:returnToStart', function() {
+Adapt.on('navigation:returnToStart', () => {
   Adapt.startController.returnToStartLocation();
 });
 

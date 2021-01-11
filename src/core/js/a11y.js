@@ -60,6 +60,7 @@ class A11y extends Backbone.Controller {
   initialize() {
     this.$html = $('html');
     this._htmlCharRegex = /&.*;/g;
+    /** @type {Object} */
     this.config = null;
     this._browserFocus = new BrowserFocus();
     this._keyboardFocusOutline = new KeyboardFocusOutline();
@@ -100,13 +101,7 @@ class A11y extends Backbone.Controller {
       return;
     }
     const classes = this.config._disableTextSelectOnClasses.split(' ');
-    let isMatch = false;
-    for (let i = 0, item; (item = classes[i++]);) {
-      if (this.$html.is(item)) {
-        isMatch = true;
-        break;
-      }
-    }
+    const isMatch = classes.some(className => this.$html.is(className));
     this.$html.toggleClass('u-no-select', isMatch);
   }
 
@@ -133,9 +128,7 @@ class A11y extends Backbone.Controller {
       return;
     }
     // Stop document reading
-    _.defer(function() {
-      Adapt.a11y.toggleHidden('.contentobject', true);
-    });
+    _.defer(() => this.toggleHidden('.contentobject', true));
   }
 
   _onNavigationEnd(view) {
@@ -144,7 +137,7 @@ class A11y extends Backbone.Controller {
       return;
     }
     // Allow document to be read
-    Adapt.a11y.toggleHidden('.contentobject', false);
+    this.toggleHidden('.contentobject', false);
   }
 
   isActive() {
@@ -161,15 +154,14 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $elements
    * @param {boolean} [isHidden=true]
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
-  toggleHidden($elements, isHidden) {
+  toggleHidden($elements, isHidden = true) {
     $elements = $($elements);
-    const config = Adapt.a11y.config;
+    const config = this.config;
     if (!config._isEnabled || !config._options._isAriaHiddenManagementEnabled) {
       return this;
     }
-    isHidden = isHidden === undefined ? true : isHidden;
     if (isHidden === true) {
       $elements.attr('aria-hidden', true);
     } else {
@@ -184,7 +176,7 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $elements
    * @param {boolean} [isHidden=true]
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   toggleAccessibleEnabled($elements, isAccessibleEnabled) {
     this.toggleAccessible($elements, isAccessibleEnabled);
@@ -197,15 +189,14 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $elements
    * @param {boolean} [isReadable=true]
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
-  toggleAccessible($elements, isReadable) {
+  toggleAccessible($elements, isReadable = true) {
     $elements = $($elements);
-    const config = Adapt.a11y.config;
+    const config = this.config;
     if (!config._isEnabled || !config._options._isAriaHiddenManagementEnabled || $elements.length === 0) {
       return this;
     }
-    isReadable = isReadable === undefined ? true : isReadable;
     if (!isReadable) {
       $elements.attr({
         tabindex: '-1',
@@ -223,14 +214,13 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $elements
    * @param {boolean} [isEnabled=true]
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
-  toggleEnabled($elements, isEnabled) {
+  toggleEnabled($elements, isEnabled = true) {
     $elements = $($elements);
     if ($elements.length === 0) {
       return this;
     }
-    isEnabled = isEnabled === undefined ? true : isEnabled;
     if (!isEnabled) {
       $elements.attr({
         tabindex: '-1',
@@ -271,7 +261,7 @@ class A11y extends Backbone.Controller {
    * @returns {Object}
    */
   findTabbable($element) {
-    const config = Adapt.a11y.config;
+    const config = this.config;
     return $($element).find(config._options._tabbableElements).filter(config._options._tabbableElementsExcludes);
   }
 
@@ -281,9 +271,7 @@ class A11y extends Backbone.Controller {
    * @param {Object|string|Array} $element
    */
   findReadable($element) {
-    return $($element).find('*').filter(function(index, element) {
-      return this.isReadable(element);
-    }.bind(this));
+    return $($element).find('*').filter((index, element) => this.isReadable(element));
   }
 
   /**
@@ -293,7 +281,7 @@ class A11y extends Backbone.Controller {
    * @returns {boolean|undefined}
    */
   isTabbable($element) {
-    const config = Adapt.a11y.config;
+    const config = this.config;
     const value = $($element).is(config._options._tabbableElements).is(config._options._tabbableElementsExcludes);
     if (!value) {
       return undefined; // Allow _findForward to descend
@@ -308,24 +296,20 @@ class A11y extends Backbone.Controller {
    * @param {boolean} [checkParents=true] Check if parents are inaccessible.
    * @returns {boolean}
    */
-  isReadable($element, checkParents) {
-    const config = Adapt.a11y.config;
+  isReadable($element, checkParents = true) {
+    const config = this.config;
     $element = $($element).first();
-    checkParents = checkParents === undefined;
 
     const $branch = checkParents
       ? $element.add($element.parents())
       : $element;
 
-    const isNotVisible = _.find($branch.toArray(), function(item) {
+    const isNotVisible = $branch.toArray().some(item => {
       const $item = $(item);
       // make sure item is not explicitly invisible
-      const isNotVisible = $item.css('display') === 'none' ||
+      return $item.css('display') === 'none' ||
         $item.css('visibility') === 'hidden' ||
         $item.attr('aria-hidden') === 'true';
-      if (isNotVisible) {
-        return true;
-      }
     });
     if (isNotVisible) {
       return false;
@@ -399,8 +383,7 @@ class A11y extends Backbone.Controller {
     }
 
     // check subsequent siblings
-    const $nextSiblings = $element.nextAll().toArray();
-    _.find($nextSiblings, function(sibling) {
+    $element.nextAll().toArray().some(sibling => {
       const $sibling = $(sibling);
       const value = iterator($sibling);
 
@@ -418,14 +401,13 @@ class A11y extends Backbone.Controller {
       // check parent sibling children by walking the tree
       $found = this._findFirstForwardDescendant($sibling, iterator);
       if ($found && $found.length) return true;
-    }.bind(this));
+    });
     if ($found && $found.length) {
       return $found;
     }
 
     // move through parents towards the body element
-    const $branch = $element.add($element.parents()).toArray().reverse();
-    _.find($branch, function(parent) {
+    $element.add($element.parents()).toArray().reverse().some(parent => {
       const $parent = $(parent);
       if (iterator($parent) === false) {
         // skip this parent if explicitly instructed
@@ -433,8 +415,7 @@ class A11y extends Backbone.Controller {
       }
 
       // move through parents nextAll siblings
-      const $siblings = $parent.nextAll().toArray();
-      return _.find($siblings, function(sibling) {
+      return $parent.nextAll().toArray().some(sibling => {
         const $sibling = $(sibling);
         const value = iterator($sibling);
 
@@ -454,8 +435,8 @@ class A11y extends Backbone.Controller {
         if ($found && $found.length) {
           return true;
         }
-      }.bind(this));
-    }.bind(this));
+      });
+    });
 
     if (!$found || !$found.length) {
       return $element.not('*');
@@ -523,15 +504,14 @@ class A11y extends Backbone.Controller {
       }
 
       // get i stack children
-      const $children = $stackItem.children().toArray();
-      _.find($children, function(item) {
+      $stackItem.children().toArray().forEach(item => {
         const $item = $(item);
         const value = iterator($item);
 
         // item explicitly not allowed, don't add to stack,
         // skip children
         if (value === false) {
-          return false;
+          return;
         }
 
         // item passed or readable, add to stack before any parent
@@ -556,12 +536,12 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $element
    * @param {FocusOptions} options
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   focusNext($element, options) {
     options = new FocusOptions(options);
     $element = $($element).first();
-    $element = Adapt.a11y.findFirstReadable($element);
+    $element = this.findFirstReadable($element);
     this.focus($element, options);
     return this;
   }
@@ -572,16 +552,16 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $element
    * @param {FocusOptions} options
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object}
    */
   focusFirst($element, options) {
     options = new FocusOptions(options);
     $element = $($element).first();
-    if (Adapt.a11y.isReadable($element)) {
+    if (this.isReadable($element)) {
       this.focus($element, options);
       return $element;
     }
-    $element = Adapt.a11y.findFirstReadable($element);
+    $element = this.findFirstReadable($element);
     this.focus($element, options);
     return $element;
   }
@@ -591,12 +571,12 @@ class A11y extends Backbone.Controller {
    *
    * @param {Object|string|Array} $element
    * @param {FocusOptions} options
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   focus($element, options) {
     options = new FocusOptions(options);
     $element = $($element).first();
-    const config = Adapt.a11y.config;
+    const config = this.config;
     if (!config._isEnabled || !config._options._isFocusAssignmentEnabled || $element.length === 0) {
       return this;
     }
@@ -629,9 +609,7 @@ class A11y extends Backbone.Controller {
       }
     }
     if (options.defer) {
-      _.defer(function() {
-        perform();
-      });
+      _.defer(perform);
     } else {
       perform();
     }
@@ -645,10 +623,7 @@ class A11y extends Backbone.Controller {
    * @returns {string} Returns text without markup or html encoded characters.
    */
   normalize(htmls) {
-    let values = Array.prototype.slice.call(arguments, 0);
-    values = values.filter(Boolean);
-    values = values.filter(_.isString);
-    htmls = values.join(' ');
+    htmls = [...arguments].filter(Boolean).filter(_.isString).join(' ');
     const text = $('<div>' + htmls + '</div>').text();
     // Remove all html encoded characters, such as &apos;
     return text.replace(this._htmlCharRegex, '');
@@ -663,10 +638,7 @@ class A11y extends Backbone.Controller {
    * @return {string} Returns html string without markup which would cause screen reader to pause.
    */
   removeBreaks(htmls) {
-    let values = Array.prototype.slice.call(arguments, 0);
-    values = values.filter(Boolean);
-    values = values.filter(_.isString);
-    htmls = values.join(' ');
+    htmls = [...arguments].filter(Boolean).filter(_.isString).join(' ');
     const $div = $('<div>' + htmls + '</div>');
     const stack = [ $div[0] ];
     let stackIndex = 0;
@@ -674,12 +646,12 @@ class A11y extends Backbone.Controller {
     do {
       if (stack[stackIndex].childNodes.length) {
         const nodes = stack[stackIndex].childNodes;
-        const usable = _.filter(nodes, function(node) {
+        const usable = nodes.filter(node => {
           const isTextNode = (node.nodeType === 3);
           if (isTextNode) {
             return true;
           }
-          const isStyleElement = $(node).is(Adapt.a11y.config._options._wrapStyleElements);
+          const isStyleElement = $(node).is(this.config._options._wrapStyleElements);
           if (isStyleElement) {
             return true;
           }
@@ -699,7 +671,7 @@ class A11y extends Backbone.Controller {
 
   /**
    * @param {Object|string|Array} $elements
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   scrollEnable($elements) {
     this._scroll.enable($elements);
@@ -708,7 +680,7 @@ class A11y extends Backbone.Controller {
 
   /**
    * @param {Object|string|Array} $elements
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   scrollDisable($elements) {
     this._scroll.disable($elements);
@@ -719,7 +691,7 @@ class A11y extends Backbone.Controller {
    * To apply accessibilty handling to a tag, isolating the user.
    *
    * @param {Object} $popupElement Element encapsulating the popup.
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   popupOpened($popupElement) {
     this._popup.opened($popupElement);
@@ -730,7 +702,7 @@ class A11y extends Backbone.Controller {
    * Remove the isolation applied with a call to `popupOpened`.
    *
    * @param {Object} [$focusElement] Element to move focus to.
-   * @returns {Object} Returns `Adapt.a11y`
+   * @returns {Object} Chainable
    */
   popupClosed($focusElement) {
     this._popup.closed($focusElement);

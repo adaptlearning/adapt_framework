@@ -214,10 +214,10 @@ class AdaptSingleton extends LockingModel {
     }
     if (nameModelViewOrData instanceof Backbone.View) {
       let foundName;
-      _.find(this.store, (entry, name) => {
+      Object.entries(this.store).forEach(([key, entry]) => {
         if (!entry || !entry.view) return;
         if (!(nameModelViewOrData instanceof entry.view)) return;
-        foundName = name;
+        foundName = key;
         return true;
       });
       return foundName;

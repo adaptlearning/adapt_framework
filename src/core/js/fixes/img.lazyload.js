@@ -9,7 +9,7 @@ import 'core/js/templates';
  * Add a loading="eager" attribute to all template and partial img tags where
  * the loading attribute is missing.
  */
-Adapt.on('app:dataReady', function() {
+Adapt.on('app:dataReady', () => {
   const config = Adapt.config.get('_fixes');
   if (config && config._imgLazyLoad === false) return;
   applyImgLoadingFix();
@@ -18,7 +18,7 @@ Adapt.on('app:dataReady', function() {
 function applyImgLoadingFix() {
   const findImgTag = /<img([^>]*)>/gi;
   const hasLoadingAttr = / loading=/gi;
-  Adapt.on('template:postRender partial:postRender', function(event) {
+  Adapt.on('template:postRender partial:postRender', event => {
     const imgTagsFound = event.value.match(findImgTag);
     if (!imgTagsFound) {
       return;

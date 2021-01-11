@@ -97,16 +97,9 @@ class Device extends Backbone.Controller {
   }
 
   getOperatingSystem() {
-    let os = '';
     const flags = ['windows', 'mac', 'linux', 'windowsphone', 'chromeos', 'android',
       'ios', 'blackberry', 'firefoxos', 'webos', 'bada', 'tizen', 'sailfish'];
-
-    for (let i = 0; i < flags.length; i++) {
-      if (Bowser[flags[i]]) {
-        os = flags[i];
-        break;
-      }
-    }
+    let os = flags.find(name => Bowser[name]) || '';
 
     if (os === '') {
       // Fall back to using navigator.platform in case Bowser can't detect the OS.
@@ -131,17 +124,8 @@ class Device extends Backbone.Controller {
   }
 
   getRenderingEngine() {
-    let engine = '';
     const flags = ['webkit', 'blink', 'gecko', 'msie', 'msedge'];
-
-    for (let i = 0; i < flags.length; i++) {
-      if (Bowser[flags[i]]) {
-        engine = flags[i];
-        break;
-      }
-    }
-
-    return engine;
+    return flags.find(name => Bowser[name]) || '';
   }
 
   onWindowResize() {
@@ -188,18 +172,8 @@ class Device extends Backbone.Controller {
   }
 
   getAppleDeviceType() {
-    let type = '';
-
     const flags = ['iphone', 'ipad', 'ipod'];
-
-    for (let i = 0; i < flags.length; i++) {
-      if (Bowser[flags[i]]) {
-        type = flags[i];
-        break;
-      }
-    }
-
-    return type;
+    return flags.find(name => Bowser[name]) || '';
   }
 
   pixelDensity() {

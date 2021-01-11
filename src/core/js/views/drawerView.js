@@ -40,12 +40,12 @@ class DrawerView extends Backbone.View {
       'drawer:remove': this.remove
     });
 
-    this._onKeyUp = _.bind(this.onKeyUp, this);
+    this.onKeyUp = this.onKeyUp.bind(this);
     this.setupEscapeKey();
   }
 
   setupEscapeKey() {
-    $(window).on('keyup', this._onKeyUp);
+    $(window).on('keyup', this.onKeyUp);
   }
 
   onKeyUp(event) {
@@ -68,9 +68,7 @@ class DrawerView extends Backbone.View {
     const shadowTemplate = Handlebars.templates['shadow'];
     $(shadowTemplate()).prependTo('body');
     // Set defer on post render
-    _.defer(_.bind(function() {
-      this.postRender();
-    }, this));
+    _.defer(this.postRender.bind(this));
     return this;
   }
 
@@ -158,6 +156,14 @@ class DrawerView extends Backbone.View {
       Adapt.trigger('drawer:openedCustomView');
     }
 
+    const complete = () => {
+      this.addShadowEvent();
+      Adapt.trigger('drawer:opened');
+
+      // focus on first tabbable element in drawer
+      Adapt.a11y.focusFirst(this.$el, { defer: true });
+    };
+
     // delay drawer animation until after background fadeout animation is complete
     const direction = {};
     if (this.disableAnimation) {
@@ -166,28 +172,23 @@ class DrawerView extends Backbone.View {
 
       direction[this.drawerDir] = 0;
       this.$el.css(direction);
-      complete.call(this);
+      complete();
     } else {
       // eslint-disable-next-line object-property-newline
-      $('.js-shadow').velocity({ opacity: 1 }, { duration: this.drawerDuration, begin: _.bind(function() {
-        $('.js-shadow').removeClass('u-display-none');
-        $('.js-drawer-holder').scrollTop(0);
-        complete.call(this);
-      }, this) });
+      $('.js-shadow').velocity({ opacity: 1 }, {
+        duration: this.drawerDuration,
+        begin: () => {
+          $('.js-shadow').removeClass('u-display-none');
+          $('.js-drawer-holder').scrollTop(0);
+          complete();
+        }
+      });
 
       const showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
       const easing = (showEasingAnimation) || 'easeOutQuart';
 
       direction[this.drawerDir] = 0;
       this.$el.velocity(direction, this.drawerDuration, easing);
-    }
-
-    function complete() {
-      this.addShadowEvent();
-      Adapt.trigger('drawer:opened');
-
-      // focus on first tabbable element in drawer
-      Adapt.a11y.focusFirst(this.$el, { defer: true });
     }
 
   }
@@ -256,9 +257,7 @@ class DrawerView extends Backbone.View {
   }
 
   addShadowEvent() {
-    $('.js-shadow').one('click touchstart', function() {
-      this.onCloseDrawer();
-    }.bind(this));
+    $('.js-shadow').one('click touchstart', () => this.onCloseDrawer());
   }
 
   removeShadowEvent() {
@@ -267,7 +266,7 @@ class DrawerView extends Backbone.View {
 
   remove() {
     Backbone.View.prototype.remove.apply(this, arguments);
-    $(window).off('keyup', this._onKeyUp);
+    $(window).off('keyup', this.onKeyUp);
 
     Adapt.trigger('drawer:empty');
     this.collection.reset();

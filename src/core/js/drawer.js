@@ -17,10 +17,10 @@ Drawer.triggerCustomView = function(view, hasBackButton) {
 };
 
 Adapt.on({
-  'adapt:start': function() {
+  'adapt:start'() {
     new DrawerView({ collection: DrawerCollection });
   },
-  'app:languageChanged': function() {
+  'app:languageChanged'() {
     Adapt.trigger('drawer:remove');
   }
 });

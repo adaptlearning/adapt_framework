@@ -5,7 +5,10 @@
 export default class Scroll extends Backbone.Controller {
 
   initialize() {
-    _.bindAll(this, '_onTouchStart', '_onTouchEnd', '_onScrollEvent', '_onKeyDown');
+    this._onTouchStart = this._onTouchStart.bind(this);
+    this._onTouchEnd = this._onTouchEnd.bind(this);
+    this._onScrollEvent = this._onScrollEvent.bind(this);
+    this._onKeyDown = this._onKeyDown.bind(this);
     this._scrollDisabledElements = $([]);
     this.$window = $(window);
     this.$body = $('body');

@@ -8,7 +8,7 @@ import Adapt from 'core/js/adapt';
 export default class KeyboardFocusOutline extends Backbone.Controller {
 
   initialize() {
-    _.bindAll(this, '_onKeyDown');
+    this._onKeyDown = this._onKeyDown.bind(this);
     this.$html = $('html');
     this.showOnKeys = {
       9: true, // tab

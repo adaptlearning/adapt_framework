@@ -5,11 +5,8 @@ import NotifyModel from 'core/js/models/notifyModel';
 // Build a collection to store push notifications
 export default class NotifyPushCollection extends Backbone.Collection {
 
-  model() {
-    return NotifyModel;
-  }
-
   initialize() {
+    this.model = NotifyModel;
     this.listenTo(this, 'add', this.onPushAdded);
     this.listenTo(Adapt, 'notify:pushRemoved', this.onRemovePush);
   }

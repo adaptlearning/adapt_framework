@@ -72,11 +72,11 @@ export default class NotifyPushView extends Backbone.View {
 
       this.$el.removeClass('is-active');
 
-      _.delay(function () {
+      _.delay(() => {
         this.model.collection.remove(this.model);
         Adapt.trigger('notify:pushRemoved', this);
         this.remove();
-      }.bind(this), 600);
+      }, 600);
     }
   }
 
@@ -86,17 +86,13 @@ export default class NotifyPushView extends Backbone.View {
   }
 
   updateIndexPosition() {
-    if (!this.hasBeenRemoved) {
-      const models = this.model.collection.models;
-      for (let i = 0, len = models.length; i < len; i++) {
-        const index = i;
-        const model = models[i];
-        if (model.get('_isActive') === true) {
-          model.set('_index', index);
-          this.updatePushPosition();
-        }
-      }
-    }
+    if (this.hasBeenRemoved) return;
+    const models = this.model.collection.models;
+    models.forEach((model, index) => {
+      if (!model.get('_isActive')) return;
+      model.set('_index', index);
+      this.updatePushPosition();
+    });
   }
 
   updatePushPosition() {
