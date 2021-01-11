@@ -104,20 +104,11 @@ class Device extends Backbone.Controller {
     if (os === '') {
       // Fall back to using navigator.platform in case Bowser can't detect the OS.
       const platform = navigator.platform;
-      const platforms = ['Win', 'Mac', 'Linux'];
-      os = 'PlatformUnknown';
-
-      for (let j = 0; j < platforms.length; j++) {
-        if (platform.indexOf(platforms[j]) !== -1) {
-          os = platforms[j].toLowerCase();
-          break;
-        }
-      }
-
+      const match = platform.match(/win|mac|linux/i);
+      if (match) os = match[0];
       // Set consistency with the Bowser flags.
-      if (os === 'win') {
-        os = 'windows';
-      }
+      if (os === 'win') os = 'windows';
+      if (!os) os = 'PlatformUnknown';
     }
 
     return os;
