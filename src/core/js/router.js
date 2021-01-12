@@ -193,6 +193,17 @@ class Router extends Backbone.Router {
       Adapt.log.deprecated(`Using event based menu view instantiation for '${Adapt.getViewName(model)}'`);
       return;
     }
+
+    if (!isMenu) {
+      // checkIfResetOnRevisit on descendant models before render
+      model.getAllDescendantModels().forEach(model => {
+        if (!model.checkIfResetOnRevisit) return;
+        model.checkIfResetOnRevisit();
+      });
+      // wait for completion to settle
+      await Adapt.deferUntilCompletionChecked();
+    }
+
     this.$wrapper.append(new ViewClass({ model }).$el);
 
     if (!isContentObject && !this.isScrolling) {
