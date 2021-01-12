@@ -58,6 +58,8 @@ class A11y extends Backbone.Controller {
   }
 
   initialize() {
+    this.isReadable = this.isReadable.bind(this);
+    this.isTabbable = this.isTabbable.bind(this);
     this.$html = $('html');
     this._htmlCharRegex = /&.*;/g;
     /** @type {Object} */
