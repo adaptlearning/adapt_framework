@@ -1,19 +1,13 @@
-define([
-  'core/js/adapt'
-], function(Adapt) {
+import Adapt from 'core/js/adapt';
 
-  class AdaptCollection extends Backbone.Collection {
+export default class AdaptCollection extends Backbone.Collection {
 
-    initialize(models, options) {
-      this.once('reset', this.loadedData, this);
-    }
-
-    loadedData() {
-      Adapt.trigger('adaptCollection:dataLoaded');
-    }
-
+  initialize(models, options) {
+    this.once('reset', this.loadedData, this);
   }
 
-  return AdaptCollection;
+  loadedData() {
+    Adapt.trigger('adaptCollection:dataLoaded');
+  }
 
-});
+}

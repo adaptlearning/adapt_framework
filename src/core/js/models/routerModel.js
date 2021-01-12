@@ -1,25 +1,19 @@
-define([
-  'core/js/adapt'
-], function(Adapt) {
+import LockingModel from 'core/js/models/lockingModel';
 
-  class RouterModel extends Backbone.Model {
+export default class RouterModel extends LockingModel {
 
-    defaults() {
-      return {
-        _canNavigate: true,
-        _shouldNavigateFocus: true
-      };
-    }
-
-    lockedAttributes() {
-      return {
-        _canNavigate: false,
-        _shouldNavigateFocus: false
-      };
-    }
-
+  defaults() {
+    return {
+      _canNavigate: true,
+      _shouldNavigateFocus: true
+    };
   }
 
-  return RouterModel;
+  lockedAttributes() {
+    return {
+      _canNavigate: false,
+      _shouldNavigateFocus: false
+    };
+  }
 
-});
+}

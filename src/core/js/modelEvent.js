@@ -1,36 +1,25 @@
-define(function() {
+export default class ModelEvent extends Backbone.Controller {
 
-  var ModelEvent = Backbone.Controller.extend({
+  /**
+   * @param {string} type Event name / type
+   * @param {Backbone.Model} target Origin model
+   * @param {*} [value] Any value that should be carried through on the event
+   */
+  initialize(type, target, value) {
+    this.type = type;
+    this.target = target;
+    this.value = value;
+    this.canBubble = true;
+    this.deepPath = [target];
+    this.timeStamp = null;
+  }
 
-    type: null,
-    target: null,
-    value: null,
-    canBubble: true,
-    deepPath: null,
-    timeStamp: null,
+  stopPropagation() {
+    this.canBubble = false;
+  }
 
-    /**
-     * @param {string} type Event name / type
-     * @param {Backbone.Model} target Origin model
-     * @param {*} [value] Any value that should be carried through on the event
-     */
-    initialize: function(type, target, value) {
-      this.type = type;
-      this.target = target;
-      this.value = value;
-      this.deepPath = [target];
-    },
+  addPath(target) {
+    this.deepPath.unshift(target);
+  }
 
-    stopPropagation: function() {
-      this.canBubble = false;
-    },
-
-    addPath: function(target) {
-      this.deepPath.unshift(target);
-    }
-
-  });
-
-  return ModelEvent;
-
-});
+}

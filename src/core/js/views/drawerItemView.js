@@ -1,41 +1,43 @@
-define([
-  'core/js/adapt'
-], function(Adapt) {
+import Adapt from 'core/js/adapt';
 
-  var DrawerItemView = Backbone.View.extend({
+class DrawerItemView extends Backbone.View {
 
-    className: 'drawer__menu drawer__item',
+  className() {
+    return 'drawer__menu drawer__item';
+  }
 
-    attributes: {
+  attributes() {
+    return {
       role: 'list'
-    },
+    };
+  }
 
-    initialize: function() {
-      this.listenTo(Adapt, 'drawer:empty', this.remove);
-      this.render();
-    },
+  initialize() {
+    this.listenTo(Adapt, 'drawer:empty', this.remove);
+    this.render();
+  }
 
-    events: {
+  events() {
+    return {
       'click .drawer__item-btn': 'onDrawerItemClicked'
-    },
+    };
+  }
 
-    render: function() {
-      var data = this.model.toJSON();
-      var template = Handlebars.templates['drawerItem'];
-      $(this.el).html(template(data)).appendTo('.drawer__holder');
-      return this;
-    },
+  render() {
+    const data = this.model.toJSON();
+    const template = Handlebars.templates['drawerItem'];
+    $(this.el).html(template(data)).appendTo('.drawer__holder');
+    return this;
+  }
 
-    onDrawerItemClicked: function(event) {
-      event.preventDefault();
-      var eventCallback = this.model.get('eventCallback');
-      Adapt.trigger(eventCallback);
-    }
+  onDrawerItemClicked(event) {
+    event.preventDefault();
+    const eventCallback = this.model.get('eventCallback');
+    Adapt.trigger(eventCallback);
+  }
 
-  }, {
-    type: 'drawerItem'
-  });
+}
 
-  return DrawerItemView;
+DrawerItemView.type = 'drawerItem';
 
-});
+export default DrawerItemView;

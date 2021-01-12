@@ -1,7 +1,7 @@
 import Wait from 'core/js/wait';
-import 'core/js/models/lockingModel';
+import LockingModel from 'core/js/models/lockingModel';
 
-class AdaptSingleton extends Backbone.Model {
+class AdaptSingleton extends LockingModel {
 
   initialize() {
     this.loadScript = window.__loadScript;
@@ -214,10 +214,10 @@ class AdaptSingleton extends Backbone.Model {
     }
     if (nameModelViewOrData instanceof Backbone.View) {
       let foundName;
-      _.find(this.store, (entry, name) => {
+      Object.entries(this.store).forEach(([key, entry]) => {
         if (!entry || !entry.view) return;
         if (!(nameModelViewOrData instanceof entry.view)) return;
-        foundName = name;
+        foundName = key;
         return true;
       });
       return foundName;

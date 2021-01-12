@@ -1,35 +1,31 @@
-define([
-  'core/js/adapt'
-], function(Adapt) {
+import Adapt from 'core/js/adapt';
 
-  var HeadingView = Backbone.View.extend({
+class HeadingView extends Backbone.View {
 
-    initialize: function() {
-      this.listenTo(Adapt.parentView, 'postRemove', this.remove);
-      this.listenTo(this.model, 'change:_isComplete', this.render);
-      this.render();
-    },
+  initialize() {
+    this.listenTo(Adapt.parentView, 'postRemove', this.remove);
+    this.listenTo(this.model, 'change:_isComplete', this.render);
+    this.render();
+  }
 
-    render: function() {
-      var template = Handlebars.templates[this.constructor.template];
-      var data = this.model.toJSON();
-      var customHeadingType = this.$el.attr('data-a11y-heading-type');
-      if (customHeadingType) data._type = customHeadingType;
-      this.$el.html(template(data));
-      this.checkCompletion();
-    },
+  render() {
+    const template = Handlebars.templates[this.constructor.template];
+    const data = this.model.toJSON();
+    const customHeadingType = this.$el.attr('data-a11y-heading-type');
+    if (customHeadingType) data._type = customHeadingType;
+    this.$el.html(template(data));
+    this.checkCompletion();
+  }
 
-    checkCompletion: function() {
-      var isComplete = this.model.get('_isComplete');
-      this.$el
-        .toggleClass('is-complete', isComplete)
-        .toggleClass('is-incomplete', !isComplete);
-    }
+  checkCompletion() {
+    const isComplete = this.model.get('_isComplete');
+    this.$el
+      .toggleClass('is-complete', isComplete)
+      .toggleClass('is-incomplete', !isComplete);
+  }
 
-  }, {
-    template: 'heading'
-  });
+}
 
-  return HeadingView;
+HeadingView.template = 'heading';
 
-});
+export default HeadingView;
