@@ -3,15 +3,6 @@ import ContentObjectView from 'core/js/views/contentObjectView';
 
 class PageView extends ContentObjectView {
 
-  preRender() {
-    // checkIfResetOnRevisit on descendant models before render
-    this.model.getAllDescendantModels().forEach(model => {
-      if (!model.checkIfResetOnRevisit) return;
-      model.checkIfResetOnRevisit();
-    });
-    super.preRender();
-  }
-
   remove() {
     if (this.$pageLabel) {
       this.$pageLabel.remove();
