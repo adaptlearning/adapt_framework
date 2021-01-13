@@ -195,11 +195,8 @@ class Router extends Backbone.Router {
     }
 
     if (!isMenu) {
-      // checkIfResetOnRevisit on descendant models before render
-      model.getAllDescendantModels().forEach(model => {
-        if (!model.checkIfResetOnRevisit) return;
-        model.checkIfResetOnRevisit();
-      });
+      // checkIfResetOnRevisit where exists on descendant models before render
+      _.invoke(model.getAllDescendantModels(), 'checkIfResetOnRevisit');
       // wait for completion to settle
       await Adapt.deferUntilCompletionChecked();
     }
