@@ -74,15 +74,17 @@ class AdaptSingleton extends LockingModel {
 
   /**
    * wait until there are no outstanding completion checks
-   * @param {Function} callback Function to be called after all completion checks have been completed
+   * @param {Function} [callback] Function to be called after all completion checks have been completed
    */
-  async deferUntilCompletionChecked(callback = () => {}) {
-    if (this.get('_outstandingCompletionChecks') === 0) return callback();
+  async deferUntilCompletionChecked(callback) {
+    if (this.get('_outstandingCompletionChecks') === 0) {
+      return callback && callback();
+    }
     return new Promise(resolve => {
       const checkIfAnyChecksOutstanding = (model, outstandingChecks) => {
         if (outstandingChecks !== 0) return;
         this.off('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
-        callback();
+        callback && callback();
         resolve();
       };
       this.on('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
