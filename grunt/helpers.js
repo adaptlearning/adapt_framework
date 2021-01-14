@@ -234,7 +234,7 @@ module.exports = function(grunt) {
         menu: grunt.option('menu') || exports.defaults.menu,
         languages: languageFolders || exports.defaults.languages,
         scriptSafe: exports.defaults.scriptSafe,
-        strict: true
+        strictMode: false
       };
 
       if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
@@ -246,7 +246,7 @@ module.exports = function(grunt) {
           return item.trim();
         });
       }
-      if (buildConfig.hasOwnProperty('strict')) data.strict = buildConfig.strict;
+      if (buildConfig.hasOwnProperty('strictMode')) data.strictMode = buildConfig.strictMode;
 
       return data;
     },

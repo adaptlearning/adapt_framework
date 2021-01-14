@@ -128,9 +128,9 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('javascript', 'Compile JavaScript files', async function() {
     const Helpers = require('../helpers')(grunt);
     const buildConfig = Helpers.generateConfigData();
-    const isStrict = buildConfig.strict;
+    const isStrictMode = buildConfig.strictMode;
     grunt.log.ok(`Cache disabled (--disable-cache): ${isDisableCache}`);
-    grunt.log.ok(`Strict (config.json:build.strict): ${isStrict}`);
+    grunt.log.ok(`Strict mode (config.json:build.strictMode): ${isStrictMode}`);
     const done = this.async();
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
@@ -347,7 +347,7 @@ window.__AMD = function(id, value) {
       amd: {
         define: 'require'
       },
-      strict: isStrict
+      strict: isStrictMode
     };
 
     try {
