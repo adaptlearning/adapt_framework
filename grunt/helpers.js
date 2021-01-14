@@ -213,7 +213,7 @@ module.exports = function(grunt) {
       var configPath = path.join(path.resolve(root, configDir), 'course', 'config.' + jsonext);
 
       try {
-        var buildConfig = grunt.file.readJSON(configPath).build;
+        var buildConfig = grunt.file.readJSON(configPath).build || {};
       } catch (error) {
         grunt.log.error(error);
         process.exit();
@@ -233,20 +233,20 @@ module.exports = function(grunt) {
         theme: grunt.option('theme') || exports.defaults.theme,
         menu: grunt.option('menu') || exports.defaults.menu,
         languages: languageFolders || exports.defaults.languages,
-        scriptSafe: exports.defaults.scriptSafe
+        scriptSafe: exports.defaults.scriptSafe,
+        strictMode: false
       };
 
-      if (buildConfig) {
-        if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
-        if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
-        if (buildConfig.excludes) data.excludes = buildConfig.excludes;
-        if (buildConfig.productionExcludes) data.productionExcludes = buildConfig.productionExcludes;
-        if (buildConfig.scriptSafe) {
-          data.scriptSafe = buildConfig.scriptSafe.split(',').map(function(item) {
-            return item.trim();
-          });
-        }
+      if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
+      if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
+      if (buildConfig.excludes) data.excludes = buildConfig.excludes;
+      if (buildConfig.productionExcludes) data.productionExcludes = buildConfig.productionExcludes;
+      if (buildConfig.scriptSafe) {
+        data.scriptSafe = buildConfig.scriptSafe.split(',').map(function(item) {
+          return item.trim();
+        });
       }
+      if (buildConfig.hasOwnProperty('strictMode')) data.strictMode = buildConfig.strictMode;
 
       return data;
     },
