@@ -72,5 +72,6 @@
         "_limitToSelector": ""
     },
     "build": {
+        "strictMode": true
     }
 }

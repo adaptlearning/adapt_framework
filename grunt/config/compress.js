@@ -3,7 +3,7 @@ module.exports = function(grunt, options) {
     options: {
       images: {
         src: [
-          '<%= outputdir %>**/*.{jpg,jpeg,png,svg}'
+          '<%= configdir %>**/*.{jpg,jpeg,png,svg}'
         ]
       }
     }

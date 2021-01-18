@@ -1,181 +1,177 @@
-define([
-  'core/js/adapt',
-  'core/js/enums/buttonStateEnum'
-], function(Adapt, BUTTON_STATE) {
+import Adapt from 'core/js/adapt';
+import BUTTON_STATE from 'core/js/enums/buttonStateEnum';
 
-  // convert BUTTON_STATE to property name
-  var textPropertyName = {
-    'SUBMIT': 'submit',
-    'CORRECT': 'correct',
-    'INCORRECT': 'incorrect',
-    'SHOW_CORRECT_ANSWER': 'showCorrectAnswer',
-    'HIDE_CORRECT_ANSWER': 'hideCorrectAnswer',
-    'SHOW_FEEDBACK': 'showFeedback',
-    'RESET': 'reset'
-  };
+// convert BUTTON_STATE to property name
+const textPropertyName = {
+  'SUBMIT': 'submit',
+  'CORRECT': 'correct',
+  'INCORRECT': 'incorrect',
+  'SHOW_CORRECT_ANSWER': 'showCorrectAnswer',
+  'HIDE_CORRECT_ANSWER': 'hideCorrectAnswer',
+  'SHOW_FEEDBACK': 'showFeedback',
+  'RESET': 'reset'
+};
 
-  var ButtonsView = Backbone.View.extend({
+export default class ButtonsView extends Backbone.View {
 
-    initialize: function(options) {
-      this.parent = options.parent;
-      this.listenTo(Adapt.parentView, 'postRemove', this.remove);
-      this.listenTo(this.model, {
-        'change:_buttonState': this.onButtonStateChanged,
-        'change:feedbackMessage': this.onFeedbackMessageChanged,
-        'change:_attemptsLeft': this.onAttemptsChanged,
-        'change:_canSubmit': this.onCanSubmitChange
-      });
-      this.render();
-    },
+  initialize(options) {
+    this.parent = options.parent;
+    this.listenTo(Adapt.parentView, 'postRemove', this.remove);
+    this.listenTo(this.model, {
+      'change:_buttonState': this.onButtonStateChanged,
+      'change:feedbackMessage': this.onFeedbackMessageChanged,
+      'change:_attemptsLeft': this.onAttemptsChanged,
+      'change:_canSubmit': this.onCanSubmitChange
+    });
+    this.render();
+  }
 
-    events: {
+  events() {
+    return {
       'click .js-btn-action': 'onActionClicked',
       'click .js-btn-feedback': 'onFeedbackClicked'
-    },
+    };
+  }
 
-    render: function() {
-      var data = this.model.toJSON();
-      var template = Handlebars.templates['buttons'];
-      _.defer(_.bind(function() {
-        this.postRender();
-        Adapt.trigger('buttonsView:postRender', this);
-      }, this));
-      this.$el.html(template(data));
-    },
+  render() {
+    const data = this.model.toJSON();
+    const template = Handlebars.templates['buttons'];
+    _.defer(() => {
+      this.postRender();
+      Adapt.trigger('buttonsView:postRender', this);
+    });
+    this.$el.html(template(data));
+  }
 
-    postRender: function() {
-      this.refresh();
-    },
+  postRender() {
+    this.refresh();
+  }
 
-    checkResetSubmittedState: function() {
-      var isSubmitted = this.model.get('_isSubmitted');
+  checkResetSubmittedState() {
+    const isSubmitted = this.model.get('_isSubmitted');
 
-      if (!isSubmitted) {
-        this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
-        this.$el.removeClass('is-submitted');
-        this.model.set('feedbackMessage', undefined);
-        Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
-      } else {
-        this.$el.addClass('is-submitted');
-      }
-    },
+    if (!isSubmitted) {
+      this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
+      this.$el.removeClass('is-submitted');
+      this.model.set('feedbackMessage', undefined);
+      Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
+    } else {
+      this.$el.addClass('is-submitted');
+    }
+  }
 
-    onActionClicked: function() {
-      var buttonState = this.model.get('_buttonState');
-      this.trigger('buttons:stateUpdate', BUTTON_STATE(buttonState));
-      this.checkResetSubmittedState();
-    },
+  onActionClicked() {
+    const buttonState = this.model.get('_buttonState');
+    this.trigger('buttons:stateUpdate', BUTTON_STATE(buttonState));
+    this.checkResetSubmittedState();
+  }
 
-    onFeedbackClicked: function() {
-      this.trigger('buttons:stateUpdate', BUTTON_STATE.SHOW_FEEDBACK);
-    },
+  onFeedbackClicked() {
+    this.trigger('buttons:stateUpdate', BUTTON_STATE.SHOW_FEEDBACK);
+  }
 
-    onFeedbackMessageChanged: function(model, changedAttribute) {
-      if (changedAttribute && this.model.get('_canShowFeedback')) {
-        // enable feedback button
-        Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), true);
-      } else {
-        // disable feedback button
-        Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
-      }
-    },
+  onFeedbackMessageChanged(model, changedAttribute) {
+    if (changedAttribute && this.model.get('_canShowFeedback')) {
+      // enable feedback button
+      Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), true);
+    } else {
+      // disable feedback button
+      Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
+    }
+  }
 
-    onCanSubmitChange: function() {
-      this.onButtonStateChanged(this.model, this.model.get('_buttonState'));
-    },
+  onCanSubmitChange() {
+    this.onButtonStateChanged(this.model, this.model.get('_buttonState'));
+  }
 
-    onButtonStateChanged: function(model, changedAttribute) {
+  onButtonStateChanged(model, changedAttribute) {
 
-      this.updateAttemptsCount();
+    this.updateAttemptsCount();
 
-      // Use 'correct' instead of 'complete' to signify button state
-      var $buttonsAction = this.$('.js-btn-action');
-      var buttonState = BUTTON_STATE(changedAttribute);
-      if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
-        // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
+    // Use 'correct' instead of 'complete' to signify button state
+    const $buttonsAction = this.$('.js-btn-action');
+    const buttonState = BUTTON_STATE(changedAttribute);
+    if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
+      // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
 
-        Adapt.a11y.toggleEnabled($buttonsAction, false);
+      Adapt.a11y.toggleEnabled($buttonsAction, false);
 
-      } else {
+    } else {
 
-        var propertyName = textPropertyName[buttonState.asString];
-        var ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
-        var buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
+      const propertyName = textPropertyName[buttonState.asString];
+      const ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
+      const buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
 
-        // Enable the button, make accessible and update aria labels and text
+      // Enable the button, make accessible and update aria labels and text
 
-        Adapt.a11y.toggleEnabled($buttonsAction, this.model.get('_canSubmit'));
-        $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
+      Adapt.a11y.toggleEnabled($buttonsAction, this.model.get('_canSubmit'));
+      $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
 
-        // Make model answer button inaccessible (but still enabled) for visual users due to
-        // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-        switch (changedAttribute) {
-          case BUTTON_STATE.SHOW_CORRECT_ANSWER:
-          case BUTTON_STATE.HIDE_CORRECT_ANSWER:
+      // Make model answer button inaccessible (but still enabled) for visual users due to
+      // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
+      switch (changedAttribute) {
+        case BUTTON_STATE.SHOW_CORRECT_ANSWER:
+        case BUTTON_STATE.HIDE_CORRECT_ANSWER:
 
-            Adapt.a11y.toggleAccessible($buttonsAction, false);
-        }
-
-      }
-    },
-
-    checkFeedbackState: function() {
-      var canShowFeedback = this.model.get('_canShowFeedback');
-
-      this.$('.js-btn-action').toggleClass('is-full-width', !canShowFeedback);
-      this.$('.js-btn-feedback').toggleClass('u-display-none', !canShowFeedback);
-      this.$('.js-btn-marking').toggleClass('is-full-width u-display-none', !canShowFeedback);
-    },
-
-    updateAttemptsCount: function(model, changedAttribute) {
-      var isInteractionComplete = this.model.get('_isInteractionComplete');
-      var attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
-      var shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
-      var attemptsString;
-
-      this.checkResetSubmittedState();
-
-      if (!isInteractionComplete && attemptsLeft !== 0) {
-        attemptsString = attemptsLeft + ' ';
-        if (attemptsLeft > 1) {
-          attemptsString += this.model.get('_buttons').remainingAttemptsText;
-        } else if (attemptsLeft === 1) {
-          attemptsString += this.model.get('_buttons').remainingAttemptText;
-        }
-
-      } else {
-        this.$('.js-display-attempts').addClass('u-visibility-hidden');
-        this.showMarking();
+          Adapt.a11y.toggleAccessible($buttonsAction, false);
       }
 
-      if (shouldDisplayAttempts) {
-        this.$('.js-insert-attempts-string').html(attemptsString);
+    }
+  }
+
+  checkFeedbackState() {
+    const canShowFeedback = this.model.get('_canShowFeedback');
+
+    this.$('.js-btn-action').toggleClass('is-full-width', !canShowFeedback);
+    this.$('.js-btn-feedback').toggleClass('u-display-none', !canShowFeedback);
+    this.$('.js-btn-marking').toggleClass('is-full-width u-display-none', !canShowFeedback);
+  }
+
+  updateAttemptsCount(model, changedAttribute) {
+    const isInteractionComplete = this.model.get('_isInteractionComplete');
+    const attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
+    const shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
+    let attemptsString;
+
+    this.checkResetSubmittedState();
+
+    if (!isInteractionComplete && attemptsLeft !== 0) {
+      attemptsString = attemptsLeft + ' ';
+      if (attemptsLeft > 1) {
+        attemptsString += this.model.get('_buttons').remainingAttemptsText;
+      } else if (attemptsLeft === 1) {
+        attemptsString += this.model.get('_buttons').remainingAttemptText;
       }
 
-    },
-
-    showMarking: function() {
-      if (!this.model.shouldShowMarking) return;
-
-      var isCorrect = this.model.get('_isCorrect');
-      var ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
-
-      this.$('.js-btn-marking')
-        .removeClass('u-display-none')
-        .addClass(isCorrect ? 'is-correct' : 'is-incorrect')
-        .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
-    },
-
-    refresh: function() {
-      this.updateAttemptsCount();
-      this.checkResetSubmittedState();
-      this.checkFeedbackState();
-      this.onButtonStateChanged(null, this.model.get('_buttonState'));
-      this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
+    } else {
+      this.$('.js-display-attempts').addClass('u-visibility-hidden');
+      this.showMarking();
     }
 
-  });
+    if (shouldDisplayAttempts) {
+      this.$('.js-insert-attempts-string').html(attemptsString);
+    }
 
-  return ButtonsView;
+  }
 
-});
+  showMarking() {
+    if (!this.model.shouldShowMarking) return;
+
+    const isCorrect = this.model.get('_isCorrect');
+    const ariaLabels = Adapt.course.get('_globals')._accessibility._ariaLabels;
+
+    this.$('.js-btn-marking')
+      .removeClass('u-display-none')
+      .addClass(isCorrect ? 'is-correct' : 'is-incorrect')
+      .attr('aria-label', isCorrect ? ariaLabels.answeredCorrectly : ariaLabels.answeredIncorrectly);
+  }
+
+  refresh() {
+    this.updateAttemptsCount();
+    this.checkResetSubmittedState();
+    this.checkFeedbackState();
+    this.onButtonStateChanged(null, this.model.get('_buttonState'));
+    this.onFeedbackMessageChanged(null, this.model.get('feedbackMessage'));
+  }
+
+}

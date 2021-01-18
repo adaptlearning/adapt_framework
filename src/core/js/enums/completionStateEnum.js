@@ -1,12 +1,8 @@
-define(function() {
+const COMPLETION_STATE = ENUM([
+  'INCOMPLETE',
+  'COMPLETED',
+  'PASSED',
+  'FAILED'
+]);
 
-  var COMPLETION_STATE = ENUM([
-    'INCOMPLETE',
-    'COMPLETED',
-    'PASSED',
-    'FAILED'
-  ]);
-
-  return COMPLETION_STATE;
-
-});
+export default COMPLETION_STATE;

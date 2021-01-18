@@ -1,13 +1,13 @@
-define(function() {
+import LockingModel from 'core/js/models/lockingModel';
 
-  var NotifyModel = Backbone.Model.extend({
-    defaults: {
+export default class NotifyModel extends LockingModel {
+
+  defaults() {
+    return {
       _isActive: false,
       _showIcon: false,
       _timeout: 3000
-    }
-  });
+    };
+  }
 
-  return NotifyModel;
-
-});
+}

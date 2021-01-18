@@ -1,32 +1,28 @@
-define([
-  'core/js/adapt',
-  'core/js/views/drawerView'
-], function(Adapt, DrawerView) {
+import Adapt from 'core/js/adapt';
+import DrawerView from 'core/js/views/drawerView';
 
-  var DrawerCollection = new Backbone.Collection(null, { comparator: 'drawerOrder' });
-  var Drawer = {};
+const DrawerCollection = new Backbone.Collection(null, { comparator: 'drawerOrder' });
+const Drawer = {};
 
-  Drawer.addItem = function(drawerObject, eventCallback) {
-    drawerObject.eventCallback = eventCallback;
-    DrawerCollection.add(drawerObject);
-  };
+Drawer.addItem = function(drawerObject, eventCallback) {
+  drawerObject.eventCallback = eventCallback;
+  DrawerCollection.add(drawerObject);
+};
 
-  Drawer.triggerCustomView = function(view, hasBackButton) {
-    if (hasBackButton !== false) {
-      hasBackButton = true;
-    }
-    Adapt.trigger('drawer:triggerCustomView', view, hasBackButton);
-  };
+Drawer.triggerCustomView = function(view, hasBackButton) {
+  if (hasBackButton !== false) {
+    hasBackButton = true;
+  }
+  Adapt.trigger('drawer:triggerCustomView', view, hasBackButton);
+};
 
-  Adapt.on({
-    'adapt:start': function() {
-      new DrawerView({ collection: DrawerCollection });
-    },
-    'app:languageChanged': function() {
-      Adapt.trigger('drawer:remove');
-    }
-  });
-
-  Adapt.drawer = Drawer;
-
+Adapt.on({
+  'adapt:start'() {
+    new DrawerView({ collection: DrawerCollection });
+  },
+  'app:languageChanged'() {
+    Adapt.trigger('drawer:remove');
+  }
 });
+
+export default (Adapt.drawer = Drawer);

@@ -1,7 +1,7 @@
 import Wait from 'core/js/wait';
-import 'core/js/models/lockingModel';
+import LockingModel from 'core/js/models/lockingModel';
 
-class AdaptSingleton extends Backbone.Model {
+class AdaptSingleton extends LockingModel {
 
   initialize() {
     this.loadScript = window.__loadScript;
@@ -74,19 +74,19 @@ class AdaptSingleton extends Backbone.Model {
 
   /**
    * wait until there are no outstanding completion checks
-   * @param {Function} callback Function to be called after all completion checks have been completed
+   * @param {Function} [callback] Function to be called after all completion checks have been completed
    */
-  deferUntilCompletionChecked(callback) {
+  async deferUntilCompletionChecked(callback = () => {}) {
     if (this.get('_outstandingCompletionChecks') === 0) return callback();
-
-    const checkIfAnyChecksOutstanding = (model, outstandingChecks) => {
-      if (outstandingChecks !== 0) return;
-      this.off('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
-      callback();
-    };
-
-    this.on('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
-
+    return new Promise(resolve => {
+      const checkIfAnyChecksOutstanding = (model, outstandingChecks) => {
+        if (outstandingChecks !== 0) return;
+        this.off('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
+        callback();
+        resolve();
+      };
+      this.on('change:_outstandingCompletionChecks', checkIfAnyChecksOutstanding);
+    });
   }
 
   setupWait() {
@@ -214,10 +214,10 @@ class AdaptSingleton extends Backbone.Model {
     }
     if (nameModelViewOrData instanceof Backbone.View) {
       let foundName;
-      _.find(this.store, (entry, name) => {
+      Object.entries(this.store).forEach(([key, entry]) => {
         if (!entry || !entry.view) return;
         if (!(nameModelViewOrData instanceof entry.view)) return;
-        foundName = name;
+        foundName = key;
         return true;
       });
       return foundName;

@@ -6,10 +6,19 @@ module.exports = function(grunt) {
     const globs = require('globs');
     async function compressImages() {
       grunt.log.ok(`Compressing images...`);
-      const imagemin = require('imagemin');
-      const imageminJpegtran = require('imagemin-jpegtran');
-      const imageminPngquant = require('imagemin-pngquant');
-      const imageminSvgo = require('imagemin-svgo');
+      let imagemin;
+      let imageminJpegtran;
+      let imageminPngquant;
+      let imageminSvgo;
+      try {
+        imagemin = require('imagemin');
+        imageminJpegtran = require('imagemin-jpegtran');
+        imageminPngquant = require('imagemin-pngquant');
+        imageminSvgo = require('imagemin-svgo');
+      } catch (err) {
+        grunt.log.error(`Optional imagemin dependencies were not installed.`);
+        return;
+      }
       const sourceFiles = globs.sync(options.images.src);
       const destFiles = await imagemin(sourceFiles, {
         plugins: [
