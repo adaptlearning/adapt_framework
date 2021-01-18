@@ -1,5 +1,10 @@
 import Adapt from 'core/js/adapt';
-import { compile, classes, helper, html } from 'core/js/reactHelpers';
+import {
+  compile,
+  classes,
+  helper,
+  html
+} from 'core/js/reactHelpers';
 
 export default function(model, view) {
   const data = model.toJSON();
