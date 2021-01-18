@@ -1,3 +1,9 @@
+## [5.10.0] - 2021-01-18
+### Changed
+* Converted core code from AMD-style module defintions to ES6 modules and (where appropriate) classes ([#2999](https://github.com/adaptlearning/adapt_framework/issues/2999))
+### Fixed
+* Reset on revisit wasn't able to complete before page render ([#3014](https://github.com/adaptlearning/adapt_framework/issues/3014))
+* Javascript was being run in [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) with no way to turn that off should it cause issues with 3rd party plugins ([#3017](https://github.com/adaptlearning/adapt_framework/issues/3017))
 ## [5.9.0] - 2021-01-07
 ### Changed
 * The `grunt compress` command now operates on images in `src/course/` by default ([#3004](https://github.com/adaptlearning/adapt_framework/issues/3004))
@@ -968,6 +974,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.10.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.9.0...v5.10.0
 [5.9.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.1...v5.9.0
 [5.8.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.0...v5.8.1
 [5.8.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.7.1...v5.8.0
