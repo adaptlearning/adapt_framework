@@ -1,5 +1,5 @@
 module.exports = function(grunt) {
-  grunt.registerTask('compress', 'Compress output folder assets', async function(mode) {
+  grunt.registerTask('compress', 'Optimise course graphics', async function(mode) {
     const done = this.async();
     const options = this.options({});
     const fs = require('fs-extra');
