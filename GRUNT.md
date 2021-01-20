@@ -22,6 +22,13 @@ The same as `build`, with a few notable *developer-friendly* differences:
 -Includes [source maps](http://blog.teamtreehouse.com/introduction-source-maps) for both JavaScript and Less.  
 -Runs the `watch` task, which monitors the source code for any file changes and updates the build when changes occur.  
 
+**compress**  
+`grunt compress [--outputdir=xx]`  
+Optimises the course's images for web delivery using [imagemin](https://www.npmjs.com/package/imagemin). Supported image types are JPEG, PNG & SVG. Operates on images found in */src/course* by default, use the `--outputdir` switch to change this e.g.:
+```console
+grunt compress --outputdir=build
+```
+
 **diff**  
 `grunt diff [--languages=xx,yy] [--menu=xx] [--theme=xx] [--sourcedir=xx] [--outputdir=xx] [--jsonext=xxx]`   
 Similar to `dev`, except that the `watch` task is not run and handlebars, JavaScript and Less files will only be recompiled if they have been changed - making this task very quick to run.
@@ -73,8 +80,8 @@ Imports translated text files and creates a new language version of the course.
 
 **Additional Build Notes**  
 By default, all installed plug-ins are included in the build process. Sometimes the developer may install plug-ins that are used only during development or that are not yet being used by the content. Doing so bloats the build needlessly. This can be avoided by adding a `build` object to *course/config.json*. It allows the developer to specify explicitly which plug-ins will be included in the build or excluded from the build. The `build` object contains values for one of two arrays: `excludes` or `includes`.  
-Example:  
-```json  
+Example:
+```json
 "build": {
     "excludes": [
         "adapt-inspector",
