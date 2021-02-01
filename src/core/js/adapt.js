@@ -346,6 +346,15 @@ class AdaptSingleton extends LockingModel {
   }
 
   /**
+   * Returns the model represented by the trackingPosition.
+   * @param {Array<Number, Number>} trackingPosition Represents the relative location of a model to a _trackingId
+   * @returns {Backbone.Model}
+   */
+  findByTrackingPosition(trackingPosition) {
+    return this.data.findByTrackingPosition(trackingPosition);
+  }
+
+  /**
    * Relative strings describe the number and type of hops in the model hierarchy
    * @param {string} relativeString "@component +1" means to move one component forward from the current model
    * This function would return the following:

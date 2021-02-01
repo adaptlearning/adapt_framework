@@ -202,10 +202,33 @@ class Data extends AdaptCollection {
   findById(id) {
     const model = this._byAdaptID[id];
     if (!model) {
-      console.warn(`Adapt.findById() unable to find collection type for id: ${id}`);
+      console.warn(`Adapt.findById() unable to find id: ${id}`);
       return;
     }
     return model;
+  }
+
+  /**
+   * Returns the model represented by the trackingPosition.
+   * @param {Array<Number, Number>} trackingPosition Represents the relative location of a model to a _trackingId
+   * @returns {Backbone.Model}
+   */
+  findByTrackingPosition(trackingPosition) {
+    const [ trackingId, indexInTrackingIdDescendants ] = trackingPosition;
+    const trackingIdModel = this.find(model => model.get('_trackingId') === trackingId);
+    if (!trackingIdModel) {
+      console.warn(`Adapt.findByTrackingPosition() unable to find trackingPosition: ${trackingPosition}`);
+      return;
+    }
+    if (indexInTrackingIdDescendants >= 0) {
+      // Model is either the trackingId model or a descendant
+      const trackingIdDescendants = [trackingIdModel].concat(trackingIdModel.getAllDescendantModels(true));
+      return trackingIdDescendants[indexInTrackingIdDescendants];
+    }
+    // Model is an ancestor of the trackingId model
+    const trackingIdAncestors = trackingIdModel.getAncestorModels();
+    const ancestorDistance = Math.abs(indexInTrackingIdDescendants) - 1;
+    return trackingIdAncestors[ancestorDistance];
   }
 
 }

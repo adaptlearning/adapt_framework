@@ -48,6 +48,27 @@ export default class AdaptModel extends LockingModel {
   }
 
   /**
+   * Fetch an array representing the relative location of the model to the nearest _trackingId
+   * @returns {Array<Number, Number>}
+   */
+  get trackingPosition() {
+    const firstDescendant = this.getAllDescendantModels(false).concat([this])[0];
+    const nearestTrackingIdModel = [firstDescendant].concat(firstDescendant.getAncestorModels()).find(model => model.has('_trackingId'));
+    if (!nearestTrackingIdModel) return;
+    const trackingId = nearestTrackingIdModel.get('_trackingId');
+    const trackingIdDescendants = [nearestTrackingIdModel].concat(nearestTrackingIdModel.getAllDescendantModels(true));
+    const indexInTrackingIdDescendants = trackingIdDescendants.findIndex(descendant => descendant === this);
+    if (indexInTrackingIdDescendants >= 0) {
+      // Is either the nearestTrackingIdModel (0) or one of its flattened descendants (>0)
+      return [ trackingId, indexInTrackingIdDescendants ];
+    }
+    // Is an ancestor of the nearestTrackingIdModel
+    const trackingIdAncestors = nearestTrackingIdModel.getAncestorModels();
+    const ancestorDistance = trackingIdAncestors.findIndex(ancestor => ancestor === this);
+    return [ trackingId, -(ancestorDistance + 1) ];
+  }
+
+  /**
    * The AAT always sets the value of `_isResetOnRevisit` to a String
    * which is fine for the 'soft' and 'hard' values - but 'false' needs
    * converting to Boolean - see #2825
