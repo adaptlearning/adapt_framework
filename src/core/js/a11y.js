@@ -583,15 +583,15 @@ class A11y extends Backbone.Controller {
       return this;
     }
     function perform() {
+      if ($element.attr('tabindex') === undefined) {
+        $element.attr({
+          'tabindex': '-1',
+          'data-a11y-force-focus': 'true'
+        });
+      }
       if (options.preventScroll) {
         const y = $(window).scrollTop();
         try {
-          if ($element.attr('tabindex') === undefined) {
-            $element.attr({
-              'tabindex': '-1',
-              'data-a11y-force-focus': 'true'
-            });
-          }
           $element[0].focus({
             preventScroll: true
           });
