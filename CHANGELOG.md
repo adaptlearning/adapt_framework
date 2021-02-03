@@ -1,3 +1,6 @@
+## [5.10.1] - 2021-02-03
+### Fixed
+* Accessibility focus bug ([#3022](https://github.com/adaptlearning/adapt_framework/issues/3022))
 ## [5.10.0] - 2021-01-18
 ### Changed
 * Converted core code from AMD-style module defintions to ES6 modules and (where appropriate) classes ([#2999](https://github.com/adaptlearning/adapt_framework/issues/2999))
@@ -974,6 +977,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.10.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.0...v5.10.1
 [5.10.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.9.0...v5.10.0
 [5.9.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.1...v5.9.0
 [5.8.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.0...v5.8.1
