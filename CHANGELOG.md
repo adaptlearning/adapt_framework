@@ -1,16 +1,17 @@
 ## [5.10.1] - 2021-02-03
 ### Fixed
 * Accessibility focus bug ([#3022](https://github.com/adaptlearning/adapt_framework/issues/3022))
+
 ## [5.10.0] - 2021-01-18
 ### Changed
 * Converted core code from AMD-style module defintions to ES6 modules and (where appropriate) classes ([#2999](https://github.com/adaptlearning/adapt_framework/issues/2999))
 * Javascript was being run in [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) with no way to turn that off should it cause issues with 3rd party plugins. For AAT courses 'strict mode' is no longer enabled; for Framework courses it is now enabled only when `build.strictMode:true` in *config.json*. ([#3017](https://github.com/adaptlearning/adapt_framework/issues/3017))
 ### Fixed
 * Reset on revisit wasn't able to complete before page render ([#3014](https://github.com/adaptlearning/adapt_framework/issues/3014))
+
 ## [5.9.0] - 2021-01-07
 ### Changed
 * The `grunt compress` command now operates on images in `src/course/` by default ([#3004](https://github.com/adaptlearning/adapt_framework/issues/3004))
-
 ### Fixed
 * Disabled buttons were still clickable if accessibility support had been switched off ([#3007](https://github.com/adaptlearning/adapt_framework/issues/3007))
 * Failure to install dependencies of `imagemin-jpegtran` / `imagemin-pngquant` on some platforms was causing the entire `npm install` process to halt ([#3002](https://github.com/adaptlearning/adapt_framework/issues/3002))
