@@ -25,7 +25,9 @@ export default class NotifyView extends Backbone.View {
   }
 
   initialize() {
-    _.bindAll(this, 'resetNotifySize', 'onKeyUp');
+    // adding close/cancelNotify here makes them available at Adapt.notify.stack[n] making it possible
+    // for the main Notify class to call those functions when it needs to close/cancel a Notify popup
+    _.bindAll(this, 'resetNotifySize', 'onKeyUp', 'closeNotify', 'cancelNotify');
     this.disableAnimation = Adapt.config.get('_disableAnimation') || false;
     this.isOpen = false;
     this.hasOpened = false;
@@ -37,8 +39,6 @@ export default class NotifyView extends Backbone.View {
     this.listenTo(Adapt, {
       'remove page:scrollTo': this.closeNotify,
       'notify:resize': this.resetNotifySize,
-      'notify:cancel': this.cancelNotify,
-      'notify:close': this.closeNotify,
       'device:resize': this.resetNotifySize
     });
     this.setupEscapeKey();
@@ -192,10 +192,8 @@ export default class NotifyView extends Backbone.View {
   }
 
   closeNotify() {
-    // Make sure that only the top most notify is closed
-    const stackItem = Adapt.notify.stack[Adapt.notify.stack.length - 1];
-    if (this !== stackItem) return;
-    Adapt.notify.stack.pop();
+    Adapt.notify.removeFromStack(this);
+
     // Prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
     if (!this.isOpen) return;
     this.isOpen = false;

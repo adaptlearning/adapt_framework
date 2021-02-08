@@ -12,7 +12,9 @@ class Notify extends Backbone.Controller {
       'notify:popup': this._deprecated.bind(this, 'popup'),
       'notify:alert': this._deprecated.bind(this, 'alert'),
       'notify:prompt': this._deprecated.bind(this, 'prompt'),
-      'notify:push': this._deprecated.bind(this, 'push')
+      'notify:push': this._deprecated.bind(this, 'push'),
+      'notify:cancel': this.cancelTopNotify,
+      'notify:close': this.closeTopNotify
     });
   }
 
@@ -20,9 +22,27 @@ class Notify extends Backbone.Controller {
     return this._stack;
   }
 
+  get stackTop() {
+    return this._stack[this._stack.length - 1];
+  }
+
   _deprecated(type, notifyObject) {
     Adapt.log.deprecated(`NOTIFY DEPRECATED: Adapt.trigger('notify:${type}', notifyObject); is no longer supported, please use Adapt.notify.${type}(notifyObject);`);
     return this.create(notifyObject, { _type: type });
+  }
+
+  removeFromStack(notifyView) {
+    const stackIndex = this.stack.find(_.matcher({ cid: notifyView.cid }));
+    if (!stackIndex) return;
+    this.stack.splice(stackIndex, 1);
+  }
+
+  cancelTopNotify() {
+    this.stackTop.cancelNotify();
+  }
+
+  closeTopNotify() {
+    this.stackTop.closeNotify();
   }
 
   create(notifyObject, defaults) {
