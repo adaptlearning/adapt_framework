@@ -32,9 +32,15 @@ class Notify extends Backbone.Controller {
   }
 
   removeFromStack(notifyView) {
-    const stackIndex = this.stack.find(_.matcher({ cid: notifyView.cid }));
-    if (!stackIndex) return;
+    const stackIndex = this.stack.findIndex(stackItem => stackItem === notifyView);
+    if (stackIndex === -1) return;
+
     this.stack.splice(stackIndex, 1);
+
+    if (this.stack.length > 0) return;
+
+    Adapt.a11y.scrollEnable('body');
+    $('html').removeClass('notify');
   }
 
   cancelTopNotify() {

@@ -192,13 +192,10 @@ export default class NotifyView extends Backbone.View {
   }
 
   closeNotify() {
-    Adapt.notify.removeFromStack(this);
-
     // Prevent from being invoked multiple times - see https://github.com/adaptlearning/adapt_framework/issues/1659
     if (!this.isOpen) return;
     this.isOpen = false;
-    // If closeNotify is called before showNotify has finished then wait
-    // until it's open.
+    // If closeNotify is called before showNotify has finished then wait until it's open.
     if (this.hasOpened) {
       this.onCloseReady();
       return;
@@ -214,30 +211,33 @@ export default class NotifyView extends Backbone.View {
       this.$('.notify__popup').css('visibility', 'hidden');
       this.$el.css('visibility', 'hidden');
       this.remove();
-    } else {
-      this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 400,
-        complete: () => {
-          this.$('.notify__popup').css('visibility', 'hidden');
-        }
-      });
-      this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 400,
-        complete: () => {
-          this.$el.css('visibility', 'hidden');
-          this.remove();
-        }
-      });
+      return;
     }
-    Adapt.a11y.scrollEnable('body');
-    $('html').removeClass('notify');
-    // Return focus to previous active element
-    Adapt.a11y.popupClosed(this.$previousActiveElement);
-    // Return reference to the notify view
-    Adapt.trigger('notify:closed', this);
+
+    this.$('.notify__popup').velocity({ opacity: 0 }, { duration: 400,
+      complete: () => {
+        this.$('.notify__popup').css('visibility', 'hidden');
+      }
+    });
+    this.$('.notify__shadow').velocity({ opacity: 0 }, { duration: 400,
+      complete: () => {
+        this.$el.css('visibility', 'hidden');
+        this.remove();
+      }
+    });
   }
 
   remove(...args) {
     this.removeSubView();
+
     $(window).off('keyup', this.onKeyUp);
+
+    Adapt.notify.removeFromStack(this);
+    // Return focus to previous active element
+    Adapt.a11y.popupClosed(this.$previousActiveElement);
+
+    Adapt.trigger('notify:closed', this);
+
     super.remove(...args);
   }
 
