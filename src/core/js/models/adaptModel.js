@@ -522,6 +522,7 @@ export default class AdaptModel extends LockingModel {
       const descendant = pageDescendants[i];
       if (!descendant.isTypeGroup(relativeDescriptor.type)) continue;
       const isSelf = (i === modelIndex);
+      // https://github.com/adaptlearning/adapt_framework/issues/3031
       if (!isSelf && isFilterFunction && !options.filter(descendant)) continue;
       if (movementCount > moveBy) {
         // there is no descendant which matches this relativeString
