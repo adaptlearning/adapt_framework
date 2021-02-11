@@ -504,10 +504,7 @@ export default class AdaptModel extends LockingModel {
       }
       return false;
     });
-
-    const shouldSkip = model => {
-      return typeof options.filter === 'function' && !options.filter(model);
-    };
+    const isFilterFunction = typeof options.filter === 'function';
 
     if (options.loop) {
       // normalize offset position to allow for overflow looping
@@ -525,7 +522,7 @@ export default class AdaptModel extends LockingModel {
       const descendant = pageDescendants[i];
       if (!descendant.isTypeGroup(relativeDescriptor.type)) continue;
       const isSelf = (i === modelIndex);
-      if (!isSelf && shouldSkip(descendant)) continue;
+      if (!isSelf && isFilterFunction && !options.filter(descendant)) continue;
       if (movementCount > moveBy) {
         // there is no descendant which matches this relativeString
         // probably looking for the descendant 0 in a parent
