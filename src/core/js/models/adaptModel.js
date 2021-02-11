@@ -504,7 +504,7 @@ export default class AdaptModel extends LockingModel {
       }
       return false;
     });
-    const isFilterFunction = typeof options.filter === 'function';
+    const isFilterFunction = (typeof options.filter === 'function');
 
     if (options.loop) {
       // normalize offset position to allow for overflow looping
