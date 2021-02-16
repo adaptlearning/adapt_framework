@@ -227,7 +227,7 @@ class QuestionModel extends ComponentModel {
   setupPartlyCorrectFeedback() {
     const feedback = this.get('_feedback')._partlyCorrect;
 
-    if (feedback && feedback.final) {
+    if (feedback?.final) {
       this.setAttemptSpecificFeedback(feedback);
     } else {
       this.setupIncorrectFeedback();

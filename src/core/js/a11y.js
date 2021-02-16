@@ -99,7 +99,7 @@ class A11y extends Backbone.Controller {
   }
 
   _setupNoSelect() {
-    if (!this.config || !this.config._disableTextSelectOnClasses) {
+    if (!this.config?._disableTextSelectOnClasses) {
       return;
     }
     const classes = this.config._disableTextSelectOnClasses.split(' ');
@@ -135,7 +135,7 @@ class A11y extends Backbone.Controller {
 
   _onNavigationEnd(view) {
     // Prevent sub-menu items provoking behaviour
-    if ((view && view.model && view.model.get('_id') !== Adapt.location._currentId) || !this.isEnabled()) {
+    if ((view?.model?.get('_id') !== Adapt.location._currentId) || !this.isEnabled()) {
       return;
     }
     // Allow document to be read
@@ -148,7 +148,7 @@ class A11y extends Backbone.Controller {
   }
 
   isEnabled() {
-    return this.config && this.config._isEnabled;
+    return this.config?._isEnabled;
   }
 
   /**
@@ -380,7 +380,7 @@ class A11y extends Backbone.Controller {
 
     // check children by walking the tree
     let $found = this._findFirstForwardDescendant($element, iterator);
-    if ($found && $found.length) {
+    if ($found.length) {
       return $found;
     }
 
@@ -402,9 +402,9 @@ class A11y extends Backbone.Controller {
 
       // check parent sibling children by walking the tree
       $found = this._findFirstForwardDescendant($sibling, iterator);
-      if ($found && $found.length) return true;
+      if ($found.length) return true;
     });
-    if ($found && $found.length) {
+    if ($found.length) {
       return $found;
     }
 
@@ -434,13 +434,13 @@ class A11y extends Backbone.Controller {
 
         // check parent sibling children by walking the tree
         $found = this._findFirstForwardDescendant($sibling, iterator);
-        if ($found && $found.length) {
+        if ($found.length) {
           return true;
         }
       });
     });
 
-    if (!$found || !$found.length) {
+    if (!$found.length) {
       return $element.not('*');
     }
     return $found;

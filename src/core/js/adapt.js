@@ -30,7 +30,7 @@ class AdaptSingleton extends LockingModel {
    * @deprecated since v6.0.0 - please use `Adapt.store` instead
    */
   get componentStore() {
-    this.log && this.log.deprecated('Adapt.componentStore, please use Adapt.store instead');
+    this.log?.deprecated('Adapt.componentStore, please use Adapt.store instead');
     return this.store;
   }
 
@@ -174,7 +174,7 @@ class AdaptSingleton extends LockingModel {
     }
 
     if ((!object.view && !object.model) || object instanceof Backbone.View) {
-      this.log && this.log.deprecated('View-only registrations are no longer supported');
+      this.log?.deprecated('View-only registrations are no longer supported');
       object = { view: object };
     }
 
@@ -215,7 +215,7 @@ class AdaptSingleton extends LockingModel {
     if (nameModelViewOrData instanceof Backbone.View) {
       let foundName;
       Object.entries(this.store).forEach(([key, entry]) => {
-        if (!entry || !entry.view) return;
+        if (!entry?.view) return;
         if (!(nameModelViewOrData instanceof entry.view)) return;
         foundName = key;
         return true;
@@ -230,7 +230,7 @@ class AdaptSingleton extends LockingModel {
       ].filter(Boolean);
       if (names.length) {
         // find first fitting view name
-        const name = names.find(name => this.store[name] && this.store[name].view);
+        const name = names.find(name => this.store[name]?.view);
         return name || names.pop(); // return last available if none found
       }
     }
@@ -249,7 +249,7 @@ class AdaptSingleton extends LockingModel {
       this.log.warnOnce(`A view for '${name}' isn't registered in your project`);
       return;
     }
-    const isBackboneView = (object.view && object.view.prototype instanceof Backbone.View);
+    const isBackboneView = (object.view?.prototype instanceof Backbone.View);
     if (!isBackboneView && object.view instanceof Function) {
       return object.view();
     }
@@ -270,10 +270,10 @@ class AdaptSingleton extends LockingModel {
     if (nameModelOrData instanceof Object) {
       const name = nameModelOrData._component;
       const entry = this.store[name];
-      const isViewOnlyQuestion = entry && !entry.model && entry.view && entry.view._isQuestionType;
+      const isViewOnlyQuestion = entry && !entry.model && entry.view?._isQuestionType;
       if (isViewOnlyQuestion) {
         // Use question model by default
-        this.log && this.log.deprecated(`Assuming a question model for a view-only question: ${name}`);
+        this.log?.deprecated(`Assuming a question model for a view-only question: ${name}`);
         return 'question';
       }
       const names = [
@@ -283,7 +283,7 @@ class AdaptSingleton extends LockingModel {
       ].filter(Boolean);
       if (names.length) {
         // find first fitting model name
-        const name = names.find(name => this.store[name] && this.store[name].model);
+        const name = names.find(name => this.store[name]?.model);
         return name || names.pop(); // return last available if none found
       }
     }
@@ -302,7 +302,7 @@ class AdaptSingleton extends LockingModel {
       this.log.warnOnce(`A model for '${name}' isn't registered in your project`);
       return;
     }
-    const isBackboneModel = (object.model && object.model.prototype instanceof Backbone.Model);
+    const isBackboneModel = (object.model?.prototype instanceof Backbone.Model);
     if (!isBackboneModel && object.model instanceof Function) {
       return object.model();
     }
@@ -339,7 +339,7 @@ class AdaptSingleton extends LockingModel {
     const foundView = idPathToView.reduce((view, currentId) => {
       if (!view) return;
       const childViews = view.getChildViews();
-      return childViews && childViews.find(view => view.model.get('_id') === currentId);
+      return childViews?.find(view => view.model.get('_id') === currentId);
     }, this.parentView);
 
     return foundView;

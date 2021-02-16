@@ -156,7 +156,7 @@ class Data extends AdaptCollection {
     Adapt.log.debug('Firing app:dataLoaded');
     try {
       // Setup the newly added models
-      this.forEach(model => model.setupModel && model.setupModel());
+      this.forEach(model => model.setupModel?.());
       Adapt.trigger('app:dataLoaded');
     } catch (e) {
       Adapt.log.error('Error during app:dataLoading trigger', e);

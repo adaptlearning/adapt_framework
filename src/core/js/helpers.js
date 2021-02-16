@@ -130,7 +130,7 @@ const helpers = {
     let data = this;
     if (context) {
       // choose between a passed argument context or the default handlebars helper context
-      data = (!context.data || !context.data.root ? context : context.data.root);
+      data = (context.data?.root ?? context);
     }
     return Handlebars.compile(template)(data);
   },
@@ -228,7 +228,7 @@ const helpers = {
     if (!this._isA11yComponentDescriptionEnabled) {
       return;
     }
-    const isNotDefined = (!this._globals._components || !this._globals._components['_' + this._component]);
+    const isNotDefined = !this._globals._components?.['_' + this._component];
     if (isNotDefined) {
       return;
     }
@@ -355,7 +355,7 @@ const helpers = {
     } else if (_.isString(levelOrType)) {
       // if a string is passed check if it is defined in global configuration
       cfg._ariaLevels = cfg._ariaLevels || defaultAriaLevels;
-      if (cfg._ariaLevels && cfg._ariaLevels['_' + levelOrType] !== undefined) {
+      if (cfg._ariaLevels?.['_' + levelOrType] !== undefined) {
         level = cfg._ariaLevels['_' + levelOrType];
       }
     }

@@ -170,12 +170,12 @@ export default class Popup extends Backbone.Controller {
         item.a11y_uid = 'UID' + ++this._elementUIDIndex;
       }
       elementUID = item.a11y_uid;
-      if (this._tabIndexes[elementUID] !== undefined && this._tabIndexes[elementUID].length !== 0) {
+      if (this._tabIndexes[elementUID]?.length) {
         // get previous tabindex if saved
         previousTabIndex = this._tabIndexes[elementUID].pop();
         previousAriaHidden = this._ariaHiddens[elementUID].pop();
       }
-      if (this._tabIndexes[elementUID] !== undefined && this._tabIndexes[elementUID].length === 0) {
+      if (this._tabIndexes[elementUID]?.length) {
         // delete element tabindex store if empty
         delete this._tabIndexes[elementUID];
         delete this._ariaHiddens[elementUID];

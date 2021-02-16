@@ -4,7 +4,7 @@ export default class LockingModel extends Backbone.Model {
     const stopProcessing = (typeof attrName === 'object' || typeof attrVal !== 'boolean' || !this.isLocking(attrName));
     if (stopProcessing) return super.set(...arguments);
 
-    const isSettingValueForSpecificPlugin = options && options.pluginName;
+    const isSettingValueForSpecificPlugin = options?.pluginName;
     if (!isSettingValueForSpecificPlugin) {
       console.error('Must supply a pluginName to change a locked attribute');
       options.pluginName = 'compatibility';
@@ -79,7 +79,7 @@ export default class LockingModel extends Backbone.Model {
   }
 
   isLocked(attrName, options) {
-    const shouldSkipCheck = (options && options.skipcheck);
+    const shouldSkipCheck = options?.skipcheck;
     if (!shouldSkipCheck) {
       const stopProcessing = !this.isLocking(attrName);
       if (stopProcessing) return;
@@ -89,13 +89,13 @@ export default class LockingModel extends Backbone.Model {
   }
 
   getLockCount(attrName, options) {
-    const shouldSkipCheck = (options && options.skipcheck);
+    const shouldSkipCheck = options?.skipcheck;
     if (!shouldSkipCheck) {
       const stopProcessing = !this.isLocking(attrName);
       if (stopProcessing) return;
     }
 
-    const isGettingValueForSpecificPlugin = options && options.pluginName;
+    const isGettingValueForSpecificPlugin = options?.pluginName;
     if (isGettingValueForSpecificPlugin) {
       return this._lockedAttributesValues[attrName][options.pluginName] ? 1 : 0;
     }
@@ -107,13 +107,13 @@ export default class LockingModel extends Backbone.Model {
   }
 
   setLockState(attrName, value, options) {
-    const shouldSkipCheck = (options && options.skipcheck);
+    const shouldSkipCheck = options?.skipcheck;
     if (!shouldSkipCheck) {
       const stopProcessing = !this.isLocking(attrName);
       if (stopProcessing) return this;
     }
 
-    const isSettingValueForSpecificPlugin = options && options.pluginName;
+    const isSettingValueForSpecificPlugin = options?.pluginName;
     if (!isSettingValueForSpecificPlugin) {
       console.error('Must supply a pluginName to set a locked attribute lock value');
       options.pluginName = 'compatibility';

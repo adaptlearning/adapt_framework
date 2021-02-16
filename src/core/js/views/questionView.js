@@ -281,7 +281,7 @@ class QuestionView extends ComponentView {
     // Attempt to get the current page location
     const currentModel = Adapt.findById(Adapt.location._currentId);
     // Make sure the page is ready
-    if (!currentModel || !currentModel.get('_isReady')) return;
+    if (!currentModel?.get('_isReady')) return;
     // Focus on the first readable item in this element
     Adapt.a11y.focusNext(this.$el);
 
