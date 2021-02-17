@@ -76,7 +76,7 @@ export default class BrowserFocus extends Backbone.Controller {
       return;
     }
     // Force focus for screen reader enter / space press
-    $focusable[0].focus();
+    $focusable.last()[0].focus();
   }
 
 }
