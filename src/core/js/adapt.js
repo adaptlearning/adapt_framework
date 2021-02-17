@@ -30,7 +30,7 @@ class AdaptSingleton extends LockingModel {
    * @deprecated since v6.0.0 - please use `Adapt.store` instead
    */
   get componentStore() {
-    this.log?.deprecated('Adapt.componentStore, please use Adapt.store instead');
+    this.log.deprecated('Adapt.componentStore, please use Adapt.store instead');
     return this.store;
   }
 
@@ -174,7 +174,7 @@ class AdaptSingleton extends LockingModel {
     }
 
     if ((!object.view && !object.model) || object instanceof Backbone.View) {
-      this.log?.deprecated('View-only registrations are no longer supported');
+      this.log.deprecated('View-only registrations are no longer supported');
       object = { view: object };
     }
 
@@ -273,7 +273,7 @@ class AdaptSingleton extends LockingModel {
       const isViewOnlyQuestion = entry && !entry.model && entry.view?._isQuestionType;
       if (isViewOnlyQuestion) {
         // Use question model by default
-        this.log?.deprecated(`Assuming a question model for a view-only question: ${name}`);
+        this.log.deprecated(`Assuming a question model for a view-only question: ${name}`);
         return 'question';
       }
       const names = [
