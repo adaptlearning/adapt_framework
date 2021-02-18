@@ -11,7 +11,7 @@ import 'core/js/templates';
  */
 Adapt.on('app:dataReady', () => {
   const config = Adapt.config.get('_fixes');
-  if (config && config._imgLazyLoad === false) return;
+  if (config?._imgLazyLoad === false) return;
   applyImgLoadingFix();
 });
 

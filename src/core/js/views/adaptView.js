@@ -61,7 +61,7 @@ class AdaptView extends Backbone.View {
   setupOnScreenHandler() {
     const onscreen = this.model.get('_onScreen');
 
-    if (!onscreen || !onscreen._isEnabled) return;
+    if (!onscreen?._isEnabled) return;
 
     this.$el.addClass(`has-animation ${onscreen._classes}-before`);
     this.$el.on('onscreen.adaptView', (e, m) => {
@@ -244,9 +244,9 @@ class AdaptView extends Backbone.View {
   findDescendantViews(isParentFirst) {
     const descendants = [];
     const childViews = this.getChildViews();
-    childViews && childViews.forEach(view => {
+    childViews?.forEach(view => {
       if (isParentFirst) descendants.push(view);
-      const children = view.findDescendantViews && view.findDescendantViews(isParentFirst);
+      const children = view.findDescendantViews?.(isParentFirst);
       if (children) descendants.push(...children);
       if (!isParentFirst) descendants.push(view);
     });

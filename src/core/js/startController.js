@@ -46,15 +46,14 @@ class StartController extends Backbone.Controller {
   }
 
   isEnabled() {
-    if (!this.model || !this.model.get('_isEnabled')) return false;
-    return true;
+    return Boolean(this.model?.get('_isEnabled'));
   }
 
   getStartId() {
     let startId = this.model.get('_id');
     const startIds = this.model.get('_startIds');
 
-    if (!startIds || !startIds.length) return startId;
+    if (!startIds?.length) return startId;
 
     const $html = $('html');
     for (let i = 0, l = startIds.length; i < l; i++) {

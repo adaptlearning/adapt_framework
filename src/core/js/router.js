@@ -246,7 +246,7 @@ class Router extends Backbone.Router {
   setGlobalClasses() {
     const currentModel = Adapt.location._currentModel;
 
-    const htmlClasses = (currentModel && currentModel.get('_htmlClasses')) || '';
+    const htmlClasses = currentModel?.get('_htmlClasses') || '';
     const classes = (Adapt.location._currentId) ?
       `location-${Adapt.location._contentType} location-id-${Adapt.location._currentId}` :
       `location-${Adapt.location._currentLocation}`;

@@ -22,7 +22,7 @@ class Scrolling extends Backbone.Controller {
 
   _loadConfig() {
     const config = Adapt.config.get('_scrollingContainer');
-    if (!config || !config._isEnabled) return;
+    if (!config?._isEnabled) return;
     const limitTo = config._limitToSelector;
     const isIncluded = !limitTo || (this.$html.is(limitTo) || this.$html.hasClass(limitTo));
     if (!isIncluded) return;

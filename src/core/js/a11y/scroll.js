@@ -42,7 +42,7 @@ export default class Scroll extends Backbone.Controller {
    */
   enable($elements) {
     $elements = $($elements);
-    if (!$elements || !$elements.length) {
+    if (!$elements.length) {
       this.clear();
       return this;
     }
@@ -139,7 +139,7 @@ export default class Scroll extends Backbone.Controller {
    * @param {JQuery.Event} event
    */
   _preventScroll(event) {
-    const isGesture = (event.touches && event.touches.length > 1);
+    const isGesture = (event.touches?.length > 1);
     if (isGesture) {
       // allow multiple finger gestures through
       // this will unfortunately allow two finger background scrolling on mobile devices
@@ -166,7 +166,7 @@ export default class Scroll extends Backbone.Controller {
    */
   _getScrollingParent(event, $target) {
     const isTouchEvent = event.type === 'touchmove';
-    const hasTouchStartEvent = (this._touchStartEventObject && this._touchStartEventObject.originalEvent);
+    const hasTouchStartEvent = this._touchStartEventObject?.originalEvent;
     if (isTouchEvent && !hasTouchStartEvent) {
       return $target;
     }
