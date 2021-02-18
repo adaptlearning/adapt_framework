@@ -70,13 +70,13 @@ export default class BrowserFocus extends Backbone.Controller {
     if (!config._isEnabled || !config._options._isFocusOnClickEnabled) {
       return;
     }
-    const $stack = $element.parents().add($element);
+    const $stack = $([...$element, ...$element.parents()]);
     const $focusable = $stack.filter(config._options._tabbableElements);
     if (!$focusable.length) {
       return;
     }
     // Force focus for screen reader enter / space press
-    $focusable.last()[0].focus();
+    $focusable[0].focus();
   }
 
 }
