@@ -70,7 +70,7 @@ export default class BrowserFocus extends Backbone.Controller {
     if (!config._isEnabled || !config._options._isFocusOnClickEnabled) {
       return;
     }
-    const $stack = $().add($element.parents()).add($element);
+    const $stack = $element.parents().add($element);
     const $focusable = $stack.filter(config._options._tabbableElements);
     if (!$focusable.length) {
       return;
