@@ -496,11 +496,6 @@ export default class AdaptModel extends LockingModel {
       pageDescendants.push(rootModel);
     }
 
-    // filter if opinionated
-    if (typeof options.filter === 'function') {
-      pageDescendants = pageDescendants.filter(options.filter);
-    }
-
     // find current index in array
     const modelId = this.get('_id');
     const modelIndex = pageDescendants.findIndex(pageDescendant => {
@@ -509,6 +504,7 @@ export default class AdaptModel extends LockingModel {
       }
       return false;
     });
+    const isFilterFunction = (typeof options.filter === 'function');
 
     if (options.loop) {
       // normalize offset position to allow for overflow looping
@@ -524,17 +520,19 @@ export default class AdaptModel extends LockingModel {
 
     for (let i = modelIndex, l = pageDescendants.length; i < l; i++) {
       const descendant = pageDescendants[i];
-      if (descendant.isTypeGroup(relativeDescriptor.type)) {
-        if (movementCount > moveBy) {
-          // there is no descendant which matches this relativeString
-          // probably looking for the descendant 0 in a parent
-          break;
-        }
-        if (movementCount === moveBy) {
-          return Adapt.findById(descendant.get('_id'));
-        }
-        movementCount++;
+      if (!descendant.isTypeGroup(relativeDescriptor.type)) continue;
+      const isSelf = (i === modelIndex);
+      // https://github.com/adaptlearning/adapt_framework/issues/3031
+      if (!isSelf && isFilterFunction && !options.filter(descendant)) continue;
+      if (movementCount > moveBy) {
+        // there is no descendant which matches this relativeString
+        // probably looking for the descendant 0 in a parent
+        break;
       }
+      if (movementCount === moveBy) {
+        return Adapt.findById(descendant.get('_id'));
+      }
+      movementCount++;
     }
 
   }
