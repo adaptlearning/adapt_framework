@@ -211,7 +211,12 @@ class DrawerView extends Backbone.View {
     const direction = {};
     // only trigger popup:closed if drawer is visible
     if (this._isVisible) {
-      Adapt.a11y.popupClosed($toElement);
+      const focusStack = $(Adapt.a11y._popup._focusStack[0]);
+      const $elementToFocus = $toElement ?? focusStack;
+      if (!$elementToFocus) {
+        Adapt.log.info('DrawerView:hideDrawer - There is no available element to focus');
+      }
+      Adapt.a11y.popupClosed($elementToFocus);
       this._isVisible = false;
       Adapt.a11y.scrollEnable('body');
     } else {
