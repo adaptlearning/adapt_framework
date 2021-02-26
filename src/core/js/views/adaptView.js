@@ -32,8 +32,8 @@ class AdaptView extends Backbone.View {
 
   preRender() {}
 
-  postRender() {
-    this.addChildren();
+  async postRender() {
+    await this.addChildren();
   }
 
   render() {
@@ -47,11 +47,11 @@ class AdaptView extends Backbone.View {
 
     Adapt.trigger(`${type}View:render view:render`, this);
 
-    _.defer(() => {
+    _.defer(async () => {
       // don't call postRender after remove
       if (this._isRemoved) return;
 
-      this.postRender();
+      await this.postRender();
       Adapt.trigger(`${type}View:postRender view:postRender`, this);
     });
 
