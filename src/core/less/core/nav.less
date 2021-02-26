@@ -15,6 +15,23 @@
     .l-container-responsive(@max-width);
   }
 
+  &__skip-btn {
+    position: absolute;
+    left: 0;
+    margin-top: 0;
+    top: -100%;
+    z-index: 100;
+    .transition(top @duration ease-in-out);
+
+    html:not(.has-accessibility) & {
+      .u-display-none;
+    }
+
+    &:focus {
+      top: 0;
+    }
+  }
+
   &__back-btn {
     .u-float-left;
   }
