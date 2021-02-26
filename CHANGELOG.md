@@ -1,3 +1,15 @@
+## [5.11.0] - 2021-02-26
+### Added
+* A method of identifying models based upon the course's `_trackingId` properties, regardless of whether they are located on blocks or components (Part of [#2805](https://github.com/adaptlearning/adapt_framework/issues/2805))
+
+### Changed
+* ESLint configuration amended to allow for ES2020 features such as [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) and [nullish coalescing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator); implemented these new features where useful ([#3035](https://github.com/adaptlearning/adapt_framework/issues/3035))
+
+### Fixed
+* Overzealous filter in `Adapt.findRelativeModel` ([#3031](https://github.com/adaptlearning/adapt_framework/issues/3031))
+* Focus on click was focusing on last parent not first parent ([#3038](https://github.com/adaptlearning/adapt_framework/issues/3038))
+* The `"postRender"` event of each view was being triggered before the view's children had been rendered ([#3045](https://github.com/adaptlearning/adapt_framework/issues/3045))
+
 ## [5.10.1] - 2021-02-03
 ### Fixed
 * Accessibility focus bug ([#3022](https://github.com/adaptlearning/adapt_framework/issues/3022))
@@ -978,6 +990,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.11.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.1...v5.11.0
 [5.10.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.0...v5.10.1
 [5.10.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.9.0...v5.10.0
 [5.9.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.8.1...v5.9.0
