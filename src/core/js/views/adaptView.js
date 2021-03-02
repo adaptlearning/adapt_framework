@@ -18,6 +18,7 @@ class AdaptView extends Backbone.View {
     });
     this.isReact = (this.constructor.template || '').includes('.jsx');
     if (this.isReact) {
+      this._classSet = new Set(_.result(this, 'className').trim().split(/\s+/));
       this.listenTo(this.model, 'all', this.changed);
       // Facilitate adaptive react views
       this.listenTo(Adapt, 'device:changed', this.changed);
@@ -82,7 +83,17 @@ class AdaptView extends Backbone.View {
       return;
     }
     const element = render(this.constructor.template.replace('.jsx', ''), this.model, this);
+    this.updateViewProperties();
     ReactDOM.render(element, this.el);
+  }
+
+  updateViewProperties() {
+    const classesToAdd = _.result(this, 'className').trim().split(/\s+/);
+    classesToAdd.forEach(i => this._classSet.add(i));
+    const classesToRemove = [ ...this._classSet ].filter(i => !classesToAdd.includes(i));
+    classesToRemove.forEach(i => this._classSet.delete(i));
+    this._setAttributes({ ..._.result(this, 'attributes'), id: _.result(this, 'id') });
+    this.$el.removeClass(classesToRemove).addClass(classesToAdd);
   }
 
   setupOnScreenHandler() {
