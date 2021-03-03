@@ -49,15 +49,15 @@ export default class ButtonsView extends Backbone.View {
 
   checkResetSubmittedState() {
     const isSubmitted = this.model.get('_isSubmitted');
-
-    if (!isSubmitted) {
-      this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
-      this.$el.removeClass('is-submitted');
-      this.model.set('feedbackMessage', undefined);
-      Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
-    } else {
+    if (isSubmitted) {
       this.$el.addClass('is-submitted');
+      return;
     }
+
+    this.$('.js-btn-marking').removeClass('is-incorrect is-correct').addClass('u-display-none');
+    this.$el.removeClass('is-submitted');
+    this.model.set('feedbackMessage', undefined);
+    Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
   }
 
   onActionClicked() {
@@ -84,10 +84,10 @@ export default class ButtonsView extends Backbone.View {
     if (changedAttribute && this.model.get('_canShowFeedback')) {
       // enable feedback button
       Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), true);
-    } else {
-      // disable feedback button
-      Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
+      return;
     }
+    // disable feedback button
+    Adapt.a11y.toggleEnabled(this.$('.js-btn-feedback'), false);
   }
 
   onCanSubmitChange() {
@@ -124,7 +124,7 @@ export default class ButtonsView extends Backbone.View {
     this.$('.js-btn-marking').toggleClass('is-full-width u-display-none', !canShowFeedback);
   }
 
-  updateAttemptsCount(model, changedAttribute) {
+  updateAttemptsCount() {
     const isInteractionComplete = this.model.get('_isInteractionComplete');
     const attemptsLeft = (this.model.get('_attemptsLeft')) ? this.model.get('_attemptsLeft') : this.model.get('_attempts');
     const shouldDisplayAttempts = this.model.get('_shouldDisplayAttempts');
@@ -134,12 +134,9 @@ export default class ButtonsView extends Backbone.View {
 
     if (!isInteractionComplete && attemptsLeft !== 0) {
       attemptsString = attemptsLeft + ' ';
-      if (attemptsLeft > 1) {
-        attemptsString += this.model.get('_buttons').remainingAttemptsText;
-      } else if (attemptsLeft === 1) {
-        attemptsString += this.model.get('_buttons').remainingAttemptText;
-      }
-
+      attemptsString += attemptsLeft === 1 ?
+        this.model.get('_buttons').remainingAttemptText :
+        this.model.get('_buttons').remainingAttemptsText;
     } else {
       this.$('.js-display-attempts').addClass('u-visibility-hidden');
       this.showMarking();
