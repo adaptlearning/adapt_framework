@@ -35,7 +35,7 @@ export default class ButtonsView extends Backbone.View {
 
   render() {
     const data = this.model.toJSON();
-    const template = Handlebars.templates['buttons'];
+    const template = Handlebars.templates.buttons;
     _.defer(() => {
       this.postRender();
       Adapt.trigger('buttonsView:postRender', this);
@@ -61,9 +61,19 @@ export default class ButtonsView extends Backbone.View {
   }
 
   onActionClicked() {
-    const buttonState = this.model.get('_buttonState');
-    this.trigger('buttons:stateUpdate', BUTTON_STATE(buttonState));
+    const buttonState = BUTTON_STATE(this.model.get('_buttonState'));
+    this.trigger('buttons:stateUpdate', buttonState);
     this.checkResetSubmittedState();
+
+    if (buttonState === BUTTON_STATE.SHOW_CORRECT_ANSWER) {
+      const correctAnswer = this.model.getCorrectAnswerAsText?.();
+      this.updateAnswerLiveRegion(correctAnswer);
+    }
+
+    if (buttonState === BUTTON_STATE.HIDE_CORRECT_ANSWER) {
+      const userAnswer = this.model?.getUserAnswerAsText?.();
+      this.updateAnswerLiveRegion(userAnswer);
+    }
   }
 
   onFeedbackClicked() {
@@ -93,30 +103,17 @@ export default class ButtonsView extends Backbone.View {
     const buttonState = BUTTON_STATE(changedAttribute);
     if (changedAttribute === BUTTON_STATE.CORRECT || changedAttribute === BUTTON_STATE.INCORRECT) {
       // Both 'correct' and 'incorrect' states have no model answer, so disable the submit button
-
       Adapt.a11y.toggleEnabled($buttonsAction, false);
-
-    } else {
-
-      const propertyName = textPropertyName[buttonState.asString];
-      const ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
-      const buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
-
-      // Enable the button, make accessible and update aria labels and text
-
-      Adapt.a11y.toggleEnabled($buttonsAction, this.model.get('_canSubmit'));
-      $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
-
-      // Make model answer button inaccessible (but still enabled) for visual users due to
-      // the inability to represent selected incorrect/correct answers to a screen reader, may need revisiting
-      switch (changedAttribute) {
-        case BUTTON_STATE.SHOW_CORRECT_ANSWER:
-        case BUTTON_STATE.HIDE_CORRECT_ANSWER:
-
-          Adapt.a11y.toggleAccessible($buttonsAction, false);
-      }
-
+      return;
     }
+
+    const propertyName = textPropertyName[buttonState.asString];
+    const ariaLabel = this.model.get('_buttons')['_' + propertyName].ariaLabel;
+    const buttonText = this.model.get('_buttons')['_' + propertyName].buttonText;
+
+    // Enable the button, make accessible and update aria labels and text
+    Adapt.a11y.toggleEnabled($buttonsAction, this.model.get('_canSubmit'));
+    $buttonsAction.html(buttonText).attr('aria-label', ariaLabel);
   }
 
   checkFeedbackState() {
@@ -152,6 +149,16 @@ export default class ButtonsView extends Backbone.View {
       this.$('.js-insert-attempts-string').html(attemptsString);
     }
 
+  }
+
+  /**
+   * Updates the ARIA 'live region' with the correct/user answer when that button
+   * is selected by the learner.
+   * @param {string} answer Textual representation of the correct/user answer
+   */
+  updateAnswerLiveRegion(answer) {
+    if (!answer) return;
+    this.$('.js-answer-live-region').html(answer);
   }
 
   showMarking() {
