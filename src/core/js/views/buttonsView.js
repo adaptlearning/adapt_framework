@@ -71,7 +71,7 @@ export default class ButtonsView extends Backbone.View {
     }
 
     if (buttonState === BUTTON_STATE.HIDE_CORRECT_ANSWER) {
-      const userAnswer = this.model?.getUserAnswerAsText?.();
+      const userAnswer = this.model.getUserAnswerAsText?.();
       this.updateAnswerLiveRegion(userAnswer);
     }
   }
