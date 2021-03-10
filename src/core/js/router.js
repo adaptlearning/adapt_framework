@@ -4,7 +4,6 @@ import CourseModel from 'core/js/models/courseModel';
 import ContentObjectModel from 'core/js/models/contentObjectModel';
 import MenuModel from 'core/js/models/menuModel';
 import 'core/js/startController';
-import Backbone from 'backbone';
 
 class Router extends Backbone.Router {
 
@@ -282,7 +281,7 @@ class Router extends Backbone.Router {
     Backbone.history.history.back();
   }
 
-  navigateToCurrentRoute(force, replace = true) {
+  navigateToCurrentRoute(force) {
     if (!this.model.get('_canNavigate') && !force) {
       return;
     }
@@ -292,7 +291,7 @@ class Router extends Backbone.Router {
     const currentId = Adapt.location._currentModel.get('_id');
     const isRoot = (Adapt.location._currentModel === this.rootModel);
     const route = isRoot ? '#/' : '#/id/' + currentId;
-    this.navigate(route, { trigger: true, replace });
+    this.navigate(route, { trigger: true, replace: true });
   }
 
   navigateToPreviousRoute(force) {
