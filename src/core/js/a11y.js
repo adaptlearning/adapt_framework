@@ -111,7 +111,7 @@ class A11y extends Backbone.Controller {
     if ($('#a11y-focuser').length) {
       return;
     }
-    $('body').append($('<div id="a11y-focuser" class="a11y-ignore" tabindex="-1" role="presentation">&nbsp;</div>'));
+    $('body').append($('<div id="a11y-focuser" class="a11y-ignore" tabindex="-1">&nbsp;</div>'));
   }
 
   _removeLegacyElements() {
