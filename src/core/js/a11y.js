@@ -90,7 +90,6 @@ class A11y extends Backbone.Controller {
     Adapt.offlineStorage.set('a11y', false);
     this.$html.toggleClass('has-accessibility', this.isEnabled());
     this._setupNoSelect();
-    this._addFocuserDiv();
     if (this._isReady) {
       return;
     }
@@ -108,10 +107,8 @@ class A11y extends Backbone.Controller {
   }
 
   _addFocuserDiv() {
-    if ($('#a11y-focuser').length) {
-      return;
-    }
-    $('body').append($('<div id="a11y-focuser" class="a11y-ignore" role="presentation">&nbsp;</div>'));
+    Adapt.log.deprecated('Adapt.a11y._addFocuserDiv, please use Adapt.a11y.parkFocus');
+    this.parkFocus();
   }
 
   _removeLegacyElements() {
@@ -720,6 +717,24 @@ class A11y extends Backbone.Controller {
    */
   setPopupCloseTo($focusElement) {
     return this._popup.setCloseTo($focusElement);
+  }
+
+  /**
+   * Make a11y-focuser available in the dom until its blur event fires
+   * a11y-focuser is used to synchronously park the focus whilst other
+   * asynchronous loading activities are happening
+   */
+  parkFocus() {
+    if ($('#a11y-focuser').length) {
+      return;
+    }
+
+    $('body').append($('<div id="a11y-focuser" class="a11y-ignore u-visibility-hidden" tabindex="-1" role="presentation">&nbsp;</div>'));
+
+    const $a11yFocuser = $('#a11y-focuser');
+    $a11yFocuser.on('blur', () => {
+      $a11yFocuser.remove();
+    });
   }
 
 }
