@@ -16,6 +16,7 @@ class Router extends Backbone.Router {
   }
 
   initialize({ model }) {
+    this._isBackward = false;
     this.model = model;
     this._navigationRoot = null;
     // Flag to indicate if the router has tried to redirect to the current location.
@@ -91,6 +92,7 @@ class Router extends Backbone.Router {
     if (this.model.get('_canNavigate')) {
       // Disable navigation whilst rendering.
       this.model.set('_canNavigate', false, { pluginName: 'adapt' });
+      this._isBackward = false;
       if (args.length <= 1) {
         return this.handleId(...args);
       }
@@ -110,7 +112,9 @@ class Router extends Backbone.Router {
     Adapt.trigger('router:navigationCancelled', args);
 
     // Reset URL to the current one.
-    this.navigateToCurrentRoute(true);
+    // https://github.com/adaptlearning/adapt_framework/issues/3061
+    Backbone.history.history[this._isBackward ? 'forward' : 'back']();
+    this._isBackward = false;
   }
 
   async handlePluginRouter(pluginName, location, action) {
@@ -273,6 +277,7 @@ class Router extends Backbone.Router {
   }
 
   navigateBack() {
+    this._isBackward = true;
     Backbone.history.history.back();
   }
 
