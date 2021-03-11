@@ -120,7 +120,9 @@ module.exports = function(grunt) {
       visitors.flushLog();
 
       if (error) {
-        grunt.fail.fatal(JSON.stringify(error, null, 1));
+        const errorString = error.toString();
+        console.error(errorString);
+        grunt.fail.fatal(errorString);
         return;
       }
 
