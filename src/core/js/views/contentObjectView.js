@@ -34,10 +34,14 @@ export default class ContentObjectView extends AdaptView {
     const type = this.constructor.type;
     Adapt.trigger(`${type}View:preRender contentObjectView:preRender view:preRender`, this);
 
-    const data = this.model.toJSON();
-    data.view = this;
-    const template = Handlebars.templates[this.constructor.template];
-    this.$el.html(template(data));
+    if (this.isReact) {
+      this.changed();
+    } else {
+      const data = this.model.toJSON();
+      data.view = this;
+      const template = Handlebars.templates[this.constructor.template];
+      this.$el.html(template(data));
+    }
 
     Adapt.trigger(`${type}View:render contentObjectView:render view:render`, this);
 
@@ -137,6 +141,9 @@ export default class ContentObjectView extends AdaptView {
     this._isRemoved = true;
 
     Adapt.wait.for(end => {
+      if (this.isReact) {
+        ReactDOM.unmountComponentAtNode(this.el);
+      }
       this.$el.off('onscreen.adaptView');
       this.findDescendantViews().reverse().forEach(view => {
         view.remove();

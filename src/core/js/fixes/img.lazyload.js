@@ -1,5 +1,6 @@
 import Adapt from 'core/js/adapt';
 import 'core/js/templates';
+import { find, clone } from 'core/js/reactHelpers';
 
 /**
  * 27 April 2020 https://github.com/adaptlearning/adapt_framework/issues/2734
@@ -30,5 +31,19 @@ function applyImgLoadingFix() {
       // Add loading="eager" by default
       return value.replace(img, img.replace(findImgTag, '<img loading="eager"$1>'));
     }, event.value);
+  });
+  Adapt.on('reactTemplate:postRender', function(event) {
+    const hasImageTagWithNoLoadingAttr = find(event.value, component => {
+      if (component.type !== 'img') return;
+      if (component.props.loading) return;
+      return true;
+    });
+    if (!hasImageTagWithNoLoadingAttr) return;
+    // Strip object freeze and write locks by cloning
+    event.value = clone(event.value, true, component => {
+      if (component.type !== 'img') return;
+      if (component.props.loading) return;
+      component.props.loading = 'eager';
+    });
   });
 }

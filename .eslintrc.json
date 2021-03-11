@@ -2,13 +2,15 @@
     "env": {
         "browser": true,
         "commonjs": false,
-        "es6": false,
+        "es2020": true,
         "amd": true
     },
     "extends": [
         "standard"
     ],
     "globals": {
+        "ReactDOM": true,
+        "React": true,
         "Promise": true,
         "requirejs": true,
         "Backbone": true,

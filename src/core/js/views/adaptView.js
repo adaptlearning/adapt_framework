@@ -1,5 +1,6 @@
 import Adapt from 'core/js/adapt';
 import ChildEvent from 'core/js/childEvent';
+import { render } from 'core/js/reactHelpers';
 
 class AdaptView extends Backbone.View {
 
@@ -15,6 +16,13 @@ class AdaptView extends Backbone.View {
       'change:_isHidden': this.toggleHidden,
       'change:_isComplete': this.onIsCompleteChange
     });
+    this.isReact = (this.constructor.template || '').includes('.jsx');
+    if (this.isReact) {
+      this._classSet = new Set(_.result(this, 'className').trim().split(/\s+/));
+      this.listenTo(this.model, 'all', this.changed);
+      // Facilitate adaptive react views
+      this.listenTo(Adapt, 'device:changed', this.changed);
+    }
     this.model.set({
       '_globals': Adapt.course.get('_globals'),
       '_isReady': false
@@ -40,10 +48,14 @@ class AdaptView extends Backbone.View {
     const type = this.constructor.type;
     Adapt.trigger(`${type}View:preRender view:preRender`, this);
 
-    const data = this.model.toJSON();
-    data.view = this;
-    const template = Handlebars.templates[this.constructor.template];
-    this.$el.html(template(data));
+    if (this.isReact) {
+      this.changed();
+    } else {
+      const data = this.model.toJSON();
+      data.view = this;
+      const template = Handlebars.templates[this.constructor.template];
+      this.$el.html(template(data));
+    }
 
     Adapt.trigger(`${type}View:render view:render`, this);
 
@@ -56,6 +68,32 @@ class AdaptView extends Backbone.View {
     });
 
     return this;
+  }
+
+  /**
+   * Re-render a react template
+   * @param {string} eventName=null Backbone change event name
+   */
+  changed(eventName = null) {
+    if (!this.isReact) {
+      throw new Error('Cannot call changed on a non-react view');
+    }
+    if (typeof eventName === 'string' && eventName.startsWith('bubble')) {
+      // Ignore bubbling events as they are outside of this view's scope
+      return;
+    }
+    const element = render(this.constructor.template.replace('.jsx', ''), this.model, this);
+    this.updateViewProperties();
+    ReactDOM.render(element, this.el);
+  }
+
+  updateViewProperties() {
+    const classesToAdd = _.result(this, 'className').trim().split(/\s+/);
+    classesToAdd.forEach(i => this._classSet.add(i));
+    const classesToRemove = [ ...this._classSet ].filter(i => !classesToAdd.includes(i));
+    classesToRemove.forEach(i => this._classSet.delete(i));
+    this._setAttributes({ ..._.result(this, 'attributes'), id: _.result(this, 'id') });
+    this.$el.removeClass(classesToRemove).addClass(classesToAdd);
   }
 
   setupOnScreenHandler() {
@@ -289,6 +327,9 @@ class AdaptView extends Backbone.View {
     this.stopListening();
 
     Adapt.wait.for(end => {
+      if (this.isReact) {
+        ReactDOM.unmountComponentAtNode(this.el);
+      }
       this.$el.off('onscreen.adaptView');
       super.remove();
       _.defer(() => {
@@ -321,10 +362,12 @@ class AdaptView extends Backbone.View {
   }
 
   /**
-   * @returns {[AdaptViews]}
+   * @returns {[AdaptView]}
    */
   getChildViews() {
-    return this._childViews;
+    if (!this._childViews) return this._childViews;
+    // Allow both a deprecated id/view map or a new array of child views
+    return Object.entries(this._childViews).map(([key, value]) => value);
   }
 
   /**
@@ -336,12 +379,24 @@ class AdaptView extends Backbone.View {
 
   /**
    * Returns an indexed by id list of child views.
-   * @deprecated since 0.5.5
+   * @deprecated since 5.7.0
    * @returns {{<string, AdaptView}}
    */
   get childViews() {
-    Adapt.log.deprecated(`view.childViews use view.getChildViews()`);
-    return _.indexBy(this.getChildViews(), view => view.model.get('_id'));
+    Adapt.log.deprecated(`view.childViews use view.getChildViews() and view.setChildViews([])`);
+    if (Array.isArray(this._childViews)) {
+      return _.indexBy(this._childViews, view => view.model.get('_id'));
+    }
+    return this._childViews;
+  }
+
+  /**
+   * Sets an indexed by id list of child views.
+   * @deprecated since 5.7.0
+   */
+  set childViews(value) {
+    Adapt.log.deprecated(`view.childViews use view.getChildViews() and view.setChildViews([])`);
+    this.setChildViews(value);
   }
 
 }

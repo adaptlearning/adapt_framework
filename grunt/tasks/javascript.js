@@ -16,7 +16,7 @@ module.exports = function(grunt) {
   const isDisableCache = process.argv.includes('--disable-cache');
   let cache;
 
-  const extensions = ['.js'];
+  const extensions = ['.js', '.jsx'];
 
   const restoreCache = async (cachePath, basePath) => {
     if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
@@ -161,6 +161,14 @@ module.exports = function(grunt) {
       });
     }
 
+    // Collect react templates
+    const reactTemplatePaths = [];
+    options.reactTemplates.forEach(pattern => {
+      grunt.file.expand({
+        filter: options.pluginsFilter
+      }, pattern).forEach(templatePath => reactTemplatePaths.push(templatePath.replace(convertSlashes, '/')));
+    });
+
     // Process remapping and external model configurations
     const mapParts = Object.keys(options.map);
     const externalParts = Object.keys(options.external);
@@ -257,6 +265,8 @@ module.exports = function(grunt) {
           // Dynamically construct plugins.js with plugin dependencies
           code = `define([${pluginPaths.map(filename => {
             return `"${filename}"`;
+          }).join(',')}, ${reactTemplatePaths.map(filename => {
+            return `"${filename}"`;
           }).join(',')}], function() {});`;
           return code;
         }
@@ -281,6 +291,12 @@ module.exports = function(grunt) {
           ],
           presets: [
             [
+              '@babel/preset-react',
+              {
+                runtime: 'classic'
+              }
+            ],
+            [
               '@babel/preset-env',
               {
                 targets: {
@@ -302,7 +318,20 @@ module.exports = function(grunt) {
                 ignoreNestedRequires: true,
                 defineFunctionName: '__AMD',
                 defineModuleId: (moduleId) => moduleId.replace(convertSlashes, '/').replace(basePath, '').replace('.js', ''),
-                excludes: []
+                excludes: [
+                  '**/templates/**/*.jsx'
+                ]
+              }
+            ],
+            [
+              'transform-react-templates',
+              {
+                includes: [
+                  '**/templates/**/*.jsx'
+                ],
+                importRegisterFunctionFromModule: path.resolve(basePath, 'core/js/reactHelpers.js').replace(convertSlashes, '/'),
+                registerFunctionName: 'register',
+                registerTemplateName: (moduleId) => path.parse(moduleId).name
               }
             ]
           ]
