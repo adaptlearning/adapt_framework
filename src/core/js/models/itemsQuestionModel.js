@@ -1,3 +1,4 @@
+import Adapt from 'core/js/adapt';
 import QuestionModel from 'core/js/models/questionModel';
 import ItemsComponentModel from 'core/js/models/itemsComponentModel';
 
@@ -213,6 +214,53 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
   */
   getResponseType() {
     return 'choice';
+  }
+
+  /**
+   * Creates a string explaining the answer(s) the learner should have chosen
+   * Used by ButtonsView to retrieve question-specific correct answer text for the ARIA
+   * 'live region' that gets updated when the learner selects the 'show correct answer' button
+   * @return {string}
+   */
+  getCorrectAnswerAsText() {
+    const globals = Adapt.course.get('_globals')._components['_' + this.get('_component')];
+    let ariaAnswer;
+    let correctAnswer;
+
+    if (this.isSingleSelect()) {
+      ariaAnswer = globals.ariaCorrectAnswer;
+      const correctOption = this.getChildren().findWhere({ _shouldBeSelected: true });
+      correctAnswer = correctOption.get('text');
+    } else {
+      ariaAnswer = globals.ariaCorrectAnswers;
+      const correctOptions = this.getChildren().where({ _shouldBeSelected: true });
+      correctAnswer = correctOptions.map(correctOption => correctOption.get('text')).join('<br>');
+    }
+
+    return Handlebars.compile(ariaAnswer)({ correctAnswer });
+  }
+
+  /**
+   * Creates a string listing the answer(s) the learner chose
+   * Used by ButtonsView to retrieve question-specific user answer text for the ARIA
+   * 'live region' that gets updated when the learner selects the 'hide correct answer' button
+   * @return {string}
+   */
+  getUserAnswerAsText() {
+    const globals = Adapt.course.get('_globals')._components['_' + this.get('_component')];
+    let ariaAnswer;
+    let userAnswer;
+
+    const selectedItems = this.getActiveItems();
+    if (selectedItems.length === 1) {
+      ariaAnswer = globals.ariaUserAnswer;
+      userAnswer = selectedItems[0].get('text');
+    } else {
+      ariaAnswer = globals.ariaUserAnswers;
+      userAnswer = selectedItems.map(selectedItem => selectedItem.get('text')).join('<br>');
+    }
+
+    return Handlebars.compile(ariaAnswer)({ userAnswer });
   }
 
 }
