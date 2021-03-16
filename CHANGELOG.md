@@ -1,3 +1,18 @@
+## [5.12.0] - 2021-03-16
+### Added
+* Support for keyboard/screen reader accessibility for the correct answer toggle button (Part of [#2942](https://github.com/adaptlearning/adapt_framework/issues/2942))
+* Support for React templates (.jsx) (Part of [#2944](https://github.com/adaptlearning/adapt_framework/issues/2944))
+* Less errors are now written to `stderr` to enable reliable error handling in the AAT ([](https://github.com/adaptlearning/adapt_framework/issues/3066))
+### Changed
+* The 'skip navigation' button now becomes visible when it has focus ([#3040](https://github.com/adaptlearning/adapt_framework/issues/3040))
+
+### Fixed
+* Screen readers reading out 'blank' at top of screen after nagivating through the page ([#3057](https://github.com/adaptlearning/adapt_framework/issues/3057))
+* History state issue when routing is prevented by plugins like [adapt-pageIncompletePrompt](https://github.com/cgkineo/adapt-pageIncompletePrompt) ([#3061](https://github.com/adaptlearning/adapt_framework/issues/3061))
+* Error 'exception thrown but not caught' in IE11 whenever clicking on the page ([#3064](https://github.com/adaptlearning/adapt_framework/issues/3064))
+* The tracking-remove task wouldn't run if the spoor plugin was not installed ([#3068](https://github.com/adaptlearning/adapt_framework/issues/3068))
+* Odd scrolling behaviour when clicking on any Drawer item that caused Adapt to scroll to an element ([#3074](https://github.com/adaptlearning/adapt_framework/issues/3074))
+
 ## [5.11.0] - 2021-02-26
 ### Added
 * A method of identifying models based upon the course's `_trackingId` properties, regardless of whether they are located on blocks or components (Part of [#2805](https://github.com/adaptlearning/adapt_framework/issues/2805))
@@ -990,6 +1005,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.12.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.11.0...v5.12.0
 [5.11.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.1...v5.11.0
 [5.10.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.0...v5.10.1
 [5.10.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.9.0...v5.10.0
