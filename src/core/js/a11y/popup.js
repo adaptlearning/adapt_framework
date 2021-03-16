@@ -140,7 +140,7 @@ export default class Popup extends Backbone.Controller {
     if (!silent) {
       Adapt.trigger('popup:closed', $focusElement, true);
     }
-    Adapt.a11y.focusFirst($($focusElement));
+    Adapt.a11y.focusFirst($($focusElement), { preventScroll: true });
     return this;
   }
 
