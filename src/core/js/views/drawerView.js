@@ -117,9 +117,9 @@ class DrawerView extends Backbone.View {
   toggleDrawer() {
     if (this._isVisible && this._isCustomViewVisible === false) {
       this.hideDrawer();
-    } else {
-      this.showDrawer(true);
+      return;
     }
+    this.showDrawer(true);
   }
 
   showDrawer(emptyDrawer) {
