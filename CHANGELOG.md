@@ -11,7 +11,7 @@
 * Screen readers reading out 'blank' at the top of the screen after nagivating through the page ([#3057](https://github.com/adaptlearning/adapt_framework/issues/3057))
 * History state issue when routing is prevented by plugins like [adapt-pageIncompletePrompt](https://github.com/cgkineo/adapt-pageIncompletePrompt) ([#3061](https://github.com/adaptlearning/adapt_framework/issues/3061))
 * Error 'exception thrown but not caught' in IE11 whenever clicking on the page ([#3064](https://github.com/adaptlearning/adapt_framework/issues/3064))
-* The `tracking-remove` task wouldn't run if the spoor plugin was not installed ([#3068](https://github.com/adaptlearning/adapt_framework/issues/3068))
+* The `tracking-remove` task wouldn't run if the [spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor) was not installed ([#3068](https://github.com/adaptlearning/adapt_framework/issues/3068))
 * Odd scrolling behaviour when clicking on any Drawer item that caused Adapt to scroll to an element ([#3074](https://github.com/adaptlearning/adapt_framework/issues/3074))
 
 ## [5.11.0] - 2021-02-26
