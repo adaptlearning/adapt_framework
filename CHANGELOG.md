@@ -2,9 +2,10 @@
 ### Added
 * Support for keyboard/screen reader accessibility for the correct answer toggle button (Part of [#2942](https://github.com/adaptlearning/adapt_framework/issues/2942))
 * Support for React .jsx templates (Part of [#2944](https://github.com/adaptlearning/adapt_framework/issues/2944))
-* Less errors are now written to `stderr` to enable reliable error handling in the AAT ([#3066](https://github.com/adaptlearning/adapt_framework/issues/3066))
+
 ### Changed
 * The 'skip navigation' button now becomes visible when it has focus ([#3040](https://github.com/adaptlearning/adapt_framework/issues/3040))
+* Less errors are now written to `stderr` to enable reliable error handling in the AAT ([#3066](https://github.com/adaptlearning/adapt_framework/issues/3066))
 
 ### Fixed
 * Screen readers reading out 'blank' at the top of the screen after nagivating through the page ([#3057](https://github.com/adaptlearning/adapt_framework/issues/3057))
