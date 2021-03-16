@@ -1,4 +1,4 @@
-## [5.12.0] - 2021-03-16
+## [5.12.0] - 2021-03-17
 ### Added
 * Support for keyboard/screen reader accessibility for the correct answer toggle button (Part of [#2942](https://github.com/adaptlearning/adapt_framework/issues/2942))
 * Support for React templates (.jsx) (Part of [#2944](https://github.com/adaptlearning/adapt_framework/issues/2944))
