@@ -148,7 +148,7 @@
         "displayTitle": "Hot Graphic",
         "body": "You can add interactivity to an image by using the <b>Hot Graphic</b>. This component allows you to position icons over an image. When an icon is selected, content associated with its corresponding location is displayed in a window over the image. This component will fall back to a <b>Narrative</b> when viewed on mobile.<br><br>This component is always spanned.",
         "instruction": "Select the icons to find out more.",
-        "mobileInstruction": "Select the plus icon followed by the next arrow to find out more",
+        "mobileInstruction": "Select the plus icon followed by the next arrow to find out more.",
         "_graphic": {
             "src": "course/en/images/hotgraphic.png",
             "alt": ""
@@ -212,7 +212,7 @@
         "_allowFullScreen": true,
         "title": "Media",
         "displayTitle": "Media",
-        "body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or simple use audio to - literally - do the talking. This is when the <b>Media</b> component comes to the fore.<br><br>Component can be either single or spanned.",
+        "body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or simply use audio to literally do the talking. This is when the <b>Media</b> component comes to the fore.<br><br>Component can be either single or spanned.",
         "instruction": "Select the play button to start the video.",
         "_media": {
             "mp4": "course/en/video/c-40.mp4",
@@ -429,7 +429,7 @@
         "_allowsPunctuation": true,
         "title": "Text Input",
         "displayTitle": "Text Input",
-        "body": "Can you name one of the three companies that established Adapt as a community-led Open Source project?",
+        "body": "Can you name one of the three companies that established Adapt as a community-led open source project?",
         "instruction": "Input your answer and select Submit.",
         "_answers": [
             ["City & Guilds Kineo", "Kineo"],
@@ -447,7 +447,7 @@
             "title": "Feedback",
             "correct": "Correct answer feedback.<br><br>That’s correct. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><i>Component facts: <b>Text input</b> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</i>",
             "_partlyCorrect": {
-                "final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><i>Component facts: <b>Text input</b> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</i>"
+                "final": "Partially correct answer feedback.<br><br>That’s partially correct. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><i>Component facts: <b>Text input</b> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</i>"
             },
             "_incorrect": {
                 "final": "Incorrect answer feedback.<br><br>Sorry, that’s not right. The Adapt Open Source project was established by Kineo, Learning Pool and Sponge. At the time of writing, there are a total of nine <a href='https://www.adaptlearning.org/index.php/collaborators/' target='_blank'>official collaborators</a>.<br><br><i>Component facts: <b>Text input</b> components let learners enter their own answers, which is great for questions that require a bit more flexibility, like those with answers that could be written as both full words and numbers.</i>"
