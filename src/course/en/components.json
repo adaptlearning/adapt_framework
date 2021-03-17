@@ -8,7 +8,7 @@
         "_layout": "left",
         "title": "Introduction",
         "displayTitle": "",
-        "body": "Adapt allows you to combine text and graphic components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br><b>These presentation components can be structured</b> in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
+        "body": "Adapt allows you to combine <b>Text</b> and <b>Graphic</b> components on the scrolling page to create rich and varied learning experiences. In addition, a wide range of interactive components are also available to help encourage deeper engagement with the material.<br><br><b>These presentation components can be structured</b> in any way to help you create learning experiences that meet the needs of your learners.<br><br>In addition, if your course is being launched from an <abbr title='Learning Management System'>LMS</abbr> or <abbr title='Learning Record Store'>LRS</abbr>, you can personalise the course content by having the learner's name dynamically displayed in the body, instruction or feedback text.",
         "instruction": "{{_globals._learnerInfo.firstname}}, scroll down to see what presentation components are available as part of the core bundle.",
         "_pageLevelProgress": {
             "_isEnabled": true,
@@ -43,7 +43,7 @@
         "_layout": "left",
         "title": "Text",
         "displayTitle": "Text",
-        "body": "The simple text component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the blank component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
+        "body": "The simple <b>Text</b> component can often be the best choice for imparting information, particularly when used in conjunction with complementary graphics. In this example we’ve used the <b>Blank</b> component to the right to create a window through to the block background.<br><br>Remember, content doesn’t always warrant an interaction so less can often be really be more. Instead, look to intersperse more interactive components with text and graphics where they add the maximum value.<br><br>Component can either be single or spanned.",
         "instruction": "",
         "_pageLevelProgress": {
             "_isEnabled": true,
@@ -69,7 +69,7 @@
         "_layout": "full",
         "title": "Graphic",
         "displayTitle": "Graphic",
-        "body": "This is the graphic component body. You can introduce your graphic or you may just want to let the graphics do the talking.<br><br>Component can either be single or spanned.",
+        "body": "This is the <b>Graphic</b> component body. You can introduce your graphic or you may just want to let the graphics do the talking.<br><br>Component can either be single or spanned.",
         "instruction": "",
         "_graphic": {
             "src": "course/en/images/full-width.png",
@@ -93,7 +93,7 @@
         "_hasNavigationInTextArea": false,
         "title": "Narrative",
         "displayTitle": "Narrative",
-        "body": "The narrative component lets you scroll through a series of images each with some accompanying text.<br><br>This component is always spanned.",
+        "body": "The <b>Narrative</b> component lets you scroll through a series of images each with some accompanying text.<br><br>This component is always spanned.",
         "instruction": "Select the next and back arrows to find out more.",
         "mobileInstruction": "Select the plus icon followed by the next arrow to find out more.",
         "_items": [
@@ -117,7 +117,7 @@
             },
             {
                 "title": "Narrative item 3",
-                "body": "The narrative can also be used when you want to illustrate the constituent steps that make up a larger process.",
+                "body": "The Narrative can also be used when you want to illustrate the constituent steps that make up a larger process.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
                     "alt": ""
@@ -146,7 +146,7 @@
         "_useGraphicsAsPins": false,
         "title": "Hot Graphic",
         "displayTitle": "Hot Graphic",
-        "body": "You can add interactivity to an image by using the <b>hot graphic</b>. This component allows you to position icons over an image. When an icon is selected, content associated with its corresponding location is displayed in a window over the image. This component will fall back to a <b>narrative</b> when viewed on mobile.<br><br>This component is always spanned.",
+        "body": "You can add interactivity to an image by using the <b>Hot Graphic</b>. This component allows you to position icons over an image. When an icon is selected, content associated with its corresponding location is displayed in a window over the image. This component will fall back to a <b>Narrative</b> when viewed on mobile.<br><br>This component is always spanned.",
         "instruction": "Select the icons to find out more.",
         "mobileInstruction": "Select the plus icon followed by the next arrow to find out more",
         "_graphic": {
@@ -156,39 +156,39 @@
         "_items": [
             {
                 "title": "Hot graphic item 1",
-                "body": "This is display text 1 which we have associated with the tablet image on the desktop.",
+                "body": "This is display text associated with item 1.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
                     "alt": "",
                     "_classes": ""
                 },
-                "strapline": "Hot graphic item 1",
+                "strapline": "Hot graphic strapline 1",
                 "_classes": "",
                 "_top": 42,
                 "_left": 8.5
             },
             {
                 "title": "Hot graphic item 2",
-                "body": "This is display text 2 which we have linked to the smartphone image.",
+                "body": "This is display text associated with item 2.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
                     "alt": "",
                     "_classes": ""
                 },
-                "strapline": "Hot graphic item 2",
+                "strapline": "Hot graphic strapline 2",
                 "_classes": "",
                 "_top": 62,
                 "_left": 26.5
             },
             {
                 "title": "Hot graphic item 3",
-                "body": "This is display text 3 which we’ve located over the laptop so you would expect the content to be about PCs.",
+                "body": "This is display text associated with item 3.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
                     "alt": "",
                     "_classes": ""
                 },
-                "strapline": "Hot graphic item 3",
+                "strapline": "Hot graphic strapline 3",
                 "_classes": "",
                 "_top": 62,
                 "_left": 49
@@ -212,7 +212,7 @@
         "_allowFullScreen": true,
         "title": "Media",
         "displayTitle": "Media",
-        "body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or just let audio to literally do the talking. This is when the media component comes to the fore.<br><br>Component can be either single or spanned.",
+        "body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or simple use audio to - literally - do the talking. This is when the <b>Media</b> component comes to the fore.<br><br>Component can be either single or spanned.",
         "instruction": "Select the play button to start the video.",
         "_media": {
             "mp4": "course/en/video/c-40.mp4",
@@ -254,7 +254,7 @@
         "_layout": "full",
         "title": "Accordion",
         "displayTitle": "Accordion",
-        "body": "You can use the <b>accordion</b> component to present learners with a series of headings which, once selected, expand to reveal associated text. Select each of the headings below to find out more about how accordions can be used.<br><br>These components can be either single or spanned. If spanned they can also contain a graphic.",
+        "body": "You can use the <b>Accordion</b> component to present learners with a series of headings which, once selected, expand to reveal associated text. Select each of the headings below to find out more about how accordions can be used.<br><br>These components can be either single or spanned. If spanned they can also contain a graphic.",
         "instruction": "Select the headings to find out more.",
         "_items": [
             {
@@ -369,7 +369,7 @@
         "_selectable": 1,
         "title": "Graphical Multiple Choice Question",
         "displayTitle": "Graphical Multiple Choice Question",
-        "body": "The graphical multiple choice question is an alternative to the standard MCQ, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
+        "body": "The Graphical Multiple Choice Question is an alternative to the standard <abbr title='Multiple Choice Question'>MCQ</abbr>, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
         "instruction": "Choose option 2 and select Submit.",
         "_columns": 3,
         "_items": [
@@ -429,7 +429,7 @@
         "_allowsPunctuation": true,
         "title": "Text Input",
         "displayTitle": "Text Input",
-        "body": "Can you name one of the three companies that established Adapt as a community led Open Source project?",
+        "body": "Can you name one of the three companies that established Adapt as a community-led Open Source project?",
         "instruction": "Input your answer and select Submit.",
         "_answers": [
             ["City & Guilds Kineo", "Kineo"],
@@ -833,9 +833,9 @@
         "_shouldDisplayAttempts": false,
         "_isRandom": true,
         "_selectable": 4,
-        "title": "Content objects",
-        "displayTitle": "Content objects",
-        "body": "What would you be referring to when describing a content object within Adapt?",
+        "title": "Content Objects",
+        "displayTitle": "Content Objects",
+        "body": "What would you be referring to when describing a Content Object within Adapt?",
         "instruction": "Choose one or more options and select Submit.",
         "_items": [
             {
