@@ -402,7 +402,7 @@
           "properties": {
             "buttonText": {
               "type": "string",
-              "default": "Correct answer",
+              "default": "Show correct answer",
               "inputType": "Text",
               "required": true,
               "validators": [
@@ -429,7 +429,7 @@
           "properties": {
             "buttonText": {
               "type": "string",
-              "default": "My answer",
+              "default": "Show your answer",
               "inputType": "Text",
               "required": true,
               "validators": [
@@ -440,7 +440,7 @@
             "ariaLabel": {
               "type": "string",
               "title": "ARIA label",
-              "default": "Hide correct answer",
+              "default": "Show your answer",
               "inputType": "Text",
               "required": true,
               "validators": [
