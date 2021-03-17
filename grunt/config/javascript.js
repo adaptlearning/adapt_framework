@@ -19,10 +19,6 @@ module.exports = function(grunt, options) {
           return grunt.config('helpers').includedFilter(filepath);
         },
         umdImports: [
-          '../node_modules/object.assign/dist/browser.js',
-          '../node_modules/react/umd/react.development.js',
-          '../node_modules/react-dom/umd/react-dom.development.js',
-          '../node_modules/html-react-parser/dist/html-react-parser.min.js'
         ],
         reactTemplates: [
           '<%= sourcedir %>core/templates/**/*.jsx',
@@ -85,10 +81,6 @@ module.exports = function(grunt, options) {
           return grunt.config('helpers').includedFilter(filepath);
         },
         umdImports: [
-          '../node_modules/object.assign/dist/browser.js',
-          '../node_modules/react/umd/react.production.min.js',
-          '../node_modules/react-dom/umd/react-dom.production.min.js',
-          '../node_modules/html-react-parser/dist/html-react-parser.min.js'
         ],
         reactTemplates: [
           '<%= sourcedir %>core/templates/**/*.jsx',

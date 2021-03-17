@@ -77,7 +77,11 @@
         scrollTo: 'libraries/scrollTo.min',
         bowser: 'libraries/bowser',
         'enum': 'libraries/enum',
-        jqueryMobile: 'libraries/jquery.mobile.custom'
+        jqueryMobile: 'libraries/jquery.mobile.custom',
+        react: 'libraries/react.development',
+        'react-dom': 'libraries/react-dom.development',
+        'object.assign': 'libraries/object.assign',
+        'html-react-parser': 'libraries/html-react-parser.min'
       }
     });
     loadJQuery();
@@ -123,7 +127,11 @@
       'libraries/jquery.resize',
       'scrollTo',
       'bowser',
-      'enum'
+      'enum',
+      'react',
+      'react-dom',
+      'object.assign',
+      'html-react-parser'
     ], loadGlobals);
   }
 
