@@ -108,7 +108,7 @@
             },
             {
                 "title": "Narrative item 2",
-                "body": "Narratives can also be used to present case studies, where the different displays are used to set the scene, show the key events and then the outcome.",
+                "body": "It can also be used to present case studies, where the different displays are used to set the scene, show the key events and then the outcome.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
                     "alt": ""
@@ -117,7 +117,7 @@
             },
             {
                 "title": "Narrative item 3",
-                "body": "The Narrative can also be used when you want to illustrate the constituent steps that make up a larger process.",
+                "body": "This component can also be useful when you want to illustrate the constituent steps that make up a larger process.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
                     "alt": ""
