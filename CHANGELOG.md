@@ -1,7 +1,7 @@
 ## [5.12.0] - 2021-03-17
 ### Added
 * Support for keyboard/screen reader accessibility for the correct answer toggle button (Part of [#2942](https://github.com/adaptlearning/adapt_framework/issues/2942))
-* Support for React .jsx templates (Part of [#2944](https://github.com/adaptlearning/adapt_framework/issues/2944))
+* Support for React JSX templates (Part of [#2944](https://github.com/adaptlearning/adapt_framework/issues/2944))
 
 ### Changed
 * The 'skip navigation' button now becomes visible when it has focus ([#3040](https://github.com/adaptlearning/adapt_framework/issues/3040))
@@ -11,7 +11,7 @@
 * Screen readers reading out 'blank' at the top of the screen after nagivating through the page ([#3057](https://github.com/adaptlearning/adapt_framework/issues/3057))
 * History state issue when routing is prevented by plugins like [pageIncompletePrompt](https://github.com/cgkineo/adapt-pageIncompletePrompt) ([#3061](https://github.com/adaptlearning/adapt_framework/issues/3061))
 * Error 'exception thrown but not caught' in IE11 whenever clicking on the page ([#3064](https://github.com/adaptlearning/adapt_framework/issues/3064))
-* The `tracking-remove` task wouldn't run if the [spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor) was not installed ([#3068](https://github.com/adaptlearning/adapt_framework/issues/3068))
+* The `tracking-remove` task wouldn't run if the [Spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor) was not installed ([#3068](https://github.com/adaptlearning/adapt_framework/issues/3068))
 * Odd scrolling behaviour when clicking on any Drawer item that caused Adapt to scroll to an element ([#3074](https://github.com/adaptlearning/adapt_framework/issues/3074))
 
 ## [5.11.0] - 2021-02-26
@@ -90,10 +90,10 @@
 * A `save` method to the `offlineStorage` API ([#2754](https://github.com/adaptlearning/adapt_framework/issues/2754))
 * New `DeepClone` API ([#2758](https://github.com/adaptlearning/adapt_framework/issues/2758))
 * New `ChildViews` API for rendering control ([#2760](https://github.com/adaptlearning/adapt_framework/issues/2760))
-* Option to track content at component level instead of block level ([#2805](https://github.com/adaptlearning/adapt_framework/issues/2805)). Note: requires [v3.5.0 of the spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor/releases/tag/v3.5.0).
+* Option to track content at component level instead of block level ([#2805](https://github.com/adaptlearning/adapt_framework/issues/2805)). Note: requires [v3.5.0 of the Spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor/releases/tag/v3.5.0).
 * Ability to exclude plugins from a 'production' build ([#2836](https://github.com/adaptlearning/adapt_framework/issues/2836))
 * Image compression via new `grunt compress` command ([#2866](https://github.com/adaptlearning/adapt_framework/issues/2866))
-* Ability to have the state of presentation components saved between sessions ([#2845](https://github.com/adaptlearning/adapt_framework/issues/2845)). Note: requires [v3.5.0 of the spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor/releases/tag/v3.5.0).
+* Ability to have the state of presentation components saved between sessions ([#2845](https://github.com/adaptlearning/adapt_framework/issues/2845)). Note: requires [v3.5.0 of the Spoor plugin](https://github.com/adaptlearning/adapt-contrib-spoor/releases/tag/v3.5.0).
 
 ### Changed
 * Underscore library updated to v1.10.2 ([#2773](https://github.com/adaptlearning/adapt_framework/issues/2773))
@@ -447,7 +447,7 @@ For a more detailed overview of the changes see ([#2711](https://github.com/adap
 - Updated JQuery from v2.2.3 to v3.3.1 ([#1303](https://github.com/adaptlearning/adapt_framework/issues/1303))
 - Moved trickle's `jquery.resize` plugin and model functions into core ([#1576](https://github.com/adaptlearning/adapt_framework/issues/1576))
 - Amended `offlineStorage` in preparation for the addition of xAPI support ([#1699](https://github.com/adaptlearning/adapt_framework/issues/1699))
-- Moved course completion settings and logic out of the spoor plugin and into core in preparation for the addition of xAPI support ([#1700](https://github.com/adaptlearning/adapt_framework/issues/1700))
+- Moved course completion settings and logic out of the Spoor plugin and into core in preparation for the addition of xAPI support ([#1700](https://github.com/adaptlearning/adapt_framework/issues/1700))
 - Tidy up of router.js ([#1757](https://github.com/adaptlearning/adapt_framework/issues/1757))
 - Amended `startController` to allow a class name as well as a selector ([#1843](https://github.com/adaptlearning/adapt_framework/issues/1843))
 - Updated Modernizr to v3.5.0 ([#1934](https://github.com/adaptlearning/adapt_framework/issues/1934))
