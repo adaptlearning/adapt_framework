@@ -369,7 +369,7 @@
         "_selectable": 1,
         "title": "Graphical Multiple Choice Question",
         "displayTitle": "Graphical Multiple Choice Question",
-        "body": "The Graphical Multiple Choice Question is an alternative to the standard <abbr title='Multiple Choice Question'>MCQ</abbr>, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
+        "body": "The <b>Graphical Multiple Choice Question</b> is an alternative to the standard <abbr title='Multiple Choice Question'>MCQ</abbr>, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
         "instruction": "Choose option 2 and select Submit.",
         "_columns": 3,
         "_items": [
