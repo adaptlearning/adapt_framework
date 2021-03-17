@@ -95,7 +95,7 @@
         "displayTitle": "Narrative",
         "body": "The narrative component lets you scroll through a series of images each with some accompanying text.<br><br>This component is always spanned.",
         "instruction": "Select the next and back arrows to find out more.",
-        "mobileInstruction": "Select the next and back arrows followed by the plus icon to find out more.",
+        "mobileInstruction": "Select the plus icon followed by the next arrow to find out more.",
         "_items": [
             {
                 "title": "Narrative item 1",
@@ -148,7 +148,7 @@
         "displayTitle": "Hot Graphic",
         "body": "You can add interactivity to an image by using the <strong>hot graphic</strong>. This component allows you to position icons over an image. When an icon is selected, content associated with its corresponding location is displayed in a window over the image. This component will fall back to a <strong>narrative</strong> when viewed on mobile.<br><br>This component is always spanned.",
         "instruction": "Select the icons to find out more.",
-        "mobileInstruction": "",
+        "mobileInstruction": "Select the plus icon followed by the next arrow to find out more",
         "_graphic": {
             "src": "course/en/images/hotgraphic.png",
             "alt": ""
