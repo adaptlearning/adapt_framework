@@ -155,40 +155,40 @@
         },
         "_items": [
             {
-                "title": "Hot graphic item 1",
+                "title": "Hot Graphic item 1",
                 "body": "This is display text associated with item 1.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
                     "alt": "",
                     "_classes": ""
                 },
-                "strapline": "Hot graphic strapline 1",
+                "strapline": "Hot Graphic strapline 1",
                 "_classes": "",
                 "_top": 42,
                 "_left": 8.5
             },
             {
-                "title": "Hot graphic item 2",
+                "title": "Hot Graphic item 2",
                 "body": "This is display text associated with item 2.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
                     "alt": "",
                     "_classes": ""
                 },
-                "strapline": "Hot graphic strapline 2",
+                "strapline": "Hot Graphic strapline 2",
                 "_classes": "",
                 "_top": 62,
                 "_left": 26.5
             },
             {
-                "title": "Hot graphic item 3",
+                "title": "Hot Graphic item 3",
                 "body": "This is display text associated with item 3.",
                 "_graphic": {
                     "src": "course/en/images/single-width.png",
                     "alt": "",
                     "_classes": ""
                 },
-                "strapline": "Hot graphic strapline 3",
+                "strapline": "Hot Graphic strapline 3",
                 "_classes": "",
                 "_top": 62,
                 "_left": 49
