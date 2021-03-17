@@ -41,7 +41,11 @@ module.exports = function(grunt, options) {
           libraries: 'empty:',
           bowser: 'empty:',
           'core/js/libraries/bowser': 'empty:',
-          'coreJS/libraries/bowser': 'empty:'
+          'coreJS/libraries/bowser': 'empty:',
+          react: 'empty:',
+          'react-dom': 'empty:',
+          'object.assign': 'empty:',
+          'html-react-parser': 'empty:'
         },
         map: {
           coreJS: 'core/js',
@@ -103,7 +107,11 @@ module.exports = function(grunt, options) {
           libraries: 'empty:',
           bowser: 'empty:',
           'core/js/libraries/bowser': 'empty:',
-          'coreJS/libraries/bowser': 'empty:'
+          'coreJS/libraries/bowser': 'empty:',
+          react: 'empty:',
+          'react-dom': 'empty:',
+          'object.assign': 'empty:',
+          'html-react-parser': 'empty:'
         },
         map: {
           coreJS: 'core/js',
