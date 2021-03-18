@@ -40,7 +40,11 @@ export default class ConfigModel extends LockingModel {
     this.fetch({
       success: () => {
         const language = this.getLanguageFromURL();
-        if (language) this.set('_defaultLanguage', language);
+
+        if (language) {
+          this.set('_defaultLanguage', language);
+          this.set('_activeLanguage', language);
+        };
 
         Adapt.trigger('offlineStorage:prepare');
         Adapt.wait.queue(() => {

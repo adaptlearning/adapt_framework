@@ -66,7 +66,6 @@ class Data extends AdaptCollection {
   onLoadCourseData() {
     if (!Adapt.config.get('_activeLanguage')) {
       Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
-      return;
     }
     this.loadCourseData();
   }
