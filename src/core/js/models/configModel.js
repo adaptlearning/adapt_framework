@@ -16,6 +16,22 @@ export default class ConfigModel extends LockingModel {
     };
   }
 
+  /**
+   * Parse the incoming search queries for a 'lang' parameter value to return
+   */
+  getLanguageFromURL() {
+    const search = window.location.search.substring(1);
+    const queries = search.split('&');
+
+    queries.forEach((query) => {
+      const pair = query.split('=');
+
+      if (decodeURIComponent(pair[0]) !== 'lang') return;
+
+      return decodeURIComponent(pair[1]);
+    });
+  }
+
   initialize(attrs, options) {
     this.url = options.url;
     // Fetch data & if successful trigger event to enable plugins to stop course files loading
@@ -23,6 +39,9 @@ export default class ConfigModel extends LockingModel {
     // 'configModel:loadCourseData' event starts the core content collections and models being fetched
     this.fetch({
       success: () => {
+        const language = this.getLanguageFromURL();
+        if (language) this.set('_defaultLanguage', language);
+
         Adapt.trigger('offlineStorage:prepare');
         Adapt.wait.queue(() => {
           Adapt.trigger('configModel:dataLoaded');
