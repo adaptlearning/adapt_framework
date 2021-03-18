@@ -237,6 +237,8 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
       correctAnswer = correctOptions.map(correctOption => correctOption.get('text')).join('<br>');
     }
 
+    if (!ariaAnswer) return;
+
     return Handlebars.compile(ariaAnswer)({ correctAnswer });
   }
 
@@ -259,6 +261,8 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
       ariaAnswer = globals.ariaUserAnswers;
       userAnswer = selectedItems.map(selectedItem => selectedItem.get('text')).join('<br>');
     }
+
+    if (!ariaAnswer) return;
 
     return Handlebars.compile(ariaAnswer)({ userAnswer });
   }
