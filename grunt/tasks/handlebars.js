@@ -142,8 +142,10 @@ module.exports = function(grunt) {
               compiled = `Handlebars.template(${compiled})`;
             }
           } catch (e) {
-            grunt.log.error(e);
-            grunt.fail.warn(`Handlebars failed to compile ${filepath}.`);
+            const title = `Handlebars failed to compile ${filepath}.`
+            e.message = `${title}\n${e.message}`;
+            console.error(e.toString());
+            grunt.fail.fatal(title);
           }
 
           var stringifiedFileName;
