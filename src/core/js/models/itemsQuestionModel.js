@@ -230,8 +230,8 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
 
     const correctOptions = this.getChildren().where({ _shouldBeSelected: true });
     const correctAnswer = isSingleSelect ?
-    correctOptions[0]?.get('text') :
-    correctOptions.map(correctOption => correctOption.get('text')).join('<br>');
+      correctOptions[0]?.get('text') :
+      correctOptions.map(correctOption => correctOption.get('text')).join('<br>');
 
     return Handlebars.compile(ariaAnswer)({ correctAnswer });
   }
@@ -250,8 +250,8 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
 
     const selectedItems = this.getActiveItems();
     const userAnswer = isSingleSelect ?
-    selectedItems[0].get('text') :
-    selectedItems.map(selectedItem => selectedItem.get('text')).join('<br>');
+      selectedItems[0].get('text') :
+      selectedItems.map(selectedItem => selectedItem.get('text')).join('<br>');
 
     return Handlebars.compile(ariaAnswer)({ userAnswer });
   }
