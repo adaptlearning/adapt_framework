@@ -1,6 +1,7 @@
 import Adapt from 'core/js/adapt';
 import ChildEvent from 'core/js/childEvent';
 import { render } from 'core/js/reactHelpers';
+import ReactDOM from 'react-dom';
 
 class AdaptView extends Backbone.View {
 

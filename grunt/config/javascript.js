@@ -19,10 +19,6 @@ module.exports = function(grunt, options) {
           return grunt.config('helpers').includedFilter(filepath);
         },
         umdImports: [
-          '../node_modules/object.assign/dist/browser.js',
-          '../node_modules/react/umd/react.development.js',
-          '../node_modules/react-dom/umd/react-dom.development.js',
-          '../node_modules/html-react-parser/dist/html-react-parser.min.js'
         ],
         reactTemplates: [
           '<%= sourcedir %>core/templates/**/*.jsx',
@@ -45,7 +41,11 @@ module.exports = function(grunt, options) {
           libraries: 'empty:',
           bowser: 'empty:',
           'core/js/libraries/bowser': 'empty:',
-          'coreJS/libraries/bowser': 'empty:'
+          'coreJS/libraries/bowser': 'empty:',
+          react: 'empty:',
+          'react-dom': 'empty:',
+          'object.assign': 'empty:',
+          'html-react-parser': 'empty:'
         },
         map: {
           coreJS: 'core/js',
@@ -85,10 +85,6 @@ module.exports = function(grunt, options) {
           return grunt.config('helpers').includedFilter(filepath);
         },
         umdImports: [
-          '../node_modules/object.assign/dist/browser.js',
-          '../node_modules/react/umd/react.production.min.js',
-          '../node_modules/react-dom/umd/react-dom.production.min.js',
-          '../node_modules/html-react-parser/dist/html-react-parser.min.js'
         ],
         reactTemplates: [
           '<%= sourcedir %>core/templates/**/*.jsx',
@@ -111,7 +107,11 @@ module.exports = function(grunt, options) {
           libraries: 'empty:',
           bowser: 'empty:',
           'core/js/libraries/bowser': 'empty:',
-          'coreJS/libraries/bowser': 'empty:'
+          'coreJS/libraries/bowser': 'empty:',
+          react: 'empty:',
+          'react-dom': 'empty:',
+          'object.assign': 'empty:',
+          'html-react-parser': 'empty:'
         },
         map: {
           coreJS: 'core/js',

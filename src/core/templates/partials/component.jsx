@@ -5,6 +5,7 @@ import {
   helper,
   html
 } from 'core/js/reactHelpers';
+import React from 'react';
 
 export default function(model, view) {
   const data = model.toJSON();

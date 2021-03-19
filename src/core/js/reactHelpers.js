@@ -1,5 +1,6 @@
 import Adapt from 'core/js/adapt';
 import TemplateRenderEvent from './templateRenderEvent';
+import HTMLReactParser from 'html-react-parser';
 
 /**
  * Finds a node in a react node hierarchy
@@ -89,7 +90,7 @@ export const templates = {};
  */
 export function html(html, ref = null) {
   if (!html) return;
-  let node = html ? window.HTMLReactParser(html) : '';
+  let node = html ? HTMLReactParser(html) : '';
   if (typeof node === 'object' && ref) {
     // Strip object freeze and write locks by cloning
     node = clone(node);
