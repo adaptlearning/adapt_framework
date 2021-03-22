@@ -224,18 +224,14 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
    */
   getCorrectAnswerAsText() {
     const globals = Adapt.course.get('_globals')._components['_' + this.get('_component')];
-    let ariaAnswer;
-    let correctAnswer;
+    const isSingleSelect = this.isSingleSelect();
+    const ariaAnswer = isSingleSelect ? globals?.ariaCorrectAnswer : globals?.ariaCorrectAnswers;
+    if (!ariaAnswer) return;
 
-    if (this.isSingleSelect()) {
-      ariaAnswer = globals.ariaCorrectAnswer;
-      const correctOption = this.getChildren().findWhere({ _shouldBeSelected: true });
-      correctAnswer = correctOption.get('text');
-    } else {
-      ariaAnswer = globals.ariaCorrectAnswers;
-      const correctOptions = this.getChildren().where({ _shouldBeSelected: true });
-      correctAnswer = correctOptions.map(correctOption => correctOption.get('text')).join('<br>');
-    }
+    const correctOptions = this.getChildren().where({ _shouldBeSelected: true });
+    const correctAnswer = isSingleSelect ?
+      correctOptions[0]?.get('text') :
+      correctOptions.map(correctOption => correctOption.get('text')).join('<br>');
 
     return Handlebars.compile(ariaAnswer)({ correctAnswer });
   }
@@ -248,17 +244,14 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
    */
   getUserAnswerAsText() {
     const globals = Adapt.course.get('_globals')._components['_' + this.get('_component')];
-    let ariaAnswer;
-    let userAnswer;
+    const isSingleSelect = this.isSingleSelect();
+    const ariaAnswer = isSingleSelect ? globals?.ariaUserAnswer : globals?.ariaUserAnswers;
+    if (!ariaAnswer) return;
 
     const selectedItems = this.getActiveItems();
-    if (selectedItems.length === 1) {
-      ariaAnswer = globals.ariaUserAnswer;
-      userAnswer = selectedItems[0].get('text');
-    } else {
-      ariaAnswer = globals.ariaUserAnswers;
-      userAnswer = selectedItems.map(selectedItem => selectedItem.get('text')).join('<br>');
-    }
+    const userAnswer = isSingleSelect ?
+      selectedItems[0].get('text') :
+      selectedItems.map(selectedItem => selectedItem.get('text')).join('<br>');
 
     return Handlebars.compile(ariaAnswer)({ userAnswer });
   }
