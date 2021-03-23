@@ -1,5 +1,5 @@
 'use strict';
-// jquery.onscreen 2018-01-22 https://github.com/adaptlearning/jquery.onscreen
+// 2021-03-23
 
 (function() {
 
@@ -542,13 +542,9 @@
 
     isOutOfBounds: function(element, parent) {
 
-      var isScrollWidthOverflowing = (parent.clientWidth < parent.scrollWidth);
-      var isScrollHeightOverflowing = (parent.clientHeight < parent.scrollHeight);
-      var isOverflowing = (isScrollWidthOverflowing || isScrollHeightOverflowing);
-
       var $parent = $(parent);
 
-      if (!isOverflowing || ($parent.css("overflow") === "visible")) {
+      if ($parent.css("overflow") === "visible") {
         return false;
       }
 
