@@ -1,3 +1,10 @@
+## [5.12.1] - 2021-03-23
+
+### Fixed
+* Various issues caused by inclusion of the React libraries from `node_modules` rather than loading as standard libraries ([3080](https://github.com/adaptlearning/adapt_framework/issues/3080))
+* `ItemsQuestionModel` triggering a Handlebars error if the new 'ARIA answer' globals weren't defined for MCQ/GMQ components ([#3089](https://github.com/adaptlearning/adapt_framework/issues/3089))
+* `u-clearfix` being read out as 'blank blank' by screenreaders ([#3094](https://github.com/adaptlearning/adapt_framework/issues/3094))
+
 ## [5.12.0] - 2021-03-17
 ### Added
 * Support for keyboard/screen reader accessibility for the correct answer toggle button (Part of [#2942](https://github.com/adaptlearning/adapt_framework/issues/2942))
@@ -1006,6 +1013,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.12.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.0...v5.12.1
 [5.12.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.11.0...v5.12.0
 [5.11.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.1...v5.11.0
 [5.10.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.0...v5.10.1
