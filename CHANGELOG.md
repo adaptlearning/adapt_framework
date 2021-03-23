@@ -3,7 +3,7 @@
 ### Fixed
 * Various issues caused by inclusion of the React libraries from `node_modules` rather than loading as standard libraries ([3080](https://github.com/adaptlearning/adapt_framework/issues/3080))
 * `ItemsQuestionModel` triggering a Handlebars error if the new 'ARIA answer' globals weren't defined for MCQ/GMQ components ([#3089](https://github.com/adaptlearning/adapt_framework/issues/3089))
-* `u-clearfix` being read out as 'blank blank' by screenreaders ([#3094](https://github.com/adaptlearning/adapt_framework/issues/3094))
+* `u-clearfix` being read out as 'blank blank' by screen readers ([#3094](https://github.com/adaptlearning/adapt_framework/issues/3094))
 
 ## [5.12.0] - 2021-03-17
 ### Added
