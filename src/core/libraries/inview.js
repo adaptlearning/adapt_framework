@@ -566,10 +566,10 @@
       parentPos.right = (parentPos.left + parent.clientWidth);
 
       // check inclusive of bounding rectangle edges
-      var isOutOfBounds = (Math.floor(elementPos.bottom) <= parentPos.top
-        || Math.floor(elementPos.right) <= parentPos.left
-        || Math.ceil(elementPos.top) >= parentPos.bottom
-        || Math.ceil(elementPos.left) >= parentPos.right);
+      var isOutOfBounds = (Math.floor(elementPos.bottom) <= Math.ceil(parentPos.top)
+        || Math.floor(elementPos.right) <= Math.ceil(parentPos.left)
+        || Math.ceil(elementPos.top) >= Math.floor(parentPos.bottom)
+        || Math.ceil(elementPos.left) >= Math.floor(parentPos.right));
 
 
       return isOutOfBounds;
