@@ -559,10 +559,10 @@
       var childOffsetRight = (childOffsetLeft + element.clientWidth);
 
       // check inclusive of bounding rectangle edges
-      var isOutOfBounds = (childOffsetTop >= parent.clientHeight
-        || childOffsetLeft >= parent.clientWidth
-        || childOffsetBottom <= 0
-        || childOffsetRight <= 0);
+      var isOutOfBounds = (Math.ceil(childOffsetTop) >= parent.clientHeight
+        || Math.ceil(childOffsetLeft) >= parent.clientWidth
+        || Math.floor(childOffsetBottom) <= 0
+        || Math.floor(childOffsetRight) <= 0);
 
       return isOutOfBounds;
 
