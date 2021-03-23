@@ -63,7 +63,7 @@ export default class BrowserFocus extends Backbone.Controller {
   _onClick(event) {
     const $element = $(event.target);
     // search elemenent and parents for aria-disabled - see https://github.com/adaptlearning/adapt_framework/issues/3097
-    const isAriaDisabled = $element.closest('[aria-disabled=true]') > 0;
+    const isAriaDisabled = $element.closest('[aria-disabled=true]').length > 0;
     if (isAriaDisabled) {
       event.preventDefault();
       event.stopImmediatePropagation();
