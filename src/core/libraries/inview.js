@@ -557,19 +557,20 @@
 
       var $element = $(element);
 
-      var childPos = $element.offset();
-      var parentPos = $parent.offset();
+      var elementPos = $element.offset();
+      elementPos.bottom = (elementPos.top + element.clientHeight);
+      elementPos.right = (elementPos.left + element.clientWidth);
 
-      var childOffsetTop = (childPos.top - parentPos.top);
-      var childOffsetLeft = (childPos.left - parentPos.left);
-      var childOffsetBottom = (childOffsetTop + element.clientHeight);
-      var childOffsetRight = (childOffsetLeft + element.clientWidth);
+      var parentPos = $parent.offset();
+      parentPos.bottom = (parentPos.top + parent.clientHeight);
+      parentPos.right = (parentPos.left + parent.clientWidth);
 
       // check inclusive of bounding rectangle edges
-      var isOutOfBounds = (Math.ceil(childOffsetTop) >= parent.clientHeight
-        || Math.ceil(childOffsetLeft) >= parent.clientWidth
-        || Math.floor(childOffsetBottom) <= 0
-        || Math.floor(childOffsetRight) <= 0);
+      var isOutOfBounds = (Math.floor(elementPos.bottom) <= parentPos.top
+        || Math.floor(elementPos.right) <= parentPos.left
+        || Math.ceil(elementPos.top) >= parentPos.bottom
+        || Math.ceil(elementPos.left) >= parentPos.right);
+
 
       return isOutOfBounds;
 
