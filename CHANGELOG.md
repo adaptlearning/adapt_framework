@@ -2,7 +2,7 @@
 
 ### Fixed
 * Poor wording of Narrative mobile instruction in the 'default course' content ([#3077](https://github.com/adaptlearning/adapt_framework/issues/3077))
-* Various issues caused by including the React libraries from `node_modules` rather than loading them as standard libraries ([3080](https://github.com/adaptlearning/adapt_framework/issues/3080))
+* Various issues caused by including the React libraries from `node_modules` rather than loading them as standard libraries ([#3080](https://github.com/adaptlearning/adapt_framework/issues/3080))
 * AAT preview hanging due to unhandled `promise` rejections in the Grunt tasks ([#3084](https://github.com/adaptlearning/adapt_framework/issues/3084))
 * `ItemsQuestionModel` triggering a Handlebars error if the new 'ARIA answer' globals weren't defined for components (such as MCQ & GMCQ that used/extended that model ([#3089](https://github.com/adaptlearning/adapt_framework/issues/3089))
 * The marking icon in `buttons.hbs` receiving focus when the course was accessed with a screen reader ([#3092](https://github.com/adaptlearning/adapt_framework/issues/3092))
