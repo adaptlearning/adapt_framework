@@ -73,7 +73,7 @@ class A11y extends Backbone.Controller {
 
     this._removeLegacyElements();
     this.listenToOnce(Adapt, {
-      'app:dataLoaded': this._onDataLoaded,
+      'configModel:dataLoaded': this._onConfigDataLoaded,
       'navigationView:postRender': this._removeLegacyElements
     }, this);
     Adapt.on('device:changed', this._setupNoSelect);
@@ -83,7 +83,7 @@ class A11y extends Backbone.Controller {
     });
   }
 
-  _onDataLoaded() {
+  _onConfigDataLoaded() {
     this.config = Adapt.config.get('_accessibility');
     this.config._isActive = false;
     this.config._options = _.defaults(this.config._options || {}, this.defaults());
