@@ -1,17 +1,24 @@
 'use strict';
-// jquery.onscreen 2018-01-22 https://github.com/adaptlearning/jquery.onscreen
+// 2021-03-23
 
 (function() {
 
-  //ENUMERATION SUPPORT
-  function ENUM(e){for(var i=0,l=e.length;i<l;i++){var n=e[i].toLowerCase();this[n]=(new Number(i));this[n].string=n;}}
+  // ENUMERATION SUPPORT
+  function ENUM(e) {
+    for (var i = 0, l = e.length; i < l; i++) {
+      var n = e[i].toLowerCase();
+      // eslint-disable-next-line no-new-wrappers
+      this[n] = (new Number(i));
+      this[n].string = n;
+    }
+  }
 
-  //handler id generation
+  // handler id generation
   var expando = {
     index: 0,
 
     check: function(element) {
-      //check that the element has a valid jquery expando property, or make one
+      // check that the element has a valid jquery expando property, or make one
 
       var hasExpando = (element[$.expando]);
       if (hasExpando) return;
@@ -21,19 +28,19 @@
     },
 
     make: function(element, data) {
-      //make a unique event id from the element's expando property and the event handler guid
+      // make a unique event id from the element's expando property and the event handler guid
 
       expando.check(element);
-      return data.guid + "-" + element[$.expando];
+      return data.guid + '-' + element[$.expando];
 
     }
   };
 
-  //handler functions
+  // handler functions
   var handlers = {
-    //types definition
-    TYPE: new ENUM(["onscreen", "inview"]),
-    INVIEW_STATES: new ENUM(["none", "top", "bottom", "left", "right", "both"]),
+    // types definition
+    TYPE: new ENUM(['onscreen', 'inview']),
+    INVIEW_STATES: new ENUM(['none', 'top', 'bottom', 'left', 'right', 'both']),
 
     registered: [],
     shouldReProcess: true,
@@ -59,10 +66,10 @@
       var registered = handlers.registered;
 
       var findId = expando.make(element, data);
-      for (var i = registered.length-1, l = -1; i > l; i--) {
-        var item = registered[i]
-        if (item.id != findId || item.type != type) continue;
-        registered.splice(i,1);
+      for (var i = registered.length - 1, l = -1; i > l; i--) {
+        var item = registered[i];
+        if (item.id !== findId || item.type !== type) continue;
+        registered.splice(i, 1);
         handlers.shouldReProcess = true;
       }
 
@@ -78,17 +85,17 @@
         handlers.shouldReProcess = false;
 
         registeredCount = registered.length;
-        if (registeredCount == 0) return;
+        if (registeredCount === 0) return;
 
         for (var i = 0; i < registeredCount; i++) {
           var item = registered[i];
           var measure = measurements.get(item.$element);
 
-          //check if measure has the same values as last
+          // check if measure has the same values as last
           var wasPreviouslyMeasured = (item._onscreen !== undefined);
 
           if (wasPreviouslyMeasured && item._hasTriggered) {
-            var hasMeasureChanged = (item._onscreen != measure.uniqueMeasurementId);
+            var hasMeasureChanged = (item._onscreen !== measure.uniqueMeasurementId);
             if (!hasMeasureChanged) {
               continue;
             }
@@ -98,11 +105,11 @@
           item._hasTriggered = true;
 
           switch (item.type) {
-          case handlers.TYPE.onscreen:
-            handlers.processOnScreen(item, measure);
-            break;
-          case handlers.TYPE.inview:
-            handlers.processInView(item, measure);
+            case handlers.TYPE.onscreen:
+              handlers.processOnScreen(item, measure);
+              break;
+            case handlers.TYPE.inview:
+              handlers.processInView(item, measure);
           }
           if (handlers.shouldReProcess) {
             break;
@@ -138,20 +145,20 @@
       else visiblePartX = handlers.INVIEW_STATES.none.string;
 
       var inviewState = [
-        measure.onscreen, //inview true/false
-        visiblePartX, //left, right, both, none
-        visiblePartY //top, bottom, both, none
+        measure.onscreen, // inview true/false
+        visiblePartX, // left, right, both, none
+        visiblePartY // top, bottom, both, none
       ];
 
       item._inviewPreviousState = inviewState;
       item._measurePreviousState = measure;
 
-      item.$element.trigger('inview', inviewState );
+      item.$element.trigger('inview', inviewState);
 
     }
   };
 
-  //checking loop management
+  // checking loop management
   var loop = {
 
     lastStartEvent: 0,
@@ -183,7 +190,7 @@
       var timeSinceLast = (new Date()).getTime() - loop.lastStartEvent;
       if (timeSinceLast < 1500) return;
 
-      loop.stop()
+      loop.stop();
       return true;
     },
 
@@ -206,16 +213,16 @@
 
       if (loop.hasExpired()) return;
 
-      if (handlers.registered.length == 0) {
-        //nothing to check
+      if (handlers.registered.length === 0) {
+        // nothing to check
         loop.stop();
-        //slow down to save cycles
+        // slow down to save cycles
         loop.intervalDuration = 200;
         loop.repeat();
       } else {
-        //something to check
+        // something to check
         loop.stop();
-        //speed up to make more responsive
+        // speed up to make more responsive
         loop.intervalDuration = 100;
         loop.repeat();
       }
@@ -243,7 +250,7 @@
 
   };
 
-  //jQuery element + event handler attachment / removal
+  // jQuery element + event handler attachment / removal
   $.extend($.event.special, {
 
     onscreen: {
@@ -276,15 +283,15 @@
 
   });
 
-  //jQuery interfaces
-  //element functions
+  // jQuery interfaces
+  // element functions
   $.extend($.fn, {
 
     onscreen: function onscreen(callback) {
 
       if (callback) {
-        //standard event attachment jquery api behaviour
-        this.on("onscreen", callback);
+        // standard event attachment jquery api behaviour
+        this.on('onscreen', callback);
         return this;
       }
 
@@ -295,8 +302,8 @@
     inview: function inview(callback) {
 
       if (callback) {
-        //standard event attachment jquery api behaviour
-        this.on("inview", callback);
+        // standard event attachment jquery api behaviour
+        this.on('inview', callback);
         return this;
       }
 
@@ -306,8 +313,8 @@
 
   });
 
-  //interface to allow for inview/onscreen to be disabled
-  var locking =  {
+  // interface to allow for inview/onscreen to be disabled
+  var locking = {
     locks: [],
 
     lock: function(name) {
@@ -323,8 +330,8 @@
 
       for (var i = 0, l = locking.locks.length; i < l; i++) {
         var lock = locking.locks[i];
-        if (lock == name) {
-          locking.locks.splice(i,1);
+        if (lock === name) {
+          locking.locks.splice(i, 1);
           break;
         }
       }
@@ -339,7 +346,7 @@
 
       for (var i = 0, l = locking.locks.length; i < l; i++) {
         var lock = locking.locks[i];
-        if (lock == name) {
+        if (lock === name) {
           return true;
         }
       }
@@ -354,7 +361,7 @@
     options: {},
 
     config: function(options) {
-      if (typeof options !== "object") return;
+      if (typeof options !== 'object') return;
 
       $.extend(config.options, options);
 
@@ -362,15 +369,15 @@
 
   };
 
-  //force an inview check - standard trigger event jquery api behaviour
+  // force an inview check - standard trigger event jquery api behaviour
   $.inview = $.onscreen = function() {
     loop.start();
   };
 
-  //attach locking interface to $.inview.lock(name); etc
+  // attach locking interface to $.inview.lock(name); etc
   $.extend($.inview, locking, config);
 
-  //window size handlers
+  // window size handlers
   var wndw = {
 
     $el: $(window),
@@ -399,7 +406,7 @@
 
     get: function get($element) {
 
-      if ($element.length == 0) return;
+      if ($element.length === 0) return;
 
       var el = $element[0];
       var offset;
@@ -414,40 +421,40 @@
       var height = offset.height;
       var width = offset.width;
 
-      //topleft from topleft of window
-      var top = offset["top"];
-      var left = offset["left"];
+      // topleft from topleft of window
+      var top = offset['top'];
+      var left = offset['left'];
 
-      //bottomright from bottomright of window
+      // bottomright from bottomright of window
       var bottom = wndw.height - (top + height);
-      var right = wndw.width - (left + width)
+      var right = wndw.width - (left + width);
 
-      //percentages of above
+      // percentages of above
       var percentFromTop = Math.round(wndw.heightRatio * top);
       var percentFromLeft = Math.round(wndw.widthRatio * left);
       var percentFromBottom = Math.round(wndw.heightRatio * bottom);
       var percentFromRight = Math.round(wndw.widthRatio * right);
 
-      //inview
+      // inview
       var inviewHorizontal = null;
-      if (left+width > 0 && right < 0 && left < 0) {
+      if (left + width > 0 && right < 0 && left < 0) {
         inviewHorizontal = width;
-      } else if (left < 0) { //offscreen left
+      } else if (left < 0) { // offscreen left
         inviewHorizontal = (width + left);
-      } else if (left + width > wndw.width) { //offscreen right
+      } else if (left + width > wndw.width) { // offscreen right
         inviewHorizontal = (wndw.width - left);
-      } else { //fully inscreen
+      } else { // fully inscreen
         inviewHorizontal = width;
       }
 
       var inviewVertical = null;
-      if (top+height > 0 && bottom < 0 && top < 0) {
+      if (top + height > 0 && bottom < 0 && top < 0) {
         inviewVertical = height;
-      } else if (top < 0) { //offscreen top
+      } else if (top < 0) { // offscreen top
         inviewVertical = (height + top);
-      } else if (top + height > wndw.height) { //offscreen bottom
+      } else if (top + height > wndw.height) { // offscreen bottom
         inviewVertical = (wndw.height - top);
-      } else { //fully inscreen
+      } else { // fully inscreen
         inviewVertical = height;
       }
 
@@ -478,7 +485,7 @@
         var parents = measurements.getParents(el);
 
         // go through all the parents except the html tag
-        for (var i = 0, l = parents.length-1; i < l; i++) {
+        for (var i = 0, l = parents.length - 1; i < l; i++) {
           var parent = parents[i];
 
           cssHidden = measurements.isElementHidden(parent);
@@ -490,7 +497,7 @@
           }
 
           // check if child is out of bounds inside its parent
-          var isOutOfBounds = measurements.isOutOfBounds(el, parent)
+          var isOutOfBounds = measurements.isOutOfBounds(el, parent);
           if (isOutOfBounds) {
             onscreen = false;
             break;
@@ -500,7 +507,7 @@
 
       }
 
-      var uniqueMeasurementId = ""+top+left+bottom+right+height+width+wndw.height+wndw.width+onscreen;
+      var uniqueMeasurementId = '' + top + left + bottom + right + height + width + wndw.height + wndw.width + onscreen;
 
       return {
         top: top,
@@ -524,7 +531,7 @@
     getParents: function(element) {
       var parents = [];
       var parent;
-      while (parent = element.parentElement) {
+      while ((parent = element.parentElement)) {
         parents.push(parent);
         element = parent;
       }
@@ -532,41 +539,38 @@
     },
 
     isElementHidden: function(element) {
-      var cssHidden = (element.style.display == "none" || element.style.visibility == "hidden");
+      var cssHidden = (element.style.display === 'none' || element.style.visibility === 'hidden');
       if (cssHidden) return true;
 
       var style = window.getComputedStyle(element, null);
-      cssHidden = (style.display == "none" || style.visibility == "hidden");
+      cssHidden = (style.display === 'none' || style.visibility === 'hidden');
       return cssHidden;
     },
 
     isOutOfBounds: function(element, parent) {
 
-      var isScrollWidthOverflowing = (parent.clientWidth < parent.scrollWidth);
-      var isScrollHeightOverflowing = (parent.clientHeight < parent.scrollHeight);
-      var isOverflowing = (isScrollWidthOverflowing || isScrollHeightOverflowing);
-
       var $parent = $(parent);
 
-      if (!isOverflowing || ($parent.css("overflow") === "visible")) {
+      if ($parent.css('overflow') === 'visible') {
         return false;
       }
 
       var $element = $(element);
 
-      var childPos = $element.offset();
-      var parentPos = $parent.offset();
+      var elementPos = $element.offset();
+      elementPos.bottom = (elementPos.top + element.clientHeight);
+      elementPos.right = (elementPos.left + element.clientWidth);
 
-      var childOffsetTop = (childPos.top - parentPos.top);
-      var childOffsetLeft = (childPos.left - parentPos.left);
-      var childOffsetBottom = (childOffsetTop + element.clientHeight);
-      var childOffsetRight = (childOffsetLeft + element.clientWidth);
+      var parentPos = $parent.offset();
+      parentPos.bottom = (parentPos.top + parent.clientHeight);
+      parentPos.right = (parentPos.left + parent.clientWidth);
 
       // check inclusive of bounding rectangle edges
-      var isOutOfBounds = (childOffsetTop >= parent.clientHeight
-        || childOffsetLeft >= parent.clientWidth
-        || childOffsetBottom <= 0
-        || childOffsetRight <= 0);
+      var isOutOfBounds = (Math.floor(elementPos.bottom) <= Math.ceil(parentPos.top)
+        || Math.floor(elementPos.right) <= Math.ceil(parentPos.left)
+        || Math.ceil(elementPos.top) >= Math.floor(parentPos.bottom)
+        || Math.ceil(elementPos.left) >= Math.floor(parentPos.right));
+
 
       return isOutOfBounds;
 
@@ -574,10 +578,10 @@
 
   };
 
-  //attach event handlers
+  // attach event handlers
   $(window).on({
-    "touchmove scroll mousedown keydown": loop.start,
-    "resize": wndw.resize
+    'touchmove scroll mousedown keydown': loop.start,
+    'resize': wndw.resize
   });
 
   $(measurements.featureDetect);
