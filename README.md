@@ -9,11 +9,11 @@ The Adapt framework is a toolkit for creating responsive, single-version HTML5 e
 
 We've also created a [server-based authoring tool](https://github.com/adaptlearning/adapt_authoring/) for creating courses using the framework.
 
-Interested? [See what Adapt can do.](https://community.adaptlearning.org/demo2/index.html)
+Interested? [See what Adapt can do.](https://adaptlearning.github.io/v5demo/)
 
 ## Features
 + Open source, published under the GNU General Public License, and FREE
-+ HTML5 and CSS3 - now with support for JavaScript ES6-8
++ HTML5 and CSS3 - now with support for JavaScript ES6-8 and [JSX](https://reactjs.org/docs/introducing-jsx.html)
 + Responsive across multiple devices and platforms
 + Delivery of courses via SCORM compliant LMS or via web server
 + 23 bundled plug-ins, [more available](https://www.adaptlearning.org/index.php/plugin-browser/) through the community
