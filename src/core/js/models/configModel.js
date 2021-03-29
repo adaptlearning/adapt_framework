@@ -43,7 +43,6 @@ export default class ConfigModel extends LockingModel {
 
         if (language) {
           this.set('_defaultLanguage', language);
-          this.set('_activeLanguage', language);
         };
 
         Adapt.trigger('offlineStorage:prepare');
