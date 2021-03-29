@@ -19,17 +19,20 @@ export default class ConfigModel extends LockingModel {
   /**
    * Parse the incoming search queries for a 'lang' parameter value to return
    */
-  getLanguageFromURL() {
-    const search = window.location.search.substring(1);
-    const queries = search.split('&');
+  setValuesFromURLParams() {
+    const paramMappings = {
+      lang: '_defaultLanguage'
+    };
 
-    queries.forEach((query) => {
-      const pair = query.split('=');
+    const params = new URLSearchParams(window.location.search);
 
-      if (decodeURIComponent(pair[0]) !== 'lang') return;
+    for (const [key, value] of Object.entries(paramMappings)) {
+      const passedVal = params.get(key);
 
-      return decodeURIComponent(pair[1]);
-    });
+      if (passedVal) {
+        this.set(value, passedVal);
+      }
+    }
   }
 
   initialize(attrs, options) {
@@ -39,11 +42,7 @@ export default class ConfigModel extends LockingModel {
     // 'configModel:loadCourseData' event starts the core content collections and models being fetched
     this.fetch({
       success: () => {
-        const language = this.getLanguageFromURL();
-
-        if (language) {
-          this.set('_defaultLanguage', language);
-        };
+        this.setValuesFromURLParams();
 
         Adapt.trigger('offlineStorage:prepare');
         Adapt.wait.queue(() => {
