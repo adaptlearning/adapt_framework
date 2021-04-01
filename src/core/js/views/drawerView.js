@@ -25,8 +25,7 @@ class DrawerView extends Backbone.View {
     }
     this.setupEventListeners();
     this.render();
-    this.drawerDuration = Adapt.config.get('_drawer')._duration;
-    this.drawerDuration = (this.drawerDuration) ? this.drawerDuration : 400;
+    this.drawerDuration = Adapt.config.get('_drawer')._duration ?? 0;
     // Setup cached selectors
     this.$wrapper = $('#wrapper');
   }
