@@ -26,7 +26,6 @@ class DrawerView extends Backbone.View {
     this.setupEventListeners();
     this.render();
     this.drawerDuration = Adapt.config.get('_drawer')._duration ?? 0;
-    // Setup cached selectors
     this.$wrapper = $('#wrapper');
   }
 
@@ -66,12 +65,10 @@ class DrawerView extends Backbone.View {
     $(this.el).html(template({ _globals: Adapt.course.get('_globals') })).prependTo('body');
     const shadowTemplate = Handlebars.templates['shadow'];
     $(shadowTemplate()).prependTo('body');
-    // Set defer on post render
     _.defer(this.postRender.bind(this));
     return this;
   }
 
-  // Set tabindex for select elements
   postRender() {
     this.$('a, button, input, select, textarea').attr('tabindex', -1);
 
@@ -79,7 +76,6 @@ class DrawerView extends Backbone.View {
   }
 
   openCustomView(view, hasBackButton) {
-    // Set whether back button should display
     this._hasBackButton = hasBackButton;
     this._isCustomViewVisible = true;
     Adapt.trigger('drawer:empty');
@@ -173,7 +169,6 @@ class DrawerView extends Backbone.View {
       this.$el.css(direction);
       complete();
     } else {
-      // eslint-disable-next-line object-property-newline
       $('.js-shadow').velocity({ opacity: 1 }, {
         duration: this.drawerDuration,
         begin: () => {
@@ -208,7 +203,6 @@ class DrawerView extends Backbone.View {
 
   hideDrawer($toElement) {
     const direction = {};
-    // only trigger popup:closed if drawer is visible
     if (this._isVisible) {
       Adapt.a11y.popupClosed($toElement);
       this._isVisible = false;
