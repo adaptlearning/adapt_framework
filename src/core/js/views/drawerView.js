@@ -20,10 +20,9 @@ class DrawerView extends Backbone.View {
     this._isVisible = false;
     this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
     this.drawerDir = Adapt.config.get('_defaultDirection') === 'rtl' ? 'left' : 'right';
+    this.drawerDuration = Adapt.config.get('_drawer')._duration ?? 0;
     this.setupEventListeners();
     this.render();
-    this.drawerDuration = Adapt.config.get('_drawer')._duration ?? 0;
-    this.$wrapper = $('#wrapper');
   }
 
   setupEventListeners() {
@@ -58,9 +57,9 @@ class DrawerView extends Backbone.View {
   }
 
   render() {
-    const template = Handlebars.templates['drawer'];
+    const template = Handlebars.templates.drawer;
     $(this.el).html(template({ _globals: Adapt.course.get('_globals') })).prependTo('body');
-    const shadowTemplate = Handlebars.templates['shadow'];
+    const shadowTemplate = Handlebars.templates.shadow;
     $(shadowTemplate()).prependTo('body');
     _.defer(this.postRender.bind(this));
     return this;
