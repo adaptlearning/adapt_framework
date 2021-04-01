@@ -190,7 +190,7 @@ class DrawerView extends Backbone.View {
   renderItems() {
     Adapt.trigger('drawer:empty');
     this.emptyDrawer();
-    this.collection.models.forEach(model => new DrawerItemView({ model }));
+    this.collection.forEach(model => new DrawerItemView({ model }));
   }
 
   hideDrawer($toElement) {
