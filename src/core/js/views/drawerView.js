@@ -174,9 +174,7 @@ class DrawerView extends Backbone.View {
         }
       });
 
-      const showEasingAnimation = Adapt.config.get('_drawer')._showEasing;
-      const easing = (showEasingAnimation) || 'easeOutQuart';
-
+      const easing = Adapt.config.get('_drawer')?._showEasing || 'easeOutQuart';
       direction[this.drawerDir] = 0;
       this.$el.velocity(direction, this.drawerDuration, easing);
     }
@@ -214,9 +212,7 @@ class DrawerView extends Backbone.View {
       Adapt.trigger('drawer:closed');
 
     } else {
-
-      const showEasingAnimation = Adapt.config.get('_drawer')._hideEasing;
-      const easing = (showEasingAnimation) || 'easeOutQuart';
+      const easing = Adapt.config.get('_drawer')?._hideEasing || 'easeInQuart';
 
       direction[this.drawerDir] = -this.$el.width();
       this.$el.velocity(direction, this.drawerDuration, easing, () => {
