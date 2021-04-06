@@ -303,6 +303,8 @@ module.exports = function(grunt) {
               [
                 '@babel/preset-env',
                 {
+                  useBuiltIns: 'entry',
+                  corejs: 3,
                   targets: {
                     ie: '11'
                   },
