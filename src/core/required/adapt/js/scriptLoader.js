@@ -63,6 +63,7 @@
       },
       paths: {
         polyfill: 'libraries/polyfill.min',
+        urlsearchparams: 'libraries/urlsearchparams',
         jquery: 'libraries/jquery.min',
         underscore: 'libraries/underscore.min',
         'underscore.results': 'libraries/underscore.results',
@@ -115,6 +116,7 @@
       'handlebars',
       'underscore',
       'polyfill',
+      'urlsearchparams',
       'underscore.results',
       'backbone',
       'backbone.controller',
