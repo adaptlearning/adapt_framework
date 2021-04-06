@@ -20,7 +20,7 @@ class DrawerView extends Backbone.View {
     this._isVisible = false;
     this.disableAnimation = Adapt.config.has('_disableAnimation') ? Adapt.config.get('_disableAnimation') : false;
     this.drawerDir = Adapt.config.get('_defaultDirection') === 'rtl' ? 'left' : 'right';
-    this.drawerDuration = Adapt.config.get('_drawer')._duration ?? 400;
+    this.drawerDuration = Adapt.config.get('_drawer')?._duration ?? 400;
     this.setupEventListeners();
     this.render();
   }
