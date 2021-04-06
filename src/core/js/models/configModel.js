@@ -17,7 +17,7 @@ export default class ConfigModel extends LockingModel {
   }
 
   /**
-   * Parse the incoming search queries for a 'lang' parameter value to return
+   * Parse the incoming search queries for certain parameter values to use as defaults
    */
   setValuesFromURLParams() {
     const paramMappings = {
