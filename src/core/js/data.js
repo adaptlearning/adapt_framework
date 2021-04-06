@@ -100,7 +100,7 @@ class Data extends AdaptCollection {
   getJSON(path) {
     return new Promise((resolve, reject) => {
       $.getJSON(path, data => {
-        // Add path to data incase it's necessary later
+        // Add path to data in case it's necessary later
         data.__path__ = path;
         resolve(data);
       }).fail(reject);
@@ -169,7 +169,7 @@ class Data extends AdaptCollection {
       Adapt.trigger('app:languageChanged', newLanguage);
       _.defer(() => {
         Adapt.startController.loadCourseData();
-        const hash = Adapt.startController.isEnabled() ? Adapt.startController.getStartHash(true) : '#/';
+        const hash = Adapt.startController.isEnabled() ? Adapt.startController.getStartHash(false) : '#/';
         Adapt.router.navigate(hash, { trigger: true, replace: true });
       });
     }
