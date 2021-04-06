@@ -21,6 +21,7 @@ export default class ConfigModel extends LockingModel {
    */
   setValuesFromURLParams() {
     const paramMappings = {
+      dir: '_defaultDirection',
       lang: '_defaultLanguage'
     };
 
@@ -29,9 +30,9 @@ export default class ConfigModel extends LockingModel {
     for (const [key, value] of Object.entries(paramMappings)) {
       const passedVal = params.get(key);
 
-      if (passedVal) {
-        this.set(value, passedVal);
-      }
+      if (!passedVal) continue;
+
+      this.set(value, passedVal);
     }
   }
 
