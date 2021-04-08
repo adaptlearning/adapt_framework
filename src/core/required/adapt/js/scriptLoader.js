@@ -62,7 +62,8 @@
         }
       },
       paths: {
-        polyfill: 'libraries/polyfill.min',
+        'regenerator-runtime': 'libraries/regenerator-runtime.min',
+        'core-js': 'libraries/core-js.min',
         jquery: 'libraries/jquery.min',
         underscore: 'libraries/underscore.min',
         'underscore.results': 'libraries/underscore.results',
@@ -114,7 +115,8 @@
     require([
       'handlebars',
       'underscore',
-      'polyfill',
+      'regenerator-runtime',
+      'core-js',
       'underscore.results',
       'backbone',
       'backbone.controller',
