@@ -1,5 +1,12 @@
-## [5.12.1] - 2021-03-24
+## [5.12.2] - 2021-04-08
+### Changed
+* Switched from (deprecated) Babel polyfill to [core-js@3](https://github.com/zloirock/core-js) ([#3113](https://github.com/adaptlearning/adapt_framework/issues/3113))
 
+### Fixed
+* Drawer animation duration couldn't be set to `0` ([#3108](https://github.com/adaptlearning/adapt_framework/issues/3108))
+* Switching languages causing the start page to be redisplayed ([#3111](https://github.com/adaptlearning/adapt_framework/issues/3111))
+
+## [5.12.1] - 2021-03-24
 ### Fixed
 * Poor wording of Narrative mobile instruction in the 'default course' content ([#3077](https://github.com/adaptlearning/adapt_framework/issues/3077))
 * Various issues caused by including the React libraries from `node_modules` rather than loading them as standard libraries ([#3080](https://github.com/adaptlearning/adapt_framework/issues/3080))
@@ -1019,6 +1026,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.12.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.1...v5.12.2
 [5.12.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.0...v5.12.1
 [5.12.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.11.0...v5.12.0
 [5.11.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.10.1...v5.11.0
