@@ -114,7 +114,8 @@ class DrawerView extends Backbone.View {
   }
 
   showDrawer(emptyDrawer) {
-    this.$el.removeClass('u-display-none').removeAttr('aria-hidden');
+    const $drawer = this.$el;
+    $drawer.removeClass('u-display-none').removeAttr('aria-hidden');
     // Only trigger popup:opened if drawer is visible, pass popup manager drawer element
     if (!this._isVisible) {
       Adapt.a11y.popupOpened(this.$el);
@@ -152,7 +153,7 @@ class DrawerView extends Backbone.View {
       Adapt.trigger('drawer:opened');
 
       // focus on first tabbable element in drawer
-      Adapt.a11y.focusFirst(this.$el, { defer: true });
+      Adapt.a11y.focusFirst($drawer, { defer: true });
     };
 
     // delay drawer animation until after background fadeout animation is complete
@@ -162,7 +163,7 @@ class DrawerView extends Backbone.View {
       $('.js-drawer-holder').scrollTop(0);
 
       direction[this.drawerDir] = 0;
-      this.$el.css(direction);
+      $drawer.css(direction);
       complete();
     } else {
       $('.js-shadow').velocity({ opacity: 1 }, {
@@ -176,7 +177,7 @@ class DrawerView extends Backbone.View {
 
       const easing = Adapt.config.get('_drawer')?._showEasing || 'easeOutQuart';
       direction[this.drawerDir] = 0;
-      this.$el.velocity(direction, this.drawerDuration, easing);
+      $drawer.velocity(direction, this.drawerDuration, easing);
     }
 
   }
@@ -223,7 +224,8 @@ class DrawerView extends Backbone.View {
         Adapt.trigger('drawer:closed');
       });
 
-      $('.js-shadow').velocity({ opacity: 0 }, { duration: this.drawerDuration,
+      $('.js-shadow').velocity({ opacity: 0 }, {
+        duration: this.drawerDuration,
         complete() {
           $('.js-shadow').addClass('u-display-none');
         }
