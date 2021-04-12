@@ -27,13 +27,11 @@ export default class ConfigModel extends LockingModel {
 
     const params = new URLSearchParams(window.location.search);
 
-    for (const [key, value] of Object.entries(paramMappings)) {
+    Object.entries(paramMappings).forEach(([key, value]) => {
       const passedVal = params.get(key);
-
-      if (!passedVal) continue;
-
+      if (!passedVal) return;
       this.set(value, passedVal);
-    }
+    });
   }
 
   initialize(attrs, options) {
