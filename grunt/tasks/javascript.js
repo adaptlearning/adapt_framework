@@ -109,23 +109,20 @@ module.exports = function(grunt) {
           break;
         default:
           hasOutput = true;
-          console.log('error', err);
+          console.error(err.toString());
       }
       if (!hasOutput) {
-        grunt.log.error(err.message);
-        grunt.log.error(`Line: ${err.loc.line}, Col: ${err.loc.column}, File: ${err.id.replace(cwd, '')}`);
-        console.log(err.frame);
+        console.error(err.toString());
+        console.error(`Line: ${err.loc.line}, Col: ${err.loc.column}, File: ${err.id.replace(cwd, '')}`);
+        console.error(err.frame);
         hasOutput = true;
       }
     }
     if (!hasOutput) {
       cache = null;
       saveCache(cachePath, basePath, cache);
-      console.log(err);
+      console.error(err.toString());
     }
-    const errorString = err.toString();
-    console.error(errorString);
-    grunt.fail.fatal(errorString);
   };
 
   grunt.registerMultiTask('javascript', 'Compile JavaScript files', async function() {
