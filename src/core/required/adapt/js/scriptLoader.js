@@ -82,7 +82,8 @@
         react: 'libraries/react.development',
         'react-dom': 'libraries/react-dom.development',
         'object.assign': 'libraries/object.assign',
-        'html-react-parser': 'libraries/html-react-parser.min'
+        'html-react-parser': 'libraries/html-react-parser.min',
+        semver: 'libraries/semver'
       }
     });
     loadJQuery();
@@ -133,7 +134,8 @@
       'react',
       'react-dom',
       'object.assign',
-      'html-react-parser'
+      'html-react-parser',
+      'semver'
     ], loadGlobals);
   }
 
