@@ -398,6 +398,7 @@ window.__AMD = function(id, value) {
       done();
     } catch (err) {
       logPrettyError(err, options.cachePath, basePath);
+      done(false);
     }
   });
 };
