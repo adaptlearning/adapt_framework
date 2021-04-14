@@ -16,7 +16,7 @@ class Device extends Backbone.Controller {
     this.renderingEngine = this.getRenderingEngine();
     this.onWindowResize = _.debounce(this.onWindowResize.bind(this), 100);
     this.listenTo(Adapt, {
-      'app:dataReady': this.onDataReady
+      'configModel:dataLoaded': this.onConfigDataLoaded
     });
     const browser = this.browser.toLowerCase();
     // Convert 'msie' and 'internet explorer' to 'ie'.
@@ -35,7 +35,7 @@ class Device extends Backbone.Controller {
     return this.screenWidth / this.screenHeight;
   }
 
-  onDataReady() {
+  onConfigDataLoaded() {
     this.screenSize = this.checkScreenSize();
     this.$html.addClass('size-' + this.screenSize);
     if (this.orientation) {
