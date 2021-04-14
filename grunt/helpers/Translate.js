@@ -275,7 +275,7 @@ class Translate {
     let importData;
     switch (format) {
       case 'json':
-        importData = fs.readFileSync(langFiles[0]);
+        importData = fs.readJSONSync(langFiles[0]);
         break;
       case 'csv':
       default:
