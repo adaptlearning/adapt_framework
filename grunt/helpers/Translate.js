@@ -371,7 +371,7 @@ class Translate {
     // update data
     importData.forEach(data => {
       const { file, item } = targetLanguage.getFileItemById(data.id);
-      const attributePath = data.path.split('/');
+      const attributePath = data.path.split('/').filter(Boolean);
       const currentValue = _.get(item, attributePath);
       if (currentValue === data.value) {
         // value is unchanged, skip
