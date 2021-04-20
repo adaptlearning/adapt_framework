@@ -29,13 +29,13 @@ export default class BuildModel extends LockingModel {
   }
 
   isFrameworkVersion(version) {
-    return semver.satisfies(this.get('package').version, version);
+    return semver.satisfies(this.get('package').version, version, { includePrerelease: true });
   }
 
   isPluginInstalled(name, version = '*') {
     const plugin = this.get('plugins').find(plugin => {
       if (plugin.name !== name) return false;
-      return semver.satisfies(plugin.version, version);
+      return semver.satisfies(plugin.version, version, { includePrerelease: true });
     });
     return Boolean(plugin);
   }
