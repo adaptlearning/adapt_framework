@@ -1,6 +1,7 @@
 import Adapt from 'core/js/adapt';
 import LockingModel from 'core/js/models/lockingModel';
 import 'core/js/logging';
+import semver from 'semver';
 
 export default class BuildModel extends LockingModel {
 
@@ -25,6 +26,18 @@ export default class BuildModel extends LockingModel {
         Adapt.trigger('buildModel:dataLoaded');
       }
     });
+  }
+
+  isFrameworkVersion(version) {
+    return semver.satisfies(this.get('package').version, version, { includePrerelease: true });
+  }
+
+  isPluginInstalled(name, version = '*') {
+    const plugin = this.get('plugins').find(plugin => {
+      if (plugin.name !== name) return false;
+      return semver.satisfies(plugin.version, version, { includePrerelease: true });
+    });
+    return Boolean(plugin);
   }
 
   whenReady() {
