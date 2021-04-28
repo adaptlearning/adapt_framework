@@ -187,10 +187,11 @@ class Language {
     let missingIds = {};
     items.forEach((o) => {
       const isCourseType = (o._type === 'course');
+      const isComponentType = (o._type === 'component');
       if (idGroups[o._id].length > 1) {
         duplicateIds[o._id] = true; // Id has more than one item
       }
-      if (isCourseType && !parentIdGroups[o._id]) {
+      if (!isComponentType && !parentIdGroups[o._id]) {
         emptyIds[o._id] = true; // Course has no children
       }
       if (!isCourseType && (!o._parentId || !idIndex[o._parentId])) {
