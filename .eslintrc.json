@@ -6,11 +6,10 @@
         "amd": true
     },
     "extends": [
-        "standard"
+        "standard",
+        "plugin:react/recommended"
     ],
     "globals": {
-        "ReactDOM": true,
-        "React": true,
         "Promise": true,
         "requirejs": true,
         "Backbone": true,
@@ -23,13 +22,17 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2020
+        "ecmaVersion": 2020,
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
     "plugins": [
         "requirejs"
     ],
     "rules": {
         "indent": ["error", 2, { "SwitchCase": 1 }],
+        "array-bracket-spacing": "off",
         "semi": ["error", "always"],
         "padded-blocks": "off",
         "no-new": "off",
@@ -39,6 +42,7 @@
         "requirejs/no-multiple-define": 2,
         "requirejs/no-named-define": "off",
         "requirejs/no-commonjs-wrapper": 2,
-        "requirejs/no-object-define": 1
+        "requirejs/no-object-define": 1,
+        "react/prop-types": "off"
     }
 }
