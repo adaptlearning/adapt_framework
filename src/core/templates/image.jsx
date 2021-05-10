@@ -10,9 +10,10 @@ import { html, classes, prefixClasses } from 'core/js/reactHelpers';
  */
 export default function Image(props) {
   const screenSize = Adapt.device.screenSize;
+  const src = (props[`_${screenSize}`] || props[`${screenSize}`] || props._src || props.src);
+  const hasSource = Boolean(src);
+  if (!hasSource) return null;
   const attributionClassNamePrefixes = (props.attributionClassNamePrefixes || props.classNamePrefixes);
-  const isSet = (props[`_${screenSize}`] || props[`${screenSize}`] || props._src || props.src);
-  if (!isSet) return null;
   return (
     <div className={classes([
       prefixClasses(props.classNamePrefixes, ['-image-container']),
@@ -21,7 +22,7 @@ export default function Image(props) {
 
       <img
         className={prefixClasses(props.classNamePrefixes, ['-image'])}
-        src={props[`_${screenSize}`] || props[`${screenSize}`] || props._src || props.src}
+        src={src}
         aria-label={Adapt.a11y.normalize(props.alt)}
         aria-hidden={!props.alt}
         loading='eager'
