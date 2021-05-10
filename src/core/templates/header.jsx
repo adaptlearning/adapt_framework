@@ -34,7 +34,9 @@ export default function Header(props) {
   const sizedInstruction = (mobileInstruction && Adapt.device.screenSize !== 'large') ?
     mobileInstruction :
     instruction;
-  return (displayTitle || body || sizedInstruction) && (
+  const isSet = (displayTitle || body || sizedInstruction);
+  if (!isSet) return null;
+  return (
     <div className={prefixClasses(classNamePrefixes, ['__header'])}>
       <div className={prefixClasses(classNamePrefixes, ['__header-inner'])}>
         {displayTitle &&

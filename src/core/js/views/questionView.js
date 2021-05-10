@@ -24,6 +24,20 @@ class QuestionView extends ComponentView {
     ].join(' ');
   }
 
+  initialize(...args) {
+    // Allow isInteractive to be used in jsx templates
+    this.isInteractive = this.isInteractive.bind(this);
+    super.initialize(...args);
+  }
+
+  /**
+   * Used to determine whether the learner is allowed to interact with the question component or not.
+   * @return {Boolean}
+  */
+  isInteractive() {
+    return this.model.isInteractive();
+  }
+
   preRender() {
     // Setup listener for _isEnabled
     this.listenTo(this.model, 'change:_isEnabled', this.onEnabledChanged);
