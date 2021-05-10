@@ -1,63 +1,7 @@
 import Adapt from 'core/js/adapt';
 import TemplateRenderEvent from './templateRenderEvent';
 import HTMLReactParser from 'html-react-parser';
-
-/**
- * Finds a node in a react node hierarchy
- * Return true from the iterator to stop traversal
- * @param {object} hierarchy
- * @param {function} iterator
- */
-export function find(hierarchy, iterator) {
-  if (iterator(hierarchy)) {
-    return true;
-  }
-  if (!hierarchy.props || !hierarchy.props.children) return;
-  if (Array.isArray(hierarchy.props.children)) {
-    return hierarchy.props.children.find(child => {
-      if (!child) return;
-      return find(child, iterator);
-    });
-  }
-  return find(hierarchy.props.children, iterator);
-};
-
-/**
- * Allows clone and modification of a react node hierarchy
- * @param {*} value
- * @param {boolean} isDeep=false
- * @param {function} modifier
- * @returns {*}
- */
-export function clone(value, isDeep = false, modifier = null) {
-  if (typeof value !== 'object' || value === null) {
-    return value;
-  }
-  const cloned = Array.isArray(value) ? [] : {};
-  const descriptors = Object.getOwnPropertyDescriptors(value);
-  for (let name in descriptors) {
-    const descriptor = descriptors[name];
-    if (!descriptor.hasOwnProperty('value')) {
-      Object.defineProperty(cloned, name, descriptor);
-      continue;
-    }
-    let value = descriptor.value;
-    if (typeof value === 'object' && value !== null) {
-      if (isDeep) {
-        value = descriptor.value = clone(value, isDeep, modifier);
-      }
-      if (modifier && typeof value.$$typeof === 'symbol') {
-        modifier(value);
-      }
-    }
-    descriptor.writable = true;
-    Object.defineProperty(cloned, name, descriptor);
-  }
-  if (modifier && typeof cloned.$$typeof === 'symbol') {
-    modifier(cloned);
-  }
-  return cloned;
-};
+import React from 'react';
 
 /**
  * Used by babel plugin babel-plugin-transform-react-templates to inject react templates
@@ -80,6 +24,29 @@ export default function register(name, component) {
 };
 
 /**
+ * Override React.createElement to allow trapping and modification of react
+ * template elements.
+ */
+(function () {
+  const original = React.createElement;
+  React.createElement = (...args) => {
+    const name = args[0];
+    // Trap render calls to emit preRender and postRender events
+    const mode = 'reactElement';
+    // Send preRender event to allow modification of args
+    const preRenderEvent = new TemplateRenderEvent(`${mode}:preRender`, name, mode, null, args);
+    Adapt.trigger(preRenderEvent.type, preRenderEvent);
+    // Execute element creation
+    const value = original(...preRenderEvent.args);
+    // Send postRender event to allow modification of rendered element
+    const postRenderEvent = new TemplateRenderEvent(`${mode}:postRender`, name, mode, value, preRenderEvent.args);
+    Adapt.trigger(postRenderEvent.type, postRenderEvent);
+    // Return rendered, modified element
+    return postRenderEvent.value;
+  };
+})();
+
+/**
  * Storage for react templates
  */
 export const templates = {};
@@ -92,23 +59,11 @@ export function html(html, ref = null) {
   if (!html) return;
   let node = html ? HTMLReactParser(html) : '';
   if (typeof node === 'object' && ref) {
-    // Strip object freeze and write locks by cloning
-    node = clone(node);
-    node.ref = ref;
+    node = Array.isArray(node) ? node[0] : node;
+    node = React.cloneElement(node, { ref });
   }
   return node;
 }
-
-/**
- * Render the named react component
- * @param {string} name React template name
- * @param {...any} args React template arguments
- */
-export function render(name, ...args) {
-  const template = templates[name];
-  const component = template(...args);
-  return component;
-};
 
 /**
  * Handlebars compile integration
@@ -141,9 +96,20 @@ export function helper(name, ...args) {
 };
 
 /**
- * Helper for a list of classes, filtering out falsies and joining with spaces
+ * Helper for a list of classes, filtering out falsies and duplicates, and joining with spaces
  * @param  {...any} args List or arrays of classes
  */
 export function classes(...args) {
-  return _.flatten(args).filter(Boolean).join(' ');
+  return _.uniq(_.flatten(args).filter(Boolean).join(' ').split(' ')).join(' ');
+};
+
+/**
+ * Helper for prefixing a list of classes, filtering out falsies and duplicates and joining with spaces
+ * @param  {[...string]} prefixes Array of class prefixes
+ * @param  {...any} args List or arrays of classes
+ */
+export function prefixClasses(prefixes, ...args) {
+  const classes = _.flatten(args).filter(Boolean);
+  const prefixed = _.flatten(prefixes.map(prefix => classes.map(className => `${prefix}${className}`)));
+  return _.uniq(prefixed.join(' ').split(' ')).join(' ');
 };

@@ -57,13 +57,14 @@
         "underscore-deep-extend": "^1.1.5"
     },
     "devDependencies": {
-        "eslint": "^6.0.1",
-        "eslint-config-standard": "^12.0.0",
-        "eslint-plugin-import": "^2.18.0",
-        "eslint-plugin-node": "^9.1.0",
-        "eslint-plugin-promise": "^4.2.1",
-        "eslint-plugin-requirejs": "^4.0.0",
-        "eslint-plugin-standard": "^4.0.0"
+        "eslint": "^7.25.0",
+        "eslint-config-standard": "^16.0.2",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^5.1.0",
+        "eslint-plugin-react": "^7.23.2",
+        "eslint-plugin-requirejs": "^4.0.1",
+        "eslint-plugin-standard": "^5.0.0"
     },
     "optionalDependencies": {
         "imagemin": "^7.0.1",
