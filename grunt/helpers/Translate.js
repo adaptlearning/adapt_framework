@@ -275,7 +275,7 @@ class Translate {
     let importData;
     switch (format) {
       case 'json':
-        importData = fs.readFileSync(langFiles[0]);
+        importData = fs.readJSONSync(langFiles[0]);
         break;
       case 'csv':
       default:
@@ -371,7 +371,7 @@ class Translate {
     // update data
     importData.forEach(data => {
       const { file, item } = targetLanguage.getFileItemById(data.id);
-      const attributePath = data.path.split('/');
+      const attributePath = data.path.split('/').filter(Boolean);
       const currentValue = _.get(item, attributePath);
       if (currentValue === data.value) {
         // value is unchanged, skip

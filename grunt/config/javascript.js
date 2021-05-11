@@ -45,7 +45,8 @@ module.exports = function(grunt, options) {
           react: 'empty:',
           'react-dom': 'empty:',
           'object.assign': 'empty:',
-          'html-react-parser': 'empty:'
+          'html-react-parser': 'empty:',
+          semver: 'empty:'
         },
         map: {
           coreJS: 'core/js',
@@ -111,7 +112,8 @@ module.exports = function(grunt, options) {
           react: 'empty:',
           'react-dom': 'empty:',
           'object.assign': 'empty:',
-          'html-react-parser': 'empty:'
+          'html-react-parser': 'empty:',
+          semver: 'empty:'
         },
         map: {
           coreJS: 'core/js',

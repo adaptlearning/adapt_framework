@@ -348,8 +348,8 @@ class Router extends Backbone.Router {
       const shouldReplace = settings.replace || false;
       const contentObject = (currentModel instanceof ContentObjectModel) ? currentModel : currentModel.findAncestor('contentobject');
       const contentObjectId = contentObject.get('_id');
-      const isInCurrentContentObject = (contentObjectId !== Adapt.location._currentId);
-      if (isInCurrentContentObject) {
+      const isNotInCurrentContentObject = (contentObjectId !== Adapt.location._currentId);
+      if (isNotInCurrentContentObject) {
         this.isScrolling = true;
         this.navigate(`#/id/${currentModelId}`, { trigger: true, replace: shouldReplace });
         this.model.set('_shouldNavigateFocus', false, { pluginName: 'adapt' });

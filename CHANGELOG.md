@@ -1,3 +1,13 @@
+## [5.13.0] - 2021-04-22
+### Added
+* Option to set the course language and text direction using query string parameters `lang` and `dir` ([#3086](https://github.com/adaptlearning/adapt_framework/pull/3086))
+* API for Framework & Plugin version detection ([#3121](https://github.com/adaptlearning/adapt_framework/issues/3121))
+
+### Fixed
+* Device size and orientation classes could be set incorrectly in multilanguage courses ([#3116](https://github.com/adaptlearning/adapt_framework/issues/3116))
+* The Grunt JavaScript task not exiting properly on error ([#3123](https://github.com/adaptlearning/adapt_framework/issues/3123))
+* The Grunt task to import translated JSON files not working ([#3126](https://github.com/adaptlearning/adapt_framework/issues/3126))
+
 ## [5.12.2] - 2021-04-08
 ### Changed
 * Switched from (deprecated) Babel polyfill to [core-js@3](https://github.com/zloirock/core-js) ([#3113](https://github.com/adaptlearning/adapt_framework/issues/3113))
@@ -1026,6 +1036,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.13.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.2...v5.13.0
 [5.12.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.1...v5.12.2
 [5.12.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.0...v5.12.1
 [5.12.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.11.0...v5.12.0
