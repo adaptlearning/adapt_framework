@@ -70,8 +70,11 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
 
   isCorrect() {
 
+    const selectable = this.get('_selectable');
+
     const props = {
       _numberOfRequiredAnswers: 0,
+      _numberOfPartlyCorrectAnswers: 0,
       _numberOfIncorrectAnswers: 0,
       _isAtLeastOneCorrectSelection: false,
       _numberOfCorrectAnswers: 0
@@ -79,11 +82,20 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
 
     this.getChildren().each(itemModel => {
       const itemShouldBeActive = itemModel.get('_shouldBeSelected');
+      const isPartlyCorrect = itemModel.get('_isPartlyCorrect');
+
       if (itemShouldBeActive) {
         props._numberOfRequiredAnswers++;
       }
 
       if (!itemModel.get('_isActive')) return;
+
+      if (isPartlyCorrect) {
+        // force partly correct feedback and mark as correct
+        props._isAtLeastOneCorrectSelection = true;
+        props._numberOfPartlyCorrectAnswers++;
+        itemModel.set('_isCorrect', true);
+      }
 
       if (!itemShouldBeActive) {
         props._numberOfIncorrectAnswers++;
@@ -97,10 +109,12 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
 
     this.set(props);
 
+    const hasAtLeastSelectableCorrectAnswers = (props._numberOfCorrectAnswers >= selectable);
     const hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
     const hasNoIncorrectAnswers = !props._numberOfIncorrectAnswers;
+    const hasNoPartlyCorrectAnswers = !props._numberOfPartlyCorrectAnswers;
 
-    return hasRightNumberOfCorrectAnswers && hasNoIncorrectAnswers;
+    return (hasRightNumberOfCorrectAnswers || hasAtLeastSelectableCorrectAnswers) && hasNoIncorrectAnswers && hasNoPartlyCorrectAnswers;
   }
 
   // Sets the score based upon the questionWeight
