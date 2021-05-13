@@ -74,7 +74,7 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
 
     const isItemCorrect = itemModel => itemModel.get('_shouldBeSelected') && !itemModel.get('_isPartlyCorrect');
     const isItemPartlyCorrect = itemModel => itemModel.get('_isPartlyCorrect');
-    const isItemInCorrect = itemModel => !itemModel.get('_shouldBeSelected') && !itemModel.get('_isPartlyCorrect');
+    const isItemIncorrect = itemModel => !itemModel.get('_shouldBeSelected') && !itemModel.get('_isPartlyCorrect');
 
     const sum = (list, predicate) => list.reduce((sum, item) => sum + (predicate(item) ? 1 : 0), 0);
 
@@ -82,7 +82,7 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
       _numberOfRequiredAnswers: sum(allChildren, isItemCorrect),
       _numberOfCorrectAnswers: sum(activeChildren, isItemCorrect),
       _numberOfPartlyCorrectAnswers: sum(activeChildren, isItemPartlyCorrect),
-      _numberOfIncorrectAnswers: sum(activeChildren, isItemInCorrect)
+      _numberOfIncorrectAnswers: sum(activeChildren, isItemIncorrect)
     };
 
     activeChildren.forEach(itemModel => itemModel.set('_isCorrect', itemModel.get('_shouldBeSelected')));
