@@ -1,6 +1,6 @@
 (function() {
 
-  var isProduction = (ADAPT_BUILD_TYPE !== 'development');
+  var isProduction = (window.ADAPT_BUILD_TYPE !== 'development');
 
   // Change location of Adapt CSS if incorrect
   (function () {
