@@ -5,7 +5,8 @@
 module.exports = function(grunt) {
     grunt.registerTask('create-json-config', 'Creating config.json', function() {
         var customItems = ['theme', 'menu'];
-        var configJson = grunt.file.readJSON(grunt.config('sourcedir') + 'course/config.json');
+        var jsonext = grunt.config('jsonext');
+        var configJson = grunt.file.readJSON(grunt.config('sourcedir') + 'course/config.' + jsonext);
 
         customItems.forEach(function (customItem) {
             // As any theme folder may be used, we need to first find the location of the
@@ -16,7 +17,7 @@ module.exports = function(grunt) {
 
             var customItemJsonFile;
             grunt.file.recurse(grunt.config('sourcedir') + customItem + '/', function(abspath, rootdir, subdir, filename) {
-                if (filename == customItem + '.json') {
+                if (filename == customItem + '.' + jsonext) {
                     customItemJsonFile = rootdir + subdir + '/' + filename;
                 }
             });
@@ -34,6 +35,6 @@ module.exports = function(grunt) {
             }
         });
 
-        grunt.file.write(grunt.config('outputdir') + 'course/config.json', JSON.stringify(configJson, null, 4));
+        grunt.file.write(grunt.config('outputdir') + 'course/config.' + jsonext, JSON.stringify(configJson, null, 4));
     });
 }

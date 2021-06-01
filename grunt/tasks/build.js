@@ -6,6 +6,7 @@ module.exports = function(grunt) {
         '_log-vars',
         'check-json',
         'clean:output',
+        'build-config',
         'copy',
         'handlebars',
         'create-json-config',
