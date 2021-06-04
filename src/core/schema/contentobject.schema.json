@@ -108,14 +108,6 @@
             "isSetting": true
           }
         },
-        "_sortOrder": {
-          "type": "number",
-          "title": "Sort order",
-          "default": 1,
-          "_adapt": {
-            "editorOnly": true
-          }
-        },
         "menuSettings": {
           "type": "object",
           "title": "Menu settings",

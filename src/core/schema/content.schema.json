@@ -152,6 +152,14 @@
       "title": "Extensions",
       "default": {}
     },
+    "_sortOrder": {
+      "type": "number",
+      "title": "Sort order",
+      "default": 1,
+      "_adapt": {
+        "editorOnly": true
+      }
+    },
     "themeSettings": {
       "type": "object",
       "title": "Theme settings",
