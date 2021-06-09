@@ -19,6 +19,7 @@ export default function Header(props) {
   const jsxHeading = useRef(null);
   const jsxComponentDescription = useRef(null);
   const {
+    _id,
     displayTitle,
     body,
     instruction,
@@ -37,7 +38,7 @@ export default function Header(props) {
   const isSet = (displayTitle || body || sizedInstruction);
   if (!isSet) return null;
   return (
-    <div className={prefixClasses(classNamePrefixes, ['__header'])}>
+    <div id={`${_id}-header`} className={prefixClasses(classNamePrefixes, ['__header'])}>
       <div className={prefixClasses(classNamePrefixes, ['__header-inner'])}>
         {displayTitle &&
         <div className={prefixClasses(classNamePrefixes, ['__title'])}>
