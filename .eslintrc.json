@@ -44,5 +44,10 @@
         "requirejs/no-commonjs-wrapper": 2,
         "requirejs/no-object-define": 1,
         "react/prop-types": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "16.14"
+        }
     }
 }
