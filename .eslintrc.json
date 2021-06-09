@@ -40,5 +40,10 @@
         "requirejs/no-named-define": "off",
         "requirejs/no-commonjs-wrapper": 2,
         "requirejs/no-object-define": 1
+    },
+    "settings": {
+        "react": {
+            "version": "17.02"
+        }
     }
 }

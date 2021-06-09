@@ -1,5 +1,7 @@
 (function() {
 
+  var isProduction = (window.ADAPT_BUILD_TYPE !== 'development');
+
   // Change location of Adapt CSS if incorrect
   (function () {
     var oldHRef = 'adapt/css/adapt.css';
@@ -79,8 +81,8 @@
         bowser: 'libraries/bowser',
         'enum': 'libraries/enum',
         jqueryMobile: 'libraries/jquery.mobile.custom',
-        react: 'libraries/react.development',
-        'react-dom': 'libraries/react-dom.development',
+        react: isProduction ? 'libraries/react.production.min' : 'libraries/react.development',
+        'react-dom': isProduction ? 'libraries/react-dom.production.min' : 'libraries/react-dom.development',
         'object.assign': 'libraries/object.assign',
         'html-react-parser': 'libraries/html-react-parser.min',
         semver: 'libraries/semver'

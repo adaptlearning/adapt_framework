@@ -66,10 +66,11 @@ module.exports = function(grunt, options) {
         spoor._advancedSettings._manifestIdentifier = spoor._advancedSettings._manifestIdentifier || 'adapt_manifest';
       }
 
-      // Combine the course and config JSON so both can be passed to replace.
+      // Combine the course, config and build JSON to pass to replace.
       return {
         'course': filterNullValues(courseJson),
-        'config': filterNullValues(configJson)
+        'config': filterNullValues(configJson),
+        'build': Helpers.generateConfigData()
       };
     } catch (ex) {
       return {};
