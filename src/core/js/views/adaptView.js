@@ -92,9 +92,7 @@ class AdaptView extends Backbone.View {
       // Add model json data
       ...this.model.toJSON(),
       // Add globals
-      ...{
-        _globals: Adapt.course.get('_globals')
-      }
+      _globals: Adapt.course.get('_globals')
     };
     const Template = templates[this.constructor.template.replace('.jsx', '')];
     this.updateViewProperties();
