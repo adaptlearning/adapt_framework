@@ -90,9 +90,9 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
     props._isAtLeastOneCorrectSelection = (props._numberOfCorrectAnswers || props._numberOfPartlyCorrectAnswers);
 
     const numberOfSelectableAnswers = this.get('_selectable');
-    const hasAtLeastSelectableCorrectAnswers = (props._numberOfCorrectAnswers >= numberOfSelectableAnswers);
-    const hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
-    const hasCorrectAnswers = (hasAtLeastSelectableCorrectAnswers || hasRightNumberOfCorrectAnswers);
+    const hasSelectableCorrectAnswers = (props._numberOfCorrectAnswers === numberOfSelectableAnswers);
+    const hasAllCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
+    const hasCorrectAnswers = (hasSelectableCorrectAnswers || hasAllCorrectAnswers);
     const hasIncorrectAnswers = props._numberOfIncorrectAnswers;
     const hasPartlyCorrectAnswers = props._numberOfPartlyCorrectAnswers;
 
