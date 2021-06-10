@@ -155,7 +155,6 @@
     "_sortOrder": {
       "type": "number",
       "title": "Sort order",
-      "default": 1,
       "_adapt": {
         "editorOnly": true
       }
