@@ -20,6 +20,7 @@ class QuestionModel extends ComponentModel {
       _canSubmit: true,
       _isSubmitted: false,
       _questionWeight: Adapt.config.get('_questionWeight'),
+      _isItemScoring: false,
       _items: []
     });
   }
