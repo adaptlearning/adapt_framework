@@ -4,7 +4,7 @@ class HeadingView extends Backbone.View {
 
   initialize() {
     this.listenTo(Adapt.parentView, 'postRemove', this.remove);
-    this.listenTo(this.model, 'change:_isComplete', this.update);
+    this.listenTo(this.model, 'change:_isComplete', this.updateAria);
     this.render();
   }
 
@@ -17,7 +17,7 @@ class HeadingView extends Backbone.View {
     this.checkCompletion();
   }
 
-  update() {
+  updateAria() {
     const template = Handlebars.templates[this.constructor.template];
     const data = this.model.toJSON();
     const $rendered = $(`<div>${template(data)}</div>`);
