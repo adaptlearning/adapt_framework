@@ -4,7 +4,7 @@ class HeadingView extends Backbone.View {
 
   initialize() {
     this.listenTo(Adapt.parentView, 'postRemove', this.remove);
-    this.listenTo(this.model, 'change:_isComplete', this.render);
+    this.listenTo(this.model, 'change:_isComplete', this.updateAria);
     this.render();
   }
 
@@ -14,6 +14,14 @@ class HeadingView extends Backbone.View {
     const customHeadingType = this.$el.attr('data-a11y-heading-type');
     if (customHeadingType) data._type = customHeadingType;
     this.$el.html(template(data));
+    this.checkCompletion();
+  }
+
+  updateAria() {
+    const template = Handlebars.templates[this.constructor.template];
+    const data = this.model.toJSON();
+    const $rendered = $(`<div>${template(data)}</div>`);
+    this.$('.aria-label').html($rendered.find('.aria-label').html());
     this.checkCompletion();
   }
 
