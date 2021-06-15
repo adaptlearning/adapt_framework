@@ -1,3 +1,14 @@
+## [5.14.0] - 2021-06-15
+### Added
+* Libraries: allow switching between development and production versions ([#3151](https://github.com/adaptlearning/adapt_framework/issues/3151))
+
+### Fixed
+* Allow pure React components as Adapt components ([#3105](https://github.com/adaptlearning/adapt_framework/issues/3105))
+* Headings lose focus if completed with focus ([#3132](https://github.com/adaptlearning/adapt_framework/issues/3132))
+* Grunt doesn't warn of empty parents ([#3134](https://github.com/adaptlearning/adapt_framework/issues/3134))
+* Underscore security warning ([#3141](https://github.com/adaptlearning/adapt_framework/issues/3141))
+* Field inputs not associated with question ([#3142](https://github.com/adaptlearning/adapt_framework/issues/3142))
+
 ## [5.13.0] - 2021-04-22
 ### Added
 * Option to set the course language and text direction using query string parameters `lang` and `dir` ([#3086](https://github.com/adaptlearning/adapt_framework/pull/3086))
@@ -1036,6 +1047,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.14.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.13.0...v5.14.0
 [5.13.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.2...v5.13.0
 [5.12.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.1...v5.12.2
 [5.12.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.0...v5.12.1
