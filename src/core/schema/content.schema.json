@@ -8,8 +8,7 @@
   "properties": {
     "_type": {
       "type": "string",
-      "title": "Type",
-      "default": ""
+      "title": "Type"
     },
     "_parentId": {
       "type": "string",
