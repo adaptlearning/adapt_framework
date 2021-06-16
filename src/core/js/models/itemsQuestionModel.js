@@ -113,25 +113,25 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
   }
 
   get score() {
-    if (!this.get('_isItemScoring')) return super.score;
+    if (!this.get('_hasItemScoring')) return super.score;
     const children = this.getChildren()?.toArray() || [];
     return children.reduce((score, child) => (score += child.get('_isActive') ? child.get('_score') || 0 : 0), 0);
   }
 
   get maxScore() {
-    if (!this.get('_isItemScoring')) return super.maxScore;
+    if (!this.get('_hasItemScoring')) return super.maxScore;
     const children = this.getChildren()?.toArray() || [];
     const scores = children.map(child => child.get('_score') || 0);
     scores.sort();
-    return scores.reverse().slice(0, this.get('_seletable')).filter(score => score > 0).reduce((maxScore, score) => (maxScore += score), 0);
+    return scores.reverse().slice(0, this.get('_selectable')).filter(score => score > 0).reduce((maxScore, score) => (maxScore += score), 0);
   }
 
   get minScore() {
-    if (!this.get('_isItemScoring')) return super.minScore;
+    if (!this.get('_hasItemScoring')) return super.minScore;
     const children = this.getChildren()?.toArray() || [];
     const scores = children.map(child => child.get('_score') || 0);
     scores.sort();
-    return scores.slice(0, this.get('_seletable')).filter(score => score < 0).reduce((minScore, score) => (minScore += score), 0);
+    return scores.slice(0, this.get('_selectable')).filter(score => score < 0).reduce((minScore, score) => (minScore += score), 0);
   }
 
   setupFeedback() {
