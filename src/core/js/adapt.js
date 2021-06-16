@@ -365,7 +365,8 @@ class AdaptSingleton extends LockingModel {
    * Trickle uses this function to determine where it should scrollTo after it unlocks
    */
   parseRelativeString(relativeString) {
-    const splitIndex = relativeString.search(/[ +\-\d]{1}/);
+    let splitIndex = relativeString.search(/[ +\-\d]{1}/);
+    if (splitIndex === -1) splitIndex = relativeString.length;
     const type = relativeString.slice(0, splitIndex).replace(/^@/, '');
     const offset = parseInt(relativeString.slice(splitIndex).trim() || 0);
     return {
