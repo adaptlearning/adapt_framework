@@ -462,6 +462,12 @@ class ViewOnlyQuestionViewCompatibilityLayer extends QuestionView {
         this.model.set('_isCorrect', false);
       }
 
+      this.set({
+        _rawScore: this.model.get('_isCorrect') ? this.model.get('_questionWeight') : 0,
+        _maxScore: this.model.get('_questionWeight'),
+        _minScore: 0
+      });
+
     } else {
       return this.model.markQuestion();
     }

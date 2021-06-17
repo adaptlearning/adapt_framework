@@ -44,6 +44,7 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
     this.setQuestionAsSubmitted();
     this.markQuestion();
     this.setScore();
+    this.updateScore();
     this.setupFeedback();
   }
 

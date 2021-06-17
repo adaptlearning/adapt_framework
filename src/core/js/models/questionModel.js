@@ -55,6 +55,7 @@ class QuestionModel extends ComponentModel {
   init() {
     this.setupDefaultSettings();
     this.setLocking('_canSubmit', true);
+    this.updateRawScore();
     super.init();
   }
 
@@ -139,6 +140,8 @@ class QuestionModel extends ComponentModel {
       this.set('_isCorrect', false);
     }
 
+    this.updateRawScore();
+
   }
 
   // Should return a boolean based upon whether to question is correct or not
@@ -147,8 +150,16 @@ class QuestionModel extends ComponentModel {
   // Used to set the score based upon the _questionWeight
   setScore() {}
 
+  updateRawScore() {
+    this.set({
+      _rawScore: this.score,
+      _maxScore: this.maxScore,
+      _minScore: this.minScore
+    });
+  }
+
   get score() {
-    return this.get('_isCorrect') ? this.get('_questionWeight') : 0;
+    return this.get('_isCorrect') ? this.maxScore : 0;
   }
 
   get maxScore() {
