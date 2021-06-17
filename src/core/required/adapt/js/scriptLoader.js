@@ -80,7 +80,7 @@
         scrollTo: 'libraries/scrollTo.min',
         bowser: 'libraries/bowser',
         'enum': 'libraries/enum',
-        jqueryMobile: 'libraries/jquery.mobile.custom',
+        jqueryMobile: 'libraries/jquery.mobile.custom.min',
         react: isProduction ? 'libraries/react.production.min' : 'libraries/react.development',
         'react-dom': isProduction ? 'libraries/react-dom.production.min' : 'libraries/react-dom.development',
         'object.assign': 'libraries/object.assign',
@@ -145,7 +145,9 @@
   function loadGlobals(Handlebars, _) {
     window._ = _;
     window.Handlebars = Handlebars;
-    loadTemplates();
+    require([
+      'events/touch'
+    ], loadTemplates);
   }
 
   // 8. Load templates
