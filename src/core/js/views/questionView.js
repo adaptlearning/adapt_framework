@@ -554,7 +554,7 @@ class ViewOnlyQuestionViewCompatibilityLayer extends QuestionView {
     if (!this.constructor.prototype[checkForFunction]) return false; // questionModel
 
     // if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
-    const hasCompatibleVersion = (ViewOnlyQuestionViewCompatibilityLayer.prototype.hasOwnProperty(checkForFunction));
+    const hasCompatibleVersion = (Object.prototype.hasOwnProperty.call(ViewOnlyQuestionViewCompatibilityLayer.prototype, checkForFunction));
     const usingCompatibleVersion = (this.constructor.prototype[checkForFunction] === ViewOnlyQuestionViewCompatibilityLayer.prototype[checkForFunction]);
     if (hasCompatibleVersion && usingCompatibleVersion) {
       switch (checkForFunction) {
