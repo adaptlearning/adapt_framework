@@ -63,7 +63,8 @@ module.exports = function(grunt, options) {
       // newer configuration
       files: {
         '<%= outputdir %>adapt/js/adapt.min.js': [
-          '<%= sourcedir %>/**/*.js'
+          '<%= sourcedir %>/**/*.js',
+          '<%= sourcedir %>/**/*.jsx'
         ]
       }
     },
