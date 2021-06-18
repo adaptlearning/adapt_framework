@@ -20,6 +20,7 @@ class QuestionModel extends ComponentModel {
       _canSubmit: true,
       _isSubmitted: false,
       _questionWeight: Adapt.config.get('_questionWeight'),
+      _hasItemScoring: false,
       _items: []
     });
   }
@@ -54,6 +55,7 @@ class QuestionModel extends ComponentModel {
   init() {
     this.setupDefaultSettings();
     this.setLocking('_canSubmit', true);
+    this.updateRawScore();
     super.init();
   }
 
@@ -76,7 +78,7 @@ class QuestionModel extends ComponentModel {
       // If they are empty use the global defaults.
       const componentButtons = this.get('_buttons');
 
-      for (let key in componentButtons) {
+      for (const key in componentButtons) {
         if (typeof componentButtons[key] === 'object') {
           // Button text.
           if (!componentButtons[key].buttonText && globalButtons[key].buttonText) {
@@ -138,6 +140,8 @@ class QuestionModel extends ComponentModel {
       this.set('_isCorrect', false);
     }
 
+    this.updateRawScore();
+
   }
 
   // Should return a boolean based upon whether to question is correct or not
@@ -145,6 +149,26 @@ class QuestionModel extends ComponentModel {
 
   // Used to set the score based upon the _questionWeight
   setScore() {}
+
+  updateRawScore() {
+    this.set({
+      _rawScore: this.score,
+      _maxScore: this.maxScore,
+      _minScore: this.minScore
+    });
+  }
+
+  get score() {
+    return this.get('_isCorrect') ? this.maxScore : 0;
+  }
+
+  get maxScore() {
+    return this.get('_questionWeight');
+  }
+
+  get minScore() {
+    return 0;
+  }
 
   // Checks if the question should be set to complete
   // Calls setCompletionStatus and adds complete classes
