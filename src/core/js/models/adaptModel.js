@@ -717,28 +717,28 @@ export default class AdaptModel extends LockingModel {
   }
 
   setSequentialLocking() {
-    const lastChildren = this.getAvailableChildModels();
-    const firstChild = lastChildren.shift();
-    lastChildren.reduce((previousChild, child) => {
+    const children = this.getAvailableChildModels();
+    const firstChild = children.shift();
+    children.reduce((previousChild, child) => {
       const isLockedByPreviousChild = (!previousChild.get('_isComplete') && !previousChild.get('_isOptional'));
       return child.set('_isLocked', isLockedByPreviousChild);
     }, firstChild);
   }
 
   setUnlockFirstLocking() {
-    const lastChildren = this.getAvailableChildModels();
-    const firstChild = lastChildren.shift();
+    const children = this.getAvailableChildModels();
+    const firstChild = children.shift();
     const isLockedByFirstChild = (!firstChild.get('_isComplete') && !firstChild.get('_isOptional'));
-    lastChildren.forEach(child => child.set('_isLocked', isLockedByFirstChild));
+    children.forEach(child => child.set('_isLocked', isLockedByFirstChild));
   }
 
   setLockLastLocking() {
-    const firstChildren = this.getAvailableChildModels();
-    const lastChild = firstChildren.pop();
-    const isLockedByFirstChildren = firstChildren.some(child =>
+    const children = this.getAvailableChildModels();
+    const lastChild = children.pop();
+    const isLockedByChildren = children.some(child =>
       (!child.get('_isComplete') && !child.get('_isOptional'))
     );
-    lastChild.set('_isLocked', isLockedByFirstChildren);
+    lastChild.set('_isLocked', isLockedByChildren);
   }
 
   setCustomLocking() {
