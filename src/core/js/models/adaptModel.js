@@ -735,9 +735,7 @@ export default class AdaptModel extends LockingModel {
   setLockLastLocking() {
     const children = this.getAvailableChildModels();
     const lastChild = children.pop();
-    const isLockedByChildren = children.some(child =>
-      (!child.get('_isComplete') && !child.get('_isOptional'))
-    );
+    const isLockedByChildren = children.some(child => (!child.get('_isComplete') && !child.get('_isOptional')));
     lastChild.set('_isLocked', isLockedByChildren);
   }
 
