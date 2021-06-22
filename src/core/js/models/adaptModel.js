@@ -19,7 +19,7 @@ export default class AdaptModel extends LockingModel {
     switch (name) {
       case '_parent':
       case '_children':
-        Adapt.log.deprecated(`Use model.getChildren() or model.getParent() instead of model.get('_children') or model.get('_parent')`);
+        Adapt.log.deprecated('Use model.getChildren() or model.getParent() instead of model.get(\'_children\') or model.get(\'_parent\')');
     }
     return super.get(name);
   }
@@ -177,8 +177,8 @@ export default class AdaptModel extends LockingModel {
     }
 
     this.listenTo(children, {
-      'all': this.onAll,
-      'bubble': this.bubble,
+      all: this.onAll,
+      bubble: this.bubble,
       'change:_isReady': this.checkReadyStatus,
       'change:_isComplete': this.onIsComplete,
       'change:_isInteractionComplete': this.checkInteractionCompletionStatus
@@ -364,7 +364,7 @@ export default class AdaptModel extends LockingModel {
     const typeGroups = [ this.get('_type') ];
     let parentClass = this;
     while ((parentClass = Object.getPrototypeOf(parentClass))) {
-      if (!parentClass.hasOwnProperty('getTypeGroup')) continue;
+      if (!Object.prototype.hasOwnProperty.call(parentClass, 'getTypeGroup')) continue;
       typeGroups.push(parentClass.getTypeGroup.call(this));
     }
     return (this._typeGroups = _.uniq(typeGroups.filter(Boolean).map(s => s.toLowerCase())));
@@ -407,7 +407,7 @@ export default class AdaptModel extends LockingModel {
 
     if (options.where) {
       return returnedDescendants.filter(descendant => {
-        for (let property in options.where) {
+        for (const property in options.where) {
           const value = options.where[property];
           if (descendant.get(property) !== value) {
             return false;
@@ -689,7 +689,7 @@ export default class AdaptModel extends LockingModel {
    * @deprecated since v3.2.3 - please use `model.set('_isOptional', value)` instead
    */
   setOptional(value) {
-    Adapt.log.deprecated(`Use model.set('_isOptional', value) as setOptional() may be removed in the future`);
+    Adapt.log.deprecated('Use model.set(\'_isOptional\', value) as setOptional() may be removed in the future');
     this.set({ _isOptional: value });
   }
 
@@ -718,60 +718,44 @@ export default class AdaptModel extends LockingModel {
 
   setSequentialLocking() {
     const children = this.getAvailableChildModels();
-
-    for (let i = 1, j = children.length; i < j; i++) {
-      children[i].set('_isLocked', !children[i - 1].get('_isComplete'));
-    }
+    const firstChild = children.shift();
+    children.reduce((previousChild, child) => {
+      const isLockedByPreviousChild = (!previousChild.get('_isComplete') && !previousChild.get('_isOptional'));
+      return child.set('_isLocked', isLockedByPreviousChild);
+    }, firstChild);
   }
 
   setUnlockFirstLocking() {
     const children = this.getAvailableChildModels();
-    const isFirstChildComplete = children[0].get('_isComplete');
-
-    for (let i = 1, j = children.length; i < j; i++) {
-      children[i].set('_isLocked', !isFirstChildComplete);
-    }
+    const firstChild = children.shift();
+    const isLockedByFirstChild = (!firstChild.get('_isComplete') && !firstChild.get('_isOptional'));
+    children.forEach(child => child.set('_isLocked', isLockedByFirstChild));
   }
 
   setLockLastLocking() {
     const children = this.getAvailableChildModels();
-    const lastIndex = children.length - 1;
-
-    for (let i = lastIndex - 1; i >= 0; i--) {
-      if (!children[i].get('_isComplete')) {
-        return children[lastIndex].set('_isLocked', true);
-      }
-    }
-
-    children[lastIndex].set('_isLocked', false);
+    const lastChild = children.pop();
+    const isLockedByChildren = children.some(child => (!child.get('_isComplete') && !child.get('_isOptional')));
+    lastChild.set('_isLocked', isLockedByChildren);
   }
 
   setCustomLocking() {
     const children = this.getAvailableChildModels();
-    children.forEach(child => {
-      child.set('_isLocked', this.shouldLock(child));
-    });
+    children.forEach(child => child.set('_isLocked', this.shouldLock(child)));
   }
 
   shouldLock(child) {
     const lockedBy = child.get('_lockedBy');
-
     if (!lockedBy) return false;
-
-    for (let i = lockedBy.length - 1; i >= 0; i--) {
-      const id = lockedBy[i];
-
+    return lockedBy.some(id => {
       try {
         const model = Adapt.findById(id);
-
-        if (!model.get('_isAvailable')) continue;
-        if (!model.get('_isComplete')) return true;
+        return !model.get('_isComplete') && !model.get('_isOptional') && model.get('_isAvailable');
       } catch (e) {
         console.warn(`AdaptModel.shouldLock: unknown _lockedBy ID '${id}' found on ${child.get('_id')}`);
+        return false;
       }
-    }
-
-    return false;
+    });
   }
 
   onIsComplete() {
