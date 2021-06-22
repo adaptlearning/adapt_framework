@@ -60,12 +60,12 @@ export default class AdaptModel extends LockingModel {
     const indexInTrackingIdDescendants = trackingIdDescendants.findIndex(descendant => descendant === this);
     if (indexInTrackingIdDescendants >= 0) {
       // Is either the nearestTrackingIdModel (0) or one of its flattened descendants (>0)
-      return [trackingId, indexInTrackingIdDescendants];
+      return [ trackingId, indexInTrackingIdDescendants ];
     }
     // Is an ancestor of the nearestTrackingIdModel
     const trackingIdAncestors = nearestTrackingIdModel.getAncestorModels();
     const ancestorDistance = trackingIdAncestors.findIndex(ancestor => ancestor === this);
-    return [trackingId, -(ancestorDistance + 1)];
+    return [ trackingId, -(ancestorDistance + 1) ];
   }
 
   /**
@@ -361,7 +361,7 @@ export default class AdaptModel extends LockingModel {
    */
   getTypeGroups() {
     if (this._typeGroups) return this._typeGroups;
-    const typeGroups = [this.get('_type')];
+    const typeGroups = [ this.get('_type') ];
     let parentClass = this;
     while ((parentClass = Object.getPrototypeOf(parentClass))) {
       if (!Object.prototype.hasOwnProperty.call(parentClass, 'getTypeGroup')) continue;
