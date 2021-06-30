@@ -1,4 +1,4 @@
-const ChildProcess = require("child_process");
+const ChildProcess = require('child_process');
 const fs = require('fs');
 
 /**
@@ -12,7 +12,7 @@ function getModuleConfig() {
   const ret = {};
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const result = line.match(/\[submodule\s+\"(.*?)\"\]/);
+    const result = line.match(/\[submodule\s+"(.*?)"\]/);
     if (!result || result.length < 2) continue;
     const submodule = result[1];
     const obj = {};
@@ -20,12 +20,14 @@ function getModuleConfig() {
     let subline = lines[++i];
     while (subline && subline.trim()) {
       subline = lines[i];
-      if (!subline || subline.match(/\[submodule\s+\"(.*?)\"\]/)) {
+      if (!subline || subline.match(/\[submodule\s+"(.*?)"\]/)) {
         i--;
         break;
       }
       subline = subline.trim();
-      const [subginal, key, value] = subline.match(/(.*?)\s*=\s*(.*)/);
+      const result = subline.match(/(.*?)\s*=\s*(.*)/);
+      const key = result.key;
+      const value = result.value;
       if (key && value) obj[key] = value;
       i++;
     }
@@ -54,7 +56,7 @@ ChildProcess.execSync('git submodule update --init --remote', {
 
 for (const path in modules) {
   const branch = (modules[path].branch || 'master');
-  console.log(`Switching submodule ${path} to branch ${branch}`)
+  console.log(`Switching submodule ${path} to branch ${branch}`);
   ChildProcess.execSync(`git checkout ${branch}`, {
     cwd: `${process.cwd()}/${path}`,
     env,
