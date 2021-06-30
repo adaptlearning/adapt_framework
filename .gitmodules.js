@@ -33,9 +33,10 @@ function getModuleConfig() {
   return ret;
 }
 
-// Fix PATH environment variables for git bash
+// Fix PATH environment variables for git bash in both the terminal and AAT
 const env = Object.assign({}, process.env, {
-  Path: `${process.env.Path};${process.env.PROGRAMFILES}\\Git\\mingw64\\libexec\\git-core;`
+  Path: `${process.env.Path};${process.env.PROGRAMFILES}\\Git\\mingw64\\libexec\\git-core;`,
+  PATH: `${process.env.PATH};${process.env.PROGRAMFILES}\\Git\\mingw64\\libexec\\git-core;`
 });
 
 // Download submodules
