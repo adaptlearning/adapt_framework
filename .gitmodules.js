@@ -41,6 +41,7 @@ const env = Object.assign({}, process.env, {
 // Download submodules
 ChildProcess.execSync('git submodule update --init --remote', {
   env,
+  cwd: process.cwd(),
   stdio: 'inherit'
 });
 
