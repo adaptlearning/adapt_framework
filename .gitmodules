@@ -1,4 +1,4 @@
 [submodule "src/core"]
 	path = src/core
-	branch = issue/3169-b
-	url = https://github.com/olivermartinfoster/adapt-contrib-core
+	branch = master
+	url = https://github.com/adaptlearning/adapt-contrib-core
