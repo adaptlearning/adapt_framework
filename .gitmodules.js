@@ -7,33 +7,28 @@ const fs = require('fs');
  */
 function getModuleConfig() {
   const str = fs.readFileSync('./.gitmodules').toString();
-  const ss = str.split('\n');
+  const lines = str.split('\n');
   const ret = {};
-  for (let idx = 0; idx < ss.length; idx++) {
-      const line = ss[idx];
-      const result = line.match(/\[submodule\s+\"(.*?)\"\]/);
-      if (!result || result.length < 2) {
-          continue;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const result = line.match(/\[submodule\s+\"(.*?)\"\]/);
+    if (!result || result.length < 2) continue;
+    const submodule = result[1];
+    const obj = {};
+    if (!submodule) continue;
+    let subline = lines[++i];
+    while (subline && subline.trim()) {
+      subline = lines[i];
+      if (!subline || subline.match(/\[submodule\s+\"(.*?)\"\]/)) {
+        i--;
+        break;
       }
-      const submodule = result[1];
-      const obj = {};
-      if (submodule) {
-          let subline = ss[++idx];
-          while (subline && subline.trim()) {
-              subline = ss[idx];
-              if (!subline || subline.match(/\[submodule\s+\"(.*?)\"\]/)) {
-                  idx--;
-                  break;
-              }
-              subline = subline.trim();
-              const [subginal, key, value] = subline.match(/(.*?)\s*=\s*(.*)/);
-              if (key && value) {
-                  obj[key] = value;
-              }
-              idx++;
-          }
-          ret[submodule] = obj;
-      }
+      subline = subline.trim();
+      const [subginal, key, value] = subline.match(/(.*?)\s*=\s*(.*)/);
+      if (key && value) obj[key] = value;
+      i++;
+    }
+    ret[submodule] = obj;
   }
   return ret;
 }
