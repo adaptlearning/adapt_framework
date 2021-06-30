@@ -1,6 +1,10 @@
 const ChildProcess = require("child_process");
 const fs = require('fs');
 
+/**
+ * Fetch and parse .gitmodules
+ * @returns {Object}
+ */
 function getModuleConfig() {
   const str = fs.readFileSync('./.gitmodules').toString();
   const ss = str.split('\n');
@@ -34,15 +38,18 @@ function getModuleConfig() {
   return ret;
 }
 
+// Fix PATH environment variables for git bash
 const env = Object.assign({}, process.env, {
   Path: `${process.env.Path};${process.env.PROGRAMFILES}\\Git\\mingw64\\libexec\\git-core;`
 });
 
+// Download submodules
 ChildProcess.execSync('git submodule update --init --remote', {
   env,
   stdio: 'inherit'
 });
 
+// Ensure submodules are on the appropriate branch
 const modules = getModuleConfig();
 for (const path in modules) {
   const branch = (modules[path].branch || 'master');
