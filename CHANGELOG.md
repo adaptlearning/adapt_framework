@@ -1,3 +1,7 @@
+## [5.15.1] - 2021-07-06
+### Fixed
+* UMD module fixes broke nested require statements ([#3188](https://github.com/adaptlearning/adapt_framework/issues/3188))
+
 ## [5.15.0] - 2021-07-05
 ### Added
 * Partly correct answer options and any correct answer option ([#3148](https://github.com/adaptlearning/adapt_framework/issues/3148))
@@ -1062,6 +1066,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.15.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.0...v5.15.1
 [5.15.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.14.0...v5.15.0
 [5.14.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.13.0...v5.14.0
 [5.13.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.2...v5.13.0
