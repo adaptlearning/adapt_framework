@@ -1,3 +1,7 @@
+## [5.15.2] - 2021-07-07
+### Fixed
+* Scoring API missing `.model` on line 465 creating error ([#3195](https://github.com/adaptlearning/adapt_framework/issues/3195))
+
 ## [5.15.1] - 2021-07-06
 ### Fixed
 * UMD module fixes broke nested require statements ([#3188](https://github.com/adaptlearning/adapt_framework/issues/3188))
@@ -1066,6 +1070,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.15.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.1...v5.15.2
 [5.15.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.0...v5.15.1
 [5.15.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.14.0...v5.15.0
 [5.14.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.13.0...v5.14.0
