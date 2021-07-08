@@ -1,3 +1,26 @@
+## [5.15.2] - 2021-07-07
+### Fixed
+* Scoring API missing `.model` on line 465 creating error ([#3195](https://github.com/adaptlearning/adapt_framework/issues/3195))
+
+## [5.15.1] - 2021-07-06
+### Fixed
+* UMD module fixes broke nested require statements ([#3188](https://github.com/adaptlearning/adapt_framework/issues/3188))
+
+## [5.15.0] - 2021-07-05
+### Added
+* Partly correct answer options and any correct answer option ([#3148](https://github.com/adaptlearning/adapt_framework/issues/3148))
+* Scoring API ([#3163](https://github.com/adaptlearning/adapt_framework/issues/3163))
+* Allow parse of @menu @page @article without offsets ([#3175](https://github.com/adaptlearning/adapt_framework/pull/3175))
+
+### Changed
+* Grunt: better cache invalidation on remove files ([#3184](https://github.com/adaptlearning/adapt_framework/issues/3184))
+
+### Fixed
+* Locking doesn't account for optional models ([#1486](https://github.com/adaptlearning/adapt_framework/issues/1486))
+* Grunt: JavaScript newer config ignores JSX files ([#3173](https://github.com/adaptlearning/adapt_framework/issues/3173))
+* Touch events broken ([#3178](https://github.com/adaptlearning/adapt_framework/issues/3178))
+* typeof undefined with UMD modules ([#3180](https://github.com/adaptlearning/adapt_framework/issues/3180))
+
 ## [5.14.0] - 2021-06-15
 ### Added
 * Libraries: allow switching between development and production versions ([#3151](https://github.com/adaptlearning/adapt_framework/issues/3151))
@@ -1047,6 +1070,9 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.15.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.1...v5.15.2
+[5.15.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.0...v5.15.1
+[5.15.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.14.0...v5.15.0
 [5.14.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.13.0...v5.14.0
 [5.13.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.2...v5.13.0
 [5.12.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.12.1...v5.12.2

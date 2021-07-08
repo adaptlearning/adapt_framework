@@ -41,7 +41,6 @@ module.exports = function(grunt) {
   const checkCache = function(invalidate) {
     if (!cache) return;
     const idHash = {};
-    const dependents = {};
     const missing = {};
     cache.modules.forEach(mod => {
       const moduleId = mod.id;
@@ -50,10 +49,6 @@ module.exports = function(grunt) {
         // Ignore as injected rollup module
         return null;
       }
-      mod.dependencies.forEach(depId => {
-        dependents[depId] = dependents[depId] || [];
-        dependents[depId].push(moduleId);
-      });
       if (!fs.existsSync(moduleId)) {
         grunt.log.error(`Cache missing file: ${moduleId.replace(cwd, '')}`);
         missing[moduleId] = true;
@@ -66,14 +61,10 @@ module.exports = function(grunt) {
       idHash[moduleId] = mod;
       return true;
     });
-    Object.keys(missing).forEach(moduleId => {
-      if (!dependents[moduleId]) return;
-      dependents[moduleId].forEach(depId => {
-        if (!idHash[depId]) return;
-        grunt.log.ok(`Cache invalidating file: ${depId.replace(cwd, '')}`);
-        delete idHash[depId];
-      });
-    });
+    if (Object.keys(missing).length) {
+      cache = null;
+      return;
+    }
     cache.modules = Object.values(idHash);
   };
 
@@ -266,9 +257,9 @@ module.exports = function(grunt) {
             // Dynamically construct plugins.js with plugin dependencies
             code = `define([${pluginPaths.map(filename => {
               return `"${filename}"`;
-            }).join(',')}, ${reactTemplatePaths.map(filename => {
+            }).concat(reactTemplatePaths.map(filename => {
               return `"${filename}"`;
-            }).join(',')}], function() {});`;
+            })).join(',')}], function() {});`;
             return code;
           }
 
@@ -339,16 +330,15 @@ module.exports = function(grunt) {
               ]
             ]
           })
-        ],
-        cache
+        ]
       };
 
       const umdImport = () => {
         return umdImports.map(filename => {
           let code = fs.readFileSync(filename).toString();
           code = code
-            .replace(`require("object-assign")`, 'Object.assign')
-            .replace(`define.amd`, 'define.noop');
+            .replace('require("object-assign")', 'Object.assign')
+            .replace('define.amd', 'define.noop');
           return code;
         }).join('\n');
       };
@@ -383,6 +373,7 @@ window.__AMD = function(id, value) {
       };
 
       checkCache([pluginsPath]);
+      inputOptions.cache = cache;
       const bundle = await rollup.rollup(inputOptions);
       await saveCache(options.cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
