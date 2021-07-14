@@ -22,6 +22,6 @@
         "adapt-contrib-textInput": "4.2.0-beta.1",
         "adapt-contrib-trickle": "5.2.0-beta.1",
         "adapt-contrib-tutor": "*",
-        "adapt-contrib-vanilla": "5.6.0-beta.1"
+        "adapt-contrib-vanilla": "5.7.0-beta.1"
     }
 }
