@@ -462,6 +462,12 @@ class ViewOnlyQuestionViewCompatibilityLayer extends QuestionView {
         this.model.set('_isCorrect', false);
       }
 
+      this.set({
+        _rawScore: this.model.get('_isCorrect') ? this.model.get('_questionWeight') : 0,
+        _maxScore: this.model.get('_questionWeight'),
+        _minScore: 0
+      });
+
     } else {
       return this.model.markQuestion();
     }
@@ -548,7 +554,7 @@ class ViewOnlyQuestionViewCompatibilityLayer extends QuestionView {
     if (!this.constructor.prototype[checkForFunction]) return false; // questionModel
 
     // if the function DOES exist on the view and MATCHES the compatibility function above, use the model only
-    const hasCompatibleVersion = (ViewOnlyQuestionViewCompatibilityLayer.prototype.hasOwnProperty(checkForFunction));
+    const hasCompatibleVersion = (Object.prototype.hasOwnProperty.call(ViewOnlyQuestionViewCompatibilityLayer.prototype, checkForFunction));
     const usingCompatibleVersion = (this.constructor.prototype[checkForFunction] === ViewOnlyQuestionViewCompatibilityLayer.prototype[checkForFunction]);
     if (hasCompatibleVersion && usingCompatibleVersion) {
       switch (checkForFunction) {

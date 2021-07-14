@@ -69,38 +69,36 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
   }
 
   isCorrect() {
+    const allChildren = this.getChildren();
+    const activeChildren = allChildren.filter(itemModel => itemModel.get('_isActive'));
+
+    const isItemCorrect = itemModel => itemModel.get('_shouldBeSelected') && !itemModel.get('_isPartlyCorrect');
+    const isItemPartlyCorrect = itemModel => itemModel.get('_isPartlyCorrect');
+    const isItemIncorrect = itemModel => !itemModel.get('_shouldBeSelected') && !itemModel.get('_isPartlyCorrect');
+
+    const sum = (list, predicate) => list.reduce((sum, item) => sum + (predicate(item) ? 1 : 0), 0);
 
     const props = {
-      _numberOfRequiredAnswers: 0,
-      _numberOfIncorrectAnswers: 0,
-      _isAtLeastOneCorrectSelection: false,
-      _numberOfCorrectAnswers: 0
+      _numberOfRequiredAnswers: sum(allChildren, isItemCorrect),
+      _numberOfCorrectAnswers: sum(activeChildren, isItemCorrect),
+      _numberOfPartlyCorrectAnswers: sum(activeChildren, isItemPartlyCorrect),
+      _numberOfIncorrectAnswers: sum(activeChildren, isItemIncorrect)
     };
 
-    this.getChildren().each(itemModel => {
-      const itemShouldBeActive = itemModel.get('_shouldBeSelected');
-      if (itemShouldBeActive) {
-        props._numberOfRequiredAnswers++;
-      }
+    activeChildren.forEach(itemModel => itemModel.set('_isCorrect', itemModel.get('_shouldBeSelected')));
 
-      if (!itemModel.get('_isActive')) return;
+    props._isAtLeastOneCorrectSelection = (props._numberOfCorrectAnswers || props._numberOfPartlyCorrectAnswers);
 
-      if (!itemShouldBeActive) {
-        props._numberOfIncorrectAnswers++;
-        return;
-      }
-
-      props._isAtLeastOneCorrectSelection = true;
-      props._numberOfCorrectAnswers++;
-      itemModel.set('_isCorrect', true);
-    });
+    const numberOfSelectableAnswers = this.get('_selectable');
+    const hasSelectableCorrectAnswers = (props._numberOfCorrectAnswers === numberOfSelectableAnswers);
+    const hasAllCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
+    const hasCorrectAnswers = (hasSelectableCorrectAnswers || hasAllCorrectAnswers);
+    const hasIncorrectAnswers = props._numberOfIncorrectAnswers;
+    const hasPartlyCorrectAnswers = props._numberOfPartlyCorrectAnswers;
 
     this.set(props);
 
-    const hasRightNumberOfCorrectAnswers = (props._numberOfCorrectAnswers === props._numberOfRequiredAnswers);
-    const hasNoIncorrectAnswers = !props._numberOfIncorrectAnswers;
-
-    return hasRightNumberOfCorrectAnswers && hasNoIncorrectAnswers;
+    return hasCorrectAnswers && !hasIncorrectAnswers && !hasPartlyCorrectAnswers;
   }
 
   // Sets the score based upon the questionWeight
@@ -110,6 +108,28 @@ export default class ItemsQuestionModel extends BlendedItemsComponentQuestionMod
     const answeredCorrectly = this.get('_isCorrect');
     const score = answeredCorrectly ? questionWeight : 0;
     this.set('_score', score);
+  }
+
+  get score() {
+    if (!this.get('_hasItemScoring')) return super.score;
+    const children = this.getChildren()?.toArray() || [];
+    return children.reduce((score, child) => (score += child.get('_isActive') ? child.get('_score') || 0 : 0), 0);
+  }
+
+  get maxScore() {
+    if (!this.get('_hasItemScoring')) return super.maxScore;
+    const children = this.getChildren()?.toArray() || [];
+    const scores = children.map(child => child.get('_score') || 0);
+    scores.sort();
+    return scores.reverse().slice(0, this.get('_selectable')).filter(score => score > 0).reduce((maxScore, score) => (maxScore += score), 0);
+  }
+
+  get minScore() {
+    if (!this.get('_hasItemScoring')) return super.minScore;
+    const children = this.getChildren()?.toArray() || [];
+    const scores = children.map(child => child.get('_score') || 0);
+    scores.sort();
+    return scores.slice(0, this.get('_selectable')).filter(score => score < 0).reduce((minScore, score) => (minScore += score), 0);
   }
 
   setupFeedback() {

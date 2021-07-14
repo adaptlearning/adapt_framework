@@ -5,7 +5,8 @@ export default class ItemModel extends LockingModel {
   defaults() {
     return {
       _isActive: false,
-      _isVisited: false
+      _isVisited: false,
+      _score: 0
     };
   }
 
