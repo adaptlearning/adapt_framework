@@ -196,7 +196,7 @@ module.exports = function(grunt) {
               moduleId = moduleId.replace(mapPart, options.map[mapPart]);
             }
             // Remap ../libraries/ or core/js/libraries/ to libraries/
-            moduleId = Object.entries(externalMap).reduce((moduleId, [ match, replaceWith]) => moduleId.replace((new RegExp(match, 'g')), replaceWith), moduleId);
+            moduleId = Object.entries(externalMap).reduce((moduleId, [ match, replaceWith ]) => moduleId.replace((new RegExp(match, 'g')), replaceWith), moduleId);
             const isRelative = (moduleId[0] === '.');
             if (isRelative) {
               if (!parentId) {
