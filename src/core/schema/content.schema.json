@@ -162,6 +162,14 @@
       "type": "object",
       "title": "Theme settings",
       "default": {}
+    },
+    "_colorLabel": {
+      "type": "string",
+      "title": "Color label",
+      "default": "",
+      "_adapt": {
+        "editorOnly": true
+      }
     }
   }
 }
