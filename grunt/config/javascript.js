@@ -27,6 +27,9 @@ module.exports = function(grunt, options) {
           '<%= sourcedir %>menu/*/templates/**/*.jsx',
           '<%= sourcedir %>theme/*/templates/**/*.jsx'
         ],
+        externalMap: {
+          '.*/libraries/(?!mediaelement-fullscreen-hook)+': 'libraries/'
+        },
         external: {
           jquery: 'empty:',
           underscore: 'empty:',
@@ -95,6 +98,9 @@ module.exports = function(grunt, options) {
           '<%= sourcedir %>menu/*/templates/**/*.jsx',
           '<%= sourcedir %>theme/*/templates/**/*.jsx'
         ],
+        externalMap: {
+          '.*/libraries/(?!mediaelement-fullscreen-hook)+': 'libraries/'
+        },
         external: {
           jquery: 'empty:',
           underscore: 'empty:',

@@ -164,6 +164,7 @@ module.exports = function(grunt) {
       // Process remapping and external model configurations
       const mapParts = Object.keys(options.map);
       const externalParts = Object.keys(options.external);
+      const externalMap = options.externalMap;
 
       const findFile = function(filename) {
         filename = filename.replace(convertSlashes, '/');
@@ -194,6 +195,8 @@ module.exports = function(grunt) {
               // Remap module, usually coreJS/adapt to core/js/adapt etc
               moduleId = moduleId.replace(mapPart, options.map[mapPart]);
             }
+            // Remap ../libraries/ or core/js/libraries/ to libraries/
+            moduleId = Object.entries(externalMap).reduce((moduleId, [ match, replaceWith ]) => moduleId.replace((new RegExp(match, 'g')), replaceWith), moduleId);
             const isRelative = (moduleId[0] === '.');
             if (isRelative) {
               if (!parentId) {
@@ -307,6 +310,7 @@ module.exports = function(grunt) {
               [
                 'transform-amd-to-es6',
                 {
+                  umdToAMDModules: true,
                   amdToES6Modules: true,
                   amdDefineES6Modules: true,
                   ignoreNestedRequires: true,
