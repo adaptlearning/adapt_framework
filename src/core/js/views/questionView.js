@@ -297,8 +297,7 @@ class QuestionView extends ComponentView {
     // Make sure the page is ready
     if (!currentModel?.get('_isReady')) return;
     // Focus on the first readable item in this element
-    Adapt.a11y.focusNext(this.$el);
-
+    Adapt.a11y.focusNext(this.$el, { preventScroll: true });
   }
 
   setQuestionAsReset() {
