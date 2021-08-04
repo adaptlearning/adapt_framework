@@ -94,7 +94,7 @@ class JSONFile {
     if (!this.hasChanged) {
       return this;
     }
-    fs.writeJSONSync(this.path, this.data, { spaces: 2 });
+    fs.writeJSONSync(this.path, this.data, { spaces: 4 });
     return this;
   }
 

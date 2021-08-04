@@ -172,7 +172,7 @@ class Translate {
     if (this.format === 'json' || this.format === 'raw') {
       const filePath = path.join(outputFolder, `export.json`);
       this.log(`Exporting json to ${filePath}`);
-      fs.writeJSONSync(filePath, exportTextData, { spaces: 2 });
+      fs.writeJSONSync(filePath, exportTextData, { spaces: 4 });
       return;
     }
 
