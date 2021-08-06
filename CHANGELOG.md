@@ -1,3 +1,9 @@
+## [5.15.3] - 2021-08-06
+### Fixed
+* Libraries compilation bug ([#3208](https://github.com/adaptlearning/adapt_framework/issues/3208))
+* Scroll on reset click ([#3211](https://github.com/adaptlearning/adapt_framework/issues/3211))
+* `lang` param not bypassing Language Picker selection view ([#3218](https://github.com/adaptlearning/adapt_framework/issues/3218))
+
 ## [5.15.2] - 2021-07-07
 ### Fixed
 * Scoring API missing `.model` on line 465 creating error ([#3195](https://github.com/adaptlearning/adapt_framework/issues/3195))
@@ -1070,6 +1076,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.15.3]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.2...v5.15.3
 [5.15.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.1...v5.15.2
 [5.15.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.0...v5.15.1
 [5.15.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.14.0...v5.15.0
