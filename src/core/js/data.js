@@ -86,12 +86,12 @@ class Data extends AdaptCollection {
 
     // All code that needs to run before adapt starts should go here
     let language = Adapt.config.get('_activeLanguage');
-    const availableLanguageMatches = Adapt.config.get('_languagePicker')?._languages?.find(lang => lang._language === language);
+    const isLanguageAvailable = Adapt.config.get('_languagePicker')?._languages?.some(({ _language }) => _language === language);
 
     // Language not available to the course, so reset the active language
-    if (!availableLanguageMatches) {
-      language = Adapt.config.get('_defaultLanguage');
-      Adapt.config.set('_activeLanguage', Adapt.config.get('_defaultLanguage'));
+    if (!isLanguageAvailable) {
+      language = Adapt.config.get('_defaultLanguage')
+      Adapt.config.set('_activeLanguage', language);
     }
 
     const courseFolder = 'course/' + language + '/';
