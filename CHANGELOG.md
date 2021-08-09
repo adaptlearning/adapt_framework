@@ -1,3 +1,7 @@
+## [5.15.4] - 2021-08-09
+### Fixed
+* Bad `lang` param was loading course data twice ([#3220](https://github.com/adaptlearning/adapt_framework/issues/3220))
+
 ## [5.15.3] - 2021-08-06
 ### Fixed
 * Libraries compilation bug ([#3208](https://github.com/adaptlearning/adapt_framework/issues/3208))
@@ -1076,6 +1080,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.15.4]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.3...v5.15.4
 [5.15.3]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.2...v5.15.3
 [5.15.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.1...v5.15.2
 [5.15.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.0...v5.15.1
