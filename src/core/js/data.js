@@ -90,9 +90,9 @@ class Data extends AdaptCollection {
 
     // Language not available to the course, so reset the active language.
     // This will trigger an onLanguageChange reload
-    if (!isLanguageAvailable) {
+    if (language !== Adapt.config.get('_defaultLanguage') && !isLanguageAvailable) {
       language = Adapt.config.get('_defaultLanguage')
-      Adapt.config.set('_activeLanguage', language);
+      Adapt.config.unset('_activeLanguage');
       return;
     }
 
