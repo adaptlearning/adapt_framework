@@ -85,13 +85,12 @@ class Data extends AdaptCollection {
   async loadCourseData(newLanguage) {
 
     // All code that needs to run before adapt starts should go here
-    let language = Adapt.config.get('_activeLanguage');
+    const language = Adapt.config.get('_activeLanguage');
     const isLanguageAvailable = Adapt.config.get('_languagePicker')?._languages?.some(({ _language }) => _language === language);
 
     // Language not available to the course, so reset the active language.
     // This will trigger an onLanguageChange reload
     if (language !== Adapt.config.get('_defaultLanguage') && !isLanguageAvailable) {
-      language = Adapt.config.get('_defaultLanguage')
       Adapt.config.unset('_activeLanguage');
       return;
     }
