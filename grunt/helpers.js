@@ -248,6 +248,21 @@ module.exports = function(grunt) {
       }
       if (buildConfig.hasOwnProperty('strictMode')) data.strictMode = buildConfig.strictMode;
 
+      const framework = new Framework({
+        rootPath: data.root,
+        outputPath: data.outputdir,
+        sourcePath: data.sourcedir,
+        includedFilter: exports.includedFilter,
+        jsonext: data.jsonext,
+        trackingIdType: data.trackingIdType,
+        useOutputData: Boolean(grunt.option('outputdir')),
+        log: grunt.log.ok,
+        warn: grunt.log.error
+      });
+      framework.load();
+
+      data.availableLanguageNames = framework.getData().languageNames;
+
       return data;
     },
 
