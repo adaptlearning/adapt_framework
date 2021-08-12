@@ -22,7 +22,7 @@ export default class ConfigModel extends LockingModel {
   setValuesFromURLParams() {
     const paramMappings = {
       dir: '_defaultDirection',
-      lang: '_defaultLanguage'
+      lang: '_activeLanguage'
     };
 
     const params = new URLSearchParams(window.location.search);
