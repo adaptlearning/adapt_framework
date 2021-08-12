@@ -22,7 +22,7 @@ export default class ConfigModel extends LockingModel {
   setValuesFromURLParams() {
     const paramMappings = {
       dir: '_defaultDirection',
-      lang: '_activeLanguage'
+      lang: '_defaultLanguage'
     };
 
     const params = new URLSearchParams(window.location.search);
@@ -30,6 +30,7 @@ export default class ConfigModel extends LockingModel {
     Object.entries(paramMappings).forEach(([key, value]) => {
       const passedVal = params.get(key);
       if (!passedVal) return;
+      if (key === 'lang' && Adapt.build.get('availableLanguageNames')?.includes(passedVal) === false) return;
       this.set(value, passedVal);
     });
   }
