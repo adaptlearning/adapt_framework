@@ -1,3 +1,7 @@
+## [5.15.5] - 2021-08-12
+### Fixed
+* Course would not load unless LanguagePicker extension was enabled ([#3224](https://github.com/adaptlearning/adapt_framework/issues/3224))
+
 ## [5.15.4] - 2021-08-09
 ### Fixed
 * Bad `lang` param was loading course data twice ([#3220](https://github.com/adaptlearning/adapt_framework/issues/3220))
@@ -1080,6 +1084,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.15.5]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.4...v5.15.5
 [5.15.4]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.3...v5.15.4
 [5.15.3]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.2...v5.15.3
 [5.15.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.1...v5.15.2
