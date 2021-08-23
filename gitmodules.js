@@ -57,7 +57,7 @@ if (isFrameworkClone) {
 } else {
   // Clone submodules
   for (const path in modules) {
-    if (fs.existsSync(path)) continue;
+    if (fs.existsSync(`${path}/package.json`)) continue;
     const url = modules[path].url;
     console.log(`Cloning submodule ${url} to ${path}`);
     ChildProcess.execSync(`git clone ${url} ${path}`, {
