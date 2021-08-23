@@ -26,8 +26,8 @@ function getModuleConfig() {
       }
       subline = subline.trim();
       const result = subline.match(/(.*?)\s*=\s*(.*)/);
-      const key = result.key;
-      const value = result.value;
+      const key = result[1];
+      const value = result[2];
       if (key && value) obj[key] = value;
       i++;
     }
@@ -46,17 +46,32 @@ const env = Object.assign({}, process.env, {
   PATH: `${process.env.PATH};${GITCOMPATIBILITY}`,
 });
 
-// Download submodules
-ChildProcess.execSync('git submodule update --init --remote', {
-  env,
-  cwd: process.cwd(),
-  stdio: 'inherit'
-});
+const isFrameworkClone = fs.existsSync('.git');
+if (isFrameworkClone) {
+  // Download submodules
+  ChildProcess.execSync('git submodule update --init --remote', {
+    env,
+    cwd: process.cwd(),
+    stdio: 'inherit'
+  });
+} else {
+  // Clone submodules
+  for (const path in modules) {
+    if (fs.existsSync(path)) continue;
+    const url = modules[path].url;
+    console.log(`Cloning submodule ${url} to ${path}`);
+    ChildProcess.execSync(`git clone ${url} ${path}`, {
+      cwd: process.cwd(),
+      env,
+      stdio: 'inherit'
+    });
+  }
+}
 
 // Ensure submodules are on the appropriate branch
-
 for (const path in modules) {
   const branch = (modules[path].branch || 'master');
+  if (!fs.existsSync(`${path}/.git`)) continue;
   console.log(`Switching submodule ${path} to branch ${branch}`);
   ChildProcess.execSync(`git checkout ${branch}`, {
     cwd: `${process.cwd()}/${path}`,
