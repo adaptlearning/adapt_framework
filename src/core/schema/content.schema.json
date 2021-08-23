@@ -1,0 +1,175 @@
+{
+  "$anchor": "content",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "title"
+  ],
+  "properties": {
+    "_type": {
+      "type": "string",
+      "title": "Type"
+    },
+    "_parentId": {
+      "type": "string",
+      "isObjectId": true,
+      "title": "Parent id"
+    },
+    "_courseId": {
+      "type": "string",
+      "isObjectId": true,
+      "title": "Course id",
+      "_adapt": {
+        "editorOnly": true
+      }
+    },
+    "title": {
+      "type": "string",
+      "title": "Title",
+      "default": "Untitled",
+      "_adapt": {
+        "translatable": true
+      }
+    },
+    "displayTitle": {
+      "type": "string",
+      "title": "Display title",
+      "description": "When viewing an element - this is the title that will be displayed on the page",
+      "default": "",
+      "_adapt": {
+        "translatable": true
+      },
+      "_backboneForms": "DisplayTitle"
+    },
+    "body": {
+      "type": "string",
+      "title": "Body",
+      "default": "",
+      "_adapt": {
+        "translatable": true
+      },
+      "_backboneForms": "TextArea"
+    },
+    "instruction": {
+      "type": "string",
+      "title": "Instruction",
+      "default": "",
+      "_adapt": {
+        "translatable": true
+      }
+    },
+    "_classes": {
+      "type": "string",
+      "title": "Custom classes",
+      "description": "Used to style or manipulate the look and feel of this element. These are predefined in the theme or added in Project Settings > Custom CSS/Less code",
+      "default": "",
+      "_adapt": {
+        "isSetting": true
+      }
+    },
+    "_isOptional": {
+      "type": "boolean",
+      "title": "Make this element optional",
+      "description": "An optional element does not have to be completed, nor do any of the elements contained within it",
+      "default": false,
+      "_adapt": {
+        "isSetting": true
+      }
+    },
+    "_isAvailable": {
+      "type": "boolean",
+      "title": "Make this element available",
+      "description": "Controls whether this element and its contents are available in the course or not",
+      "default": true,
+      "_adapt": {
+        "isSetting": true
+      }
+    },
+    "_isHidden": {
+      "type": "boolean",
+      "title": "Hide this element",
+      "description": "Enabling this is equivalent to applying the CSS 'display:none' to the element",
+      "default": false,
+      "_adapt": {
+        "isSetting": true
+      }
+    },
+    "_isVisible": {
+      "type": "boolean",
+      "title": "Make this element visible",
+      "description": "Disabling this is equivalent to applying the CSS 'visibility:hidden' to the element",
+      "default": true,
+      "_adapt": {
+        "isSetting": true
+      }
+    },
+    "_ariaLevel": {
+      "type": "number",
+      "title": "Custom ARIA level",
+      "description": "If you need to override the default element ARIA level (as defined in Configuration Settings), set this to any number greater than 0",
+      "default": 0,
+      "_adapt": {
+        "isSetting": true
+      }
+    },
+    "_onScreen": {
+      "type": "object",
+      "title": "Animation classes",
+      "description": "These settings allow you to attach classes to the element when it is within the browser's viewport; helpful for running CSS-based animations on elements as they scroll into view",
+      "default": {},
+      "properties": {
+        "_isEnabled": {
+          "type": "boolean",
+          "title": "Add classes when this element is in view",
+          "default": false,
+          "_adapt": {
+            "isSetting": true
+          }
+        },
+        "_classes": {
+          "type": "string",
+          "title": "Classes",
+          "description": "The CSS class(es) to add to the element",
+          "default": "",
+          "_adapt": {
+            "isSetting": true
+          }
+        },
+        "_percentInviewVertical": {
+          "type": "number",
+          "title": "Percent in view",
+          "description": "Controls what percentage of the element's height needs to be in the viewport in order for the CSS class(es) to be added",
+          "default": 50,
+          "_adapt": {
+            "isSetting": true
+          }
+        }
+      }
+    },
+    "_extensions": {
+      "type": "object",
+      "title": "Extensions",
+      "default": {}
+    },
+    "_sortOrder": {
+      "type": "number",
+      "title": "Sort order",
+      "_adapt": {
+        "editorOnly": true
+      }
+    },
+    "themeSettings": {
+      "type": "object",
+      "title": "Theme settings",
+      "default": {}
+    },
+    "_colorLabel": {
+      "type": "string",
+      "title": "Color label",
+      "default": "",
+      "_adapt": {
+        "editorOnly": true
+      }
+    }
+  }
+}

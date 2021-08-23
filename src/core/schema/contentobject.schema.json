@@ -1,0 +1,119 @@
+{
+  "$anchor": "contentobject",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$merge": {
+    "source": {
+      "$ref": "content"
+    },
+    "with": {
+      "required": [
+        "linkText"
+      ],
+      "properties": {
+        "subtitle": {
+          "type": "string",
+          "title": "Subtitle",
+          "description": "When viewing a menu/page - this is the subtitle that will be displayed on the menu/page",
+          "default": "",
+          "_adapt": {
+            "translatable": true
+          }
+        },
+        "pageBody": {
+          "type": "string",
+          "title": "Custom page body",
+          "description": "If set, this text will be shown instead of the body text when this page is viewed",
+          "default": "",
+          "_adapt": {
+            "translatable": true
+          },
+          "_backboneForms": "TextArea"
+        },
+        "_htmlClasses": {
+          "type": "string",
+          "title": "Custom HTML classes",
+          "description": "If set, this CSS class/es will be applied to the <html> element whenever this is the active page in the course. These are predefined in the theme or added in Project Settings > Custom CSS/Less code",
+          "default": ""
+        },
+        "_graphic": {
+          "type": "object",
+          "title": "Graphic",
+          "default": {},
+          "properties": {
+            "alt": {
+              "type": "string",
+              "title": "Alternative text",
+              "description": "A description of the image; required when it has meaning that must be conveyed to the learner. For 'decorative' images, leave this blank",
+              "default": "",
+              "_adapt": {
+                "translatable": true
+              }
+            },
+            "src": {
+              "type": "string",
+              "isObjectId": true,
+              "title": "Source",
+              "_backboneForms": {
+                "type": "Asset",
+                "media": "image"
+              }
+            }
+          }
+        },
+        "linkText": {
+          "type": "string",
+          "title": "Menu button text",
+          "default": "View",
+          "_adapt": {
+            "translatable": true
+          }
+        },
+        "duration": {
+          "type": "string",
+          "title": "Duration",
+          "description": "Indicates how long this page or section should take to complete",
+          "default": "",
+          "_adapt": {
+            "translatable": true
+          }
+        },
+        "_lockedBy": {
+          "type": "array",
+          "title": "Elements to complete before this is unlocked",
+          "description": "If the course is using a 'custom' menu lock type, this should contain the unique ID of the item(s) which must be completed before this is unlocked",
+          "default": [],
+          "_backboneForms": "List"
+        },
+        "_lockType": {
+          "type": "string",
+          "title": "Menu lock type",
+          "description": "Defines which (if any) locking mechanism will be used. To be used only on submenus",
+          "default": "",
+          "enum": [
+            "",
+            "custom",
+            "lockLast",
+            "sequential",
+            "unlockFirst"
+          ],
+          "_backboneForms": "Select"
+        },
+        "_requireCompletionOf": {
+          "type": "number",
+          "title": "Number of articles required for completion",
+          "description": "The number of articles within this page the learner must complete in order for this page to be set as completed. A value of -1 requires all of them to be completed",
+          "default": -1,
+          "_adapt": {
+            "isSetting": true
+          }
+        },
+        "menuSettings": {
+          "type": "object",
+          "title": "Menu settings",
+          "default": {}
+        }
+      }
+    }
+  }
+}

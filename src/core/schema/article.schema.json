@@ -1,0 +1,23 @@
+{
+  "$anchor": "article",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$merge": {
+    "source": {
+      "$ref": "content"
+    },
+    "with": {
+      "properties": {
+        "_requireCompletionOf": {
+          "type": "number",
+          "title": "Number of blocks required for completion",
+          "description": "The number of blocks within this article the learner must complete in order for this article to be set as completed. A value of -1 requires all of them to be completed",
+          "default": -1,
+          "_adapt": {
+            "isSetting": true
+          }
+        }
+      }
+    }
+  }
+}

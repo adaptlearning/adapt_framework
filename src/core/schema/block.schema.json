@@ -1,0 +1,36 @@
+{
+  "$anchor": "block",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$merge": {
+    "source": {
+      "$ref": "content"
+    },
+    "with": {
+      "properties": {
+        "_trackingId": {
+          "type": "number",
+          "title": "Tracking id",
+          "default": 0
+        },
+        "layoutOptions": {
+          "type": "array",
+          "title": "Layout options",
+          "default": [],
+          "_adapt": {
+            "editorOnly": true
+          }
+        },
+        "_requireCompletionOf": {
+          "type": "number",
+          "title": "Number of components required for completion",
+          "description": "The number of components within this block the learner must complete in order for this block to be set as completed. A value of -1 requires all of them to be completed",
+          "default": -1,
+          "_adapt": {
+            "isSetting": true
+          }
+        }
+      }
+    }
+  }
+}

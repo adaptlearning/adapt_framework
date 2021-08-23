@@ -9,7 +9,6 @@
     "scripts": {
         "lint": "node node_modules/eslint/bin/eslint.js ./"
     },
-    "authoringTool": ">=0.8",
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/adaptlearning/adapt_framework/issues"

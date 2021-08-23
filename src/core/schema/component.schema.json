@@ -1,0 +1,55 @@
+{
+  "$anchor": "component",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "$merge": {
+    "source": {
+      "$ref": "content"
+    },
+    "with": {
+      "required": [
+        "_component"
+      ],
+      "properties": {
+        "_component": {
+          "type": "string",
+          "title": "Component"
+        },
+        "_layout": {
+          "type": "string",
+          "title": "Layout",
+          "default": ""
+        },
+        "_isResetOnRevisit": {
+          "type": "string",
+          "title": "Reset state on revisit",
+          "description": "Controls whether this component will be reset when the learner leaves the page then returns to it. The 'soft' setting will reset the component to allow the learner to attempt it again, but will not require them to do so; whereas the 'hard' setting will require them to do so. The default (false) will not cause the component to be reset",
+          "default": "false",
+          "enum": [
+            "false",
+            "soft",
+            "hard"
+          ],
+          "_adapt": {
+            "isSetting": true
+          },
+          "_backboneForms": "Select"
+        },
+        "_disableAccessibilityState": {
+          "type": "boolean",
+          "title": "Disable completion ARIA label",
+          "description": "Controls whether the user can tab to a hidden label that describes the completion state of the component",
+          "default": false,
+          "_adapt": {
+            "isSetting": true
+          }
+        },
+        "properties": {
+          "type": "object",
+          "title": "Properties",
+          "default": {}
+        }
+      }
+    }
+  }
+}
