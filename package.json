@@ -1,6 +1,6 @@
 {
     "name": "adapt_framework",
-    "version": "5.15.2",
+    "version": "5.15.5",
     "description": "Adapt Learning output framework",
     "repository": {
         "type": "git",
@@ -10,7 +10,6 @@
         "preinstall": "node gitmodules.js",
         "lint": "node node_modules/eslint/bin/eslint.js ./"
     },
-    "authoringTool": ">=0.8",
     "license": "GPL-3.0",
     "bugs": {
         "url": "https://github.com/adaptlearning/adapt_framework/issues"
