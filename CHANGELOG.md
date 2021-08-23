@@ -1,3 +1,7 @@
+## [5.16.0] - 2021-08-23
+### Added
+* Support for authoring tool 1 (https://github.com/adaptlearning/adapt_framework/issues/2704)
+
 ## [5.15.5] - 2021-08-12
 ### Fixed
 * Course would not load unless LanguagePicker extension was enabled ([#3224](https://github.com/adaptlearning/adapt_framework/issues/3224))
@@ -1084,6 +1088,7 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.16.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.5...v5.16.0
 [5.15.5]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.4...v5.15.5
 [5.15.4]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.3...v5.15.4
 [5.15.3]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.2...v5.15.3
