@@ -296,9 +296,6 @@ module.exports = function(grunt) {
                 {
                   useBuiltIns: 'entry',
                   corejs: 3,
-                  targets: {
-                    ie: '11'
-                  },
                   exclude: [
                     // Breaks lockingModel.js, set function vs set variable
                     'transform-function-name'
