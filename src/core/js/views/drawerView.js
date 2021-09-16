@@ -9,7 +9,7 @@ class DrawerView extends Backbone.View {
 
   attributes() {
     return {
-      'role': 'dialog',
+      role: 'dialog',
       'aria-modal': 'true',
       'aria-labelledby': 'drawer-heading',
       'aria-hidden': 'true'
@@ -30,7 +30,7 @@ class DrawerView extends Backbone.View {
       'navigation:toggleDrawer': this.toggleDrawer,
       'drawer:triggerCustomView': this.openCustomView,
       'drawer:closeDrawer': this.onCloseDrawer,
-      'remove': this.onRemove,
+      remove: this.onRemove,
       'drawer:remove': this.remove
     });
 
@@ -176,7 +176,13 @@ class DrawerView extends Backbone.View {
 
       const easing = Adapt.config.get('_drawer')?._showEasing || 'easeOutQuart';
       direction[this.drawerDir] = 0;
-      this.$el.velocity(direction, this.drawerDuration, easing);
+      this.$el.velocity(direction, {
+        duration: this.drawerDuration,
+        easing,
+        complete: () => {
+          Adapt.trigger('drawer:animationComplete');
+        }
+      });
     }
 
   }
@@ -223,7 +229,8 @@ class DrawerView extends Backbone.View {
         Adapt.trigger('drawer:closed');
       });
 
-      $('.js-shadow').velocity({ opacity: 0 }, { duration: this.drawerDuration,
+      $('.js-shadow').velocity({ opacity: 0 }, {
+        duration: this.drawerDuration,
         complete() {
           $('.js-shadow').addClass('u-display-none');
         }
