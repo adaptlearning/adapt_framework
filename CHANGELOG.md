@@ -1,3 +1,12 @@
+## [5.17.0] - 2021-09-16
+### Changed
+* Move src/core to adapt-contrib-core (https://github.com/adaptlearning/adapt_framework/issues/3169)
+* Allow ES to be published without support for IE11 (https://github.com/adaptlearning/adapt_framework/issues/3236)
+
+### Fixed
+* Exclude locked drawer items from inheriting hover style (https://github.com/adaptlearning/adapt_framework/issues/3235)
+* gitmodules.js fix for adapt-cli and adapt-contrib-core (https://github.com/adaptlearning/adapt_framework/issues/3232)
+
 ## [5.16.0] - 2021-08-23
 ### Added
 * Support for authoring tool 1 (https://github.com/adaptlearning/adapt_framework/issues/2704)
