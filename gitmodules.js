@@ -46,26 +46,17 @@ const env = Object.assign({}, process.env, {
   PATH: `${process.env.PATH};${GITCOMPATIBILITY}`,
 });
 
-const isFrameworkClone = fs.existsSync('.git');
-if (isFrameworkClone) {
-  // Download submodules
-  ChildProcess.execSync('git submodule update --init --remote', {
-    env,
+// Clone submodules
+for (const path in modules) {
+  if (fs.existsSync(`${path}/package.json`)) continue;
+  const url = modules[path].url;
+  if (fs.existsSync(`${path}/.git`)) continue;
+  console.log(`Cloning submodule ${url} to ${path}`);
+  ChildProcess.execSync(`git clone ${url} ${path}`, {
     cwd: process.cwd(),
+    env,
     stdio: 'inherit'
   });
-} else {
-  // Clone submodules
-  for (const path in modules) {
-    if (fs.existsSync(`${path}/package.json`)) continue;
-    const url = modules[path].url;
-    console.log(`Cloning submodule ${url} to ${path}`);
-    ChildProcess.execSync(`git clone ${url} ${path}`, {
-      cwd: process.cwd(),
-      env,
-      stdio: 'inherit'
-    });
-  }
 }
 
 // Ensure submodules are on the appropriate branch
