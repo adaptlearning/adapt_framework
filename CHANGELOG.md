@@ -1,3 +1,7 @@
+## [5.17.1] - 2021-10-13
+### Changed
+* Core branch updated 
+
 ## [5.17.0] - 2021-09-16
 ### Changed
 * Move src/core to adapt-contrib-core (https://github.com/adaptlearning/adapt_framework/issues/3169)
