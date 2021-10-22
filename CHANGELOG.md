@@ -1,3 +1,7 @@
+## [5.17.3] - 2021-10-22
+### Changed
+* Core branch updated (https://github.com/adaptlearning/adapt-contrib-core/issues/24)
+
 ## [5.17.2] - 2021-10-19
 ### Changed
 * Core branch updated 
