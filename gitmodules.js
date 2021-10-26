@@ -56,7 +56,7 @@ for (const subPath in modules) {
   const url = modules[subPath].url;
   console.log(`Cleaning ${subPath}`);
   fs.rmSync(dirPath, { recursive: true, force: true });
-  console.log(`Cloning submodule ${url} to ${subPath}`);
+  console.log(`Cloning submodule ${url} into ${subPath}`);
   ChildProcess.execSync(`git clone ${url} ${subPath}`, {
     cwd: __dirname,
     env,
@@ -70,7 +70,7 @@ for (const subPath in modules) {
   const branch = (modules[subPath].installBranch || modules[subPath].branch);
   const hasGit = fs.existsSync(path.join(dirPath, '.git'));
   if (!hasGit) continue;
-  console.log(`Switching submodule ${subPath} into branch ${branch}`);
+  console.log(`Switching submodule ${subPath} to branch ${branch}`);
   ChildProcess.execSync(`git checkout ${branch}`, {
     cwd: dirPath,
     env,
