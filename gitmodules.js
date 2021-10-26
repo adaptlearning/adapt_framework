@@ -54,20 +54,8 @@ const env = Object.assign({}, process.env, {
 for (const subPath in modules) {
   const dirPath = path.join(__dirname, subPath);
   const url = modules[subPath].url;
-  const hasPackageJSON = fs.existsSync(path.join(dirPath, 'package.json'));
-  if (!hasPackageJSON) {
-    console.log(`Removing erroneous files from ${subPath}`);
-    fs.rmSync(dirPath, { recursive: true, force: true });
-  }
-  if (hasPackageJSON) {
-    console.log(`Updating ${subPath} from origin`);
-    ChildProcess.execSync(`git fetch --prune`, {
-      cwd: dirPath,
-      env,
-      stdio: 'inherit'
-    });
-    continue;
-  };
+  console.log(`Cleaning ${subPath}`);
+  fs.rmSync(dirPath, { recursive: true, force: true });
   console.log(`Cloning submodule ${url} to ${subPath}`);
   ChildProcess.execSync(`git clone ${url} ${subPath}`, {
     cwd: __dirname,
@@ -82,7 +70,7 @@ for (const subPath in modules) {
   const branch = (modules[subPath].installBranch || modules[subPath].branch);
   const hasGit = fs.existsSync(path.join(dirPath, '.git'));
   if (!hasGit) continue;
-  console.log(`Switching submodule ${subPath} to branch ${branch}`);
+  console.log(`Switching submodule ${subPath} into branch ${branch}`);
   ChildProcess.execSync(`git checkout ${branch}`, {
     cwd: dirPath,
     env,
