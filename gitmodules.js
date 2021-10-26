@@ -7,13 +7,16 @@ const path = require('path');
  * @returns {Object}
  */
 function getModuleConfig() {
-  if (!fs.existsSync(path.join(__dirname, './.gitmodules'))) return false;
-  const str = fs.readFileSync(path.join(__dirname, './.gitmodules')).toString();
+  const gitModulesPath = path.join(__dirname, './.gitmodules');
+  if (!fs.existsSync(gitModulesPath)) return false;
+  const boundaryRegExp = /\[submodule\s+"(.*?)"\]/;
+  const propertyRegExp = /(.*?)\s*=\s*(.*)/;
+  const str = fs.readFileSync(gitModulesPath).toString();
   const lines = str.split('\n');
   const ret = {};
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const result = line.match(/\[submodule\s+"(.*?)"\]/);
+    const result = line.match(boundaryRegExp);
     if (!result || result.length < 2) continue;
     const submodule = result[1];
     const obj = {};
@@ -21,12 +24,12 @@ function getModuleConfig() {
     let subline = lines[++i];
     while (subline && subline.trim()) {
       subline = lines[i];
-      if (!subline || subline.match(/\[submodule\s+"(.*?)"\]/)) {
+      if (!subline || subline.match(boundaryRegExp)) {
         i--;
         break;
       }
       subline = subline.trim();
-      const result = subline.match(/(.*?)\s*=\s*(.*)/);
+      const result = subline.match(propertyRegExp);
       const key = result[1];
       const value = result[2];
       if (key && value) obj[key] = value;
@@ -54,7 +57,7 @@ for (const subPath in modules) {
   const hasPackageJSON = fs.existsSync(path.join(dirPath, 'package.json'));
   if (!hasPackageJSON) {
     console.log(`Removing erroneous files from ${subPath}`);
-    fs.rmSync(path.join(dirPath), { recursive: true, force: true });
+    fs.rmSync(dirPath, { recursive: true, force: true });
   }
   if (hasPackageJSON) {
     console.log(`Updating ${subPath} from origin`);
@@ -77,7 +80,8 @@ for (const subPath in modules) {
 for (const subPath in modules) {
   const dirPath = path.join(__dirname, subPath);
   const branch = (modules[subPath].installBranch || modules[subPath].branch);
-  if (!fs.existsSync(path.join(dirPath, '.git'))) continue;
+  const hasGit = fs.existsSync(path.join(dirPath, '.git'));
+  if (!hasGit) continue;
   console.log(`Switching submodule ${subPath} to branch ${branch}`);
   ChildProcess.execSync(`git checkout ${branch}`, {
     cwd: dirPath,
