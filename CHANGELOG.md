@@ -1,14 +1,18 @@
+## [5.17.4] - 2021-10-26
+### Changed
+* babel/core updated to 7.15.8 (https://github.com/adaptlearning/adapt_framework/issues/3251)
+
 ## [5.17.3] - 2021-10-22
 ### Changed
 * Core branch updated (https://github.com/adaptlearning/adapt-contrib-core/issues/24)
 
 ## [5.17.2] - 2021-10-19
 ### Changed
-* Core branch updated 
+* Core branch updated
 
 ## [5.17.1] - 2021-10-13
 ### Changed
-* Core branch updated 
+* Core branch updated
 
 ## [5.17.0] - 2021-09-16
 ### Changed
@@ -1109,6 +1113,11 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.17.4]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.3...v5.17.4
+[5.17.3]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.2...v5.17.3
+[5.17.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.1...v5.17.2
+[5.17.1]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.0...v5.17.1
+[5.17.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.16.0...v5.17.0
 [5.16.0]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.5...v5.16.0
 [5.15.5]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.4...v5.15.5
 [5.15.4]: https://github.com/adaptlearning/adapt_framework/compare/v5.15.3...v5.15.4
