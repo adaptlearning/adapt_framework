@@ -1,18 +1,22 @@
 const ChildProcess = require('child_process');
 const fs = require('fs');
+const path = require('path');
 
 /**
  * Fetch and parse .gitmodules
  * @returns {Object}
  */
 function getModuleConfig() {
-  if (!fs.existsSync('./.gitmodules')) return false;
-  const str = fs.readFileSync('./.gitmodules').toString();
+  const gitModulesPath = path.join(__dirname, './.gitmodules');
+  if (!fs.existsSync(gitModulesPath)) return false;
+  const boundaryRegExp = /\[submodule\s+"(.*?)"\]/;
+  const propertyRegExp = /(.*?)\s*=\s*(.*)/;
+  const str = fs.readFileSync(gitModulesPath).toString();
   const lines = str.split('\n');
   const ret = {};
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const result = line.match(/\[submodule\s+"(.*?)"\]/);
+    const result = line.match(boundaryRegExp);
     if (!result || result.length < 2) continue;
     const submodule = result[1];
     const obj = {};
@@ -20,12 +24,12 @@ function getModuleConfig() {
     let subline = lines[++i];
     while (subline && subline.trim()) {
       subline = lines[i];
-      if (!subline || subline.match(/\[submodule\s+"(.*?)"\]/)) {
+      if (!subline || subline.match(boundaryRegExp)) {
         i--;
         break;
       }
       subline = subline.trim();
-      const result = subline.match(/(.*?)\s*=\s*(.*)/);
+      const result = subline.match(propertyRegExp);
       const key = result[1];
       const value = result[2];
       if (key && value) obj[key] = value;
@@ -47,25 +51,41 @@ const env = Object.assign({}, process.env, {
 });
 
 // Clone submodules
-for (const path in modules) {
-  if (fs.existsSync(`${path}/package.json`)) continue;
-  const url = modules[path].url;
-  if (fs.existsSync(`${path}/.git`)) continue;
-  console.log(`Cloning submodule ${url} to ${path}`);
-  ChildProcess.execSync(`git clone ${url} ${path}`, {
-    cwd: process.cwd(),
+for (const subPath in modules) {
+  const dirPath = path.join(__dirname, subPath);
+  const url = modules[subPath].url;
+  const hasPackageJSON = fs.existsSync(path.join(dirPath, 'package.json'));
+  if (!hasPackageJSON) {
+    console.log(`Cleaning ${subPath}`);
+    // rmSync was introduced in node v14.14.0
+    fs[fs.rmSync ? 'rmSync' : 'rmdirSync'](dirPath, { recursive: true, force: true });
+  }
+  if (hasPackageJSON) {
+    console.log(`Updating ${subPath} from origin`);
+    ChildProcess.execSync(`git fetch --prune`, {
+      cwd: dirPath,
+      env,
+      stdio: 'inherit'
+    });
+    continue;
+  };
+  console.log(`Cloning submodule ${url} into ${subPath}`);
+  ChildProcess.execSync(`git clone ${url} ${subPath}`, {
+    cwd: __dirname,
     env,
     stdio: 'inherit'
   });
 }
 
 // Ensure submodules are on the appropriate branch
-for (const path in modules) {
-  const branch = (modules[path].branch || 'master');
-  if (!fs.existsSync(`${path}/.git`)) continue;
-  console.log(`Switching submodule ${path} to branch ${branch}`);
+for (const subPath in modules) {
+  const dirPath = path.join(__dirname, subPath);
+  const branch = (modules[subPath].installBranch || modules[subPath].branch);
+  const hasGit = fs.existsSync(path.join(dirPath, '.git'));
+  if (!hasGit) continue;
+  console.log(`Switching submodule ${subPath} to branch ${branch}`);
   ChildProcess.execSync(`git checkout ${branch}`, {
-    cwd: `${process.cwd()}/${path}`,
+    cwd: dirPath,
     env,
     stdio: 'inherit'
   });
