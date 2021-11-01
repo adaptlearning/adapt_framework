@@ -57,7 +57,8 @@ for (const subPath in modules) {
   const hasPackageJSON = fs.existsSync(path.join(dirPath, 'package.json'));
   if (!hasPackageJSON) {
     console.log(`Cleaning ${subPath}`);
-    fs.rmSync(dirPath, { recursive: true, force: true });
+    // rmSync was introduced in node v14.14.0
+    fs[fs.rmSync ? 'rmSync' : 'rmdirSync'](dirPath, { recursive: true, force: true });
   }
   if (hasPackageJSON) {
     console.log(`Updating ${subPath} from origin`);
