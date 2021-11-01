@@ -1,12 +1,12 @@
 ## [5.17.5] - 2021-11-01
 ### Changed
 * Core branch updated
-* Caniuse-lite out of date (https://github.com/adaptlearning/adapt_framework/issues/3251)
-* Inherit link font size (https://github.com/adaptlearning/adapt_framework/issues/3243)
 
 ## [5.17.4] - 2021-10-26
 ### Changed
 * babel/core updated to 7.15.8 (https://github.com/adaptlearning/adapt_framework/issues/3251)
+* Caniuse-lite out of date (https://github.com/adaptlearning/adapt_framework/issues/3251)
+* Inherit link font size (https://github.com/adaptlearning/adapt_framework/issues/3243)
 
 ## [5.17.3] - 2021-10-22
 ### Changed
