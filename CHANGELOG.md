@@ -1,3 +1,7 @@
+## [5.17.6] - 2021-11-01
+### Changed
+* Issue with gitmodules.js path and branch (https://github.com/adaptlearning/adapt_framework/issues/3252)
+
 ## [5.17.5] - 2021-11-01
 ### Changed
 * Core branch updated
