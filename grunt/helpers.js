@@ -219,7 +219,7 @@ module.exports = function(grunt) {
         process.exit();
       }
 
-      const isDevelopmentBuild = process.argv.some(arg => (arg.includes('dev') || arg.includes(':dev')));
+      const isDevelopmentBuild = process.argv.some(arg => (arg === 'dev' || arg.includes(':dev')));
 
       var data = {
         type: isDevelopmentBuild ? 'development' : 'production',
