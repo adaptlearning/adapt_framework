@@ -1,3 +1,7 @@
+## [5.17.7] - 2021-11-09
+### Changed
+* Core branch updated
+
 ## [5.17.6] - 2021-11-01
 ### Changed
 * Issue with gitmodules.js path and branch (https://github.com/adaptlearning/adapt_framework/issues/3252)
@@ -1123,6 +1127,9 @@ The initial version of the Adapt framework.
 ### Added
 - Everything!
 
+[5.17.7]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.6...v5.17.7
+[5.17.6]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.5...v5.17.6
+[5.17.5]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.4...v5.17.5
 [5.17.4]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.3...v5.17.4
 [5.17.3]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.2...v5.17.3
 [5.17.2]: https://github.com/adaptlearning/adapt_framework/compare/v5.17.1...v5.17.2
