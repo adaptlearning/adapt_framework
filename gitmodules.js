@@ -55,20 +55,10 @@ for (const subPath in modules) {
   const dirPath = path.join(__dirname, subPath);
   const url = modules[subPath].url;
   const hasPackageJSON = fs.existsSync(path.join(dirPath, 'package.json'));
-  if (!hasPackageJSON) {
-    console.log(`Cleaning ${subPath}`);
-    // rmSync was introduced in node v14.14.0
-    fs[fs.rmSync ? 'rmSync' : 'rmdirSync'](dirPath, { recursive: true, force: true });
-  }
-  if (hasPackageJSON) {
-    console.log(`Updating ${subPath} from origin`);
-    ChildProcess.execSync(`git fetch --prune`, {
-      cwd: dirPath,
-      env,
-      stdio: 'inherit'
-    });
-    continue;
-  };
+  if (hasPackageJSON) continue;
+  console.log(`Cleaning ${subPath}`);
+  // rmSync was introduced in node v14.14.0
+  fs[fs.rmSync ? 'rmSync' : 'rmdirSync'](dirPath, { recursive: true, force: true });
   console.log(`Cloning submodule ${url} into ${subPath}`);
   ChildProcess.execSync(`git clone ${url} ${subPath}`, {
     cwd: __dirname,
