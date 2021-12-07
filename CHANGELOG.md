@@ -3,6 +3,7 @@
 * Core branch updated
 * Column Structure (https://github.com/adaptlearning/adapt_framework/issues/3177)
 * npm install on non-git src/core breaks (https://github.com/adaptlearning/adapt_framework/issues/3259)
+* Better dev mode identification for client side (https://github.com/adaptlearning/adapt_framework/issues/3256)
 
 ## [5.17.7] - 2021-11-09
 ### Changed
