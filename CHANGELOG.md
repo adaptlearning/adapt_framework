@@ -1,3 +1,9 @@
+## [5.18.0] - 2021-12-07
+### Changed
+* Core branch updated
+* Column Structure (https://github.com/adaptlearning/adapt_framework/issues/3177)
+* npm install on non-git src/core breaks (https://github.com/adaptlearning/adapt_framework/issues/3259)
+
 ## [5.17.7] - 2021-11-09
 ### Changed
 * Core branch updated
