@@ -20,7 +20,7 @@
         "@babel/preset-env": "^7.8.4",
         "@babel/preset-react": "^7.10.4",
         "@rollup/plugin-babel": "^5.0.4",
-        "@types/backbone": "^1.4.1",
+        "@types/backbone": "^1.4.14",
         "@types/jquery": "^3.3.31",
         "async": "^3.1.1",
         "babel-plugin-transform-amd-to-es6": "^0.6.1",
