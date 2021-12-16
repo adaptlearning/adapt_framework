@@ -1,7 +1,10 @@
+## [5.18.1] - 2021-12-16
+### Changed
+* Core branch updated
+
 ## [5.18.0] - 2021-12-07
 ### Changed
 * Core branch updated
-* Column Structure (https://github.com/adaptlearning/adapt_framework/issues/3177)
 * npm install on non-git src/core breaks (https://github.com/adaptlearning/adapt_framework/issues/3259)
 * Better dev mode identification for client side (https://github.com/adaptlearning/adapt_framework/issues/3256)
 
@@ -41,7 +44,6 @@
 * Allow ES to be published without support for IE11 (https://github.com/adaptlearning/adapt_framework/issues/3236)
 
 ### Fixed
-* Exclude locked drawer items from inheriting hover style (https://github.com/adaptlearning/adapt_framework/issues/3235)
 * gitmodules.js fix for adapt-cli and adapt-contrib-core (https://github.com/adaptlearning/adapt_framework/issues/3232)
 
 ## [5.16.0] - 2021-08-23
