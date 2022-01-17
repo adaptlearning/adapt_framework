@@ -102,7 +102,7 @@
                 "body": "Narratives are particularly good for showing dialogue between two or more characters, with each step of the conversation being accompanied by an image. This photo story approach can be used to provide context for the learning to follow, to illustrate real-world application of the learning or to show the impact on people when the learning hasn’t been applied correctly.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": ""
+                    "alt": "alt text"
                 },
                 "strapline": "Narrative item 1"
             },
@@ -111,7 +111,7 @@
                 "body": "It can also be used to present case studies, where the different displays are used to set the scene, show the key events and then the outcome.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": ""
+                    "alt": "alt text"
                 },
                 "strapline": "Narrative item 2"
             },
@@ -120,7 +120,7 @@
                 "body": "This component can also be useful when you want to illustrate the constituent steps that make up a larger process.",
                 "_graphic": {
                     "src": "course/en/images/narrative.png",
-                    "alt": ""
+                    "alt": "alt text"
                 },
                 "strapline": "Narrative item 3"
             }
@@ -151,7 +151,7 @@
         "mobileInstruction": "Select the plus icon followed by the next arrow to find out more.",
         "_graphic": {
             "src": "course/en/images/hotgraphic.png",
-            "alt": ""
+            "alt": "alt text"
         },
         "_items": [
             {
@@ -379,7 +379,7 @@
                 "_graphic": {
                     "large": "course/en/images/gmcq.png",
                     "small": "course/en/images/gmcq.png",
-                    "alt": ""
+                    "alt": "alt text"
                 }
             },
             {
@@ -388,7 +388,7 @@
                 "_graphic": {
                     "large": "course/en/images/gmcq.png",
                     "small": "course/en/images/gmcq.png",
-                    "alt": ""
+                    "alt": "alt text"
                 }
             },
             {
@@ -397,7 +397,7 @@
                 "_graphic": {
                     "large": "course/en/images/gmcq.png",
                     "small": "course/en/images/gmcq.png",
-                    "alt": ""
+                    "alt": "alt text"
                 }
             }
         ],
