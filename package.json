@@ -27,7 +27,7 @@
         "babel-plugin-transform-react-templates": "^0.1.0",
         "chalk": "^2.4.1",
         "columnify": "^1.5.4",
-        "csv": "^5.0.0",
+        "csv": "^5.5.3",
         "fs-extra": "^8.1.0",
         "globs": "^0.1.4",
         "grunt": "^1.0.3",
