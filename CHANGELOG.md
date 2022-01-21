@@ -1,3 +1,9 @@
+## [5.18.3] - 2022-01-21
+### Changed
+* Core branch updated
+* Default alt text updated (Part of https://github.com/adaptlearning/adapt_framework/issues/3171)
+* Updated libraries (https://github.com/adaptlearning/adapt_framework/issues/3268)
+
 ## [5.18.2] - 2022-01-10
 ### Changed
 * Core branch updated
