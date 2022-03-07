@@ -1,3 +1,7 @@
+## [5.18.8] - 2022-03-07
+### Changed
+* Core branch updated
+
 ## [5.18.7] - 2022-02-16
 ### Changed
 * Core branch updated
