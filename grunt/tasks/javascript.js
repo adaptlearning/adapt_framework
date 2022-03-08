@@ -124,10 +124,11 @@ module.exports = function(grunt) {
     grunt.log.ok(`Strict mode (config.json:build.strictMode): ${isStrictMode}`);
     const done = this.async();
     const options = this.options({});
+    const cachePath = buildConfig.cachepath ?? options.cachePath;
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
     try {
-      await restoreCache(options.cachePath, basePath);
+      await restoreCache(cachePath, basePath);
       const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
       // Make src/plugins.js to attach the plugins dynamically
@@ -376,7 +377,7 @@ window.__AMD = function(id, value) {
       checkCache([pluginsPath]);
       inputOptions.cache = cache;
       const bundle = await rollup.rollup(inputOptions);
-      await saveCache(options.cachePath, basePath, bundle.cache);
+      await saveCache(cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
 
       // Remove old sourcemap if no longer required
@@ -386,7 +387,7 @@ window.__AMD = function(id, value) {
 
       done();
     } catch (err) {
-      logPrettyError(err, options.cachePath, basePath);
+      logPrettyError(err, cachePath, basePath);
       done(false);
     }
   });

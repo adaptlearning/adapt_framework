@@ -149,6 +149,7 @@ module.exports = function(grunt) {
     defaults: {
       sourcedir: 'src/',
       outputdir: 'build/',
+      cachepath: null,
       jsonext: 'json',
       theme: '**',
       menu: '**',
@@ -196,6 +197,7 @@ module.exports = function(grunt) {
       var root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
       var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
       var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+      var cachepath = grunt.option('cachepath') || null;
       var tempdir = outputdir + '.temp/';
       var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
 
@@ -227,6 +229,7 @@ module.exports = function(grunt) {
         sourcedir: sourcedir,
         outputdir: outputdir,
         configdir: configDir,
+        cachepath: cachepath,
         tempdir: tempdir,
         jsonext: jsonext,
         trackingIdType: grunt.option('trackingidtype') || 'block',
