@@ -70,7 +70,7 @@ module.exports = function(grunt, options) {
       return {
         'course': filterNullValues(courseJson),
         'config': filterNullValues(configJson),
-        'build': Helpers.generateConfigData()
+        'build': filterNullValues(Helpers.generateConfigData())
       };
     } catch (ex) {
       return {};
