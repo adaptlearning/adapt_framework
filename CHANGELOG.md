@@ -1,3 +1,9 @@
+## [5.19.0] - 2022-03-14
+### Changed
+* Core branch updated
+* Added --cachepath to grunt (Part of https://github.com/adaptlearning/adapt_framework/issues/3277)
+* Fix for build.cachepath = null (Part of https://github.com/adaptlearning/adapt_framework/issues/3277)
+
 ## [5.18.8] - 2022-03-07
 ### Changed
 * Core branch updated
