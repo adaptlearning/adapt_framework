@@ -2,7 +2,7 @@
     "env": {
         "browser": true,
         "commonjs": false,
-        "es2020": true,
+        "es2022": true,
         "amd": true
     },
     "extends": [
@@ -22,7 +22,7 @@
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2020,
+        "ecmaVersion": 2022,
         "ecmaFeatures": {
             "jsx": true
         }
