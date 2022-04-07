@@ -1,3 +1,10 @@
+## [5.19.1] - 2022-04-06
+### Changed
+* Core branch updated
+* Highlight the Node requirements of the framework in the documentation (https://github.com/adaptlearning/adapt_framework/issues/3288)
+* Bump minimist from 1.2.5 to 1.2.6 (https://github.com/adaptlearning/adapt_framework/pull/3286)
+* Upgrade csv from 5.4.0 to 5.5.3 (https://github.com/adaptlearning/adapt_framework/pull/3272)
+
 ## [5.19.0] - 2022-03-14
 ### Changed
 * Core branch updated
