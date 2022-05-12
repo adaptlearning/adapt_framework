@@ -30,25 +30,31 @@
         "_assessment": {
             "_isEnabled": true,
             "_id": "a-15",
-            "_isPercentageBased": true,
+            "_suppressMarking": false,
             "_scoreToPass": 75,
+            "_correctToPass": 75,
+            "_isPercentageBased": true,
             "_includeInTotalScore": true,
             "_assessmentWeight": 1,
-            "_suppressMarking": false,
+            "_isResetOnRevisit": true,
+            "_attempts": "infinite",
             "_allowResetIfPassed": false,
+            "_scrollToOnReset": false,
             "_banks": {
                 "_isEnabled": true,
                 "_split": "2,2",
                 "_randomisation": true
+            },
+            "_randomisation": {
+                "_isEnabled": false,
+                "_blockCount": 1
             },
             "_questions": {
                 "_resetType": "hard",
                 "_canShowFeedback": false,
                 "_canShowMarking": false,
                 "_canShowModelAnswer": false
-            },
-            "_isResetOnRevisit": true,
-            "_attempts": "infinite"
+            }
         },
         "_trickle": {
             "_isEnabled": true,
