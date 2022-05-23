@@ -1,3 +1,8 @@
+## [5.19.4] - 2022-05-23
+### Changed
+* Core branch updated
+* Added missing assessment configurations (https://github.com/adaptlearning/adapt_framework/issues/3287)
+
 ## [5.19.3] - 2022-05-09
 ### Changed
 * Core branch updated
