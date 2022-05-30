@@ -1,3 +1,9 @@
+## [5.19.5] - 2022-05-30
+### Changed
+* Core branch updated
+* node modules updated (https://github.com/adaptlearning/adapt_framework/issues/3290)
+* Bump grunt from 1.5.2 to 1.5.3 (https://github.com/adaptlearning/adapt_framework/pull/3304)
+
 ## [5.19.4] - 2022-05-23
 ### Changed
 * Core branch updated
