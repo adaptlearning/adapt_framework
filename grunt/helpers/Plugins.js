@@ -23,6 +23,7 @@ class Plugins {
     framework = null,
     includedFilter = function() { return true; },
     sourcePath = process.cwd() + '/src/',
+    courseDir = 'course',
     log = console.log,
     warn = console.warn
   } = {}) {
@@ -32,6 +33,8 @@ class Plugins {
     this.includedFilter = includedFilter;
     /** @type {string} */
     this.sourcePath = sourcePath;
+    /** @type {string} */
+    this.courseDir = courseDir;
     /** @type {function} */
     this.log = log;
     /** @type {function} */
@@ -47,7 +50,7 @@ class Plugins {
   get pluginLocations() {
     return [
       `${this.sourcePath}core/`,
-      `${this.sourcePath}!(core|course)/*/`
+      `${this.sourcePath}!(core|${this.courseDir})/*/`
     ];
   }
 

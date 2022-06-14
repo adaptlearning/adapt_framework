@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
 // extends grunt.file.expand with { order: cb(filePaths) }
 require('grunt-file-order');
@@ -149,6 +149,7 @@ module.exports = function(grunt) {
     defaults: {
       sourcedir: 'src/',
       outputdir: 'build/',
+      coursedir: 'course',
       cachepath: null,
       jsonext: 'json',
       theme: '**',
@@ -195,11 +196,13 @@ module.exports = function(grunt) {
     generateConfigData: function() {
 
       var root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
+      var adaptJSON = fs.readJSONSync(`${root}/adapt.json`);
       var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
       var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
       var cachepath = grunt.option('cachepath') || null;
       var tempdir = outputdir + '.temp/';
       var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
+      var coursedir = grunt.option('coursedir') || adaptJSON.coursedir || exports.defaults.coursedir;
 
       var languageFolders = '';
       if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
@@ -212,7 +215,7 @@ module.exports = function(grunt) {
       var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
       // add root path if necessary, and point to course/config.json
 
-      var configPath = path.join(path.resolve(root, configDir), 'course', 'config.' + jsonext);
+      var configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
 
       try {
         var buildConfig = grunt.file.readJSON(configPath).build || {};
@@ -229,6 +232,7 @@ module.exports = function(grunt) {
         sourcedir: sourcedir,
         outputdir: outputdir,
         configdir: configDir,
+        coursedir: coursedir,
         cachepath: cachepath,
         tempdir: tempdir,
         jsonext: jsonext,
@@ -255,6 +259,7 @@ module.exports = function(grunt) {
         rootPath: data.root,
         outputPath: data.outputdir,
         sourcePath: data.sourcedir,
+        courseDir: data.coursedir,
         includedFilter: exports.includedFilter,
         jsonext: data.jsonext,
         trackingIdType: data.trackingIdType,
@@ -357,6 +362,7 @@ module.exports = function(grunt) {
         rootPath: buildConfig.root,
         outputPath: buildConfig.outputdir,
         sourcePath: buildConfig.sourcedir,
+        courseDir: buildConfig.coursedir,
         includedFilter: exports.includedFilter,
         jsonext: buildConfig.jsonext,
         trackingIdType: buildConfig.trackingIdType,

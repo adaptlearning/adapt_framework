@@ -31,6 +31,7 @@ class Framework {
     rootPath = process.cwd(),
     outputPath = process.cwd() + '/build/',
     sourcePath = process.cwd() + '/src/',
+    courseDir = 'course',
     includedFilter = function() { return true; },
     jsonext = 'json',
     trackingIdType = 'block',
@@ -44,6 +45,8 @@ class Framework {
     this.outputPath = outputPath.replace(/\\/g, '/');
     /** @type {string} */
     this.sourcePath = sourcePath.replace(/\\/g, '/');
+    /** @type {string} */
+    this.courseDir = courseDir;
     /** @type {function} */
     this.includedFilter = includedFilter;
     /** @type {string} */
@@ -92,6 +95,7 @@ class Framework {
     const data = new Data({
       framework: this,
       sourcePath: useOutputData ? this.outputPath : this.sourcePath,
+      courseDir: this.courseDir,
       jsonext: this.jsonext,
       trackingIdType: this.trackingIdType,
       log: this.log
@@ -152,6 +156,7 @@ class Framework {
       sourcePath: this.sourcePath,
       languagePath,
       outputPath: this.outputPath,
+      courseDir: this.courseDir,
       useOutputData: this.useOutputData,
       isTest,
       log: this.log,
