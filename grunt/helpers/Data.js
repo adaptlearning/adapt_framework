@@ -25,6 +25,7 @@ class Data {
    * @param {Object} options
    * @param {Framework} options.framework
    * @param {string} options.sourcePath
+   * @param {string} options.courseDir
    * @param {string} options.jsonext
    * @param {string} options.trackingIdType
    * @param {function} options.log
@@ -32,6 +33,7 @@ class Data {
   constructor({
     framework = null,
     sourcePath = null,
+    courseDir = null,
     jsonext = 'json',
     trackingIdType = 'block',
     log = console.log
@@ -40,6 +42,8 @@ class Data {
     this.framework = framework;
     /** @type {string} */
     this.sourcePath = sourcePath;
+    /** @type {string} */
+    this.courseDir = courseDir;
     /** @type {string} */
     this.jsonext = jsonext;
     /** @type {string} */
@@ -54,11 +58,12 @@ class Data {
 
   /** @returns {Data} */
   load() {
-    const coursePath = path.join(this.sourcePath, 'course').replace(/\\/g, '/');
+    const coursePath = path.join(this.sourcePath, this.courseDir).replace(/\\/g, '/');
     this.languages = globs.sync(path.join(coursePath, '*/')).map(languagePath => {
       const language = new Language({
         framework: this.framework,
         languagePath,
+        courseDir: this.courseDir,
         jsonext: this.jsonext,
         trackingIdType: this.trackingIdType,
         log: this.log
@@ -130,6 +135,7 @@ class Data {
       toLang = new Language({
         framework: this.framework,
         languagePath: newPath,
+        courseDir: this.courseDir,
         jsonext: this.jsonext,
         trackingIdType: this.trackingIdType
       });

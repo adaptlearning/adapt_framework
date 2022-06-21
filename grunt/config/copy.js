@@ -29,8 +29,8 @@ module.exports = function(grunt, options) {
         {
           expand: true,
           src: ['<%= languages %>/**/*', '!**/*.<%= jsonext %>'],
-          cwd: '<%= sourcedir %>course/',
-          dest: '<%= outputdir %>course/'
+          cwd: '<%= sourcedir %><%= coursedir %>/',
+          dest: '<%= outputdir %><%= coursedir %>/'
         }
       ]
     },
@@ -39,8 +39,8 @@ module.exports = function(grunt, options) {
         {
           expand: true,
           src: ['<%= languages %>/*.<%= jsonext %>', '*.<%= jsonext %>'],
-          cwd: '<%= sourcedir %>course/',
-          dest: '<%= outputdir %>course/'
+          cwd: '<%= sourcedir %><%= coursedir %>/',
+          dest: '<%= outputdir %><%= coursedir %>/'
         }
       ]
     }

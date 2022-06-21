@@ -47,6 +47,7 @@ class Translate {
     sourcePath = '',
     languagePath = path.join(process.cwd(), 'languagefiles'),
     outputPath = '',
+    courseDir = 'course',
     useOutputData = false,
     isTest = false,
     log = console.log,
@@ -73,6 +74,8 @@ class Translate {
     this.sourcePath = sourcePath.replace(/\\/g, '/');
     /** @type {string} */
     this.outputPath = outputPath.replace(/\\/g, '/');
+    /** @type {string} */
+    this.courseDir = courseDir;
     /** @type {Framework} */
     this.useOutputData = useOutputData;
     /** @type {string} */
@@ -92,6 +95,7 @@ class Translate {
     this.data = new Data({
       framework: this.framework,
       sourcePath: this.useOutputData ? this.outputPath : this.sourcePath,
+      courseDir: this.courseDir,
       jsonext: this.jsonext,
       trackingIdType: this.framework.trackingIdType,
       log: this.log
