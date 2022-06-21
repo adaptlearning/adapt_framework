@@ -1,3 +1,13 @@
+## [5.20.0] - 2022-06-21
+### Changed
+* Core branch updated to v6.10.0
+
+### Removed
+* IE11 support (https://github.com/adaptlearning/adapt_framework/issues/3309)
+
+### Added
+* Ability to specify "course" directory (https://github.com/adaptlearning/adapt_framework/issues/3305)
+
 ## [5.19.6] - 2022-06-08
 ### Changed
 * Core branch updated
