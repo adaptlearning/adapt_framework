@@ -270,6 +270,9 @@ module.exports = function(grunt) {
         };
       };
 
+      const targets = buildConfig.targets || fs.readFileSync('.browserslistrc').toString().replace(/#+[^\n]+\n/gm, '').replace(/\r/g, '').split('\n').filter(Boolean).join(', ');
+      grunt.log.ok(`Targets: ${targets}`);
+
       const inputOptions = {
         input: './' + options.baseUrl + options.name,
         shimMissingExports: true,
@@ -300,7 +303,8 @@ module.exports = function(grunt) {
                   exclude: [
                     // Breaks lockingModel.js, set function vs set variable
                     'transform-function-name'
-                  ]
+                  ],
+                  targets
                 }
               ]
             ],
