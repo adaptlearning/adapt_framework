@@ -1,3 +1,10 @@
+## [5.20.1] - 2022-07-06
+### Changed
+* Core branch updated to v6.11.0
+
+### fixed
+* Updated and added libraries (https://github.com/adaptlearning/adapt_framework/issues/3307)
+
 ## [5.20.0] - 2022-06-21
 ### Changed
 * Core branch updated to v6.10.0
