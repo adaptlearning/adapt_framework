@@ -1,3 +1,7 @@
+## [5.20.2] - 2022-07-18
+### Changed
+* Core branch updated to v6.12.0
+
 ## [5.20.1] - 2022-07-06
 ### Changed
 * Core branch updated to v6.11.0
