@@ -17,6 +17,7 @@
     "engines": {
         "node": ">=14"
     },
+    "private": true,
     "dependencies": {
         "@babel/core": "^7.16.5",
         "@babel/plugin-transform-react-jsx": "^7.16.5",
@@ -68,12 +69,46 @@
         "eslint-plugin-promise": "^6.0.0",
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-requirejs": "^4.0.1",
-        "eslint-plugin-standard": "^5.0.0"
+        "eslint-plugin-standard": "^5.0.0",
+        "@semantic-release/commit-analyzer": "^9.0.2",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^8.0.5",
+        "@semantic-release/npm": "^9.0.1",
+        "@semantic-release/release-notes-generator": "^10.0.3",
+        "conventional-changelog-eslint": "^3.0.9",
+        "semantic-release": "^19.0.3"
     },
     "optionalDependencies": {
         "imagemin": "^7.0.1",
         "imagemin-jpegtran": "^7.0.0",
         "imagemin-pngquant": "^9.0.0",
         "imagemin-svgo": "^8.0.0"
+    },
+    "release": {
+        "plugins": [
+            [
+                "@semantic-release/commit-analyzer",
+                {
+                    "preset": "eslint"
+                }
+            ],
+            [
+                "@semantic-release/release-notes-generator",
+                {
+                    "preset": "eslint"
+                }
+            ],
+            "@semantic-release/npm",
+            "@semantic-release/github",
+            [
+                "@semantic-release/git",
+                {
+                    "assets": [
+                        "package.json"
+                    ],
+                    "message": "Chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+                }
+            ]
+        ]
     }
 }
