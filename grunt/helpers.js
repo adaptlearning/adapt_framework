@@ -241,7 +241,8 @@ module.exports = function(grunt) {
         menu: grunt.option('menu') || exports.defaults.menu,
         languages: languageFolders || exports.defaults.languages,
         scriptSafe: exports.defaults.scriptSafe,
-        strictMode: false
+        strictMode: false,
+        targets: buildConfig.targets || ''
       };
 
       if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
