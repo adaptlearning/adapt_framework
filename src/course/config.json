@@ -13,13 +13,13 @@
         "_isSkipNavigationEnabled": true,
         "_ariaLevels": {
             "_menu": 1,
-            "_menuGroup": 2,
-            "_menuItem": 2,
+            "_menuGroup": "@menu+1",
+            "_menuItem": "@menu+1",
             "_page": 1,
-            "_article": 2,
-            "_block": 3,
-            "_component": 4,
-            "_componentItem": 5,
+            "_article": "@page+1",
+            "_block": "@article+1",
+            "_component": "@block+1",
+            "_componentItem": "@component+1",
             "_notify": 1
         },
         "_options": {
