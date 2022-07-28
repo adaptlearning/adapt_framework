@@ -43,6 +43,11 @@
     "_accessibility": {
       "skipNavigationText": "Skip navigation",
       "_ariaLabels": {
+        "course": "Course",
+        "contentObject": "Page",
+        "article": "Article",
+        "block": "Block",
+        "component": "Component",
         "answeredIncorrectly": "You answered incorrectly",
         "answeredCorrectly": "You answered correctly",
         "selectedAnswer": "selected",
