@@ -8,7 +8,7 @@
 * A sentence describing each fix
 
 ### Update
-* A sentence describing each udpate
+* A sentence describing each update
 
 ### New
 * A sentence describing each new feature
