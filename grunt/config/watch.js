@@ -1,7 +1,7 @@
 module.exports = {
   courseJson: {
     files: ['<%= outputdir %><%= coursedir %>/**/*.<%= jsonext %>', '<%= outputdir %><%= coursedir %>/*/language_data_manifest.js', '<%= sourcedir %>/node_modules/adapt-*/**/*.schema', '<%= sourcedir %>/node_modules/adapt-*/**/*.schema.json'],
-    tasks: ['language-data-manifests', 'jsonlint', 'check-json', 'newer:copy:courseJson', 'schema-defaults']
+    tasks: ['language-data-manifests', 'jsonlint', 'check-json', 'schema-defaults']
   },
   packageJson: {
     files: ['<%= sourcedir %>/node_modules/adapt-*/package.json', '<%= sourcedir %>/node_modules/adapt-*/bower.json'],
@@ -26,11 +26,11 @@ module.exports = {
   },
   assets: {
     files: ['<%= sourcedir %>/node_modules/adapt-*/assets/**'],
-    tasks: ['newer:copy:componentAssets']
+    tasks: ['newer:copy:assets']
   },
   fonts: {
     files: ['<%= sourcedir %>/node_modules/adapt-*/fonts/**'],
-    tasks: ['newer:copy:componentFonts']
+    tasks: ['newer:copy:fonts']
   },
   libraries: {
     files: ['<%= sourcedir %>/node_modules/adapt-*/libraries/**'],
