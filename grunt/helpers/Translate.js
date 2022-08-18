@@ -48,7 +48,7 @@ class Translate {
     languagePath = path.join(process.cwd(), 'languagefiles'),
     outputPath = '',
     courseDir = 'course',
-    useOutputData = false,
+    useOutputData = true,
     isTest = false,
     log = console.log,
     warn = console.warn
@@ -126,8 +126,8 @@ class Translate {
       function recursiveJSONProcess(data, level, path, lookupPath, id, file, component) {
         if (level === 0) {
           // at the root
-          id = data.hasOwnProperty('_id') ? data._id : null;
-          component = data.hasOwnProperty('_component') ? data._component : null;
+          id = Object.prototype.hasOwnProperty.call(data, '_id') ? data._id : null;
+          component = Object.prototype.hasOwnProperty.call(data, '_component') ? data._component : null;
         }
         if (Array.isArray(data)) {
           for (let i = 0; i < data.length; i++) {
@@ -136,16 +136,16 @@ class Translate {
           return;
         }
         if (typeof data === 'object') {
-          for (let attribute in data) {
+          for (const attribute in data) {
             recursiveJSONProcess(data[attribute], level += 1, path + attribute + '/', lookupPath + attribute + '/', id, file, component);
           }
           return;
         }
         if (data && translatablePaths.includes(lookupPath)) {
           exportTextData.push({
-            file: file,
-            id: id,
-            path: path,
+            file,
+            id,
+            path,
             value: data
           });
         }
@@ -174,7 +174,7 @@ class Translate {
     fs.mkdirpSync(outputFolder);
 
     if (this.format === 'json' || this.format === 'raw') {
-      const filePath = path.join(outputFolder, `export.json`);
+      const filePath = path.join(outputFolder, 'export.json');
       this.log(`Exporting json to ${filePath}`);
       fs.writeJSONSync(filePath, exportTextData, { spaces: 2 });
       return;
@@ -182,7 +182,7 @@ class Translate {
 
     // create csv for each file
     const outputGroupedByFile = exportTextData.reduce((prev, current) => {
-      if (!prev.hasOwnProperty(current.file)) {
+      if (!Object.prototype.hasOwnProperty.call(prev, current.file)) {
         prev[current.file] = [];
       }
       prev[current.file].push([`${current.file}/${current.id}${current.path}`, current.value]);
@@ -218,7 +218,7 @@ class Translate {
   async import() {
 
     if (this.isTest) {
-      this.log(`!TEST IMPORT, not changing data.`);
+      this.log('!TEST IMPORT, not changing data.');
     }
 
     // check that a targetLang has been specified
@@ -282,7 +282,7 @@ class Translate {
         importData = fs.readJSONSync(langFiles[0]);
         break;
       case 'csv':
-      default:
+      default: {
         importData = [];
         const lines = [];
         await async.each(langFiles, (filename, done) => {
@@ -327,7 +327,7 @@ class Translate {
                 throw new Error(`Too few columns detected: expected 2, found ${line.length} in ${filename}`);
               }
               if (line.length !== 2 && !hasWarnedTruncated) {
-                this.log(`Truncating, too many columns detected: expected 2, found extra ${line.length-2} in ${filename}`);
+                this.log(`Truncating, too many columns detected: expected 2, found extra ${line.length - 2} in ${filename}`);
                 hasWarnedTruncated = true;
               }
               line.length = 2;
@@ -339,8 +339,8 @@ class Translate {
           lines.forEach(line => {
             const [ file, id, ...path ] = line[0].split('/');
             importData.push({
-              file: file,
-              id: id,
+              file,
+              id,
               path: path.filter(Boolean).join('/'),
               value: line[1]
             });
@@ -349,17 +349,20 @@ class Translate {
           throw new Error(`Error processing CSV files: ${err}`);
         });
         break;
+      }
     }
 
     // check import validity
     const item = importData[0];
-    const isValid = item.hasOwnProperty('file') && item.hasOwnProperty('id') && item.hasOwnProperty('path') && item.hasOwnProperty('value');
+    const isValid = Object.prototype.hasOwnProperty.call(item, 'file') &&
+      Object.prototype.hasOwnProperty.call(item, 'id') &&
+      Object.prototype.hasOwnProperty.call(item, 'path') &&
+      Object.prototype.hasOwnProperty.call(item, 'value');
     if (!isValid) {
       throw new Error('Sorry, the imported File is not valid');
     }
 
     // maintain output order with original translate tasks
-    // TODO: could probably improve this with read order rather than file order
     const typeSortLevel = {
       course: 1,
       contentObjects: 2,

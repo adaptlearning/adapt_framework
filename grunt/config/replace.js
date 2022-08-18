@@ -4,12 +4,12 @@ module.exports = function(grunt, options) {
 
   const Helpers = require('../helpers')(grunt);
 
-  var filterNullValues = function(obj) {
+  const filterNullValues = function(obj) {
     // hack to fix bug https://github.com/adaptlearning/adapt_framework/issues/1867
-    var value;
+    let value;
 
     if (obj instanceof Array) {
-      for (var i = obj.length - 1; i >= 0; i--) {
+      for (let i = obj.length - 1; i >= 0; i--) {
         value = obj[i];
         if (value === null) {
           obj.splice(i, 1);
@@ -18,7 +18,7 @@ module.exports = function(grunt, options) {
         }
       }
     } else if (typeof obj === 'object') {
-      for (var k in obj) {
+      for (const k in obj) {
         value = obj[k];
         if (value === null) {
           delete obj[k];
@@ -32,7 +32,7 @@ module.exports = function(grunt, options) {
 
   };
 
-  var generatePatterns = function() {
+  const generatePatterns = function() {
     const framework = Helpers.getFramework({ useOutputData: true });
     const data = framework.getData();
 
@@ -42,25 +42,25 @@ module.exports = function(grunt, options) {
       const courseJson = data.getLanguage(defaultLanguage).getCourseFileItem().item;
 
       // Backwards compatibility for courses missing 'description'
-      if (!courseJson.hasOwnProperty('description')) {
+      if (!Object.prototype.hasOwnProperty.call(courseJson, 'description')) {
         courseJson.description = '';
       }
 
       // A shim for edge cases where xAPI has not been configured.
-      if (!configJson.hasOwnProperty('_xapi')) {
+      if (!Object.prototype.hasOwnProperty.call(configJson, '_xapi')) {
         configJson._xapi = {
-          '_activityID': '',
-          '_isEnabled': false
+          _activityID: '',
+          _isEnabled: false
         };
       } else {
         // xAPI has been enabled, check if the activityID has been set.
-        if (configJson._xapi.hasOwnProperty('_activityID') && configJson._xapi._activityID === '') {
+        if (Object.prototype.hasOwnProperty.call(configJson._xapi, '_activityID') && configJson._xapi._activityID === '') {
           grunt.log.writeln('WARNING: xAPI activityID has not been set');
         }
       }
 
       // Shim to preserve the 'adapt_manifest' identifier.
-      var spoor = configJson._spoor;
+      const spoor = configJson._spoor;
       if (spoor) {
         spoor._advancedSettings = spoor._advancedSettings || {};
         spoor._advancedSettings._manifestIdentifier = spoor._advancedSettings._manifestIdentifier || 'adapt_manifest';
@@ -68,9 +68,9 @@ module.exports = function(grunt, options) {
 
       // Combine the course, config and build JSON to pass to replace.
       return {
-        'course': filterNullValues(courseJson),
-        'config': filterNullValues(configJson),
-        'build': filterNullValues(Helpers.generateConfigData())
+        course: filterNullValues(courseJson),
+        config: filterNullValues(configJson),
+        build: filterNullValues(Helpers.generateConfigData())
       };
     } catch (ex) {
       return {};

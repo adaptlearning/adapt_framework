@@ -62,9 +62,9 @@ class Schema {
     const recursiveSchemaNodeProperties = (properties, ...args) => {
       let rtnValue = false;
       // process properties
-      for (let attributeName in properties) {
+      for (const attributeName in properties) {
         let description = properties[attributeName];
-        if (description.hasOwnProperty('editorOnly') || !description.hasOwnProperty('type')) {
+        if (Object.prototype.hasOwnProperty.call(description, 'editorOnly') || !Object.prototype.hasOwnProperty.call(description, 'type')) {
           // go to next attribute
           continue;
         }
@@ -77,13 +77,14 @@ class Schema {
             switch (description.type) {
               case 'object':
                 return recursiveSchemaNodeProperties(description.properties, ...args);
-              case 'array':
+              case 'array': {
                 if (description.items.type === 'object') {
                   return recursiveSchemaNodeProperties(description.items.properties, ...args);
                 }
                 const next = {};
                 next[attributeName] = description.items;
                 return recursiveSchemaNodeProperties(next, ...args);
+              }
             }
           },
           stop: () => {
@@ -128,8 +129,8 @@ class Schema {
       let defaultValue;
       switch (description.type) {
         case 'object':
-          defaultValue = description.hasOwnProperty('default') && options.fillObjects ? description.default : {};
-          if (!output.hasOwnProperty(description.name)) {
+          defaultValue = Object.prototype.hasOwnProperty.call(description, 'default') && options.fillObjects ? description.default : {};
+          if (!Object.prototype.hasOwnProperty.call(output, description.name)) {
             output[description.name] = defaultValue;
             hasChanged = true;
           }
@@ -139,8 +140,8 @@ class Schema {
           }
           break;
         case 'array':
-          defaultValue = description.hasOwnProperty('default') && options.fillObjects ? description.default : [];
-          if (!output.hasOwnProperty(description.name)) {
+          defaultValue = Object.prototype.hasOwnProperty.call(description, 'default') && options.fillObjects ? description.default : [];
+          if (!Object.prototype.hasOwnProperty.call(output, description.name)) {
             output[description.name] = defaultValue;
             hasChanged = true;
           }
@@ -151,7 +152,7 @@ class Schema {
           break;
         default:
           defaultValue = description.default;
-          if (description.hasOwnProperty('default') && !output.hasOwnProperty(description.name)) {
+          if (Object.prototype.hasOwnProperty.call(description, 'default') && !Object.prototype.hasOwnProperty.call(output, description.name)) {
             output[description.name] = defaultValue;
             hasChanged = true;
           }

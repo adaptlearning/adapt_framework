@@ -1,5 +1,1 @@
-# Ignore library files.
-/src/core/libraries/*.js
-
-# Ignore built output.
-/build/
+!**/src/node_modules/adapt-*/

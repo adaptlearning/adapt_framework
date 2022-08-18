@@ -1,11 +1,9 @@
-module.exports = function(grunt, options) {
+module.exports = function(grunt) {
   return {
     options: {
-      filter: function(filepath) {
-        return grunt.config('helpers').includedFilter(filepath);
-      },
+      filter: filepath => grunt.option('helpers').includedFilter(filepath),
       allowedProperties: {
-        bower: [
+        package: [
           'name',
           'version',
           'framework',
@@ -18,13 +16,6 @@ module.exports = function(grunt, options) {
           'main',
           'keywords',
           'licence'
-        ],
-        package: [
-          'name',
-          'version',
-          'description',
-          'repository',
-          'license'
         ]
       }
     }

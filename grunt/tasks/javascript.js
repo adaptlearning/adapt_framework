@@ -10,7 +10,14 @@ module.exports = function(grunt) {
   const fs = require('fs-extra');
   const rollup = require('rollup');
   const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
+  const { nodeResolve } = require('@rollup/plugin-node-resolve');
+  const commonjs = require('@rollup/plugin-commonjs');
+  const replace = require('@rollup/plugin-replace');
+  const { terser } = require('rollup-plugin-terser');
+
+  const resolve = require('resolve');
   const { deflate, unzip, constants } = require('zlib');
+  const MagicString = require('magic-string');
 
   const cwd = process.cwd().replace(convertSlashes, '/') + '/';
   const isDisableCache = process.argv.includes('--disable-cache');
@@ -127,44 +134,54 @@ module.exports = function(grunt) {
     const cachePath = buildConfig.cachepath ?? options.cachePath;
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
+
+    const framework = Helpers.getFramework();
+    const pluginsObject = framework.getPlugins();
+    const corePlugin = pluginsObject.plugins.find(plugin => plugin.type === 'core');
+
     try {
       await restoreCache(cachePath, basePath);
-      const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
-
-      // Make src/plugins.js to attach the plugins dynamically
-      if (!fs.existsSync(pluginsPath)) {
-        fs.writeFileSync(pluginsPath, '');
-      }
 
       // Collect all plugin entry points for injection
-      const pluginPaths = [];
-      for (let i = 0, l = options.plugins.length; i < l; i++) {
-        const src = options.plugins[i];
-        grunt.file.expand({
-          filter: options.pluginsFilter
-        }, src).forEach(function(bowerJSONPath) {
-          if (bowerJSONPath === undefined) return;
-          const pluginPath = path.dirname(bowerJSONPath);
-          const bowerJSON = grunt.file.readJSON(bowerJSONPath);
-          const requireJSRootPath = pluginPath.substr(options.baseUrl.length);
-          const requireJSMainPath = path.join(requireJSRootPath, bowerJSON.main);
-          const ext = path.extname(requireJSMainPath);
-          const requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, '/');
-          pluginPaths.push(requireJSMainPathNoExt);
-        });
-      }
+      const pluginPaths = pluginsObject.plugins.map(plugin => {
+        if (plugin.name === corePlugin.name) return null;
+        const requireJSRootPath = plugin.sourcePath.substr(options.baseUrl.length);
+        const requireJSMainPath = path.join(requireJSRootPath, plugin.main);
+        const ext = path.extname(requireJSMainPath);
+        const requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, '/');
+        return requireJSMainPathNoExt;
+      }).filter(Boolean);
 
       // Collect react templates
       const reactTemplatePaths = [];
       options.reactTemplates.forEach(pattern => {
         grunt.file.expand({
           filter: options.pluginsFilter
-        }, pattern).forEach(templatePath => reactTemplatePaths.push(templatePath.replace(convertSlashes, '/')));
+        }, pattern).forEach(templatePath => {
+          const requireJSRootPath = templatePath.substr(options.baseUrl.length);
+          return reactTemplatePaths.push(requireJSRootPath.replace(convertSlashes, '/'));
+        });
       });
 
       // Process remapping and external model configurations
-      const mapParts = Object.keys(options.map);
-      const externalParts = Object.keys(options.external);
+      const pluginMap = pluginsObject.plugins.reduce((map, plugin) => ({ ...map, ...plugin.compilationMap }), {});
+      const pluginExternals = pluginsObject.plugins.reduce((paths, plugin) => ({ ...paths, ...plugin.externalPaths }), {});
+      const pluginRedirects = pluginsObject.plugins.reduce((redirects, plugin) => ({ ...redirects, ...plugin.runtimeRedirects }), {});
+      const maps = { ...options.map, ...pluginMap };
+      const externals = { ...options.external, ...pluginExternals };
+      const backwardCompatibleRedirects = pluginsObject.plugins.reduce((redirects, plugin) => {
+        const part = `${plugin.name}/`;
+        redirects[part] = redirects[part] || [];
+        if (plugin.type === 'core') {
+          redirects[part].push('core/');
+          return redirects;
+        }
+        redirects[part].push(`${plugin.legacyFolder}/${plugin.name}/`);
+        return redirects;
+      }, pluginRedirects);
+      const mapped = {};
+      const mapParts = Object.keys(maps).sort((a, b) => b.localeCompare(a));
+      const externalParts = Object.keys(externals);
       const externalMap = options.externalMap;
 
       const findFile = function(filename) {
@@ -176,8 +193,6 @@ module.exports = function(grunt) {
         }
         return filename;
       };
-
-      const umdImports = options.umdImports.map(filename => findFile(path.resolve(basePath, filename)));
 
       // Rework modules names and inject plugins
       const adaptLoader = function() {
@@ -191,13 +206,35 @@ module.exports = function(grunt) {
               // Ignore as injected rollup module
               return null;
             }
+            if (moduleId.startsWith(basePath)) {
+              moduleId = moduleId.substr(basePath.length);
+            }
             const mapPart = mapParts.find(part => moduleId.startsWith(part));
             if (mapPart) {
               // Remap module, usually coreJS/adapt to core/js/adapt etc
-              moduleId = moduleId.replace(mapPart, options.map[mapPart]);
+              const original = moduleId;
+              moduleId = moduleId.replace(mapPart, maps[mapPart]);
+              mapped[moduleId] = original;
             }
             // Remap ../libraries/ or core/js/libraries/ to libraries/
             moduleId = Object.entries(externalMap).reduce((moduleId, [ match, replaceWith ]) => moduleId.replace((new RegExp(match, 'g')), replaceWith), moduleId);
+
+            const externalPart = externalParts.find(part => moduleId.startsWith(part));
+            const isEmpty = Boolean(options.external[externalPart]);
+            if (isEmpty) {
+              // External module as is defined as 'empty:', libraries/ bower handlebars etc
+              return {
+                id: moduleId,
+                external: true
+              };
+            }
+            try {
+              // TODO: Cache resolved external modules
+              if (!moduleId.includes('adapt-') && resolve.sync(moduleId, { basedir: path.resolve(cwd, options.baseUrl) })) {
+                return null;
+              }
+            } catch (err) {}
+
             const isRelative = (moduleId[0] === '.');
             if (isRelative) {
               if (!parentId) {
@@ -213,15 +250,6 @@ module.exports = function(grunt) {
               return {
                 id: filename,
                 external: false
-              };
-            }
-            const externalPart = externalParts.find(part => moduleId.startsWith(part));
-            const isEmpty = (options.external[externalPart] === 'empty:');
-            if (isEmpty) {
-              // External module as is defined as 'empty:', libraries/ bower handlebars etc
-              return {
-                id: moduleId,
-                external: true
               };
             }
             const isES6Import = !fs.existsSync(moduleId);
@@ -254,17 +282,39 @@ module.exports = function(grunt) {
             if (isRollupHelper) {
               return null;
             }
-            const isPlugins = (moduleId.includes('/' + options.pluginsModule + '.js'));
-            if (!isPlugins) {
+            const isStart = (moduleId.includes('/' + options.baseUrl + corePlugin.name + corePlugin.main));
+            if (!isStart) {
               return null;
             }
-            // Dynamically construct plugins.js with plugin dependencies
-            code = `define([${pluginPaths.map(filename => {
-              return `"${filename}"`;
+
+            const magicString = new MagicString(code);
+
+            const matches = [...String(code).matchAll(/import .*;/g)];
+            const last = matches[matches.length - 1];
+            const end = last.index + last[0].length;
+
+            const headerPart = `\n${Object.keys(pluginExternals).map(filename => {
+              return `import '${filename}';\n`;
+            }).join('')}`;
+            const original = code.substr(0, end);
+            const newPart = `\n${pluginPaths.map(filename => {
+              return `import '${filename}';\n`;
             }).concat(reactTemplatePaths.map(filename => {
-              return `"${filename}"`;
-            })).join(',')}], function() {});`;
-            return code;
+              return `import '${filename}';\n`;
+            })).join('')}`;
+
+            magicString.remove(0, end);
+            magicString.prepend(headerPart + original + newPart);
+
+            return {
+              code: magicString.toString(),
+              map: isSourceMapped
+                ? magicString.generateMap({
+                  filename: moduleId,
+                  includeContent: true
+                })
+                : false
+            };
           }
 
         };
@@ -274,20 +324,33 @@ module.exports = function(grunt) {
       grunt.log.ok(`Targets: ${targets || fs.readFileSync('.browserslistrc').toString().replace(/#+[^\n]+\n/gm, '').replace(/\r/g, '').split('\n').filter(Boolean).join(', ')}`);
 
       const inputOptions = {
-        input: './' + options.baseUrl + options.name,
+        input: './' + options.baseUrl + corePlugin.name + corePlugin.main,
         shimMissingExports: true,
+        external: externalParts,
+        treeshake: false,
         plugins: [
           adaptLoader({}),
           adaptInjectPlugins({}),
+          replace({
+            'process.env.NODE_ENV': isSourceMapped ? JSON.stringify('development') : JSON.stringify('production'),
+            preventAssignment: true
+          }),
+          commonjs({
+            exclude: ['**/node_modules/adapt-*/**'],
+            sourceMap: isSourceMapped
+          }),
+          !isSourceMapped && terser(),
+          nodeResolve({
+            browser: true,
+            preferBuiltins: false
+          }),
           babel({
             babelHelpers: 'bundled',
             extensions,
             minified: false,
             compact: false,
             comments: false,
-            exclude: [
-              '**/node_modules/**'
-            ],
+            exclude: [ '**/node_modules/core-js/**' ],
             presets: [
               [
                 '@babel/preset-react',
@@ -298,7 +361,7 @@ module.exports = function(grunt) {
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'entry',
+                  useBuiltIns: 'usage',
                   corejs: 3,
                   exclude: [
                     // Breaks lockingModel.js, set function vs set variable
@@ -318,8 +381,11 @@ module.exports = function(grunt) {
                   ignoreNestedRequires: true,
                   defineFunctionName: '__AMD',
                   defineModuleId: (moduleId) => moduleId.replace(convertSlashes, '/').replace(basePath, '').replace('.js', ''),
+                  includes: [
+                    '**/node_modules/adapt-*/**'
+                  ],
                   excludes: [
-                    '**/templates/**/*.jsx'
+                    '**/node_modules/adapt-*/templates/**/*.jsx'
                   ]
                 }
               ],
@@ -327,7 +393,7 @@ module.exports = function(grunt) {
                 'transform-react-templates',
                 {
                   includes: [
-                    '**/templates/**/*.jsx'
+                    '**/node_modules/adapt-*/templates/**/*.jsx'
                   ],
                   importRegisterFunctionFromModule: path.resolve(basePath, 'core/js/reactHelpers.js').replace(convertSlashes, '/'),
                   registerFunctionName: 'register',
@@ -336,22 +402,18 @@ module.exports = function(grunt) {
               ]
             ]
           })
-        ]
+        ].filter(Boolean)
       };
 
-      const umdImport = () => {
-        return umdImports.map(filename => {
-          let code = fs.readFileSync(filename).toString();
-          code = code
-            .replace('require("object-assign")', 'Object.assign')
-            .replace('define.amd', 'define.noop');
-          return code;
-        }).join('\n');
-      };
+      checkCache([]);
+      inputOptions.cache = cache;
+      const bundle = await rollup.rollup(inputOptions);
+      await saveCache(cachePath, basePath, bundle.cache);
 
       const outputOptions = {
         file: options.out,
         format: 'amd',
+        interop: false,
         plugins: [
           !isSourceMapped && getBabelOutputPlugin({
             minified: true,
@@ -360,13 +422,41 @@ module.exports = function(grunt) {
             allowAllFormats: true
           })
         ].filter(Boolean),
-        intro: umdImport(),
-        footer: `// Allow ES export default to be exported as amd modules
-window.__AMD = function(id, value) {
-  window.define(id, function() { return value; }); // define for external use
-  window.require([id]); // force module to load
-  return value; // return for export
-};`,
+        banner: `(function() {
+// This section is for legacy requirejs support
+var compilationMap = ${JSON.stringify(mapped, null, 2)};
+var externalPaths = ${JSON.stringify(pluginExternals, null, 2)};
+requirejs.config({
+  paths: externalPaths
+});
+var runtimeRedirects = ${JSON.stringify(backwardCompatibleRedirects, null, 2)};
+var runtimeRedirectParts = Object.keys(runtimeRedirects);
+window.__AMD = function(defineId, value) {
+  function register(id) {
+    window.define(id, function() { return value; });
+    window.require([id]);
+  }
+  var compilationId = compilationMap[defineId];
+  if (compilationId) register(compilationId)
+  var redirectPart;
+  for (var i = 0, l = runtimeRedirectParts.length; i < l; i++) {
+    var part = runtimeRedirectParts[i];
+    if (defineId.substr(0, part.length) !== part) continue;
+    redirectPart = part;
+    break;
+  }
+  if (redirectPart) {
+    var runtimePartRedirects = runtimeRedirects[redirectPart];
+    for (var i = 0, l = runtimePartRedirects.length; i < l; i++) {
+      var runtimeRedirectPart = runtimePartRedirects[i];
+      var redirectId = defineId.replace(redirectPart, runtimeRedirectPart);
+      register(redirectId);
+    }
+  }
+  register(defineId)
+  return value;
+};
+})();`,
         sourcemap: isSourceMapped,
         sourcemapPathTransform: (relativeSourcePath) => {
           // Rework sourcemap paths to overlay at the appropriate root
@@ -378,10 +468,6 @@ window.__AMD = function(id, value) {
         strict: isStrictMode
       };
 
-      checkCache([pluginsPath]);
-      inputOptions.cache = cache;
-      const bundle = await rollup.rollup(inputOptions);
-      await saveCache(cachePath, basePath, bundle.cache);
       await bundle.write(outputOptions);
 
       // Remove old sourcemap if no longer required

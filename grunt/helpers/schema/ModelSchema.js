@@ -17,7 +17,7 @@ class ModelSchema extends GlobalsSchema {
           next(attributePath + description.name + '/');
           break;
         case 'array':
-          if (!description.hasOwnProperty('items')) {
+          if (!Object.prototype.hasOwnProperty.call(description, 'items')) {
             // handles 'inputType': 'List' edge-case
             break;
           }
@@ -27,7 +27,7 @@ class ModelSchema extends GlobalsSchema {
             next(attributePath);
           }
           break;
-        case 'string':
+        case 'string': {
           // check if attribute should be picked
           const value = Boolean(description.translatable);
           if (value === false) {
@@ -36,6 +36,7 @@ class ModelSchema extends GlobalsSchema {
           // add value to store
           paths[attributePath + description.name + '/'] = value;
           break;
+        }
       }
     }, '/');
     return Object.keys(paths);

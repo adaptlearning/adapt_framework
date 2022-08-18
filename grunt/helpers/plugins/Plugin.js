@@ -65,6 +65,10 @@ class Plugin {
     return this;
   }
 
+  get isAdaptPlugin() {
+    return Boolean(this.packageJSONFile.firstFileItem.item.keywords?.includes('adapt-plugin'));
+  }
+
   /**
    * Informs the Schemas API from where to fetch the schemas defined in this
    * plugin.
@@ -82,6 +86,7 @@ class Plugin {
    */
   get packageJSONLocations() {
     return [
+      `${this.sourcePath}package.json`,
       `${this.sourcePath}bower.json`
     ];
   }
@@ -101,17 +106,64 @@ class Plugin {
    * @returns {string}
    */
   get type() {
-    if (this.name === 'core') {
-      return 'component';
-    }
     const config = this.packageJSONFile.firstFileItem.item;
     const configKeys = Object.keys(config);
-    const typeKeyName = ['component', 'extension', 'menu', 'theme'];
-    const foundType = configKeys.find(key => typeKeyName.includes(key));
+    const typeKeyName = ['core', 'component', 'extension', 'menu', 'theme'];
+    const foundType = configKeys.find(key => typeKeyName.includes(key)) || (this.packageJSONFile.firstFileItem.item.keywords?.includes('adapt-core') && 'core');
     if (!foundType) {
       throw new Error('Unknown plugin type');
     }
     return foundType;
+  }
+
+  /**
+   * Returns the plugin folder name for adapt_framework <=v5
+   * @returns {string}
+   */
+  get legacyFolder() {
+    const typeToFolderMapping = {
+      component: 'components',
+      extension: 'extensions',
+      menu: 'menu',
+      theme: 'theme'
+    };
+    return typeToFolderMapping[this.type];
+  }
+
+  /**
+   * Returns the plugin main path.
+   * @returns {string}
+   */
+  get main() {
+    const config = this.packageJSONFile.firstFileItem.item;
+    return config.main;
+  }
+
+  /**
+   * Returns the client-side module name mappings
+   * @returns {Object}
+   */
+  get compilationMap() {
+    const config = this.packageJSONFile.firstFileItem.item;
+    return config.adapt_framework?.compilationMap || {};
+  }
+
+  /**
+   * Returns the client-side external library name mappings
+   * @returns {Object}
+   */
+  get externalPaths() {
+    const config = this.packageJSONFile.firstFileItem.item;
+    return config.adapt_framework?.externalPaths || {};
+  }
+
+  /**
+   * Returns the client-side external library name redirections
+   * @returns {Object}
+   */
+  get runtimeRedirects() {
+    const config = this.packageJSONFile.firstFileItem.item;
+    return config.adapt_framework?.runtimeRedirects || {};
   }
 
   /**

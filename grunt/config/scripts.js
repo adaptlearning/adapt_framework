@@ -4,13 +4,10 @@ module.exports = function(grunt, options) {
       outputdir: '<%= outputdir %>',
       sourcedir: '<%= sourcedir %>',
       plugins: [
-        '<%= sourcedir %>components/*/bower.json',
-        '<%= sourcedir %>extensions/*/bower.json',
-        '<%= sourcedir %>menu/<%= menu %>/bower.json',
-        '<%= sourcedir %>theme/<%= theme %>/bower.json'
+        '<%= sourcedir %>/node_modules/adapt-*/*/package.json'
       ],
       pluginsFilter: function(filepath) {
-        return grunt.config('helpers').includedFilter(filepath) && grunt.config('helpers').scriptSafeFilter(filepath);
+        return grunt.option('helpers').includedFilter(filepath) && grunt.option('helpers').scriptSafeFilter(filepath);
       }
     }
   };

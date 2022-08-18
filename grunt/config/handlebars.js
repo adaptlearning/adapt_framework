@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = function(grunt) {
   return {
@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         amd: 'handlebars',
         namespace: 'Handlebars.templates',
         processName: function(filePath) {
-          var newFilePath = filePath.split('/');
+          let newFilePath = filePath.split('/');
           newFilePath = newFilePath[newFilePath.length - 1].replace(/\.[^/.]+$/, '');
           return newFilePath;
         },
@@ -17,11 +17,7 @@ module.exports = function(grunt) {
       files: [
         {
           src: [
-            '<%= sourcedir %>core/**/*.hbs',
-            '<%= sourcedir %>components/**/*.hbs',
-            '<%= sourcedir %>extensions/**/*.hbs',
-            '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
-            '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
+            '<%= sourcedir %>/node_modules/**/*.hbs'
           ],
           follow: true,
           dest: '<%= outputdir %>templates.js',
@@ -31,7 +27,7 @@ module.exports = function(grunt) {
               return true;
             }
 
-            return grunt.config('helpers').includedFilter(filepath);
+            return grunt.option('helpers').includedFilter(filepath);
           }
         }
       ]

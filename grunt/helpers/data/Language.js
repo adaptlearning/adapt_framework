@@ -262,7 +262,7 @@ class Language {
     });
 
     this.save();
-    this.log(`Tracking IDs ${wasAdded ? `were added to` : `are ok for`} course/${this.name}. The latest tracking ID is ${course._latestTrackingId}\n`);
+    this.log(`Tracking IDs ${wasAdded ? 'were added to' : 'are ok for'} course/${this.name}. The latest tracking ID is ${course._latestTrackingId}\n`);
 
     return this;
   }
