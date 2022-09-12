@@ -271,7 +271,23 @@ module.exports = function(grunt) {
       };
 
       const targets = buildConfig.targets || null;
-      grunt.log.ok(`Targets: ${targets || fs.readFileSync('.browserslistrc').toString().replace(/#+[^\n]+\n/gm, '').replace(/\r/g, '').split('\n').filter(Boolean).join(', ')}`);
+      const browserList = fs.existsSync('.browserslistrc')
+        ? fs.readFileSync('.browserslistrc')
+          .toString()
+          .replace(/#+[^\n]+\n/gm, '')
+          .replace(/\r/g, '')
+          .split('\n')
+          .filter(Boolean)
+          .join(', ')
+        : [
+          'last 2 chrome versions, last 2 firefox versions',
+          'last 2 safari versions',
+          'last 2 edge versions',
+          'last 2 ios_saf versions',
+          'last 2 and_chr versions',
+          'firefox esr'
+        ].join(', ')
+      grunt.log.ok(`Targets: ${targets || browserList}`);
 
       const inputOptions = {
         input: './' + options.baseUrl + options.name,
