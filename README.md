@@ -52,3 +52,4 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 
 ## Requirements
 Node >=14 is required for the grunt tasks to run as needed
+
