@@ -1,5 +1,8 @@
 name: Test Runner
-on: [push]
+on:
+  pull_request:
+    types:
+      - opened
 
 env:
   FRAMEWORK: "v5.22.5"
