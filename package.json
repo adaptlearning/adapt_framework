@@ -8,7 +8,9 @@
     },
     "scripts": {
         "preinstall": "node gitmodules.js",
-        "lint": "node node_modules/eslint/bin/eslint.js ./"
+        "lint": "node node_modules/eslint/bin/eslint.js ./",
+        "create-test-course": "node ./createTestCourse.js",
+        "test": "npm run create-test-course & wait-on http://localhost:9001 && ./node_modules/cypress/bin/cypress run"
     },
     "license": "GPL-3.0",
     "bugs": {
@@ -61,6 +63,7 @@
         "underscore-deep-extend": "^1.1.5"
     },
     "devDependencies": {
+        "cypress": "^10.10.0",
         "eslint": "^8.17.0",
         "eslint-config-standard": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
@@ -76,7 +79,8 @@
         "@semantic-release/npm": "^9.0.1",
         "@semantic-release/release-notes-generator": "^10.0.3",
         "conventional-changelog-eslint": "^3.0.9",
-        "semantic-release": "^19.0.3"
+        "semantic-release": "^19.0.3",
+        "wait-on": "^6.0.1"
     },
     "optionalDependencies": {
         "imagemin": "^7.0.1",

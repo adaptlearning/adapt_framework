@@ -1,0 +1,25 @@
+name: Test Runner
+on: [push]
+
+env:
+  FRAMEWORK: "v5.22.5"
+
+jobs:
+  test:
+    name: Build and Launch Course
+    runs-on: ubuntu-latest
+    timeout-minutes: 59
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "14"
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm install -g git
+      - run: npm install -g adapt-cli
+      - run: npm install -g grunt
+      - run: npm run test
