@@ -210,6 +210,7 @@
         "_setCompletionOn": "play",
         "_useClosedCaptions": true,
         "_allowFullScreen": true,
+        "_startLanguage": "en",
         "title": "Media",
         "displayTitle": "Media",
         "body": "Sometimes we need to make use of rich media to really drive home a point, bring a complex subject to life or simply use audio to literally do the talking. This is when the <b>Media</b> component comes to the fore.<br><br>Component can be either single or spanned.",
