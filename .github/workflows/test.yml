@@ -4,9 +4,6 @@ on:
     types:
       - opened
 
-env:
-  FRAMEWORK: "v5.22.5"
-
 jobs:
   test:
     name: Build and Launch Course
