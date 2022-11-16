@@ -13,7 +13,7 @@ const runTest = async () => {
     await fs.rmdirSync(contentName, { recursive: true });
   }
 
-  const buildString = `adapt create ${type} '${contentName}' v${framework} ${bypassPrompt}`;
+  const buildString = `adapt create ${type} "${contentName}" v${framework} ${bypassPrompt}`;
   console.log(`Running command "${buildString}"`);
 
   await execSync(buildString, { stdio: [0, 1, 2] });
