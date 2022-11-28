@@ -63,6 +63,24 @@
         "correct": "Correct",
         "locked": "Locked",
         "visited": "Visited"
+      },
+      "_extensions": {
+        "_drawer": {
+          "_navOrder": 100
+        },
+        "_navigation": {
+          "_skipButton": {
+            "_navOrder": -100
+          },
+          "_backButton": {
+            "_navOrder": 0
+          },
+          "_spacers": [
+            {
+              "_navOrder": 0
+            }
+          ]
+        }
       }
     }
   },
