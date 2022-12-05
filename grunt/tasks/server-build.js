@@ -9,6 +9,7 @@ module.exports = function(grunt) {
       '_log-vars',
       'build-config',
       'copy',
+      'scripts:adaptpostcopy',
       'language-data-manifests',
       'less:' + requireMode,
       'handlebars',
