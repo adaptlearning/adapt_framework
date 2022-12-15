@@ -9,6 +9,7 @@ module.exports = function(grunt) {
   const path = require('path');
   const fs = require('fs-extra');
   const rollup = require('rollup');
+  const { terser } = require('rollup-plugin-terser');
   const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
   const { deflate, unzip, constants } = require('zlib');
 
@@ -295,6 +296,7 @@ module.exports = function(grunt) {
         plugins: [
           adaptLoader({}),
           adaptInjectPlugins({}),
+          terser(),
           babel({
             babelHelpers: 'bundled',
             extensions,
