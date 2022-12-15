@@ -56,6 +56,7 @@
         "lodash": "^4.17.19",
         "nsdeclare": "^0.1.0",
         "rollup": "^2.60.0",
+        "rollup-plugin-terser": "^7.0.2",
         "time-grunt": "^2.0.0",
         "underscore": "^1.13.1",
         "underscore-deep-extend": "^1.1.5"
