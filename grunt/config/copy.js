@@ -1,29 +1,29 @@
 module.exports = function(grunt, options) {
 
-  var _ = require('underscore');
+  const _ = require('underscore');
 
-  var getUnixPath = function(filepath) {
+  const getUnixPath = function(filepath) {
     // convert to unix style slashes
     return filepath.replace(/\\/g, '/');
   };
 
-  var collate = function(collateAtFolderName, destFolder, srcFileName) {
+  const collate = function(collateAtFolderName, destFolder, srcFileName) {
     destFolder = getUnixPath(destFolder);
     srcFileName = getUnixPath(srcFileName);
 
     // ignore if the srcFileName ends with the collateAtFolderName
-    var nameParts = srcFileName.split('/');
+    const nameParts = srcFileName.split('/');
     if (nameParts[nameParts.length - 1] === collateAtFolderName) {
       return destFolder;
     }
 
-    var startOfCollatePath = srcFileName.indexOf(collateAtFolderName) + collateAtFolderName.length + 1;
-    var collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
+    const startOfCollatePath = srcFileName.indexOf(collateAtFolderName) + collateAtFolderName.length + 1;
+    const collatedFilePath = destFolder + srcFileName.substr(startOfCollatePath);
 
     return collatedFilePath;
   };
 
-  var nonServerTasks = {
+  const nonServerTasks = {
     courseAssets: {
       files: [
         {
@@ -46,7 +46,7 @@ module.exports = function(grunt, options) {
     }
   };
 
-  var mandatoryTasks = {
+  const mandatoryTasks = {
     coreAssets: {
       files: [
         {
@@ -61,7 +61,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['<%= sourcedir %>components/**/assets/**'],
+          src: ['<%= sourcedir %>components/*/assets/**'],
           dest: '<%= outputdir %>assets/',
           filter: function(filepath) {
             return grunt.config('helpers')
@@ -75,7 +75,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['<%= sourcedir %>components/**/fonts/**'],
+          src: ['<%= sourcedir %>components/*/fonts/**'],
           dest: '<%= outputdir %>fonts/',
           filter: function(filepath) {
             return grunt.config('helpers')
@@ -89,7 +89,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['<%= sourcedir %>extensions/**/assets/**'],
+          src: ['<%= sourcedir %>extensions/*/assets/**'],
           dest: '<%= outputdir %>assets/',
           filter: function(filepath) {
             return grunt.config('helpers')
@@ -103,7 +103,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['<%= sourcedir %>extensions/**/fonts/**'],
+          src: ['<%= sourcedir %>extensions/*/fonts/**'],
           dest: '<%= outputdir %>fonts/',
           filter: function(filepath) {
             return grunt.config('helpers')
@@ -195,7 +195,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['components/**/libraries/**/*', 'extensions/**/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
+          src: ['components/*/libraries/**/*', 'extensions/*/libraries/**/*', 'menu/<%= menu %>/libraries/**/*', 'theme/<%= theme %>/libraries/**/*'],
           cwd: '<%= sourcedir %>',
           dest: '<%= outputdir %>libraries/',
           filter: function(filepath) {
@@ -210,7 +210,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['core/required/**/*'],
+          src: ['core/required/**'],
           cwd: '<%= sourcedir %>',
           dest: '<%= outputdir %>',
           rename: _.partial(collate, 'required')
@@ -221,7 +221,7 @@ module.exports = function(grunt, options) {
       files: [
         {
           expand: true,
-          src: ['components/**/required/**/*', 'extensions/**/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
+          src: ['components/*/required/**/*', 'extensions/*/required/**/*', 'menu/<%= menu %>/required/**/*', 'theme/<%= theme %>/required/**/*'],
           cwd: '<%= sourcedir %>',
           dest: '<%= outputdir %>',
           filter: function(filepath) {
