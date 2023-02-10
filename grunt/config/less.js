@@ -1,6 +1,6 @@
 module.exports = function(grunt, options) {
-  var convertSlashes = /\\/g;
-  var path = require('path');
+  const convertSlashes = /\\/g;
+  const path = require('path');
 
   function alphanumericOrder(a, b) {
     return a > b ? 1 : a < b ? -1 : 0;
@@ -14,15 +14,15 @@ module.exports = function(grunt, options) {
     /**
      * If not in the same folder sort alphanumerically
      */
-    var aParsed = path.parse(a);
-    var bParsed = path.parse(b);
+    const aParsed = path.parse(a);
+    const bParsed = path.parse(b);
     if (aParsed.dir !== bParsed.dir) return alphanumericOrder(a, b);
 
     /**
      * If names don't start with the same phrase sort alphanumerically
      */
-    var aStartsB = bParsed.name.startsWith(aParsed.name);
-    var bStartsA = aParsed.name.startsWith(bParsed.name);
+    const aStartsB = bParsed.name.startsWith(aParsed.name);
+    const bStartsA = aParsed.name.startsWith(bParsed.name);
     if (!aStartsB && !bStartsA) return alphanumericOrder(a, b);
 
     /**
@@ -54,10 +54,10 @@ module.exports = function(grunt, options) {
           '<%= sourcedir %>core/less/**/*.less'
         ],
         src: [
-          '<%= sourcedir %>components/**/*.less',
-          '<%= sourcedir %>extensions/**/*.less',
-          '<%= sourcedir %>menu/<%= menu %>/**/*.less',
-          '<%= sourcedir %>theme/<%= theme %>/**/*.less'
+          '<%= sourcedir %>components/*/less/**/*.less',
+          '<%= sourcedir %>extensions/*/less/**/*.less',
+          '<%= sourcedir %>menu/<%= menu %>/*/less/**/*.less',
+          '<%= sourcedir %>theme/<%= theme %>/*/less/**/*.less'
         ],
         config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
         sourcemaps: true,
@@ -69,16 +69,17 @@ module.exports = function(grunt, options) {
         order: sortLESSFilePaths,
         replaceUrls: [
           {
-            'action': 'Replace url(../../assets/ with url(assets/',
-            'find': /\.\.\/\.\.\/assets\//,
-            'replaceWith': 'assets/'
+            action: 'Replace url(../../assets/ with url(assets/',
+            find: /\.\.\/\.\.\/assets\//,
+            replaceWith: 'assets/'
           }
         ]
       },
       // newer configuration
       files: {
         '<%= outputdir %>adapt.css': [
-          '<%= sourcedir %>/**/*.less'
+          '<%= sourcedir %>/core/less/**/*.less',
+          '<%= sourcedir %>/*/*/less/**/*.less'
         ]
       }
     },
@@ -89,10 +90,10 @@ module.exports = function(grunt, options) {
           '<%= sourcedir %>core/less/**/*.less'
         ],
         src: [
-          '<%= sourcedir %>components/**/*.less',
-          '<%= sourcedir %>extensions/**/*.less',
-          '<%= sourcedir %>menu/<%= menu %>/**/*.less',
-          '<%= sourcedir %>theme/<%= theme %>/**/*.less'
+          '<%= sourcedir %>components/*/less/**/*.less',
+          '<%= sourcedir %>extensions/*/less/**/*.less',
+          '<%= sourcedir %>menu/<%= menu %>/*/less/**/*.less',
+          '<%= sourcedir %>theme/<%= theme %>/*less/**/*.less'
         ],
         config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
         sourcemaps: false,
@@ -104,9 +105,9 @@ module.exports = function(grunt, options) {
         order: sortLESSFilePaths,
         replaceUrls: [
           {
-            'action': 'Replace url(../../assets/ with url(assets/',
-            'find': /\.\.\/\.\.\/assets\//,
-            'replaceWith': 'assets/'
+            action: 'Replace url(../../assets/ with url(assets/',
+            find: /\.\.\/\.\.\/assets\//,
+            replaceWith: 'assets/'
           }
         ]
       }

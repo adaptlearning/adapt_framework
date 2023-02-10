@@ -9,7 +9,8 @@ module.exports = function(grunt) {
   const path = require('path');
   const fs = require('fs-extra');
   const rollup = require('rollup');
-  const { babel, getBabelOutputPlugin } = require('@rollup/plugin-babel');
+  const { babel } = require('@rollup/plugin-babel');
+  const terser = require('@rollup/plugin-terser');
   const { deflate, unzip, constants } = require('zlib');
 
   const cwd = process.cwd().replace(convertSlashes, '/') + '/';
@@ -76,7 +77,7 @@ module.exports = function(grunt) {
       let str = JSON.stringify(bundleCache);
       // Make cache location agnostic by stripping current basePath
       str = str.replace(new RegExp(escapeRegExp(basePath), 'g'), '%%basePath%%');
-      deflate(str, { level: constants.Z_BEST_COMPRESSION }, (err, buffer) => {
+      deflate(str, { level: constants.Z_BEST_SPEED }, (err, buffer) => {
         if (err) {
           console.error('An error occurred saving rollup cache:', err);
           process.exitCode = 1;
@@ -286,7 +287,7 @@ module.exports = function(grunt) {
           'last 2 ios_saf versions',
           'last 2 and_chr versions',
           'firefox esr'
-        ].join(', ')
+        ].join(', ');
       grunt.log.ok(`Targets: ${targets || browserList}`);
 
       const inputOptions = {
@@ -369,11 +370,9 @@ module.exports = function(grunt) {
         file: options.out,
         format: 'amd',
         plugins: [
-          !isSourceMapped && getBabelOutputPlugin({
-            minified: true,
-            compact: true,
-            comments: false,
-            allowAllFormats: true
+          !isSourceMapped && terser({
+            mangle: false,
+            compress: false
           })
         ].filter(Boolean),
         intro: umdImport(),

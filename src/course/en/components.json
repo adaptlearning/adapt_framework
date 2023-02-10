@@ -307,6 +307,7 @@
         "displayTitle": "Multiple Choice Question",
         "body": "In what year was the first recorded instance of a large scale assessment that consists solely of multiple choice questions?",
         "instruction": "Choose one option and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "1917",
@@ -372,6 +373,7 @@
         "displayTitle": "Graphical Multiple Choice Question",
         "body": "The <b>Graphical Multiple Choice Question</b> is an alternative to the standard <abbr title='Multiple Choice Question'>MCQ</abbr>, and allows you to ask a question and present the options as graphics (with accompanying captions). This component is always spanned.",
         "instruction": "Choose option 2 and select Submit.",
+        "ariaQuestion": "",
         "_columns": 3,
         "_items": [
             {
@@ -432,6 +434,7 @@
         "displayTitle": "Text Input",
         "body": "Can you name one of the three companies that established Adapt as a community-led open source project?",
         "instruction": "Input your answer and select Submit.",
+        "ariaQuestion": "",
         "_answers": [
             ["City & Guilds Kineo", "Kineo"],
             ["Learning Pool"],
@@ -493,6 +496,7 @@
         "displayTitle": "Matching",
         "body": "Can you identify some of the key facts and figures associated with the Adapt Open Source project?",
         "instruction": "Choose an option from each dropdown list and select Submit.",
+        "ariaQuestion": "",
         "placeholder": "Select an option",
         "_items": [
             {
@@ -593,6 +597,7 @@
         "displayTitle": "Slider",
         "body": "Working memory is thought to be responsible for our ability to temporarily hold and manipulate information, but according to a paper by Miller (1956) what ‘magic number’ describes its capacity?",
         "instruction": "Drag the slider to make your choice and select Submit.",
+        "ariaQuestion": "",
         "labelStart": "",
         "labelEnd": "",
         "_correctAnswer": "",
@@ -629,6 +634,7 @@
         "displayTitle": "To scroll or not to scroll?",
         "body": "Can you identify a few of the benefits that a vertical scrolling approach offers over the traditional back and next approach?",
         "instruction": "Choose one or more options and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "Scrolling is common place on the web and therefore familiar to the learner",
@@ -697,6 +703,7 @@
         "displayTitle": "Do you know your plugins?",
         "body": "Which of the following are types of Adapt plugins?",
         "instruction": "Choose one or more options and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "Component",
@@ -769,6 +776,7 @@
         "displayTitle": "It’s as simple as A, B, C",
         "body": "Can you identify the missing word in the following sequence?<br>Article / ..... / Component.",
         "instruction": "Choose an option and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "Block",
@@ -838,6 +846,7 @@
         "displayTitle": "Content Objects",
         "body": "What would you be referring to when describing a Content Object within Adapt?",
         "instruction": "Choose one or more options and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "Page",
@@ -906,6 +915,7 @@
         "displayTitle": "Adding titles to icons",
         "body": "What JSON file would you need to edit in order to add a title to an icon in the navigation bar?",
         "instruction": "Choose an option and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "course.json",
@@ -971,6 +981,7 @@
         "displayTitle": "Control the scroll",
         "body": "The <b>Trickle</b> extension makes it possible to control how the learner scrolls down the page, but what elements of a page can it be applied to?",
         "instruction": "Choose an option and select Submit.",
+        "ariaQuestion": "",
         "_items": [
             {
                 "text": "Article",

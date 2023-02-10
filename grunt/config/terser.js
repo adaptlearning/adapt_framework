@@ -1,6 +1,10 @@
 module.exports = function(grunt, options) {
   return {
     minify: {
+      options: {
+        mangle: false,
+        compress: false
+      },
       files: [
         {
           expand: true,
