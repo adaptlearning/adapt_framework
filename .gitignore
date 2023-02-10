@@ -5,7 +5,6 @@ src/extensions
 src/less
 src/less/adapt.less
 src/plugins.js
-test-course/
 build
 bower_components
 node_modules
