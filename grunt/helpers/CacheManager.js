@@ -28,9 +28,8 @@ module.exports = class CacheManager {
     return tempPath;
   }
 
-  get cachePath() {
-    const projectPath = process.cwd();
-    const projectHash = CacheManager.hash(projectPath);
+  cachePath(basePath, outputFilePath = process.cwd()) {
+    const projectHash = CacheManager.hash(path.join(basePath, outputFilePath));
     const cachePath = path.join(this.tempPath, `${projectHash}.cache`);
     return cachePath;
   }

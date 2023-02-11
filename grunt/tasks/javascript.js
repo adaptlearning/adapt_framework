@@ -128,9 +128,9 @@ module.exports = function(grunt) {
     grunt.log.ok(`Strict mode (config.json:build.strictMode): ${isStrictMode}`);
     const done = this.async();
     const options = this.options({});
-    const cachePath = buildConfig.cachepath ?? cacheManager.cachePath;
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
+    const cachePath = buildConfig.cachepath ?? cacheManager.cachePath(cwd, options.out);
     try {
       await restoreCache(cachePath, basePath);
       await cacheManager.clean();
@@ -410,6 +410,9 @@ window.__AMD = function(id, value) {
 
       done();
     } catch (err) {
+      try {
+        await fs.unlink(cachePath);
+      } catch (err) {}
       logPrettyError(err, cachePath, basePath);
       done(false);
     }
