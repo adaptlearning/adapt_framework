@@ -56,8 +56,8 @@ module.exports = function(grunt, options) {
         src: [
           '<%= sourcedir %>components/*/less/**/*.less',
           '<%= sourcedir %>extensions/*/less/**/*.less',
-          '<%= sourcedir %>menu/<%= menu %>/*/less/**/*.less',
-          '<%= sourcedir %>theme/<%= theme %>/*/less/**/*.less'
+          '<%= sourcedir %>menu/<%= menu %>/**/*.less',
+          '<%= sourcedir %>theme/<%= theme %>/**/*.less'
         ],
         config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
         sourcemaps: true,
