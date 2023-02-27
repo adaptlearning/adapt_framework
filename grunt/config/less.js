@@ -46,35 +46,39 @@ module.exports = function(grunt, options) {
     return grunt.config('helpers').includedFilter(filepath);
   }
 
+  const compileOptions = {
+    baseUrl: '<%= sourcedir %>',
+    mandatory: [
+      '<%= sourcedir %>core/less/**/*.less'
+    ],
+    src: [
+      '<%= sourcedir %>components/*/less/**/*.less',
+      '<%= sourcedir %>extensions/*/less/**/*.less',
+      '<%= sourcedir %>menu/<%= menu %>/**/*.less',
+      '<%= sourcedir %>theme/<%= theme %>/**/*.less'
+    ],
+    config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
+    dest: '<%= outputdir %>',
+    cssFilename: 'adapt.css',
+    mapFilename: 'adapt.css.map',
+    filter: includedFilter,
+    order: sortLESSFilePaths,
+    replaceUrls: [
+      {
+        action: 'Replace url(../../assets/ with url(assets/',
+        find: /\.\.\/\.\.\/assets\//,
+        replaceWith: 'assets/'
+      }
+    ],
+    sourcemaps: false,
+    compress: true
+  };
+
+  const devOptions = _.extend({}, compileOptions, { sourcemaps: true, compress: false });
+
   return {
     dev: {
-      options: {
-        baseUrl: '<%= sourcedir %>',
-        mandatory: [
-          '<%= sourcedir %>core/less/**/*.less'
-        ],
-        src: [
-          '<%= sourcedir %>components/*/less/**/*.less',
-          '<%= sourcedir %>extensions/*/less/**/*.less',
-          '<%= sourcedir %>menu/<%= menu %>/**/*.less',
-          '<%= sourcedir %>theme/<%= theme %>/**/*.less'
-        ],
-        config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
-        sourcemaps: true,
-        compress: false,
-        dest: '<%= outputdir %>',
-        cssFilename: 'adapt.css',
-        mapFilename: 'adapt.css.map',
-        filter: includedFilter,
-        order: sortLESSFilePaths,
-        replaceUrls: [
-          {
-            action: 'Replace url(../../assets/ with url(assets/',
-            find: /\.\.\/\.\.\/assets\//,
-            replaceWith: 'assets/'
-          }
-        ]
-      },
+      options: devOptions,
       // newer configuration
       files: {
         '<%= outputdir %>adapt.css': [
@@ -84,33 +88,7 @@ module.exports = function(grunt, options) {
       }
     },
     compile: {
-      options: {
-        baseUrl: '<%= sourcedir %>',
-        mandatory: [
-          '<%= sourcedir %>core/less/**/*.less'
-        ],
-        src: [
-          '<%= sourcedir %>components/*/less/**/*.less',
-          '<%= sourcedir %>extensions/*/less/**/*.less',
-          '<%= sourcedir %>menu/<%= menu %>/**/*.less',
-          '<%= sourcedir %>theme/<%= theme %>/**/*.less'
-        ],
-        config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
-        sourcemaps: false,
-        compress: true,
-        dest: '<%= outputdir %>',
-        cssFilename: 'adapt.css',
-        mapFilename: 'adapt.css.map',
-        filter: includedFilter,
-        order: sortLESSFilePaths,
-        replaceUrls: [
-          {
-            action: 'Replace url(../../assets/ with url(assets/',
-            find: /\.\.\/\.\.\/assets\//,
-            replaceWith: 'assets/'
-          }
-        ]
-      }
+      options: compileOptions
     }
   };
 };
