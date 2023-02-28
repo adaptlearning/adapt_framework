@@ -77,7 +77,7 @@ module.exports = function(grunt, options) {
   const devOptions = {
     ...compileOptions, 
     ...{ sourcemaps: true, compress: false }
-  });
+  };
 
   return {
     dev: {
