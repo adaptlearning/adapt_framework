@@ -1,3 +1,5 @@
+const CacheManager = require('../helpers/CacheManager');
+
 module.exports = function(grunt) {
 
   const convertSlashes = /\\/g;
@@ -18,6 +20,7 @@ module.exports = function(grunt) {
   let cache;
 
   const extensions = ['.js', '.jsx'];
+  const cacheManager = new CacheManager(grunt);
 
   const restoreCache = async (cachePath, basePath) => {
     if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
@@ -125,11 +128,12 @@ module.exports = function(grunt) {
     grunt.log.ok(`Strict mode (config.json:build.strictMode): ${isStrictMode}`);
     const done = this.async();
     const options = this.options({});
-    const cachePath = buildConfig.cachepath ?? options.cachePath;
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
+    const cachePath = buildConfig.cachepath ?? cacheManager.cachePath(cwd, options.out);
     try {
       await restoreCache(cachePath, basePath);
+      await cacheManager.clean();
       const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
       // Make src/plugins.js to attach the plugins dynamically
@@ -406,6 +410,9 @@ window.__AMD = function(id, value) {
 
       done();
     } catch (err) {
+      try {
+        await fs.unlink(cachePath);
+      } catch (err) {}
       logPrettyError(err, cachePath, basePath);
       done(false);
     }
