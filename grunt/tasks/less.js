@@ -69,8 +69,6 @@ module.exports = function(grunt) {
       }
     }
 
-    console.log(imports);
-
     let sourcemaps;
     if (options.sourcemaps) {
       sourcemaps = {
