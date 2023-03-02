@@ -157,7 +157,6 @@ module.exports = function(grunt) {
     try {
       await restoreCache(cachePath, basePath);
       await cacheManager.clean();
-      const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
       // Collect all plugin entry points for injection
       const pluginPaths = options.pluginsOrder(pluginsObject.plugins.map(plugin => {
@@ -548,7 +547,8 @@ window.__AMD = function(id, value) {
         strict: isStrictMode
       };
 
-      checkCache([pluginsPath]);
+      const mainPath = path.resolve(cwd, options.baseUrl, options.name + '.js').replace(convertSlashes, '/');
+      checkCache([mainPath]);
       inputOptions.cache = cache;
       const bundle = await rollup.rollup(inputOptions);
       await saveCache(cachePath, basePath, bundle.cache);
