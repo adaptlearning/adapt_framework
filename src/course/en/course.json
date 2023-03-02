@@ -162,8 +162,8 @@
     }
   },
   "_vanilla": {
-      "_favIcon": {
-          "_src": "https://www.adaptlearning.org/wp-content/uploads/2018/02/cropped-nav_logo_gold-192x192.png"
-      }
+    "_favIcon": {
+      "_src": ""
+    }
   }
 }
