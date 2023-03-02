@@ -10,14 +10,13 @@
         "plugin:react/recommended"
     ],
     "globals": {
-        "Promise": true,
         "requirejs": true,
-        "Backbone": true,
-        "$": true,
-        "ENUM": true,
-        "Modernizr": true,
-        "_": true,
-        "Handlebars": true,
+        "Backbone": "off",
+        "$": "off",
+        "ENUM": "off",
+        "Modernizr": "off",
+        "_": "off",
+        "Handlebars": "off",
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
@@ -31,6 +30,29 @@
         "requirejs"
     ],
     "rules": {
+        "no-restricted-globals": [
+            "error",
+            {
+                "name": "ENUM",
+                "message": "Use: import ENUM from 'enum';"
+            },
+            {
+                "name": "Backbone",
+                "message": "Use: import Backbone from 'backbone';"
+            },
+            {
+                "name": "Handlebars",
+                "message": "Use: import Handlebars from 'handlebars';"
+            },
+            {
+                "name": "_",
+                "message": "Use: import _ from 'underscore';"
+            },
+            {
+                "name": "$",
+                "message": "Use: import $ from 'jquery';"
+            }
+        ],
         "indent": ["error", 2, { "SwitchCase": 1 }],
         "array-bracket-spacing": "off",
         "semi": ["error", "always"],

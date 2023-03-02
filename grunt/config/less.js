@@ -39,23 +39,22 @@ module.exports = function(grunt, options) {
     filepaths = filepaths.map(function(path) {
       return path.replace(convertSlashes, '/');
     });
-    return filepaths.sort(compareFilePaths);
+    filepaths = filepaths.sort(compareFilePaths);
+    filepaths = grunt.option('helpers').orderFilesByPluginType(filepaths);
+    return filepaths;
   }
 
   function includedFilter(filepath) {
-    return grunt.config('helpers').includedFilter(filepath);
+    return grunt.option('helpers').includedFilter(filepath);
   }
 
   const compileOptions = {
     baseUrl: '<%= sourcedir %>',
     mandatory: [
-      '<%= sourcedir %>core/less/**/*.less'
+      '<%= sourcedir %>node_modules/adapt-contrib-core/less/**/*.less'
     ],
     src: [
-      '<%= sourcedir %>components/*/less/**/*.less',
-      '<%= sourcedir %>extensions/*/less/**/*.less',
-      '<%= sourcedir %>menu/<%= menu %>/**/*.less',
-      '<%= sourcedir %>theme/<%= theme %>/**/*.less'
+      '<%= sourcedir %>node_modules/adapt-*/less/**/*.less'
     ],
     config: '<%= outputdir %><%= coursedir %>/config.<%= jsonext %>',
     dest: '<%= outputdir %>',
@@ -75,7 +74,7 @@ module.exports = function(grunt, options) {
   };
 
   const devOptions = {
-    ...compileOptions, 
+    ...compileOptions,
     ...{ sourcemaps: true, compress: false }
   };
 

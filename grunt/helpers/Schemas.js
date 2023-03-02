@@ -66,7 +66,7 @@ class Schemas {
       const json = fs.readJSONSync(filePath);
       const isExtensionSchema = Boolean(json.properties.pluginLocations);
       const InferredSchemaClass = (isExtensionSchema ? ExtensionSchema : ModelSchema);
-      const inferredSchemaName = (plugin.name === 'core') ?
+      const inferredSchemaName = (plugin.name === 'core' || plugin.name === 'adapt-contrib-core') ?
         path.parse(filePath).name.split('.')[0] : // if core, get schema name from file name
         isExtensionSchema ?
           plugin.name : // assume schema name is plugin name
@@ -137,7 +137,7 @@ class Schemas {
       if (!extensionParts) {
         return;
       }
-      for (let modelName in extensionParts) {
+      for (const modelName in extensionParts) {
         const extensionPart = extensionParts[modelName];
         /**
          * Check if the sub-schema part has any defined properties.
@@ -187,7 +187,7 @@ class Schemas {
    * @returns {ModelSchemas}
    */
   getSchemasForModelJSON(json) {
-    let schemas = [];
+    const schemas = [];
     if (json._type) {
       if (json._type === 'menu' || json._type === 'page') {
         schemas.push(this.getModelSchemaByName('contentobject'));

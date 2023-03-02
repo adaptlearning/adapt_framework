@@ -35,7 +35,7 @@ class Framework {
     includedFilter = function() { return true; },
     jsonext = 'json',
     trackingIdType = 'block',
-    useOutputData = false,
+    useOutputData = true,
     log = console.log,
     warn = console.warn
   } = {}) {
@@ -89,12 +89,10 @@ class Framework {
    * function or the Framework instance.
    * @returns {Data}
    */
-  getData({
-    useOutputData = this.useOutputData
-  } = {}) {
+  getData() {
     const data = new Data({
       framework: this,
-      sourcePath: useOutputData ? this.outputPath : this.sourcePath,
+      sourcePath: this.outputPath,
       courseDir: this.courseDir,
       jsonext: this.jsonext,
       trackingIdType: this.trackingIdType,
@@ -106,7 +104,8 @@ class Framework {
 
   /** @returns {Plugins} */
   getPlugins({
-    includedFilter = this.includedFilter
+    includedFilter = this.includedFilter,
+    sortBy = 'type'
   } = {}) {
     const plugins = new Plugins({
       framework: this.framework,
@@ -115,7 +114,7 @@ class Framework {
       log: this.log,
       warn: this.warn
     });
-    plugins.load();
+    plugins.load().sortBy(sortBy);
     return plugins;
   }
 

@@ -17,22 +17,18 @@ module.exports = function(grunt) {
       files: [
         {
           src: [
-            '<%= sourcedir %>core/templates/**/*.hbs',
-            '<%= sourcedir %>components/*/templates/**/*.hbs',
-            '<%= sourcedir %>extensions/*/templates/**/*.hbs',
-            '<%= sourcedir %>menu/<%= menu %>/**/*.hbs',
-            '<%= sourcedir %>theme/<%= theme %>/**/*.hbs'
+            '<%= sourcedir %>/node_modules/adapt-*/templates/**/*.hbs'
           ],
           follow: true,
           dest: '<%= outputdir %>templates.js',
           filter: function(filepath) {
-            if (filepath.indexOf(path.join(grunt.config('sourcedir'), 'core')) > -1) {
+            if (filepath?.indexOf(path.join(grunt.config('sourcedir'), 'adapt-contrib-core')) > -1) {
               // Always include core templates.
               return true;
             }
-
-            return grunt.config('helpers').includedFilter(filepath);
-          }
+            return grunt.option('helpers').includedFilter(filepath);
+          },
+          order: grunt.option('helpers').orderFilesByPluginType
         }
       ]
     }

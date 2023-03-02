@@ -49,8 +49,7 @@ class Plugins {
    */
   get pluginLocations() {
     return [
-      `${this.sourcePath}core/`,
-      `${this.sourcePath}!(core|${this.courseDir})/*/`
+      `${this.sourcePath}node_modules/adapt-*`
     ];
   }
 
@@ -58,17 +57,28 @@ class Plugins {
   load() {
     this.plugins = globs.sync(this.pluginLocations).map(sourcePath => {
       if (!this.includedFilter(sourcePath)) {
-        return;
+        return null;
       }
-      let plugin = new Plugin({
+      const plugin = new Plugin({
         framework: this.framework,
-        sourcePath,
+        sourcePath: sourcePath + '/',
         log: this.log,
         warn: this.warn
       });
       plugin.load();
+      if (!plugin.isAdaptPlugin) return null;
       return plugin;
     }).filter(Boolean);
+    return this;
+  }
+
+  sortBy(by = 'type') {
+    switch (by) {
+      case 'type': {
+        const types = { core: 1, component: 2, extension: 3, menu: 4, theme: 5 };
+        this.plugins.sort((a, b) => (types[a.type] || 0) - (types[b.type] || 0));
+      }
+    }
     return this;
   }
 

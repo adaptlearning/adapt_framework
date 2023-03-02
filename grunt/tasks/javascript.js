@@ -12,7 +12,12 @@ module.exports = function(grunt) {
   const fs = require('fs-extra');
   const rollup = require('rollup');
   const { babel } = require('@rollup/plugin-babel');
+  const { nodeResolve } = require('@rollup/plugin-node-resolve');
+  const commonjs = require('@rollup/plugin-commonjs');
+  const replace = require('@rollup/plugin-replace');
   const terser = require('@rollup/plugin-terser');
+  const resolve = require('resolve');
+  const MagicString = require('magic-string');
   const { deflate, unzip, constants } = require('zlib');
 
   const cwd = process.cwd().replace(convertSlashes, '/') + '/';
@@ -120,6 +125,13 @@ module.exports = function(grunt) {
     }
   };
 
+  const resolvedNodeModules = {};
+  const findNodeModule = (cwd, baseUrl, moduleId) => {
+    if (resolvedNodeModules[moduleId]) return resolvedNodeModules[moduleId];
+    resolvedNodeModules[moduleId] = resolve.sync(moduleId, { basedir: path.resolve(cwd, baseUrl) });
+    return resolvedNodeModules[moduleId];
+  };
+
   grunt.registerMultiTask('javascript', 'Compile JavaScript files', async function() {
     const Helpers = require('../helpers')(grunt);
     const buildConfig = Helpers.generateConfigData();
@@ -131,46 +143,103 @@ module.exports = function(grunt) {
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
     const cachePath = buildConfig.cachepath ?? cacheManager.cachePath(cwd, options.out);
+
+    const framework = Helpers.getFramework();
+    const pluginsObject = framework.getPlugins();
+    const pluginPackageJSONs = pluginsObject.getAllPackageJSONFileItems().map(item => item.item);
+    const pluginMappings = pluginPackageJSONs.reduce((mappings, packageJSON) => {
+      if (!packageJSON.adapt_framework) return mappings;
+      mappings.map = Object.assign({}, mappings.map, packageJSON.adapt_framework.map);
+      mappings.paths = Object.assign({}, mappings.paths, packageJSON.adapt_framework.paths);
+      return mappings;
+    }, {});
+
     try {
       await restoreCache(cachePath, basePath);
       await cacheManager.clean();
       const pluginsPath = path.resolve(cwd, options.pluginsPath).replace(convertSlashes, '/');
 
-      // Make src/plugins.js to attach the plugins dynamically
-      if (!fs.existsSync(pluginsPath)) {
-        fs.writeFileSync(pluginsPath, '');
-      }
-
       // Collect all plugin entry points for injection
-      const pluginPaths = [];
-      for (let i = 0, l = options.plugins.length; i < l; i++) {
-        const src = options.plugins[i];
-        grunt.file.expand({
-          filter: options.pluginsFilter
-        }, src).forEach(function(bowerJSONPath) {
-          if (bowerJSONPath === undefined) return;
-          const pluginPath = path.dirname(bowerJSONPath);
-          const bowerJSON = grunt.file.readJSON(bowerJSONPath);
-          const requireJSRootPath = pluginPath.substr(options.baseUrl.length);
-          const requireJSMainPath = path.join(requireJSRootPath, bowerJSON.main);
-          const ext = path.extname(requireJSMainPath);
-          const requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, '/');
-          pluginPaths.push(requireJSMainPathNoExt);
-        });
-      }
+      const pluginPaths = options.pluginsOrder(pluginsObject.plugins.map(plugin => {
+        if (plugin.name === 'adapt-contrib-core') return null;
+        const requireJSRootPath = plugin.sourcePath.substr(options.baseUrl.length);
+        const requireJSMainPath = path.join(requireJSRootPath, plugin.main);
+        const ext = path.extname(requireJSMainPath);
+        const requireJSMainPathNoExt = requireJSMainPath.slice(0, -ext.length).replace(convertSlashes, '/');
+        return requireJSMainPathNoExt;
+      }).filter(Boolean));
 
       // Collect react templates
       const reactTemplatePaths = [];
       options.reactTemplates.forEach(pattern => {
         grunt.file.expand({
-          filter: options.pluginsFilter
-        }, pattern).forEach(templatePath => reactTemplatePaths.push(templatePath.replace(convertSlashes, '/')));
+          filter: options.pluginsFilter,
+          order: options.pluginsOrder
+        }, pattern).forEach(templatePath => {
+          const requireJSRootPath = templatePath.substr(options.baseUrl.length);
+          return reactTemplatePaths.push(requireJSRootPath.replace(convertSlashes, '/'));
+        });
       });
 
+      const isProduction = false;
+      // These will be overridden/added to in the package.json of any plugin
+      //  they are here for backward compatibility only
+      const v5toV6DefaultMappings = {
+        externalMap: {
+          '.*/libraries/(?!mediaelement-fullscreen-hook)+': 'libraries/'
+        },
+        map: {
+          'components/': '',
+          'extensions/': '',
+          'menu/': '',
+          'theme/': '',
+          'core/': 'adapt-contrib-core/',
+          coreJS: 'adapt-contrib-core/js',
+          coreViews: 'adapt-contrib-core/js/views',
+          coreModels: 'adapt-contrib-core/js/models',
+          coreCollections: 'adapt-contrib-core/js/collections',
+          coreHelpers: 'adapt-contrib-core/js/helpers',
+          // This library from the media component has a circular reference to core/js/adapt, it should be loaded after Adapt
+          // It needs to be moved from the libraries folder to the js folder
+          'libraries/mediaelement-fullscreen-hook': '../libraries/mediaelement-fullscreen-hook'
+        },
+        paths: {
+          jquery: 'libraries/jquery.min',
+          underscore: 'libraries/underscore.min',
+          'underscore.results': 'libraries/underscore.results',
+          backbone: 'libraries/backbone.min',
+          'backbone.controller': 'libraries/backbone.controller',
+          'backbone.controller.results': 'libraries/backbone.controller.results',
+          'backbone.es6': 'libraries/backbone.es6',
+          handlebars: 'libraries/handlebars.min',
+          velocity: 'libraries/velocity.min',
+          imageReady: 'libraries/imageReady',
+          inview: 'libraries/inview',
+          a11y: 'empty:',
+          plugins: 'empty:',
+          'libraries/': 'empty:',
+          'regenerator-runtime': 'libraries/regenerator-runtime.min',
+          'core-js': 'libraries/core-js.min',
+          scrollTo: 'libraries/scrollTo.min',
+          bowser: 'libraries/bowser',
+          enum: 'libraries/enum',
+          'core/js/libraries/bowser': 'empty:',
+          'coreJS/libraries/bowser': 'empty:',
+          'object.assign': 'empty:',
+          jqueryMobile: 'libraries/jquery.mobile.custom.min',
+          react: isProduction ? 'libraries/react.production.min' : 'libraries/react.development',
+          'react-dom': isProduction ? 'libraries/react-dom.production.min' : 'libraries/react-dom.development',
+          'html-react-parser': 'libraries/html-react-parser.min',
+          semver: 'libraries/semver'
+        }
+      };
+
       // Process remapping and external model configurations
-      const mapParts = Object.keys(options.map);
-      const externalParts = Object.keys(options.external);
-      const externalMap = options.externalMap;
+      const mappings = Object.assign(v5toV6DefaultMappings.map, pluginMappings.map);
+      const mapParts = Object.keys(mappings);
+      const externals = Object.assign(v5toV6DefaultMappings.paths, pluginMappings.paths);
+      const externalParts = Object.keys(externals);
+      const externalMap = (v5toV6DefaultMappings.externalMap);
 
       const findFile = function(filename) {
         filename = filename.replace(convertSlashes, '/');
@@ -181,8 +250,6 @@ module.exports = function(grunt) {
         }
         return filename;
       };
-
-      const umdImports = options.umdImports.map(filename => findFile(path.resolve(basePath, filename)));
 
       // Rework modules names and inject plugins
       const adaptLoader = function() {
@@ -196,13 +263,32 @@ module.exports = function(grunt) {
               // Ignore as injected rollup module
               return null;
             }
+            if (moduleId.startsWith(basePath)) {
+              moduleId = moduleId.substr(basePath.length);
+            }
             const mapPart = mapParts.find(part => moduleId.startsWith(part));
             if (mapPart) {
               // Remap module, usually coreJS/adapt to core/js/adapt etc
-              moduleId = moduleId.replace(mapPart, options.map[mapPart]);
+              moduleId = moduleId.replace(mapPart, mappings[mapPart]);
             }
             // Remap ../libraries/ or core/js/libraries/ to libraries/
             moduleId = Object.entries(externalMap).reduce((moduleId, [ match, replaceWith ]) => moduleId.replace((new RegExp(match, 'g')), replaceWith), moduleId);
+            const externalPart = externalParts.find(part => moduleId.startsWith(part));
+            const isExteral = Boolean(externals[externalPart]);
+            const isNodeModule = Boolean(externals[externalPart] === 'node_modules:');
+            if (isExteral && !isNodeModule) {
+              // External module as defined in paths
+              return {
+                id: moduleId,
+                external: true
+              };
+            }
+            try {
+              // Resolve node modules
+              if (!moduleId.includes('adapt-') && findNodeModule(cwd, options.baseUrl, moduleId)) {
+                return null;
+              }
+            } catch (err) {}
             const isRelative = (moduleId[0] === '.');
             if (isRelative) {
               if (!parentId) {
@@ -218,15 +304,6 @@ module.exports = function(grunt) {
               return {
                 id: filename,
                 external: false
-              };
-            }
-            const externalPart = externalParts.find(part => moduleId.startsWith(part));
-            const isEmpty = (options.external[externalPart] === 'empty:');
-            if (isEmpty) {
-              // External module as is defined as 'empty:', libraries/ bower handlebars etc
-              return {
-                id: moduleId,
-                external: true
               };
             }
             const isES6Import = !fs.existsSync(moduleId);
@@ -259,17 +336,35 @@ module.exports = function(grunt) {
             if (isRollupHelper) {
               return null;
             }
-            const isPlugins = (moduleId.includes('/' + options.pluginsModule + '.js'));
-            if (!isPlugins) {
+            const isStart = (moduleId.includes('/' + options.baseUrl + options.name));
+            if (!isStart) {
               return null;
             }
-            // Dynamically construct plugins.js with plugin dependencies
-            code = `define([${pluginPaths.map(filename => {
-              return `"${filename}"`;
+
+            const magicString = new MagicString(code);
+            const matches = [...String(code).matchAll(/import .*;/g)];
+            const last = matches[matches.length - 1];
+            const end = last.index + last[0].length;
+
+            const original = code.substr(0, end);
+            const newPart = `\n${pluginPaths.map(filename => {
+              return `import '${filename}';\n`;
             }).concat(reactTemplatePaths.map(filename => {
-              return `"${filename}"`;
-            })).join(',')}], function() {});`;
-            return code;
+              return `import '${filename}';\n`;
+            })).join('')}`;
+
+            magicString.remove(0, end);
+            magicString.prepend(original + newPart);
+
+            return {
+              code: magicString.toString(),
+              map: isSourceMapped
+                ? magicString.generateMap({
+                  filename: moduleId,
+                  includeContent: true
+                })
+                : false
+            };
           }
 
         };
@@ -300,15 +395,25 @@ module.exports = function(grunt) {
         plugins: [
           adaptLoader({}),
           adaptInjectPlugins({}),
+          replace({
+            'process.env.NODE_ENV': isSourceMapped ? JSON.stringify('development') : JSON.stringify('production'),
+            preventAssignment: true
+          }),
+          commonjs({
+            exclude: ['**/node_modules/adapt-*/**'],
+            sourceMap: isSourceMapped
+          }),
+          nodeResolve({
+            browser: true,
+            preferBuiltins: false
+          }),
           babel({
             babelHelpers: 'bundled',
             extensions,
             minified: false,
             compact: false,
             comments: false,
-            exclude: [
-              '**/node_modules/**'
-            ],
+            exclude: [ '**/node_modules/core-js/**' ],
             presets: [
               [
                 '@babel/preset-react',
@@ -319,7 +424,7 @@ module.exports = function(grunt) {
               [
                 '@babel/preset-env',
                 {
-                  useBuiltIns: 'entry',
+                  useBuiltIns: 'usage',
                   corejs: 3,
                   exclude: [
                     // Breaks lockingModel.js, set function vs set variable
@@ -339,8 +444,11 @@ module.exports = function(grunt) {
                   ignoreNestedRequires: true,
                   defineFunctionName: '__AMD',
                   defineModuleId: (moduleId) => moduleId.replace(convertSlashes, '/').replace(basePath, '').replace('.js', ''),
+                  includes: [
+                    '**/node_modules/adapt-*/**'
+                  ],
                   excludes: [
-                    '**/templates/**/*.jsx'
+                    '**/node_modules/adapt-*/templates/**/*.jsx'
                   ]
                 }
               ],
@@ -348,7 +456,7 @@ module.exports = function(grunt) {
                 'transform-react-templates',
                 {
                   includes: [
-                    '**/templates/**/*.jsx'
+                    '**/node_modules/adapt-*/templates/**/*.jsx'
                   ],
                   importRegisterFunctionFromModule: path.resolve(basePath, 'core/js/reactHelpers.js').replace(convertSlashes, '/'),
                   registerFunctionName: 'register',
@@ -357,29 +465,72 @@ module.exports = function(grunt) {
               ]
             ]
           })
-        ]
+        ].filter(Boolean)
       };
 
-      const umdImport = () => {
-        return umdImports.map(filename => {
-          let code = fs.readFileSync(filename).toString();
-          code = code
-            .replace('require("object-assign")', 'Object.assign')
-            .replace('define.amd', 'define.noop');
-          return code;
-        }).join('\n');
-      };
+      const clientSidePaths = Object.entries(externals)
+        .filter(([, value]) => {
+          // any forced node_module, at odds with the compatibility defaults
+          const isNodeModule = (value === 'node_modules:');
+          // general prefixes libraries/
+          const isEmpty = (value === 'empty:');
+          return (!isNodeModule && !isEmpty);
+        })
+        .reduce((output, [key, value]) => {
+          output[key] = value;
+          return output;
+        }, {});
 
       const outputOptions = {
         file: options.out,
         format: 'amd',
+        interop: false,
+        banner: `
+requirejs.config({
+  map: {
+    '*': ${JSON.stringify(mappings, null, 2)}
+  },
+  paths: ${JSON.stringify(clientSidePaths, null, 2)}
+});
+define('plugins', () => true);
+(function requireJSMapExtension() {
+  // Extend requirejs map with direct string replacement
+  const requireJSMapConfig = requirejs.s.contexts._.config.map['*'];
+  const remapConfigs = Object.entries(requireJSMapConfig).map(([ find, replaceWith ]) => {
+    return {
+      find: new RegExp("^" + find),
+      replaceWith
+    };
+  });
+  function stringReplaceModuleIds(original, ...args) {
+    let [ names ] = args;
+    const isArray = Array.isArray(names);
+    if (!isArray) names = [names];
+    names = names.map(name => {
+      remapConfigs.forEach(({ find, replaceWith }) => {
+        name = name.replace(find, replaceWith);
+      });
+      return name;
+    });
+    args[0] = isArray ? names : names[0];
+    return original.apply(this, args);
+  }
+  function monkeyPunch(context, functionName, trap) {
+    const original = context[functionName];
+    context[functionName] = function(...args) {
+      args.unshift(original);
+      return trap.apply(context, args);
+    };
+  }
+  monkeyPunch(requirejs.s.contexts._, 'require', stringReplaceModuleIds);
+})();
+`,
         plugins: [
           !isSourceMapped && terser({
             mangle: false,
             compress: false
           })
         ].filter(Boolean),
-        intro: umdImport(),
         footer: `// Allow ES export default to be exported as amd modules
 window.__AMD = function(id, value) {
   window.define(id, function() { return value; }); // define for external use
