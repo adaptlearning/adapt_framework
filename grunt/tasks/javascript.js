@@ -273,9 +273,9 @@ module.exports = function(grunt) {
             // Remap ../libraries/ or core/js/libraries/ to libraries/
             moduleId = Object.entries(externalMap).reduce((moduleId, [ match, replaceWith ]) => moduleId.replace((new RegExp(match, 'g')), replaceWith), moduleId);
             const externalPart = externalParts.find(part => moduleId.startsWith(part));
-            const isExteral = Boolean(externals[externalPart]);
+            const isExternal = Boolean(externals[externalPart]);
             const isNodeModule = Boolean(externals[externalPart] === 'node_modules:');
-            if (isExteral && !isNodeModule) {
+            if (isExternal && !isNodeModule) {
               // External module as defined in paths
               return {
                 id: moduleId,
