@@ -11,8 +11,6 @@ module.exports = function(grunt, options) {
           '<%= sourcedir %>/node_modules/adapt-*/package.json',
           '<%= sourcedir %>/node_modules/adapt-*/bower.json'
         ],
-        pluginsPath: '<%= sourcedir %>/node_modules/plugins.js',
-        pluginsModule: 'plugins',
         pluginsFilter: filepath => grunt.option('helpers').includedFilter(filepath),
         pluginsOrder: grunt.option('helpers').orderFilesByPluginType,
         reactTemplates: [
@@ -39,8 +37,6 @@ module.exports = function(grunt, options) {
           '<%= sourcedir %>/node_modules/adapt-*/package.json',
           '<%= sourcedir %>/node_modules/adapt-*/bower.json'
         ],
-        pluginsPath: '<%= sourcedir %>/node_modules/plugins.js',
-        pluginsModule: 'plugins',
         pluginsFilter: filepath => grunt.option('helpers').includedFilter(filepath),
         pluginsOrder: grunt.option('helpers').orderFilesByPluginType,
         reactTemplates: [
