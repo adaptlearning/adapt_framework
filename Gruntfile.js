@@ -1,8 +1,8 @@
 var path = require('path');
 
 module.exports = function(grunt) {
-  var helpers = require('./grunt/helpers')(grunt);
-
+  const helpers = require('./grunt/helpers')(grunt);
+  grunt.option('helpers', helpers);
   require('time-grunt')(grunt);
   require('load-grunt-config')(grunt, {
     data: helpers.generateConfigData(),
@@ -14,8 +14,6 @@ module.exports = function(grunt) {
       }
     }
   });
-
-  grunt.config('helpers', helpers);
   grunt.registerTask('default', ['help']);
 };
 

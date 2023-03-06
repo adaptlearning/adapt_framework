@@ -1,46 +1,39 @@
 module.exports = function(grunt) {
-  var convertSlashes = /\\/g;
-
   grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
-    var less = require('less');
-    var _ = require('underscore');
-    var path = require('path');
-    var Visitors = require('./less/visitors');
-    var done = this.async();
-    var options = this.options({});
+    const less = require('less');
+    const _ = require('underscore');
+    const path = require('path');
+    const Visitors = require('./less/visitors');
+    const done = this.async();
+    const options = this.options({});
 
-    var rootPath = path.join(path.resolve(options.baseUrl), '../')
-      .replace(convertSlashes, '/');
-    var cwd = process.cwd();
-
-    var imports = '';
-    var src = '';
+    let imports = '';
 
     if (options.src && options.config) {
-      var screenSize = {
-        'small': 520,
-        'medium': 760,
-        'large': 900
+      let screenSize = {
+        small: 520,
+        medium: 760,
+        large: 900
       };
       try {
-        var configjson = JSON.parse(grunt.file.read(options.config)
+        const configjson = JSON.parse(grunt.file.read(options.config)
           .toString());
         screenSize = configjson.screenSize || screenSize;
       } catch (e) {}
 
-      var screensizeEmThreshold = 300;
-      var baseFontSize = 16;
+      const screensizeEmThreshold = 300;
+      const baseFontSize = 16;
 
       // Check to see if the screen size value is larger than the em threshold
       // If value is larger than em threshold, convert value (assumed px) to ems
       // Otherwise assume value is in ems
-      var largeEmBreakpoint = screenSize.large > screensizeEmThreshold ?
+      const largeEmBreakpoint = screenSize.large > screensizeEmThreshold ?
         screenSize.large / baseFontSize :
         screenSize.large;
-      var mediumEmBreakpoint = screenSize.medium > screensizeEmThreshold ?
+      const mediumEmBreakpoint = screenSize.medium > screensizeEmThreshold ?
         screenSize.medium / baseFontSize :
         screenSize.medium;
-      var smallEmBreakpoint = screenSize.small > screensizeEmThreshold ?
+      const smallEmBreakpoint = screenSize.small > screensizeEmThreshold ?
         screenSize.small / baseFontSize :
         screenSize.small;
 
@@ -51,47 +44,43 @@ module.exports = function(grunt) {
 
     if (options.mandatory) {
       for (let i = 0, l = options.mandatory.length; i < l; i++) {
-        src = path.join(cwd, options.mandatory[i]);
         grunt.file.expand({
           follow: true,
           order: options.order
-        }, src)
+        }, options.mandatory[i])
           .forEach(function(lessPath) {
             lessPath = path.normalize(lessPath);
-            var trimmed = lessPath.substr(rootPath.length);
-            imports += "@import '" + trimmed + "';\n";
+            imports += "@import '" + lessPath + "';\n";
           });
       }
     }
 
     if (options.src) {
       for (let i = 0, l = options.src.length; i < l; i++) {
-        src = path.join(cwd, options.src[i]);
         grunt.file.expand({
           follow: true,
           filter: options.filter,
           order: options.order
-        }, src)
+        }, options.src[i])
           .forEach(function(lessPath) {
             lessPath = path.normalize(lessPath);
-            var trimmed = lessPath.substr(rootPath.length);
-            imports += "@import '" + trimmed + "';\n";
+            imports += "@import '" + lessPath + "';\n";
           });
       }
     }
 
-    var sourcemaps;
+    let sourcemaps;
     if (options.sourcemaps) {
       sourcemaps = {
-        'sourceMap': {
-          'sourceMapFileInline': false,
-          'outputSourceFiles': true,
-          'sourceMapBasepath': 'src',
-          'sourceMapURL': options.mapFilename
+        sourceMap: {
+          sourceMapFileInline: false,
+          outputSourceFiles: true,
+          sourceMapBasepath: 'src/node_modules',
+          sourceMapURL: options.mapFilename
         }
       };
     } else {
-      var sourceMapPath = path.join(options.dest, options.mapFilename);
+      const sourceMapPath = path.join(options.dest, options.mapFilename);
       if (grunt.file.exists(sourceMapPath)) {
         grunt.file.delete(sourceMapPath, {
           force: true
@@ -104,11 +93,11 @@ module.exports = function(grunt) {
       }
     }
 
-    var visitors = new Visitors(options);
+    const visitors = new Visitors(options);
 
-    var lessOptions = _.extend({
-      'compress': options.compress,
-      'plugins': [
+    const lessOptions = _.extend({
+      compress: options.compress,
+      plugins: [
         visitors
       ]
     }, sourcemaps);

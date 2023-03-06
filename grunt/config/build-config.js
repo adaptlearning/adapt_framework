@@ -5,7 +5,7 @@ module.exports = function(grunt, options) {
         return grunt.config('helpers').includedFilter(filepath);
       },
       allowedProperties: {
-        bower: [
+        package: [
           'name',
           'version',
           'framework',
@@ -18,13 +18,6 @@ module.exports = function(grunt, options) {
           'main',
           'keywords',
           'licence'
-        ],
-        package: [
-          'name',
-          'version',
-          'description',
-          'repository',
-          'license'
         ]
       }
     }

@@ -7,7 +7,7 @@ module.exports = function(grunt) {
     const next = this.async();
 
     const framework = Helpers.getFramework();
-    grunt.log.ok(`Using ${framework.useOutputData ? framework.outputPath : framework.sourcePath} folder for course data...`);
+    grunt.log.ok(`Using ${framework.outputPath} folder for course data...`);
 
     const translate = framework.getTranslate({
       masterLang: grunt.option('masterLang') || 'en',
@@ -31,16 +31,16 @@ module.exports = function(grunt) {
         translate.import().then(next, err => {
           switch (err.number) {
             case 10001: // Target language option is missing
-              grunt.log.error(err + `\nPlease add --targetLang=<languageCode>`);
+              grunt.log.error(err + '\nPlease add --targetLang=<languageCode>');
               break;
             case 10002: // Import source folder does not exist.
-              grunt.log.error(err + `\nPlease create this folder in the languagefiles directory.`);
+              grunt.log.error(err + '\nPlease create this folder in the languagefiles directory.');
               break;
             case 10003: // Import destination folder already exists.
-              grunt.log.error(err + `\nTo replace the content in this folder, please add a --replace flag to the grunt task.`);
+              grunt.log.error(err + '\nTo replace the content in this folder, please add a --replace flag to the grunt task.');
               break;
             case 10014: // Could not detect delimiter
-              grunt.log.error(err + `\nTo specify a delimiter, please add a --csvDelimiter=',' flag to the grunt task. Only , ; | tab and space are supported.`);
+              grunt.log.error(err + '\nTo specify a delimiter, please add a --csvDelimiter=\',\' flag to the grunt task. Only , ; | tab and space are supported.');
               break;
             default:
               grunt.log.error(err);

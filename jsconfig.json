@@ -1,15 +1,13 @@
 {
   "include": [
-    "src/core/js/**/*.js",
-    "src/*/*/js/**/*.js"
+    "src/node_modules/adapt-*/js/**/*.js",
+    "src/node_modules/adapt-*/templates/**/*.jsx",
   ],
   "compilerOptions": {
     "module": "amd",
-    "target": "es2015",
+    "target": "es2020",
     "baseUrl": "src/"
   },
   "exclude": [
-    "node_modules",
-    "**/node_modules/*"
   ]
 }

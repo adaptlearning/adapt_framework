@@ -48,7 +48,7 @@ class Translate {
     languagePath = path.join(process.cwd(), 'languagefiles'),
     outputPath = '',
     courseDir = 'course',
-    useOutputData = false,
+    useOutputData = true,
     isTest = false,
     log = console.log,
     warn = console.warn
@@ -94,7 +94,7 @@ class Translate {
   load() {
     this.data = new Data({
       framework: this.framework,
-      sourcePath: this.useOutputData ? this.outputPath : this.sourcePath,
+      sourcePath: this.outputPath,
       courseDir: this.courseDir,
       jsonext: this.jsonext,
       trackingIdType: this.framework.trackingIdType,
@@ -136,16 +136,16 @@ class Translate {
           return;
         }
         if (typeof data === 'object') {
-          for (let attribute in data) {
+          for (const attribute in data) {
             recursiveJSONProcess(data[attribute], level += 1, path + attribute + '/', lookupPath + attribute + '/', id, file, component);
           }
           return;
         }
         if (data && translatablePaths.includes(lookupPath)) {
           exportTextData.push({
-            file: file,
-            id: id,
-            path: path,
+            file,
+            id,
+            path,
             value: data
           });
         }
@@ -174,7 +174,7 @@ class Translate {
     fs.mkdirpSync(outputFolder);
 
     if (this.format === 'json' || this.format === 'raw') {
-      const filePath = path.join(outputFolder, `export.json`);
+      const filePath = path.join(outputFolder, 'export.json');
       this.log(`Exporting json to ${filePath}`);
       fs.writeJSONSync(filePath, exportTextData, { spaces: 2 });
       return;
@@ -218,7 +218,7 @@ class Translate {
   async import() {
 
     if (this.isTest) {
-      this.log(`!TEST IMPORT, not changing data.`);
+      this.log('!TEST IMPORT, not changing data.');
     }
 
     // check that a targetLang has been specified
@@ -327,7 +327,7 @@ class Translate {
                 throw new Error(`Too few columns detected: expected 2, found ${line.length} in ${filename}`);
               }
               if (line.length !== 2 && !hasWarnedTruncated) {
-                this.log(`Truncating, too many columns detected: expected 2, found extra ${line.length-2} in ${filename}`);
+                this.log(`Truncating, too many columns detected: expected 2, found extra ${line.length - 2} in ${filename}`);
                 hasWarnedTruncated = true;
               }
               line.length = 2;
@@ -339,8 +339,8 @@ class Translate {
           lines.forEach(line => {
             const [ file, id, ...path ] = line[0].split('/');
             importData.push({
-              file: file,
-              id: id,
+              file,
+              id,
               path: path.filter(Boolean).join('/'),
               value: line[1]
             });
