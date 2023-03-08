@@ -4,7 +4,7 @@ module.exports = function(grunt, options) {
       outputdir: '<%= outputdir %>',
       sourcedir: '<%= sourcedir %>',
       plugins: [
-        '<%= sourcedir %>node_modules/adapt-*/pacakge.json'
+        '<%= sourcedir %>node_modules/adapt-*/package.json'
       ],
       pluginsFilter: function(filepath) {
         return grunt.option('helpers').includedFilter(filepath) && grunt.option('helpers').scriptSafeFilter(filepath);
