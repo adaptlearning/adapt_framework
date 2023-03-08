@@ -16,13 +16,12 @@ module.exports = function(grunt) {
 
     if (options.plugins) {
 
-      let paths = [];
-      for (let i = 0, l = options.plugins.length; i < l; i++) {
-        const src = options.plugins[i];
-        paths = paths.concat(grunt.file.expand({
+      const paths = [];
+      options.plugins.forEach(src => {
+        paths.push(...grunt.file.expand({
           filter: options.pluginsFilter
         }, src));
-      }
+      })
 
       async.each(paths, function(bowerJSONPath, done) {
 
