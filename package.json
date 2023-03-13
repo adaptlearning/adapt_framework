@@ -68,7 +68,6 @@
         "@semantic-release/github": "^8.0.5",
         "@semantic-release/npm": "^9.0.1",
         "@semantic-release/release-notes-generator": "^10.0.3",
-        "adapt-cli": "^3.0.7",
         "conventional-changelog-eslint": "^3.0.9",
         "cypress": "^10.10.0",
         "eslint": "^8.17.0",
