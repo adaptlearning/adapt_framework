@@ -160,5 +160,10 @@
       "yes": "Yes",
       "no": "No"
     }
+  },
+  "_vanilla": {
+    "_favIcon": {
+      "_src": ""
+    }
   }
 }
