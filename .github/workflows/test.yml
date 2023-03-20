@@ -1,9 +1,7 @@
 name: Test Runner
 on:
-  pull_request:
-    types:
-      - opened
-
+  release:
+    types: [published]
 jobs:
   test:
     name: Build and Launch Course
