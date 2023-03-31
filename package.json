@@ -8,7 +8,8 @@
     },
     "scripts": {
         "preinstall": "node gitmodules.js",
-        "lint": "node node_modules/eslint/bin/eslint.js ./"
+        "lint": "node node_modules/eslint/bin/eslint.js ./",
+        "test": "jest"
     },
     "license": "GPL-3.0",
     "bugs": {
@@ -77,6 +78,10 @@
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-requirejs": "^4.0.1",
         "eslint-plugin-standard": "^5.0.0",
+        "jest": "^29.3.1",
+        "jest-environment-jsdom": "^29.3.1",
+        "react": "18.2.0",
+        "react-dom": "^18.2.0",
         "semantic-release": "^19.0.3"
     },
     "optionalDependencies": {
