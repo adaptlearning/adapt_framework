@@ -3,9 +3,9 @@ const { spawn, exec } = require('child_process');
 const runTest = async () => {
   try {    
     await new Promise((resolve, reject) => {
-      const gruntBuild = spawn('adapt', ['install'], { stdio: [0, 1, 2] });
-      gruntBuild.on('error', reject);
-      gruntBuild.on('close', code => {
+      const adaptInstall = spawn('adapt', ['install'], { stdio: [0, 1, 2] });
+      adaptInstall.on('error', reject);
+      adaptInstall.on('close', code => {
         if (!code) return resolve();
         reject(new Error('adapt install failed'));
       });
