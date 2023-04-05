@@ -1,7 +1,7 @@
 const { spawn, exec } = require('child_process');
 
 const runTest = async () => {
-  try {    
+  try {
     await new Promise((resolve, reject) => {
       const adaptInstall = spawn('adapt', ['install'], { stdio: [0, 1, 2] });
       adaptInstall.on('error', reject);
