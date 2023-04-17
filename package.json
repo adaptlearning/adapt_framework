@@ -26,7 +26,7 @@
         "@rollup/plugin-babel": "^6.0.3",
         "@rollup/plugin-terser": "^0.4.0",
         "@types/backbone": "^1.4.14",
-        "@types/jquery": "^3.5.11",
+        "@types/jquery": "^3.5.16",
         "async": "^3.2.2",
         "babel-plugin-transform-amd-to-es6": "^0.6.1",
         "babel-plugin-transform-react-templates": "^0.1.0",
