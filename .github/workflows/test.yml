@@ -1,7 +1,6 @@
 name: Test Runner
 on:
-  release:
-    types: [published]
+  pull_request
 jobs:
   test:
     name: Build and Launch Course
@@ -16,8 +15,11 @@ jobs:
           node-version: "14"
           cache: "npm"
 
-      - run: npm ci
-      - run: npm install -g git
-      - run: npm install -g adapt-cli
-      - run: npm install -g grunt
-      - run: npm run test
+      - name: Installing Environment
+        run: npm ci &&
+          npm install -g git &&
+          npm install -g adapt-cli &&
+          npm install -g grunt
+
+      - name: Running Tests
+        run: npm run test
