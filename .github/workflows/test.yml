@@ -21,15 +21,4 @@ jobs:
           npm install -g grunt
 
       - name: Running Tests
-        run: npm run test || exit 1
-
-      - name: Create artifacts
-        if: failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: cypress-screenshots
-          path: ./cypress/screenshots
-
-      - name: Tests failed
-        if: failure()
-        run: exit 1
+        run: npm run test

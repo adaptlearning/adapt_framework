@@ -35,13 +35,19 @@ const runTest = async () => {
         resolve(gruntServerRun);
       }, 1000);
     });
-    await new Promise((resolve, reject) => {
+    const cypressCode = await new Promise((resolve, reject) => {
       exec('node ./node_modules/wait-on/bin/wait-on http://localhost:9001', { stdio: [0, 1, 2] }, () => {
         const cypressRun = spawn('node', ['./node_modules/cypress/bin/cypress', 'run'], { stdio: [0, 1, 2] });
         cypressRun.on('error', reject);
         cypressRun.on('close', resolve);
       });
     });
+
+    if (cypressCode > 0) {
+      console.log(`Cypress failed with code '${cypressCode}'`);
+      process.exit(1);
+    }
+
     gruntServerRun.kill();
   } catch (err) {}
 };
