@@ -21,7 +21,7 @@ jobs:
           npm install -g grunt
 
       - name: Running Tests
-        run: npm run test
+        run: npm run test || exit 1
 
       - name: Create artifacts
         if: failure()
