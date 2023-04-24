@@ -1,5 +1,5 @@
 describe('Menu Page', () => {
-  const pageTitle = 'Adapt Version 5';
+  const pageTitle = 'Adapt Version 5 BAD';
 
   it(`should have the title ${pageTitle}`, () => {
     cy.visit('/');
