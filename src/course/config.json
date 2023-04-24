@@ -23,6 +23,7 @@
             "_notify": 1
         },
         "_options": {
+            "_isPrefersReducedMotionEnabled": true,
             "_isFocusOutlineKeyboardOnlyEnabled": true,
             "_isFocusOutlineDisabled": false,
             "_isFocusAssignmentEnabled": true,
