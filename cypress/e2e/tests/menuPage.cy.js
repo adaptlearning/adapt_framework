@@ -3,6 +3,6 @@ describe('Menu Page', () => {
 
   it(`should have the title ${pageTitle}`, () => {
     cy.visit('/');
-    cy.get('.menu__title-inner').should('contain', pageTitle)
-  })
-})
+    cy.get('.menu__title-inner').should('contain', pageTitle);
+  });
+});
