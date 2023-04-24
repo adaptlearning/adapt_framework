@@ -1,6 +1,5 @@
 name: Test Runner
-on:
-  pull_request
+on: pull_request
 jobs:
   test:
     name: Build and Launch Course
@@ -9,13 +8,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/upload-artifact@v2
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: ./cypress/screenshots
-      - name: Tests failed
-        run: exit 1
 
       - uses: actions/setup-node@v3
         with:
@@ -30,3 +22,14 @@ jobs:
 
       - name: Running Tests
         run: npm run test
+
+      - name: Create artifacts
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: ./cypress/screenshots
+
+      - name: Tests failed
+        if: failure()
+        run: exit 1
