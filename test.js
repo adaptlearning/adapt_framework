@@ -1,9 +1,10 @@
 const { spawn, exec } = require('child_process');
+const os = require('os');
 
 const runTest = async () => {
   try {
     await new Promise((resolve, reject) => {
-      const adaptInstall = spawn('adapt', ['install'], { stdio: [0, 1, 2] });
+      const adaptInstall = spawn(`adapt${os.platform() === 'win32' ? '.cmd' : ''}`, ['install'], { stdio: [0, 1, 2] });
       adaptInstall.on('error', reject);
       adaptInstall.on('close', code => {
         if (!code) return resolve();
