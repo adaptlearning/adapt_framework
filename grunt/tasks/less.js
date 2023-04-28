@@ -30,7 +30,7 @@ module.exports = function(grunt) {
       try {
         const configjson = JSON.parse(grunt.file.read(options.config)
           .toString());
-        screenSize = configjson.screenSize || screenSize;
+        screenSize = configjson?.screenSize || screenSize;
       } catch (e) {}
 
       const screensizeEmThreshold = 300;
