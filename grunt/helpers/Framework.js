@@ -185,6 +185,23 @@ class Framework {
     return this;
   }
 
+  /** @returns {Framework} */
+  applyScreenSizeDefaults({
+    includedFilter = this.includedFilter,
+    useOutputData = this.useOutputData
+  } = {}) {
+    const schemas = this.getSchemas({
+      includedFilter
+    });
+    const configSchema = schemas.getConfigSchema();
+    const data = this.getData(useOutputData);
+    const { file, item: config } = data.getConfigFileItem();
+    config.screenSize = configSchema.applyDefaults(config.screenSize, 'screenSize');
+    file.changed();
+    data.save();
+    return this;
+  }
+
 }
 
 module.exports = Framework;
