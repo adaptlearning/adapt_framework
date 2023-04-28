@@ -30,6 +30,7 @@ module.exports = function(grunt) {
       try {
         const configjson = JSON.parse(grunt.file.read(options.config)
           .toString());
+        // Apply hardcoded defaults only when configjson.screenSize is missing
         screenSize = configjson?.screenSize || screenSize;
       } catch (e) {}
 
