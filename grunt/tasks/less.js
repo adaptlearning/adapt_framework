@@ -20,19 +20,19 @@ module.exports = function(grunt) {
     if (options.src && options.config) {
       const framework = Helpers.getFramework({ useOutputData: true });
       framework.applyScreenSizeDefaults();
-      let screenSize = {
-        xsmall: 0,
-        small: 520,
-        medium: 760,
-        large: 900,
-        xlarge: 2147483647
-      };
+      let screenSize;
       try {
         const configjson = JSON.parse(grunt.file.read(options.config)
           .toString());
-        screenSize = configjson?.screenSize || screenSize;
+        screenSize = configjson?.screenSize;
       } catch (e) {}
-
+      if (!screenSize) {
+        const error = new Error('No screenSize defined in config.json');
+        const errorString = error.toString();
+        console.error(errorString);
+        grunt.fail.fatal(errorString);
+        return;
+      }
       const screensizeEmThreshold = 300;
       const baseFontSize = 16;
       for (const [name, value] of Object.entries(screenSize)) {
