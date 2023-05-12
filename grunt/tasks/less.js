@@ -1,6 +1,5 @@
 module.exports = function(grunt) {
   const convertSlashes = /\\/g;
-  const Helpers = require('../helpers')(grunt);
 
   grunt.registerMultiTask('less', 'Compile LESS files to CSS', function() {
     const less = require('less');
@@ -18,8 +17,6 @@ module.exports = function(grunt) {
     let src = '';
 
     if (options.src && options.config) {
-      const framework = Helpers.getFramework({ useOutputData: true });
-      framework.applyScreenSizeDefaults();
       let screenSize;
       try {
         const configjson = JSON.parse(grunt.file.read(options.config)
