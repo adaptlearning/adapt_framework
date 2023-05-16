@@ -10,6 +10,7 @@ module.exports = function(grunt) {
       'build-config',
       'copy',
       'scripts:adaptpostcopy',
+      'schema-defaults',
       'language-data-manifests',
       'less:' + requireMode,
       'handlebars',
