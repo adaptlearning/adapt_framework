@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../../src/core/adapt-contrib-core/templates/header';
+import Header from '../../../src/core/templates/header';
 import { jest } from '@jest/globals';
 
 export const templates = {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../src/core/adapt-contrib-core/templates/header';
+import Header from '../src/core/templates/header';
 import { act } from 'react-dom/test-utils';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import device from 'core/js/device';
