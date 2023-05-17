@@ -1,3 +1,12 @@
+const mockDeviceInstance = {
+  isScreenSizeMin: jest.fn().mockReturnValue(true)
+};
+
+const mockIsScreenSizeMinMock = jest.fn().mockReturnValue(true);
 export default {
-  screenSize: jest.fn(() => 'large')
+  __esModule: true,
+  default: mockDeviceInstance,
+  get isScreenSizeMin() {
+    return mockIsScreenSizeMinMock;
+  }
 };
