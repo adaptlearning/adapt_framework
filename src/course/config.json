@@ -23,6 +23,7 @@
             "_notify": 1
         },
         "_options": {
+            "_isPrefersReducedMotionEnabled": true,
             "_isFocusOutlineKeyboardOnlyEnabled": true,
             "_isFocusOutlineDisabled": false,
             "_isFocusAssignmentEnabled": true,
@@ -49,7 +50,8 @@
     "_completionCriteria": {
         "_requireContentCompleted": false,
         "_requireAssessmentCompleted": true,
-        "_shouldSubmitScore": true
+        "_shouldSubmitScore": true,
+        "_submitOnEveryAssessmentAttempt": true
     },
     "_spoor": {
         "_isEnabled": true,
