@@ -21,10 +21,6 @@ afterEach(() => {
 });
 
 describe('Header Component State', () => {
-  beforeEach(() => {
-    device.screenSize = 'small';
-  });
-
   it('should display the header body', () => {
     const body = 'test body text';
     const props = {
