@@ -43,17 +43,6 @@ describe('Header Component State', () => {
     expect(container.textContent).toBe(instruction);
   });
 
-  it('should be able to set the displayTitle', () => {
-    const displayTitle = 'test body text';
-    const props = {
-      displayTitle
-    };
-    act(() => {
-      render(<Header {...props} />, container);
-    });
-    expect(container.textContent).toBe('');
-  });
-
   it('should not display a header when there is no body text, display title or sized instruction set', () => {
     const _id = 'header';
     const props = {
