@@ -1,16 +1,48 @@
 import React from 'react';
-import Header from '../src/core/templates/header';
+import Adapt from 'core/js/adapt';
+import Header from 'core/templates/header';
+import console from 'console';
 import { act } from 'react-dom/test-utils';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import device from 'core/js/device';
 import { unmountComponentAtNode, render } from 'react-dom';
+
+beforeAll(async () => {
+  global.console = console;
+  // await import('core/js/app.js');
+  // await new Promise((resolve, reject) => {
+  //   const a = setInterval(() => {
+  //     if (!Adapt.get('_isStarted')) return;
+  //     clearInterval(a);
+  //     resolve(Promise.resolve());
+  //   }, 250);
+  // });
+});
 
 let container = null;
 beforeEach(() => {
   jest.clearAllMocks();
   // setup a DOM element as a render target
   container = document.createElement('div');
+
   document.body.appendChild(container);
+  Adapt.course = {
+    get: jest.fn().mockReturnValue(
+      {
+        _components: {
+          _text: {
+            ariaRegion: 'Text Component Aria Text'
+          }
+        },
+        _extensions: {
+          _glossary: {
+            ariaRegion: 'Glossary Extension Aria Text'
+          }
+        }
+      }
+    )
+  };
+
 });
 
 afterEach(() => {
