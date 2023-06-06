@@ -9,7 +9,7 @@
     "scripts": {
         "preinstall": "node gitmodules.js",
         "lint": "node node_modules/eslint/bin/eslint.js ./",
-        "jesttest": "jest --verbose=false",
+        "jesttest": "jest",
         "clearjest": "jest --clearCache",
         "test": "node ./test.js"
     },
