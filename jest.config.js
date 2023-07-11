@@ -2,7 +2,6 @@
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
-
 module.exports = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -23,7 +22,7 @@ module.exports = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -31,7 +30,7 @@ module.exports = {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -71,9 +70,11 @@ module.exports = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: [
+    'node_modules',
+    'build',
+    'src'
+  ],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -130,7 +131,6 @@ module.exports = {
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
-
   // The paths to modules that run some code to configure or set up the testing environment before each test
   // setupFiles: [],
 
@@ -144,7 +144,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "jsdom",
+  testEnvironment: 'jest-environment-adapt',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -153,10 +153,9 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-  // ],
+  testMatch: [
+    '**/__tests__/**/*.[jt]s?(x)'
+  ]
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   // testPathIgnorePatterns: [
