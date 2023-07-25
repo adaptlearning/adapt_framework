@@ -1,13 +1,13 @@
-var _ = require('underscore');
-var fs = require('fs-extra');
-var path = require('path');
+const _ = require('underscore');
+const fs = require('fs-extra');
+const path = require('path');
 // extends grunt.file.expand with { order: cb(filePaths) }
 require('grunt-file-order');
 const Framework = require('./helpers/Framework');
 
 module.exports = function(grunt) {
 
-  var convertSlashes = /\\/g;
+  const convertSlashes = /\\/g;
 
   // grunt tasks
 
@@ -15,22 +15,22 @@ module.exports = function(grunt) {
     grunt.log.ok(`Starting server in '${grunt.config('outputdir')}' using port ${grunt.config('connect.server.options.port')}`);
   });
   grunt.registerTask('_log-vars', 'Logs out user-defined build variables', function() {
-    var includes = grunt.config('includes');
-    var excludes = grunt.config('excludes');
-    var productionExcludes = grunt.config('productionExcludes');
+    const includes = grunt.config('includes');
+    const excludes = grunt.config('excludes');
+    const productionExcludes = grunt.config('productionExcludes');
 
     if (includes && excludes) {
       grunt.fail.fatal('Cannot specify includes and excludes. Please check your config.json configuration.');
     }
 
     if (includes) {
-      let count = includes.length;
+      const count = includes.length;
       grunt.log.writeln('The following will be included in the build:');
       for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + includes[i]); }
       grunt.log.writeln('');
     }
     if (excludes) {
-      let count = excludes.length;
+      const count = excludes.length;
       grunt.log.writeln('The following will be excluded from the build:');
       for (let i = 0; i < count; i++) { grunt.log.writeln('- ' + excludes[i]); }
       grunt.log.writeln('');
@@ -50,44 +50,44 @@ module.exports = function(grunt) {
   });
 
   // privates
-  var generateIncludedRegExp = function() {
-    var includes = grunt.config('includes') || [];
-    var pluginTypes = exports.defaults.pluginTypes;
+  const generateIncludedRegExp = function() {
+    const includes = grunt.config('includes') || [];
+    const pluginTypes = exports.defaults.pluginTypes;
 
     // Return a more specific plugin regExp including src path.
-    var re = _.map(includes, function(plugin) {
+    const re = _.map(includes, function(plugin) {
       return _.map(pluginTypes, function(type) {
         // eslint-disable-next-line no-useless-escape
         return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
       }).join('|');
     }).join('|');
     // eslint-disable-next-line no-useless-escape
-    var core = exports.defaults.sourcedir + `core\/`;
+    const core = exports.defaults.sourcedir + 'core\/';
     return new RegExp(core + '|' + re, 'i');
   };
 
-  var generateNestedIncludedRegExp = function() {
-    var includes = grunt.config('includes') || [];
-    var folderRegEx = 'less/plugins';
+  const generateNestedIncludedRegExp = function() {
+    const includes = grunt.config('includes') || [];
+    const folderRegEx = 'less/plugins';
 
     // Return a more specific plugin regExp including src path.
-    var re = _.map(includes, function(plugin) {
+    const re = _.map(includes, function(plugin) {
       // eslint-disable-next-line no-useless-escape
       return exports.defaults.sourcedir + '([^\/]*)\/([^\/]*)\/' + folderRegEx + '\/' + plugin + '\/';
     }).join('|');
     return new RegExp(re, 'i');
   };
 
-  var generateExcludedRegExp = function() {
-    var excludes = grunt.config('excludes') || [];
+  const generateExcludedRegExp = function() {
+    const excludes = grunt.config('excludes') || [];
     if (grunt.config('type') === 'production') {
       const productionExcludes = grunt.config('productionExcludes') || [];
       excludes.push(...productionExcludes);
     }
-    var pluginTypes = exports.defaults.pluginTypes;
+    const pluginTypes = exports.defaults.pluginTypes;
 
     // Return a more specific plugin regExp including src path.
-    var re = _.map(excludes, function(plugin) {
+    const re = _.map(excludes, function(plugin) {
       return _.map(pluginTypes, function(type) {
         // eslint-disable-next-line no-useless-escape
         return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
@@ -96,12 +96,12 @@ module.exports = function(grunt) {
     return new RegExp(re, 'i');
   };
 
-  var generateScriptSafeRegExp = function() {
-    let includes = grunt.config('scriptSafe') || [];
+  const generateScriptSafeRegExp = function() {
+    const includes = grunt.config('scriptSafe') || [];
     let re = '';
-    let count = includes.length;
+    const count = includes.length;
 
-    for (var i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
       // eslint-disable-next-line no-useless-escape
       re += '\/' + includes[i].toLowerCase() + '\/';
       if (i < includes.length - 1) re += '|';
@@ -109,36 +109,36 @@ module.exports = function(grunt) {
     return new RegExp(re, 'i');
   };
 
-  var appendSlash = function(dir) {
+  const appendSlash = function(dir) {
     if (dir) {
-      var lastChar = dir.substring(dir.length - 1, dir.length);
+      const lastChar = dir.substring(dir.length - 1, dir.length);
       if (lastChar !== path.sep) return dir + path.sep;
     }
   };
 
   // eslint-disable-next-line no-unused-vars
-  var includedProcess = function(content, filepath) {
+  const includedProcess = function(content, filepath) {
     if (!exports.isPathIncluded(filepath)) return '';
     else return content;
   };
 
-  var getIncludedRegExp = function() {
-    var configValue = grunt.config('includedRegExp');
+  const getIncludedRegExp = function() {
+    const configValue = grunt.config('includedRegExp');
     return configValue || grunt.config('includedRegExp', generateIncludedRegExp());
   };
 
-  var getNestedIncludedRegExp = function() {
-    var configValue = grunt.config('nestedIncludedRegExp');
+  const getNestedIncludedRegExp = function() {
+    const configValue = grunt.config('nestedIncludedRegExp');
     return configValue || grunt.config('nestedIncludedRegExp', generateNestedIncludedRegExp());
   };
 
-  var getExcludedRegExp = function() {
-    var configValue = grunt.config('excludedRegExp');
+  const getExcludedRegExp = function() {
+    const configValue = grunt.config('excludedRegExp');
     return configValue || grunt.config('excludedRegExp', generateExcludedRegExp());
   };
 
-  var getScriptSafeRegExp = function() {
-    var configValue = grunt.config('scriptSafeRegExp');
+  const getScriptSafeRegExp = function() {
+    const configValue = grunt.config('scriptSafeRegExp');
     return configValue || grunt.config('scriptSafeRegExp', generateScriptSafeRegExp());
   };
 
@@ -171,17 +171,17 @@ module.exports = function(grunt) {
     },
 
     getIncludes: function(buildIncludes, configData) {
-      var dependencies = [];
+      const dependencies = [];
 
       // Iterate over the plugin types.
-      for (var i = 0; i < exports.defaults.pluginTypes.length; i++) {
-        var pluginTypeDir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
+      for (let i = 0; i < exports.defaults.pluginTypes.length; i++) {
+        const pluginTypeDir = path.join(configData.sourcedir, exports.defaults.pluginTypes[i]);
         // grab a list of the installed (and included) plugins for this type
-        var plugins = _.intersection(fs.readdirSync(pluginTypeDir), buildIncludes);
-        for (var j = 0; j < plugins.length; j++) {
+        const plugins = _.intersection(fs.readdirSync(pluginTypeDir), buildIncludes);
+        for (let j = 0; j < plugins.length; j++) {
           try {
-            var bowerJson = grunt.file.readJSON(path.join(pluginTypeDir, plugins[j], 'bower.json'));
-            for (var key in bowerJson.dependencies) {
+            const bowerJson = grunt.file.readJSON(path.join(pluginTypeDir, plugins[j], 'bower.json'));
+            for (const key in bowerJson.dependencies) {
               if (!_.contains(buildIncludes, key)) dependencies.push(key);
             }
           } catch (error) {
@@ -195,16 +195,16 @@ module.exports = function(grunt) {
 
     generateConfigData: function() {
 
-      var root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
-      var adaptJSON = fs.readJSONSync(`${root}/adapt.json`);
-      var sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
-      var outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
-      var cachepath = grunt.option('cachepath') || null;
-      var tempdir = outputdir + '.temp/';
-      var jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
-      var coursedir = grunt.option('coursedir') || adaptJSON.coursedir || exports.defaults.coursedir;
+      const root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
+      const adaptJSON = fs.readJSONSync(`${root}/adapt.json`);
+      const sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
+      const outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+      const cachepath = grunt.option('cachepath') || null;
+      const tempdir = outputdir + '.temp/';
+      const jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
+      const coursedir = grunt.option('coursedir') || adaptJSON.coursedir || exports.defaults.coursedir;
 
-      var languageFolders = '';
+      let languageFolders = '';
       if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
         languageFolders = '{' + grunt.option('languages') + '}';
       } else {
@@ -212,10 +212,10 @@ module.exports = function(grunt) {
       }
 
       // Selectively load the course.json ('outputdir' passed by server-build)
-      var configDir = grunt.option('outputdir') ? outputdir : sourcedir;
+      const configDir = grunt.option('outputdir') ? outputdir : sourcedir;
       // add root path if necessary, and point to course/config.json
 
-      var configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
+      const configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
 
       try {
         var buildConfig = grunt.file.readJSON(configPath).build || {};
@@ -226,16 +226,16 @@ module.exports = function(grunt) {
 
       const isDevelopmentBuild = process.argv.some(arg => (arg === 'dev' || arg.includes(':dev')));
 
-      var data = {
+      const data = {
         type: isDevelopmentBuild ? 'development' : 'production',
-        root: root,
-        sourcedir: sourcedir,
-        outputdir: outputdir,
+        root,
+        sourcedir,
+        outputdir,
         configdir: configDir,
-        coursedir: coursedir,
-        cachepath: cachepath,
-        tempdir: tempdir,
-        jsonext: jsonext,
+        coursedir,
+        cachepath,
+        tempdir,
+        jsonext,
         trackingIdType: grunt.option('trackingidtype') || 'block',
         theme: grunt.option('theme') || exports.defaults.theme,
         menu: grunt.option('menu') || exports.defaults.menu,
@@ -281,7 +281,7 @@ module.exports = function(grunt) {
     * assumption: all folders are plugins
     */
     getInstalledPluginsByType: function(type) {
-      var pluginDir = grunt.config('sourcedir') + type + '/';
+      const pluginDir = grunt.config('sourcedir') + type + '/';
       if (!grunt.file.isDir(pluginDir)) return []; // fail silently
       // return all sub-folders, and save for later
       return grunt.option(type, grunt.file.expand({
@@ -291,9 +291,9 @@ module.exports = function(grunt) {
     },
 
     isPluginInstalled: function(pluginName) {
-      var types = ['components', 'extensions', 'theme', 'menu'];
-      for (var i = 0, len = types.length; i < len; i++) {
-        var plugins = grunt.option(types[i]) || this.getInstalledPluginsByType(types[i]);
+      const types = ['components', 'extensions', 'theme', 'menu'];
+      for (let i = 0, len = types.length; i < len; i++) {
+        const plugins = grunt.option(types[i]) || this.getInstalledPluginsByType(types[i]);
         if (plugins.indexOf(pluginName) !== -1) return true;
       }
       return false;
@@ -302,16 +302,16 @@ module.exports = function(grunt) {
     isPathIncluded: function(pluginPath) {
       pluginPath = pluginPath.replace(convertSlashes, '/');
 
-      var includes = grunt.config('includes');
-      var excludes = grunt.config('excludes') || (grunt.config('type') === 'production' && grunt.config('productionExcludes'));
+      const includes = grunt.config('includes');
+      const excludes = grunt.config('excludes') || (grunt.config('type') === 'production' && grunt.config('productionExcludes'));
 
       // carry on as normal if no includes/excludes
       if (!includes && !excludes) return true;
 
       // Very basic check to see if the file path string contains any
       // of the included list of plugin string names.
-      var isIncluded = includes && pluginPath.search(getIncludedRegExp()) !== -1;
-      var isExcluded = excludes && pluginPath.search(getExcludedRegExp()) !== -1;
+      const isIncluded = includes && pluginPath.search(getIncludedRegExp()) !== -1;
+      const isExcluded = excludes && pluginPath.search(getExcludedRegExp()) !== -1;
 
       // Exclude any plugins that don't match any part of the full file path string.
       if (isExcluded || isIncluded === false) {
@@ -321,13 +321,13 @@ module.exports = function(grunt) {
       // Check the LESS plugins folder exists.
       // The LESS 'plugins' folder doesn't exist, so add the file,
       // as the plugin has already been found in the previous check.
-      var nestedPluginsPath = !!pluginPath.match(/(?:.)+(?:\/less\/plugins)/g);
+      const nestedPluginsPath = !!pluginPath.match(/(?:.)+(?:\/less\/plugins)/g);
       if (!nestedPluginsPath) {
         return true;
       }
 
       // The LESS 'plugins' folder exists, so check that any plugins in this folder are allowed.
-      var hasPluginSubDirectory = !!pluginPath.match(getNestedIncludedRegExp());
+      const hasPluginSubDirectory = !!pluginPath.match(getNestedIncludedRegExp());
       if (hasPluginSubDirectory) {
         return true;
       }
@@ -340,9 +340,9 @@ module.exports = function(grunt) {
     isPluginScriptSafe: function(pluginPath) {
 
       pluginPath = pluginPath.replace(convertSlashes, '/');
-      var includes = grunt.config('scriptSafe');
-      var isExplicitlyDefined = (includes && pluginPath.search(getScriptSafeRegExp()) !== -1);
-      var isIncluded = grunt.option('allowscripts') || includes[0] === '*' || isExplicitlyDefined;
+      const includes = grunt.config('scriptSafe');
+      const isExplicitlyDefined = (includes && pluginPath.search(getScriptSafeRegExp()) !== -1);
+      const isIncluded = grunt.option('allowscripts') || includes[0] === '*' || isExplicitlyDefined;
 
       return isIncluded;
 

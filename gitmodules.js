@@ -47,7 +47,7 @@ if (!modules) process.exit();
 const GITCOMPATIBILITY = `${process.env.PROGRAMFILES}\\Git\\bin;${process.env.PROGRAMFILES}\\Git\\mingw64\\libexec\\git-core;${process.env.APPDATA}\\..\\Local\\Programs\\Git\\mingw64\\libexec\\git-core`;
 const env = Object.assign({}, process.env, {
   Path: `${process.env.Path};${GITCOMPATIBILITY}`,
-  PATH: `${process.env.PATH};${GITCOMPATIBILITY}`,
+  PATH: `${process.env.PATH};${GITCOMPATIBILITY}`
 });
 
 // Clone submodules

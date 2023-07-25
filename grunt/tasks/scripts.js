@@ -21,7 +21,7 @@ module.exports = function(grunt) {
           filter: options.pluginsFilter
         }, src));
         return paths;
-      }, [])
+      }, []);
 
       async.each(paths, function(bowerJSONPath, done) {
 

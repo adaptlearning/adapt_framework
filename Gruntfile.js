@@ -1,7 +1,7 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = function(grunt) {
-  var helpers = require('./grunt/helpers')(grunt);
+  const helpers = require('./grunt/helpers')(grunt);
 
   require('time-grunt')(grunt);
   require('load-grunt-config')(grunt, {
