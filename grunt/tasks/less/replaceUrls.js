@@ -1,6 +1,6 @@
 'use strict';
 
-var less = require('less');
+const less = require('less');
 
 class ReplaceUrls {
 
@@ -46,7 +46,7 @@ class ReplaceUrls {
     }
 
     this._options.replaceUrls.forEach(function(replaceObject) {
-      var matches = URLNode.value.value.match(replaceObject.find);
+      const matches = URLNode.value.value.match(replaceObject.find);
       if (!matches) return;
 
       // If action required by user, warn them
@@ -66,8 +66,8 @@ class ReplaceUrls {
   }
 
   flushLog() {
-    for (var filename in this._actions) {
-      var action = this._actions[filename];
+    for (const filename in this._actions) {
+      const action = this._actions[filename];
       // Output blank line to separate outputs
       console.log('');
       console.log('Take action:', action.replaceObject.action);

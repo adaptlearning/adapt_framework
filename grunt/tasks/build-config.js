@@ -1,16 +1,16 @@
 module.exports = function(grunt) {
 
-  var Helpers = require('../helpers')(grunt);
-  var path = require('path');
-  var _ = require('underscore');
+  const Helpers = require('../helpers')(grunt);
+  const path = require('path');
+  const _ = require('underscore');
 
   grunt.registerTask('build-config', 'Create build config file', function() {
-    var options = this.options({});
+    const options = this.options({});
 
-    var buildConfig = Helpers.generateConfigData();
-    var buildConfigPath = path.join(buildConfig.outputdir, 'adapt/js/build.min.js');
+    const buildConfig = Helpers.generateConfigData();
+    const buildConfigPath = path.join(buildConfig.outputdir, 'adapt/js/build.min.js');
 
-    var allowedProperties = options.allowedProperties || {};
+    const allowedProperties = options.allowedProperties || {};
 
     const framework = Helpers.getFramework();
 
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
     });
 
     // remove path specific variables
-    var hideAttributes = ['outputdir', 'sourcedir', 'root'];
+    const hideAttributes = ['outputdir', 'sourcedir', 'root'];
     hideAttributes.forEach(function(attrName) {
       delete buildConfig[attrName];
     });

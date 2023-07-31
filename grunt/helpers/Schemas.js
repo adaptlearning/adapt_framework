@@ -137,7 +137,7 @@ class Schemas {
       if (!extensionParts) {
         return;
       }
-      for (let modelName in extensionParts) {
+      for (const modelName in extensionParts) {
         const extensionPart = extensionParts[modelName];
         /**
          * Check if the sub-schema part has any defined properties.
@@ -187,7 +187,7 @@ class Schemas {
    * @returns {ModelSchemas}
    */
   getSchemasForModelJSON(json) {
-    let schemas = [];
+    const schemas = [];
     if (json._type) {
       if (json._type === 'menu' || json._type === 'page') {
         schemas.push(this.getModelSchemaByName('contentobject'));

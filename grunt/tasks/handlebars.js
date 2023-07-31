@@ -7,43 +7,43 @@
  */
 
 'use strict';
-var chalk = require('chalk');
-var nsdeclare = require('nsdeclare');
+const chalk = require('chalk');
+const nsdeclare = require('nsdeclare');
 
 module.exports = function(grunt) {
-  var _ = grunt.util._;
+  const _ = grunt.util._;
 
   // content conversion for templates
-  var defaultProcessContent = function(content) {
+  const defaultProcessContent = function(content) {
     return content;
   };
 
   // AST processing for templates
-  var defaultProcessAST = function(ast) {
+  const defaultProcessAST = function(ast) {
     return ast;
   };
 
   // filename conversion for templates
-  var defaultProcessName = function(name) {
+  const defaultProcessName = function(name) {
     return name;
   };
 
   // filename conversion for partials
-  var defaultProcessPartialName = function(filepath) {
-    var pieces = _.last(filepath.split('/')).split('.');
-    var name = _(pieces).without(_.last(pieces)).join('.'); // strips file extension
+  const defaultProcessPartialName = function(filepath) {
+    const pieces = _.last(filepath.split('/')).split('.');
+    let name = _(pieces).without(_.last(pieces)).join('.'); // strips file extension
     if (name.charAt(0) === '_') {
       name = name.substr(1, name.length); // strips leading _ character
     }
     return name;
   };
 
-  var extractGlobalNamespace = function(nsDeclarations) {
+  const extractGlobalNamespace = function(nsDeclarations) {
     // Extract global namespace from any existing namespace declaration.
     // The purpose of this method is too fix an issue with AMD when using namespace as a function where the
     // nsInfo.namespace will contains the last namespace, not the global namespace.
 
-    var declarations = _.keys(nsDeclarations);
+    const declarations = _.keys(nsDeclarations);
 
     // no declaration found
     if (!declarations.length) {
@@ -57,12 +57,12 @@ module.exports = function(grunt) {
     // We only need to take any declaration to extract the global namespace.
     // Another option might be find the shortest declaration which is the global one.
     // eslint-disable-next-line no-useless-escape
-    var matches = declarations[0].match(/(this\[[^\[]+\])/g);
+    const matches = declarations[0].match(/(this\[[^\[]+\])/g);
     return matches[0];
   };
 
   grunt.registerMultiTask('handlebars', 'Compile handlebars templates and partials.', function() {
-    var options = this.options({
+    const options = this.options({
       namespace: 'JST',
       separator: grunt.util.linefeed + grunt.util.linefeed,
       wrapped: true,
@@ -73,43 +73,43 @@ module.exports = function(grunt) {
     });
 
     // assign regex for partials directory detection
-    var partialsPathRegex = options.partialsPathRegex || /./;
+    const partialsPathRegex = options.partialsPathRegex || /./;
 
     // assign regex for partial detection
-    var isPartialRegex = options.partialRegex || /^_/;
+    const isPartialRegex = options.partialRegex || /^_/;
 
     // assign transformation functions
-    var processContent = options.processContent || defaultProcessContent;
-    var processName = options.processName || defaultProcessName;
-    var processPartialName = options.processPartialName || defaultProcessPartialName;
-    var processAST = options.processAST || defaultProcessAST;
-    var useNamespace = options.namespace !== false;
+    const processContent = options.processContent || defaultProcessContent;
+    const processName = options.processName || defaultProcessName;
+    const processPartialName = options.processPartialName || defaultProcessPartialName;
+    const processAST = options.processAST || defaultProcessAST;
+    const useNamespace = options.namespace !== false;
 
     // assign compiler options
-    var compilerOptions = options.compilerOptions || {};
-    var filesCount = 0;
+    const compilerOptions = options.compilerOptions || {};
+    let filesCount = 0;
 
     this.files.forEach(function(f) {
-      var declarations = [];
-      var partials = {};
-      var templates = {};
+      const declarations = [];
+      const partials = {};
+      const templates = {};
       // template identifying parts
-      var ast, compiled, filename;
+      let ast, compiled, filename;
 
       // Namespace info for current template
-      var nsInfo;
+      let nsInfo;
 
       // Map of already declared namespace parts
-      var nsDeclarations = {};
+      const nsDeclarations = {};
 
       // nsdeclare options when fetching namespace info
-      var nsDeclareOptions = {
+      const nsDeclareOptions = {
         response: 'details',
         declared: nsDeclarations
       };
 
       // Just get the namespace info for a given template
-      var getNamespaceInfo = _.memoize(function(filepath) {
+      const getNamespaceInfo = _.memoize(function(filepath) {
         if (!useNamespace) {
           return undefined;
         }
@@ -129,9 +129,9 @@ module.exports = function(grunt) {
         return true;
       })
         .forEach(function(filepath) {
-          var src = processContent(grunt.file.read(filepath), filepath);
+          const src = processContent(grunt.file.read(filepath), filepath);
 
-          var Handlebars = require('handlebars');
+          const Handlebars = require('handlebars');
           try {
             // parse the handlebars template into it's AST
             ast = processAST(Handlebars.parse(src));
@@ -142,13 +142,13 @@ module.exports = function(grunt) {
               compiled = `Handlebars.template(${compiled})`;
             }
           } catch (e) {
-            const title = `Handlebars failed to compile ${filepath}.`
+            const title = `Handlebars failed to compile ${filepath}.`;
             e.message = `${title}\n${e.message}`;
             console.error(e.toString());
             grunt.fail.fatal(title);
           }
 
-          var stringifiedFileName;
+          let stringifiedFileName;
           // register partial or add template to namespace
           if (partialsPathRegex.test(filepath) && isPartialRegex.test(_.last(filepath.split('/')))) {
             filename = processPartialName(filepath);
@@ -186,16 +186,16 @@ module.exports = function(grunt) {
           }
         });
 
-      var output = declarations.concat(_.values(partials), _.values(templates));
+      const output = declarations.concat(_.values(partials), _.values(templates));
       if (output.length < 1) {
         grunt.log.warn('Destination not written because compiled files were empty.');
       } else {
         if (useNamespace) {
           if (options.node) {
-            output.unshift(`Handlebars = glob.Handlebars || require('handlebars');`);
-            output.unshift(`var glob = ('undefined' === typeof window) ? global : window,`);
+            output.unshift('Handlebars = glob.Handlebars || require(\'handlebars\');');
+            output.unshift('var glob = (\'undefined\' === typeof window) ? global : window,');
 
-            var nodeExport = `if (typeof exports === 'object' && exports) {`;
+            let nodeExport = 'if (typeof exports === \'object\' && exports) {';
             nodeExport += `module.exports = ${nsInfo.namespace};}`;
 
             output.push(nodeExport);
@@ -206,15 +206,15 @@ module.exports = function(grunt) {
         if (options.amd) {
           // Wrap the file in an AMD define fn.
           if (typeof options.amd === 'boolean') {
-            output.unshift(`define(['handlebars'], function(Handlebars) {`);
+            output.unshift('define([\'handlebars\'], function(Handlebars) {');
           } else if (typeof options.amd === 'string') {
             output.unshift(`define(['${options.amd}'], function(Handlebars) {`);
           } else if (typeof options.amd === 'function') {
             output.unshift(`define(['${options.amd(filename, ast, compiled)}'], function(Handlebars) {`);
           } else if (Array.isArray(options.amd)) {
             // convert options.amd to a string of dependencies for require([...])
-            var amdString = '';
-            for (var i = 0; i < options.amd.length; i++) {
+            let amdString = '';
+            for (let i = 0; i < options.amd.length; i++) {
               if (i !== 0) {
                 amdString += ', ';
               }

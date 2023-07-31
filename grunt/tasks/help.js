@@ -1,14 +1,14 @@
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 /*
  * Lists out the available tasks along with their descriptions.
  * Tasks in the array below will not be listed.
  */
 module.exports = function(grunt) {
   grunt.registerTask('help', function() {
-    var chalk = require('chalk'); // for some nice colouring
-    var columnify = require('columnify'); // deals with formatting
-    var config = grunt.config('help') || {
+    const chalk = require('chalk'); // for some nice colouring
+    const columnify = require('columnify'); // deals with formatting
+    const config = grunt.config('help') || {
       maxConsoleWidth: '80'
     };
 
@@ -18,14 +18,14 @@ module.exports = function(grunt) {
     grunt.log.writeln('See below for the list of available tasks:');
     grunt.log.writeln('');
 
-    var maxTaskLength = 0;
-    var taskData = getTaskData();
+    let maxTaskLength = 0;
+    const taskData = getTaskData();
 
-    for (var task in taskData) {
+    for (const task in taskData) {
       if (task.length > maxTaskLength) maxTaskLength = task.length;
     }
 
-    var options = {
+    const options = {
       maxWidth: config.maxConsoleWidth - maxTaskLength,
       showHeaders: false,
       columnSplitter: '  '
@@ -43,22 +43,22 @@ module.exports = function(grunt) {
 
 // TODO: this only includes tasks in /tasks...might not be good enough
 function getTaskData() {
-  var taskData = {};
-  var files = fs.readdirSync(__dirname);
-  var re = /grunt.register(Multi)?Task\('(.+?)', '(.*?)',/g;
+  const taskData = {};
+  const files = fs.readdirSync(__dirname);
+  const re = /grunt.register(Multi)?Task\('(.+?)', '(.*?)',/g;
 
-  for (var i = 0, count = files.length; i < count; i++) {
+  for (let i = 0, count = files.length; i < count; i++) {
     // reset RegExp
     re.lastIndex = 0;
 
-    var filePath = path.join(__dirname, files[i]);
-    var fileStat = fs.statSync(filePath);
+    const filePath = path.join(__dirname, files[i]);
+    const fileStat = fs.statSync(filePath);
 
     // skip directories
     if (fileStat.isDirectory()) continue;
 
-    var file = fs.readFileSync(filePath, 'utf8');
-    var match = '';
+    const file = fs.readFileSync(filePath, 'utf8');
+    let match = '';
     while ((match = re.exec(file))) {
       taskData[match[2]] = match[3] || '';
     }
