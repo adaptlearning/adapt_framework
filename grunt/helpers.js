@@ -144,12 +144,13 @@ module.exports = function(grunt) {
 
   // exported
 
-  var exports = {
+  const exports = {
 
     defaults: {
       sourcedir: 'src/',
       outputdir: 'build/',
       coursedir: 'course',
+      configdir: null,
       cachepath: null,
       jsonext: 'json',
       theme: '**',
@@ -195,14 +196,20 @@ module.exports = function(grunt) {
 
     generateConfigData: function() {
 
+      const localConfigPath = exports.getLocalConfig();
+      const localConfig = localConfigPath
+        ? fs.readJSONSync(localConfigPath)
+        : {};
+      const defaults = Object.assign({}, exports.defaults, localConfig);
+
       const root = __dirname.split(path.sep).slice(0, -1).join(path.sep);
       const adaptJSON = fs.readJSONSync(`${root}/adapt.json`);
-      const sourcedir = appendSlash(grunt.option('sourcedir')) || exports.defaults.sourcedir;
-      const outputdir = appendSlash(grunt.option('outputdir')) || exports.defaults.outputdir;
+      const sourcedir = appendSlash(grunt.option('sourcedir')) || defaults.sourcedir;
+      const outputdir = appendSlash(grunt.option('outputdir')) || defaults.outputdir;
       const cachepath = grunt.option('cachepath') || null;
       const tempdir = outputdir + '.temp/';
-      const jsonext = grunt.option('jsonext') || exports.defaults.jsonext;
-      const coursedir = grunt.option('coursedir') || adaptJSON.coursedir || exports.defaults.coursedir;
+      const jsonext = grunt.option('jsonext') || defaults.jsonext;
+      const coursedir = grunt.option('coursedir') || adaptJSON.coursedir || defaults.coursedir;
 
       let languageFolders = '';
       if (grunt.option('languages') && grunt.option('languages').split(',').length > 1) {
@@ -212,13 +219,14 @@ module.exports = function(grunt) {
       }
 
       // Selectively load the course.json ('outputdir' passed by server-build)
-      const configDir = grunt.option('outputdir') ? outputdir : sourcedir;
+      const configDir = grunt.option('outputdir') ? outputdir : defaults.configdir ?? sourcedir;
       // add root path if necessary, and point to course/config.json
 
       const configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
 
+      let buildConfig;
       try {
-        var buildConfig = grunt.file.readJSON(configPath).build || {};
+        buildConfig = grunt.file.readJSON(configPath).build || {};
       } catch (error) {
         grunt.log.error(error);
         process.exit();
@@ -237,10 +245,10 @@ module.exports = function(grunt) {
         tempdir,
         jsonext,
         trackingIdType: grunt.option('trackingidtype') || 'block',
-        theme: grunt.option('theme') || exports.defaults.theme,
-        menu: grunt.option('menu') || exports.defaults.menu,
-        languages: languageFolders || exports.defaults.languages,
-        scriptSafe: exports.defaults.scriptSafe,
+        theme: grunt.option('theme') || defaults.theme,
+        menu: grunt.option('menu') || defaults.menu,
+        languages: languageFolders || defaults.languages,
+        scriptSafe: defaults.scriptSafe,
         strictMode: false,
         targets: buildConfig.targets || ''
       };
@@ -254,7 +262,7 @@ module.exports = function(grunt) {
           return item.trim();
         });
       }
-      if (buildConfig.hasOwnProperty('strictMode')) data.strictMode = buildConfig.strictMode;
+      if (Object.hasOwn(buildConfig, 'strictMode')) data.strictMode = buildConfig.strictMode;
 
       const framework = new Framework({
         rootPath: data.root,
@@ -373,6 +381,24 @@ module.exports = function(grunt) {
       });
       framework.load();
       return framework;
+    },
+
+    getLocalConfig: function() {
+      if (Object.hasOwn(this, '_localConfigPath')) {
+        return this._localConfigPath;
+      }
+      const fileName = '.adaptrc.json';
+      let currentDir = path.resolve(process.cwd()).replace(convertSlashes, '/');
+      while (currentDir.split('/').filter(Boolean).length > 0) {
+        const filePath = `${currentDir}/${fileName}`;
+        if (fs.existsSync(filePath)) {
+          grunt.log.ok(`Using: ${filePath}`);
+          this._localConfigPath = filePath;
+          return filePath;
+        }
+        currentDir = currentDir.split('/').slice(0, -1).join('/');
+      }
+      return (this._localConfigPath = null);
     }
 
   };
