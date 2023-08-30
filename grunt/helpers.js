@@ -384,9 +384,7 @@ module.exports = function(grunt) {
     },
 
     getLocalConfig: function() {
-      if (Object.hasOwn(this, '_localConfigPath')) {
-        return this._localConfigPath;
-      }
+      if (Object.hasOwn(this, '_localConfigPath')) return this._localConfigPath;
       const fileName = '.adaptrc.json';
       let currentDir = path.resolve(process.cwd()).replace(convertSlashes, '/');
       while (currentDir.split('/').filter(Boolean).length > 0) {
