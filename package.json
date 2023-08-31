@@ -69,7 +69,7 @@
         "@semantic-release/npm": "^9.0.1",
         "@semantic-release/release-notes-generator": "^10.0.3",
         "conventional-changelog-eslint": "^3.0.9",
-        "cypress": "^10.10.0",
+        "cypress": "^13.0.0",
         "eslint": "^8.17.0",
         "eslint-config-standard": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
