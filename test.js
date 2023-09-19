@@ -48,35 +48,7 @@ async function waitForExec(command, ...args) {
 const shouldUseOutputDir = Boolean(process.env.npm_config_outputdir);
 const outputDir = (process.env.npm_config_outputdir || './build/');
 
-const adaptInstall = async () => {
-  return asyncSpawn(`adapt${os.platform() === 'win32' ? '.cmd' : ''}`, 'install');
-};
-const gruntDiff = async () => {
-  return asyncSpawn(...[
-    'node',
-    './node_modules/grunt/bin/grunt',
-    'diff',
-    shouldUseOutputDir && `--outputdir=${outputDir}`
-  ].filter(Boolean));
-};
-const gruntServer = () => {
-  return backgroundSpawn('node', './node_modules/grunt/bin/grunt', 'server-silent', 'run', `--outputdir=${outputDir}`);
-};
-const waitForGruntServer = () => {
-  return waitForExec('node', './node_modules/wait-on/bin/wait-on', 'http://localhost:9001');
-};
-const cypressRun = () => {
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run');
-};
-const jestRun = () => {
-  config.testEnvironmentOptions.outputDir = outputDir;
-  return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
-};
-const jestClear = async () => {
-  return asyncSpawn('node', './node_modules/jest/bin/jest', '--clearCache');
-};
-
-const hasInstalledAndBuilt = async () => {
+async function hasInstalledAndBuilt() {
   const hasInstalled = await doFilesExist([
     'src/components/*',
     'src/extensions/*',
@@ -89,30 +61,100 @@ const hasInstalledAndBuilt = async () => {
   return hasInstalled && hasBuilt;
 };
 
-async function e2e () {
-  const gruntServerRun = await gruntServer();
-  await waitForGruntServer();
-  const cypressCode = await cypressRun();
-
-  if (cypressCode > 0) {
-    console.log(`Cypress failed with code '${cypressCode}'`);
-    process.exit(1);
-  }
-  gruntServerRun.kill();
+async function adaptInstall() {
+  return asyncSpawn(`adapt${os.platform() === 'win32' ? '.cmd' : ''}`, 'install');
 };
 
-async function unit () {
-  return await jestRun();
+async function gruntDiff() {
+  return asyncSpawn(...[
+    'node',
+    './node_modules/grunt/bin/grunt',
+    'diff',
+    shouldUseOutputDir && `--outputdir=${outputDir}`
+  ].filter(Boolean));
 };
 
-async function clear () {
-  return await jestClear();
+async function gruntServer() {
+  return backgroundSpawn('node', './node_modules/grunt/bin/grunt', 'server-silent', 'run', `--outputdir=${outputDir}`);
+};
+
+async function waitForGruntServer() {
+  return waitForExec('node', './node_modules/wait-on/bin/wait-on', 'http://localhost:9001');
+};
+
+async function cypressRun() {
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run');
+};
+
+async function jestRun() {
+  config.testEnvironmentOptions.outputDir = outputDir;
+  return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
+};
+
+async function jestClear() {
+  return asyncSpawn('node', './node_modules/jest/bin/jest', '--clearCache');
 };
 
 const commands = {
-  e2e,
-  unit,
-  clear
+  help: {
+    name: 'help',
+    description: 'Display this help screen',
+    async start() {
+      console.log(`
+Usage:
+
+    To run prepare with the unit and then e2e tests:
+    $ npm test
+
+    To run any of the available commands:
+    $ npm test <command>
+
+    To run prepare, e2e or unit with a defined output directory:
+    $ npm test <command> --outputdir=./build/
+
+where <command> is one of:
+
+${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, ' ')}${description}`).join('\n')}
+`);
+    }
+  },
+  prepare: {
+    name: 'prepare',
+    description: 'Install and build Adapt ready for testing (runs automatically when requied)',
+    async start() {
+      await adaptInstall();
+      await gruntDiff();
+    }
+  },
+  e2e: {
+    name: 'e2e',
+    description: 'Run prepare and e2e testing',
+    async start() {
+      const gruntServerRun = await gruntServer();
+      await waitForGruntServer();
+      const cypressCode = await cypressRun();
+
+      if (cypressCode > 0) {
+        console.log(`Cypress failed with code '${cypressCode}'`);
+        process.exit(1);
+      }
+      gruntServerRun.kill();
+    }
+  },
+  unit: {
+    name: 'unit',
+    description: 'Run prepare and unit testing',
+    async start() {
+      return await jestRun();
+    }
+  },
+  clear: {
+    name: 'clear',
+    description: 'Clear testing cache',
+    async start() {
+      return await jestClear();
+    }
+  }
 };
 
 const runTest = async () => {
@@ -124,16 +166,16 @@ const runTest = async () => {
 
   try {
     if (isCommandNotFound && hasParameters) {
-      const e = new Error(`Unknown command "${commandName}", please check the documentation.`);
+      const e = new Error(`Unknown command "${commandName}", please check the documentation. $ npm test help`);
       console.error(e);
       return;
     }
 
+    const isCommandHelp = (commandName === 'help');
     const isCommandPrepare = (commandName === 'prepare');
-    const shouldPrepare = (!await hasInstalledAndBuilt() || isCommandPrepare);
+    const shouldPrepare = (isCommandPrepare || (!isCommandHelp && !await hasInstalledAndBuilt()));
     if (shouldPrepare) {
-      await adaptInstall();
-      await gruntDiff();
+      await commands.prepare.start();
       if (isCommandPrepare) return;
     }
 
@@ -143,7 +185,7 @@ const runTest = async () => {
       process.exit(0);
     }
 
-    await command();
+    await command.start();
     process.exit(0);
 
   } catch (err) {
