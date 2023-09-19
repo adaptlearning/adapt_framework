@@ -1,4 +1,3 @@
-
 const os = require('os');
 const { spawn, exec } = require('child_process');
 const jest = require('jest');
