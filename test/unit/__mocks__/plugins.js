@@ -1,6 +1,7 @@
 import 'components/adapt-contrib-accordion/js/adapt-contrib-accordion.js';
 import 'components/adapt-contrib-assessmentResults/js/adapt-contrib-assessmentResults.js';
 import 'components/adapt-contrib-blank/js/adapt-contrib-blank.js';
+import 'components/adapt-contrib-gmcq/js/adapt-contrib-gmcq.js';
 import 'components/adapt-contrib-graphic/js/adapt-contrib-graphic.js';
 import 'components/adapt-contrib-hotgraphic/js/adapt-contrib-hotgraphic.js';
 import 'components/adapt-contrib-matching/js/adapt-contrib-matching.js';
