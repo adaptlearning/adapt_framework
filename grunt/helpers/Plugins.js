@@ -60,7 +60,7 @@ class Plugins {
       if (!this.includedFilter(sourcePath)) {
         return;
       }
-      let plugin = new Plugin({
+      const plugin = new Plugin({
         framework: this.framework,
         sourcePath,
         log: this.log,

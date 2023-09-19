@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     const fs = require('fs-extra');
     const globs = require('globs');
     async function compressImages() {
-      grunt.log.ok(`Compressing images...`);
+      grunt.log.ok('Compressing images...');
       let imagemin;
       let imageminJpegtran;
       let imageminPngquant;
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
         imageminPngquant = require('imagemin-pngquant');
         imageminSvgo = require('imagemin-svgo');
       } catch (err) {
-        grunt.log.error(`Optional imagemin dependencies were not installed.`);
+        grunt.log.error('Optional imagemin dependencies were not installed.');
         return;
       }
       const sourceFiles = globs.sync(options.images.src);
@@ -28,7 +28,7 @@ module.exports = function(grunt) {
           }),
           imageminSvgo({
             plugins: [
-              {removeViewBox: false}
+              { removeViewBox: false }
             ]
           })
         ]

@@ -9,7 +9,7 @@
   ],
   "compilerOptions": {
     "module": "amd",
-    "target": "es2015",
+    "target": "es2022",
     "baseUrl": "src/"
   },
   "exclude": [

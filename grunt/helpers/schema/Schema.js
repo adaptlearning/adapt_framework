@@ -62,7 +62,7 @@ class Schema {
     const recursiveSchemaNodeProperties = (properties, ...args) => {
       let rtnValue = false;
       // process properties
-      for (let attributeName in properties) {
+      for (const attributeName in properties) {
         let description = properties[attributeName];
         if (description.hasOwnProperty('editorOnly') || !description.hasOwnProperty('type')) {
           // go to next attribute
