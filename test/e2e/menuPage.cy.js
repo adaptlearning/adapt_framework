@@ -12,17 +12,15 @@ describe('Menu Page', () => {
   });
 
   it(`should display ${Content.length} menu tiles`, () => {
-    let counter = 0
     cy.get('.menu-item').should('have.length', Content.length)
 
-    cy.get('.menu-item').each(($item) => {
+    cy.get('.menu-item').each(($item, index) => {
       cy.get($item).within(() => {
-        cy.get('.menu-item__title').should('contain', Content[counter].displayTitle)
-        cy.get('.menu-item__body').should('contain', Content[counter].body)
-        cy.get('button').should('contain', Content[counter].linkText)
-        cy.get('.menu-item__duration').should('contain', Content[counter].duration)
-        cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[counter]._graphic.src)
-        counter += 1
+        cy.get('.menu-item__title').should('contain', Content[index].displayTitle)
+        cy.get('.menu-item__body').should('contain', Content[index].body)
+        cy.get('button').should('contain', Content[index].linkText)
+        cy.get('.menu-item__duration').should('contain', Content[index].duration)
+        cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[index]._graphic.src)
       })
     })
   })
