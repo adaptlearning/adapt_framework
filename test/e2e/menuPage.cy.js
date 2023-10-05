@@ -12,27 +12,18 @@ describe('Menu Page', () => {
   });
 
   it(`should display ${Content.length} menu tiles`, () => {
+    let counter = 0
     cy.get('.menu-item').should('have.length', Content.length)
-    cy.get('.menu-item').first().within(() => {
-      cy.get('.menu-item__title').should('contain', Content[0].displayTitle)
-      cy.get('.menu-item__body').should('contain', Content[0].body)
-      cy.get('button').should('contain', Content[0].linkText)
-      cy.get('.menu-item__duration').should('contain', Content[0].duration)
-      cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[0]._graphic.src)
-    })
-    cy.get('.menu-item').eq(1).within(() => {
-      cy.get('.menu-item__title').should('contain', Content[1].displayTitle)
-      cy.get('.menu-item__body').should('contain', Content[1].body)
-      cy.get('button').should('contain', Content[1].linkText)
-      cy.get('.menu-item__duration').should('contain', Content[1].duration)
-      cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[1]._graphic.src)
-    })
-    cy.get('.menu-item').eq(2).within(() => {
-      cy.get('.menu-item__title').should('contain', Content[2].displayTitle)
-      cy.get('.menu-item__body').should('contain', Content[2].body)
-      cy.get('button').should('contain', Content[2].linkText)
-      cy.get('.menu-item__duration').should('contain', Content[2].duration)
-      cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[2]._graphic.src)
+
+    cy.get('.menu-item').each(($item) => {
+      cy.get($item).within(() => {
+        cy.get('.menu-item__title').should('contain', Content[counter].displayTitle)
+        cy.get('.menu-item__body').should('contain', Content[counter].body)
+        cy.get('button').should('contain', Content[counter].linkText)
+        cy.get('.menu-item__duration').should('contain', Content[counter].duration)
+        cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[counter]._graphic.src)
+        counter += 1
+      })
     })
   })
 
