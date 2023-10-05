@@ -1,14 +1,14 @@
 import Content from '../../src/course/en/contentObjects.json'
+import Course from '../../src/course/en/course.json'
 
 describe('Menu Page', () => {
-  const pageTitle = 'Adapt Version 5';
-
   beforeEach(() => {
     cy.visit('/');
   })
 
-  it(`should have the title ${pageTitle}`, () => {
-    cy.get('.menu__title-inner').should('contain', pageTitle);
+  it(`should have the title ${Course.displayTitle} and correct description`, () => {
+    cy.get('.menu__title-inner').should('contain', Course.displayTitle);
+    cy.get('.menu__body-inner').should('contain', Course.body);
   });
 
   it('should display the correct amount of menu tiles', () => {
