@@ -6,12 +6,12 @@ describe('Menu Page', () => {
     cy.visit('/');
   })
 
-  it(`should have the title ${Course.displayTitle} and correct description`, () => {
+  it(`should have the title '${Course.displayTitle}' and correct description`, () => {
     cy.get('.menu__title-inner').should('contain', Course.displayTitle);
     cy.get('.menu__body-inner').should('contain', Course.body);
   });
 
-  it('should display the correct amount of menu tiles', () => {
+  it(`should display ${Content.length} menu tiles`, () => {
     cy.get('.menu-item').should('have.length', Content.length)
     cy.get('.menu-item').first().within(() => {
       cy.get('.menu-item__title').should('contain', Content[0].displayTitle)
