@@ -18,19 +18,21 @@ describe('Menu Page', () => {
       cy.get('.menu-item__body').should('contain', Content[0].body)
       cy.get('button').should('contain', Content[0].linkText)
       cy.get('.menu-item__duration').should('contain', Content[0].duration)
-      cy.get('.menu-item__subtitle').should('not.exist')
+      cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[0]._graphic.src)
     })
     cy.get('.menu-item').eq(1).within(() => {
       cy.get('.menu-item__title').should('contain', Content[1].displayTitle)
       cy.get('.menu-item__body').should('contain', Content[1].body)
       cy.get('button').should('contain', Content[1].linkText)
       cy.get('.menu-item__duration').should('contain', Content[1].duration)
+      cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[1]._graphic.src)
     })
     cy.get('.menu-item').eq(2).within(() => {
       cy.get('.menu-item__title').should('contain', Content[2].displayTitle)
       cy.get('.menu-item__body').should('contain', Content[2].body)
       cy.get('button').should('contain', Content[2].linkText)
       cy.get('.menu-item__duration').should('contain', Content[2].duration)
+      cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[2]._graphic.src)
     })
   })
 
