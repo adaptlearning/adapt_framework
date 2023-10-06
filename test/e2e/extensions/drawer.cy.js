@@ -16,7 +16,7 @@ describe('Drawer', () => {
 
     it('should appear on the right hand side in course view', () => {
         cy.get('button.drawer__close-btn').click()
-        cy.get('button').contains('View').first().click()
+        cy.get('.menu-item .menu-item__button-container button').contains('View').first().click()
         cy.get('button[data-event="toggleDrawer"]').click()
         cy.get('.drawer').should('have.css', 'right').and('match', /0px/)
     });
