@@ -38,7 +38,7 @@ describe('Drawer', () => {
         checkDrawerLength(2)
     });
 
-    it('ahouls display the correct drawer items', () => {
+    it('should display the correct drawer items', () => {
         cy.get('.drawer__item').each(($item, index) => {
             cy.get($item).within(() => {
                 cy.get('.drawer__item-title').should('contain', Course._resources._resourcesItems[index].title)
