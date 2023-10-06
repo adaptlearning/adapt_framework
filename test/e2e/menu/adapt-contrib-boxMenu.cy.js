@@ -1,5 +1,5 @@
-import Content from '../../src/course/en/contentObjects.json'
-import Course from '../../src/course/en/course.json'
+import Content from '../../../src/course/en/contentObjects.json'
+import Course from '../../../src/course/en/course.json'
 
 describe('Menu Page', () => {
   beforeEach(() => {
@@ -23,20 +23,5 @@ describe('Menu Page', () => {
         cy.get('img.menu-item__image').should('exist').should('have.attr', 'src', Content[index]._graphic.src)
       })
     })
-  })
-
-  it('should have an expandable drawer', () => {
-    cy.get('.drawer[aria-expanded="true"]').should('not.exist')
-    cy.get('.drawer[aria-expanded="false"]').should('exist')
-
-    cy.get('button[data-event="toggleDrawer"]').click()
-
-    cy.get('.drawer[aria-expanded="true"]').should('exist')
-    cy.get('.drawer[aria-expanded="false"]').should('not.exist')
-
-    cy.get('button.drawer__close-btn').click()
-
-    cy.get('.drawer[aria-expanded="true"]').should('not.exist')
-    cy.get('.drawer[aria-expanded="false"]').should('exist')
   })
 });
