@@ -1,7 +1,7 @@
 # Adapt Framework
 [![Join the chat at https://gitter.im/adaptlearning/adapt_framework](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/adaptlearning/adapt_framework?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Adapt is a free and easy to use framework and authoring tool that creates fully responsive, multi-device, HTML5 e-learning content.
- 
+
 **Important Note:** Adapt no longer supports IE8, 9 & 10. If you need support for those browsers, please use [the legacy branch of Adapt](https://github.com/adaptlearning/adapt_framework/tree/legacy) instead.
 
 ## What Does It Do?
@@ -51,5 +51,5 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 <a href="https://community.adaptlearning.org/" target="_blank"><img src="https://github.com/adaptlearning/documentation/blob/master/04_wiki_assets/plug-ins/images/adapt-logo-mrgn-lft.jpg" alt="adapt learning logo" align="right"></a>  Adapt is licensed under the [GNU General Public License, Version 3](https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE).
 
 ## Requirements
-Node >=14 is required for the grunt tasks to run as needed
+Node >=16 is required for the grunt tasks to run as needed
 
