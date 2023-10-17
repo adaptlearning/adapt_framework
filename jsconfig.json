@@ -1,10 +1,10 @@
 {
   "include": [
     "src/core/js/**/*.js",
-    "src/*/*/js/**/*.js",
     "src/core/js/**/*.jsx",
-    "src/*/*/js/**/*.jsx",
     "src/core/templates/**/*.jsx",
+    "src/*/*/js/**/*.js",
+    "src/*/*/js/**/*.jsx",
     "src/*/*/templates/**/*.jsx"
   ],
   "compilerOptions": {

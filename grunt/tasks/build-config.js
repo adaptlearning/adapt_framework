@@ -30,7 +30,14 @@ module.exports = function(grunt) {
     });
 
     // remove path specific variables
-    const hideAttributes = ['outputdir', 'sourcedir', 'root'];
+    const hideAttributes = [
+      'cachepath',
+      'configdir',
+      'outputdir',
+      'root',
+      'sourcedir',
+      'tempdir'
+    ];
     hideAttributes.forEach(function(attrName) {
       delete buildConfig[attrName];
     });

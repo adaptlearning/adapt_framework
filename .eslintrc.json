@@ -3,7 +3,8 @@
         "browser": true,
         "commonjs": false,
         "es2022": true,
-        "amd": true
+        "amd": true,
+        "jest": true
     },
     "extends": [
         "standard",
