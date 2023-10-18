@@ -144,7 +144,7 @@ module.exports = function(grunt) {
 
   // exported
 
-  var exports = {
+  const exports = {
 
     defaults: {
       sourcedir: 'src/',
@@ -216,9 +216,10 @@ module.exports = function(grunt) {
       // add root path if necessary, and point to course/config.json
 
       const configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
+      let buildConfig;
 
       try {
-        var buildConfig = grunt.file.readJSON(configPath).build || {};
+        buildConfig = grunt.file.readJSON(configPath).build || {};
       } catch (error) {
         grunt.log.error(error);
         process.exit();

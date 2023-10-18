@@ -44,9 +44,6 @@ async function waitForExec(command, ...args) {
   return await new Promise(resolve => exec([command, ...args].join(' '), { stdio: [0, 1, 2] }, resolve));
 }
 
-const shouldUseOutputDir = Boolean(process.env.npm_config_outputdir);
-const outputDir = (process.env.npm_config_outputdir || './build/');
-
 async function hasInstalled() {
   return await doFilesExist([
     'src/components/*',
@@ -58,7 +55,7 @@ async function hasInstalled() {
 
 async function hasBuilt() {
   return await doFilesExist([
-    path.join(outputDir, 'index.html')
+    path.join(argumentValues.outputdir, 'index.html')
   ]);
 };
 
@@ -71,12 +68,12 @@ async function gruntDiff() {
     'node',
     './node_modules/grunt/bin/grunt',
     'diff',
-    shouldUseOutputDir && `--outputdir=${outputDir}`
+    Boolean(process.env.npm_config_outputdir) && `--outputdir=${argumentValues.outputdir}`
   ].filter(Boolean));
 };
 
 async function gruntServer() {
-  return backgroundSpawn('node', './node_modules/grunt/bin/grunt', 'server-silent', 'run', `--outputdir=${outputDir}`);
+  return backgroundSpawn('node', './node_modules/grunt/bin/grunt', 'server-silent', 'run', `--outputdir=${argumentValues.outputdir}`);
 };
 
 async function waitForGruntServer() {
@@ -84,11 +81,11 @@ async function waitForGruntServer() {
 };
 
 async function cypressRun() {
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run');
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`);
 };
 
 async function jestRun() {
-  config.testEnvironmentOptions.outputDir = outputDir;
+  config.testEnvironmentOptions.outputDir = argumentValues.outputdir;
   return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
 };
 
@@ -103,7 +100,7 @@ const acceptedArgs = [
 ];
 
 const argumentValues = {
-  outputdir: outputDir,
+  outputdir: (process.env.npm_config_outputdir || './build/'),
   skipinstall: false,
   testfiles: './test/**'
 };
@@ -147,7 +144,7 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
         await adaptInstall();
       }
       if (!await hasBuilt()) {
-        console.log('Performing course build');
+        console.log(`Performing course build to '${argumentValues.outputdir}'`);
         await gruntDiff();
       }
     }
