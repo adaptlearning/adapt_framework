@@ -94,12 +94,18 @@ async function jestClear() {
   return asyncSpawn('node', './node_modules/jest/bin/jest', '--clearCache');
 };
 
+const acceptedArgs = [
+  '--files',
+  '--outputdir',
+  '--skipinstall'
+];
+
 const commands = {
   help: {
     name: 'help',
     description: 'Display this help screen',
     async start() {
-      console.log(`
+      const helpText = `
 Usage:
 
     To run prepare with the unit and then e2e tests:
@@ -107,6 +113,9 @@ Usage:
 
     To run prepare with the unit and then e2e tests without overwriting the ./src/ plugins:
     $ npm test --skipinstall
+
+    To run prepare with specif unit and/or e2e tests:
+    $ npm test --files=**/globForTestsToRun/**
 
     To run any of the available commands:
     $ npm test <command>
@@ -117,7 +126,8 @@ Usage:
 where <command> is one of:
 
 ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, ' ')}${description}`).join('\n')}
-`);
+`;
+      console.log(helpText);
     }
   },
   prepare: {
@@ -171,9 +181,14 @@ const runTest = async () => {
 
   try {
     if (isCommandNotFound && hasParameters) {
-      const e = new Error(`Unknown command "${commandName}", please check the documentation. $ npm test help`);
-      console.error(e);
-      return;
+      // Check for passed arguments and unset the command if found
+      const passedArgParts = commandName.split('=');
+
+      if (!acceptedArgs.includes(passedArgParts[0])) {
+        const e = new Error(`Unknown command/argument "${commandName}", please check the documentation. $ npm test help`);
+        console.error(e);
+        return;
+      }
     }
 
     const isCommandHelp = (commandName === 'help');
@@ -184,7 +199,8 @@ const runTest = async () => {
       if (isCommandPrepare) return;
     }
 
-    if (!hasParameters) {
+    // No specific command called - run tests by default
+    if (isCommandNotFound) {
       await commands.unit.start();
       await commands.e2e.start();
       process.exit(0);
