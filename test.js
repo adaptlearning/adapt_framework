@@ -96,10 +96,16 @@ async function jestClear() {
   return asyncSpawn('node', './node_modules/jest/bin/jest', '--clearCache');
 };
 
-const acceptedArgs = {
-  testFiles: '--files',
-  outputDir: '--outputdir',
-  skipInstall: '--skipinstall'
+const acceptedArgs = [
+  'outputdir',
+  'skipinstall',
+  'testfiles'
+];
+
+const argumentValues = {
+  outputdir: outputDir,
+  skipinstall: false,
+  testfiles: './test/**'
 };
 
 const commands = {
@@ -117,7 +123,7 @@ Usage:
     $ npm test --skipinstall
 
     To run prepare with specif unit and/or e2e tests:
-    $ npm test --files=**/globForTestsToRun/**
+    $ npm test --testfiles=**/globForTestsToRun/**
 
     To run any of the available commands:
     $ npm test <command>
@@ -135,8 +141,8 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
   prepare: {
     name: 'prepare',
     description: 'Install and build Adapt ready for testing (runs automatically when requied)',
-    async start(passedArgs) {
-      if (passedArgs !== acceptedArgs.skipInstall && !await hasInstalled()) {
+    async start() {
+      if ((argumentValues.skipinstall !== 'true') && !await hasInstalled()) {
         console.log('Installing latest adapt plugins');
         await adaptInstall();
       }
@@ -186,21 +192,20 @@ const runTest = async () => {
   const isCommandNotFound = !command;
 
   // Read the input for passed arguments that arent command names
-  passedArgs = passedArgs.split(' ').filter(name => isCommandNotFound || name !== commandName);
+  passedArgs = passedArgs.trim().replaceAll('--', '').toLowerCase().split(' ').filter(name => isCommandNotFound || name !== commandName);
+
+  // Update argumentValues array for later use while checking if the command is valid
+  const paramsRecognised = passedArgs.every(passedArg => {
+    const passedArgParts = passedArg.trim().split('=');
+    argumentValues[passedArgParts[0]] = passedArgParts[1];
+    return acceptedArgs.includes(passedArgParts[0]);
+  });
 
   try {
-    if (isCommandNotFound && hasParameters) {
-      // Only throw error if check for valid arguments fails
-      const paramsRecognised = passedArgs.every(passedArg => {
-        const passedArgParts = passedArg.split('=');
-        return Object.values(acceptedArgs).includes(passedArgParts[0]);
-      });
-
-      if (!paramsRecognised) {
-        const e = new Error(`Unknown command/argument "${parameters[0]}", please check the documentation. $ npm test help`);
-        console.error(e);
-        return;
-      }
+    if (isCommandNotFound && hasParameters && !paramsRecognised) {
+      const e = new Error(`Unknown command/argument "${parameters[0]}", please check the documentation. $ npm test help`);
+      console.error(e);
+      return;
     }
 
     const isCommandHelp = (commandName === 'help');
@@ -208,7 +213,7 @@ const runTest = async () => {
     const shouldPrepare = (isCommandPrepare || !isCommandHelp);
 
     if (shouldPrepare) {
-      await commands.prepare.start(passedArgs[0]?.toLowerCase());
+      await commands.prepare.start();
       if (isCommandPrepare) return;
     }
 
