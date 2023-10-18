@@ -225,7 +225,6 @@ module.exports = function(grunt) {
       const configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
       let buildConfig;
 
-      let buildConfig;
       try {
         buildConfig = grunt.file.readJSON(configPath).build || {};
       } catch (error) {
