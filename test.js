@@ -47,17 +47,19 @@ async function waitForExec(command, ...args) {
 const shouldUseOutputDir = Boolean(process.env.npm_config_outputdir);
 const outputDir = (process.env.npm_config_outputdir || './build/');
 
-async function hasInstalledAndBuilt() {
-  const hasInstalled = await doFilesExist([
+async function hasInstalled() {
+  return await doFilesExist([
     'src/components/*',
     'src/extensions/*',
     'src/menu/*',
     'src/theme/*'
   ]);
-  const hasBuilt = await doFilesExist([
+};
+
+async function hasBuilt() {
+  return await doFilesExist([
     path.join(outputDir, 'index.html')
   ]);
-  return hasInstalled && hasBuilt;
 };
 
 async function adaptInstall() {
@@ -94,11 +96,11 @@ async function jestClear() {
   return asyncSpawn('node', './node_modules/jest/bin/jest', '--clearCache');
 };
 
-const acceptedArgs = [
-  '--files',
-  '--outputdir',
-  '--skipinstall'
-];
+const acceptedArgs = {
+  testFiles: '--files',
+  outputDir: '--outputdir',
+  skipInstall: '--skipinstall'
+};
 
 const commands = {
   help: {
@@ -133,12 +135,15 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
   prepare: {
     name: 'prepare',
     description: 'Install and build Adapt ready for testing (runs automatically when requied)',
-    async start() {
-      if (!process.env.npm_config_skipinstall) {
+    async start(passedArgs) {
+      if (passedArgs !== acceptedArgs.skipInstall && !await hasInstalled()) {
         console.log('Installing latest adapt plugins');
         await adaptInstall();
       }
-      await gruntDiff();
+      if (!await hasBuilt()) {
+        console.log('Performing course build');
+        await gruntDiff();
+      }
     }
   },
   e2e: {
@@ -175,17 +180,24 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
 const runTest = async () => {
   const parameters = process.argv.slice(2);
   const hasParameters = Boolean(parameters.length);
-  const [ commandName ] = parameters;
+  let [ passedArgs = '' ] = parameters;
+  const [ commandName ] = passedArgs.split(' ');
   const command = commands[commandName];
   const isCommandNotFound = !command;
 
+  // Read the input for passed arguments that arent command names
+  passedArgs = passedArgs.split(' ').filter(name => isCommandNotFound || name !== commandName);
+
   try {
     if (isCommandNotFound && hasParameters) {
-      // Check for passed arguments and unset the command if found
-      const passedArgParts = commandName.split('=');
+      // Only throw error if check for valid arguments fails
+      const paramsRecognised = passedArgs.every(passedArg => {
+        const passedArgParts = passedArg.split('=');
+        return Object.values(acceptedArgs).includes(passedArgParts[0]);
+      });
 
-      if (!acceptedArgs.includes(passedArgParts[0])) {
-        const e = new Error(`Unknown command/argument "${commandName}", please check the documentation. $ npm test help`);
+      if (!paramsRecognised) {
+        const e = new Error(`Unknown command/argument "${parameters[0]}", please check the documentation. $ npm test help`);
         console.error(e);
         return;
       }
@@ -193,9 +205,10 @@ const runTest = async () => {
 
     const isCommandHelp = (commandName === 'help');
     const isCommandPrepare = (commandName === 'prepare');
-    const shouldPrepare = (isCommandPrepare || (!isCommandHelp && !await hasInstalledAndBuilt()));
+    const shouldPrepare = (isCommandPrepare || !isCommandHelp);
+
     if (shouldPrepare) {
-      await commands.prepare.start();
+      await commands.prepare.start(passedArgs[0]?.toLowerCase());
       if (isCommandPrepare) return;
     }
 

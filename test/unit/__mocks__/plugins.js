@@ -11,7 +11,6 @@ import 'components/adapt-contrib-narrative/js/adapt-contrib-narrative.js';
 import 'components/adapt-contrib-slider/js/adapt-contrib-slider.js';
 import 'components/adapt-contrib-text/js/adapt-contrib-text.js';
 import 'components/adapt-contrib-textInput/js/adapt-contrib-textInput.js';
-import 'extensions/adapt-contrib-assessment/js/adapt-assessmentArticleExtension.js';
 import 'extensions/adapt-contrib-bookmarking/js/adapt-contrib-bookmarking.js';
 import 'extensions/adapt-contrib-languagePicker/js/adapt-languagePicker.js';
 import 'extensions/adapt-contrib-pageLevelProgress/js/adapt-contrib-pageLevelProgress.js';
