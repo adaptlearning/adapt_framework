@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run tests",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/test.js",
+      "args": ["--testFiles=./test/** --outputDir=./build1/  "]
+    }
+  ]
+}
