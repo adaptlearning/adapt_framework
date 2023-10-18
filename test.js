@@ -105,6 +105,9 @@ Usage:
     To run prepare with the unit and then e2e tests:
     $ npm test
 
+    To run prepare with the unit and then e2e tests without overwriting the ./src/ plugins:
+    $ npm test --skipinstall
+
     To run any of the available commands:
     $ npm test <command>
 
@@ -121,7 +124,10 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
     name: 'prepare',
     description: 'Install and build Adapt ready for testing (runs automatically when requied)',
     async start() {
-      await adaptInstall();
+      if (!process.env.npm_config_skipinstall) {
+        console.log('Installing latest adapt plugins');
+        await adaptInstall();
+      }
       await gruntDiff();
     }
   },
