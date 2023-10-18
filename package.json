@@ -1,6 +1,6 @@
 {
     "name": "adapt_framework",
-    "version": "5.32.6",
+    "version": "5.33.1",
     "description": "Adapt Learning output framework",
     "repository": {
         "type": "git",
@@ -16,7 +16,7 @@
         "url": "https://github.com/adaptlearning/adapt_framework/issues"
     },
     "engines": {
-        "node": ">=14"
+        "node": ">=16"
     },
     "private": true,
     "dependencies": {
