@@ -6,6 +6,14 @@ module.exports = defineConfig({
     screenshotOnRunFailure: false,
     video: false,
     supportFile: false,
-    specPattern: '**/test/e2e/**/*.cy.{js,jsx}'
+    specPattern: '**/test/e2e/**/*.cy.{js,jsx}',
+    setupNodeEvents (on, config) {
+      on('task', {
+        log(message) {
+          console.log(message);
+          return null;
+        }
+      });
+    }
   }
 });

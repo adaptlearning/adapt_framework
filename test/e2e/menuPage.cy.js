@@ -1,8 +1,13 @@
-describe('Menu Page', () => {
-  const pageTitle = 'Adapt Version 5';
+import {getData} from './commands'
 
-  it(`should have the title ${pageTitle}`, () => {
+describe('Menu Page', () => {
+
+  beforeEach(() => {
+    cy.getData()
+  })
+
+  it(`should have the correct title`, function () {
     cy.visit('/');
-    cy.get('.menu__title-inner').should('contain', pageTitle);
+    cy.get('.menu__title-inner').should('contain', this.courseData.displayTitle);
   });
 });

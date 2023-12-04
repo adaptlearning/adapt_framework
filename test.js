@@ -82,7 +82,7 @@ async function waitForGruntServer() {
 };
 
 async function cypressRun() {
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run');
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--config', `{"fixturesFolder": "${outputDir}course/en"}`);
 };
 
 async function jestRun() {
@@ -130,7 +130,7 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
     description: 'Run prepare and e2e testing',
     async start() {
       const gruntServerRun = await gruntServer();
-      await waitForGruntServer();
+      waitForGruntServer();
       const cypressCode = await cypressRun();
 
       if (cypressCode > 0) {
