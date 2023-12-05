@@ -1,4 +1,4 @@
-import {getData} from './commands'
+import './commands';
 
 describe('Menu Page', () => {
 
