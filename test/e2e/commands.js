@@ -21,7 +21,7 @@ function flatten (arr) {
 const loadManifestFiles = () => {
   try {
     const manifest = 'language_data_manifest.js';
-    let allFileData = [];
+    const allFileData = [];
     cy.fixture(manifest).as('manifest_data').then((data) => {
       data.forEach((item) => {
         const name = path.parse(item).name;
