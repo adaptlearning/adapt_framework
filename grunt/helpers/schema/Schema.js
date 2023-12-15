@@ -126,6 +126,9 @@ class Schema {
       let hasChanged = false;
       let haveChildenChanged = false;
       let defaultValue;
+
+      if (description === null || output === null) return;
+
       switch (description.type) {
         case 'object':
           defaultValue = description.hasOwnProperty('default') && options.fillObjects ? description.default : {};
