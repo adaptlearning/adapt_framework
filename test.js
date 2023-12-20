@@ -89,7 +89,7 @@ async function jestRun() {
 
   // Limit the tests if a certain set are passed in
   if (argumentValues.testfiles) {
-    config.testMatch = [argumentValues.testfiles.split(',')];
+    config.testMatch = argumentValues.testfiles.split(',');
   }
 
   return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
