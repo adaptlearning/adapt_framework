@@ -5,7 +5,7 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:9001/',
     screenshotOnRunFailure: false,
     video: false,
-    supportFile: false,
+    supportFile: '**/test/e2e/commands.js',
     specPattern: '**/test/e2e/**/*.cy.{js,jsx}',
     setupNodeEvents (on, config) {
       on('task', {

@@ -1,13 +1,11 @@
-import './commands';
-
 describe('Menu Page', () => {
 
   beforeEach(() => {
-    cy.getData()
-  })
+    cy.getData();
+  });
 
-  it(`should have the correct title`, function () {
+  it('should have the correct title', function () {
     cy.visit('/');
-    cy.get('.menu__title-inner').should('contain', this.courseData.displayTitle);
+    cy.get('.menu__title-inner').should('contain', this.data.course.displayTitle);
   });
 });

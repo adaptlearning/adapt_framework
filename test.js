@@ -82,7 +82,7 @@ async function waitForGruntServer() {
 };
 
 async function cypressRun() {
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--config', `{"fixturesFolder": "${outputDir}course/en"}`);
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--config', `{"fixturesFolder": "${outputDir}"}`);
 };
 
 async function jestRun() {
