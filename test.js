@@ -164,7 +164,7 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
     description: 'Run prepare and e2e testing',
     async start() {
       const gruntServerRun = await gruntServer();
-      waitForGruntServer();
+      await waitForGruntServer();
       const cypressCode = await cypressRun();
 
       if (cypressCode > 0) {
