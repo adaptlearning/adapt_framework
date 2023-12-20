@@ -223,8 +223,8 @@ module.exports = function(grunt) {
       // add root path if necessary, and point to course/config.json
 
       const configPath = path.join(path.resolve(root, configDir), coursedir, 'config.' + jsonext);
-
       let buildConfig;
+
       try {
         buildConfig = grunt.file.readJSON(configPath).build || {};
       } catch (error) {
