@@ -112,7 +112,7 @@ const acceptedArgs = [
 const argumentValues = {
   outputdir: (process.env.npm_config_outputdir || './build/'),
   skipinstall: false,
-  testfiles: '**/test/unit/**/*.js?(x)'
+  testfiles: null
 };
 
 const commands = {
