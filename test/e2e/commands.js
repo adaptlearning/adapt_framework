@@ -44,18 +44,19 @@ function getData() {
         enumerable: false
       }
     });
+    const coursedir = 'course';
     // Load the config.json
-    cy.fixture('course/config.json').then(configData => {
+    cy.fixture(`${coursedir}/config.json`).then(configData => {
       // Assign _type = 'config' to the config object
       configData._type = 'config';
       data.push(configData);
       // Fetch the default language
       const defaultLanguage = configData._defaultLanguage;
       // Load the language_data_manifest.js for the default language
-      cy.fixture(`course/${defaultLanguage}/language_data_manifest.js`).then(languageDataManifest => {
+      cy.fixture(`${coursedir}/${defaultLanguage}/language_data_manifest.js`).then(languageDataManifest => {
         // Load each of the files specified in the manifest
         languageDataManifest.forEach(localFilePath => {
-          const filePath = `course/${defaultLanguage}/${localFilePath}`
+          const filePath = `${coursedir}/${defaultLanguage}/${localFilePath}`
           cy.fixture(filePath).then(fileData => {
           // Add __index__ and __path__ attributes to each object as in adapt
           // so that each object's origin can be identified later if necessary
