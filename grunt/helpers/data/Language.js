@@ -107,9 +107,12 @@ class Language {
       return index;
     }, {});
 
-    this.getCourseFileItem();
-
     return this;
+  }
+
+  /** @type {boolean} */
+  get isValid() {
+    return Boolean(this.courseFileItem);
   }
 
   /** @type {boolean} */
@@ -118,7 +121,7 @@ class Language {
   }
 
   /**
-   * Produces a manifest file for the Framework data layer at course/language_data_manifest.js.
+   * Produces a manifest file for the Framework data layer at course/lang/language_data_manifest.js.
    * @returns {Language}
    */
   saveManifest() {
