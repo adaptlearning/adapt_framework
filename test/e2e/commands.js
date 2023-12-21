@@ -67,7 +67,7 @@ function getData(languageCode = null) {
         availableLanguageNames
       } = build;
       // Load the config.json
-      return getConfig({ coursedir }).then(config => {
+      return getConfig().then(config => {
         // Check that the specified language is available
         const defaultLanguage = config._defaultLanguage;
         languageCode = languageCode ?? defaultLanguage;
