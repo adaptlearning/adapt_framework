@@ -1,7 +1,8 @@
 function getBuild() {
   try {
     return cy.fixture(`adapt/js/build.min.js`).then(build => {
-      // Return the data for cy.getBuild().then(build => {});
+      // Return for cy.getBuild().then(build => {});
+      // Expose this.build in cypress
       return cy.wrap(build).as('build');
     });
   } catch {
@@ -13,7 +14,8 @@ function getConfig() {
   return getBuild().then(build => {
     // Load the config.json
     return cy.fixture(`${build.coursedir}/config.json`).then(config => {
-      // Return the config for cy.getConfig().then(config => {});
+      // Return for cy.getConfig().then(config => {});
+      // Expose this.config in cypress
       return cy.wrap(config).as('config');
     });
   });
@@ -93,7 +95,7 @@ function getData(languageCode = null) {
             });
           });
         });
-        // Return the data for cy.getData(languageCode).then(data => {});
+        // Return for cy.getData(languageCode).then(data => {});
         return cy.wrap(data);
       });
     });
