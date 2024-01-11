@@ -82,10 +82,10 @@ async function waitForGruntServer() {
 
 async function cypressRun() {
   if (argumentValues.testfiles) {
-    return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`);
+    return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
   }
 
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run');
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
 };
 
 async function jestRun() {

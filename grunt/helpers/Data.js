@@ -70,7 +70,7 @@ class Data {
       });
       language.load();
       return language;
-    });
+    }).filter(lang => lang.isValid);
     this.configFile = new JSONFile({
       framework: this.framework,
       path: path.join(coursePath, `config.${this.jsonext}`)

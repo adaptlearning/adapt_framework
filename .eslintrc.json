@@ -4,7 +4,8 @@
         "commonjs": false,
         "es2022": true,
         "amd": true,
-        "jest": true
+        "jest": true,
+        "cypress": true
     },
     "extends": [
         "standard",
