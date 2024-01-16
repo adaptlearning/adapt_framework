@@ -1,5 +1,10 @@
 name: Test Runner
-on: pull_request
+on:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 2 * * 1-5'  # Runs at 2:30am Mon-Fri
+
 jobs:
   test:
     name: Build and Launch Course
@@ -11,8 +16,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: "16"
-          cache: "npm"
+          node-version: '16'
+          cache: 'npm'
 
       - name: Installing Environment
         run: npm ci &&
