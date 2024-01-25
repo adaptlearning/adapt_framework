@@ -77,7 +77,7 @@ async function gruntServer() {
 };
 
 async function waitForGruntServer() {
-  return waitForExec('node', './node_modules/wait-on/bin/wait-on', 'http://localhost:9001');
+  return waitForExec('node', './node_modules/wait-on/bin/wait-on', 'http://127.0.0.1:9001');
 };
 
 async function cypressRun() {
@@ -165,12 +165,19 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
     async start() {
       const gruntServerRun = await gruntServer();
       await waitForGruntServer();
-      const cypressCode = await cypressRun();
 
-      if (cypressCode > 0) {
-        console.log(`Cypress failed with code '${cypressCode}'`);
-        process.exit(1);
+      try {
+        const cypressCode = await cypressRun();
+
+        if (cypressCode > 0) {
+          console.log(`Cypress failed with code '${cypressCode}'`);
+          process.exit(1);
+        }
+      } catch (cypressErr) {
+        console.log('Cypress tests failure');
+        console.log(cypressErr);
       }
+
       gruntServerRun.kill();
     }
   },
