@@ -63,13 +63,9 @@
         "underscore-deep-extend": "^1.1.5"
     },
     "devDependencies": {
-        "@semantic-release/commit-analyzer": "^9.0.2",
         "@semantic-release/git": "^10.0.1",
-        "@semantic-release/github": "^8.0.5",
-        "@semantic-release/npm": "^9.0.1",
-        "@semantic-release/release-notes-generator": "^10.0.3",
-        "conventional-changelog-eslint": "^3.0.9",
-        "cypress": "^13.2.0",
+        "conventional-changelog-eslint": "^5.0.0",
+        "cypress": "^13.6.3",
         "eslint": "^8.49.0",
         "eslint-config-standard": "^17.1.0",
         "eslint-plugin-import": "^2.28.1",
@@ -82,7 +78,7 @@
         "jest-environment-adapt": "^1.0.0",
         "react": "17.0.2",
         "react-dom": "17.0.2",
-        "semantic-release": "^19.0.3",
+        "semantic-release": "^22.0.12",
         "wait-on": "^7.2.0"
     },
     "optionalDependencies": {
@@ -90,32 +86,5 @@
         "imagemin-jpegtran": "^7.0.0",
         "imagemin-pngquant": "^9.0.0",
         "imagemin-svgo": "^8.0.0"
-    },
-    "release": {
-        "plugins": [
-            [
-                "@semantic-release/commit-analyzer",
-                {
-                    "preset": "eslint"
-                }
-            ],
-            [
-                "@semantic-release/release-notes-generator",
-                {
-                    "preset": "eslint"
-                }
-            ],
-            "@semantic-release/npm",
-            "@semantic-release/github",
-            [
-                "@semantic-release/git",
-                {
-                    "assets": [
-                        "package.json"
-                    ],
-                    "message": "Chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-                }
-            ]
-        ]
     }
 }
