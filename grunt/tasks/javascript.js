@@ -124,13 +124,16 @@ module.exports = function(grunt) {
     const Helpers = require('../helpers')(grunt);
     const buildConfig = Helpers.generateConfigData();
     const isStrictMode = buildConfig.strictMode;
-    grunt.log.ok(`Cache disabled (--disable-cache): ${isDisableCache}`);
     grunt.log.ok(`Strict mode (config.json:build.strictMode): ${isStrictMode}`);
+    grunt.log.ok(`Cache disabled (--disable-cache): ${isDisableCache}`);
     const done = this.async();
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
     const cachePath = buildConfig.cachepath ?? cacheManager.cachePath(cwd, options.out);
+    if (!isDisableCache) {
+      grunt.log.ok(`Cache path: ${cachePath}`);
+    }
     try {
       await restoreCache(cachePath, basePath);
       await cacheManager.clean();
