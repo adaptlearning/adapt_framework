@@ -104,6 +104,15 @@ function getData(languageCode = null) {
   }
 }
 
+function testContainsOrNotExists(target, value) {
+  if (value) {
+    cy.get(target).should('contain', value);
+  } else {
+    cy.get(target).should('not.exist');
+  }
+}
+
 Cypress.Commands.add('getBuild', getBuild);
 Cypress.Commands.add('getConfig', getConfig);
 Cypress.Commands.add('getData', getData);
+Cypress.Commands.add('testContainsOrNotExists', testContainsOrNotExists);
