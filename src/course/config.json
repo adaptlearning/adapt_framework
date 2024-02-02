@@ -1,79 +1,80 @@
 {
-    "_defaultLanguage": "en",
-    "_defaultDirection": "ltr",
-    "_questionWeight": 1,
-    "_logging": {
-        "_isEnabled": true,
-        "_level": "debug",
-        "_console": true,
-        "_warnFirstOnly": true
+  "_defaultLanguage": "en",
+  "_defaultDirection": "ltr",
+  "_questionWeight": 1,
+  "_logging": {
+    "_isEnabled": true,
+    "_level": "debug",
+    "_console": true,
+    "_warnFirstOnly": true
+  },
+  "_accessibility": {
+    "_isEnabled": true,
+    "_isSkipNavigationEnabled": true,
+    "_ariaLevels": {
+      "_menu": 1,
+      "_menuGroup": "@menu+1",
+      "_menuItem": "@menu+1",
+      "_page": 1,
+      "_article": "@page+1",
+      "_block": "@article+1",
+      "_component": "@block+1",
+      "_componentItem": "@component+1",
+      "_notify": 1
     },
-    "_accessibility": {
-        "_isEnabled": true,
-        "_isSkipNavigationEnabled": true,
-        "_ariaLevels": {
-            "_menu": 1,
-            "_menuGroup": "@menu+1",
-            "_menuItem": "@menu+1",
-            "_page": 1,
-            "_article": "@page+1",
-            "_block": "@article+1",
-            "_component": "@block+1",
-            "_componentItem": "@component+1",
-            "_notify": 1
-        },
-        "_options": {
-            "_isPrefersReducedMotionEnabled": true,
-            "_isFocusOutlineKeyboardOnlyEnabled": true,
-            "_isFocusOutlineDisabled": false,
-            "_isFocusAssignmentEnabled": true,
-            "_isFocusOnClickEnabled": true,
-            "_isFocusNextOnDisabled": true,
-            "_isScrollDisableEnabled": true,
-            "_isAriaHiddenManagementEnabled": true,
-            "_isPopupManagementEnabled": true,
-            "_isPopupWrapFocusEnabled": true,
-            "_isPopupAriaHiddenManagementEnabled": true,
-            "_isPopupTabIndexManagementEnabled": true,
-            "_warn": true,
-            "_warnFirstOnly": true
-        }
-    },
-    "_fixes": {
-        "_imgLazyLoad": true
-    },
-    "_drawer": {
-        "_showEasing": "easeOutQuart",
-        "_hideEasing": "easeInQuart",
-        "_duration": 400
-    },
-    "_completionCriteria": {
-        "_requireContentCompleted": true,
-        "_requireAssessmentCompleted": false,
-        "_shouldSubmitScore": true,
-        "_submitOnEveryAssessmentAttempt": false
-    },
-    "_spoor": {
-        "_isEnabled": true,
-        "_tracking": {
-            "_shouldStoreResponses": true,
-            "_shouldStoreAttempts": false,
-            "_shouldRecordInteractions": true
-        },
-        "_reporting": {
-            "_comment": "Your options here are 'completed', 'passed', 'failed', and 'incomplete'",
-            "_onTrackingCriteriaMet": "completed",
-            "_onAssessmentFailure": "incomplete",
-            "_resetStatusOnLanguageChange": false
-        }
-    },
-    "_disableAnimationFor": [],
-    "_disableAnimation": false,
-    "_scrollingContainer": {
-        "_isEnabled": false,
-        "_limitToSelector": ""
-    },
-    "build": {
-        "strictMode": true
+    "_options": {
+      "_isPrefersReducedMotionEnabled": true,
+      "_isFocusOutlineKeyboardOnlyEnabled": true,
+      "_isFocusOutlineDisabled": false,
+      "_isFocusAssignmentEnabled": true,
+      "_isFocusOnClickEnabled": true,
+      "_isFocusNextOnDisabled": true,
+      "_isScrollDisableEnabled": true,
+      "_isAriaHiddenManagementEnabled": true,
+      "_isPopupManagementEnabled": true,
+      "_isPopupWrapFocusEnabled": true,
+      "_isPopupAriaHiddenManagementEnabled": true,
+      "_isPopupTabIndexManagementEnabled": true,
+      "_warn": true,
+      "_warnFirstOnly": true
     }
+  },
+  "_fixes": {
+    "_imgLazyLoad": true
+  },
+  "_drawer": {
+    "_showEasing": "easeOutQuart",
+    "_hideEasing": "easeInQuart",
+    "_duration": 400
+  },
+  "_completionCriteria": {
+    "_requireContentCompleted": true,
+    "_requireAssessmentCompleted": false,
+    "_shouldSubmitScore": false,
+    "_submitOnEveryAssessmentAttempt": false
+  },
+  "_spoor": {
+    "_isEnabled": true,
+    "_tracking": {
+      "_shouldStoreResponses": true,
+      "_shouldStoreAttempts": false,
+      "_shouldRecordInteractions": true,
+      "_shouldCompress": false
+    },
+    "_reporting": {
+      "_comment": "Your options here are 'completed', 'passed', 'failed', and 'incomplete'",
+      "_onTrackingCriteriaMet": "completed",
+      "_onAssessmentFailure": "incomplete",
+      "_resetStatusOnLanguageChange": false
+    }
+  },
+  "_disableAnimationFor": [],
+  "_disableAnimation": false,
+  "_scrollingContainer": {
+    "_isEnabled": true,
+    "_limitToSelector": ""
+  },
+  "build": {
+    "strictMode": true
+  }
 }
