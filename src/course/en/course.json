@@ -89,12 +89,17 @@
     "_isEnabled": true,
     "_showPageCompletion": false,
     "_isCompletionIndicatorEnabled": false,
-    "_isShownInNavigationBar": true
+    "_isShownInNavigationBar": true,
+    "_showAtCourseLevel": false
   },
   "_resources": {
     "_isEnabled": true,
+    "_drawerOrder": 1,
     "title": "Resources",
     "description": "View resources for this course by clicking here.",
+    "displayTitle": "",
+    "body": "",
+    "instruction": "",
     "_filterButtons": {
       "all": "All",
       "document": "Document",
@@ -112,7 +117,9 @@
         "_type": "document",
         "title": "Vanilla Theme Swatch",
         "description": "See the swatch for the vanilla theme by clicking here.",
-        "_link": "course/en/images/vanilla-swatch.jpg"
+        "_link": "course/en/images/vanilla-swatch.jpg",
+        "filename": "adapt-vanilla.jpg",
+        "_forceDownload": true
       },
       {
         "_type": "media",
@@ -154,6 +161,7 @@
   "_bookmarking": {
     "_isEnabled": true,
     "_level": "component",
+    "_showPrompt": true,
     "title": "Resume?",
     "body": "Would you like to resume the course from the location you were at last time?",
     "_buttons": {
