@@ -4,12 +4,12 @@
         "commonjs": false,
         "es2022": true,
         "amd": true,
-        "jest": true,
-        "cypress": true
+        "jest": true
     },
     "extends": [
         "standard",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:cypress/recommended"
     ],
     "globals": {
         "Promise": true,
