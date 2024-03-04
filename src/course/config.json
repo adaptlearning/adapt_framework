@@ -45,7 +45,9 @@
   "_drawer": {
     "_showEasing": "easeOutQuart",
     "_hideEasing": "easeInQuart",
-    "_duration": 400
+    "_duration": 400,
+    "_position": "auto",
+    "_iconClass": "icon-list"
   },
   "_completionCriteria": {
     "_requireContentCompleted": true,
