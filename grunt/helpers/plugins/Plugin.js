@@ -104,12 +104,13 @@ class Plugin {
     if (this.name === 'core') {
       return 'component';
     }
+    const packageName = this.packageJSONFile.firstFileItem.item.name;
     const config = this.packageJSONFile.firstFileItem.item;
     const configKeys = Object.keys(config);
     const typeKeyName = ['component', 'extension', 'menu', 'theme'];
     const foundType = configKeys.find(key => typeKeyName.includes(key));
     if (!foundType) {
-      throw new Error('Unknown plugin type');
+      throw new Error(`Unknown plugin type for ${packageName}`);
     }
     return foundType;
   }
