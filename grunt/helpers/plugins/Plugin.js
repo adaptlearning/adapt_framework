@@ -64,7 +64,7 @@ class Plugin {
       // assume path name is also plugin name, this shouldn't be necessary
       this.warn(`Plugin folder name ${pathDerivedName} does not match package name ${packageName}.`);
     }
-    if (this.requiredFramework !== undefined && this.isFrameworkCompatible === false) {
+    if (this.requiredFramework && this.isFrameworkCompatible === false) {
       throw new Error(`Required framework version (${this.requiredFramework}) for plugin ${packageName} not satisfied by current framework version (${this.framework.version}).`);
     }
     return this;
