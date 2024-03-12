@@ -108,6 +108,8 @@ class Plugin {
 
   /** @returns {boolean} */
   get isFrameworkCompatible() {
+    if (!this.framework || !this.framework.version) return;
+
     return semver.satisfies(this.framework.version, this.requiredFramework);
   }
 
