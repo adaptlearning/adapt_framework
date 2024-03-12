@@ -1,5 +1,4 @@
 const semver = require('semver');
-
 const globs = require('globs');
 const JSONFile = require('../lib/JSONFile');
 
