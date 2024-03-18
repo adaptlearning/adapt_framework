@@ -109,7 +109,7 @@ class Plugin {
     const typeKeyName = ['component', 'extension', 'menu', 'theme'];
     const foundType = configKeys.find(key => typeKeyName.includes(key));
     if (!foundType) {
-      throw new Error('Unknown plugin type');
+      throw new Error(`Unknown plugin type for ${this.name}`);
     }
     return foundType;
   }
