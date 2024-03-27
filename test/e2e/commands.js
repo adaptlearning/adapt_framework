@@ -118,4 +118,3 @@ Cypress.Commands.add('getBuild', getBuild);
 Cypress.Commands.add('getConfig', getConfig);
 Cypress.Commands.add('getData', getData);
 Cypress.Commands.add('testContainsOrNotExists', testContainsOrNotExists);
-Cypress.Commands.add('stripHtml', stripHtml);
