@@ -112,7 +112,20 @@ function testContainsOrNotExists(target, value) {
   }
 }
 
+function testQuestionButtons(buttonsObject = {btn__action: 'Submit', btn__feedback: 'Show feedback'}) {
+  Object.keys(buttonsObject).forEach((key) => {
+    cy.get(`.${key}`).should('contain', buttonsObject[key])
+  })
+}
+
+function stripHtml(text) {
+  const textWithoutHtml = text.replace(/<[^>]*>/g, '');
+  cy.wrap(textWithoutHtml).as('text');
+}
+
 Cypress.Commands.add('getBuild', getBuild);
 Cypress.Commands.add('getConfig', getConfig);
 Cypress.Commands.add('getData', getData);
 Cypress.Commands.add('testContainsOrNotExists', testContainsOrNotExists);
+Cypress.Commands.add('testQuestionButtons', testQuestionButtons);
+Cypress.Commands.add('stripHtml', stripHtml);
