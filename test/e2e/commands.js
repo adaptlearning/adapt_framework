@@ -112,15 +112,17 @@ function testContainsOrNotExists(target, value) {
   }
 }
 
-function testQuestionButtons(buttonsObject = {btn__action: 'Submit', btn__feedback: 'Show feedback'}) {
+function testQuestionButtons(buttonsObject = {btn__action: this.data.course._buttons._submit.buttonText, btn__feedback: this.data.course._buttons._showFeedback.buttonText}) {
   Object.keys(buttonsObject).forEach((key) => {
     cy.get(`.${key}`).should('contain', buttonsObject[key])
   })
 }
 
 function stripHtml(text) {
-  const textWithoutHtml = text.replace(/<[^>]*>/g, '');
-  cy.wrap(textWithoutHtml).as('text');
+  let tmp = document.createElement("DIV");
+  tmp.innerHTML = text;
+  const textWithoutHtml = tmp.textContent || tmp.innerText || "";
+  cy.wrap(textWithoutHtml).as('textWithoutHtml');
 }
 
 Cypress.Commands.add('getBuild', getBuild);
