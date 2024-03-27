@@ -1,3 +1,5 @@
+import './helpers'
+
 function getBuild() {
   try {
     return cy.fixture(`adapt/js/build.min.js`).then(build => {
@@ -112,22 +114,8 @@ function testContainsOrNotExists(target, value) {
   }
 }
 
-function testQuestionButtons(buttonsObject = {btn__action: this.data.course._buttons._submit.buttonText, btn__feedback: this.data.course._buttons._showFeedback.buttonText}) {
-  Object.keys(buttonsObject).forEach((key) => {
-    cy.get(`.${key}`).should('contain', buttonsObject[key])
-  })
-}
-
-function stripHtml(text) {
-  let tmp = document.createElement("DIV");
-  tmp.innerHTML = text;
-  const textWithoutHtml = tmp.textContent || tmp.innerText || "";
-  cy.wrap(textWithoutHtml).as('textWithoutHtml');
-}
-
 Cypress.Commands.add('getBuild', getBuild);
 Cypress.Commands.add('getConfig', getConfig);
 Cypress.Commands.add('getData', getData);
 Cypress.Commands.add('testContainsOrNotExists', testContainsOrNotExists);
-Cypress.Commands.add('testQuestionButtons', testQuestionButtons);
 Cypress.Commands.add('stripHtml', stripHtml);
