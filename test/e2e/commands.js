@@ -119,7 +119,7 @@ function testMultipleForContainsOrNotExists(testObjects = []) {
     const {target = '', value = '', stripHtml = false} = testObject;
 
     if (stripHtml) {
-      cy.testContainsOrNotExists(target, helpers.stripHtml(value));
+      cy.testContainsOrNotExists(target, cy.helpers.stripHtml(value));
     } else {
       cy.testContainsOrNotExists(target, value);
     }
