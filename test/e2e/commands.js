@@ -114,7 +114,20 @@ function testContainsOrNotExists(target, value) {
   }
 }
 
+function testMultipleForContainsOrNotExists(testObjects = []) {
+  testObjects.forEach((testObject) => {
+    const {target = '', value = '', stripHtml = false} = testObject;
+
+    if (stripHtml) {
+      cy.testContainsOrNotExists(target, helpers.stripHtml(value));
+    } else {
+      cy.testContainsOrNotExists(target, value);
+    }
+  });
+}
+
 Cypress.Commands.add('getBuild', getBuild);
 Cypress.Commands.add('getConfig', getConfig);
 Cypress.Commands.add('getData', getData);
 Cypress.Commands.add('testContainsOrNotExists', testContainsOrNotExists);
+Cypress.Commands.add('testMultipleForContainsOrNotExists', testMultipleForContainsOrNotExists);
