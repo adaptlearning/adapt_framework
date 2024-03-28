@@ -1,3 +1,5 @@
+import './helpers'
+
 function getBuild() {
   try {
     return cy.fixture(`adapt/js/build.min.js`).then(build => {
