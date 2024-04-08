@@ -115,10 +115,9 @@ function testContainsOrNotExists(target, value) {
 }
 
 function testMultipleForContainsOrNotExists(testObjects = []) {
-  testObjects.forEach(({ target = '', value = '', stripHtml = false }) => {
-    if (stripHtml) value = cy.helpers.stripHtml(value);
+  for (const [target, value] of Object.entries(testObjects)) {
     cy.testContainsOrNotExists(target, value);
-  });
+  }
 }
 
 Cypress.Commands.add('getBuild', getBuild);
