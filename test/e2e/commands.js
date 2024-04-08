@@ -115,14 +115,9 @@ function testContainsOrNotExists(target, value) {
 }
 
 function testMultipleForContainsOrNotExists(testObjects = []) {
-  testObjects.forEach((testObject) => {
-    const {target = '', value = '', stripHtml = false} = testObject;
-
-    if (stripHtml) {
-      cy.testContainsOrNotExists(target, cy.helpers.stripHtml(value));
-    } else {
-      cy.testContainsOrNotExists(target, value);
-    }
+  testObjects.forEach(({ target = '', value = '', stripHtml = false }) => {
+    if (stripHtml) value = cy.helpers.stripHtml(value);
+    cy.testContainsOrNotExists(target, value);
   });
 }
 
