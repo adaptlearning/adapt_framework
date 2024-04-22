@@ -68,7 +68,9 @@ async function gruntDiff() {
     'node',
     './node_modules/grunt/bin/grunt',
     'diff',
-    Boolean(process.env.npm_config_outputdir) && `--outputdir=${argumentValues.outputdir}`
+    Boolean(process.env.npm_config_outputdir) && `--outputdir=${argumentValues.outputdir}`,
+    Boolean(process.env.npm_config_theme) && `--theme=${argumentValues.theme}`,
+    Boolean(process.env.npm_config_menu) && `--menu=${argumentValues.menu}`
   ].filter(Boolean));
 };
 
