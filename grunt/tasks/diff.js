@@ -24,7 +24,6 @@ module.exports = function(grunt) {
       'newer:copy:courseAssets',
       'newer:copy:courseJson',
       'newer:copy:coreAssets',
-      'newer:copy:coreAssets',
       'newer:copy:componentAssets',
       'newer:copy:componentFonts',
       'newer:copy:extensionAssets',

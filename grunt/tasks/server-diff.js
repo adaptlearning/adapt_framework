@@ -19,7 +19,6 @@ module.exports = function(grunt) {
     grunt.task.run([
       '_log-vars',
       'build-config',
-      'copy:coreAssets',
       'newer:copy:coreAssets',
       'newer:copy:componentAssets',
       'newer:copy:componentFonts',
