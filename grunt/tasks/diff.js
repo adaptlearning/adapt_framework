@@ -46,7 +46,9 @@ module.exports = function(grunt) {
       'newer:less:dev',
       'replace',
       'scripts:adaptpostbuild',
-      'clean:temp'
+      'clean:temp',
+      requireMode === 'compile' && 'json-minify:minify',
+      requireMode === 'compile' && 'newer:terser:minify'
     ].filter(Boolean).map(item => {
       if (!force) return item;
       return item.replace('newer:', '');

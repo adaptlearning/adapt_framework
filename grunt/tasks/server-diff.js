@@ -43,7 +43,7 @@ module.exports = function(grunt) {
       'replace',
       'scripts:adaptpostbuild',
       'clean:temp',
-      requireMode === 'compile' && 'newer:minify'
+      requireMode === 'compile' && 'newer:terser:minify'
     ].filter(Boolean).map(item => {
       if (!force) return item;
       return item.replace('newer:', '');
