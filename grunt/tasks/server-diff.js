@@ -2,13 +2,24 @@
  * For the authoring tool
  */
 module.exports = function(grunt) {
+  const fs = require('fs-extra');
+
   grunt.registerTask('server-diff', 'Differential builds the course without JSON [used by the authoring tool]', function(mode) {
     const requireMode = (mode === 'dev') ? 'dev' : 'compile';
+
+    const outputdir = grunt.config('outputdir');
+    const buildFilePath = `${outputdir}/adapt/js/build.min.js`;
+    let force = false;
+    if (fs.existsSync(buildFilePath)) {
+      const buildJSON = fs.readJSONSync(buildFilePath);
+      force = (buildJSON.type === 'development' && requireMode !== 'dev') ||
+        (buildJSON.type === 'production' && requireMode !== 'compile');
+    }
 
     grunt.task.run([
       '_log-vars',
       'build-config',
-      'newer:copy:coreAssets',
+      'copy:coreAssets',
       'newer:copy:componentAssets',
       'newer:copy:componentFonts',
       'newer:copy:extensionAssets',
@@ -30,7 +41,11 @@ module.exports = function(grunt) {
       'newer:javascript:' + requireMode,
       'replace',
       'scripts:adaptpostbuild',
-      'clean:temp'
-    ]);
+      'clean:temp',
+      requireMode === 'compile' && 'newer:minify'
+    ].filter(Boolean).map(item => {
+      if (!force) return item;
+      return item.replace('newer:', '');
+    }));
   });
 };
