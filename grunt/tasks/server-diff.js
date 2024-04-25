@@ -20,6 +20,7 @@ module.exports = function(grunt) {
       '_log-vars',
       'build-config',
       'copy:coreAssets',
+      'newer:copy:coreAssets',
       'newer:copy:componentAssets',
       'newer:copy:componentFonts',
       'newer:copy:extensionAssets',
