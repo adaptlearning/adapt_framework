@@ -63,7 +63,7 @@
         "correct": "Correct",
         "locked": "Locked",
         "visited": "Visited",
-        "Required": "Required",
+        "required": "Required",
         "optional": "Optional"
       }
     },
