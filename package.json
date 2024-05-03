@@ -44,7 +44,7 @@
         "grunt-contrib-watch": "^1.1.0",
         "grunt-file-order": "^1.0.0",
         "grunt-json-minify": "^1.1.0",
-        "grunt-jsonlint": "^2.1.3",
+        "grunt-jsonlint": "^3.0.0",
         "grunt-newer": "^1.3.0",
         "grunt-replace": "^2.0.2",
         "grunt-terser": "^2.0.0",
