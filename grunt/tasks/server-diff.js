@@ -1,11 +1,11 @@
 /**
- * For development
+ * For the authoring tool
  */
 module.exports = function(grunt) {
   const fs = require('fs-extra');
 
-  grunt.registerTask('diff', 'Differential compile on a developer-friendly build of the course', function(mode) {
-    const requireMode = (mode === 'build') ? 'compile' : 'dev';
+  grunt.registerTask('server-diff', 'Differential builds the course without JSON [used by the authoring tool]', function(mode) {
+    const requireMode = (mode === 'dev') ? 'dev' : 'compile';
 
     const outputdir = grunt.config('outputdir');
     const buildFilePath = `${outputdir}/adapt/js/build.min.js`;
@@ -18,11 +18,7 @@ module.exports = function(grunt) {
 
     grunt.task.run([
       '_log-vars',
-      'check-json',
       'build-config',
-      'tracking-insert',
-      'newer:copy:courseAssets',
-      'newer:copy:courseJson',
       'newer:copy:coreAssets',
       'newer:copy:componentAssets',
       'newer:copy:componentFonts',
@@ -40,13 +36,12 @@ module.exports = function(grunt) {
       'scripts:adaptpostcopy',
       'schema-defaults',
       'language-data-manifests',
-      'newer:handlebars:compile',
-      'newer:javascript:dev',
-      'newer:less:dev',
+      'newer:less:' + requireMode,
+      'newer:handlebars',
+      'newer:javascript:' + requireMode,
       'replace',
       'scripts:adaptpostbuild',
       'clean:temp',
-      requireMode === 'compile' && 'json-minify:minify',
       requireMode === 'compile' && 'newer:terser:minify'
     ].filter(Boolean).map(item => {
       if (!force) return item;

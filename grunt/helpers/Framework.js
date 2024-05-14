@@ -169,13 +169,13 @@ class Framework {
   /** @returns {Framework} */
   applyGlobalsDefaults({
     includedFilter = this.includedFilter,
-    useOutputData = this.useOutputData
-  } = {}) {
-    const schemas = this.getSchemas({
+    useOutputData = this.useOutputData,
+    schemas = this.getSchemas({
       includedFilter
-    });
+    }),
+    data = this.getData(useOutputData)
+  } = {}) {
     const courseSchema = schemas.getCourseSchema();
-    const data = this.getData(useOutputData);
     data.languages.forEach(language => {
       const { file, item: course } = language.getCourseFileItem();
       course._globals = courseSchema.applyDefaults(course._globals, '_globals');
@@ -188,13 +188,13 @@ class Framework {
   /** @returns {Framework} */
   applyScreenSizeDefaults({
     includedFilter = this.includedFilter,
-    useOutputData = this.useOutputData
-  } = {}) {
-    const schemas = this.getSchemas({
+    useOutputData = this.useOutputData,
+    schemas = this.getSchemas({
       includedFilter
-    });
+    }),
+    data = this.getData(useOutputData)
+  } = {}) {
     const configSchema = schemas.getConfigSchema();
-    const data = this.getData(useOutputData);
     const { file, item: config } = data.getConfigFileItem();
     config.screenSize = configSchema.applyDefaults(config.screenSize, 'screenSize');
     file.changed();

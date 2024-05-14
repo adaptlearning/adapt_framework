@@ -66,8 +66,16 @@ module.exports = function(grunt, options) {
       // newer configuration
       files: {
         '<%= outputdir %>adapt/js/adapt.min.js': [
-          '<%= sourcedir %>/**/*.js',
-          '<%= sourcedir %>/**/*.jsx'
+          '<%= sourcedir %>core/**/*.js',
+          '<%= sourcedir %>components/**/*.js',
+          '<%= sourcedir %>extensions/**/*.js',
+          '<%= sourcedir %>menu/**/*.js',
+          '<%= sourcedir %>theme/**/*.js',
+          '<%= sourcedir %>core/templates/**/*.jsx',
+          '<%= sourcedir %>components/*/templates/**/*.jsx',
+          '<%= sourcedir %>extensions/*/templates/**/*.jsx',
+          '<%= sourcedir %>menu/*/templates/**/*.jsx',
+          '<%= sourcedir %>theme/*/templates/**/*.jsx'
         ]
       }
     },
@@ -132,6 +140,21 @@ module.exports = function(grunt, options) {
           // It needs to be moved from the libraries folder to the js folder
           'libraries/mediaelement-fullscreen-hook': '../libraries/mediaelement-fullscreen-hook'
         }
+      },
+      // newer configuration
+      files: {
+        '<%= outputdir %>adapt/js/adapt.min.js': [
+          '<%= sourcedir %>core/**/*.js',
+          '<%= sourcedir %>components/**/*.js',
+          '<%= sourcedir %>extensions/**/*.js',
+          '<%= sourcedir %>menu/**/*.js',
+          '<%= sourcedir %>theme/**/*.js',
+          '<%= sourcedir %>core/templates/**/*.jsx',
+          '<%= sourcedir %>components/*/templates/**/*.jsx',
+          '<%= sourcedir %>extensions/*/templates/**/*.jsx',
+          '<%= sourcedir %>menu/*/templates/**/*.jsx',
+          '<%= sourcedir %>theme/*/templates/**/*.jsx'
+        ]
       }
     }
   };

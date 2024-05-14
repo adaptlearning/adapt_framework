@@ -233,6 +233,9 @@ module.exports = function(grunt) {
       }
 
       const isDevelopmentBuild = process.argv.some(arg => (arg === 'dev' || arg.includes(':dev') || arg.includes('--dev')));
+      const cacheAge = isNaN(grunt.option('cacheage'))
+        ? 7 * 24 * 60 * 60 * 1000 // one week
+        : parseInt(grunt.option('cacheage'));
 
       const data = {
         type: isDevelopmentBuild ? 'development' : 'production',
@@ -250,7 +253,8 @@ module.exports = function(grunt) {
         languages: languageFolders || defaults.languages,
         scriptSafe: defaults.scriptSafe,
         strictMode: false,
-        targets: buildConfig.targets || ''
+        targets: buildConfig.targets || '',
+        cacheAge
       };
 
       if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;

@@ -20,7 +20,7 @@ module.exports = function(grunt) {
   let cache;
 
   const extensions = ['.js', '.jsx'];
-  const cacheManager = new CacheManager(grunt);
+  const cacheManager = new CacheManager(grunt, grunt.config('cacheAge'));
 
   const restoreCache = async (cachePath, basePath) => {
     if (isDisableCache || cache || !fs.existsSync(cachePath)) return;
