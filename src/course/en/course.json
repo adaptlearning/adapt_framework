@@ -171,6 +171,17 @@
       "no": "No"
     }
   },
+  "_navigation": {
+    "_isDefaultNavigationDisabled": false,
+    "_navigationAlignment": "top",
+    "_isBottomOnTouchDevices": false,
+    "_showLabel": false,
+    "_showLabelAtWidth": "medium",
+    "_labelPosition": "auto"
+  },
+  "_tooltips": {
+    "_isEnabled": true
+  },
   "_vanilla": {
     "_favIcon": {
       "_src": ""
