@@ -44,6 +44,7 @@
       "skipNavigationText": "Skip navigation",
       "_ariaLabels": {
         "answeredIncorrectly": "You answered incorrectly",
+        "answeredPartlyCorrect": "You answered partly correct",
         "answeredCorrectly": "You answered correctly",
         "selectedAnswer": "selected",
         "unselectedAnswer": "not selected",
@@ -60,6 +61,7 @@
         "complete": "Completed",
         "incomplete": "Incomplete",
         "incorrect": "Incorrect",
+        "partlyCorrect": "Partly correct",
         "correct": "Correct",
         "locked": "Locked",
         "visited": "Visited",
