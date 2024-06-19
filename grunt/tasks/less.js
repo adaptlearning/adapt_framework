@@ -82,7 +82,7 @@ module.exports = function(grunt) {
       }
     }
 
-    if (configJSON.themeSettings) {
+    if (configJSON.themeVariables) {
       // Add theme variables
       function fetchVariableNameValuePairs(object) {
         return Object.entries(object).flatMap(([name, value]) => {
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
           return fetchVariableNameValuePairs(value);
         });
       }
-      const variableNameValuePairs = fetchVariableNameValuePairs(configJSON.themeSettings);
+      const variableNameValuePairs = fetchVariableNameValuePairs(configJSON.themeVariables);
       // Add less variables
       imports += variableNameValuePairs.map(([name, value]) => `\n@${name}: ${value};`).join('');
       // Add css variables

@@ -79,7 +79,7 @@
   "build": {
     "strictMode": true
   },
-  "themeSettings": {
+  "themeVariables": {
     "_global": {
       "font-color": "",
       "font-color-inverted": "",
