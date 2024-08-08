@@ -206,7 +206,7 @@ const runTest = async () => {
   const isCommandNotFound = !command;
 
   // Read the input for passed arguments that arent command names
-  passedArgs = passedArgs.trim().replaceAll('--', '').toLowerCase().split(' ').filter(name => isCommandNotFound || name !== commandName);
+  passedArgs = passedArgs.trim().replaceAll('--', '').split(' ').filter(name => isCommandNotFound || name !== commandName);
 
   // Update argumentValues array for later use while checking if the command is valid
   const paramsRecognised = passedArgs.every(passedArg => {
