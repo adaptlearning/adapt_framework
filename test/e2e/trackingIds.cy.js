@@ -15,7 +15,7 @@ describe('Tracking Ids', function () {
         trackingIdItems.forEach(item => {
           expect(item).to.have.ownProperty('_trackingId');
         });
-      })
+      });
     });
   });
 
