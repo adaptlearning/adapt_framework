@@ -86,11 +86,12 @@ async function populateTestFiles() {
   if (argumentValues.testfiles) return;
 
   // otherwise, only include test files for plugins present in the course config
-  const config = fs.readFileSync('./src/course/config.json', {
-    encoding: null
-  });
+  const config = fs.readFileSync('./src/course/config.json');
+  const plugins = config?.build?.includes || [];
 
-  argumentValues.testfiles = config?.build?.includes?.join(',') || [];
+  argumentValues.testfiles = plugins.map(plugin => {
+    return `**/${plugin}/*`;
+  });
 }
 
 async function cypressRun() {
