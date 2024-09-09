@@ -89,14 +89,16 @@ async function populateTestFiles() {
   const config = JSON.parse(fs.readFileSync('./build/course/config.json'));
   const plugins = config?.build?.includes || [];
 
-  argumentValues.testfiles = plugins.map(plugin => {
+  const testFiles = plugins.map(plugin => {
     return `**/${plugin}/**/*.cy.js`;
   });
+
+  argumentValues.testfiles = testFiles.join(',');
 }
 
 async function cypressRun() {
   await populateTestFiles();
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles.join(',')}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
 };
 
 async function jestRun() {
