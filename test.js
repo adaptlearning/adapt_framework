@@ -86,17 +86,17 @@ async function populateTestFiles() {
   if (argumentValues.testfiles) return;
 
   // otherwise, only include test files for plugins present in the course config
-  const config = fs.readFileSync('./src/course/config.json');
+  const config = JSON.parse(fs.readFileSync('./build/course/config.json'));
   const plugins = config?.build?.includes || [];
 
   argumentValues.testfiles = plugins.map(plugin => {
-    return `**/${plugin}/*`;
+    return `**/${plugin}/**/*.cy.js`;
   });
 }
 
 async function cypressRun() {
   await populateTestFiles();
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles.join(',')}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
 };
 
 async function jestRun() {
