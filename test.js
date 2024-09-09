@@ -189,6 +189,7 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
       } catch (cypressErr) {
         console.log('Cypress tests failure');
         console.log(cypressErr);
+        process.exit(1);
       }
 
       gruntServerRun.kill();
