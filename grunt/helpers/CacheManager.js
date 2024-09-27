@@ -24,8 +24,7 @@ module.exports = class CacheManager {
   }
 
   get tempPath() {
-    const tempPath = path.join(os.tmpdir(), 'adapt_framework');
-    return tempPath;
+    return this.grunt.option('cachepath') ?? path.join(os.tmpdir(), 'adapt_framework');
   }
 
   cachePath(basePath, outputFilePath = process.cwd()) {

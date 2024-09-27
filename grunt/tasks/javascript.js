@@ -130,7 +130,7 @@ module.exports = function(grunt) {
     const options = this.options({});
     const isSourceMapped = Boolean(options.generateSourceMaps);
     const basePath = path.resolve(cwd + '/' + options.baseUrl).replace(convertSlashes, '/') + '/';
-    const cachePath = buildConfig.cachepath ?? cacheManager.cachePath(cwd, options.out);
+    const cachePath = cacheManager.cachePath(cwd, options.out);
     if (!isDisableCache) {
       grunt.log.ok(`Cache path: ${cachePath}`);
     }
