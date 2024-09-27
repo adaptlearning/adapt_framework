@@ -86,7 +86,7 @@ async function populateTestFiles() {
   if (argumentValues.testfiles) return;
 
   // otherwise, only include test files for plugins present in the course config
-  const config = JSON.parse(fs.readFileSync('./build/course/config.json'));
+  const config = JSON.parse(fs.readFileSync(path.join(argumentValues.outputdir, 'course', 'config.json')));
   const plugins = config?.build?.includes || [];
 
   const testFiles = plugins.map(plugin => {
