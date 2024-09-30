@@ -104,10 +104,8 @@ async function cypressRun() {
 async function jestRun() {
   config.testEnvironmentOptions.outputDir = argumentValues.outputdir;
 
-  // Limit the tests if a certain set are passed in
-  if (argumentValues.testfiles) {
-    config.testMatch = argumentValues.testfiles.split(',');
-  }
+  await populateTestFiles();
+  config.testMatch = argumentValues.testfiles.split(',');
 
   return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
 };
