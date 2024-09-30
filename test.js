@@ -88,18 +88,12 @@ async function populateTestFiles() {
   // otherwise, only include test files for plugins present in the course config
   const config = JSON.parse(fs.readFileSync(path.join(argumentValues.outputdir, 'course', 'config.json')));
   const plugins = config?.build?.includes || [];
-  console.log('CAHIRA');
-  console.log(JSON.stringify(config));
-  console.log('CAHIRB');
 
   const testFiles = plugins.map(plugin => {
     return `**/${plugin}/**/*.cy.js`;
   });
 
   argumentValues.testfiles = testFiles.join(',');
-  console.log('CAHIR1');
-  console.log(argumentValues.testfiles);
-  console.log('CAHIR2');
 }
 
 async function cypressRun() {
@@ -111,7 +105,10 @@ async function jestRun() {
   config.testEnvironmentOptions.outputDir = argumentValues.outputdir;
 
   await populateTestFiles();
-  config.testMatch = argumentValues.testfiles.split(',');
+
+  if (argumentValues.testfiles) {
+    config.testMatch = argumentValues.testfiles.split(',');
+  }
 
   return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
 };
