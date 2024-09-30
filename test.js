@@ -94,6 +94,8 @@ async function populateTestFiles() {
   });
 
   argumentValues.testfiles = testFiles.join(',');
+  console.log('CAHIR');
+  console.log(argumentValues.testfiles);
 }
 
 async function cypressRun() {
