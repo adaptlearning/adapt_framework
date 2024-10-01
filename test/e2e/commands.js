@@ -1,8 +1,8 @@
-import './helpers'
+import './helpers';
 
 function getBuild() {
   try {
-    return cy.fixture(`adapt/js/build.min.js`).then(build => {
+    return cy.fixture('adapt/js/build.min.js').then(build => {
       // Return for cy.getBuild().then(build => {});
       // Expose this.build in cypress
       return cy.wrap(build).as('build');
@@ -40,7 +40,7 @@ function getData(languageCode = null) {
       },
       contentObjects: {
         get() {
-          return data.filter(item => ['menu','page'].includes(item._type));
+          return data.filter(item => ['menu', 'page'].includes(item._type));
         },
         enumerable: false
       },
@@ -80,7 +80,7 @@ function getData(languageCode = null) {
         cy.fixture(`${coursedir}/${languageCode}/language_data_manifest.js`).then(languageDataManifest => {
           // Load each of the files specified in the manifest
           languageDataManifest.forEach(localFilePath => {
-            const filePath = `${coursedir}/${languageCode}/${localFilePath}`
+            const filePath = `${coursedir}/${languageCode}/${localFilePath}`;
             cy.fixture(filePath).then(fileData => {
               // Add __index__ and __path__ attributes to each object as in adapt
               // so that each object's origin can be identified later if necessary

@@ -1,4 +1,5 @@
 const os = require('os');
+const fs = require('fs-extra');
 const { spawn, exec } = require('child_process');
 const jest = require('jest');
 const config = require('./jest.config');
@@ -80,18 +81,31 @@ async function waitForGruntServer() {
   return waitForExec('node', './node_modules/wait-on/bin/wait-on', 'http://127.0.0.1:9001');
 };
 
-async function cypressRun() {
-  if (argumentValues.testfiles) {
-    return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
-  }
+async function populateTestFiles() {
+  // accept the user-specified file(s)
+  if (argumentValues.testfiles) return;
 
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
+  // otherwise, only include test files for plugins present in the course config
+  const config = JSON.parse(fs.readFileSync(path.join(argumentValues.outputdir, 'course', 'config.json')));
+  const plugins = config?.build?.includes || [];
+
+  const testFiles = plugins.map(plugin => {
+    return `**/${plugin}/**/*.cy.js`;
+  });
+
+  argumentValues.testfiles = testFiles.join(',');
+}
+
+async function cypressRun() {
+  await populateTestFiles();
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
 };
 
 async function jestRun() {
   config.testEnvironmentOptions.outputDir = argumentValues.outputdir;
 
-  // Limit the tests if a certain set are passed in
+  await populateTestFiles();
+
   if (argumentValues.testfiles) {
     config.testMatch = argumentValues.testfiles.split(',');
   }
@@ -176,6 +190,7 @@ ${Object.values(commands).map(({ name, description }) => `    ${name.padEnd(21, 
       } catch (cypressErr) {
         console.log('Cypress tests failure');
         console.log(cypressErr);
+        process.exit(1);
       }
 
       gruntServerRun.kill();
