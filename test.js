@@ -95,6 +95,9 @@ async function populateTestFiles(testFormat) {
     return `**/${plugin}/test/${globSuffix}`;
   });
 
+  // Add the framework level test files
+  testFiles.push(`**/test/${globSuffix}`);
+
   argumentValues.testfiles = testFiles.join(',');
 }
 
