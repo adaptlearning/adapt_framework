@@ -81,34 +81,36 @@ async function waitForGruntServer() {
   return waitForExec('node', './node_modules/wait-on/bin/wait-on', 'http://127.0.0.1:9001');
 };
 
-async function populateTestFiles() {
+function populateTestFiles(testFormat) {
   // accept the user-specified file(s)
-  if (argumentValues.testfiles) return;
+  if (argumentValues.testfiles) return argumentValues.testfiles;
 
   // otherwise, only include test files for plugins present in the course config
   const config = JSON.parse(fs.readFileSync(path.join(argumentValues.outputdir, 'course', 'config.json')));
   const plugins = config?.build?.includes || [];
 
+  const globSuffix = testFormat === 'e2e' ? 'e2e/*.cy.js' : 'unit/*.js';
+
   const testFiles = plugins.map(plugin => {
-    return `**/${plugin}/**/*.cy.js`;
+    return `**/${plugin}/test/${globSuffix}`;
   });
 
-  argumentValues.testfiles = testFiles.join(',');
+  // Add the framework level test files
+  testFiles.push(`**/test/${globSuffix}`);
+
+  return testFiles.join(',');
 }
 
 async function cypressRun() {
-  await populateTestFiles();
-  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${argumentValues.testfiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
+  const testFiles = populateTestFiles('e2e');
+  return asyncSpawn('node', './node_modules/cypress/bin/cypress', 'run', '--spec', `${testFiles}`, '--config', `{"fixturesFolder": "${argumentValues.outputdir}"}`);
 };
 
 async function jestRun() {
   config.testEnvironmentOptions.outputDir = argumentValues.outputdir;
 
-  await populateTestFiles();
-
-  if (argumentValues.testfiles) {
-    config.testMatch = argumentValues.testfiles.split(',');
-  }
+  const testFiles = populateTestFiles('unit');
+  config.testMatch = testFiles.split(',');
 
   return jest.runCLI(config, [process.cwd().replace(/\\/g, '/')]);
 };
