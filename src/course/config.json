@@ -77,6 +77,35 @@
     "_limitToSelector": ""
   },
   "build": {
-    "strictMode": true
+    "strictMode": true,
+    "includes": [
+      "adapt-contrib-according",
+      "adapt-contrib-assessment",
+      "adapt-contrib-assessmentResults",
+      "adapt-contrib-blank",
+      "adapt-contrib-bookmarking",
+      "adapt-contrib-boxMenu",
+      "adapt-contrib-branching",
+      "adapt-contrib-confidenceSlider",
+      "adapt-contrib-gmcq",
+      "adapt-contrib-glossary",
+      "adapt-contrib-graphic",
+      "adapt-contrib-hotgraphic",
+      "adapt-contrib-languagePicker",
+      "adapt-contrib-matching",
+      "adapt-contrib-media",
+      "adapt-contrib-mcq",
+      "adapt-contrib-narrative",
+      "adapt-contrib-pageLevelProgress",
+      "adapt-contrib-resources",
+      "adapt-contrib-slider",
+      "adapt-contrib-spoor",
+      "adapt-contrib-textInput",
+      "adapt-contrib-text",
+      "adapt-contrib-trickle",
+      "adapt-contrib-tutor",
+      "adapt-contrib-xapi",
+      "adapt-contrib-vanilla"
+    ]
   }
 }
