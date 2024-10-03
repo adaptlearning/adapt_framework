@@ -79,7 +79,7 @@
   "build": {
     "strictMode": true,
     "includes": [
-      "adapt-contrib-according",
+      "adapt-contrib-accordion",
       "adapt-contrib-assessment",
       "adapt-contrib-assessmentResults",
       "adapt-contrib-blank",
