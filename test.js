@@ -96,7 +96,7 @@ function populateTestFiles(testFormat) {
   });
 
   // Add the framework level test files
-  testFiles.push(`**/test/${globSuffix}`);
+  testFiles.push(`<rootDir>/test/${globSuffix}`);
 
   return testFiles.join(',');
 }
