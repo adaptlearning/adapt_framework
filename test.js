@@ -96,7 +96,11 @@ function populateTestFiles(testFormat) {
   });
 
   // Add the framework level test files
-  testFiles.push(`<rootDir>/test/${globSuffix}`);
+  if (testFormat === 'e2e') {
+    testFiles.push(`./test/${globSuffix}`);
+  } else {
+    testFiles.push('<rootDir>/test/unit/*.js');
+  }
 
   return testFiles.join(',');
 }
