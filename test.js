@@ -93,7 +93,8 @@ function populateTestFiles(testFormat) {
   // Set a wider glob as default and limit to included plugins if that is set
   let testFiles = [`**/*/test/${globSuffix}`];
 
-  if (plugins) {
+  const hasDefinedIncludes = Boolean(plugins?.length);
+  if (hasDefinedIncludes) {
     testFiles = plugins.map(plugin => {
       return `**/${plugin}/test/${globSuffix}`;
     });
