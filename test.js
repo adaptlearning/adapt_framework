@@ -87,16 +87,25 @@ function populateTestFiles(testFormat) {
 
   // otherwise, only include test files for plugins present in the course config
   const config = JSON.parse(fs.readFileSync(path.join(argumentValues.outputdir, 'course', 'config.json')));
-  const plugins = config?.build?.includes || [];
-
+  const plugins = config?.build?.includes;
   const globSuffix = testFormat === 'e2e' ? 'e2e/*.cy.js' : 'unit/*.js';
 
-  const testFiles = plugins.map(plugin => {
-    return `**/${plugin}/test/${globSuffix}`;
-  });
+  // Set a wider glob as default and limit to included plugins if that is set
+  let testFiles = [`**/*/test/${globSuffix}`];
+
+  const hasDefinedIncludes = Boolean(plugins?.length);
+  if (hasDefinedIncludes) {
+    testFiles = plugins.map(plugin => {
+      return `**/${plugin}/test/${globSuffix}`;
+    });
+  }
 
   // Add the framework level test files
-  testFiles.push(`**/test/${globSuffix}`);
+  if (testFormat === 'e2e') {
+    testFiles.push(`./test/${globSuffix}`);
+  } else {
+    testFiles.push('<rootDir>/test/unit/*.js');
+  }
 
   return testFiles.join(',');
 }
