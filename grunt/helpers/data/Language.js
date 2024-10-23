@@ -38,7 +38,7 @@ class Language {
     /** @type {string} */
     this.jsonext = jsonext;
     /** @type {string} */
-    this.path = languagePath.replace(/\\/g, '/');
+    this.path = path.normalize(languagePath).replace(/\\/g, '/');
     /** @type {string} */
     this.name = this.path.split('/').filter(Boolean).pop();
     /** @type {string} */
