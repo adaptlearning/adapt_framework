@@ -196,11 +196,13 @@ class Translate {
 ${Object.entries(outputGroupedByFile).map(([fileName, entries]) => {
     return ` <file id="${fileName}">
 ${entries.map(item => {
-    if (/[<>]+/.test(item.value)) return null;
+    const value = /[<>&"'/]/.test(item.value)
+      ? `<![CDATA[${item.value}]]>`
+      : item.value;
     return `    <unit id="${item.id}${item.path}">
       <segment>
-        <source xml:space="preserve">${item.value}</source>
-        <target xml:space="preserve">${item.value}</target>
+        <source xml:space="preserve">${value}</source>
+        <target xml:space="preserve">${value}</target>
       </segment>
     </unit>
 `;
