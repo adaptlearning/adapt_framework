@@ -191,22 +191,41 @@ class Translate {
         return prev;
       }, {});
 
+      // xliff 2.0
+      //       const output = `<?xml version="1.0" encoding="UTF-8"?>
+      // <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="${this.masterLang}" trgLang="${this.masterLang}">
+      // ${Object.entries(outputGroupedByFile).map(([fileName, entries]) => {
+      //     return ` <file id="${fileName}">
+      // ${entries.map(item => {
+      //     const value = /[<>&"'/]/.test(item.value)
+      //       ? `<![CDATA[${item.value}]]>`
+      //       : item.value;
+      //     return `    <unit id="${item.id}${item.path}">
+      //       <segment>
+      //         <source xml:space="preserve">${value}</source>
+      //         <target xml:space="preserve">${value}</target>
+      //       </segment>
+      //     </unit>
+      // `;
+      //   }).filter(Boolean).join('')}  </file>
+      // `;
+      //   }).join('')}</xliff>`;
+
+      // xliff 1.2
       const output = `<?xml version="1.0" encoding="UTF-8"?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="${this.masterLang}" trgLang="${this.masterLang}">
+<xliff  version="1.2">
 ${Object.entries(outputGroupedByFile).map(([fileName, entries]) => {
-    return ` <file id="${fileName}">
+    return ` <file original="${fileName}" source-language="${this.masterLang}" target-language="${this.masterLang}"><body>
 ${entries.map(item => {
     const value = /[<>&"'/]/.test(item.value)
       ? `<![CDATA[${item.value}]]>`
       : item.value;
-    return `    <unit id="${item.id}${item.path}">
-      <segment>
-        <source xml:space="preserve">${value}</source>
-        <target xml:space="preserve">${value}</target>
-      </segment>
-    </unit>
+    return `    <trans-unit id="${item.id}${item.path}">
+      <source>${value}</source>
+      <target>${value}</target>
+    </trans-unit>
 `;
-  }).filter(Boolean).join('')}  </file>
+  }).filter(Boolean).join('')}  </body></file>
 `;
   }).join('')}</xliff>`;
       const filePath = path.join(outputFolder, 'source.xlf');
@@ -330,14 +349,27 @@ ${entries.map(item => {
             attributeNamePrefix: ''
           });
           const xml = parser.parse(XMLData);
+          // xliff 2.0
+          // for (const file of xml.xliff.file) {
+          //   for (const unit of file.unit) {
+          //     const [ id, ...path ] = unit.id.split('/');
+          //     importData.push({
+          //       file: file.id,
+          //       id,
+          //       path: path.filter(Boolean).join('/'),
+          //       value: unit.segment.target['#text']
+          //     });
+          //   }
+          // }
+          // xliff 1.2
           for (const file of xml.xliff.file) {
-            for (const unit of file.unit) {
+            for (const unit of file.body['trans-unit']) {
               const [ id, ...path ] = unit.id.split('/');
               importData.push({
-                file: file.id,
+                file: file.original,
                 id,
                 path: path.filter(Boolean).join('/'),
-                value: unit.segment.target['#text']
+                value: unit.source
               });
             }
           }
