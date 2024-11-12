@@ -210,7 +210,6 @@ ${entries.map(item => {
       const filePath = path.join(outputFolder, 'source.xlf');
       this.log(`Exporting xliff to ${filePath}`);
       fs.writeFileSync(filePath, `${output}`);
-
       return this;
     }
 
@@ -294,7 +293,6 @@ ${entries.map(item => {
     if (format === 'xliff') format = 'xlf';
 
     // discover import files
-    console.log(`${inputFolder}/*.${format}`);
     const langFiles = globs.sync([`${inputFolder}/*.${format}`]);
     if (langFiles.length === 0) {
       throw new Error(`No languagefiles found to process in folder ${inputFolder}`);
