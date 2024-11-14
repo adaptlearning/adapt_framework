@@ -376,7 +376,8 @@ ${entries.map(item => {
           done();
         });
         break;
-      } case 'csv':
+      }
+      case 'csv':
       default: {
         importData = [];
         const lines = [];
