@@ -37,7 +37,7 @@
       "_includeInTotalScore": true,
       "_assessmentWeight": 1,
       "_isResetOnRevisit": true,
-      "_attempts": "infinite",
+      "_attempts": -1,
       "_allowResetIfPassed": false,
       "_scrollToOnReset": false,
       "_banks": {
@@ -58,6 +58,7 @@
     },
     "_trickle": {
       "_isEnabled": true,
+      "_onChildren": true,
       "_button": {
         "_isEnabled": true,
         "startText": "Continue"
