@@ -2,6 +2,7 @@ const path = require('path');
 const _ = require('lodash');
 const fs = require('fs-extra');
 const csv = require('csv');
+const { XMLParser } = require('fast-xml-parser');
 const async = require('async');
 const globs = require('globs');
 const jschardet = require('jschardet');
@@ -177,7 +178,60 @@ class Translate {
       const filePath = path.join(outputFolder, 'export.json');
       this.log(`Exporting json to ${filePath}`);
       fs.writeJSONSync(filePath, exportTextData, { spaces: 2 });
-      return;
+      return this;
+    }
+
+    if (['xliff', 'xlf'].includes(this.format)) {
+      // create csv for each file
+      const outputGroupedByFile = exportTextData.reduce((prev, current) => {
+        if (!prev.hasOwnProperty(current.file)) {
+          prev[current.file] = [];
+        }
+        prev[current.file].push(current);
+        return prev;
+      }, {});
+
+      // xliff 2.0
+      //       const output = `<?xml version="1.0" encoding="UTF-8"?>
+      // <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="${this.masterLang}" trgLang="${this.masterLang}">
+      // ${Object.entries(outputGroupedByFile).map(([fileName, entries]) => {
+      //     return ` <file id="${fileName}">
+      // ${entries.map(item => {
+      //     const value = /[<>&"'/]/.test(item.value)
+      //       ? `<![CDATA[${item.value}]]>`
+      //       : item.value;
+      //     return `    <unit id="${item.id}${item.path}">
+      //       <segment>
+      //         <source xml:space="preserve">${value}</source>
+      //         <target xml:space="preserve">${value}</target>
+      //       </segment>
+      //     </unit>
+      // `;
+      //   }).filter(Boolean).join('')}  </file>
+      // `;
+      //   }).join('')}</xliff>`;
+
+      // xliff 1.2
+      const output = `<?xml version="1.0" encoding="UTF-8"?>
+<xliff  version="1.2">
+${Object.entries(outputGroupedByFile).map(([fileName, entries]) => {
+    return ` <file original="${fileName}" source-language="${this.masterLang}" target-language="${this.masterLang}"><body>
+${entries.map(item => {
+    const value = /[<>&"'/]/.test(item.value)
+      ? `<![CDATA[${item.value}]]>`
+      : item.value;
+    return `    <trans-unit id="${item.id}${item.path}">
+      <source>${value}</source>
+      <target>${value}</target>
+    </trans-unit>
+`;
+  }).filter(Boolean).join('')}  </body></file>
+`;
+  }).join('')}</xliff>`;
+      const filePath = path.join(outputFolder, 'source.xlf');
+      this.log(`Exporting xliff to ${filePath}`);
+      fs.writeFileSync(filePath, `${output}`);
+      return this;
     }
 
     // create csv for each file
@@ -246,6 +300,8 @@ class Translate {
       }
       format = uniqueFileExtensions[0];
       switch (format) {
+        case 'xlf':
+        case 'xliff':
         case 'csv':
         case 'json':
           this.log(`Format autodetected as ${format}`);
@@ -254,6 +310,8 @@ class Translate {
           throw new Error(`Format of the language file is not supported: ${format}`);
       }
     }
+
+    if (format === 'xliff') format = 'xlf';
 
     // discover import files
     const langFiles = globs.sync([`${inputFolder}/*.${format}`]);
@@ -281,8 +339,46 @@ class Translate {
       case 'json':
         importData = fs.readJSONSync(langFiles[0]);
         break;
+      case 'xliff':
+      case 'xlf': {
+        importData = [];
+        await async.each(langFiles, (filename, done) => {
+          const XMLData = fs.readFileSync(filename);
+          const parser = new XMLParser({
+            ignoreAttributes: false,
+            attributeNamePrefix: ''
+          });
+          const xml = parser.parse(XMLData);
+          // xliff 2.0
+          // for (const file of xml.xliff.file) {
+          //   for (const unit of file.unit) {
+          //     const [ id, ...path ] = unit.id.split('/');
+          //     importData.push({
+          //       file: file.id,
+          //       id,
+          //       path: path.filter(Boolean).join('/'),
+          //       value: unit.segment.target['#text']
+          //     });
+          //   }
+          // }
+          // xliff 1.2
+          for (const file of xml.xliff.file) {
+            for (const unit of file.body['trans-unit']) {
+              const [ id, ...path ] = unit.id.split('/');
+              importData.push({
+                file: file.original,
+                id,
+                path: path.filter(Boolean).join('/'),
+                value: unit.source
+              });
+            }
+          }
+          done();
+        });
+        break;
+      }
       case 'csv':
-      default:
+      default: {
         importData = [];
         const lines = [];
         await async.each(langFiles, (filename, done) => {
@@ -349,6 +445,7 @@ class Translate {
           throw new Error(`Error processing CSV files: ${err}`);
         });
         break;
+      }
     }
 
     // check import validity
