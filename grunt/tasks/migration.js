@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     return clone;
   }
 
-  grunt.registerTask('migration', 'Migrate from on verion to another', function(mode) {
+  grunt.registerTask('migration', 'Migrate from one version to another', function(mode) {
     const next = this.async();
     const buildConfig = Helpers.generateConfigData();
     const fileNameIncludes = grunt.option('file');
