@@ -32,18 +32,14 @@ Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/
 [Visit the wiki](https://github.com/adaptlearning/adapt_framework/wiki) for full documentation, including **installation**, course authoring, developer guides, and other information.
 
 ## Communication
-+ [Twitter: @AdaptLearning](https://twitter.com/adaptlearning)
-+ [Gitter](https://gitter.im/orgs/adaptlearning/rooms)
-+ [Community Site](https://community.adaptlearning.org/)
-+ [Technical Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4)
++ [Adapt Learning community via Gitter](https://gitter.im/orgs/adaptlearning/rooms)
 + [Bugs / Feature Requests](https://github.com/adaptlearning/adapt_framework/issues/new)
-+ [Responsive e-Learning Forum](https://community.adaptlearning.org/mod/forum/view.php?id=56)
 
 ## Contributing to Adapt
 See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt_framework/wiki/Contributing-to-the-Adapt-Project).
 
 ## Troubleshooting, Bugs, and Feedback
-+ For help with troubleshooting, visit the [Technical Discussion Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4).
++ For help with troubleshooting, visit the community [Gitter](https://gitter.im/orgs/adaptlearning/rooms)
 + To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 + To provide feedback, please use [GitHub Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 
