@@ -1,4 +1,5 @@
 {
+  "_type": "config",
   "_defaultLanguage": "en",
   "_defaultDirection": "ltr",
   "_questionWeight": 1,
