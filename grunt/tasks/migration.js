@@ -116,10 +116,10 @@ module.exports = function(grunt) {
             await migrations.migrate({ journal, logger });
 
             // Todo - {
-              // display changes success/failure and request user confirmation before completing
-              // move saving of content outside of the language loop
-              // only 1 confirmation per course rather than 1 per language
-              // output journal entries for revert
+            // display changes success/failure and request user confirmation before completing
+            // move saving of content outside of the language loop
+            // only 1 confirmation per course rather than 1 per language
+            // output journal entries for revert
             // }
 
             // group all content items by path
@@ -147,12 +147,8 @@ module.exports = function(grunt) {
         return next();
       }
 
-      if (mode === 'revert') {
-
-      }
-
       if (mode === 'test') {
-        await migrations.test();
+        await migrations.test({ logger });
         return next();
       }
 
