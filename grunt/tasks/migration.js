@@ -103,14 +103,6 @@ module.exports = function(grunt) {
                 fromPlugins,
                 originalFromPlugins,
                 toPlugins: plugins
-              },
-              supplementEntry: (entry, data) => {
-                entry._id = data[entry.keys[0]][entry.keys[1]]?._id ?? '';
-                entry._type = data[entry.keys[0]][entry.keys[1]]?._type ?? '';
-                if (entry._type && data[entry.keys[0]][entry.keys[1]]?.[`_${entry._type}`]) {
-                  entry[`_${entry._type}`] = data[entry.keys[0]][entry.keys[1]]?.[`_${entry._type}`] ?? '';
-                }
-                return entry;
               }
             });
             await migrations.migrate({ journal, logger });
