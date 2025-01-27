@@ -107,13 +107,6 @@ module.exports = function(grunt) {
             });
             await migrations.migrate({ journal, logger });
 
-            // Todo - {
-            // display changes success/failure and request user confirmation before completing
-            // move saving of content outside of the language loop
-            // only 1 confirmation per course rather than 1 per language
-            // output journal entries for revert
-            // }
-
             // group all content items by path
             const outputFilePathItems = _.groupBy(content, '__path__');
             // sort items inside each path
@@ -128,7 +121,6 @@ module.exports = function(grunt) {
               const stripped = isSingleObject
                 ? undressPathIndex(outputItems[0]) // config.json, course.json
                 : outputItems.map(undressPathIndex); // contentObjects.json, articles.json, blocks.json, components.json
-              // console.log(journal.entries)
               fs.writeJSONSync(outputPath, stripped, { replacer: null, spaces: 2 });
             });
           }
