@@ -66,6 +66,7 @@
     },
     "devDependencies": {
         "@semantic-release/git": "^10.0.1",
+        "adapt-migrations": "^1.0.0",
         "conventional-changelog-eslint": "^5.0.0",
         "cypress": "^13.6.3",
         "eslint": "^8.49.0",
