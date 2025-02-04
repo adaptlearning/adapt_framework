@@ -33,7 +33,7 @@ Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/
 
 ## Communication
 + [Adapt Learning community via Gitter](https://gitter.im/orgs/adaptlearning/rooms)
-+ [Bugs / Feature Requests](https://github.com/adaptlearning/adapt_framework/issues/new)
++ [Bugs / Feature Requests](https://github.com/adaptlearning/adapt_framework/issues/new?template=issue_template.md)
 
 ## Contributing to Adapt
 See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt_framework/wiki/Contributing-to-the-Adapt-Project).
