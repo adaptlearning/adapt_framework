@@ -32,20 +32,15 @@ Got five minutes to spare? Check out [our whistle-stop tour](https://github.com/
 [Visit the wiki](https://github.com/adaptlearning/adapt_framework/wiki) for full documentation, including **installation**, course authoring, developer guides, and other information.
 
 ## Communication
-+ [Twitter: @AdaptLearning](https://twitter.com/adaptlearning)
-+ [Gitter](https://gitter.im/orgs/adaptlearning/rooms)
-+ [Community Site](https://community.adaptlearning.org/)
-+ [Technical Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4)
-+ [Bugs / Feature Requests](https://github.com/adaptlearning/adapt_framework/issues/new)
-+ [Responsive e-Learning Forum](https://community.adaptlearning.org/mod/forum/view.php?id=56)
++ [Adapt Learning community via Gitter](https://gitter.im/orgs/adaptlearning/rooms)
++ [Bugs / Feature Requests](https://github.com/adaptlearning/adapt_framework/issues/new?template=issue_template.md)
 
 ## Contributing to Adapt
 See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt_framework/wiki/Contributing-to-the-Adapt-Project).
 
 ## Troubleshooting, Bugs, and Feedback
-+ For help with troubleshooting, visit the [Technical Discussion Forum](https://community.adaptlearning.org/mod/forum/view.php?id=4).
-+ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
-+ To provide feedback, please use [GitHub Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
++ For help with troubleshooting, visit the community [Gitter](https://gitter.im/orgs/adaptlearning/rooms)
++ To report a bug or provide feedback, please use [Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new?template=issue_template.md).
 
 ## License
 <a href="https://community.adaptlearning.org/" target="_blank"><img src="https://github.com/adaptlearning/documentation/blob/master/04_wiki_assets/plug-ins/images/adapt-logo-mrgn-lft.jpg" alt="adapt learning logo" align="right"></a>  Adapt is licensed under the [GNU General Public License, Version 3](https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE).
