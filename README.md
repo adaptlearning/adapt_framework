@@ -40,7 +40,7 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 
 ## Troubleshooting, Bugs, and Feedback
 + For help with troubleshooting, visit the community [Gitter](https://gitter.im/orgs/adaptlearning/rooms)
-+ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
++ To report a bug, please [submit an issue via Github Issues](https://github.com/adaptlearning/adapt_framework/issues/new?template=issue_template.md).
 + To provide feedback, please use [GitHub Issues](https://github.com/adaptlearning/adapt_framework/issues/new).
 
 ## License
