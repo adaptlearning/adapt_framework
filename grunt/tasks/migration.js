@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   const path = require('path');
   const fs = require('fs-extra');
   const _ = require('underscore');
+  const minimatch = require('minimatch');
 
   function unix(path) {
     return path.replace(/\\/g, '/');
@@ -52,8 +53,13 @@ module.exports = function(grunt) {
         ], { cwd: path.join(cwd, './src/'), absolute: true }, (err, files) => resolve(err ? null : files));
       })).filter(filePath => {
         if (!fileNameIncludes) return true;
-        return filePath.includes(fileNameIncludes);
+        return minimatch(filePath, '**/' + fileNameIncludes);
       });
+
+      if (!migrationScripts.length) {
+        console.log('No migration scripts found');
+        return next();
+      }
 
       await migrations.load({
         cachePath,
