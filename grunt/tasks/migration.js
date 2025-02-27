@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         ], { cwd: path.join(cwd, './src/'), absolute: true }, (err, files) => resolve(err ? null : files));
       })).filter(filePath => {
         if (!fileNameIncludes) return true;
-        return minimatch(filePath, '**/' + fileNameIncludes);
+        return minimatch(filePath, '**/' + fileNameIncludes) || filePath.includes(fileNameIncludes);
       });
 
       if (!migrationScripts.length) {
