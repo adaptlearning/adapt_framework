@@ -63,8 +63,7 @@
         "semver": "^7.6.0",
         "time-grunt": "^2.0.0",
         "underscore": "^1.13.1",
-        "underscore-deep-extend": "^1.1.5",
-        "wait-on": "^8.0.3"
+        "underscore-deep-extend": "^1.1.5"
     },
     "devDependencies": {
         "@semantic-release/git": "^10.0.1",
@@ -83,7 +82,8 @@
         "jest-environment-adapt": "^1.0.0",
         "react": "17.0.2",
         "react-dom": "17.0.2",
-        "semantic-release": "^22.0.12"
+        "semantic-release": "^22.0.12",
+        "wait-on": "^8.0.3"
     },
     "optionalDependencies": {
         "imagemin": "^7.0.1",
