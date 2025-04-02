@@ -62,6 +62,8 @@ module.exports = function(grunt) {
             ...data.configFile.fileItems,
             ...data.languages[index].getAllFileItems()
           ].map(dressPathIndex).map(obj => {
+            // reduce __path__ to relative paths about src/course/ or build/course/ so
+            // that they're easier to restore elsewhere later
             obj.__path__ = obj.__path__.slice(data.coursePath.length).replace(/^\//, '');
             return obj;
           });
@@ -143,6 +145,7 @@ module.exports = function(grunt) {
               const stripped = isSingleObject
                 ? undressPathIndex(outputItems[0]) // config.json, course.json
                 : outputItems.map(undressPathIndex); // contentObjects.json, articles.json, blocks.json, components.json
+              // write files to specified --outputdir= location
               const outputFilePath = path.join(coursePath, outputPath);
               const outputDir = path.parse(outputFilePath).dir;
               fs.ensureDirSync(outputDir);
