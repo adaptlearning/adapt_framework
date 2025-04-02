@@ -229,10 +229,7 @@ module.exports = function(grunt) {
 
       try {
         buildConfig = grunt.file.readJSON(configPath).build || {};
-      } catch (error) {
-        // grunt.log.error(error);
-        // process.exit();
-      }
+      } catch (error) {}
 
       const isDevelopmentBuild = process.argv.some(arg => (arg === 'dev' || arg.includes(':dev') || arg.includes('--dev')));
       const cacheAge = isNaN(grunt.option('cacheage'))
