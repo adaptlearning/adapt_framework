@@ -15,6 +15,7 @@ class LanguageFile extends JSONFile {
    * @param {Framework} options.framework
    * @param {Language} options.language
    * @param {string} options.path
+   * @param {string} options.jsonext
    * @param {Object} options.data
    * @param {boolean} options.hasChanged
    */
@@ -22,10 +23,11 @@ class LanguageFile extends JSONFile {
     framework = null,
     language = null,
     path = null,
+    jsonext = null,
     data = null,
     hasChanged = false
   } = {}) {
-    super({ framework, path, data, hasChanged });
+    super({ framework, path, jsonext, data, hasChanged });
     /** @type {Language} */
     this.language = language;
   }

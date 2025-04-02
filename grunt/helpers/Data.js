@@ -54,12 +54,13 @@ class Data {
     this.configFile = null;
     /** @type {[Language]} */
     this.languages = null;
+    /** @type {string} */
+    this.coursePath = path.join(this.sourcePath, this.courseDir).replace(/\\/g, '/');
   }
 
   /** @returns {Data} */
   load() {
-    const coursePath = path.join(this.sourcePath, this.courseDir).replace(/\\/g, '/');
-    this.languages = globs.sync(path.join(coursePath, '*/')).map(languagePath => {
+    this.languages = globs.sync(path.join(this.coursePath, '*/')).map(languagePath => {
       const language = new Language({
         framework: this.framework,
         languagePath,
@@ -73,7 +74,8 @@ class Data {
     }).filter(lang => lang.isValid);
     this.configFile = new JSONFile({
       framework: this.framework,
-      path: path.join(coursePath, `config.${this.jsonext}`)
+      path: path.join(this.coursePath, `config.${this.jsonext}`),
+      jsonext: this.jsonext
     });
     this.configFile.load();
     return this;

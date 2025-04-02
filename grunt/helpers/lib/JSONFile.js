@@ -22,6 +22,7 @@ class JSONFile {
   constructor({
     framework = null,
     path = null,
+    jsonext = null,
     data = null,
     hasChanged = false
   } = {}) {
@@ -29,6 +30,8 @@ class JSONFile {
     this.framework = framework;
     /** @type {string} */
     this.path = path;
+    /** @type {string} */
+    this.jsonext = jsonext;
     /** @type {Object|Array} */
     this.data = data;
     /** @type {boolean} */

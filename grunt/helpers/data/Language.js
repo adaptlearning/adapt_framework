@@ -80,6 +80,7 @@ class Language {
       const file = new LanguageFile({
         framework: this.framework,
         language: this,
+        jsonext: this.jsonext,
         path: jsonFilePath,
         data: null,
         hasChanged: false

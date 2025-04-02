@@ -29,8 +29,8 @@ class Framework {
    */
   constructor({
     rootPath = process.cwd(),
-    outputPath = process.cwd() + '/build/',
-    sourcePath = process.cwd() + '/src/',
+    outputPath = path.join(rootPath, '/build/'),
+    sourcePath = path.join(rootPath, '/src/'),
     courseDir = 'course',
     includedFilter = function() { return true; },
     jsonext = 'json',
@@ -42,9 +42,9 @@ class Framework {
     /** @type {string} */
     this.rootPath = rootPath.replace(/\\/g, '/');
     /** @type {string} */
-    this.outputPath = outputPath.replace(/\\/g, '/');
+    this.outputPath = path.join(this.rootPath, outputPath).replace(/\\/g, '/');
     /** @type {string} */
-    this.sourcePath = sourcePath.replace(/\\/g, '/');
+    this.sourcePath = path.join(this.rootPath, sourcePath).replace(/\\/g, '/');
     /** @type {string} */
     this.courseDir = courseDir;
     /** @type {function} */
@@ -90,7 +90,8 @@ class Framework {
    * @returns {Data}
    */
   getData({
-    useOutputData = this.useOutputData
+    useOutputData = this.useOutputData,
+    performLoad = true
   } = {}) {
     const data = new Data({
       framework: this,
@@ -100,7 +101,7 @@ class Framework {
       trackingIdType: this.trackingIdType,
       log: this.log
     });
-    data.load();
+    if (performLoad) data.load();
     return data;
   }
 
