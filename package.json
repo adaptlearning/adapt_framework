@@ -83,7 +83,7 @@
         "react": "17.0.2",
         "react-dom": "17.0.2",
         "semantic-release": "^22.0.12",
-        "wait-on": "^7.2.0"
+        "wait-on": "^8.0.3"
     },
     "optionalDependencies": {
         "imagemin": "^7.0.1",
