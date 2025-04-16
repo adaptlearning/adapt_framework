@@ -42,9 +42,9 @@ class Framework {
     /** @type {string} */
     this.rootPath = rootPath.replace(/\\/g, '/');
     /** @type {string} */
-    this.outputPath = path.resolve(this.rootPath, outputPath).replace(/\\/g, '/');
+    this.outputPath = path.resolve(this.rootPath, outputPath).replace(/\\/g, '/').replace(/\/?$/, '/');
     /** @type {string} */
-    this.sourcePath = path.resolve(this.rootPath, sourcePath).replace(/\\/g, '/');
+    this.sourcePath = path.resolve(this.rootPath, sourcePath).replace(/\\/g, '/').replace(/\/?$/, '/');
     /** @type {string} */
     this.courseDir = courseDir;
     /** @type {function} */
