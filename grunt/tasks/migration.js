@@ -1,5 +1,3 @@
-const { match } = require('assert');
-
 module.exports = function(grunt) {
 
   const Helpers = require('../helpers')(grunt);
@@ -7,7 +5,6 @@ module.exports = function(grunt) {
   const path = require('path');
   const fs = require('fs-extra');
   const _ = require('underscore');
-  const minimatch = require('minimatch');
 
   function unix(path) {
     return path.replace(/\\/g, '/');
