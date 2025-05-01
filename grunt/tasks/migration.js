@@ -1,3 +1,5 @@
+const { match } = require('assert');
+
 module.exports = function(grunt) {
 
   const Helpers = require('../helpers')(grunt);
@@ -26,6 +28,11 @@ module.exports = function(grunt) {
     delete clone.__path__;
     delete clone.__jsonext__;
     return clone;
+  }
+
+  function matchFileNameIncludes(filePath, fileNameIncludes) {
+    const regex = new RegExp(`(^|\\/)${fileNameIncludes}(\\W|$)`);
+    return regex.test(filePath);
   }
 
   grunt.registerTask('migration', 'Migrate from one version to another', function(mode) {
@@ -86,11 +93,10 @@ module.exports = function(grunt) {
           'src/core/migrations/**/*.js'
         ];
         if (customScriptsDir) globPatterns.push(`${customScriptsDir}/*.js`);
-
         globs(globPatterns, { cwd, absolute: true }, (err, files) => resolve(err ? null : files));
       })).filter(filePath => {
         if (!fileNameIncludes) return true;
-        return new RegExp(`(^|\\W)${fileNameIncludes}(\\W|$)`).test(filePath);
+        return matchFileNameIncludes(filePath, fileNameIncludes);
       });
 
       if (!migrationScripts.length) {
