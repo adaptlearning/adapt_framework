@@ -253,7 +253,8 @@ module.exports = function(grunt) {
         scriptSafe: defaults.scriptSafe,
         strictMode: false,
         targets: buildConfig.targets || '',
-        cacheAge
+        cacheAge,
+        timestamp: Date.now()
       };
 
       if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
