@@ -5,7 +5,6 @@ module.exports = function(grunt) {
   const path = require('path');
   const fs = require('fs-extra');
   const _ = require('underscore');
-  const minimatch = require('minimatch');
 
   function unix(path) {
     return path.replace(/\\/g, '/');
@@ -28,10 +27,16 @@ module.exports = function(grunt) {
     return clone;
   }
 
+  function matchFileNameIncludes(filePath, fileNameIncludes) {
+    const regex = new RegExp(`(^|\\/)${fileNameIncludes}(\\W|$)`);
+    return regex.test(filePath);
+  }
+
   grunt.registerTask('migration', 'Migrate from one version to another', function(mode) {
     const next = this.async();
     const buildConfig = Helpers.generateConfigData();
     const fileNameIncludes = grunt.option('file');
+    const customScriptsDir = grunt.option('customscriptsdir');
 
     (async function() {
       const migrations = await import('adapt-migrations');
@@ -80,13 +85,15 @@ module.exports = function(grunt) {
       logger.debug(`Using ${toFramework.useOutputData ? toFramework.outputPath : toFramework.sourcePath} folder for course data...`);
       const plugins = toFramework.getPlugins().getAllPackageJSONFileItems().map(fileItem => fileItem.item);
       const migrationScripts = Array.from(await new Promise(resolve => {
-        globs([
-          '*/*/migrations/**/*.js',
-          'core/migrations/**/*.js'
-        ], { cwd: path.join(cwd, './src/'), absolute: true }, (err, files) => resolve(err ? null : files));
+        const globPatterns = [
+          'src/*/*/migrations/**/*.js',
+          'src/core/migrations/**/*.js'
+        ];
+        if (customScriptsDir) globPatterns.push(`${customScriptsDir}/*.js`);
+        globs(globPatterns, { cwd, absolute: true }, (err, files) => resolve(err ? null : files));
       })).filter(filePath => {
         if (!fileNameIncludes) return true;
-        return minimatch(filePath, '**/' + fileNameIncludes) || filePath.includes(fileNameIncludes);
+        return matchFileNameIncludes(filePath, fileNameIncludes);
       });
 
       if (!migrationScripts.length) {
