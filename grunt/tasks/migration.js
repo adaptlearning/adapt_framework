@@ -5,6 +5,7 @@ module.exports = function(grunt) {
   const path = require('path');
   const fs = require('fs-extra');
   const _ = require('underscore');
+  const minimatch = require('minimatch');
 
   function unix(path) {
     return path.replace(/\\/g, '/');
@@ -25,11 +26,6 @@ module.exports = function(grunt) {
     delete clone.__path__;
     delete clone.__jsonext__;
     return clone;
-  }
-
-  function matchFileNameIncludes(filePath, fileNameIncludes) {
-    const regex = new RegExp(`(^|\\/)${fileNameIncludes}(\\W|$)`);
-    return regex.test(filePath);
   }
 
   grunt.registerTask('migration', 'Migrate from one version to another', function(mode) {
@@ -93,7 +89,7 @@ module.exports = function(grunt) {
         globs(globPatterns, { cwd, absolute: true }, (err, files) => resolve(err ? null : files));
       })).filter(filePath => {
         if (!fileNameIncludes) return true;
-        return matchFileNameIncludes(filePath, fileNameIncludes);
+        return minimatch(filePath, '**/' + fileNameIncludes) || filePath.includes(fileNameIncludes);
       });
 
       if (!migrationScripts.length) {
