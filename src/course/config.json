@@ -53,17 +53,18 @@
     "_iconClass": "icon-list"
   },
   "_completionCriteria": {
-    "_requireContentCompleted": true,
-    "_requireAssessmentCompleted": false,
-    "_shouldSubmitScore": false,
-    "_submitOnEveryAssessmentAttempt": false
+    "_requireContentCompleted": false,
+    "_requireAssessmentCompleted": true,
+    "_submitOnEveryAssessmentAttempt": true
   },
   "_spoor": {
     "_isEnabled": true,
     "_tracking": {
+      "_shouldSubmitScore": true,
       "_shouldStoreResponses": true,
       "_shouldStoreAttempts": false,
       "_shouldRecordInteractions": true,
+      "_shouldRecordObjectives": true,
       "_shouldCompress": false
     },
     "_reporting": {
