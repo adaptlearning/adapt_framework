@@ -23,7 +23,8 @@
       "_block": "@article+1",
       "_component": "@block+1",
       "_componentItem": "@component+1",
-      "_notify": 1
+      "_notify": 1,
+      "_drawer": 1
     },
     "_options": {
       "_isPrefersReducedMotionEnabled": true,
