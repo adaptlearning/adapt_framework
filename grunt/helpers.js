@@ -210,7 +210,7 @@ module.exports = function(grunt) {
       const outputdir = appendSlash(grunt.option('outputdir')) || defaults.outputdir;
       const cachepath = grunt.option('cachepath') || null;
       const tempdir = outputdir + '.temp/';
-      const jsonext = grunt.option('jsonext') || defaults.jsonext;
+      const jsonext = grunt.option('jsonext') || adaptJSON.jsonext || defaults.jsonext;
       const coursedir = grunt.option('coursedir') || adaptJSON.coursedir || defaults.coursedir;
 
       let languageFolders = '';
