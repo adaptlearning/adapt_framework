@@ -108,6 +108,7 @@
     "displayTitle": "",
     "body": "",
     "instruction": "",
+    "_enableFilters": true,
     "_filterButtons": {
       "all": "All",
       "document": "Document",
