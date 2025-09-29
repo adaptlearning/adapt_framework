@@ -2,4 +2,4 @@
   path = src/core
   branch = master
   url = https://github.com/adaptlearning/adapt-contrib-core
-  installBranch = v6.69.0
+  installBranch = v6.69.1
