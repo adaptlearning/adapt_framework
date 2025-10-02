@@ -199,23 +199,25 @@ class Language {
         emptyIds[o._id] = true; // Course has no children
       }
       if (!isCourseType && (!o._parentId || !idIndex[o._parentId])) {
-        orphanedIds[o._id] = true; // Item has no defined parent id or the parent id doesn't exist
+        orphanedIds[o._id] = o._type; // Item has no defined parent id or the parent id doesn't exist
       }
       if (!isCourseType && o._parentId && !idIndex[o._parentId]) {
-        missingIds[o._parentId] = true; // Referenced parent item does not exist
+        missingIds[o._parentId] = o._type; // Referenced parent item does not exist
       }
     });
-    orphanedIds = Object.keys(orphanedIds);
+    const orphanedIdsArray = Object.keys(orphanedIds);
+    const missingIdsArray = Object.keys(missingIds);
     emptyIds = Object.keys(emptyIds);
     duplicateIds = Object.keys(duplicateIds);
-    missingIds = Object.keys(missingIds);
     // Output for each type of error
-    const hasErrored = orphanedIds.length || emptyIds.length || duplicateIds.length || missingIds.length;
-    if (orphanedIds.length) {
-      this.log(chalk.yellow(`Orphaned _ids: ${orphanedIds}`));
+    const hasErrored = orphanedIdsArray.length || emptyIds.length || duplicateIds.length || missingIdsArray.length;
+    if (orphanedIdsArray.length) {
+      const orphanedIdString = orphanedIdsArray.map((id) => `${id} (${orphanedIds[id]})`);
+      this.log(chalk.yellow(`Orphaned _ids: ${orphanedIdString.join(', ')}`));
     }
-    if (missingIds.length) {
-      this.log(chalk.yellow(`Missing _ids: ${missingIds}`));
+    if (missingIdsArray.length) {
+      const missingIdString = missingIdsArray.map((id) => `${id} (${missingIds[id]})`);
+      this.log(chalk.yellow(`Missing _ids: ${missingIdString.join(', ')}`));
     }
     if (emptyIds.length) {
       this.log(chalk.yellow(`Empty _ids: ${emptyIds}`));
