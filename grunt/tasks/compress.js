@@ -27,9 +27,10 @@ module.exports = function(grunt) {
             quality: [0.6, 0.8]
           }),
           imageminSvgo({
-            plugins: [
-              { removeViewBox: false }
-            ]
+            plugins: [{
+              name: 'removeViewBox',
+              active: false
+            }]
           })
         ]
       });
