@@ -11,10 +11,10 @@ module.exports = function(grunt) {
       let imageminPngquant;
       let imageminSvgo;
       try {
-        imagemin = require('imagemin');
-        imageminJpegtran = require('imagemin-jpegtran');
-        imageminPngquant = require('imagemin-pngquant');
-        imageminSvgo = require('imagemin-svgo');
+        imagemin = (await import('imagemin')).default;
+        imageminJpegtran = (await import('imagemin-jpegtran')).default;
+        imageminPngquant = (await import('imagemin-pngquant')).default;
+        imageminSvgo = (await import('imagemin-svgo')).default;
       } catch (err) {
         grunt.log.error('Optional imagemin dependencies were not installed.');
         return;
@@ -27,9 +27,10 @@ module.exports = function(grunt) {
             quality: [0.6, 0.8]
           }),
           imageminSvgo({
-            plugins: [
-              { removeViewBox: false }
-            ]
+            plugins: [{
+              name: 'removeViewBox',
+              active: false
+            }]
           })
         ]
       });
