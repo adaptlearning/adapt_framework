@@ -28,6 +28,7 @@ jobs:
         with:
           deploy_key: ${{ secrets.RELEASES_TOKEN }}
           external_repository: adaptlearning/adaptlearning.github.io
-          publish_branch: gh-pages
+          publish_branch: master
           publish_dir: ./build
+          destination_dir: v5demo
         
