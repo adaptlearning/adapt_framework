@@ -26,5 +26,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.RELEASES_TOKEN }}
+          external_repository: adaptlearning/adaptlearning.github.io
+          publish_branch: gh-pages
           publish_dir: ./build
+        
