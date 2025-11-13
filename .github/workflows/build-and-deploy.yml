@@ -3,6 +3,8 @@ name: Build and Deploy to GitHub Pages
 on:
   release:
     types: [published]
+  schedule:
+    - cron: '0 7 * * 2'  # Runs every Tuesday at midnight MST (7am UTC)
 
 jobs:
   build-and-deploy:
