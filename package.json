@@ -57,7 +57,7 @@
     "jshint-stylish": "^2.2.1",
     "less": "^3.9.0",
     "load-grunt-config": "^4.0.1",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.23",
     "nsdeclare": "^0.1.0",
     "rollup": "^2.79.2",
     "semver": "^7.6.0",
