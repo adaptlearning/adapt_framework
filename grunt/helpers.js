@@ -213,7 +213,7 @@ module.exports = function(grunt) {
       });
       framework.load();
 
-      exports.includedFilter = framework.makeIncludeFilter();
+      exports.includedFilter = framework.includedFilter;
 
       data.availableLanguageNames = [];
       try {
