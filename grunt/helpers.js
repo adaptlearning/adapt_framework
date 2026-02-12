@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 const path = require('path');
 // extends grunt.file.expand with { order: cb(filePaths) }
 require('grunt-file-order');
-const Framework = require('./helpers/Framework');
+const { Framework } = require('adapt-project');
 
 module.exports = function(grunt) {
 
@@ -49,53 +49,6 @@ module.exports = function(grunt) {
     if (grunt.config('languages') !== '**') grunt.log.ok(`The following languages will be included in the build '${grunt.config('languages')}'`);
   });
 
-  // privates
-  const generateIncludedRegExp = function() {
-    const includes = grunt.config('includes') || [];
-    const pluginTypes = exports.defaults.pluginTypes;
-
-    // Return a more specific plugin regExp including src path.
-    const re = _.map(includes, function(plugin) {
-      return _.map(pluginTypes, function(type) {
-        // eslint-disable-next-line no-useless-escape
-        return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
-      }).join('|');
-    }).join('|');
-    // eslint-disable-next-line no-useless-escape
-    const core = exports.defaults.sourcedir + 'core\/';
-    return new RegExp(core + '|' + re, 'i');
-  };
-
-  const generateNestedIncludedRegExp = function() {
-    const includes = grunt.config('includes') || [];
-    const folderRegEx = 'less/plugins';
-
-    // Return a more specific plugin regExp including src path.
-    const re = _.map(includes, function(plugin) {
-      // eslint-disable-next-line no-useless-escape
-      return exports.defaults.sourcedir + '([^\/]*)\/([^\/]*)\/' + folderRegEx + '\/' + plugin + '\/';
-    }).join('|');
-    return new RegExp(re, 'i');
-  };
-
-  const generateExcludedRegExp = function() {
-    const excludes = grunt.config('excludes') || [];
-    if (grunt.config('type') === 'production') {
-      const productionExcludes = grunt.config('productionExcludes') || [];
-      excludes.push(...productionExcludes);
-    }
-    const pluginTypes = exports.defaults.pluginTypes;
-
-    // Return a more specific plugin regExp including src path.
-    const re = _.map(excludes, function(plugin) {
-      return _.map(pluginTypes, function(type) {
-        // eslint-disable-next-line no-useless-escape
-        return exports.defaults.sourcedir + type + '\/' + plugin + '\/';
-      }).join('|');
-    }).join('|');
-    return new RegExp(re, 'i');
-  };
-
   const generateScriptSafeRegExp = function() {
     const includes = grunt.config('scriptSafe') || [];
     let re = '';
@@ -114,27 +67,6 @@ module.exports = function(grunt) {
       const lastChar = dir.substring(dir.length - 1, dir.length);
       if (lastChar !== path.sep) return dir + path.sep;
     }
-  };
-
-  // eslint-disable-next-line no-unused-vars
-  const includedProcess = function(content, filepath) {
-    if (!exports.isPathIncluded(filepath)) return '';
-    else return content;
-  };
-
-  const getIncludedRegExp = function() {
-    const configValue = grunt.config('includedRegExp');
-    return configValue || grunt.config('includedRegExp', generateIncludedRegExp());
-  };
-
-  const getNestedIncludedRegExp = function() {
-    const configValue = grunt.config('nestedIncludedRegExp');
-    return configValue || grunt.config('nestedIncludedRegExp', generateNestedIncludedRegExp());
-  };
-
-  const getExcludedRegExp = function() {
-    const configValue = grunt.config('excludedRegExp');
-    return configValue || grunt.config('excludedRegExp', generateExcludedRegExp());
   };
 
   const getScriptSafeRegExp = function() {
@@ -273,7 +205,6 @@ module.exports = function(grunt) {
         outputPath: data.outputdir,
         sourcePath: data.sourcedir,
         courseDir: data.coursedir,
-        includedFilter: exports.includedFilter,
         jsonext: data.jsonext,
         trackingIdType: data.trackingIdType,
         useOutputData: Boolean(grunt.option('outputdir')),
@@ -281,6 +212,8 @@ module.exports = function(grunt) {
         warn: grunt.log.error
       });
       framework.load();
+
+      exports.includedFilter = framework.includedFilter;
 
       data.availableLanguageNames = [];
       try {
@@ -314,44 +247,6 @@ module.exports = function(grunt) {
       return false;
     },
 
-    isPathIncluded: function(pluginPath) {
-      pluginPath = pluginPath.replace(convertSlashes, '/');
-
-      const includes = grunt.config('includes');
-      const excludes = grunt.config('excludes') || (grunt.config('type') === 'production' && grunt.config('productionExcludes'));
-
-      // carry on as normal if no includes/excludes
-      if (!includes && !excludes) return true;
-
-      // Very basic check to see if the file path string contains any
-      // of the included list of plugin string names.
-      const isIncluded = includes && pluginPath.search(getIncludedRegExp()) !== -1;
-      const isExcluded = excludes && pluginPath.search(getExcludedRegExp()) !== -1;
-
-      // Exclude any plugins that don't match any part of the full file path string.
-      if (isExcluded || isIncluded === false) {
-        return false;
-      }
-
-      // Check the LESS plugins folder exists.
-      // The LESS 'plugins' folder doesn't exist, so add the file,
-      // as the plugin has already been found in the previous check.
-      const nestedPluginsPath = !!pluginPath.match(/(?:.)+(?:\/less\/plugins)/g);
-      if (!nestedPluginsPath) {
-        return true;
-      }
-
-      // The LESS 'plugins' folder exists, so check that any plugins in this folder are allowed.
-      const hasPluginSubDirectory = !!pluginPath.match(getNestedIncludedRegExp());
-      if (hasPluginSubDirectory) {
-        return true;
-      }
-
-      // File might be in the included plugin/less/plugins directory,
-      // but the naming convention or directory structure is not correct.
-      return false;
-    },
-
     isPluginScriptSafe: function(pluginPath) {
 
       pluginPath = pluginPath.replace(convertSlashes, '/');
@@ -361,10 +256,6 @@ module.exports = function(grunt) {
 
       return isIncluded;
 
-    },
-
-    includedFilter: function(filepath) {
-      return exports.isPathIncluded(filepath);
     },
 
     scriptSafeFilter: function(filepath) {
@@ -382,7 +273,6 @@ module.exports = function(grunt) {
         outputPath: buildConfig.outputdir,
         sourcePath: buildConfig.sourcedir,
         courseDir: buildConfig.coursedir,
-        includedFilter: exports.includedFilter,
         jsonext: buildConfig.jsonext,
         trackingIdType: buildConfig.trackingIdType,
         useOutputData,
