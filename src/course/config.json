@@ -83,5 +83,125 @@
   },
   "build": {
     "strictMode": true
+  },
+  "themeVariables": {
+    "_global": {
+      "font-color": "",
+      "font-color-inverted": "",
+      "link": "",
+      "link-inverted": "",
+      "link-hover": "",
+      "link-inverted-hover": "",
+      "heading-color": "",
+      "heading-color-inverted": ""
+    },
+    "_items": {
+      "item-color": "",
+      "item-color-inverted": "",
+      "item-color-hover": "",
+      "item-color-inverted-hover": "",
+      "item-color-selected": "",
+      "item-color-inverted-selected": "",
+      "visited": "",
+      "visited-inverted": ""
+    },
+    "_buttons": {
+      "btn-color": "",
+      "btn-color-inverted": "",
+      "btn-color-hover": "",
+      "btn-color-inverted-hover": "",
+      "btn-icon-color": "",
+      "btn-icon-color-inverted": "",
+      "btn-icon-color-hover": "",
+      "btn-icon-color-inverted-hover": "",
+      "disabled": "",
+      "disabled-inverted": ""
+    },
+    "_validation": {
+      "validation-success": "",
+      "validation-success-inverted": "",
+      "validation-error": "",
+      "validation-error-inverted": ""
+    },
+    "_progress": {
+      "progress": "",
+      "progress-inverted": "",
+      "progress-border": ""
+    },
+    "_menu": {
+      "menu-header-background-color": "",
+      "menu-header-title-color": "",
+      "menu-header-subtitle-color": "",
+      "menu-header-body-color": "",
+      "menu-header-instruction-color": "",
+      "menu-item": "",
+      "menu-item-inverted": "",
+      "menu-item-border-color": "",
+      "menu-item-progress": "",
+      "menu-item-progress-inverted": "",
+      "menu-item-progress-border": "",
+      "menu-item-btn-color": "",
+      "menu-item-btn-color-inverted": "",
+      "menu-item-btn-color-hover": "",
+      "menu-item-btn-color-inverted-hover": ""
+    },
+    "_nav": {
+      "nav": "",
+      "nav-inverted": "",
+      "nav-icon": "",
+      "nav-icon-inverted": "",
+      "nav-icon-hover": "",
+      "nav-icon-inverted-hover": "",
+      "nav-progress": "",
+      "nav-progress-inverted": "",
+      "nav-progress-border": "",
+      "nav-progress-hover": "",
+      "nav-progress-inverted-hover": "",
+      "nav-progress-border-hover": ""
+    },
+    "_notify": {
+      "notify": "",
+      "notify-inverted": "",
+      "notify-link": "",
+      "notify-link-hover": "",
+      "notify-btn": "",
+      "notify-btn-inverted": "",
+      "notify-btn-hover": "",
+      "notify-btn-inverted-hover": "",
+      "notify-icon": "",
+      "notify-icon-inverted": "",
+      "notify-icon-hover": "",
+      "notify-icon-inverted-hover": ""
+    },
+    "_drawer": {
+      "drawer": "",
+      "drawer-inverted": "",
+      "drawer-link": "",
+      "drawer-link-hover": "",
+      "drawer-icon": "",
+      "drawer-icon-inverted": "",
+      "drawer-icon-hover": "",
+      "drawer-icon-inverted-hover": "",
+      "drawer-item": "",
+      "drawer-item-inverted": "",
+      "drawer-item-hover": "",
+      "drawer-item-inverted-hover": "",
+      "drawer-item-selected": "",
+      "drawer-item-inverted-selected": "",
+      "drawer-progress": "",
+      "drawer-progress-inverted": "",
+      "drawer-progress-border": "",
+      "drawer-progress-hover": "",
+      "drawer-progress-inverted-hover": "",
+      "drawer-progress-border-hover": ""
+    },
+    "_misc": {
+      "background": "",
+      "background-inverted": "",
+      "shadow": "",
+      "shadow-inverted": "",
+      "loading": "",
+      "loading-inverted": ""
+    }
   }
 }
