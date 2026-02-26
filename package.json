@@ -29,6 +29,7 @@
     "@types/backbone": "^1.4.14",
     "@types/jquery": "^3.5.16",
     "adapt-migrations": "^1.0.0",
+    "adapt-project": "^1.0.5",
     "async": "^3.2.2",
     "babel-plugin-transform-amd-to-es6": "^0.6.1",
     "babel-plugin-transform-react-templates": "^0.1.0",
