@@ -59,7 +59,7 @@
     "load-grunt-config": "^4.0.1",
     "lodash": "^4.17.23",
     "nsdeclare": "^0.1.0",
-    "rollup": "^2.79.2",
+    "rollup": "^2.80.0",
     "semver": "^7.6.0",
     "time-grunt": "^2.0.0",
     "underscore": "^1.13.1",
