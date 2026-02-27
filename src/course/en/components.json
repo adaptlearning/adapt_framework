@@ -1003,30 +1003,6 @@
           "alt": "",
           "attribution": ""
         }
-      },
-      "_partlyCorrectNotFinal": {
-        "altTitle": "",
-        "title": "That’s incorrect.",
-        "body": "Please try again.",
-        "_classes": "",
-        "_imageAlignment": "left",
-        "_graphic": {
-          "_src": "course/en/images/single-width.png",
-          "alt": "",
-          "attribution": ""
-        }
-      },
-      "_partlyCorrectFinal": {
-        "altTitle": "",
-        "title": "Sorry, that’s not right.",
-        "body": "According to Miller’s paper 7 +/- 2 chunks of information was the limited capacity of working memory. Various theories from the field of cognitive psychology such as Miller’s <a href=’http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two’ target=’_blank’>magical number</a>, <a href=’http://en.wikipedia.org/wiki/Chunking_%28psychology%29#Chunking_as_the_learning_of_long-term_memory_structures’ target=’_blank’>chunking</a>, <a href=’http://en.wikipedia.org/wiki/Forgetting_curve’ target=’_blank’>the forgetting curve</a> and <a href=’http://en.wikipedia.org/wiki/Spaced_repetition’ target=’_blank’>spaced repetition</a> have all influenced learning theory over the last 50 years or so.<br><br><i>Component facts: The correct answer for a <b>Slider</b> component can be an exact number or a range. In this instance we have set the correct answer to a range of 5-9 due to the correct answer being seven plus or minus two. Component is either single or spanned.</i>",
-        "_classes": "",
-        "_imageAlignment": "left",
-        "_graphic": {
-          "_src": "course/en/images/single-width.png",
-          "alt": "",
-          "attribution": ""
-        }
       }
     },
     "_pageLevelProgress": {
