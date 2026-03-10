@@ -208,6 +208,10 @@ module.exports = function(grunt) {
         jsonext: data.jsonext,
         trackingIdType: data.trackingIdType,
         useOutputData: Boolean(grunt.option('outputdir')),
+        usePackageJSON: false,
+        schemaVersion: '0.1.0',
+        specifiedMenus: data.menu === '**' ? null : [data.menu],
+        specifiedThemes: data.theme === '**' ? null : [data.theme],
         log: grunt.log.ok,
         warn: grunt.log.error
       });
@@ -276,6 +280,10 @@ module.exports = function(grunt) {
         jsonext: buildConfig.jsonext,
         trackingIdType: buildConfig.trackingIdType,
         useOutputData,
+        usePackageJSON: false,
+        schemaVersion: '0.1.0',
+        specifiedMenus: buildConfig.menu === '**' ? null : [buildConfig.menu],
+        specifiedThemes: buildConfig.theme === '**' ? null : [buildConfig.theme],
         log: grunt.log.ok,
         warn: grunt.log.error
       });
