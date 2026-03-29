@@ -258,9 +258,9 @@ module.exports = function(grunt) {
       };
 
       if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
-      if (buildConfig.includes) data.includes = exports.getIncludes(buildConfig.includes, data);
-      if (buildConfig.excludes) data.excludes = buildConfig.excludes;
-      if (buildConfig.productionExcludes) data.productionExcludes = buildConfig.productionExcludes;
+      if (buildConfig.includes?.length) data.includes = exports.getIncludes(buildConfig.includes, data);
+      if (buildConfig.excludes?.length) data.excludes = buildConfig.excludes;
+      if (buildConfig.productionExcludes?.length) data.productionExcludes = buildConfig.productionExcludes;
       if (buildConfig.scriptSafe) {
         data.scriptSafe = buildConfig.scriptSafe.split(',').map(function(item) {
           return item.trim();
