@@ -254,7 +254,7 @@ module.exports = function(grunt) {
         strictMode: false,
         targets: buildConfig.targets || '',
         cacheAge,
-        timestamp: Date.now()
+        timestamp: isDevelopmentBuild ? 0 : Date.now()
       };
 
       if (buildConfig.jsonext) data.jsonext = buildConfig.jsonext;
