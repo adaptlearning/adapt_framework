@@ -20,7 +20,7 @@ Install the following before proceeding:
 
 Download the Adapt framework as a ZIP and extract the files. If you are a Windows user, you may need to [unblock the ZIP archive](http://answers.microsoft.com/en-us/windows/forum/windows_7-security/windows-found-that-this-file-is-potentially/cab2b576-2074-4b26-bf54-571fe03f9ef8) before you extract it.
 
-Open a console interface (e.g. Git Bash, Terminal on OSX, Powershell or CMD.exe) and navigate to the extracted folder (typically adapt_framework-master, but you can safely rename this). 
+Open a console interface (e.g. Git Bash, Terminal on OSX, PowerShell or Command Prompt) and navigate to the extracted folder (typically adapt_framework-master, but you can safely rename this). 
 
 ### 3. Install Module Dependencies.  
 
@@ -61,7 +61,7 @@ Install the following before proceeding:
 
 ### 2. Download and Install the Framework  
 
-Open a console interface (e.g. Git Bash, Terminal on OSX, Powershell or CMD.exe) and navigate to the folder where you'd like to install the framework. The CLI will create a root folder using the name you supply as the course name. Run the following command substituting your course name for "My Course Name".  
+Open a console interface (e.g. Git Bash, Terminal on OSX, PowerShell or Command Prompt) and navigate to the folder where you'd like to install the framework. The CLI will create a root folder using the name you supply as the course name. Run the following command substituting your course name for "My Course Name".  
 `adapt create course "My Course Name"`
 
 To create an Adapt course from a specific branch, run:
