@@ -82,11 +82,13 @@ module.exports = function(grunt, options) {
   return {
     dev: {
       options: devOptions,
-      // newer configuration
       files: {
         '<%= outputdir %>adapt.css': [
-          '<%= sourcedir %>/core/less/**/*.less',
-          '<%= sourcedir %>/*/*/less/**/*.less'
+          '<%= sourcedir %>core/less/**/*.less',
+          '<%= sourcedir %>components/*/less/**/*.less',
+          '<%= sourcedir %>extensions/*/less/**/*.less',
+          '<%= sourcedir %>menu/<%= menu %>/**/*.less',
+          '<%= sourcedir %>theme/<%= theme %>/**/*.less'
         ]
       }
     },
