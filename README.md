@@ -46,5 +46,5 @@ See [Contributing to the Adapt Framework](https://github.com/adaptlearning/adapt
 <a href="https://community.adaptlearning.org/" target="_blank"><img src="https://github.com/adaptlearning/documentation/blob/master/04_wiki_assets/plug-ins/images/adapt-logo-mrgn-lft.jpg" alt="adapt learning logo" align="right"></a>  Adapt is licensed under the [GNU General Public License, Version 3](https://github.com/adaptlearning/adapt_framework/blob/master/LICENSE).
 
 ## Requirements
-Node >=16 is required for the grunt tasks to run as needed
+Node >=22 is required for the grunt tasks to run as needed
 

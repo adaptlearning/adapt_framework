@@ -16,7 +16,7 @@
     "url": "https://github.com/adaptlearning/adapt_framework/issues"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "private": true,
   "dependencies": {
