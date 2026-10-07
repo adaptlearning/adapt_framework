@@ -13,16 +13,17 @@ module.exports = function(grunt) {
       .replace(convertSlashes, '/');
     const cwd = process.cwd();
 
+    let configJSON;
+    try {
+      configJSON = JSON.parse(grunt.file.read(options.config)
+        .toString());
+    } catch (e) {}
+
     let imports = '';
     let src = '';
 
     if (options.src && options.config) {
-      let screenSize;
-      try {
-        const configjson = JSON.parse(grunt.file.read(options.config)
-          .toString());
-        screenSize = configjson?.screenSize;
-      } catch (e) {}
+      const screenSize = configJSON?.screenSize;
       if (!screenSize) {
         const error = new Error('No screenSize defined in config.json');
         const errorString = error.toString();
@@ -79,6 +80,22 @@ module.exports = function(grunt) {
             imports += "@import '" + trimmed + "';\n";
           });
       }
+    }
+
+    if (configJSON.themeVariables) {
+      // Add theme variables
+      function fetchVariableNameValuePairs(object) {
+        return Object.entries(object).flatMap(([name, value]) => {
+          if (value === '' || value === null) return [];
+          if (typeof value !== 'object') return [[ name, value ]];
+          return fetchVariableNameValuePairs(value);
+        });
+      }
+      const variableNameValuePairs = fetchVariableNameValuePairs(configJSON.themeVariables);
+      // Add less variables
+      imports += variableNameValuePairs.map(([name, value]) => `\n@${name}: ${value};`).join('');
+      // Add css variables
+      imports += `\n:root {\n ${variableNameValuePairs.map(([name, value]) => `\n  --adapt-${name}: ${value};`).join('')}\n}`;
     }
 
     let sourcemaps;
