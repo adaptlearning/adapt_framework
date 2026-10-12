@@ -8,6 +8,7 @@
   "description": "A sample course demonstrating the capabilities of the Adapt Framework",
   "body": "Welcome to the demonstration build for version 5 of the Adapt framework.",
   "instruction": "",
+  "_lockType": "",
   "_buttons": {
     "_submit": {
       "buttonText": "Submit",
