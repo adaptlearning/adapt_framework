@@ -333,10 +333,10 @@ module.exports = function(grunt) {
         return false;
       }
 
-      // Check the LESS plugins folder exists.
-      // The LESS 'plugins' folder doesn't exist, so add the file,
-      // as the plugin has already been found in the previous check.
-      const nestedPluginsPath = !!pluginPath.match(/(?:.)+(?:\/less\/plugins)/g);
+      // Check whether the file is in a LESS plugins/<plugin> subfolder.
+      // If not, add the file, as the plugin has already been found in the
+      // previous check. Loose files directly in less/plugins/ are added too.
+      const nestedPluginsPath = /\/less\/plugins\/[^/]+\//.test(pluginPath);
       if (!nestedPluginsPath) {
         return true;
       }
